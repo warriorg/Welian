@@ -1,0 +1,76 @@
+//
+//  NavViewController.m
+//  Welian
+//
+//  Created by dong on 14-9-10.
+//  Copyright (c) 2014年 chuansongmen. All rights reserved.
+//
+
+#import "NavViewController.h"
+
+@interface NavViewController ()
+
+@end
+
+@implementation NavViewController
+
++ (void)initialize
+{
+    UINavigationBar *navBar = [UINavigationBar appearance];
+    [navBar setBarTintColor:[UIColor blueColor]];
+    [navBar setTintColor:[UIColor whiteColor]];
+    // 3.设置文字样式
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+    attrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    //    attrs[UITextAttributeTextShadowOffset] = [NSValue valueWithUIOffset:UIOffsetMake(0, 0)];
+    //    attrs[UITextAttributeFont] = [UIFont systemFontOfSize:20];
+    [navBar setTitleTextAttributes:attrs];
+    
+    // 4.设置导航栏按钮的主题
+    UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+    NSMutableDictionary *disableAttrs = [NSMutableDictionary dictionary];
+    disableAttrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    [barItem setTitleTextAttributes:disableAttrs forState:UIControlStateDisabled];
+    // 6.设置按钮的文字样式
+    NSMutableDictionary *itemAttrs = [NSMutableDictionary dictionary];
+    itemAttrs[NSForegroundColorAttributeName] =[UIColor whiteColor];
+    //    itemAttrs[UITextAttributeTextShadowOffset] = [NSValue valueWithUIOffset:UIOffsetMake(0, 0)];
+    [barItem setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
+    [barItem setTitleTextAttributes:itemAttrs forState:UIControlStateHighlighted];
+    
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self.viewControllers.count) {
+        [viewController setHidesBottomBarWhenPushed:YES];
+    }
+    [super pushViewController:viewController animated:animated];
+    
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

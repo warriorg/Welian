@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "BMapKit.h"
+#import "MainViewController.h"
+#import "LogInController.h"
+
 
 @interface AppDelegate() <BMKGeneralDelegate>
 
@@ -27,7 +30,22 @@ BMKMapManager* _mapManager;
 	}
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    /**
+     *  设置状态栏颜色
+     */
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    /**
+     *  未登陆
+     */
+    LogInController *loginVC = [[LogInController alloc] init];
+    [self.window setRootViewController:loginVC];
+    
+    /**
+     *  已登陆
+     */
+//    MainViewController *mainVC = [[MainViewController alloc] init];
+//    [self.window setRootViewController:mainVC];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LogInController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *LogInButtoon;
+- (IBAction)signInClick:(UIButton *)sender;
+- (IBAction)logInClick:(UIButton *)sender;
 
 @end

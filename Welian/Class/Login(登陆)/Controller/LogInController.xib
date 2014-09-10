@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogInController">
             <connections>
+                <outlet property="LogInButtoon" destination="DI5-Pn-r44" id="VXc-9q-Cnw"/>
+                <outlet property="signInButton" destination="dZe-Ge-QOl" id="fVO-vD-Vvy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,30 +16,53 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9l1-Sf-ktP">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login_bg_big.png" translatesAutoresizingMaskIntoConstraints="NO" id="9l1-Sf-ktP">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DI5-Pn-r44">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DI5-Pn-r44">
                     <rect key="frame" x="169" y="498" width="117" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="登陆">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="logInClick:" destination="-1" eventType="touchUpInside" id="d54-X4-wJV"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZe-Ge-QOl">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZe-Ge-QOl">
                     <rect key="frame" x="32" y="498" width="117" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="5bG-cU-9oE"/>
+                        <constraint firstAttribute="width" constant="117" id="qGh-1n-jUA"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="加入welian">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="signInClick:" destination="-1" eventType="touchUpInside" id="dIo-TT-K8g"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dZe-Ge-QOl" secondAttribute="bottom" constant="35" id="OEa-8r-YGA"/>
+                <constraint firstItem="DI5-Pn-r44" firstAttribute="top" secondItem="dZe-Ge-QOl" secondAttribute="top" id="Roh-pq-sS6"/>
+                <constraint firstAttribute="trailing" secondItem="DI5-Pn-r44" secondAttribute="trailing" constant="34" id="Uzx-zp-n5g"/>
+                <constraint firstItem="dZe-Ge-QOl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="e3n-9w-R2Q"/>
+                <constraint firstItem="DI5-Pn-r44" firstAttribute="bottom" secondItem="dZe-Ge-QOl" secondAttribute="bottom" id="fPt-vM-xDD"/>
+                <constraint firstItem="DI5-Pn-r44" firstAttribute="leading" secondItem="dZe-Ge-QOl" secondAttribute="trailing" constant="20" id="qUA-on-XbU"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="login_bg_big.png" width="320" height="568"/>
+    </resources>
 </document>
