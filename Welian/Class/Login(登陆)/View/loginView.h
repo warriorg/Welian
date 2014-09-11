@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "jianjuTextField.h"
 
 @interface loginView : UIView <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tsLabel;
-@property (strong, nonatomic)  UITextField *phoneTextF;
+@property (strong, nonatomic)  jianjuTextField *phoneTextF;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @end

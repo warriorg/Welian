@@ -10,6 +10,7 @@
 #import "BMapKit.h"
 #import "MainViewController.h"
 #import "LogInController.h"
+#import "NavViewController.h"
 
 
 @interface AppDelegate() <BMKGeneralDelegate>

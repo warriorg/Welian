@@ -13,6 +13,11 @@
 		F56254F519C01C7E00809D0B /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F419C01C7E00809D0B /* NavViewController.m */; };
 		F56254F819C0307700809D0B /* loginView.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F719C0307700809D0B /* loginView.m */; };
 		F56254FA19C0309200809D0B /* loginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56254F919C0309200809D0B /* loginView.xib */; };
+		F5BA193919C16D4D005F91BE /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193819C16D4D005F91BE /* UserInfoController.m */; };
+		F5BA193C19C17394005F91BE /* InfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193B19C17394005F91BE /* InfoHeaderView.m */; };
+		F5BA193E19C173A8005F91BE /* InfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */; };
+		F5BA194119C18FE6005F91BE /* NameController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA194019C18FE6005F91BE /* NameController.m */; };
+		F5BA194419C1D5B3005F91BE /* jianjuTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA194319C1D5B3005F91BE /* jianjuTextField.m */; };
 		F5CE85FE19BFF2AB00A9D14C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE85FD19BFF2AB00A9D14C /* Foundation.framework */; };
 		F5CE860019BFF2AB00A9D14C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE85FF19BFF2AB00A9D14C /* CoreGraphics.framework */; };
 		F5CE860219BFF2AB00A9D14C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE860119BFF2AB00A9D14C /* UIKit.framework */; };
@@ -84,6 +89,15 @@
 		F56254F619C0307700809D0B /* loginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginView.h; sourceTree = "<group>"; };
 		F56254F719C0307700809D0B /* loginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginView.m; sourceTree = "<group>"; };
 		F56254F919C0309200809D0B /* loginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginView.xib; sourceTree = "<group>"; };
+		F5BA193719C16D4D005F91BE /* UserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoController.h; sourceTree = "<group>"; };
+		F5BA193819C16D4D005F91BE /* UserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoController.m; sourceTree = "<group>"; };
+		F5BA193A19C17394005F91BE /* InfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoHeaderView.h; sourceTree = "<group>"; };
+		F5BA193B19C17394005F91BE /* InfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoHeaderView.m; sourceTree = "<group>"; };
+		F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoHeaderView.xib; sourceTree = "<group>"; };
+		F5BA193F19C18FE6005F91BE /* NameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameController.h; sourceTree = "<group>"; };
+		F5BA194019C18FE6005F91BE /* NameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameController.m; sourceTree = "<group>"; };
+		F5BA194219C1D5B3005F91BE /* jianjuTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jianjuTextField.h; sourceTree = "<group>"; };
+		F5BA194319C1D5B3005F91BE /* jianjuTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jianjuTextField.m; sourceTree = "<group>"; };
 		F5CE85FA19BFF2AB00A9D14C /* Welian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Welian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5CE85FD19BFF2AB00A9D14C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F5CE85FF19BFF2AB00A9D14C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -612,6 +626,10 @@
 				F5CE869819BFF6C100A9D14C /* LogInController.h */,
 				F5CE869919BFF6C100A9D14C /* LogInController.m */,
 				F5CE869A19BFF6C100A9D14C /* LogInController.xib */,
+				F5BA193719C16D4D005F91BE /* UserInfoController.h */,
+				F5BA193819C16D4D005F91BE /* UserInfoController.m */,
+				F5BA193F19C18FE6005F91BE /* NameController.h */,
+				F5BA194019C18FE6005F91BE /* NameController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -629,6 +647,11 @@
 				F56254F619C0307700809D0B /* loginView.h */,
 				F56254F719C0307700809D0B /* loginView.m */,
 				F56254F919C0309200809D0B /* loginView.xib */,
+				F5BA193A19C17394005F91BE /* InfoHeaderView.h */,
+				F5BA193B19C17394005F91BE /* InfoHeaderView.m */,
+				F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */,
+				F5BA194219C1D5B3005F91BE /* jianjuTextField.h */,
+				F5BA194319C1D5B3005F91BE /* jianjuTextField.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -763,6 +786,7 @@
 				F5CE86C119C011BF00A9D14C /* login_btn@2x.png in Resources */,
 				F5CE86C619C011BF00A9D14C /* login_information@2x.png in Resources */,
 				F5CE86B719C011BF00A9D14C /* login_background@2x.png in Resources */,
+				F5BA193E19C173A8005F91BE /* InfoHeaderView.xib in Resources */,
 				F5CE86BF19C011BF00A9D14C /* login_bg_up@2x.png in Resources */,
 				F5CE86C019C011BF00A9D14C /* login_bg_up_pre@2x.png in Resources */,
 			);
@@ -789,7 +813,11 @@
 				F5CE86D219C0162200A9D14C /* HomeController.m in Sources */,
 				F5CE86CF19C012A000A9D14C /* MainViewController.m in Sources */,
 				F56254F219C01C1800809D0B /* MeViewController.m in Sources */,
+				F5BA194419C1D5B3005F91BE /* jianjuTextField.m in Sources */,
+				F5BA194119C18FE6005F91BE /* NameController.m in Sources */,
 				F5CE869B19BFF6C100A9D14C /* LogInController.m in Sources */,
+				F5BA193C19C17394005F91BE /* InfoHeaderView.m in Sources */,
+				F5BA193919C16D4D005F91BE /* UserInfoController.m in Sources */,
 				F5CE869F19BFF9CE00A9D14C /* UIButton+roundButton.m in Sources */,
 				F56254EC19C01BF700809D0B /* FriendsController.m in Sources */,
 				F5CE860A19BFF2AB00A9D14C /* main.m in Sources */,

@@ -16,7 +16,7 @@
     if (self) {
         [self.layer setCornerRadius:10];
         [self.layer setMasksToBounds:YES];
-        self.phoneTextF = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
+        self.phoneTextF = [[jianjuTextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
         [self.phoneTextF setDelegate:self];
 //        [self.phoneTextF setBounds:CGRectMake(0, 0, 270, 50)];
         [self.phoneTextF.layer setCornerRadius:8];
@@ -27,6 +27,7 @@
         [self.phoneTextF setPlaceholder:@"手机号码"];
         [self.phoneTextF setClearButtonMode:UITextFieldViewModeWhileEditing];
         [self addSubview:self.phoneTextF];
+
     }
     return self;
 }

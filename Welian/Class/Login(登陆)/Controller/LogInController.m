@@ -9,9 +9,16 @@
 #import "LogInController.h"
 #import "UIImage+ImageEffects.h"
 #import "loginView.h"
+#import "UserInfoController.h"
+#import "NavViewController.h"
+
+#define KTimes 1;
 
 @interface LogInController () <UITextFieldDelegate>
-
+{
+    __block int timeout;
+    dispatch_source_t _timer;
+}
 @property (nonatomic, strong) loginView *trendView;
 @property (nonatomic, strong) UIImageView *bgblurImage;
 @property (nonatomic, strong) loginView *verificationView;
@@ -20,6 +27,7 @@
 @end
 
 @implementation LogInController
+
 
 - (loginView*)verificationView
 {
@@ -30,10 +38,7 @@
         [self.view addSubview:_verificationView];
         [_verificationView setHidden:YES];
         [_verificationView.nextButton setEnabled:YES];
-//        [_verificationView.nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [_verificationView.nextButton addTarget:self action:@selector(startTime) forControlEvents:UIControlEventTouchUpInside];
-//        [_verificationView.nextButton setTitle:@"提交" forState:UIControlStateNormal];
-
+        [_verificationView.nextButton addTarget:self action:@selector(setVerificationNmb) forControlEvents:UIControlEventTouchUpInside];
     }
     return _verificationView;
 }
@@ -90,11 +95,27 @@
     [super viewDidLoad];
     // 设置按钮图片
     [self setbuttonimage];
-    
+    timeout = KTimes;
     
 }
 
+/**
+ *  发送验证码
+ */
+- (void)setVerificationNmb
+{
+    timeout = KTimes;
+    [self startTime];
+    UserInfoController *userInfoVC = [[UserInfoController alloc] init];
+    [self presentViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC] animated:YES completion:^{
+        
+    }];
+    
+}
 
+/**
+ *  隐藏验证码view，显示电话号码view
+ */
 - (void)hideVerificationViewShowTrendView
 {
     [self.backBut setHidden:YES];
@@ -114,11 +135,55 @@
 
 
 /**
+ *  隐藏验证码view
+ */
+- (void)verificationViewHide
+{
+    [self.backBut setHidden:YES];
+    CGPoint cente = self.verificationView.center;
+    cente.y += 500;
+    [self.verificationView.phoneTextF resignFirstResponder];
+    [UIView animateWithDuration:0.4 animations:^{
+        [self.verificationView setCenter:cente];
+        [self.bgblurImage setHidden:YES];
+    } completion:^(BOOL finished) {
+        [self.verificationView setHidden:YES];
+        [self.verificationView setCenter:CGPointMake(self.view.center.x, -90)];
+    }];
+}
+
+/**
+ *  显示验证码输入
+ */
+- (void)verificationViewshow
+{
+    [self.bgblurImage setHidden:NO];
+    [self.verificationView setHidden:NO];
+    [self.verificationView.tsLabel setText:@"我们已将验证码发至：13173698687 请输入您收到的验证码"];
+    [self.verificationView.phoneTextF becomeFirstResponder];
+    CGPoint cente = CGPointMake(self.view.center.x, -90);
+    cente.y += 250;
+    [self.view bringSubviewToFront:self.verificationView];
+    [UIView animateWithDuration:0.4 animations:^{
+        [self.verificationView setCenter:cente];
+        
+    } completion:^(BOOL finished) {
+        //        [self.bgblurImage setUserInteractionEnabled:NO];
+        [self.backBut setHidden:NO];
+        [self.view bringSubviewToFront:self.backBut];
+    }];
+    
+    [self startTime];
+    
+}
+
+/**
  *  隐藏手机号输入，显示验证码输入
  */
 - (void)nextClick
 {
     if (_trendView.phoneTextF.text) {
+        [[NSUserDefaults standardUserDefaults] setObject:_trendView.phoneTextF.text forKey:@"phone"];
         //        [_trendView.tsLabel setText:@"手机号码输入有误，请重新输入"];
         CGPoint cente = self.trendView.center;
         cente.y += 500;
@@ -129,6 +194,7 @@
             [self.trendView setHidden:YES];
             CGPoint cente = CGPointMake(self.view.center.x, -90);
             [self.trendView setCenter:cente];
+            timeout = KTimes;
             [self verificationViewshow];
         }];
     }
@@ -144,7 +210,13 @@
  */
 - (void)tapGestureAction:(UITapGestureRecognizer *)tapges
 {
-    [self trendViewHide];
+    if (!self.trendView.hidden) {
+        [self trendViewHide];
+    }
+    if (!self.verificationView.hidden) {
+        [self verificationViewHide];
+        
+    }
 }
 
 /**
@@ -154,7 +226,7 @@
 {
     [self.trendView.phoneTextF becomeFirstResponder];
     [self.bgblurImage setHidden:NO];
-    [self.bgblurImage setUserInteractionEnabled:YES];
+//    [self.bgblurImage setUserInteractionEnabled:YES];
     [self.trendView setHidden:NO];
     CGPoint cente = CGPointMake(self.view.center.x, -90);
     cente.y += 250;
@@ -206,30 +278,7 @@
  *  @param sender
  */
 - (IBAction)signInClick:(UIButton *)sender {
-}
-
-/**
- *  显示验证码输入
- */
-- (void)verificationViewshow
-{
-    [self.bgblurImage setHidden:NO];
-    [self.verificationView setHidden:NO];
-    [self.verificationView.tsLabel setText:@"我们已将验证码发至：13173698687 请输入您收到的验证码"];
-    [self.verificationView.phoneTextF becomeFirstResponder];
-    CGPoint cente = CGPointMake(self.view.center.x, -90);
-    cente.y += 250;
-    [self.view bringSubviewToFront:self.verificationView];
-    [UIView animateWithDuration:0.4 animations:^{
-        [self.verificationView setCenter:cente];
-        
-    } completion:^(BOOL finished) {
-        [self.bgblurImage setUserInteractionEnabled:NO];
-        [self.backBut setHidden:NO];
-        [self.view bringSubviewToFront:self.backBut];
-    }];
-    
-    [self startTime];
+    [self trendViewShow];
 
 }
 
@@ -240,42 +289,50 @@
  *  @param sender
  */
 - (IBAction)logInClick:(UIButton *)sender {
-
-    [self trendViewShow];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"phone"]) {
+        [self verificationViewshow];
+    }else{
+    
+        [self trendViewShow];
+    }
     
 }
 
 -(void)startTime{
-    __block int timeout=60; //倒计时时间
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
-    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-    dispatch_source_set_event_handler(_timer, ^{
-        if(timeout<=0){ //倒计时结束，关闭
-            dispatch_source_cancel(_timer);
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-                [self.verificationView.nextButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                self.verificationView.nextButton.userInteractionEnabled = YES;
-                [self.verificationView.nextButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            });
-        }else{
-            //            int minutes = timeout / 60;
-//            int seconds = timeout % 60;
-            NSString *strTime = [NSString stringWithFormat:@"%d", timeout];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-                NSLog(@"____%@",strTime);
-                [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateNormal];
-                self.verificationView.nextButton.userInteractionEnabled = NO;
-                [self.verificationView.nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                
-            });
-            timeout--;
-            
-        }
-    });
-    dispatch_resume(_timer);
+    if (timeout< 3)  {
+        return;
+    }else{
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+        dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+        
+        dispatch_source_set_event_handler(_timer, ^{
+            if(timeout<=0){ //倒计时结束，关闭
+                dispatch_source_cancel(_timer);
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    //设置界面的按钮显示 根据自己需求设置
+                    [self.verificationView.nextButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+                    self.verificationView.nextButton.userInteractionEnabled = YES;
+                    [self.verificationView.nextButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                });
+            }else{
+                //            int minutes = timeout / 60;
+                //            int seconds = timeout % 60;
+                NSString *strTime = [NSString stringWithFormat:@"%d", timeout];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    //设置界面的按钮显示 根据自己需求设置
+                    NSLog(@"____%@",strTime);
+                    [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateNormal];
+                    self.verificationView.nextButton.userInteractionEnabled = NO;
+                    [self.verificationView.nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    
+                });
+                timeout--;
+            }
+        });
+        dispatch_resume(_timer);
+    }
+//    timeout=60; //倒计时时间
     
 }
 

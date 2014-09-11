@@ -17,13 +17,11 @@
 + (void)initialize
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
-    [navBar setBarTintColor:[UIColor blueColor]];
+    [navBar setBarTintColor:[UIColor colorWithRed:8/255.0 green:61/255.0 blue:84/255.0 alpha:0.8]];
     [navBar setTintColor:[UIColor whiteColor]];
     // 3.设置文字样式
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
     attrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    //    attrs[UITextAttributeTextShadowOffset] = [NSValue valueWithUIOffset:UIOffsetMake(0, 0)];
-    //    attrs[UITextAttributeFont] = [UIFont systemFontOfSize:20];
     [navBar setTitleTextAttributes:attrs];
     
     // 4.设置导航栏按钮的主题
