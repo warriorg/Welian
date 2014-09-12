@@ -7,6 +7,8 @@
 //
 
 #import "HomeController.h"
+#import "PublishStatusController.h"
+#import "NavViewController.h"
 
 @interface HomeController ()
 
@@ -18,8 +20,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
 
 }
+
+#pragma mark - 发表状态
+- (void)publishStatus
+{
+    PublishStatusController *publishVC = [[PublishStatusController alloc] init];
+    [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+        
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

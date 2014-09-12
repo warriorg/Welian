@@ -18,7 +18,7 @@
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
     [navBar setBarTintColor:[UIColor colorWithRed:8/255.0 green:61/255.0 blue:84/255.0 alpha:0.8]];
-    [navBar setTintColor:[UIColor whiteColor]];
+//    [navBar setTintColor:KBasesColor];
     // 3.设置文字样式
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
     attrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
@@ -26,16 +26,16 @@
     
     // 4.设置导航栏按钮的主题
     UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+    [barItem setTintColor:[UIColor whiteColor]];
+
     NSMutableDictionary *disableAttrs = [NSMutableDictionary dictionary];
-    disableAttrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    disableAttrs[NSForegroundColorAttributeName] = [UIColor grayColor];
     [barItem setTitleTextAttributes:disableAttrs forState:UIControlStateDisabled];
-    // 6.设置按钮的文字样式
+    
     NSMutableDictionary *itemAttrs = [NSMutableDictionary dictionary];
     itemAttrs[NSForegroundColorAttributeName] =[UIColor whiteColor];
-    //    itemAttrs[UITextAttributeTextShadowOffset] = [NSValue valueWithUIOffset:UIOffsetMake(0, 0)];
     [barItem setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
-    [barItem setTitleTextAttributes:itemAttrs forState:UIControlStateHighlighted];
-    
+
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated

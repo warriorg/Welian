@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface InfoHeaderView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *pictureBut;
 
 @end

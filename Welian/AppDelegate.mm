@@ -38,14 +38,14 @@ BMKMapManager* _mapManager;
     /**
      *  未登陆
      */
-    LogInController *loginVC = [[LogInController alloc] init];
-    [self.window setRootViewController:loginVC];
+//    LogInController *loginVC = [[LogInController alloc] init];
+//    [self.window setRootViewController:loginVC];
     
     /**
      *  已登陆
      */
-//    MainViewController *mainVC = [[MainViewController alloc] init];
-//    [self.window setRootViewController:mainVC];
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    [self.window setRootViewController:mainVC];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

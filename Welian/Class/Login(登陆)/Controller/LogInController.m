@@ -12,13 +12,14 @@
 #import "UserInfoController.h"
 #import "NavViewController.h"
 
-#define KTimes 1;
+#define KTimes 3;
 
 @interface LogInController () <UITextFieldDelegate>
 {
     __block int timeout;
     dispatch_source_t _timer;
 }
+@property (strong, nonatomic)  UITextField *phoneTextF;
 @property (nonatomic, strong) loginView *trendView;
 @property (nonatomic, strong) UIImageView *bgblurImage;
 @property (nonatomic, strong) loginView *verificationView;
@@ -53,6 +54,17 @@
         [self.view addSubview:_trendView];
         [_trendView setHidden:YES];
         [_trendView.nextButton addTarget:self action:@selector(nextClick) forControlEvents:UIControlEventTouchUpInside];
+        self.phoneTextF = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
+        [self.phoneTextF setDelegate:self];
+        //        [self.phoneTextF setBounds:CGRectMake(0, 0, 270, 50)];
+        [self.phoneTextF.layer setCornerRadius:8];
+        [self.phoneTextF setKeyboardType:UIKeyboardTypePhonePad];
+        [self.phoneTextF.layer setMasksToBounds:YES];
+        [self.phoneTextF setFont:[UIFont systemFontOfSize:20]];
+        [self.phoneTextF setBackgroundColor:[UIColor lightGrayColor]];
+        [self.phoneTextF setPlaceholder:@"手机号码"];
+        [self.phoneTextF setClearButtonMode:UITextFieldViewModeWhileEditing];
+        [_trendView addSubview:self.phoneTextF];
         
     }
     return _trendView;
@@ -82,7 +94,7 @@
     if (_backBut == nil) {
         _backBut = [[UIButton alloc] initWithFrame:CGRectMake(20, 30, 50, 30)];
         [_backBut setTitle:@"返回" forState:UIControlStateNormal];
-        [_backBut setBackgroundColor:[UIColor redColor]];
+//        [_backBut setBackgroundColor:[UIColor redColor]];
         [_backBut addTarget:self action:@selector(hideVerificationViewShowTrendView) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_backBut];
         [_backBut setHidden:YES];
@@ -107,9 +119,10 @@
     timeout = KTimes;
     [self startTime];
     UserInfoController *userInfoVC = [[UserInfoController alloc] init];
-    [self presentViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC] animated:YES completion:^{
-        
-    }];
+    [self.view.window setRootViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC]];
+//    [self presentViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC] animated:YES completion:^{
+    
+//    }];
     
 }
 
@@ -121,7 +134,7 @@
     [self.backBut setHidden:YES];
     CGPoint cente = self.verificationView.center;
     cente.y += 500;
-    [self.verificationView.phoneTextF resignFirstResponder];
+//    [self.verificationView.phoneTextF resignFirstResponder];
     [UIView animateWithDuration:0.4 animations:^{
         [self.verificationView setCenter:cente];
 
@@ -142,7 +155,7 @@
     [self.backBut setHidden:YES];
     CGPoint cente = self.verificationView.center;
     cente.y += 500;
-    [self.verificationView.phoneTextF resignFirstResponder];
+//    [self.verificationView.phoneTextF resignFirstResponder];
     [UIView animateWithDuration:0.4 animations:^{
         [self.verificationView setCenter:cente];
         [self.bgblurImage setHidden:YES];
@@ -160,7 +173,7 @@
     [self.bgblurImage setHidden:NO];
     [self.verificationView setHidden:NO];
     [self.verificationView.tsLabel setText:@"我们已将验证码发至：13173698687 请输入您收到的验证码"];
-    [self.verificationView.phoneTextF becomeFirstResponder];
+//    [self.verificationView.phoneTextF becomeFirstResponder];
     CGPoint cente = CGPointMake(self.view.center.x, -90);
     cente.y += 250;
     [self.view bringSubviewToFront:self.verificationView];
@@ -182,12 +195,12 @@
  */
 - (void)nextClick
 {
-    if (_trendView.phoneTextF.text) {
-        [[NSUserDefaults standardUserDefaults] setObject:_trendView.phoneTextF.text forKey:@"phone"];
+    if (self.phoneTextF.text) {
+        [[NSUserDefaults standardUserDefaults] setObject:self.phoneTextF.text forKey:@"phone"];
         //        [_trendView.tsLabel setText:@"手机号码输入有误，请重新输入"];
         CGPoint cente = self.trendView.center;
         cente.y += 500;
-        [self.trendView.phoneTextF resignFirstResponder];
+        [self.phoneTextF resignFirstResponder];
         [UIView animateWithDuration:0.4 animations:^{
             [self.trendView setCenter:cente];
         } completion:^(BOOL finished) {
@@ -224,7 +237,7 @@
  */
 - (void)trendViewShow
 {
-    [self.trendView.phoneTextF becomeFirstResponder];
+    [self.phoneTextF becomeFirstResponder];
     [self.bgblurImage setHidden:NO];
 //    [self.bgblurImage setUserInteractionEnabled:YES];
     [self.trendView setHidden:NO];
@@ -246,7 +259,7 @@
 {
     CGPoint cente = self.trendView.center;
     cente.y += 500;
-    [self.trendView.phoneTextF resignFirstResponder];
+    [self.phoneTextF resignFirstResponder];
     [UIView animateWithDuration:0.4 animations:^{
         [self.trendView setCenter:cente];
         [self.bgblurImage setHidden:YES];
@@ -335,6 +348,28 @@
 //    timeout=60; //倒计时时间
     
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //    [self aaa:textField];
+    if (range.location==0&&string.length) {
+        [self.trendView.nextButton setEnabled:YES];
+    }
+    if (range.location==0&&string.length==0) {
+        [self.trendView.nextButton setEnabled:NO];
+    }
+    if (range.location==11) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    [self.trendView.nextButton setEnabled:NO];
+    return YES;
+}
+
 
 
 @end

@@ -9,8 +9,9 @@
 #import "UserInfoController.h"
 #import "InfoHeaderView.h"
 #import "NameController.h"
+#import "MainViewController.h"
 
-@interface UserInfoController () <UITableViewDelegate,UITableViewDataSource>
+@interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) InfoHeaderView *infoHeader;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
@@ -23,6 +24,7 @@
     if (nil == _infoHeader) {
         
         _infoHeader = [[[NSBundle mainBundle] loadNibNamed:@"InfoHeaderView" owner:self options:nil] lastObject];
+        [_infoHeader.pictureBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
     }
     return _infoHeader;
 }
@@ -43,8 +45,75 @@
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"加入weLian"];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
     self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
     [self.view addSubview:self.tableView];
+}
+
+#pragma mark - 保存并登陆
+- (void)saveAndLogin
+{
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    [self.view.window setRootViewController:mainVC];
+}
+
+
+#pragma mark - 选取头像照片
+- (void)choosePicture
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    [imagePicker setAllowsEditing:YES];
+    if (buttonIndex==0) { //拍照
+        // 判断相机可以使用
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        }else {
+            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
+            return;
+        }
+        [self presentViewController:imagePicker animated:YES completion:^{
+            
+        }];
+
+        
+    }else if(buttonIndex ==1) {  // 从相册选择
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            
+        }else {
+            [[[UIAlertView alloc] initWithTitle:nil message:@"相册不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
+            return;
+        }
+        [self presentViewController:imagePicker animated:YES completion:^{
+            
+        }];
+
+    }
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    //image就是你选取的照片
+    UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
+    [self.infoHeader.pictureBut setImage:image forState:UIWindowLevelNormal];
+    [self.infoHeader.pictureBut.layer setCornerRadius:self.infoHeader.pictureBut.bounds.size.width*0.5];
+    [self.infoHeader.pictureBut.layer setMasksToBounds:YES];
+    [self.infoHeader.pictureBut.layer setBorderWidth:2];
+    [self.infoHeader.pictureBut.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+    
 }
 
 
@@ -107,6 +176,7 @@
         [nameVC setUserInfoStr:self.dataDic[@"职务"]];
         [self.navigationController pushViewController:nameVC animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -116,15 +186,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
