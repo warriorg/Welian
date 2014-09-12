@@ -151,6 +151,9 @@
 		F57909EA19C2E40C009DB1B2 /* list_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909DB19C2E40C009DB1B2 /* list_selected@2x.png */; };
 		F57909EB19C2E40C009DB1B2 /* navbar_mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909DC19C2E40C009DB1B2 /* navbar_mail@2x.png */; };
 		F57909EE19C2E9C3009DB1B2 /* PublishStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57909ED19C2E9C3009DB1B2 /* PublishStatusController.m */; };
+		F5790A3D19C323E5009DB1B2 /* AuthCodeTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F5790A3C19C323E5009DB1B2 /* AuthCodeTextField.m */; };
+		F5790A4319C32BD8009DB1B2 /* AuthCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5790A4219C32BD8009DB1B2 /* AuthCodeView.m */; };
+		F5790A4519C32BEA009DB1B2 /* AuthCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5790A4419C32BEA009DB1B2 /* AuthCodeView.xib */; };
 		F5BA193919C16D4D005F91BE /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193819C16D4D005F91BE /* UserInfoController.m */; };
 		F5BA193C19C17394005F91BE /* InfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193B19C17394005F91BE /* InfoHeaderView.m */; };
 		F5BA193E19C173A8005F91BE /* InfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */; };
@@ -367,6 +370,11 @@
 		F57909DC19C2E40C009DB1B2 /* navbar_mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_mail@2x.png"; sourceTree = "<group>"; };
 		F57909EC19C2E9C3009DB1B2 /* PublishStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishStatusController.h; sourceTree = "<group>"; };
 		F57909ED19C2E9C3009DB1B2 /* PublishStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishStatusController.m; sourceTree = "<group>"; };
+		F5790A3B19C323E5009DB1B2 /* AuthCodeTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthCodeTextField.h; sourceTree = "<group>"; };
+		F5790A3C19C323E5009DB1B2 /* AuthCodeTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCodeTextField.m; sourceTree = "<group>"; };
+		F5790A4119C32BD8009DB1B2 /* AuthCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthCodeView.h; sourceTree = "<group>"; };
+		F5790A4219C32BD8009DB1B2 /* AuthCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCodeView.m; sourceTree = "<group>"; };
+		F5790A4419C32BEA009DB1B2 /* AuthCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthCodeView.xib; sourceTree = "<group>"; };
 		F5BA193719C16D4D005F91BE /* UserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoController.h; sourceTree = "<group>"; };
 		F5BA193819C16D4D005F91BE /* UserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoController.m; sourceTree = "<group>"; };
 		F5BA193A19C17394005F91BE /* InfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoHeaderView.h; sourceTree = "<group>"; };
@@ -1084,9 +1092,14 @@
 				F56254F619C0307700809D0B /* loginView.h */,
 				F56254F719C0307700809D0B /* loginView.m */,
 				F56254F919C0309200809D0B /* loginView.xib */,
+				F5790A4119C32BD8009DB1B2 /* AuthCodeView.h */,
+				F5790A4219C32BD8009DB1B2 /* AuthCodeView.m */,
+				F5790A4419C32BEA009DB1B2 /* AuthCodeView.xib */,
 				F5BA193A19C17394005F91BE /* InfoHeaderView.h */,
 				F5BA193B19C17394005F91BE /* InfoHeaderView.m */,
 				F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */,
+				F5790A3B19C323E5009DB1B2 /* AuthCodeTextField.h */,
+				F5790A3C19C323E5009DB1B2 /* AuthCodeTextField.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1344,6 +1357,7 @@
 				F579095419C2C523009DB1B2 /* me_mywriten_good@2x.png in Resources */,
 				F57909E419C2E40C009DB1B2 /* discovery_circle@2x.png in Resources */,
 				F579093F19C2C523009DB1B2 /* me_myactivity_time@2x.png in Resources */,
+				F5790A4519C32BEA009DB1B2 /* AuthCodeView.xib in Resources */,
 				F579095119C2C523009DB1B2 /* me_myfriend_star_s@2x.png in Resources */,
 				F579094B19C2C523009DB1B2 /* me_myfriend_add_right_bg@2x.png in Resources */,
 				F57909C719C2E3F2009DB1B2 /* tabbar_a@2x.png in Resources */,
@@ -1392,6 +1406,8 @@
 				F5BA193C19C17394005F91BE /* InfoHeaderView.m in Sources */,
 				F5BA193919C16D4D005F91BE /* UserInfoController.m in Sources */,
 				F5CE869F19BFF9CE00A9D14C /* UIButton+roundButton.m in Sources */,
+				F5790A3D19C323E5009DB1B2 /* AuthCodeTextField.m in Sources */,
+				F5790A4319C32BD8009DB1B2 /* AuthCodeView.m in Sources */,
 				F56254EC19C01BF700809D0B /* FriendsController.m in Sources */,
 				F5CE860A19BFF2AB00A9D14C /* main.m in Sources */,
 				F56254F819C0307700809D0B /* loginView.m in Sources */,

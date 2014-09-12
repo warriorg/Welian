@@ -11,6 +11,7 @@
 #import "loginView.h"
 #import "UserInfoController.h"
 #import "NavViewController.h"
+#import "AuthCodeView.h"
 
 #define KTimes 3;
 
@@ -19,10 +20,9 @@
     __block int timeout;
     dispatch_source_t _timer;
 }
-@property (strong, nonatomic)  UITextField *phoneTextF;
 @property (nonatomic, strong) loginView *trendView;
 @property (nonatomic, strong) UIImageView *bgblurImage;
-@property (nonatomic, strong) loginView *verificationView;
+@property (nonatomic, strong) AuthCodeView *verificationView;
 @property (nonatomic, strong)  UIButton *backBut;
 
 @end
@@ -30,10 +30,10 @@
 @implementation LogInController
 
 
-- (loginView*)verificationView
+- (AuthCodeView*)verificationView
 {
     if (_verificationView == nil) {
-        _verificationView = [[[NSBundle mainBundle] loadNibNamed:@"loginView" owner:self options:nil] lastObject];
+        _verificationView = [[[NSBundle mainBundle] loadNibNamed:@"AuthCodeView" owner:self options:nil] lastObject];
         CGPoint cente = CGPointMake(self.view.center.x, -90);
         [_verificationView setCenter:cente];
         [self.view addSubview:_verificationView];
@@ -54,18 +54,6 @@
         [self.view addSubview:_trendView];
         [_trendView setHidden:YES];
         [_trendView.nextButton addTarget:self action:@selector(nextClick) forControlEvents:UIControlEventTouchUpInside];
-        self.phoneTextF = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
-        [self.phoneTextF setDelegate:self];
-        //        [self.phoneTextF setBounds:CGRectMake(0, 0, 270, 50)];
-        [self.phoneTextF.layer setCornerRadius:8];
-        [self.phoneTextF setKeyboardType:UIKeyboardTypePhonePad];
-        [self.phoneTextF.layer setMasksToBounds:YES];
-        [self.phoneTextF setFont:[UIFont systemFontOfSize:20]];
-        [self.phoneTextF setBackgroundColor:[UIColor lightGrayColor]];
-        [self.phoneTextF setPlaceholder:@"手机号码"];
-        [self.phoneTextF setClearButtonMode:UITextFieldViewModeWhileEditing];
-        [_trendView addSubview:self.phoneTextF];
-        
     }
     return _trendView;
 }
@@ -173,13 +161,13 @@
     [self.bgblurImage setHidden:NO];
     [self.verificationView setHidden:NO];
     [self.verificationView.tsLabel setText:@"我们已将验证码发至：13173698687 请输入您收到的验证码"];
-//    [self.verificationView.phoneTextF becomeFirstResponder];
+    [self.verificationView.authTextF becomeFirstResponder];
     CGPoint cente = CGPointMake(self.view.center.x, -90);
     cente.y += 250;
     [self.view bringSubviewToFront:self.verificationView];
     [UIView animateWithDuration:0.4 animations:^{
         [self.verificationView setCenter:cente];
-        
+
     } completion:^(BOOL finished) {
         //        [self.bgblurImage setUserInteractionEnabled:NO];
         [self.backBut setHidden:NO];
@@ -195,12 +183,11 @@
  */
 - (void)nextClick
 {
-    if (self.phoneTextF.text) {
-        [[NSUserDefaults standardUserDefaults] setObject:self.phoneTextF.text forKey:@"phone"];
+    if (self.trendView.phoneTextF.text) {
+        [[NSUserDefaults standardUserDefaults] setObject:self.trendView.phoneTextF.text forKey:@"phone"];
         //        [_trendView.tsLabel setText:@"手机号码输入有误，请重新输入"];
         CGPoint cente = self.trendView.center;
         cente.y += 500;
-        [self.phoneTextF resignFirstResponder];
         [UIView animateWithDuration:0.4 animations:^{
             [self.trendView setCenter:cente];
         } completion:^(BOOL finished) {
@@ -223,6 +210,7 @@
  */
 - (void)tapGestureAction:(UITapGestureRecognizer *)tapges
 {
+    [self.view endEditing:YES];
     if (!self.trendView.hidden) {
         [self trendViewHide];
     }
@@ -237,7 +225,7 @@
  */
 - (void)trendViewShow
 {
-    [self.phoneTextF becomeFirstResponder];
+    [self.trendView.phoneTextF becomeFirstResponder];
     [self.bgblurImage setHidden:NO];
 //    [self.bgblurImage setUserInteractionEnabled:YES];
     [self.trendView setHidden:NO];
@@ -259,7 +247,7 @@
 {
     CGPoint cente = self.trendView.center;
     cente.y += 500;
-    [self.phoneTextF resignFirstResponder];
+    [self.trendView.phoneTextF resignFirstResponder];
     [UIView animateWithDuration:0.4 animations:^{
         [self.trendView setCenter:cente];
         [self.bgblurImage setHidden:YES];
@@ -345,30 +333,9 @@
         });
         dispatch_resume(_timer);
     }
-//    timeout=60; //倒计时时间
-    
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    //    [self aaa:textField];
-    if (range.location==0&&string.length) {
-        [self.trendView.nextButton setEnabled:YES];
-    }
-    if (range.location==0&&string.length==0) {
-        [self.trendView.nextButton setEnabled:NO];
-    }
-    if (range.location==11) {
-        return NO;
-    }
-    return YES;
-}
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    [self.trendView.nextButton setEnabled:NO];
-    return YES;
-}
 
 
 

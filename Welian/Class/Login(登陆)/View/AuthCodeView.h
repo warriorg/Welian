@@ -1,17 +1,18 @@
 //
-//  loginView.h
+//  AuthCodeView.h
 //  Welian
 //
-//  Created by dong on 14-9-10.
+//  Created by dong on 14-9-12.
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-//#import "jianjuTextField.h"
+#import "AuthCodeTextField.h"
 
-@interface loginView : UIView <UITextFieldDelegate>
+@interface AuthCodeView : UIView <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tsLabel;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-@property (strong, nonatomic)  UITextField *phoneTextF;
+
+@property (nonatomic, strong) AuthCodeTextField *authTextF;
 
 @end
