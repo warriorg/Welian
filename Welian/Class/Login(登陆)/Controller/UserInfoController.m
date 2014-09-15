@@ -53,6 +53,7 @@
 #pragma mark - 保存并登陆
 - (void)saveAndLogin
 {
+    [UserDefaults setObject:UIImageJPEGRepresentation(self.infoHeader.pictureBut.imageView.image, 0.5) forKey:UserIconImage];
     MainViewController *mainVC = [[MainViewController alloc] init];
     [self.view.window setRootViewController:mainVC];
 }

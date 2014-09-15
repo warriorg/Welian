@@ -31,10 +31,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 
-//#define VIEW_BACKGROUND [self.view setBackgroundColor:[UIColor colorWithRed:240.f/255 green:236.f/255 blue:217.f/255 alpha:1.0]];
+#define UserDefaults [NSUserDefaults standardUserDefaults]
 
-//A better version of NSLog
-
+#define UserIconImage @"UserIconImage"
 
 //当前系统版本
 #define isIOS6 [[UIDevice currentDevice].systemVersion intValue]==6?1:0

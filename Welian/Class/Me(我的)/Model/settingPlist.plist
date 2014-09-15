@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string></string>
+			<key>title</key>
+			<string>给weLian点赞</string>
+			<key>content</key>
+			<string></string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>title</key>
+			<string>新消息提醒</string>
+			<key>content</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>row</key>
+			<string>1</string>
+			<key>title</key>
+			<string>手机号</string>
+			<key>content</key>
+			<string></string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>title</key>
+			<string>关于weLian</string>
+			<key>content</key>
+			<string></string>
+		</dict>
+	</array>
+</array>
+</plist>

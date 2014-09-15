@@ -57,7 +57,8 @@
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveInfo:)];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+    [self.navigationItem.rightBarButtonItem setEnabled:self.userInfoStr.length];
     [self.view addSubview:self.tableView];
 }
 
