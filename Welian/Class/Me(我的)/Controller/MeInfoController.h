@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicTableViewController.h"
 
-@interface MeInfoController : UITableViewController
+@interface MeInfoController : BasicTableViewController
 
 @end

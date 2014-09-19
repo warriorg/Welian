@@ -10,9 +10,8 @@
 #import "NavViewController.h"
 #import "AddWorkOrEducationController.h"
 
-@interface WorksListController () <UITableViewDataSource,UITableViewDelegate>
+@interface WorksListController ()
 @property (nonatomic, strong) NSMutableArray *dataArray;
-@property (nonatomic, strong) UITableView *tableView;
 @end
 
 @implementation WorksListController
@@ -45,22 +44,17 @@
     if (self.dataArray.count==0) {
 
     }else {
-        self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        [self.tableView setDataSource:self];
-        [self.tableView setDelegate:self];
-        [self.tableView setSectionHeaderHeight:15.0];
-        [self.tableView setSectionFooterHeight:0.0];
         [self.tableView setRowHeight:60.0];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-        [self.view addSubview:self.tableView];
     }
 }
 
-#pragma mark - tableView代理
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 15.0;
+    return 60.0;
 }
+
+#pragma mark - tableView代理
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

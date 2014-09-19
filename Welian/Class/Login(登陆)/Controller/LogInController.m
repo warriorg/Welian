@@ -64,6 +64,7 @@
 {
     if (nil == _bgblurImage) {
         UIImage *background = [UIImage blurredSnapshot:self.view];
+//        UIImage *background = [UIImage imageNamed:@"login_bg_big"];
         _bgblurImage = [[UIImageView alloc] initWithImage:background];
         [_bgblurImage setUserInteractionEnabled:YES];
     
@@ -336,6 +337,16 @@
 }
 
 
+//- (void)dealloc
+//{
+//    for (UIView *vie in self.view.subviews) {
+//
+//        [vie removeFromSuperview];
+//    }
+//    _trendView = nil;
+//    _bgblurImage = nil;
+//    _verificationView = nil;
+//}
 
 
 

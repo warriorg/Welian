@@ -11,12 +11,13 @@
 #import "MeSttingCell.h"
 #import "MeInfoController.h"
 #import "SettingController.h"
+#import "CertificationController.h"
+#import "MyLocationController.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_data;
 }
-@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -26,8 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // 1.搭建UI界面
-    [self buildUI];
     
     // 2.读取plist文件的内容
     [self loadPlist];
@@ -35,18 +34,6 @@
     // 3.设置tableView属性
 //    [self buildTableView];
     
-}
-
-#pragma mark 搭建UI界面
-- (void)buildUI
-{
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-    // 2.设置tableView每组头部的高度
-    self.tableView.sectionHeaderHeight = 15;
-    self.tableView.sectionFooterHeight = 0;
-    [self.view addSubview:self.tableView];
 }
 
 
@@ -94,14 +81,9 @@
     if (indexPath.section==0) {
         return 60;
     }
-    return 47;
+    return KTableRowH;
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 15.0;
-}
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -115,6 +97,11 @@
     if (indexPath.section==0) {
         controller = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
         [controller setTitle:@"个人信息"];
+    }else if (indexPath.section==1){
+        controller = [[MyLocationController alloc] init];
+    }else if (indexPath.section==2){
+        controller = [[CertificationController alloc] init];
+        
     }else if (indexPath.section == 3){
         controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }

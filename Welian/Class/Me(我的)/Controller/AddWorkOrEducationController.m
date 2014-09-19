@@ -65,7 +65,6 @@
         [self.dataDicM setObject:@"" forKey:@"离职时间"];
         [self.dataDicM setObject:@"" forKey:@"入职时间"];
         [self.dataDicM setObject:@"" forKey:@"公司名称"];
-        [self.tableView setSectionFooterHeight:0.0];
         [self.tableView setSectionHeaderHeight:30.0];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         UILabel *teseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
@@ -165,11 +164,6 @@
         [companyName setUserInfoStr:self.dataDicM[@"公司名称"]];
         [self.navigationController pushViewController:companyName animated:YES];
     }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.view endEditing:YES];
 }
 
 -(void)dateChanged:(UIDatePicker *)sender{

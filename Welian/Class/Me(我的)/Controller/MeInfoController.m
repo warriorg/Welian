@@ -34,9 +34,7 @@
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         [self loadPlist];
-        // 2.设置tableView每组头部的高度
-        self.tableView.sectionHeaderHeight = 15;
-        self.tableView.sectionFooterHeight = 0;
+        // 2.设置tableView分割线
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
     return self;
@@ -108,13 +106,7 @@
     if (indexPath.section==0) {
         return 60;
     }
-    return 47;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 15.0;
+    return KTableRowH;
 }
 
 

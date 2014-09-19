@@ -31,6 +31,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 
+#define WLHttpServer  @"192.168.118.5:80"
+
+#define KTableHeaderHeight 15.0
+#define KTableRowH 47.0
+
+#define KAddressBook @"AddressBok"
+
 #define UserDefaults [NSUserDefaults standardUserDefaults]
 
 #define UserIconImage @"UserIconImage"
@@ -40,21 +47,5 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 主色透明效果
 #define KBasesColor [UIColor colorWithRed:8/255.0 green:61/255.0 blue:84/255.0 alpha:0.8]
-
-//切换内外网，0表示内网，1表示外网
-#ifndef SERVER_TYPE
-#define SERVER_TYPE 1
-#endif
-
-//测试服务器
-#if SERVER_TYPE == 0
-static NSString *const SendIFServer = @"http://192.168.0.193:8080";
-//static NSString *const SendIFServer = @"http://192.168.0.5:8386";
-
-//正式服务器
-#elif SERVER_TYPE == 1
-static NSString *const SendIFServer = @"http://115.236.71.155:18386";
-#endif
-
 
 #endif

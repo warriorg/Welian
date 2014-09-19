@@ -6,8 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
-@interface SettingController : UITableViewController
+#import "BasicTableViewController.h"
+
+@interface SettingController : BasicTableViewController
 
 @end

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string></string>
+			<key>name</key>
+			<string>项目Logo</string>
+			<key>icon</key>
+			<string></string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>name</key>
+			<string>创业项目</string>
+			<key>icon</key>
+			<string>me_mail.png</string>
+		</dict>
+		<dict>
+			<key>row</key>
+			<string>1</string>
+			<key>name</key>
+			<string>项目领域</string>
+			<key>icon</key>
+			<string>me_write.png</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>name</key>
+			<string>项目介绍</string>
+			<key>icon</key>
+			<string>me_yes.png</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>name</key>
+			<string>项目网址</string>
+			<key>icon</key>
+			<string>me_setting.png</string>
+		</dict>
+	</array>
+</array>
+</plist>

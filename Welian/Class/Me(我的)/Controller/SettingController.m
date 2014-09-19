@@ -33,9 +33,7 @@
     if (self) {
         [self loadPlist];
         
-        // 2.设置tableView每组头部的高度
-        self.tableView.sectionHeaderHeight = 15;
-        self.tableView.sectionFooterHeight = 0;
+        // 2.设置tableView
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         // 3.要在tableView底部添加一个按钮
         UIButton *logout = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -60,11 +58,6 @@
         return 15;
     }
     return 0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 15.0;
 }
 
 
@@ -120,13 +113,6 @@
     [cell.detailTextLabel setText:dict[@"content"]];
     
     return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-    return 47;
 }
 
 
