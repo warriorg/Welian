@@ -7,13 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WLHttpTool.h"
+#import "UserInfoTool.h"
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
 
 
 //iphone5适配
-#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+// 1.判断是否为iPhone5的宏
+#define iPhone5 ([UIScreen mainScreen].bounds.size.height == 568)
+
+#define iPhone4 ([UIScreen mainScreen].bounds.size.height == 480)
+
+#define iPhone6 ([UIScreen mainScreen].bounds.size.height == 480)
+
+//#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 //输出详细log,显示方法及所在的行数
 // 2.日志输出宏定义
@@ -30,8 +39,22 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 发布状态
 #define DLog(...)
 #endif
+// 服务器地址
+#define WLHttpServer  @"http://192.168.118.14:80"
 
-#define WLHttpServer  @"192.168.118.5:80"
+#define ww @"http://192.168.1.191:80"
+
+// 百度地图key
+#define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
+
+
+// 文件路径
+#define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
+
+
+#define SuperSize self.view.bounds.size
+#define INPUT_HEIGHT 64.0f
+
 
 #define KTableHeaderHeight 15.0
 #define KTableRowH 47.0

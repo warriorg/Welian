@@ -16,6 +16,7 @@
     if (self) {
         [self.layer setCornerRadius:10];
         [self.layer setMasksToBounds:YES];
+        [self setBackgroundColor:[UIColor lightGrayColor]];
         self.tintColor = [UIColor clearColor];
         [self setKeyboardType:UIKeyboardTypeNumberPad];
         [self setTextColor:[UIColor clearColor]];
@@ -34,7 +35,8 @@
 {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     [label setTextAlignment:NSTextAlignmentCenter];
-    [label setBackgroundColor:[UIColor lightGrayColor]];
+    [label setBackgroundColor:[UIColor lightTextColor]];
+    [label setTextColor:KBasesColor];
     [label setFont:[UIFont boldSystemFontOfSize:25]];
     [self addSubview:label];
     return label;

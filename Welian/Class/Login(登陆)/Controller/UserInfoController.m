@@ -10,8 +10,12 @@
 #import "InfoHeaderView.h"
 #import "NameController.h"
 #import "MainViewController.h"
+#import "WLHUDView.h"
 
 @interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+{
+    NSString *avatar;
+}
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) InfoHeaderView *infoHeader;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
@@ -46,6 +50,7 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"加入weLian"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
+//    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
     [self.view addSubview:self.tableView];
 }
@@ -53,9 +58,44 @@
 #pragma mark - 保存并登陆
 - (void)saveAndLogin
 {
-    [UserDefaults setObject:UIImageJPEGRepresentation(self.infoHeader.pictureBut.imageView.image, 0.5) forKey:UserIconImage];
-    MainViewController *mainVC = [[MainViewController alloc] init];
-    [self.view.window setRootViewController:mainVC];
+    NSString *name = [self.dataDic objectForKey:@"姓名"];
+    NSString *danwei = [self.dataDic objectForKey:@"单位"];
+    NSString *zhiwu = [self.dataDic objectForKey:@"职务"];
+    if (!name.length) {
+        [WLHUDView showErrorHUD:@"姓名不能为空"];
+        return;
+    }
+    if (!danwei.length) {
+        [WLHUDView showErrorHUD:@"单位不能为空"];
+        return;
+    }
+    if (!zhiwu.length) {
+        [WLHUDView showErrorHUD:@"职务不能为空"];
+        return;
+    }
+    if (!avatar) {
+        [WLHUDView showErrorHUD:@"头像不能为空"];
+        return;
+    }
+    UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    [modeinfo setUserName:name];
+    [modeinfo setUserIcon:avatar];
+    [modeinfo setUserIncName:danwei];
+    [modeinfo setUserJob:zhiwu];
+    [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
+    
+    [WLHttpTool saveProfileAvatarParameterDic:@{@"name":name,@"company":danwei,@"position":zhiwu,@"avatar":avatar,@"avatarname":@"jpg"} success:^(id JSON) {
+        NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
+        if ([datadic objectForKey:@"url"]) {
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            [mode setUserIcon:[datadic objectForKey:@"url"]];
+        }
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [self.view.window setRootViewController:mainVC];
+    } fail:^(NSError *error) {
+        
+    }];
+
 }
 
 
@@ -104,11 +144,15 @@
     
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
+    
+    avatar = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
     [self.infoHeader.pictureBut setImage:image forState:UIWindowLevelNormal];
     [self.infoHeader.pictureBut.layer setCornerRadius:self.infoHeader.pictureBut.bounds.size.width*0.5];
     [self.infoHeader.pictureBut.layer setMasksToBounds:YES];
     [self.infoHeader.pictureBut.layer setBorderWidth:2];
     [self.infoHeader.pictureBut.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+    
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];

@@ -24,7 +24,7 @@
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"PioneerPlist" withExtension:@"plist"];
     self.dataArray = [NSArray arrayWithContentsOfURL:url];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -44, self.view.bounds.size.width, 44)];
     [view setBackgroundColor:[UIColor redColor]];
 //    [self.view addSubview:view];
 //    [self.tableView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];

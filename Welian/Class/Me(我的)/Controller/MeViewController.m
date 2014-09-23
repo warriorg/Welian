@@ -13,6 +13,8 @@
 #import "SettingController.h"
 #import "CertificationController.h"
 #import "MyLocationController.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -67,12 +69,19 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
-    // 1.取出这行对应的字典数据
-    NSDictionary *dict = _data[indexPath.section][indexPath.row];
+    if (indexPath.section==0) {
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:mode.userIcon] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [cell.textLabel setText:mode.userName];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@    %@",mode.userIncName,mode.userJob]];
+    }else{
     
-    // 2.设置文字
-    cell.textLabel.text = dict[@"name"];
-    [cell.imageView setImage:[UIImage imageNamed:dict[@"icon"]]];
+        // 1.取出这行对应的字典数据
+        NSDictionary *dict = _data[indexPath.section][indexPath.row];
+        // 2.设置文字
+        cell.textLabel.text = dict[@"name"];
+        [cell.imageView setImage:[UIImage imageNamed:dict[@"icon"]]];
+    }
     return cell;
 }
 

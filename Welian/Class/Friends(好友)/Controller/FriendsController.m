@@ -7,11 +7,12 @@
 //
 
 #import "FriendsController.h"
-#import "WLTool.h"
-//#import <AddressBook/AddressBook.h>
-//#import <AddressBookUI/AddressBookUI.h>
 
 @interface FriendsController () <UITableViewDelegate,UITableViewDataSource>
+
+{
+    FriendBlock _frienBlock;
+}
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArray;
 
@@ -31,9 +32,25 @@
 
 }
 
+- (instancetype)initWithFrienBlock:(FriendBlock)frienBlock
+{
+    self = [super init];
+    if (self) {
+        _frienBlock = frienBlock;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:UIBarButtonItemStyleBordered target:self action:@selector(saveuser:)];
+    
+    if (self.seleArray==nil) {
+        
+        self.seleArray = [NSMutableArray array];
+    }
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
@@ -61,6 +78,33 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    PeopleAddressBook *peoBook = self.dataArray[indexPath.row];
+    if (self.seleArray.count) {
+        for (PeopleAddressBook *selePeo in self.seleArray) {
+            if (peoBook == selePeo) {
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [self.seleArray removeObject:peoBook];
+            }else{
+                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                [self.seleArray addObject:peoBook];
+            }
+        }
+    }else{
+        [self.seleArray addObject:peoBook];
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }
+    
+}
+
+- (void)saveuser:(UIBarButtonItem*)item
+{
+    _frienBlock(self.seleArray);
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -8,6 +8,7 @@
 
 #import "InvestorController.h"
 
+
 @interface InvestorController () <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -24,12 +25,12 @@
 - (UITableView*)distableView
 {
     if (nil == _distableView) {
-        _distableView =[[UITableView alloc] initWithFrame:CGRectMake(0, 64, 320, self.view.bounds.size.height-64-216) style:UITableViewStylePlain];
+        _distableView =[[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height-64-216) style:UITableViewStylePlain];
         [_distableView setDataSource:self];
         [_distableView setDelegate: self];
         [_distableView setBackgroundColor:[UIColor redColor]];
     }
-
+    
     return _distableView;
 }
 
@@ -46,6 +47,17 @@
 - (void)loadData
 {
     self.disArray = @[@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111"];
+    
+    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    NSInteger uid = [mo.uid integerValue];
+    
+    [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
+        self.dataArray = [NSArray arrayWithArray:JSON];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        
+    }];
+    
 }
 
 
@@ -60,7 +72,7 @@
     self.searchBar = [[UISearchBar alloc] init];
     [self.searchBar setPlaceholder:@"搜索"];
     [self.searchBar setDelegate:self];
-
+    
     [self.tableView setTableHeaderView:self.searchBar];
     [self.searchBar sizeToFit];
     self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
@@ -75,13 +87,13 @@
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
- 
+    
 }
 
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
 {
-[self.view addSubview:self.distableView];
+    [self.view addSubview:self.distableView];
 }
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
 {
@@ -153,6 +165,9 @@
     
     if (tableView == self.distableView) {
         [cell.textLabel setText:self.disArray[indexPath.row]];
+    }else if (tableView == self.tableView){
+        NSDictionary *da = self.dataArray[indexPath.row];
+        [cell.textLabel setText:[NSString stringWithFormat:@"%d",[da objectForKey:@"fid"]]];
     }
     return cell;
 }
@@ -172,14 +187,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

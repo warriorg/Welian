@@ -12,50 +12,56 @@
 #import "FindViewController.h"
 #import "MeViewController.h"
 #import "NavViewController.h"
-#import "BMKLocationService.h"
-#import "BMKGeometry.h"
-#import "BMKGeocodeSearchOption.h"
-#import "BMKGeocodeSearch.h"
+
 //#import "BMKReverseGeoCodeOption.h"
 
-@interface MainViewController () <UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+@interface MainViewController () <UINavigationControllerDelegate>
 {
-    BMKLocationService *_locService;
-
-    BMKReverseGeoCodeOption *_reverseGeoCodeSearchOption;
-    BMKGeoCodeSearch *_geoSearch;
+      
+//    // 地理编码器
+//    CLGeocoder              *_geocoder;
+//    
+//    // 地位器
+//    CLLocationManager       *_locationManager;
 }
 @end
 
 @implementation MainViewController
 
-- (void)loadLocationVC
-{
-    //初始化BMKLocationService
-    _locService = [[BMKLocationService alloc]init];
-    _locService.delegate = self;
-    //启动LocationService
-    [_locService startUserLocationService];
-    
-    //初始化检索对象
-    _geoSearch =[[BMKGeoCodeSearch alloc]init];
-    [_geoSearch setDelegate:self];
-    
-    //发起反向地理编码检索
-    _reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
 
-}
+//- (void)loadddddd
+//{
+//    if ([CLLocationManager locationServicesEnabled]) {
+//        // 1） 实例化定位管理器
+//        if (_locationManager == nil) {
+//            
+//            _locationManager = [[CLLocationManager alloc]init];
+//            
+//            // 2) 设置定位管理器的代理
+//            [_locationManager setDelegate:self];
+//            
+//            // 3) 设置定位管理器的精度
+//            [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+//            
+//            // 4) 开启用户定位功能
+//            [_locationManager startUpdatingLocation];
+//            
+//        }
+//    }
+//
+//}
+//
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+//{
+//    DLog(@"%@",locations);
+//}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([CLLocationManager locationServicesEnabled]) {
-        // 打开定位
-        [self loadLocationVC];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位服务已关闭" message:@"前往“设置”>“隐私”>“定位服务”打开" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+    [[UITextField appearance] setTintColor:KBasesColor];
+    [[UITextView appearance] setTintColor:KBasesColor];
     
     
     // 首页
@@ -99,46 +105,6 @@
 }
 
 
-//处理位置坐标更新
-- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
-{
-    //转换 google地图、soso地图、aliyun地图、mapabc地图和amap地图所用坐标至百度坐标
-//    NSDictionary* testdic = BMKConvertBaiduCoorFrom(userLocation.location.coordinate,BMK_COORDTYPE_COMMON);
-//    //转换GPS坐标至百度坐标
-//    testdic = BMKConvertBaiduCoorFrom(userLocation.location.coordinate,BMK_COORDTYPE_GPS);
-    CGFloat la = userLocation.location.coordinate.latitude;
-    
-    [UserDefaults setObject:[NSString stringWithFormat:@"%f",la] forKey:@"lat"];
-    [UserDefaults setObject:[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude] forKey:@"lon"];
-    
-    
-    
-    _reverseGeoCodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
-    BOOL flag = [_geoSearch reverseGeoCode:_reverseGeoCodeSearchOption];
-    if(flag)
-    {
-//        [_geoSearch setDelegate:nil];
-        DLog(@"反geo检索发送成功");
-    }
-    else
-    {
-        DLog(@"反geo检索发送失败");
-    }
-}
-
-//接收反向地理编码结果
--(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result
-errorCode:(BMKSearchErrorCode)error{
-  if (error == BMK_SEARCH_NO_ERROR) {
-      // 在此处理正常结果
-      [_locService setDelegate:nil];
-      [_geoSearch setDelegate:nil];
-      DLog(@"%@",result.address);
-  }
-  else {
-      DLog(@"抱歉，未找到结果");
-  }
-}
 
 - (void)didReceiveMemoryWarning
 {

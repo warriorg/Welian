@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserInfoModel : NSObject
+@interface UserInfoModel : NSObject <NSCoding>
 /**
  * 用户姓名
  */
@@ -20,7 +20,7 @@
 /**
  *  用户头像
  */
-@property (nonatomic, strong) NSData   *userIcon;
+@property (nonatomic, strong) NSString   *userIcon;
 /**
  *  用户公司
  */
@@ -42,5 +42,13 @@
  */
 @property (nonatomic, strong) NSString *userCity;
 
+/**  密码 验证码   */
+@property (nonatomic, strong) NSString *checkcode;
+
+/**  sessionId   */
+@property (nonatomic, strong) NSString *sessionId;
+
+/**  uid唯一标示   */
+@property (nonatomic, strong) NSString *uid;
 
 @end

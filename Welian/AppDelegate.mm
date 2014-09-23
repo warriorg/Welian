@@ -11,9 +11,9 @@
 #import "MainViewController.h"
 #import "LogInController.h"
 #import "NavViewController.h"
-#import "WLHttpTool.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "AFNetworking.h"
 
 @interface AppDelegate() <BMKGeneralDelegate>
 
@@ -26,19 +26,13 @@ BMKMapManager* _mapManager;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [[WLHttpTool sharedService] reqestApi:@"server/index" parameters:@{} successBlock:^(id JSON) {
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
     // 要使用百度地图，请先启动BaiduMapManager
 	_mapManager = [[BMKMapManager alloc]init];
-	BOOL ret = [_mapManager start:@"cbtkHchgOfETh6dZdWi1rytI" generalDelegate:self];
+	BOOL ret = [_mapManager start:KBMK_Key generalDelegate:self];
 	if (!ret) {
-		NSLog(@"manager start failed!");
+        
 	}
-    
+
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -60,14 +54,14 @@ BMKMapManager* _mapManager;
     /**
      *  未登陆
      */
-    LogInController *loginVC = [[LogInController alloc] init];
-    [self.window setRootViewController:loginVC];
+//    LogInController *loginVC = [[LogInController alloc] init];
+//    [self.window setRootViewController:loginVC];
     
     /**
      *  已登陆
      */
-//    MainViewController *mainVC = [[MainViewController alloc] init];
-//    [self.window setRootViewController:mainVC];
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    [self.window setRootViewController:mainVC];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -94,6 +88,9 @@ BMKMapManager* _mapManager;
         NSLog(@"onGetPermissionState %d",iError);
     }
 }
+
+
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

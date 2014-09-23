@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WLTool.h"
+
+typedef void(^FriendBlock)(NSMutableArray *frienArray);
 
 @interface FriendsController : UIViewController
+
+@property (nonatomic, strong) NSMutableArray *seleArray;
+
+- (instancetype)initWithFrienBlock:(FriendBlock)frienBlock;
 
 @end

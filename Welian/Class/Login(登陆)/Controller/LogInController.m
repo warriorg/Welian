@@ -12,8 +12,10 @@
 #import "UserInfoController.h"
 #import "NavViewController.h"
 #import "AuthCodeView.h"
+#import "NSString+val.h"
+#import "MainViewController.h"
 
-#define KTimes 3;
+#define KTimes 20;
 
 @interface LogInController () <UITextFieldDelegate>
 {
@@ -39,8 +41,11 @@
         [self.view addSubview:_verificationView];
         [_verificationView setHidden:YES];
         [_verificationView.nextButton setEnabled:YES];
-        [_verificationView.nextButton addTarget:self action:@selector(setVerificationNmb) forControlEvents:UIControlEventTouchUpInside];
+        [_verificationView.nextButton addTarget:self action:@selector(setVerificationNmb:) forControlEvents:UIControlEventTouchUpInside];
     }
+    UserInfoModel *userM = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
+    [_verificationView.tsLabel setText:[NSString stringWithFormat:@"我们已将验证码发至：%@ 请输入您收到的验证码",userM.userPhone]];
     return _verificationView;
 }
 
@@ -103,15 +108,50 @@
 /**
  *  发送验证码
  */
-- (void)setVerificationNmb
+- (void)setVerificationNmb:(UIButton *)butt
 {
-    timeout = KTimes;
-    [self startTime];
-    UserInfoController *userInfoVC = [[UserInfoController alloc] init];
-    [self.view.window setRootViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC]];
-//    [self presentViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC] animated:YES completion:^{
-    
-//    }];
+    if ([butt.titleLabel.text isEqualToString:@"提交"]) {
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        if ([mode.checkcode isEqualToString:self.verificationView.authTextF.text]) {
+            [WLHttpTool checkCodeParameterDic:@{@"type":@"checkCode",@"data":@{@"mobile":mode.userPhone,@"code":mode.checkcode}} success:^(id JSON) {
+                if (JSON) {
+                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                    if ([[JSON objectForKey:@"flag"] integerValue]==1) {  // 已注册
+                        
+                        [mode setUserName:[JSON objectForKey:@"name"]];
+                        [mode setUserIncName:[JSON objectForKey:@"company"]];
+                        [mode setUserPhone:[JSON objectForKey:@"mobile"]];
+                        [mode setUserJob:[JSON objectForKey:@"position"]];
+                        [mode setUid:[JSON objectForKey:@"uid"]];
+                        [mode setSessionId:[JSON objectForKey:@"sessionid"]];
+                        [mode setUserIcon:[JSON objectForKey:@"url"]];
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        MainViewController *mainVC = [[MainViewController alloc] init];
+                        [self.view.window setRootViewController:mainVC];
+                    }else {
+                        [mode setSessionId:[JSON objectForKey:@"sessionid"]];
+                        UserInfoController *userInfoVC = [[UserInfoController alloc] init];
+                        [self.view.window setRootViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC]];
+                    }
+                }
+            } fail:^(NSError *error) {
+                
+            }];
+        }else {
+            [[[UIAlertView alloc] initWithTitle:@"提示：验证码错误！" message:nil delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
+            [butt setTitle:@"重新发送" forState:UIControlStateNormal];
+        }
+
+    }else if ([butt.titleLabel.text isEqualToString:@"重新发送"]){
+
+        timeout = KTimes;
+        [self startTime];
+    }
+    [self.verificationView.authTextF setText:nil];
+    [self.verificationView.authTextF.oneLabel setText:nil];
+    [self.verificationView.authTextF.twoLabel setText:nil];
+    [self.verificationView.authTextF.thirdLabel setText:nil];
+    [self.verificationView.authTextF.fourLabel setText:nil];
     
 }
 
@@ -161,7 +201,6 @@
 {
     [self.bgblurImage setHidden:NO];
     [self.verificationView setHidden:NO];
-    [self.verificationView.tsLabel setText:@"我们已将验证码发至：13173698687 请输入您收到的验证码"];
     [self.verificationView.authTextF becomeFirstResponder];
     CGPoint cente = CGPointMake(self.view.center.x, -90);
     cente.y += 250;
@@ -184,9 +223,12 @@
  */
 - (void)nextClick
 {
-    if (self.trendView.phoneTextF.text) {
-        [[NSUserDefaults standardUserDefaults] setObject:self.trendView.phoneTextF.text forKey:@"phone"];
-        //        [_trendView.tsLabel setText:@"手机号码输入有误，请重新输入"];
+    if ([NSString phoneValidate:self.trendView.phoneTextF.text]) {
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        
+        [mode setUserPhone:self.trendView.phoneTextF.text];
+        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+        
         CGPoint cente = self.trendView.center;
         cente.y += 500;
         [UIView animateWithDuration:0.4 animations:^{
@@ -198,6 +240,8 @@
             timeout = KTimes;
             [self verificationViewshow];
         }];
+    }else {
+        [_trendView.tsLabel setText:@"手机号码输入有误，请重新输入"];
     }
 }
 
@@ -291,17 +335,18 @@
  *  @param sender
  */
 - (IBAction)logInClick:(UIButton *)sender {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"phone"]) {
-        [self verificationViewshow];
-    }else{
-    
         [self trendViewShow];
-    }
-    
 }
 
 -(void)startTime{
-    if (timeout< 3)  {
+    
+    [WLHttpTool loginGetCheckCodeParameterDic:@{@"type":@"getCheckCode",@"data":@{@"mobile":self.trendView.phoneTextF.text}} success:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    
+    if (timeout< 20)  {
         return;
     }else{
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -309,24 +354,25 @@
         dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
         
         dispatch_source_set_event_handler(_timer, ^{
+            if (self.verificationView.authTextF.oneLabel.text.length) {
+                timeout = 0;
+            }
             if(timeout<=0){ //倒计时结束，关闭
                 dispatch_source_cancel(_timer);
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     //设置界面的按钮显示 根据自己需求设置
-                    [self.verificationView.nextButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                    self.verificationView.nextButton.userInteractionEnabled = YES;
-                    [self.verificationView.nextButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                    [self.verificationView.nextButton setTitle:@"重新发送" forState:UIControlStateNormal];
+                    [self.verificationView.nextButton setEnabled:YES];
+
                 });
             }else{
-                //            int minutes = timeout / 60;
-                //            int seconds = timeout % 60;
                 NSString *strTime = [NSString stringWithFormat:@"%d", timeout];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     //设置界面的按钮显示 根据自己需求设置
                     NSLog(@"____%@",strTime);
-                    [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateNormal];
-                    self.verificationView.nextButton.userInteractionEnabled = NO;
-                    [self.verificationView.nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateDisabled];
+
+                    [self.verificationView.nextButton setEnabled:NO];
                     
                 });
                 timeout--;

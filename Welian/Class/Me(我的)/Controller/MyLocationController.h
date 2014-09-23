@@ -6,8 +6,13 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "BasicTableViewController.h"
+#import "LocationController.h"
+#import "BMKPoiSearch.h"
 
-@interface MyLocationController : BasicTableViewController
+typedef void(^LocationBlok)(BMKPoiInfo *infoPoi);
+
+@interface MyLocationController : LocationController
+
+- (instancetype)initWithLocationBlock:(LocationBlok)locationBlock;
 
 @end

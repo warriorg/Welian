@@ -97,9 +97,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UserCardController *cardVC = [[UserCardController alloc] init];
-    [self.navigationController pushViewController:cardVC animated:YES];
-    return;
+//    UserCardController *cardVC = [[UserCardController alloc] init];
+//    [self.navigationController pushViewController:cardVC animated:YES];
+//    return;
     InvestorController *investorVC = [[InvestorController alloc] init];
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];

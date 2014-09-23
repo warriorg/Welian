@@ -16,7 +16,6 @@
     if (self) {
         [self.layer setCornerRadius:10];
         [self.layer setMasksToBounds:YES];
-        
         self.authTextF = [[AuthCodeTextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
         [self.authTextF setDelegate:self];
         [self addSubview:self.authTextF];
@@ -41,6 +40,11 @@
         [self.authTextF.fourLabel setText:string];
     }
     
+    if (self.authTextF.fourLabel.text.length) {
+        [self.nextButton setTitle:@"提交" forState:UIControlStateNormal];
+    }else {
+        [self.nextButton setTitle:@"重新发送" forState:UIControlStateNormal];
+    }
     
     return YES;
 }
