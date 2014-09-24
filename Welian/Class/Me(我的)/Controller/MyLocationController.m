@@ -8,10 +8,7 @@
 
 #import "MyLocationController.h"
 #import "WLHUDView.h"
-#import "UIScrollView+SVInfiniteScrolling.h"
-//#import "XHRefreshControl.h"
-//#import <CoreLocation/CoreLocation.h>
-
+#import "MJRefresh.h"
 
 @interface MyLocationController ()<BMKPoiSearchDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -19,9 +16,7 @@
     NSMutableArray *_dataArray;
     LocationBlok _locationBlock;
 }
-//@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) BMKPoiSearch *searcher;
-//@property (nonatomic, strong) UIRefreshControl *refreshCont;
 @property (nonatomic, strong) BMKNearbySearchOption *option;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UISearchDisplayController *searchDisplayVC;
@@ -31,18 +26,6 @@
 
 @implementation MyLocationController
 
-//- (UITableView*)tableView
-//{
-//    if (_tableView==nil) {
-//        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//        [_tableView setDelegate:self];
-//        [_tableView setDataSource:self];
-//        [self.view addSubview:_tableView];
-//        self.refreshCont = [[UIRefreshControl alloc] init];
-//        [self.refreshCont addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
-//    }
-//    return _tableView;
-//}
 
 - (BMKPoiSearch*)searcher
 {
@@ -91,6 +74,7 @@
         self.refreshControl = [[UIRefreshControl alloc] init];
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.refreshControl beginRefreshing];
+        [self.tableView addFooterWithTarget:self action:@selector(beginLoadMoreRefreshing)];
         [self addUIViewsear];
     }
     return self;
@@ -145,7 +129,7 @@
 {
     if (error == BMK_SEARCH_NO_ERROR) {
         [self.refreshControl endRefreshing];
-        [self.tableView.infiniteScrollingView stopAnimating];
+        [self.tableView footerEndRefreshing];
         [WLHUDView hiddenHud];
         if (self.option.pageIndex==0) {
             [_dataArray removeAllObjects];
@@ -153,12 +137,6 @@
         //在此处理正常结果d
         for (BMKPoiInfo *info in poiResultList.poiInfoList) {
             [_dataArray addObject:info];
-        }
-        if (_dataArray.count) {
-            __weak MyLocationController *weakSelf = self;
-            [self.tableView addInfiniteScrollingWithActionHandler:^{
-                [weakSelf beginLoadMoreRefreshing];
-            }];
         }
         _option.pageIndex++;
         [self.tableView reloadData];

@@ -13,6 +13,7 @@
 #import "MyLocationController.h"
 #import "FriendsController.h"
 #import "PublishModel.h"
+#import "IWTextView.h"
 
 static NSString *picCellid = @"PicCellID";
 
@@ -20,7 +21,7 @@ static NSString *picCellid = @"PicCellID";
 
 @property (nonatomic, strong) UIView *inputttView;
 @property (nonatomic, copy) NSArray *assets;
-@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) IWTextView *textView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 
@@ -68,14 +69,17 @@ static NSString *picCellid = @"PicCellID";
 
 
 - (void)addUIView {
-    
-    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 250)];
+
+    CGFloat high = iPhone5?250:160;
+    self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
+    [self.textView setPlaceholder:@"说点什么..."];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-    [self.textView setFont:[UIFont systemFontOfSize:23]];
+    [self.textView setFont:[UIFont systemFontOfSize:17]];
     [self.textView setDelegate:self];
+    
     //    [self.textView setInputAccessoryView:self.inputttView];
-    //    [self.textView setBackgroundColor:[UIColor orangeColor]];
+        [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setReturnKeyType:UIReturnKeyDone];
     [self.view addSubview:self.textView];
     

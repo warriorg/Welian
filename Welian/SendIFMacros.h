@@ -20,7 +20,6 @@
 
 #define iPhone4 ([UIScreen mainScreen].bounds.size.height == 480)
 
-#define iPhone6 ([UIScreen mainScreen].bounds.size.height == 480)
 
 //#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
@@ -40,7 +39,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://192.168.118.14:80"
+#define WLHttpServer  @"http://192.168.118.3:80"
 
 #define ww @"http://192.168.1.191:80"
 
@@ -70,5 +69,77 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 主色透明效果
 #define KBasesColor [UIColor colorWithRed:8/255.0 green:61/255.0 blue:84/255.0 alpha:0.8]
+
+
+// 2.获得RGB颜色
+#define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
+// 3.全局背景色
+#define IWGlobalBg IWColor(226, 226, 226)
+
+
+/*
+ 6.一条微博上的颜色
+ */
+// 昵称
+#define IWNameColor IWColor(88, 88, 88)
+// 会员昵称颜色
+#define IWMBNameColor IWColor(244, 103, 8)
+// 时间
+#define IWTimeColor IWColor(246, 157, 46)
+// 内容
+#define IWContentColor IWColor(52, 52, 52)
+// 来源
+#define IWSourceColor IWColor(153, 153, 153)
+// 被转发昵称
+#define IWRetweetNameColor IWColor(81, 126, 175)
+// 被转发内容
+#define IWRetweetContentColor IWColor(109, 109, 109)
+
+/*
+ 7.一条微博上的字体
+ */
+// 昵称
+#define IWNameFont [UIFont systemFontOfSize:15]
+// 时间
+#define IWTimeFont [UIFont systemFontOfSize:12]
+// 来源
+#define IWSourceFont IWTimeFont
+// 内容
+#define IWContentFont IWNameFont
+// 转发的昵称
+#define IWRetweetNameFont [UIFont systemFontOfSize:15]
+// 转发的内容
+#define IWRetweetContentFont IWRetweetNameFont
+
+
+/**
+ 8.常用的一些距离
+ */
+// cell的边框宽度（cell的内边距）
+#define IWCellBorderWidth 8
+// tableview的边框宽度（tableView的内边距）
+#define IWTableBorderWidth 10
+// 每个cell之间的间距
+#define IWCellMargin 5
+// 图片的最大个数
+#define IWPhotoMaxCount 9
+// 每张图片之间的间距
+#define IWPhotoMargin 5
+
+// 每张图片的尺寸
+#define IWPhotoWH 87
+
+// 微博工具条的高度
+#define IWStatusDockH 35
+
+// 认证图标的尺寸
+#define IWVertifyWH 18
+
+// 头像图片的尺寸
+#define IWIconWHDefault 50
+#define IWIconWHSmall 34
+#define IWIconWHBig 85
+
 
 #endif

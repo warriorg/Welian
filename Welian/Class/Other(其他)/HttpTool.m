@@ -7,6 +7,7 @@
 //
 
 #import "HttpTool.h"
+#import "WLHUDView.h"
 
 @implementation HttpTool
 
@@ -39,8 +40,8 @@ static HttpTool *engine;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
-            NSDictionary *dicdata = [dic objectForKey:@"data"];
-            success(dicdata);
+
+            success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
         
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
@@ -49,6 +50,7 @@ static HttpTool *engine;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
+        [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }
@@ -66,8 +68,8 @@ static HttpTool *engine;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
-            NSDictionary *dicdata = [dic objectForKey:@"data"];
-            success(dicdata);
+
+            success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
             
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
@@ -75,6 +77,7 @@ static HttpTool *engine;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
+        [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }

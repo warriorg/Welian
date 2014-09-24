@@ -9,6 +9,8 @@
 #import "WLHttpTool.h"
 #import "HttpTool.h"
 #import "WLHUDView.h"
+#import "WLUserStatusesResult.h"
+#import "MJExtension.h"
 
 @implementation WLHttpTool
 
@@ -16,7 +18,7 @@
 + (void)loginGetCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     [WLHUDView showHUDWithStr:@"获取验证码" dim:NO];
-    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(NSDictionary *JSON) {
+    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
         if ([JSON objectForKey:@"checkcode"]) {
             UserInfoModel *mod = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
             [mod setCheckcode:[JSON objectForKey:@"checkcode"]];
@@ -25,7 +27,6 @@
         [WLHUDView hiddenHud];
         succeBlock(JSON);
     } failure:^(NSError *error) {
-        [WLHUDView hiddenHud];
         failurBlock(error);
     }];
 
@@ -34,7 +35,7 @@
 #pragma mark - 验证 验证码
 + (void)checkCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(NSDictionary *JSON) {
+    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
@@ -48,7 +49,7 @@
 {
     NSDictionary *dic = @{@"type":@"saveProfileAvatar",@"data":parameterDic};
     
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(NSDictionary *JSON) {
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
@@ -59,7 +60,7 @@
 + (void)addFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"addFeed",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(NSDictionary *JSON) {
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
@@ -71,11 +72,14 @@
 {
 //    [WLHUDView showHUDWithStr:@"玩命加载..." dim:NO];
     NSDictionary *dic = @{@"type":@"loadFeed",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(NSDictionary *JSON) {
-        [WLHUDView showSuccessHUD:@""];
-        succeBlock (JSON);
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+//        [WLHUDView showSuccessHUD:@""];
+        WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
+        
+        
+        succeBlock (result);
     } failure:^(NSError *error) {
-        [WLHUDView showErrorHUD:error.localizedFailureReason];
+        
         failurBlock(error);
     }];
 }

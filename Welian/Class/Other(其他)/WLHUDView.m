@@ -29,13 +29,13 @@ MBProgressHUD *HUD;
 + (void)showSuccessHUD:(NSString *)labeltext
 {
     [self showCustomHUD:labeltext imageview:Ksuccess];
-    [HUD hide:YES afterDelay:2];
+    [HUD hide:YES afterDelay:1];
 }
 
 + (void)showErrorHUD:(NSString *)labeltext
 {
     [self showCustomHUD:labeltext imageview:Kerror];
-    [HUD hide:YES afterDelay:2];
+    [HUD hide:YES afterDelay:1];
 }
 
 + (void)showCustomHUD:(NSString *)labeltext imageview:(NSString *)imageName

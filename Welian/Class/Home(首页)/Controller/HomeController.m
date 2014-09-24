@@ -10,7 +10,13 @@
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "WLHUDView.h"
-#import "SVPullToRefresh.h"
+#import "MJRefresh.h"
+#import "WLStatusCell.h"
+#import "WLUserStatusesResult.h"
+#import "WLStatusM.h"
+#import "WLBasicTrends.h"
+#import "WLStatusCell.h"
+#import "WLStatusFrame.h"
 
 @interface HomeController ()
 {
@@ -28,7 +34,7 @@
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.refreshControl beginRefreshing];
         [self.tableView setContentSize:CGSizeMake(0, [UIScreen mainScreen].bounds.size.height)];
-        
+        [self.tableView addFooterWithTarget:self action:@selector(beginPullDownRefreshing)];
     }
     return self;
 }
@@ -40,20 +46,22 @@
     NSInteger uid = [mo.uid integerValue];
     [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
         [self.refreshControl endRefreshing];
+        [self.tableView footerEndRefreshing];        
+        WLUserStatusesResult *userStatus = JSON;
         
-        [self.tableView.infiniteScrollingView stopAnimating];
+        _dataArry = [NSMutableArray array];
         
-        _dataArry = [NSMutableArray arrayWithArray:JSON];
-        if (_dataArry.count) {
-            __weak HomeController *weakSelf = self;
-            [self.tableView addInfiniteScrollingWithActionHandler:^{
-                [weakSelf beginPullDownRefreshing];
-            }];
+        for (WLStatusM *statusM in userStatus.data) {
+            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
+            sf.status = statusM;
+            [_dataArry addObject:sf];
         }
+        
         [self.tableView reloadData];
         DLog(@"dasdfsadfa");
     } fail:^(NSError *error) {
-        
+        [self.refreshControl endRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
 }
 
@@ -67,7 +75,6 @@
     [self beginPullDownRefreshing];
     // 1.设置界面属性
     [self buildUI];
-    
 }
 
 #pragma mark 设置界面属性
@@ -76,8 +83,9 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
     
     // 背景颜色
-    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 8, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView setBackgroundColor:[UIColor colorWithWhite:0.85 alpha:1.0]];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, IWTableBorderWidth, 0);
 }
 
 
@@ -98,12 +106,25 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    NSDictionary *da = _dataArry[indexPath.row];
-    [cell.textLabel setText:[NSString stringWithFormat:@"%d",[da objectForKey:@"fid"]]];
+    // 1.取出一个cell
+    WLStatusCell *cell = [WLStatusCell cellWithTableView:tableView];
+    
+    // 2.给cell传递模型数据
+    // 传递的模型：文字数据 + 子控件frame数据
+    cell.statusFrame = _dataArry[indexPath.row];
+    
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [_dataArry[indexPath.row] cellHeight];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {

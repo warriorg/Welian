@@ -8,7 +8,7 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
-typedef void (^HttpSuccessBlock)(NSDictionary *JSON);
+typedef void (^HttpSuccessBlock)(id JSON);
 typedef void (^HttpFailureBlock)(NSError *error);
 
 @interface HttpTool : AFHTTPRequestOperationManager
