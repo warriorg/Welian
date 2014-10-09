@@ -57,8 +57,12 @@
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveInfo:)];
-
-    [self.navigationItem.rightBarButtonItem setEnabled:self.userInfoStr.length];
+    
+    if (self.userInfoStr.length>0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }else {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
     [self.view addSubview:self.tableView];
 }
 
@@ -87,6 +91,8 @@
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     return YES;
 }
+
+
 
 #pragma mark tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

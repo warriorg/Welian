@@ -12,28 +12,83 @@
 
 @interface WorksListController ()
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) UIImageView *nostringImage;
 @end
 
 @implementation WorksListController
+
+- (UIImageView *)nostringImage
+{
+    if (_nostringImage==nil) {
+        _nostringImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_bg"]];
+        [_nostringImage setFrame:self.tableView.frame];
+    }
+    return _nostringImage;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self beginPullDownRefreshing];
+}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // 加载数据
-    [self loadDataArray];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl beginRefreshing];
     // 加载ui
     [self loadUIview];
 }
+
+- (void)beginPullDownRefreshing
+{
+    // 加载数据
+    [self loadDataArray];
+}
+
 
 #pragma mark - 加载数据
 - (void)loadDataArray
 {
     self.dataArray = [NSMutableArray array];
-    for (NSInteger i = 0; i<10; i++) {
-        NSDictionary *dic = @{@"name":[NSString stringWithFormat:@"公司-%d",i],@"date":[NSString stringWithFormat:@"时间-%d",i]};
-        [self.dataArray addObject:dic];
+    if (self.wlUserLoadType == WLSchool) {
+        [WLHttpTool loadUserSchoolParameterDic:@{} success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            self.dataArray = JSON;
+            if (self.dataArray.count) {
+                
+                
+            }else{
+                if (self.nostringImage.superview==nil) {
+                    
+//                    [self.tableView addSubview:self.nostringImage];
+                }
+            }
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+        }];
+    }else if (self.wlUserLoadType == WLCompany){
+        [WLHttpTool loadUserCompanyParameterDic:@{} success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            
+            self.dataArray = JSON;
+            if (self.dataArray.count) {
+                
+                
+            }else{
+                if (self.nostringImage.superview==nil) {
+                    [self.tableView addSubview:self.nostringImage];
+                }
+            }
+
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+        }];
     }
+    
 }
 
 #pragma mark - 加载页面UI
@@ -42,7 +97,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addWorkExperience)];
     
     if (self.dataArray.count==0) {
-
+        
     }else {
         [self.tableView setRowHeight:60.0];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -102,7 +157,13 @@
 #pragma mark - 添加工作经历
 - (void)addWorkExperience
 {
-    AddWorkOrEducationController *addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped];
+    AddWorkOrEducationController *addWkOrEdVC;
+    
+    if (self.wlUserLoadType==WLSchool) {
+        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:0];
+    }else if (self.wlUserLoadType == WLCompany){
+        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
+    }
     NavViewController *navVC = [[NavViewController alloc] initWithRootViewController:addWkOrEdVC];
     [self presentViewController:navVC animated:YES completion:^{
         

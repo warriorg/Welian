@@ -14,6 +14,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 @interface AppDelegate() <BMKGeneralDelegate>
 
@@ -51,18 +52,25 @@ BMKMapManager* _mapManager;
      *  设置状态栏颜色
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    /**
-     *  未登陆
-     */
-//    LogInController *loginVC = [[LogInController alloc] init];
-//    [self.window setRootViewController:loginVC];
     
-    /**
-     *  已登陆
-     */
-    MainViewController *mainVC = [[MainViewController alloc] init];
-    [self.window setRootViewController:mainVC];
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if (mode.sessionid) {
+        /**
+         *  已登陆
+         */
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [self.window setRootViewController:mainVC];
 
+    }else{
+        /**
+         *  未登陆
+         */
+        LogInController *loginVC = [[LogInController alloc] init];
+        [self.window setRootViewController:loginVC];
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    DLog(@"====沙盒路径=======%@",paths);
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -90,8 +98,13 @@ BMKMapManager* _mapManager;
 }
 
 
-
-
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    // 清除内存中的图片缓存
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

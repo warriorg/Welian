@@ -9,7 +9,6 @@
 #import "WLStatusM.h"
 #import "MJExtension.h"
 #import "WLPhoto.h"
-#import "WLTogetherUser.h"
 
 
 @implementation WLStatusM
@@ -22,11 +21,10 @@
 
 - (NSString *)created
 {
-    NSString *aa = [_created substringToIndex:([_created length]-2)];
     // 1.获得微博的发送时间
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate *send = [fmt dateFromString:aa];
+    NSDate *send = [fmt dateFromString:_created];
     
     // 2.当前时间
     NSDate *now = [NSDate date];

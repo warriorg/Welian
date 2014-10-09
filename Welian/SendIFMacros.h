@@ -39,7 +39,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://192.168.118.3:80"
+#define WLHttpServer  @"http://122.226.44.105:8080"
 
 #define ww @"http://192.168.1.191:80"
 
@@ -86,7 +86,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 会员昵称颜色
 #define IWMBNameColor IWColor(244, 103, 8)
 // 时间
-#define IWTimeColor IWColor(246, 157, 46)
+#define IWTimeColor IWColor(200, 200, 200)
 // 内容
 #define IWContentColor IWColor(52, 52, 52)
 // 来源
@@ -95,18 +95,20 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define IWRetweetNameColor IWColor(81, 126, 175)
 // 被转发内容
 #define IWRetweetContentColor IWColor(109, 109, 109)
+// 线条浅灰颜色
+#define WLLineColor IWColor(232, 234, 239)
 
 /*
  7.一条微博上的字体
  */
 // 昵称
-#define IWNameFont [UIFont systemFontOfSize:15]
+#define IWNameFont [UIFont boldSystemFontOfSize:15]
 // 时间
 #define IWTimeFont [UIFont systemFontOfSize:12]
 // 来源
-#define IWSourceFont IWTimeFont
+//#define IWSourceFont IWTimeFont
 // 内容
-#define IWContentFont IWNameFont
+#define IWContentFont [UIFont systemFontOfSize:15]
 // 转发的昵称
 #define IWRetweetNameFont [UIFont systemFontOfSize:15]
 // 转发的内容
@@ -117,7 +119,7 @@ fprintf(stderr, "-----------------------------------\n");                       
  8.常用的一些距离
  */
 // cell的边框宽度（cell的内边距）
-#define IWCellBorderWidth 8
+#define IWCellBorderWidth 10
 // tableview的边框宽度（tableView的内边距）
 #define IWTableBorderWidth 10
 // 每个cell之间的间距
@@ -125,13 +127,17 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 图片的最大个数
 #define IWPhotoMaxCount 9
 // 每张图片之间的间距
-#define IWPhotoMargin 5
+#define IWPhotoMargin 8
+
+// 关系图标的宽度
+#define WLFriendW 42
+#define WLFriendsFriend 65
 
 // 每张图片的尺寸
 #define IWPhotoWH 87
 
 // 微博工具条的高度
-#define IWStatusDockH 35
+#define IWStatusDockH 40
 
 // 认证图标的尺寸
 #define IWVertifyWH 18

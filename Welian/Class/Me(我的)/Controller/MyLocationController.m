@@ -72,8 +72,8 @@
     if (self) {
         _locationBlock = locationBlock;
         self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.refreshControl beginRefreshing];
+        [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventEditingChanged];
         [self.tableView addFooterWithTarget:self action:@selector(beginLoadMoreRefreshing)];
         [self addUIViewsear];
     }
@@ -83,8 +83,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"不显示" style:UIBarButtonItemStyleBordered target:self action:@selector(notShowLocation)];
     
 }
+
+- (void)notShowLocation
+{
+    BMKPoiInfo *info = [[BMKPoiInfo alloc] init];
+    info.name = @"不显示";
+    _locationBlock(info);
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)addUIViewsear
 {
@@ -104,6 +114,7 @@
 
 - (void)beginPullDownRefreshing
 {
+    [self.refreshControl beginRefreshing];
     self.option.pageIndex = 0;
     [self statLocationMy];
 }

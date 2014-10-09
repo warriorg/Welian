@@ -22,8 +22,11 @@
 - (UIImageView*)iconImage
 {
     if (nil == _iconImage) {
-        NSData *imageData = [UserDefaults objectForKey:UserIconImage];
-        _iconImage = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        _iconImage = [[UIImageView alloc] init];
+        
+        [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        
 //        [_iconImage setContentMode:UIViewContentModeScaleAspectFit];
     }
     return _iconImage;
@@ -88,16 +91,28 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
-    if (indexPath.section==0) {
-        [self.iconImage setFrame:CGRectMake(0, 0, 40, 40)];
-        [cell setAccessoryView:self.iconImage];
-    }
-    
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
-    [cell.detailTextLabel setText:dict[@"content"]];
-    
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if (indexPath.section==0) {
+        [self.iconImage setFrame:CGRectMake(0, 0, 50, 50)];
+        [cell setAccessoryView:self.iconImage];
+    }else if (indexPath.section==1){
+        if (indexPath.row==0) {
+            
+            [cell.detailTextLabel setText:mode.name];
+        }else if (indexPath.row ==1){
+            [cell.detailTextLabel setText:mode.company];
+        }else if (indexPath.row ==2){
+            [cell.detailTextLabel setText:mode.position];
+        }else if (indexPath.row ==3){
+            [cell.detailTextLabel setText:mode.userEmail];
+        }else if (indexPath.row==4){
+            [cell.detailTextLabel setText:mode.userProvince];
+        }
+
+    }
     return cell;
 }
 
@@ -122,14 +137,90 @@
         UIViewController *controller;
         if (indexPath.section==2) {
             controller = [[WorksListController alloc] init];
-            
+            WorksListController *workVC = (WorksListController*)controller;
+            if (indexPath.row==0) {
+                [workVC setWlUserLoadType:WLSchool];
+            }else {
+                [workVC setWlUserLoadType:WLCompany];
+            }
         }else {
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                
-            }];
-            
+
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            if (indexPath.row==0) {
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
+                        [mode setName:userInfo];
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                    
+                }];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.name];
+            }else if (indexPath.row ==1){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
+                        [mode setCompany:userInfo];
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                    
+                }];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.company];
+            }else if (indexPath.row ==2){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
+                        [mode setPosition:userInfo];
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ 
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                    
+                }];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.position];
+            }else if (indexPath.row ==3){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
+                        [mode setUserEmail:userInfo];
+                        
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                    
+                }];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.userEmail];
+            }else if (indexPath.row==4){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WLHttpTool saveProfileParameterDic:@{@"cityid":userInfo} success:^(id JSON) {
+                        
+                        [mode setUserProvince:userInfo];
+                        
+                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                }];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.userProvince];
+            }
+
         }
         [controller setTitle:dict[@"title"]];
+        
         [self.navigationController pushViewController:controller animated:YES];
 
     }
@@ -182,8 +273,17 @@
     
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
-    [self.iconImage setImage:image];
-    [self.tableView reloadData];
+    
+    NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [mode setAvatar:[JSON objectForKey:@"url"]];
+        [self.iconImage setImage:image];
+        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        
+    }];
+    
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];

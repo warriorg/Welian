@@ -10,8 +10,8 @@
 
 @interface SchoolModel : SchoolCompanyDate
 /**  学校id   */
-@property (nonatomic, strong) NSString *school_id;
+@property (nonatomic, assign) NSInteger schoolid;
 /**  学校名称   */
-@property (nonatomic, strong) NSString *school;
+@property (nonatomic, strong) NSString *schoolname;
 
 @end

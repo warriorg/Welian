@@ -19,7 +19,6 @@
         
         self.phoneTextF = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
         [self.phoneTextF setDelegate:self];
-        //        [self.phoneTextF setBounds:CGRectMake(0, 0, 270, 50)];
         [self.phoneTextF.layer setCornerRadius:8];
         [self.phoneTextF setKeyboardType:UIKeyboardTypePhonePad];
         [self.phoneTextF.layer setMasksToBounds:YES];

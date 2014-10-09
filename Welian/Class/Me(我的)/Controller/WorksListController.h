@@ -8,6 +8,14 @@
 
 #import "BasicTableViewController.h"
 
+typedef enum {
+    WLSchool = 0,   // 教育
+    WLCompany = 1,  // 工作
+} WLUserLoadType;
+
+
 @interface WorksListController : BasicTableViewController
+
+@property (nonatomic, assign) WLUserLoadType wlUserLoadType;
 
 @end

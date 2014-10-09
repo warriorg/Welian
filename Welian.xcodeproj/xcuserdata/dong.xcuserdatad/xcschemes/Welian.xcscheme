@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5CE85F919BFF2AB00A9D14C"
-               BuildableName = "Welian.app"
-               BlueprintName = "Welian"
-               ReferencedContainer = "container:Welian.xcodeproj">
+               BuildableName = "weLian.app"
+               BlueprintName = "weLian"
+               ReferencedContainer = "container:weLian.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5CE861419BFF2AB00A9D14C"
-               BuildableName = "WelianTests.xctest"
-               BlueprintName = "WelianTests"
-               ReferencedContainer = "container:Welian.xcodeproj">
+               BuildableName = "weLian.temp_caseinsensitive_renameTests.xctest"
+               BlueprintName = "weLian.temp_caseinsensitive_renameTests"
+               ReferencedContainer = "container:weLian.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5CE85F919BFF2AB00A9D14C"
-            BuildableName = "Welian.app"
-            BlueprintName = "Welian"
-            ReferencedContainer = "container:Welian.xcodeproj">
+            BuildableName = "weLian.app"
+            BlueprintName = "weLian"
+            ReferencedContainer = "container:weLian.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5CE85F919BFF2AB00A9D14C"
-            BuildableName = "Welian.app"
-            BlueprintName = "Welian"
-            ReferencedContainer = "container:Welian.xcodeproj">
+            BuildableName = "weLian.app"
+            BlueprintName = "weLian"
+            ReferencedContainer = "container:weLian.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5CE85F919BFF2AB00A9D14C"
-            BuildableName = "Welian.app"
-            BlueprintName = "Welian"
-            ReferencedContainer = "container:Welian.xcodeproj">
+            BuildableName = "weLian.app"
+            BlueprintName = "weLian"
+            ReferencedContainer = "container:weLian.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

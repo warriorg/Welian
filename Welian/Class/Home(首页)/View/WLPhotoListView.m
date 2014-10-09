@@ -8,6 +8,10 @@
 
 #import "WLPhotoListView.h"
 #import "WLPhotoView.h"
+#import "UIImageView+MJWebCache.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
+#import "WLPhoto.h"
 
 @implementation WLPhotoListView
 
@@ -41,10 +45,9 @@
     for (int i = 0; i<IWPhotoMaxCount; i++) {
         // 2.1.取出对应位置的子控件
         WLPhotoView *photoView = self.subviews[i];
-        
         if (picCount == 1) {
-            photoView.contentMode = UIViewContentModeScaleAspectFit;
-            photoView.clipsToBounds = NO;
+            photoView.contentMode = UIViewContentModeScaleAspectFill;
+            photoView.clipsToBounds = YES;
         } else { // 多张
             photoView.contentMode = UIViewContentModeScaleAspectFill;
             // 超出边界范围的内容都裁剪
@@ -58,7 +61,19 @@
         
         // 2.2.判断这个photoView有没有可展示的图片
         if (i < picCount) { // 有可以展示的图片
+            
+            // 4.显示图片
+            photoView.photo = photos[i];
+            
             photoView.hidden = NO;
+            [photoView setTag:i];
+            [photoView setUserInteractionEnabled:YES];
+            [photoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
+            
+            if (picCount == 1) { // 1张
+                photoView.frame = CGRectMake(0, 0, 180, 120);
+                continue;
+            }
             
             // 3.设置图片的frame
             int maxColPerRow = picCount == 4 ? 2 : 3;
@@ -74,8 +89,6 @@
             CGFloat photoY = row * (IWPhotoWH + IWPhotoMargin);
             photoView.frame = CGRectMake(photoX, photoY, IWPhotoWH, IWPhotoWH);
             
-            // 4.显示图片
-            photoView.photo = photos[i];
             
         } else { // 没有可以展示的图片
             photoView.hidden = YES;
@@ -83,8 +96,35 @@
     }
 }
 
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:_photos.count];
+    for (int i = 0; i<_photos.count; i++) {
+        WLPhotoView *photoView = self.subviews[i];
+        // 替换为中等尺寸图片
+        NSString *url = photoView.photo.url;
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.srcImageView = photoView; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
+
+
 + (CGSize)photoListSizeWithCount:(int)count
 {
+    // 1.只有1张图片
+    if (count == 1) {
+        return CGSizeMake(180, 120+5);
+    }
+
     // 1.每一行的最大列数
     int maxColPerRow = count == 4 ? 2 : 3;
     
@@ -98,7 +138,7 @@
     CGFloat photoListW = colCount * IWPhotoWH + (colCount - 1) * IWPhotoMargin;
     CGFloat photoListH = rowCount * IWPhotoWH + (rowCount - 1) * IWPhotoMargin;
     
-    return CGSizeMake(photoListW, photoListH);
+    return CGSizeMake(photoListW, photoListH+5);
 }
 
 @end

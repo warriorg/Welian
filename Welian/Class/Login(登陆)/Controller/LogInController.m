@@ -45,7 +45,7 @@
     }
     UserInfoModel *userM = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     
-    [_verificationView.tsLabel setText:[NSString stringWithFormat:@"我们已将验证码发至：%@ 请输入您收到的验证码",userM.userPhone]];
+    [_verificationView.tsLabel setText:[NSString stringWithFormat:@"我们已将验证码发至：%@ 请输入您收到的验证码",userM.mobile]];
     return _verificationView;
 }
 
@@ -113,23 +113,23 @@
     if ([butt.titleLabel.text isEqualToString:@"提交"]) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         if ([mode.checkcode isEqualToString:self.verificationView.authTextF.text]) {
-            [WLHttpTool checkCodeParameterDic:@{@"type":@"checkCode",@"data":@{@"mobile":mode.userPhone,@"code":mode.checkcode}} success:^(id JSON) {
+            [WLHttpTool checkCodeParameterDic:@{@"type":@"checkCode",@"data":@{@"mobile":mode.mobile,@"code":mode.checkcode}} success:^(id JSON) {
                 if (JSON) {
                 UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
                     if ([[JSON objectForKey:@"flag"] integerValue]==1) {  // 已注册
                         
-                        [mode setUserName:[JSON objectForKey:@"name"]];
-                        [mode setUserIncName:[JSON objectForKey:@"company"]];
-                        [mode setUserPhone:[JSON objectForKey:@"mobile"]];
-                        [mode setUserJob:[JSON objectForKey:@"position"]];
+                        [mode setName:[JSON objectForKey:@"name"]];
+                        [mode setCompany:[JSON objectForKey:@"company"]];
+                        [mode setMobile:[JSON objectForKey:@"mobile"]];
+                        [mode setPosition:[JSON objectForKey:@"position"]];
                         [mode setUid:[JSON objectForKey:@"uid"]];
-                        [mode setSessionId:[JSON objectForKey:@"sessionid"]];
-                        [mode setUserIcon:[JSON objectForKey:@"url"]];
+                        [mode setSessionid:[JSON objectForKey:@"sessionid"]];
+                        [mode setAvatar:[JSON objectForKey:@"avatar"]];
                         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         MainViewController *mainVC = [[MainViewController alloc] init];
                         [self.view.window setRootViewController:mainVC];
                     }else {
-                        [mode setSessionId:[JSON objectForKey:@"sessionid"]];
+                        [mode setSessionid:[JSON objectForKey:@"sessionid"]];
                         UserInfoController *userInfoVC = [[UserInfoController alloc] init];
                         [self.view.window setRootViewController:[[NavViewController alloc] initWithRootViewController:userInfoVC]];
                     }
@@ -226,7 +226,7 @@
     if ([NSString phoneValidate:self.trendView.phoneTextF.text]) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         
-        [mode setUserPhone:self.trendView.phoneTextF.text];
+        [mode setMobile:self.trendView.phoneTextF.text];
         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         
         CGPoint cente = self.trendView.center;
@@ -369,7 +369,7 @@
                 NSString *strTime = [NSString stringWithFormat:@"%d", timeout];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     //设置界面的按钮显示 根据自己需求设置
-                    NSLog(@"____%@",strTime);
+//                    NSLog(@"____%@",strTime);
                     [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateDisabled];
 
                     [self.verificationView.nextButton setEnabled:NO];

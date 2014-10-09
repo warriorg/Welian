@@ -30,8 +30,9 @@
     TQRichTextView *_contentLabel;
     /** 配图 */
     WLPhotoListView *_photoListView;
-    /** 微博会员图标 */
-//    UIImageView *_mbView;
+    
+    /** 关系图标 */
+    UIImageView *_mbView;
     
     /** 转发微博的整体 */
     UIImageView *_retweetView;
@@ -89,12 +90,12 @@
 {
     // 1.默认
     UIImageView *bg = [[UIImageView alloc] init];
-    bg.image = [UIImage resizedImage:@"common_card_background"];
+    bg.image = [UIImage resizedImage:@"background_white"];
     self.backgroundView = bg;
     
     // 2.选中
     UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"common_card_background_highlighted"];
+    selectedBg.image = [UIImage resizedImage:@"background_grey"];
     self.selectedBackgroundView = selectedBg;
 }
 
@@ -120,7 +121,7 @@
     // 3.时间
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = IWTimeFont;
-    _timeLabel.textColor = IWTimeColor;
+    _timeLabel.textColor = [UIColor darkGrayColor];
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];
     
@@ -145,22 +146,9 @@
     [self.contentView addSubview:_photoListView];
     
 //    // 7.微博会员图标
-//    _mbView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"common_icon_membership"]];
-//    [self.contentView addSubview:_mbView];
-    
-//    // 8.更多按钮
-//    UIButton *more = [UIButton buttonWithType:UIButtonTypeCustom];
-//    // 8.1.设置内部的图片
-//    [more setImage:[UIImage imageWithName:@"timeline_icon_more"] forState:UIControlStateNormal];
-//    [more setImage:[UIImage imageWithName:@"timeline_icon_more_highlighted"] forState:UIControlStateHighlighted];
-//    // 8.2.设置按钮的frame
-//    CGFloat btnWH = 35;
-//    CGFloat btnY = 0;
-//    CGFloat btnX = self.contentView.frame.size.width - btnWH;
-//    more.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
-//    // 8.3.设置按钮永远停留在右上角
-//    more.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
-//    [self.contentView addSubview:more];
+    _mbView = [[UIImageView alloc] init];
+    [self.contentView addSubview:_mbView];
+
 }
 
 /**
@@ -170,7 +158,8 @@
 {
     // 0.整体
     _retweetView = [[UIImageView alloc] init];
-    _retweetView.image = [UIImage resizedImage:@"timeline_retweet_background" leftScale:0.9 topScale:0.7];
+    [_retweetView setUserInteractionEnabled:YES];
+//    _retweetView.image = [UIImage resizedImage:@"timeline_retweet_background" leftScale:0.9 topScale:0.7];
     [self.contentView addSubview:_retweetView];
     
     // 1.昵称
@@ -221,27 +210,27 @@
     
     // 1.头像
     _iconView.frame = statusFrame.iconViewF;
-//    [_iconView sd_setImageWithURL:[NSURL URLWithString:status.user.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-//    [_iconView.layer setMasksToBounds:YES];
-//    [_iconView.layer setCornerRadius:statusFrame.iconViewF.size.height*0.5];
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:status.user.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    [_iconView.layer setMasksToBounds:YES];
+    [_iconView.layer setCornerRadius:statusFrame.iconViewF.size.height*0.5];
     
 //    [_iconView setUser:user iconType:IWIconTypeSmall];
     
     // 2.昵称
     _nameLabel.frame = statusFrame.nameLabelF;
     _nameLabel.text = user.name;
-    
+
+    _mbView.hidden = NO;
+    _mbView.frame = statusFrame.mbViewF;
     // 3.会员图标
-//    if (user.mbtype == IWMBTypeNone) { // 非会员
-//        _mbView.hidden = YES;
-//        
-//        _nameLabel.textColor = IWNameColor;
-//    } else { // 会员
-//        _mbView.hidden = NO;
-//        _mbView.frame = statusFrame.mbViewF;
-//        
-//        _nameLabel.textColor = IWMBNameColor;
-//    }
+    if (user.relation == WLRelationTypeNone) { // 关系无
+        _mbView.hidden = YES;
+    } else if(user.relation == WLRelationTypeFriend){ // 朋友
+        [_mbView setImage:[UIImage imageNamed:@"home_label_friend"]];
+
+    }else if (user.relation == WLRelationTypeFriendsFriend){
+        [_mbView setImage:[UIImage imageNamed:@"home_label_friendsfriend"]];
+    }
     
     // 4.配图
     if (status.photos.count) {

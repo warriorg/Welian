@@ -51,12 +51,12 @@
     UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     NSInteger uid = [mo.uid integerValue];
     
-    [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
-        self.dataArray = [NSArray arrayWithArray:JSON];
-        [self.tableView reloadData];
-    } fail:^(NSError *error) {
-        
-    }];
+//    [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
+//        self.dataArray = [NSArray arrayWithArray:JSON];
+//        [self.tableView reloadData];
+//    } fail:^(NSError *error) {
+//        
+//    }];
     
 }
 

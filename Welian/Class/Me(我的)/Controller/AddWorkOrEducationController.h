@@ -10,4 +10,6 @@
 
 @interface AddWorkOrEducationController : BasicTableViewController
 
+- (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType;
+
 @end

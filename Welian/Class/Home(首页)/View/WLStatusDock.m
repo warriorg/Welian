@@ -25,20 +25,21 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
-        self.image = [UIImage resizedImage:@"timeline_card_bottom_background"];
         
         // 0.顶部添加分割线
         UIView *divider = [[UIView alloc] init];
-        divider.frame = CGRectMake(0, 0, frame.size.width, 0.5);
-        divider.backgroundColor = [UIColor lightGrayColor];
+        divider.frame = CGRectMake(10, 0, frame.size.width-20, 0.5);
+        divider.backgroundColor = WLLineColor;
         [self addSubview:divider];
         
-        // 1.添加转发
-        _repostBtn = [self addBtn:@"转发" image:@"me_mywriten_repeat" background:@"timeline_card_leftbottom_highlighted" index:0];
+        // 1.添加赞
+        _attitudeBtn = [self addBtn:@"赞" image:@"me_mywriten_good" index:0];
+        
         // 2.添加评论
-        _commentBtn = [self addBtn:@"评论" image:@"me_mywriten_comment" background:@"timeline_card_middlebottom_highlighted" index:1];
-        // 3.添加赞
-        _attitudeBtn = [self addBtn:@"赞" image:@"me_mywriten_good" background:@"timeline_card_rightbottom_highlighted" index:2];
+        _commentBtn = [self addBtn:@"评论" image:@"me_mywriten_comment" index:1];
+        
+        // 3.添加转发
+        _repostBtn = [self addBtn:@"转发" image:@"me_mywriten_repeat" index:2];
     }
     return self;
 }
@@ -51,7 +52,7 @@
  *  @param background 高亮背景
  *  @param index      按钮索引（0~2）
  */
-- (UIButton *)addBtn:(NSString *)title image:(NSString *)image background:(NSString *)background index:(int)index
+- (UIButton *)addBtn:(NSString *)title image:(NSString *)image index:(int)index
 {
     // 1.创建按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -66,12 +67,9 @@
     
     // 3.设置图片
     [btn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
-    
-    // 4.设置背景
-    [btn setBackgroundImage:[UIImage resizedImage:background] forState:UIControlStateHighlighted];
-    
+        
     // 5.其他属性杂项
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     // 按钮文字
     [btn setTitle:title forState:UIControlStateNormal];
     
@@ -79,16 +77,6 @@
     
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self addSubview:btn];
-    
-    // 6.添加分割线
-    if (index != 0) { // 当是评论、赞按钮的时候，添加分割线
-        UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeline_card_bottom_line"]];
-        //        divider.backgroundColor = [UIColor redColor];
-        CGFloat centerY = btnH * 0.5;
-        CGFloat centerX = btnX;
-        divider.center = CGPointMake(centerX, centerY);
-        [self addSubview:divider];
-    }
     
     return btn;
 }
@@ -110,6 +98,14 @@
     
     // 3.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan];
+
+    if (status.iszan==1) { // 已赞
+        [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
+    }else {
+        
+    }
+    
+    
 }
 
 /**

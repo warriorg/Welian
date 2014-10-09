@@ -10,7 +10,7 @@
 
 @interface CompanyModel : SchoolCompanyDate
 /**  企业id   */
-@property (nonatomic, strong) NSString *company_id;
+@property (nonatomic, assign) NSInteger companyid;
 /**  企业名称   */
 @property (nonatomic, strong) NSString *company;
 

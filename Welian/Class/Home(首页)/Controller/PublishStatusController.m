@@ -70,16 +70,18 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)addUIView {
 
-    CGFloat high = iPhone5?250:160;
+//    CGFloat high = SuperSize.height-INPUT_HEIGHT;
+    CGFloat high = iPhone5?250:150;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
+    [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.textView setFont:[UIFont systemFontOfSize:17]];
     [self.textView setDelegate:self];
     
     //    [self.textView setInputAccessoryView:self.inputttView];
-        [self.textView setBackgroundColor:[UIColor orangeColor]];
+//        [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setReturnKeyType:UIReturnKeyDone];
     [self.view addSubview:self.textView];
     
@@ -102,14 +104,17 @@ static NSString *picCellid = @"PicCellID";
     
     self.inputttView = [[UIView alloc]initWithFrame:CGRectMake(0, SuperSize.height-INPUT_HEIGHT, SuperSize.width, INPUT_HEIGHT)];
     UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(20, 30, 40, 40)];
-    [but setBackgroundColor:[UIColor redColor]];
+//    [but setBackgroundColor:[UIColor redColor]];
     [but addTarget:self action:@selector(showPicVC:) forControlEvents:UIControlEventTouchUpInside];
+    [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
     [self.inputttView addSubview:but];
+    
     UIButton *addLocation = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 30)];
     [addLocation setTitle:@"添加位置" forState:UIControlStateNormal];
-    [addLocation setBackgroundColor:[UIColor blueColor]];
+//    [addLocation setBackgroundColor:[UIColor blueColor]];
     [addLocation.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [addLocation addTarget:self action:@selector(addUserLocation:) forControlEvents:UIControlEventTouchUpInside];
+    [addLocation setImage:[UIImage imageNamed:@"me_mywriten_location"] forState:UIControlStateNormal];
     [self.inputttView addSubview:addLocation];
     
     UIButton *together = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 30)];
@@ -311,12 +316,17 @@ static NSString *picCellid = @"PicCellID";
 - (void)addUserLocation:(UIButton*)but
 {
     MyLocationController *myLocationVC = [[MyLocationController alloc] initWithLocationBlock:^(BMKPoiInfo *infoPoi) {
+        
         [but setTitle:infoPoi.name forState:UIControlStateNormal];
         [but sizeToFit];
-        
-        [self.publishM setAddress:infoPoi.name];
-        [self.publishM setX:[NSString stringWithFormat:@"%f",infoPoi.pt.latitude]];
-        [self.publishM setY:[NSString stringWithFormat:@"%f",infoPoi.pt.longitude]];
+        if ([infoPoi.name isEqualToString:@"不显示"]) {
+            
+        }else {
+            
+            [self.publishM setAddress:infoPoi.name];
+            [self.publishM setX:[NSString stringWithFormat:@"%f",infoPoi.pt.latitude]];
+            [self.publishM setY:[NSString stringWithFormat:@"%f",infoPoi.pt.longitude]];
+        }
         
     }];
     [self.navigationController pushViewController:myLocationVC animated:YES];
@@ -372,7 +382,9 @@ static NSString *picCellid = @"PicCellID";
     }
     
     [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
-        
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     } fail:^(NSError *error) {
         
     }];

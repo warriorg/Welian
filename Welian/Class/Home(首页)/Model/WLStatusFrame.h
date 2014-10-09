@@ -18,13 +18,12 @@
 @property (nonatomic, assign, readonly) CGRect nameLabelF;
 /** 时间 */
 @property (nonatomic, assign, readonly) CGRect timeLabelF;
-/** 来源 */
-@property (nonatomic, assign, readonly) CGRect sourceLabelF;
+
 /** 内容 */
 @property (nonatomic, assign, readonly) CGRect contentLabelF;
 /** 配图 */
 @property (nonatomic, assign, readonly) CGRect photoListViewF;
-/** 微博会员图标 */
+/** 朋友关系图标 */
 @property (nonatomic, assign, readonly) CGRect mbViewF;
 
 /** 转发微博的整体 */

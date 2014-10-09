@@ -28,6 +28,9 @@
 /** int	表态数 */
 @property (nonatomic, assign) int zan;
 
+/**  1已赞 0未赞  */
+@property (nonatomic, assign) int iszan;
+
 /**  纬度   */
 @property (nonatomic, assign) float  x;
 /**  经度   */
@@ -44,6 +47,6 @@
 @property (nonatomic, strong) NSArray *photos;
 
 /**  和谁一起   */
-@property (nonatomic, strong) NSArray *with;
+//@property (nonatomic, strong) NSArray *with;
 
 @end

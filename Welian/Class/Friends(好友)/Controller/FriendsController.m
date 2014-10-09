@@ -22,6 +22,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     if ([[UserDefaults objectForKey:KAddressBook] integerValue]) {
         self.dataArray = [NSArray arrayWithArray:[WLTool getAddressBookArray]];
     }else {

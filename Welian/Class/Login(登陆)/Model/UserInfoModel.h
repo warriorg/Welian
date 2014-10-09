@@ -12,23 +12,23 @@
 /**
  * 用户姓名
  */
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *name;
 /**
  *  用户手机号
  */
-@property (nonatomic, strong) NSString *userPhone;
+@property (nonatomic, strong) NSString *mobile;
 /**
  *  用户头像
  */
-@property (nonatomic, strong) NSString   *userIcon;
+@property (nonatomic, strong) NSString   *avatar;
 /**
  *  用户公司
  */
-@property (nonatomic, strong) NSString *userIncName;
+@property (nonatomic, strong) NSString *company;
 /**
  *  用户职务
  */
-@property (nonatomic, strong) NSString *userJob;
+@property (nonatomic, strong) NSString *position;
 /**
  *  用户邮箱
  */
@@ -46,7 +46,7 @@
 @property (nonatomic, strong) NSString *checkcode;
 
 /**  sessionId   */
-@property (nonatomic, strong) NSString *sessionId;
+@property (nonatomic, strong) NSString *sessionid;
 
 /**  uid唯一标示   */
 @property (nonatomic, strong) NSString *uid;

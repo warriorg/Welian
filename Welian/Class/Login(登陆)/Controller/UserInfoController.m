@@ -78,24 +78,23 @@
         return;
     }
     UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    [modeinfo setUserName:name];
-    [modeinfo setUserIcon:avatar];
-    [modeinfo setUserIncName:danwei];
-    [modeinfo setUserJob:zhiwu];
+    [modeinfo setName:name];
+//    [modeinfo setAvatar:avatar];
+    [modeinfo setCompany:danwei];
+    [modeinfo setPosition:zhiwu];
     [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
     
     [WLHttpTool saveProfileAvatarParameterDic:@{@"name":name,@"company":danwei,@"position":zhiwu,@"avatar":avatar,@"avatarname":@"jpg"} success:^(id JSON) {
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
-        if ([datadic objectForKey:@"url"]) {
+        if ([datadic objectForKey:@"avatar"]) {
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            [mode setUserIcon:[datadic objectForKey:@"url"]];
+            [mode setAvatar:[datadic objectForKey:@"avatar"]];
         }
         MainViewController *mainVC = [[MainViewController alloc] init];
         [self.view.window setRootViewController:mainVC];
     } fail:^(NSError *error) {
         
     }];
-
 }
 
 

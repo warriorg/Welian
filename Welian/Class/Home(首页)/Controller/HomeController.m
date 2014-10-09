@@ -17,6 +17,7 @@
 #import "WLBasicTrends.h"
 #import "WLStatusCell.h"
 #import "WLStatusFrame.h"
+#import "StatusInfoController.h"
 
 @interface HomeController ()
 {
@@ -30,11 +31,12 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        _dataArry = [NSMutableArray array];
         self.refreshControl = [[UIRefreshControl alloc] init];
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.refreshControl beginRefreshing];
         [self.tableView setContentSize:CGSizeMake(0, [UIScreen mainScreen].bounds.size.height)];
-        [self.tableView addFooterWithTarget:self action:@selector(beginPullDownRefreshing)];
+        [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];
     }
     return self;
 }
@@ -44,12 +46,13 @@
 {
     UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     NSInteger uid = [mo.uid integerValue];
+    
     [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];        
         WLUserStatusesResult *userStatus = JSON;
         
-        _dataArry = [NSMutableArray array];
+        // 1.在拿到最新微博数据的同时计算它的frame
+//        NSMutableArray *newFrames = [NSMutableArray array];
+        [_dataArry removeAllObjects];
         
         for (WLStatusM *statusM in userStatus.data) {
             WLStatusFrame *sf = [[WLStatusFrame alloc] init];
@@ -58,11 +61,52 @@
         }
         
         [self.tableView reloadData];
+        
+        [self.refreshControl endRefreshing];
+        [self.tableView footerEndRefreshing];
+        
         DLog(@"dasdfsadfa");
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
     }];
+}
+
+#pragma mark 加载更多数据
+- (void)loadMoreData
+{
+    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    NSInteger uid = [mo.uid integerValue];
+    // 1.最后1条微博的ID
+    WLStatusFrame *f = [_dataArry lastObject];
+    int start = f.status.fid;
+    
+    [WLHttpTool loadFeedParameterDic:@{@"start":@(start),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
+        WLUserStatusesResult *userStatus = JSON;
+        
+        // 1.在拿到最新微博数据的同时计算它的frame
+        NSMutableArray *newFrames = [NSMutableArray array];
+        
+        for (WLStatusM *statusM in userStatus.data) {
+            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
+            sf.status = statusM;
+            [newFrames addObject:sf];
+        }
+        
+        // 2.将newFrames整体插入到旧数据的后面
+        [_dataArry addObjectsFromArray:newFrames];
+        
+        [self.tableView reloadData];
+        
+        [self.refreshControl endRefreshing];
+        [self.tableView footerEndRefreshing];
+        
+        DLog(@"dasdfsadfa");
+    } fail:^(NSError *error) {
+        [self.refreshControl endRefreshing];
+        [self.tableView footerEndRefreshing];
+    }];
+
 }
 
 
@@ -94,6 +138,7 @@
 - (void)publishStatus
 {
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
+    
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
         
     }];
@@ -124,6 +169,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    StatusInfoController *statusInfo = [[StatusInfoController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:statusInfo animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

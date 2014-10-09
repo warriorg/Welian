@@ -13,8 +13,6 @@
 #import "SettingController.h"
 #import "CertificationController.h"
 #import "MyLocationController.h"
-#import "UIImageView+WebCache.h"
-
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -25,6 +23,17 @@
 
 @implementation MeViewController
 
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.tableView) {
+        NSIndexSet *set = [NSIndexSet indexSetWithIndex:0];
+        [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
+//        NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
+//        [self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -71,9 +80,11 @@
     }
     if (indexPath.section==0) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:mode.userIcon] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-        [cell.textLabel setText:mode.userName];
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@    %@",mode.userIncName,mode.userJob]];
+        
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [cell.textLabel setText:mode.name];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@    %@",mode.company,mode.position]];
     }else{
     
         // 1.取出这行对应的字典数据
@@ -108,9 +119,10 @@
         [controller setTitle:@"个人信息"];
     }else if (indexPath.section==1){
         controller = [[MyLocationController alloc] init];
+
     }else if (indexPath.section==2){
         controller = [[CertificationController alloc] init];
-        
+        [controller setTitle:@"认证"];
     }else if (indexPath.section == 3){
         controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }

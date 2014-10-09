@@ -7,6 +7,8 @@
 //
 
 #import "SettingController.h"
+#import "UIImage+ImageEffects.h"
+#import "NameController.h"
 
 @interface SettingController ()
 {
@@ -37,9 +39,11 @@
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         // 3.要在tableView底部添加一个按钮
         UIButton *logout = [UIButton buttonWithType:UIButtonTypeCustom];
-        [logout setBackgroundColor:[UIColor whiteColor]];
+
+        [logout setBackgroundImage:[UIImage resizedImage:@"background_white"] forState:UIControlStateNormal];
         [logout setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-      
+        [logout setBackgroundImage:[UIImage resizedImage:@"background_grey"] forState:UIControlStateHighlighted];
+        
         // tableFooterView的宽度是不需要设置。默认就是整个tableView的宽度
         logout.bounds = CGRectMake(0, 0, 0, 44);
         
@@ -109,11 +113,27 @@
     if (indexPath.section==1&&indexPath.row==0) {
         [cell setAccessoryView:self.remindSwitch];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }else if (indexPath.section==1&&indexPath.row==1){
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [cell.detailTextLabel setText:mode.mobile];
     }
-    [cell.detailTextLabel setText:dict[@"content"]];
-    
     return cell;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==1&&indexPath.row==1) {
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+            [mode setMobile:userInfo];
+            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }];
+        [phoneVC setUserInfoStr:mode.mobile];
+        
+        [self.navigationController pushViewController:phoneVC animated:YES];
+    }
+}
 
 @end

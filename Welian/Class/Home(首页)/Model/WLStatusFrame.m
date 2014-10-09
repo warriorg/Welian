@@ -22,9 +22,9 @@
 - (void)setStatus:(WLStatusM *)status
 {
     _status = status;
-    
+    WLBasicTrends *user = status.user;
     // 0.cell的宽度
-    CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width - 2 * IWTableBorderWidth;
+    CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width;
     
     // 1.头像
     CGFloat iconX = IWCellBorderWidth;
@@ -39,16 +39,28 @@
     CGSize nameSize = [status.user.name sizeWithFont:IWNameFont];
     _nameLabelF = (CGRect){{nameX, nameY}, nameSize};
     
-    // 会员
-    CGFloat mbX = CGRectGetMaxX(_nameLabelF) + IWCellBorderWidth;
-    CGFloat mbY = CGRectGetMinY(_nameLabelF) + (nameSize.height - 14) * 0.5;
-    _mbViewF = CGRectMake(mbX, mbY, 14, 14);
+    //    // 朋友关系图片
+    CGFloat mbW = 0;
+    if(user.relation == WLRelationTypeFriend){ // 朋友
+        mbW = WLFriendW;
+        
+    }else if (user.relation == WLRelationTypeFriendsFriend){
+        mbW = WLFriendsFriend;
+    }
+    CGFloat mbX = cellWidth - mbW-10;
+    CGFloat mbY = iconY;
+    _mbViewF = CGRectMake(mbX, mbY, mbW, 17);
+
     
-    // 3.内容
     CGFloat contentX = iconX;
     CGFloat contentY = CGRectGetMaxY(_iconViewF) + IWCellBorderWidth;
-    CGSize contentSize = [status.content sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-    _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height + 10);
+    if (status.content) {
+        // 3.内容
+        CGSize contentSize = [status.content sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
+        _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
+    }else {
+        _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
+    }
     
     WLStatusM *retweetStatus = status.relationfeed;
     if (status.photos.count) {
@@ -64,7 +76,7 @@
         // 5.如果有转发微博
         CGFloat retweetX = contentX;
         CGFloat retweetY = CGRectGetMaxY(_contentLabelF) + IWCellBorderWidth;
-        CGFloat retweetWidth = cellWidth - 2 * IWCellBorderWidth;
+        CGFloat retweetWidth = cellWidth;
         CGFloat retweetHeight = 0;
         
         // 5.1.昵称
@@ -76,8 +88,9 @@
         // 5.2.内容
         CGFloat retweetContentX = retweetNameX;
         CGFloat retweetContentY = CGRectGetMaxY(_retweetNameLabelF) + IWCellBorderWidth;
+        
         CGSize retweetContentSize = [retweetStatus.content sizeWithFont:IWRetweetContentFont constrainedToSize:CGSizeMake(retweetWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-        _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, retweetContentSize.width, retweetContentSize.height + 10);
+        _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, retweetContentSize.width, retweetContentSize.height + 20);
         
         // 5.3.如果有配图
         if (retweetStatus.photos.count) {
@@ -98,7 +111,7 @@
         // 5.4.整体
         _retweetViewF = CGRectMake(retweetX, retweetY, retweetWidth, retweetHeight);
     }
-    
+
     // 6.整个cell的高度
     if (retweetStatus) { // 有转发微博
         _cellHeight = CGRectGetMaxY(_retweetViewF);

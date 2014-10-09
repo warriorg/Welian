@@ -7,6 +7,7 @@
 //
 
 #import "BasicTableViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface BasicTableViewController ()
 

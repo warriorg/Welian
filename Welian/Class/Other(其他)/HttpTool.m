@@ -20,7 +20,7 @@ static HttpTool *engine;
         dispatch_once(&onceToken, ^{
             engine = [[self alloc] initWithBaseURL:[NSURL URLWithString:WLHttpServer]];
             engine.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-            engine.responseSerializer = [AFHTTPResponseSerializer serializer];
+//            engine.responseSerializer = [AFHTTPResponseSerializer serializer];
         });
     }
     return engine;
@@ -43,9 +43,9 @@ static HttpTool *engine;
 
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-        
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-        
+            [WLHUDView showErrorHUD:@"senddidddd超时"];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -60,8 +60,8 @@ static HttpTool *engine;
 {
     NSString *parameterStr = [self dicTostring:parameterDic];
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":mode.sessionId};
-    [self formatUrlAndParameters:parameterDic];
+    NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":mode.sessionid};
+    [self formatUrlAndParameters:parmetDic];
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -71,9 +71,9 @@ static HttpTool *engine;
 
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-            
+          [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-            
+            [WLHUDView showErrorHUD:@"senddidddd超时"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);

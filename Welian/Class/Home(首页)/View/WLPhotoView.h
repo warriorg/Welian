@@ -11,6 +11,8 @@
 
 @interface WLPhotoView : UIImageView
 
+
+
 @property (nonatomic, strong) WLPhoto *photo;
 
 @end
