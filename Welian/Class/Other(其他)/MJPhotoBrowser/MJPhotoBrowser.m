@@ -9,7 +9,6 @@
 #import "MJPhoto.h"
 #import "SDWebImageManager+MJ.h"
 #import "MJPhotoView.h"
-#import "MJPhotoToolbar.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #define kPadding 10
@@ -23,8 +22,6 @@
     // 所有的图片view
 	NSMutableSet *_visiblePhotoViews;
     NSMutableSet *_reusablePhotoViews;
-    // 工具条
-    MJPhotoToolbar *_toolbar;
     
     // 一开始的状态栏
     BOOL _statusBarHiddenInited;

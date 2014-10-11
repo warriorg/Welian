@@ -9,8 +9,12 @@
 #import "MeInfoController.h"
 #import "NameController.h"
 #import "WorksListController.h"
+#import "UserCardController.h"
+#import "LocationprovinceController.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
 
-@interface MeInfoController () <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface MeInfoController () <LocationProDelegate>
 {
     NSArray *_data;
 }
@@ -26,11 +30,35 @@
         _iconImage = [[UIImageView alloc] init];
         
         [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-        
+        [_iconImage setUserInteractionEnabled:YES];
+        [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
 //        [_iconImage setContentMode:UIViewContentModeScaleAspectFit];
     }
     return _iconImage;
 }
+
+
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    // 1.封装图片数据
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    // 替换为中等尺寸图片
+    NSString *url = mode.avatar;
+    MJPhoto *photo = [[MJPhoto alloc] init];
+//    url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+//    url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+    photo.url = [NSURL URLWithString:url]; // 图片路径
+    photo.srcImageView = self.iconImage; // 来源于哪个UIImageView
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+    browser.photos = @[photo]; // 设置所有的图片
+    [browser show];
+    [browser.toolbar setHidden:YES];
+}
+
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,8 +67,19 @@
         [self loadPlist];
         // 2.设置tableView分割线
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_businesscard"] style:UIBarButtonItemStyleBordered target:self action:@selector(showUserCar)];
+        
     }
     return self;
+}
+
+#pragma mark 个人名片卡
+- (void)showUserCar
+{
+    UserCardController *carVC = [[UserCardController alloc] init];
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    [carVC setUserinfoM:mode];
+    [self.navigationController pushViewController:carVC animated:YES];
 }
 
 #pragma mark 读取plist文件的内容
@@ -96,8 +135,10 @@
     [cell.textLabel setText:dict[@"title"]];
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if (indexPath.section==0) {
-        [self.iconImage setFrame:CGRectMake(0, 0, 50, 50)];
-        [cell setAccessoryView:self.iconImage];
+        [self.iconImage setFrame:CGRectMake(240, 10, 40, 40)];
+        [cell.contentView addSubview:self.iconImage];
+        
+//        [cell setAccessoryView:self.iconImage];
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
             
@@ -107,11 +148,18 @@
         }else if (indexPath.row ==2){
             [cell.detailTextLabel setText:mode.position];
         }else if (indexPath.row ==3){
-            [cell.detailTextLabel setText:mode.userEmail];
+            [cell.detailTextLabel setText:mode.email];
         }else if (indexPath.row==4){
-            [cell.detailTextLabel setText:mode.userProvince];
+            if (mode.provicename||mode.cityname) {
+                
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provicename,mode.cityname]];
+            }
+        }else if (indexPath.row ==5){
+            [cell.detailTextLabel setText:mode.address];
         }
 
+    }else if (indexPath.section ==2){
+        [cell.detailTextLabel setText:nil];
     }
     return cell;
 }
@@ -191,7 +239,7 @@
             }else if (indexPath.row ==3){
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
-                        [mode setUserEmail:userInfo];
+                        [mode setEmail:userInfo];
                         
                         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -201,12 +249,18 @@
                     
                 }];
                 NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.userEmail];
-            }else if (indexPath.row==4){
+                [inffVC setUserInfoStr:mode.email];
+            } else if (indexPath.row==4){
+               LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
+                controller=locontroller;
+                [locontroller setDelegate:self];
+                [locontroller setMeinfoVC:self];
+            
+            } else if (indexPath.row==5){
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                    [WLHttpTool saveProfileParameterDic:@{@"cityid":userInfo} success:^(id JSON) {
+                    [WLHttpTool saveProfileParameterDic:@{@"address":userInfo} success:^(id JSON) {
                         
-                        [mode setUserProvince:userInfo];
+                        [mode setAddress:userInfo];
                         
                         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -215,7 +269,7 @@
                     }];
                 }];
                 NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.userProvince];
+                [inffVC setUserInfoStr:mode.address];
             }
 
         }
@@ -227,46 +281,24 @@
     
 }
 
-#pragma mark - 选取头像照片
-- (void)choosePicture
+- (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
-    [sheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    [imagePicker setAllowsEditing:YES];
-    if (buttonIndex==0) { //拍照
-        // 判断相机可以使用
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-        [self presentViewController:imagePicker animated:YES completion:^{
-            
-        }];
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    [mode setProvicename:locationDic[@"provname"]];
+    [mode setCityname:locationDic[@"cityname"]];
+    [mode setCityid:locationDic[@"cityid"]];
+    [mode setProvinceid:locationDic[@"provid"]];
+    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [WLHttpTool saveProfileParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} success:^(id JSON) {
         
+    } fail:^(NSError *error) {
         
-    }else if(buttonIndex ==1) {  // 从相册选择
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"相册不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-        [self presentViewController:imagePicker animated:YES completion:^{
-            
-        }];
-        
-    }
+    }];
     
 }
+
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -278,6 +310,7 @@
     [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [mode setAvatar:[JSON objectForKey:@"url"]];
+        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         [self.iconImage setImage:image];
         [self.tableView reloadData];
     } fail:^(NSError *error) {

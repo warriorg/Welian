@@ -10,4 +10,7 @@
 
 @interface HomeController : UITableViewController
 
+//* type=1 所有 0 自己  *//
+- (instancetype)initWithStyle:(UITableViewStyle)style withType:(NSString *)type;
+
 @end

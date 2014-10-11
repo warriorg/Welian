@@ -12,6 +12,15 @@
 
 @interface WLStatusDock : UIImageView
 
+//* 转发*//
+@property (nonatomic, strong) UIButton *repostBtn;
+
+//* 评论*//
+@property (nonatomic, strong) UIButton *commentBtn;
+
+//* 赞*//
+@property (nonatomic, strong) UIButton *attitudeBtn;
+
 @property (nonatomic, strong) WLStatusM *status;
 
 @end

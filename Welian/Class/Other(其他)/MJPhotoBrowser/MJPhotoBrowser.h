@@ -5,6 +5,7 @@
 //  Copyright (c) 2013年 itcast. All rights reserved.
 
 #import <UIKit/UIKit.h>
+#import "MJPhotoToolbar.h"
 
 @protocol MJPhotoBrowserDelegate;
 @interface MJPhotoBrowser : UIViewController <UIScrollViewDelegate>
@@ -15,6 +16,9 @@
 @property (nonatomic, strong) NSArray *photos;
 // 当前展示的图片索引
 @property (nonatomic, assign) NSUInteger currentPhotoIndex;
+
+// 工具条
+@property (nonatomic, strong) MJPhotoToolbar *toolbar;
 
 // 显示
 - (void)show;

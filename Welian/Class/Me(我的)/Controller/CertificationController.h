@@ -9,5 +9,7 @@
 #import "BasicTableViewController.h"
 
 @interface CertificationController : BasicTableViewController
+
 @property (nonatomic, strong) NSArray *dataArray;
+
 @end

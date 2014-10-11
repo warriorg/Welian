@@ -16,7 +16,7 @@
 #import "WLBasicTrends.h"
 #import "UIImageView+WebCache.h"
 
-@interface WLStatusCell ()
+@interface WLStatusCell () <UIActionSheetDelegate>
 {
     /** 头像 */
     UIImageView *_iconView;
@@ -43,11 +43,10 @@
     /** 转发微博的内容 */
     TQRichTextView *_retweetContentLabel;
     
-    /** 微博工具条 */
-    WLStatusDock *_dock;
-    /** 右上角按钮 */
+    
+    UserInfoModel *_mode;
 
-
+//    WLCellMoreBlock _cellMoreBlock;
 }
 @end
 
@@ -58,13 +57,16 @@
     static NSString *CellIdentifier = @"Cell";
     WLStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
+//        cell = [[WLStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier withBlok:(WLCellMoreBlock)moreBlock]
         cell = [[WLStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
     }
     return cell;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
+//    _cellMoreBlock = moreBlock;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // 1.添加原创微博的子控件
@@ -104,7 +106,7 @@
  */
 - (void)setupOriginalSubviews
 {
-#warning 清除cell默认的背景色(才能只显示背景view、背景图片)
+// 清除cell默认的背景色(才能只显示背景view、背景图片)
     self.backgroundColor = [UIColor clearColor];
     
     // 1.头像
@@ -114,7 +116,7 @@
     // 2.昵称
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = IWNameFont;
-#warning 清除背景颜色
+// 清除背景颜色
     _nameLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_nameLabel];
     
@@ -124,19 +126,13 @@
     _timeLabel.textColor = [UIColor darkGrayColor];
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];
-    
-//    // 4.来源
-//    _sourceLabel = [[UILabel alloc] init];
-//    _sourceLabel.font = IWSourceFont;
-//    _sourceLabel.textColor = IWSourceColor;
-//    _sourceLabel.backgroundColor = [UIColor clearColor];
-//    [self.contentView addSubview:_sourceLabel];
+
     
     // 5.内容
     _contentLabel = [[TQRichTextView alloc] init];
     _contentLabel.font = IWContentFont;
     _contentLabel.textColor = IWContentColor;
-#warning 自动换行
+// 自动换行
     //    _contentLabel.numberOfLines = 0;
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_contentLabel];
@@ -148,8 +144,39 @@
 //    // 7.微博会员图标
     _mbView = [[UIImageView alloc] init];
     [self.contentView addSubview:_mbView];
+    
+    // 8.更多按钮
+    _moreBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    // 8.1.设置内部的图片
+    [_moreBut setImage:[UIImage imageNamed:@"me_mywriten_more"] forState:UIControlStateNormal];
+//    [_moreBut setImage:[UIImage imageNamed:@"timeline_icon_more_highlighted"] forState:UIControlStateHighlighted];
+    // 8.2.设置按钮的frame
+    CGFloat btnWH = 35;
+    CGFloat btnY = 0;
+    CGFloat btnX = self.contentView.frame.size.width - btnWH-10;
+    _moreBut.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
+    // 8.3.设置按钮永远停留在右上角
+    _moreBut.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.contentView addSubview:_moreBut];
+    
+//    [_moreBut addTarget:self action:@selector(moreClick:) forControlEvents:UIControlEventTouchUpInside];
 
 }
+
+
+//#pragma mark - 更多按钮
+//- (void)moreClick:(UIButton*)but
+//{
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除该条动态" otherButtonTitles:nil,nil];
+//    [sheet showInView:self];
+//}
+//
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex==0) {
+//        _cellMoreBlock(_statusFrame);
+//    }
+//}
 
 /**
  *  添加转发微博的子控件
@@ -207,6 +234,9 @@
     WLStatusM *status = statusFrame.status;
     
     WLBasicTrends *user = status.user;
+    if (!_mode) {
+        _mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    }
     
     // 1.头像
     _iconView.frame = statusFrame.iconViewF;
@@ -222,15 +252,26 @@
 
     _mbView.hidden = NO;
     _mbView.frame = statusFrame.mbViewF;
-    // 3.会员图标
-    if (user.relation == WLRelationTypeNone) { // 关系无
-        _mbView.hidden = YES;
-    } else if(user.relation == WLRelationTypeFriend){ // 朋友
-        [_mbView setImage:[UIImage imageNamed:@"home_label_friend"]];
+    
 
-    }else if (user.relation == WLRelationTypeFriendsFriend){
-        [_mbView setImage:[UIImage imageNamed:@"home_label_friendsfriend"]];
+    if ([_mode.uid integerValue]==[user.uid integerValue]) {
+        [_moreBut setHidden:NO];
+        [_mbView setHidden:YES];
+    }else{
+        [_moreBut setHidden:YES];
+        [_mbView setHidden:NO];
+        // 3.会员图标
+        if (user.friendship == WLRelationTypeNone) { // 关系无
+            _mbView.hidden = YES;
+        } else if(user.friendship == WLRelationTypeFriend){ // 朋友
+            [_mbView setImage:[UIImage imageNamed:@"home_label_friend"]];
+            
+        }else if (user.friendship == WLRelationTypeFriendsFriend){
+            [_mbView setImage:[UIImage imageNamed:@"home_label_friendsfriend"]];
+        }
+
     }
+    
     
     // 4.配图
     if (status.photos.count) {

@@ -13,6 +13,7 @@
 #import "SettingController.h"
 #import "CertificationController.h"
 #import "MyLocationController.h"
+#import "HomeController.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -21,6 +22,7 @@
 
 @end
 
+static NSString *meinfocellid = @"MeinfoCell";
 @implementation MeViewController
 
 
@@ -43,8 +45,13 @@
     [self loadPlist];
     
     // 3.设置tableView属性
-//    [self buildTableView];
+    [self buildTableView];
     
+}
+
+- (void)buildTableView
+{
+    [self.tableView registerNib:[UINib nibWithNibName:@"MeinfoCell" bundle:nil] forCellReuseIdentifier:meinfocellid];
 }
 
 
@@ -74,19 +81,19 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
     if (indexPath.section==0) {
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
         
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-        [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
-        [cell.textLabel setText:mode.name];
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@    %@",mode.company,mode.position]];
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [cell.MyNameLabel setText:mode.name];
+        [cell.deleLabel setText:[NSString stringWithFormat:@"%@    %@",mode.position,mode.company]];
+        [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        return cell;
     }else{
-    
+        if (nil == cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
         // 1.取出这行对应的字典数据
         NSDictionary *dict = _data[indexPath.section][indexPath.row];
         // 2.设置文字
@@ -118,7 +125,13 @@
         controller = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
         [controller setTitle:@"个人信息"];
     }else if (indexPath.section==1){
-        controller = [[MyLocationController alloc] init];
+        if (indexPath.row==0) {
+            
+            controller = [[MyLocationController alloc] init];
+        }else if (indexPath.row ==1){
+            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain withType:@"0"];
+            [controller setTitle:@"我的动态"];
+        }
 
     }else if (indexPath.section==2){
         controller = [[CertificationController alloc] init];

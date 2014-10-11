@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "WLHttpTool.h"
 #import "UserInfoTool.h"
+#import "WLHUDView.h"
+
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h

@@ -17,7 +17,7 @@
 
 @interface MainViewController () <UINavigationControllerDelegate>
 {
-      
+    
 //    // 地理编码器
 //    CLGeocoder              *_geocoder;
 //    
@@ -67,7 +67,7 @@
     // 首页
     UITabBarItem *homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
-    HomeController *homeVC = [[HomeController alloc] init];
+    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain withType:@"1"];
     [homeVC.navigationItem setTitle:@"动态"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeNav setDelegate:self];

@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *headPicImage;
 @property (weak, nonatomic) IBOutlet UILabel *MyNameLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *deleLabel;
 
 
 @end

@@ -8,6 +8,7 @@
 
 #import "CertificationController.h"
 #import "PioneeringController.h"
+#import "InvestViewController.h"
 
 @interface CertificationController ()
 
@@ -19,7 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.dataArray = @[@"投资人认证",@"创业者认证"];
+    self.dataArray = @[@"投资人认证"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -34,9 +35,29 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_chuang_big"]];
-        [imageV setFrame:CGRectMake(250, 13, 30, 22)];
-        [cell.contentView addSubview:imageV];
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        UIButton *tayBut = [[UIButton alloc] initWithFrame:CGRectMake(220, 13, 70, 22)];
+        [tayBut setEnabled:NO];
+        [cell.contentView addSubview:tayBut];
+        [tayBut setHidden:NO];
+        NSInteger inves = [mode.investorauth integerValue];
+        DLog(@"%@", [mode.investorauth class]);
+        switch (inves) {
+            case 0:
+                [tayBut setHidden:YES];
+                break;
+            case 1:
+                [tayBut setImage:[UIImage imageNamed:@"me_renzheng_certification_bg"] forState:UIControlStateDisabled];
+                break;
+            case -1:
+                [tayBut setImage:[UIImage imageNamed:@"me_renzheng_certification_failed_bg"] forState:UIControlStateDisabled];
+                break;
+            case -2:
+                [tayBut setImage:[UIImage imageNamed:@"me_renzheng_uncertification_bg"] forState:UIControlStateDisabled];
+                break;
+            default:
+                break;
+        }
     }
     [cell.textLabel setText:self.dataArray[indexPath.row]];
     return cell;
@@ -45,8 +66,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PioneeringController *pioneVC = [[PioneeringController alloc] init];
-    [self.navigationController pushViewController:pioneVC animated:YES];
+    if (indexPath.row==0) {
+        InvestViewController *invesVC = [[InvestViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [invesVC setTitle:self.dataArray[indexPath.row]];
+        [self.navigationController pushViewController:invesVC animated:YES];
+    }else if (indexPath.row==1){
+    
+        PioneeringController *pioneVC = [[PioneeringController alloc] init];
+        [pioneVC setTitle:self.dataArray[indexPath.row]];
+        [self.navigationController pushViewController:pioneVC animated:YES];
+    }
 }
 
 

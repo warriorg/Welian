@@ -14,4 +14,7 @@
 /**  学校名称   */
 @property (nonatomic, strong) NSString *schoolname;
 
+/**  usid   */
+@property (nonatomic, assign) NSInteger usid;
+
 @end

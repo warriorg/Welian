@@ -36,7 +36,7 @@ typedef enum {
 @property (nonatomic, assign) WLVerifiedType status;
 
 /**  关系 0非，1好友，2好友的好友  */
-@property (nonatomic, assign) WLRelationType relation;
+@property (nonatomic, assign) WLRelationType friendship;
 
 
 @end

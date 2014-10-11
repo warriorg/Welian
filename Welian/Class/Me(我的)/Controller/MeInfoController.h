@@ -10,4 +10,6 @@
 
 @interface MeInfoController : BasicTableViewController
 
+- (void)locationProvinController:(UIViewController *)locationVC withLocationDic:(NSDictionary *)locationDic;
+
 @end

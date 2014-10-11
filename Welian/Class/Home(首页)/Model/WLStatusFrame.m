@@ -41,10 +41,10 @@
     
     //    // 朋友关系图片
     CGFloat mbW = 0;
-    if(user.relation == WLRelationTypeFriend){ // 朋友
+    if(user.friendship == WLRelationTypeFriend){ // 朋友
         mbW = WLFriendW;
         
-    }else if (user.relation == WLRelationTypeFriendsFriend){
+    }else if (user.friendship == WLRelationTypeFriendsFriend){
         mbW = WLFriendsFriend;
     }
     CGFloat mbX = cellWidth - mbW-10;

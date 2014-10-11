@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="S1n-rc-k9I" customClass="MeinfoCell">
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="MeinfoCell" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MeinfoCell" id="S1n-rc-k9I" customClass="MeinfoCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S1n-rc-k9I" id="HUc-qa-3Xs">
@@ -16,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hT4-F7-iZ1">
                         <rect key="frame" x="15" y="10" width="40" height="40"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="hT4-F7-iZ1" secondAttribute="height" multiplier="1:1" id="0WP-K4-wLm"/>
                             <constraint firstAttribute="width" constant="40" id="Yam-Ag-CsX"/>
@@ -24,23 +24,14 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="陈日沙" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inm-M0-G6o">
-                        <rect key="frame" x="70" y="12" width="51" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="70" y="12" width="51" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="weLian" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lEM-vI-Aix">
-                        <rect key="frame" x="70" y="32" width="51" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="weLiansdfsdf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUB-cO-KTP">
-                        <rect key="frame" x="129" y="32" width="91" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="70" y="32" width="200" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="JuE-r1-WBl"/>
+                            <constraint firstAttribute="width" constant="200" id="BT2-KU-omj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,20 +42,22 @@
                     <constraint firstItem="inm-M0-G6o" firstAttribute="top" secondItem="HUc-qa-3Xs" secondAttribute="top" constant="12" id="75g-ax-GdD"/>
                     <constraint firstItem="inm-M0-G6o" firstAttribute="leading" secondItem="hT4-F7-iZ1" secondAttribute="trailing" constant="15" id="8J0-tD-tzb"/>
                     <constraint firstItem="lEM-vI-Aix" firstAttribute="top" secondItem="HUc-qa-3Xs" secondAttribute="top" constant="32" id="AMc-UA-N9l"/>
-                    <constraint firstItem="rUB-cO-KTP" firstAttribute="top" secondItem="lEM-vI-Aix" secondAttribute="top" id="D7h-LI-s0E"/>
                     <constraint firstItem="hT4-F7-iZ1" firstAttribute="top" secondItem="HUc-qa-3Xs" secondAttribute="top" constant="10" id="DV1-f3-i9c"/>
-                    <constraint firstItem="rUB-cO-KTP" firstAttribute="leading" secondItem="lEM-vI-Aix" secondAttribute="trailing" constant="8" symbolic="YES" id="PHs-hb-bQe"/>
                     <constraint firstAttribute="bottom" secondItem="lEM-vI-Aix" secondAttribute="bottom" constant="6" id="Pq8-L1-lDP"/>
                     <constraint firstItem="lEM-vI-Aix" firstAttribute="leading" secondItem="inm-M0-G6o" secondAttribute="leading" id="Qrg-w6-w8m"/>
-                    <constraint firstItem="rUB-cO-KTP" firstAttribute="baseline" secondItem="lEM-vI-Aix" secondAttribute="baseline" id="Tnu-Hl-jwB"/>
                     <constraint firstItem="hT4-F7-iZ1" firstAttribute="leading" secondItem="HUc-qa-3Xs" secondAttribute="leading" constant="15" id="YMt-pi-15T"/>
-                    <constraint firstItem="rUB-cO-KTP" firstAttribute="leading" secondItem="inm-M0-G6o" secondAttribute="trailing" constant="8" symbolic="YES" id="pgp-8n-dvx"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="MyNameLabel" destination="inm-M0-G6o" id="8Gi-pc-OHP"/>
+                <outlet property="deleLabel" destination="lEM-vI-Aix" id="jeM-MH-pTc"/>
                 <outlet property="headPicImage" destination="hT4-F7-iZ1" id="4bA-FO-gxz"/>
             </connections>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

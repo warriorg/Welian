@@ -107,16 +107,18 @@
             NSDictionary *daDic = [_schoolM keyValues];
             
             [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
-                
+                [WLHUDView showSuccessHUD:@"保存成功！"];
+                [self dismissVC];
             } fail:^(NSError *error) {
                 
             }];
         }
     }else if (_wlUserLoadType == 1){
-        if (_companyM.company&&_companyM.startyear&&_companyM.endyear) {
+        if (_companyM.companyname&&_companyM.startyear&&_companyM.endyear) {
             NSDictionary *datDic = [_companyM keyValues];
             [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
-                
+                [WLHUDView showSuccessHUD:@"保存成功！"];
+                [self dismissVC];
             } fail:^(NSError *error) {
                 
             }];
@@ -181,18 +183,18 @@
     }else if (_wlUserLoadType==1){
         if (indexPath.row==0) {
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            [cell.detailTextLabel setText:_companyM.company];
+            [cell.detailTextLabel setText:_companyM.companyname];
         }else if(indexPath.row ==1){
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             
             [self.beginTextF setInputView:self.datePick];
-            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-100, size.height)];
+            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
             
             [cell.contentView addSubview:self.beginTextF];
         }else if (indexPath.row==2){
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [self.endTextF setInputView:self.datePick];
-            [self.endTextF setFrame:CGRectMake(100, 0, size.width-100, size.height)];
+            [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
             
             [cell.contentView addSubview:self.endTextF];
         }
@@ -222,18 +224,19 @@
             if (_wlUserLoadType==0) {
                 [_schoolM setSchoolname:userInfo];
             }else if (_wlUserLoadType == 1){
-                [_companyM setCompany:userInfo];
+                [_companyM setCompanyname:userInfo];
             }
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
         if (_wlUserLoadType==0) {
             [companyName setUserInfoStr:_schoolM.schoolname];
         }else if (_wlUserLoadType ==1){
-            [companyName setUserInfoStr:_companyM.company];
+            [companyName setUserInfoStr:_companyM.companyname];
         }
         [self.navigationController pushViewController:companyName animated:YES];
     }
 }
+
 
 -(void)dateChanged:(UIDatePicker *)sender{
 

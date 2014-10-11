@@ -11,24 +11,26 @@
 #import "WLHUDView.h"
 #import "WLUserStatusesResult.h"
 #import "MJExtension.h"
+#import "InvestAuthModel.h"
+#import "SchoolModel.h"
+#import "CompanyModel.h"
 
 @implementation WLHttpTool
 
 #pragma mark - 登陆获取验证码/密码
 + (void)loginGetCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [WLHUDView showHUDWithStr:@"获取验证码" dim:NO];
     [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
         if ([JSON objectForKey:@"checkcode"]) {
             UserInfoModel *mod = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
             [mod setCheckcode:[JSON objectForKey:@"checkcode"]];
             [[UserInfoTool sharedUserInfoTool] saveUserInfo:mod];
         }
-        [WLHUDView hiddenHud];
+
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 
@@ -40,7 +42,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 
@@ -51,7 +53,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 用户注册填写信息
@@ -63,7 +65,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 修改用户信息
@@ -75,7 +77,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
-    }];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 修改用户头像
@@ -87,7 +89,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
 }
 
 
@@ -99,24 +101,32 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 加载好友最新动态
 + (void)loadFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-//    [WLHUDView showHUDWithStr:@"玩命加载..." dim:NO];
-    NSDictionary *dic = @{@"type":@"loadFeed",@"data":parameterDic};
+    NSDictionary *dic;
+    
+    if ([[parameterDic objectForKey:@"uid"] integerValue]== 0) {
+        dic = @{@"type":@"loadUserFeed",@"data":parameterDic};
+    }else {
+        dic = @{@"type":@"loadFeed",@"data":parameterDic};
+    
+    }
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        if (JSON) {
+            
+            WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
+            succeBlock (result);
+        }
 //        [WLHUDView showSuccessHUD:@""];
-        WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
         
-        
-        succeBlock (result);
     } failure:^(NSError *error) {
         
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 关键字搜索公司
@@ -126,7 +136,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 
 }
 
@@ -138,7 +148,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 关键字搜索职位
@@ -148,27 +158,36 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 投资者认证
 + (void)investAuthParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"investAuth",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 取投资者认证信息
 + (void)getInvestAuthParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
-        succeBlock (JSON);
+    NSDictionary *dic = @{@"type":@"getInvestAuth",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
+        InvestAuthModel *investM = [[InvestAuthModel alloc] init];
+        if (datadic.allKeys) {
+            [investM setUrl:[datadic objectForKey:@"url"]];
+            [investM setInvestType:[datadic objectForKey:@"auth"]];
+            investM.items = [[datadic objectForKey:@"items"] componentsSeparatedByString:@","];
+        }
+        succeBlock (investM);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 取动态评论
@@ -178,7 +197,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 添加动态评论
@@ -188,7 +207,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 删除评论
@@ -198,7 +217,18 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
+}
+
+#pragma mark - 删除自己动态
++ (void)deleteFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteFeed",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock (JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 转发评论
@@ -208,17 +238,18 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 添加动态赞
 + (void)addFeedZanParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"addFeedZan",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 
 }
 
@@ -230,17 +261,19 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 取消赞
 + (void)deleteFeedZanParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"deleteFeedZan",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 根据uid取用户信息  0取自己
@@ -250,17 +283,18 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 根据uid取用户好友  0取自己
 + (void)loadFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
+    
     [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 根据fid取一条动态信息
@@ -270,7 +304,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 取发现
@@ -280,21 +314,21 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 添加教育经历
 + (void)addSchoolParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     
-    NSDictionary *dic = @{@"type":@"addSchool",@"data":@[parameterDic]};
+    NSDictionary *dic = @{@"type":@"addSchool",@"data":parameterDic};
     
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 取教育经历
@@ -303,10 +337,28 @@
     NSDictionary *dic = @{@"type":@"loadUserSchool",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataA = [NSArray arrayWithArray:JSON];
-        succeBlock(dataA);
+        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
+        for (NSDictionary *dic in dataA) {
+            SchoolModel *schoolM = [[SchoolModel alloc] init];
+            [schoolM setKeyValues:dic];
+            [dataArrayM addObject:schoolM];
+        }
+        succeBlock(dataArrayM);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 删除教育经历
++ (void)deleteUserSchoolParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteUserSchool",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
 }
 
 
@@ -316,11 +368,17 @@
 {
     NSDictionary *dic = @{@"type":@"loadUserCompany",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
-        
-        succeBlock(JSON);
+        NSArray *dataA = [NSArray arrayWithArray:JSON];
+        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
+        for (NSDictionary *dic in dataA) {
+            CompanyModel *companyM= [[CompanyModel alloc] init];
+            [companyM setKeyValues:dic];
+            [dataArrayM addObject:companyM];
+        }
+        succeBlock(dataArrayM);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 添加工作经历
@@ -332,7 +390,21 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    }];
+    } withHUD:YES andDim:NO];
+}
+
+#pragma mark - 删除工作经历
++ (void)deleteUserCompanyParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    NSDictionary *dic = @{@"type":@"deleteUserCompany",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        [WLHUDView showSuccessHUD:@"删除成功"];
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        [WLHUDView showErrorHUD:@"删除失败"];
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
 }
 
 

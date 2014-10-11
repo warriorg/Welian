@@ -33,7 +33,10 @@ BMKMapManager* _mapManager;
 	if (!ret) {
         
 	}
-
+    
+    // 添加微信分享
+    [WXApi registerApp:@"wx4150b21797fa0a5e"];
+    
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -79,10 +82,10 @@ BMKMapManager* _mapManager;
 - (void)onGetNetworkState:(int)iError
 {
     if (0 == iError) {
-        NSLog(@"联网成功");
+        DLog(@"百度地图-------------联网成功");
     }
     else{
-        NSLog(@"onGetNetworkState %d",iError);
+        DLog(@"百度地图------------- %d",iError);
     }
     
 }
@@ -90,10 +93,10 @@ BMKMapManager* _mapManager;
 - (void)onGetPermissionState:(int)iError
 {
     if (0 == iError) {
-        NSLog(@"授权成功");
+        DLog(@"百度地图-------------授权成功");
     }
     else {
-        NSLog(@"onGetPermissionState %d",iError);
+        DLog(@"百度地图------------- %d",iError);
     }
 }
 
@@ -133,6 +136,16 @@ BMKMapManager* _mapManager;
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [WXApi handleOpenURL:url delegate:self];
 }
 
 @end

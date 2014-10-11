@@ -15,15 +15,22 @@
 {
     [encoder encodeObject:_name forKey:@"_userName"];
     [encoder encodeObject:_mobile forKey:@"_userPhone"];
-    [encoder encodeObject:_userEmail forKey:@"_userEmail"];
+    [encoder encodeObject:_email forKey:@"_userEmail"];
     [encoder encodeObject:_avatar forKey:@"_userIcon"];
     [encoder encodeObject:_position forKey:@"_userJob"];
     [encoder encodeObject:_company forKey:@"_userIncName"];
-    [encoder encodeObject:_userCity forKey:@"_userCity"];
-    [encoder encodeObject:_userProvince forKey:@"_userProvince"];
+    [encoder encodeObject:_cityname forKey:@"_cityname"];
+    [encoder encodeObject:_provicename forKey:@"_provicename"];
     [encoder encodeObject:_checkcode forKey:@"_checkcode"];
     [encoder encodeObject:_sessionid forKey:@"_sessionId"];
+    [encoder encodeObject:_cityid forKey:@"_cityid"];
     [encoder encodeObject:_uid forKey:@"_uid"];
+    [encoder encodeObject:_provinceid forKey:@"_provinceid"];
+    [encoder encodeObject:_investorauth forKey:@"_investorauth"];
+    [encoder encodeObject:_startupauth forKey:@"_startupauth"];
+    [encoder encodeObject:_friendship forKey:@"_friendship"];
+    [encoder encodeObject:_shareurl forKey:@"_shareurl"];
+    [encoder encodeObject:_address forKey:@"_address"];
 }
 
 
@@ -32,15 +39,22 @@
     if (self = [super init]) {
         self.name = [aDecoder decodeObjectForKey:@"_userName"];
         self.mobile = [aDecoder decodeObjectForKey:@"_userPhone"];
-        self.userEmail = [aDecoder decodeObjectForKey:@"_userEmail"];
+        self.email = [aDecoder decodeObjectForKey:@"_userEmail"];
         self.avatar = [aDecoder decodeObjectForKey:@"_userIcon"];
         self.company = [aDecoder decodeObjectForKey:@"_userIncName"];
         self.position = [aDecoder decodeObjectForKey:@"_userJob"];
-        self.userCity = [aDecoder decodeObjectForKey:@"_userCity"];
-        self.userProvince = [aDecoder decodeObjectForKey:@"_userProvince"];
+        self.cityname = [aDecoder decodeObjectForKey:@"_cityname"];
+        self.provicename = [aDecoder decodeObjectForKey:@"_provicename"];
         self.checkcode = [aDecoder decodeObjectForKey:@"_checkcode"];
         self.sessionid = [aDecoder decodeObjectForKey:@"_sessionId"];
+        self.cityid = [aDecoder decodeObjectForKey:@"_cityid"];
         self.uid = [aDecoder decodeObjectForKey:@"_uid"];
+        self.provinceid = [aDecoder decodeObjectForKey:@"_provinceid"];
+        self.investorauth = [aDecoder decodeObjectForKey:@"_investorauth"];
+        self.startupauth = [aDecoder decodeObjectForKey:@"_startupauth"];
+        self.friendship = [aDecoder decodeObjectForKey:@"_friendship"];
+        self.shareurl = [aDecoder decodeObjectForKey:@"_shareurl"];
+        self.address = [aDecoder decodeObjectForKey:@"_address"];
     }
     return self;
 }

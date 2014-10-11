@@ -11,11 +11,7 @@
 #import "UIImage+ImageEffects.h"
 
 @interface WLStatusDock ()
-{
-    UIButton *_repostBtn;
-    UIButton *_commentBtn;
-    UIButton *_attitudeBtn;
-}
+
 @end
 
 @implementation WLStatusDock
@@ -98,15 +94,16 @@
     
     // 3.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan];
+    
 
     if (status.iszan==1) { // 已赞
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
     }else {
-        
+        [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good"] forState:UIControlStateNormal];
     }
-    
-    
 }
+
+
 
 /**
  *  设置按钮文字

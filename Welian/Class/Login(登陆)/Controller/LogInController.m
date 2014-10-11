@@ -125,6 +125,15 @@
                         [mode setUid:[JSON objectForKey:@"uid"]];
                         [mode setSessionid:[JSON objectForKey:@"sessionid"]];
                         [mode setAvatar:[JSON objectForKey:@"avatar"]];
+                        [mode setInvestorauth:[JSON objectForKey:@"investorauth"]];
+                        [mode setStartupauth:[JSON objectForKey:@"startupauth"]];
+                        [mode setEmail:[JSON objectForKey:@"email"]];
+                        [mode setShareurl:[JSON objectForKey:@"shareurl"]];
+                        [mode setAddress:[JSON objectForKey:@"address"]];
+                        [mode setProvinceid:[JSON objectForKey:@"provinceid"]];
+                        [mode setProvicename:[JSON objectForKey:@"provincename"]];
+                        [mode setCityid:[JSON objectForKey:@"cityid"]];
+                        [mode setCityname:[JSON objectForKey:@"cityname"]];
                         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         MainViewController *mainVC = [[MainViewController alloc] init];
                         [self.view.window setRootViewController:mainVC];

@@ -105,6 +105,8 @@
         // 替换为中等尺寸图片
         NSString *url = photoView.photo.url;
         MJPhoto *photo = [[MJPhoto alloc] init];
+        url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+        url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
         photo.url = [NSURL URLWithString:url]; // 图片路径
         photo.srcImageView = photoView; // 来源于哪个UIImageView
         [photos addObject:photo];

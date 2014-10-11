@@ -9,6 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @interface UserInfoModel : NSObject <NSCoding>
+
+
+/**  对外分享url   */
+@property (nonatomic, strong) NSString *shareurl;
+
+/**  投资者认证   */
+@property (nonatomic, strong) NSString *investorauth;
+
+/**  创业者认证   */
+@property (nonatomic, strong) NSString *startupauth;
+
+/**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+@property (nonatomic, strong) NSString *friendship;
+
 /**
  * 用户姓名
  */
@@ -32,15 +46,24 @@
 /**
  *  用户邮箱
  */
-@property (nonatomic, strong) NSString *userEmail;
-/**
- *  省
- */
-@property (nonatomic, strong) NSString *userProvince;
-/**
- *  市
- */
-@property (nonatomic, strong) NSString *userCity;
+@property (nonatomic, strong) NSString *email;
+
+/**省id*/
+@property (nonatomic, strong) NSString *provinceid;
+
+/**  省份名称   */
+@property (nonatomic, strong) NSString *provicename;
+
+/**  地址   */
+@property (nonatomic, strong) NSString *address;
+
+/**  城市id*/
+@property (nonatomic, strong) NSString *cityid;
+
+/**  城市名称   */
+@property (nonatomic, strong) NSString *cityname;
+
+
 
 /**  密码 验证码   */
 @property (nonatomic, strong) NSString *checkcode;

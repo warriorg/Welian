@@ -16,7 +16,7 @@
     if (self) {
         [self.layer setCornerRadius:10];
         [self.layer setMasksToBounds:YES];
-        
+
         self.phoneTextF = [[UITextField alloc] initWithFrame:CGRectMake(10, 80, 270, 40)];
         [self.phoneTextF setDelegate:self];
         [self.phoneTextF.layer setCornerRadius:8];

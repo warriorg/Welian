@@ -9,7 +9,7 @@
 #import "BasicTableViewController.h"
 #import "UIImageView+WebCache.h"
 
-@interface BasicTableViewController ()
+@interface BasicTableViewController ()  <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @end
 
@@ -47,6 +47,54 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+#pragma mark - 选取头像照片
+- (void)choosePicture
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    [imagePicker setAllowsEditing:YES];
+    if (buttonIndex==0) { //拍照
+        // 判断相机可以使用
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        }else {
+            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
+            return;
+        }
+        
+        [self presentViewController:imagePicker animated:YES completion:^{
+            
+        }];
+        
+        
+    }else if(buttonIndex ==1) {  // 从相册选择
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            
+        }else {
+            [[[UIAlertView alloc] initWithTitle:nil message:@"相册不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
+            return;
+        }
+        [self presentViewController:imagePicker animated:YES completion:^{
+            
+        }];
+        
+    }
+    
+}
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
 }
 
 - (void)didReceiveMemoryWarning

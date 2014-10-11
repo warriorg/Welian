@@ -9,22 +9,28 @@
 #import "WorksListController.h"
 #import "NavViewController.h"
 #import "AddWorkOrEducationController.h"
+#import "SchoolModel.h"
+#import "CompanyModel.h"
+#import "NoListView.h"
 
 @interface WorksListController ()
 @property (nonatomic, strong) NSMutableArray *dataArray;
-@property (nonatomic, strong) UIImageView *nostringImage;
+//@property (nonatomic, strong) UIImageView *nostringImage;
+@property (nonatomic, strong) NoListView *nolistView;
 @end
 
 @implementation WorksListController
 
-- (UIImageView *)nostringImage
+- (NoListView*)nolistView
 {
-    if (_nostringImage==nil) {
-        _nostringImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_bg"]];
-        [_nostringImage setFrame:self.tableView.frame];
+    if (_nolistView == nil) {
+        _nolistView = [[[NSBundle mainBundle] loadNibNamed:@"NoListView" owner:self options:nil] lastObject];
+        [_nolistView setFrame:self.view.bounds];
+        [_nolistView setCenter:self.view.center];
     }
-    return _nostringImage;
+    return _nolistView;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -36,6 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.dataArray = [NSMutableArray array];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl beginRefreshing];
@@ -53,18 +60,17 @@
 #pragma mark - 加载数据
 - (void)loadDataArray
 {
-    self.dataArray = [NSMutableArray array];
     if (self.wlUserLoadType == WLSchool) {
         [WLHttpTool loadUserSchoolParameterDic:@{} success:^(id JSON) {
             [self.refreshControl endRefreshing];
             self.dataArray = JSON;
             if (self.dataArray.count) {
-                
-                
+                [self.tableView reloadData];
+                [self.nolistView removeFromSuperview];
             }else{
-                if (self.nostringImage.superview==nil) {
+                if (self.nolistView.superview==nil) {
                     
-//                    [self.tableView addSubview:self.nostringImage];
+                    [self.tableView addSubview:self.nolistView];
                 }
             }
         } fail:^(NSError *error) {
@@ -76,11 +82,11 @@
             
             self.dataArray = JSON;
             if (self.dataArray.count) {
-                
-                
+                [self.tableView reloadData];
+                [self.nolistView removeFromSuperview];
             }else{
-                if (self.nostringImage.superview==nil) {
-                    [self.tableView addSubview:self.nostringImage];
+                if (self.nolistView.superview==nil) {
+                    [self.tableView addSubview:self.nolistView];
                 }
             }
 
@@ -128,10 +134,15 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellid];
     }
-    
-    NSDictionary *dataDic = self.dataArray[indexPath.section];
-    [cell.textLabel setText:dataDic[@"name"]];
-    [cell.detailTextLabel setText:dataDic[@"date"]];
+    if (self.wlUserLoadType == WLSchool) {
+        SchoolModel *schoolM = self.dataArray[indexPath.section];
+        [cell.textLabel setText:schoolM.schoolname];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d年%d月  -  %d年%d月",schoolM.startyear,schoolM.startmonth,schoolM.endyear,schoolM.endmonth]];
+    }else if (self.wlUserLoadType == WLCompany){
+        CompanyModel *companyM = self.dataArray[indexPath.section];
+        [cell.textLabel setText:companyM.companyname];
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d年%d月  -  %d年%d月",companyM.startyear,companyM.startmonth,companyM.endyear,companyM.endmonth]];
+    }
     
     return cell;
 }
@@ -145,10 +156,38 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove the row from data model
-    [self.dataArray removeObjectAtIndex:indexPath.section];
-    NSIndexSet *indexset = [NSIndexSet indexSetWithIndex:indexPath.section];
-    //移除tableView中的数据
-    [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationRight];
+    if (self.wlUserLoadType == WLSchool) {
+        SchoolModel *scmode = self.dataArray[indexPath.section];
+        [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":@(scmode.usid)} success:^(id JSON) {
+            
+            [self.dataArray removeObjectAtIndex:indexPath.section];
+            if (self.dataArray.count==0) {
+                [self.tableView addSubview:self.nolistView];
+            }
+            NSIndexSet *indexset = [NSIndexSet indexSetWithIndex:indexPath.section];
+            //移除tableView中的数据
+            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationRight];
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }else if (self.wlUserLoadType == WLCompany){
+        CompanyModel *commode = self.dataArray[indexPath.section];
+        [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":@(commode.ucid)} success:^(id JSON) {
+            
+            [self.dataArray removeObjectAtIndex:indexPath.section];
+            
+            if (self.dataArray.count==0) {
+                [self.tableView addSubview:self.nolistView];
+            }
+            NSIndexSet *indexset = [NSIndexSet indexSetWithIndex:indexPath.section];
+            //移除tableView中的数据
+            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationRight];
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }
 
 }
 

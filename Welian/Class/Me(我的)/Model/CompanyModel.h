@@ -12,6 +12,9 @@
 /**  企业id   */
 @property (nonatomic, assign) NSInteger companyid;
 /**  企业名称   */
-@property (nonatomic, strong) NSString *company;
+@property (nonatomic, strong) NSString *companyname;
+
+/**  ucid   */
+@property (nonatomic, assign) NSInteger ucid;
 
 @end
