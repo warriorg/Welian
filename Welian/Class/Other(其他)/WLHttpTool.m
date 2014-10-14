@@ -14,6 +14,7 @@
 #import "InvestAuthModel.h"
 #import "SchoolModel.h"
 #import "CompanyModel.h"
+#import "CommentCellFrame.h"
 
 @implementation WLHttpTool
 
@@ -193,8 +194,20 @@
 #pragma mark - 取动态评论
 + (void)loadFeedCommentParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
-        succeBlock (JSON);
+    NSDictionary *dic = @{@"type":@"loadFeedComment",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *dataArray = [NSArray arrayWithArray:JSON];
+        NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:dataArray.count];
+        for (NSDictionary *dic in dataArray) {
+            
+            CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
+            CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+            [commentFrame setCommentM:commentM];
+            
+            [dataAM addObject:commentFrame];
+        }
+        succeBlock (dataAM);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:NO andDim:NO];
@@ -203,7 +216,10 @@
 #pragma mark - 添加动态评论
 + (void)addFeedCommentParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    
+     NSDictionary *dic = @{@"type":@"addFeedComment",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);

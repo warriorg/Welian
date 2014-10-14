@@ -35,9 +35,11 @@
 /** 转发微博的内容 */
 @property (nonatomic, assign, readonly) CGRect retweetContentLabelF;
 
-
 /** 转发微博的内容 */
 @property (nonatomic, assign, readonly) CGFloat cellHeight;
+
+/** dock Y  */
+@property (nonatomic, assign, readonly) CGFloat dockY;
 
 /**
  *  微博数据模型

@@ -21,7 +21,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
-        
         // 0.顶部添加分割线
         UIView *divider = [[UIView alloc] init];
         divider.frame = CGRectMake(10, 0, frame.size.width-20, 0.5);

@@ -49,12 +49,15 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
 
 
+#define KPublishOK @"PublishStatusOK"
+
+
 // 文件路径
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
 
 
 #define SuperSize self.view.bounds.size
-#define INPUT_HEIGHT 64.0f
+#define INPUT_HEIGHT 44.0f
 
 
 #define KTableHeaderHeight 15.0
@@ -107,14 +110,16 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define IWNameFont [UIFont boldSystemFontOfSize:15]
 // 时间
 #define IWTimeFont [UIFont systemFontOfSize:12]
-// 来源
-//#define IWSourceFont IWTimeFont
 // 内容
 #define IWContentFont [UIFont systemFontOfSize:15]
+
 // 转发的昵称
 #define IWRetweetNameFont [UIFont systemFontOfSize:15]
 // 转发的内容
 #define IWRetweetContentFont IWRetweetNameFont
+
+// 每次加载cell的个数
+#define KCellConut 15
 
 
 /**
@@ -136,7 +141,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define WLFriendsFriend 65
 
 // 每张图片的尺寸
-#define IWPhotoWH 87
+#define IWPhotoWH 85
 
 // 微博工具条的高度
 #define IWStatusDockH 40

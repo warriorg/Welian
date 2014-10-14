@@ -8,12 +8,10 @@
 #import "MJPhotoLoadingView.h"
 #import "MJPhotoBrowser.h"
 #import <QuartzCore/QuartzCore.h>
-#import "MJPhotoProgressView.h"
 
 @interface MJPhotoLoadingView ()
 {
     UILabel *_failureLabel;
-    MJPhotoProgressView *_progressView;
 }
 
 @end

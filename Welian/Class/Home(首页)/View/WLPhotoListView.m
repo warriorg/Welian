@@ -38,7 +38,7 @@
 {
     _photos = photos;
     
-    // 1.图片个数 3
+    // 1.图片个数
     int picCount = photos.count;
     
     // 2.遍历所有的子控件(i --- 0 ~ 8)
@@ -46,8 +46,8 @@
         // 2.1.取出对应位置的子控件
         WLPhotoView *photoView = self.subviews[i];
         if (picCount == 1) {
-            photoView.contentMode = UIViewContentModeScaleAspectFill;
-            photoView.clipsToBounds = YES;
+            photoView.contentMode = UIViewContentModeScaleAspectFit;
+            photoView.clipsToBounds = NO;
         } else { // 多张
             photoView.contentMode = UIViewContentModeScaleAspectFill;
             // 超出边界范围的内容都裁剪
@@ -83,10 +83,12 @@
             // 第几行
             int row = i / maxColPerRow;
             
+            
             // x 取决于 列
             CGFloat photoX = col * (IWPhotoWH + IWPhotoMargin);
             // y 取决于 行
             CGFloat photoY = row * (IWPhotoWH + IWPhotoMargin);
+            
             photoView.frame = CGRectMake(photoX, photoY, IWPhotoWH, IWPhotoWH);
             
             
@@ -124,7 +126,7 @@
 {
     // 1.只有1张图片
     if (count == 1) {
-        return CGSizeMake(180, 120+5);
+        return CGSizeMake(290, 120+5);
     }
 
     // 1.每一行的最大列数
@@ -142,5 +144,6 @@
     
     return CGSizeMake(photoListW, photoListH+5);
 }
+
 
 @end

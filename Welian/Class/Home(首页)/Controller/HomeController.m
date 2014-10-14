@@ -17,7 +17,8 @@
 #import "WLBasicTrends.h"
 #import "WLStatusCell.h"
 #import "WLStatusFrame.h"
-#import "StatusInfoController.h"
+#import "UIImageView+WebCache.h"
+#import "CommentInfoController.h"
 
 @interface HomeController () <UIActionSheetDelegate>
 {
@@ -47,11 +48,11 @@
 
 - (void)beginPullDownRefreshing
 {
-
+    [self.tableView setFooterHidden:YES];
     UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     NSInteger uid = [mo.uid integerValue];
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
-    [darDic setObject:@(20) forKey:@"size"];
+    [darDic setObject:@(KCellConut) forKey:@"size"];
     if ([_type isEqualToString:@"0"]) {
         [darDic setObject:@(0) forKey:@"page"];
         [darDic setObject:@(0) forKey:@"uid"];
@@ -78,8 +79,10 @@
         
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
-        
-        DLog(@"dasdfsadfa");
+        if (userStatus.data.count>0) {
+            [self.tableView setFooterHidden:NO];
+        }
+
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
@@ -96,7 +99,7 @@
     int start = f.status.fid;
 
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
-    [darDic setObject:@(20) forKey:@"size"];
+    [darDic setObject:@(KCellConut) forKey:@"size"];
     if ([_type isEqualToString:@"0"]) {
         [darDic setObject:@(start) forKey:@"page"];
         [darDic setObject:@(0) forKey:@"uid"];
@@ -106,8 +109,7 @@
         [darDic setObject:@(uid) forKey:@"uid"];
     }
     
-    
-    [WLHttpTool loadFeedParameterDic:@{@"start":@(start),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
+    [WLHttpTool loadFeedParameterDic:darDic success:^(id JSON) {
         WLUserStatusesResult *userStatus = JSON;
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -127,7 +129,10 @@
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
         
-        DLog(@"dasdfsadfa");
+        if (userStatus.data.count<KCellConut) {
+            [self.tableView setFooterHidden:YES];
+        }
+        
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
@@ -141,6 +146,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginPullDownRefreshing) name:KPublishOK object:nil];
     
     [self beginPullDownRefreshing];
     // 1.设置界面属性
@@ -159,10 +165,9 @@
     
     // 背景颜色
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView setBackgroundColor:[UIColor colorWithWhite:0.85 alpha:1.0]];
+    [self.tableView setBackgroundColor:WLLineColor];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, IWTableBorderWidth, 0);
 }
-
 
 
 #pragma mark - 发表状态
@@ -247,10 +252,7 @@
                 [but setEnabled:YES];
             }];
         }
-        
-        DLog(@"%@",statF.status.user.name);
     }
-    
 }
 
 #pragma mark- 评论
@@ -306,15 +308,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    StatusInfoController *statusInfo = [[StatusInfoController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:statusInfo animated:YES];
+    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+    WLStatusFrame *statusF = _dataArry[indexPath.row];
+
+    [commentInfo setStatusFrame:statusF];
+
+    [self.navigationController pushViewController:commentInfo animated:YES];
 }
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    // 清除内存中的图片缓存
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
     // Dispose of any resources that can be recreated.
 }
 

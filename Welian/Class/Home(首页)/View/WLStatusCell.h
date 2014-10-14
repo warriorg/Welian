@@ -27,7 +27,6 @@
  *  @param tableView 从哪个tableView的缓存池中取出cell
  */
 + (instancetype)cellWithTableView:(UITableView *)tableView;
-//+ (instancetype)cellWithTableView:(UITableView *)tableView withBlok:(WLCellMoreBlock)moreBlock;
 
 /**
  

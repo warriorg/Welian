@@ -28,7 +28,7 @@
     
     // 1.头像
     CGFloat iconX = IWCellBorderWidth;
-    CGFloat iconY = IWCellBorderWidth;
+    CGFloat iconY = IWCellBorderWidth+10;
     
 //    CGSize iconSize = [IWIconView iconSizeWithIconType:IWIconTypeSmall];;
     _iconViewF = (CGRect){{iconX, iconY}, CGSizeMake(IWIconWHSmall, IWIconWHSmall)};
@@ -38,6 +38,14 @@
     CGFloat nameY = iconY;
     CGSize nameSize = [status.user.name sizeWithFont:IWNameFont];
     _nameLabelF = (CGRect){{nameX, nameY}, nameSize};
+    
+    // 7.时间
+    CGFloat timeX = nameX;
+    CGFloat timeY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth * 0.5;
+    CGSize timeSize = [status.created sizeWithFont:IWTimeFont];
+    _timeLabelF = (CGRect){{timeX, timeY}, timeSize};
+    
+    
     
     //    // 朋友关系图片
     CGFloat mbW = 0;
@@ -120,8 +128,8 @@
     } else { // 只有文字
         _cellHeight = CGRectGetMaxY(_contentLabelF);
     }
-    
-    _cellHeight += IWCellBorderWidth + IWCellMargin + IWStatusDockH;
+    _dockY = _cellHeight+IWCellBorderWidth;
+    _cellHeight += IWCellBorderWidth + IWCellBorderWidth + IWStatusDockH;
     
 }
 

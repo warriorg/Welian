@@ -15,8 +15,9 @@
 #import "WLStatusM.h"
 #import "WLBasicTrends.h"
 #import "UIImageView+WebCache.h"
+#import "MLEmojiLabel.h"
 
-@interface WLStatusCell () <UIActionSheetDelegate>
+@interface WLStatusCell () <UIActionSheetDelegate,MLEmojiLabelDelegate>
 {
     /** 头像 */
     UIImageView *_iconView;
@@ -27,7 +28,7 @@
     /** 来源 */
 //    UILabel *_sourceLabel;
     /** 内容 */
-    TQRichTextView *_contentLabel;
+    MLEmojiLabel *_contentLabel;
     /** 配图 */
     WLPhotoListView *_photoListView;
     
@@ -41,8 +42,7 @@
     /** 转发微博的配图 */
     WLPhotoListView *_retweetPhotoListView;
     /** 转发微博的内容 */
-    TQRichTextView *_retweetContentLabel;
-    
+    MLEmojiLabel *_retweetContentLabel;
     
     UserInfoModel *_mode;
 
@@ -57,7 +57,6 @@
     static NSString *CellIdentifier = @"Cell";
     WLStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-//        cell = [[WLStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier withBlok:(WLCellMoreBlock)moreBlock]
         cell = [[WLStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
     }
@@ -92,12 +91,11 @@
 {
     // 1.默认
     UIImageView *bg = [[UIImageView alloc] init];
-    bg.image = [UIImage resizedImage:@"background_white"];
+    bg.image = [UIImage resizedImage:@"cellbackground_normal"];
     self.backgroundView = bg;
-    
     // 2.选中
     UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"background_grey"];
+    selectedBg.image = [UIImage resizedImage:@"cellbackground_highlight"];
     self.selectedBackgroundView = selectedBg;
 }
 
@@ -108,7 +106,6 @@
 {
 // 清除cell默认的背景色(才能只显示背景view、背景图片)
     self.backgroundColor = [UIColor clearColor];
-    
     // 1.头像
     _iconView = [[UIImageView alloc] init];
     [self.contentView addSubview:_iconView];
@@ -127,11 +124,16 @@
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];
 
-    
     // 5.内容
-    _contentLabel = [[TQRichTextView alloc] init];
+    _contentLabel = [[MLEmojiLabel alloc]init];
+    _contentLabel.numberOfLines = 0;
+    _contentLabel.emojiDelegate = self;
+    _contentLabel.backgroundColor = [UIColor clearColor];
+    _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    _contentLabel.isNeedAtAndPoundSign = YES;
     _contentLabel.font = IWContentFont;
     _contentLabel.textColor = IWContentColor;
+
 // 自动换行
     //    _contentLabel.numberOfLines = 0;
     _contentLabel.backgroundColor = [UIColor clearColor];
@@ -150,33 +152,20 @@
     // 8.1.设置内部的图片
     [_moreBut setImage:[UIImage imageNamed:@"me_mywriten_more"] forState:UIControlStateNormal];
 //    [_moreBut setImage:[UIImage imageNamed:@"timeline_icon_more_highlighted"] forState:UIControlStateHighlighted];
+    
+    
     // 8.2.设置按钮的frame
+    // 8.3.设置按钮永远停留在右上角
     CGFloat btnWH = 35;
-    CGFloat btnY = 0;
+    CGFloat btnY = IWTableBorderWidth;
     CGFloat btnX = self.contentView.frame.size.width - btnWH-10;
     _moreBut.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
-    // 8.3.设置按钮永远停留在右上角
     _moreBut.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.contentView addSubview:_moreBut];
     
 //    [_moreBut addTarget:self action:@selector(moreClick:) forControlEvents:UIControlEventTouchUpInside];
 
 }
-
-
-//#pragma mark - 更多按钮
-//- (void)moreClick:(UIButton*)but
-//{
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除该条动态" otherButtonTitles:nil,nil];
-//    [sheet showInView:self];
-//}
-//
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if (buttonIndex==0) {
-//        _cellMoreBlock(_statusFrame);
-//    }
-//}
 
 /**
  *  添加转发微博的子控件
@@ -197,13 +186,18 @@
     [_retweetView addSubview:_retweetNameLabel];
     
     // 2.内容
-    _retweetContentLabel = [[TQRichTextView alloc] init];
+    _retweetContentLabel = [[MLEmojiLabel alloc] init];
     _retweetContentLabel.font = IWRetweetContentFont;
     _retweetContentLabel.textColor = IWRetweetContentColor;
-    //    _retweetContentLabel.numberOfLines = 0;
     _retweetContentLabel.backgroundColor = [UIColor clearColor];
-    [_retweetView addSubview:_retweetContentLabel];
+    _retweetContentLabel.numberOfLines = 0;
+    _retweetContentLabel.emojiDelegate = self;
+    _retweetContentLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    _retweetContentLabel.isNeedAtAndPoundSign = YES;
     
+    [_retweetView addSubview:_retweetContentLabel];
+
+
     // 3.配图
     _retweetPhotoListView = [[WLPhotoListView alloc] init];
     [_retweetView addSubview:_retweetPhotoListView];
@@ -217,7 +211,7 @@
     // 1.计算dock的frame
     CGFloat dockH = IWStatusDockH;
     CGFloat dockX = 0;
-    CGFloat dockY = self.contentView.frame.size.height - dockH;
+    CGFloat dockY = _statusFrame.dockY;
     CGFloat dockW = self.contentView.frame.size.width;
     CGRect dockF = CGRectMake(dockX, dockY, dockW, dockH);
     
@@ -240,7 +234,7 @@
     
     // 1.头像
     _iconView.frame = statusFrame.iconViewF;
-    [_iconView sd_setImageWithURL:[NSURL URLWithString:status.user.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:status.user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     [_iconView.layer setMasksToBounds:YES];
     [_iconView.layer setCornerRadius:statusFrame.iconViewF.size.height*0.5];
     
@@ -253,7 +247,6 @@
     _mbView.hidden = NO;
     _mbView.frame = statusFrame.mbViewF;
     
-
     if ([_mode.uid integerValue]==[user.uid integerValue]) {
         [_moreBut setHidden:NO];
         [_mbView setHidden:YES];
@@ -294,8 +287,11 @@
         _retweetNameLabel.text = [NSString stringWithFormat:@"@%@", retweetStatus.user.name];
         
         // 5.2.正文
+        _retweetContentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+        _retweetContentLabel.customEmojiPlistName = @"expressionImage_custom";
         _retweetContentLabel.frame = statusFrame.retweetContentLabelF;
         _retweetContentLabel.text = retweetStatus.content;
+        
         
         // 5.3.配图
         if (retweetStatus.photos.count) {
@@ -310,40 +306,19 @@
     }
     
     // 6.正文
+    _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+    _contentLabel.customEmojiPlistName = @"expressionImage_custom";
     _contentLabel.frame = statusFrame.contentLabelF;
     _contentLabel.text = status.content;
     
     // 7.时间
     _timeLabel.text = status.created;
-    CGFloat timeX = CGRectGetMinX(_nameLabel.frame);
-    CGFloat timeY = CGRectGetMaxY(_nameLabel.frame) + IWCellBorderWidth * 0.5;
-    CGSize timeSize = [_timeLabel.text sizeWithFont:IWTimeFont];
-    _timeLabel.frame = (CGRect){{timeX, timeY}, timeSize};
-    
-//    // 8.来源
-//    _sourceLabel.text = status.source;
-//    CGFloat sourceX = CGRectGetMaxX(_timeLabel.frame) + IWCellBorderWidth * 0.5;
-//    CGFloat sourceY = timeY;
-//    CGSize sourceSize = [_sourceLabel.text sizeWithFont:IWSourceFont];
-//    _sourceLabel.frame = (CGRect){{sourceX, sourceY}, sourceSize};
+    _timeLabel.frame = statusFrame.timeLabelF;
     
     // 9.给dock传递微博模型数据
     _dock.status = status;
-}
-
-- (void)setFrame:(CGRect)frame
-{
-//    frame.origin.x = 0;
-//    frame.size.width -= 2 * IWTableBorderWidth;
     
-    frame.origin.y += IWTableBorderWidth;
-    frame.size.height -= IWCellMargin*2;
-    
-    [super setFrame:frame];
 }
-
-
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

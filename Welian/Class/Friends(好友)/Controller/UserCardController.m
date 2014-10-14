@@ -24,16 +24,16 @@
     [_iconImageV sd_setImageWithURL:[NSURL URLWithString:userinfoM.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
     [_nameLabel setText:userinfoM.name];
-    if (userinfoM.provicename||userinfoM.cityname) {
-        
-        [_provinceLabel setText:[NSString stringWithFormat:@"%@   %@",userinfoM.provicename,userinfoM.cityname]];
-    }
-//    [_cityLabel setText:userinfoM.cityname];
+
     [_companyLabel setText:userinfoM.company];
     [_positionLabel setText:userinfoM.position];
     [_mobileLabel setText:userinfoM.mobile];
     [_emilLabel setText:userinfoM.email];
-    [_addresLabel setText:userinfoM.address];
+    
+    if (userinfoM.provicename || userinfoM.cityname || userinfoM.address) {
+        
+        [_addresLabel setText:[NSString stringWithFormat:@"%@-%@%@",userinfoM.provicename,userinfoM.cityname,userinfoM.address]];
+    }
     
     NSInteger investint = [userinfoM.investorauth integerValue];
     [_investerImage setHidden:!investint];
@@ -73,11 +73,7 @@
     
     //    activityView.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint];
     [self presentViewController:activityView animated:YES completion:nil];
-    
-    
-    
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"分享给微信好友" otherButtonTitles:nil,nil];
-//    [sheet showInView:self.view];
+
 
 }
 
@@ -85,7 +81,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"mavbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shares)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shares)];
 
     [_iconImageV.layer setCornerRadius:self.iconImageV.bounds.size.width*0.5];
     [_iconImageV.layer setMasksToBounds:YES];

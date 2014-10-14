@@ -14,10 +14,21 @@
 #import "FriendsController.h"
 #import "PublishModel.h"
 #import "IWTextView.h"
+#import "ZBMessageManagerFaceView.h"
 
 static NSString *picCellid = @"PicCellID";
 
-@interface PublishStatusController () <UITextViewDelegate,CTAssetsPickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@interface PublishStatusController () <UITextViewDelegate,CTAssetsPickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,ZBMessageManagerFaceViewDelegate>
+
+{
+    UIButton *_emojiBut;
+//    UITextField  *_commentTextView;
+    UIView *_iamgeview;
+    
+    BOOL keyboardIsShow;//键盘是否显示
+}
+
+@property (nonatomic,strong) ZBMessageManagerFaceView *faceView;
 
 @property (nonatomic, strong) UIView *inputttView;
 @property (nonatomic, copy) NSArray *assets;
@@ -36,6 +47,7 @@ static NSString *picCellid = @"PicCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    keyboardIsShow=NO;
     self.publishM = [[PublishModel alloc] init];
     [self setUiItems];
     [self addUIView];
@@ -67,6 +79,14 @@ static NSString *picCellid = @"PicCellID";
     
 }
 
+- (void)dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
+}
+
 
 - (void)addUIView {
 
@@ -74,12 +94,12 @@ static NSString *picCellid = @"PicCellID";
     CGFloat high = iPhone5?250:150;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
-    [self.textView setBackgroundColor:[UIColor orangeColor]];
+//    [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.textView setFont:[UIFont systemFontOfSize:17]];
     [self.textView setDelegate:self];
-    
+    [self.textView becomeFirstResponder];
     //    [self.textView setInputAccessoryView:self.inputttView];
 //        [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setReturnKeyType:UIReturnKeyDone];
@@ -103,30 +123,175 @@ static NSString *picCellid = @"PicCellID";
     
     
     self.inputttView = [[UIView alloc]initWithFrame:CGRectMake(0, SuperSize.height-INPUT_HEIGHT, SuperSize.width, INPUT_HEIGHT)];
-    UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(20, 30, 40, 40)];
+    [self.inputttView setBackgroundColor:[UIColor whiteColor]];
+    
+    _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(20, 2, 44, 44)];
+    [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_emoji"] forState:UIControlStateNormal];
+    [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_add"] forState:UIControlStateSelected];
+    [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputttView addSubview:_emojiBut];
+    
+    // 选择照片
+    UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(90, 0, 44, 44)];
 //    [but setBackgroundColor:[UIColor redColor]];
     [but addTarget:self action:@selector(showPicVC:) forControlEvents:UIControlEventTouchUpInside];
     [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
     [self.inputttView addSubview:but];
     
-    UIButton *addLocation = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 30)];
-    [addLocation setTitle:@"添加位置" forState:UIControlStateNormal];
-//    [addLocation setBackgroundColor:[UIColor blueColor]];
-    [addLocation.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [addLocation addTarget:self action:@selector(addUserLocation:) forControlEvents:UIControlEventTouchUpInside];
-    [addLocation setImage:[UIImage imageNamed:@"me_mywriten_location"] forState:UIControlStateNormal];
-    [self.inputttView addSubview:addLocation];
     
-    UIButton *together = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 30)];
-    [together setTitle:@"" forState:UIControlStateNormal];
-    [together setBackgroundColor:[UIColor blueColor]];
-    [together.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [together addTarget:self action:@selector(getTogether:) forControlEvents:UIControlEventTouchUpInside];
-    [self.inputttView addSubview:together];
+    self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, keyboardHeight)];//216-->196
+    self.faceView.delegate = self;
+    [self.view addSubview:self.faceView];
     
-    [self.inputttView setBackgroundColor:[UIColor grayColor]];
+//    // 我的位置
+//    UIButton *addLocation = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 30)];
+//    [addLocation setTitle:@"添加位置" forState:UIControlStateNormal];
+////    [addLocation setBackgroundColor:[UIColor blueColor]];
+//    [addLocation.titleLabel setFont:[UIFont systemFontOfSize:13]];
+//    [addLocation addTarget:self action:@selector(addUserLocation:) forControlEvents:UIControlEventTouchUpInside];
+//    [addLocation setImage:[UIImage imageNamed:@"me_mywriten_location"] forState:UIControlStateNormal];
+//    [self.inputttView addSubview:addLocation];
+    
+    
+    // 和谁在一起
+//    UIButton *together = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 30)];
+//    [together setTitle:@"" forState:UIControlStateNormal];
+//    [together setBackgroundColor:[UIColor blueColor]];
+//    [together.titleLabel setFont:[UIFont systemFontOfSize:13]];
+//    [together addTarget:self action:@selector(getTogether:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.inputttView addSubview:together];
+    
+//    [self.inputttView setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:self.inputttView];
 }
+
+
+
+
+-(void)showEmojiView:(UIButton*)but{
+    
+    [but setSelected:!but.selected];
+    
+    //如果直接点击表情，通过toolbar的位置来判断
+    if (self.inputttView.frame.origin.y== self.view.bounds.size.height - INPUT_HEIGHT&&self.inputttView.frame.size.height==INPUT_HEIGHT) {
+        
+        [UIView animateWithDuration:Time animations:^{
+            self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-keyboardHeight-INPUT_HEIGHT,  self.view.bounds.size.width,INPUT_HEIGHT);
+        }];
+        [UIView animateWithDuration:Time animations:^{
+            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height-keyboardHeight,self.view.frame.size.width, keyboardHeight)];
+        }];
+        [self.textView resignFirstResponder];
+        return;
+    }
+    //如果键盘没有显示，点击表情了，隐藏表情，显示键盘
+    if (!keyboardIsShow) {
+        [UIView animateWithDuration:Time animations:^{
+            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, keyboardHeight)];
+        }];
+        [self.textView becomeFirstResponder];
+        
+    }else{
+        [self.textView resignFirstResponder];
+        //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
+        [UIView animateWithDuration:Time animations:^{
+            self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-keyboardHeight-self.inputttView.frame.size.height,  self.view.bounds.size.width,self.inputttView.frame.size.height);
+        }];
+        
+        [UIView animateWithDuration:Time animations:^{
+            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height-keyboardHeight,self.view.frame.size.width, keyboardHeight)];
+        }];
+    }
+}
+
+
+
+
+//#pragma mark 隐藏键盘
+-(void)dismissKeyBoard{
+    //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
+    [UIView animateWithDuration:Time animations:^{
+        self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-INPUT_HEIGHT,  self.view.bounds.size.width,INPUT_HEIGHT);
+    }];
+    
+    [UIView animateWithDuration:Time animations:^{
+        [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height,self.view.frame.size.width, keyboardHeight)];
+    }];
+    [_emojiBut setSelected:NO];
+    [self.textView resignFirstResponder];
+}
+
+
+//#pragma mark 监听键盘的显示与隐藏
+//-(void)inputKeyboardWillShow:(NSNotification *)notification{
+//    //键盘显示，设置toolbar的frame跟随键盘的frame
+//    CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+//    CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    
+//    [UIView animateWithDuration:animationTime animations:^{
+//        
+//        CGFloat keyboardY = [self.view convertRect:keyBoardFrame fromView:nil].origin.y;
+//        
+//        CGFloat inputViewFrameY = keyboardY - toolBarHeight;
+//        
+//        // for ipad modal form presentations
+//        CGFloat messageViewFrameBottom = self.view.frame.size.height - toolBarHeight;
+//        
+//        if(inputViewFrameY > messageViewFrameBottom){
+//            
+//            inputViewFrameY = messageViewFrameBottom;
+//        }
+//        self.inputttView.frame = CGRectMake(0,
+//                                inputViewFrameY,
+//                                self.inputttView.bounds.size.width,
+//                                toolBarHeight);
+//        
+//    } completion:^(BOOL finished) {
+//        
+//        
+//    }];
+//    
+//
+//}
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [_emojiBut setSelected:NO];
+}
+
+-(void)inputKeyboardWillHide:(NSNotification *)notification{
+    
+    keyboardIsShow=NO;
+}
+
+
+- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
+{
+    //    NSLog(@"%@",faceStr);
+    if (dele) {
+        self.textView.text = [self.textView.text stringByReplacingOccurrencesOfString:@"" withString:@""];
+    }else{
+        
+        self.textView.text = [self.textView.text stringByAppendingString:faceStr];
+        [self.textView setPlaceholder:nil];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self dismissKeyBoard];
+}
+
+
+
+
+
+
+
+
+
 
 
 #pragma mark - CollectionView代理
@@ -179,6 +344,7 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)showPicVC:(UIButton*)but
 {
+    [self dismissKeyBoard];
     if (!self.assets)
         self.assets = [[NSMutableArray alloc] init];
     
@@ -202,13 +368,18 @@ static NSString *picCellid = @"PicCellID";
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    
     if ([text isEqualToString:@"\n"]) {//按下return键
+        
+        [self dismissKeyBoard];
         //这里隐藏键盘，不做任何处理
         [textView resignFirstResponder];
+
         return NO;
     }
     return YES;
 }
+
 
 
 #pragma mark - Keyboard notifications
@@ -219,7 +390,8 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)handleWillHideKeyboard:(NSNotification *)notification
 {
-    [self keyboardWillShowHide:notification];
+//    [self keyboardWillShowHide:notification];
+    keyboardIsShow=NO;
 }
 
 - (void)keyboardWillShowHide:(NSNotification *)notification
@@ -247,6 +419,7 @@ static NSString *picCellid = @"PicCellID";
     } completion:^(BOOL finished) {
         
     }];
+    keyboardIsShow=YES;
 }
 
 #pragma mark - Assets Picker Delegate
@@ -382,6 +555,8 @@ static NSString *picCellid = @"PicCellID";
     }
     
     [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+        
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
@@ -407,16 +582,5 @@ static NSString *picCellid = @"PicCellID";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

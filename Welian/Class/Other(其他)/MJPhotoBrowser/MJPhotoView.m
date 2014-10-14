@@ -106,8 +106,8 @@
         [_photoLoadingView showLoading];
         [self addSubview:_photoLoadingView];
         
-        __unsafe_unretained MJPhotoView *photoView = self;
-        __unsafe_unretained MJPhotoLoadingView *loading = _photoLoadingView;
+        __weak MJPhotoView *photoView = self;
+        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         
         [_imageView sd_setImageWithPreviousCachedImageWithURL:_photo.url andPlaceholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             if (receivedSize > kMinProgress) {
@@ -207,7 +207,9 @@
 {
     if (_doubleTap) return;
     [UIApplication sharedApplication].statusBarHidden = NO;
+
     // 移除进度条
+    [_photoLoadingView.progressView removeFromSuperview];
     [_photoLoadingView removeFromSuperview];
     self.contentOffset = CGPointZero;
     
