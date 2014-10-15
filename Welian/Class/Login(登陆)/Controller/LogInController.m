@@ -378,7 +378,6 @@
                 NSString *strTime = [NSString stringWithFormat:@"%d", timeout];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     //设置界面的按钮显示 根据自己需求设置
-//                    NSLog(@"____%@",strTime);
                     [self.verificationView.nextButton setTitle:[NSString stringWithFormat:@"%@秒后重新发送",strTime] forState:UIControlStateDisabled];
 
                     [self.verificationView.nextButton setEnabled:NO];

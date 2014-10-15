@@ -11,7 +11,7 @@
 
 @interface CommentInfoController : UIViewController
 
-
+@property (nonatomic, assign) BOOL beginEdit;
 @property (nonatomic, strong) WLStatusFrame *statusFrame;
 
 @end

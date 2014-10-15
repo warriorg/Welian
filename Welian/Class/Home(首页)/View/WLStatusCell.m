@@ -16,8 +16,15 @@
 #import "WLBasicTrends.h"
 #import "UIImageView+WebCache.h"
 #import "MLEmojiLabel.h"
+#import "LXActivity.h"
+#import "PublishStatusController.h"
+#import "NavViewController.h"
+#import "ShareEngine.h"
 
-@interface WLStatusCell () <UIActionSheetDelegate,MLEmojiLabelDelegate>
+#define SHARE_CONTENT @"Code4App, 移动开发好帮手。"
+#define SHARE_URL @"http://www.code4app.com/"
+
+@interface WLStatusCell () <UIActionSheetDelegate,MLEmojiLabelDelegate,LXActivityDelegate>
 {
     /** 头像 */
     UIImageView *_iconView;
@@ -218,8 +225,85 @@
     // 2.创建和添加dock
     _dock = [[WLStatusDock alloc] initWithFrame:dockF];
     _dock.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [_dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.contentView addSubview:_dock];
 }
+
+#pragma mark - 转发
+- (void)transmitButClick:(UIButton*)but event:(id)event
+{
+    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+    shareButtonTitleArray = @[@"weLian动态",@"微信好友",@"微信朋友圈",@"新浪微博"];
+    shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle",@"home_repost_weibo"];
+    LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    [lxActivity showInView:self.window];
+}
+
+#pragma mark - LXActivityDelegate
+- (void)didClickOnImageIndex:(NSInteger)imageIndex
+{
+    WLStatusM *statusM = self.statusFrame.status;
+    
+    if (imageIndex == 0) {  // weLian
+        
+        PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+        [publishVC setStatusFrame:self.statusFrame];
+        [self.homeVC presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+            
+        }];
+        
+    }else if (imageIndex == 1){  // 微信好友
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.user.name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChat];
+        
+    }else if (imageIndex == 2){  // 微信朋友圈
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.user.name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChatFriend];
+
+    }else if (imageIndex == 3){  // 新浪微博
+        
+    }
+    NSLog(@"%d",(int)imageIndex);
+}
+
+- (void)didClickOnCancelButton
+{
+    NSLog(@"didClickOnCancelButton");
+}
+
+
+//#pragma mark - shareEngineDelegate
+//- (void)shareEngineDidLogIn:(WeiboType)weibotype
+//{
+////    [shareTableView reloadData];
+//}
+//
+//- (void)shareEngineDidLogOut:(WeiboType)weibotype
+//{
+////    [shareTableView reloadData];
+//}
+//
+//- (void)shareEngineSendSuccess
+//{
+//    UIAlertView *shareAlert = [[UIAlertView alloc] initWithTitle:@"发送成功" message:@"内容成功发送到微博！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [shareAlert show];
+//}
+//
+//- (void)shareEngineSendFail:(NSError *)error
+//{
+//    NSString *failDescription = @"请重试！";
+//    if (20019 == error.code)
+//    {
+//        failDescription = @"重复发送了相同的内容！";
+//    }
+//    UIAlertView *shareAlert = [[UIAlertView alloc] initWithTitle:@"发送失败" message:failDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [shareAlert show];
+//}
+
+
+
+
+
 
 - (void)setStatusFrame:(WLStatusFrame *)statusFrame
 {

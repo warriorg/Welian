@@ -60,7 +60,7 @@
                 }
                 [expressionButton addTarget:self
                                      action:@selector(faceClick:)
-                           forControlEvents:UIControlEventTouchUpInside];
+                           forControlEvents:UIControlEventTouchDown];
             }
         }
     }

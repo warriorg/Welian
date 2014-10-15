@@ -19,6 +19,8 @@ typedef void(^MessageCommeBlock)(NSString *comment);
 
 @interface MessageKeyboardView : UIView
 
+@property (nonatomic, strong)  UITextField  *commentTextView;
+
 - (instancetype)initWithFrame:(CGRect)frame andSuperView:(UIView *)superView withMessageBlock:(MessageCommeBlock)messageBlock;
 
 - (void)startCompile:(WLBasicTrends*)touser;

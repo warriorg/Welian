@@ -46,6 +46,9 @@
 /** object 	微博配图地址。多图时返回多图链接。无配图返回“[]”  */
 @property (nonatomic, strong) NSArray *photos;
 
+//** 分享URL *//
+@property (nonatomic, strong) NSString *shareurl;
+
 /**  和谁一起   */
 //@property (nonatomic, strong) NSArray *with;
 

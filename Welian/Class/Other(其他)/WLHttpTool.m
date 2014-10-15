@@ -250,7 +250,9 @@
 #pragma mark - 转发评论
 + (void)forwardFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"forwardFeed",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);

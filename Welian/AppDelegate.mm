@@ -15,6 +15,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
+#import "ShareEngine.h"
 
 @interface AppDelegate() <BMKGeneralDelegate>
 
@@ -35,7 +36,8 @@ BMKMapManager* _mapManager;
 	}
     
     // 添加微信分享
-    [WXApi registerApp:@"wx4150b21797fa0a5e"];
+//    [WXApi registerApp:@"wx4150b21797fa0a5e"];
+    [[ShareEngine sharedShareEngine] registerApp];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -44,7 +46,7 @@ BMKMapManager* _mapManager;
         dispatch_semaphore_signal(sema);
         if (greanted) {
             [UserDefaults setObject:@"1" forKey:KAddressBook];
-            NSLog(@"ABAddressBookSetAuthorization success.");
+            DLog(@"ABAddressBookSetAuthorization success.");
         }else {
             [UserDefaults setObject:@"0" forKey:KAddressBook];
             
@@ -140,12 +142,11 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [WXApi handleOpenURL:url delegate:self];
+    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [WXApi handleOpenURL:url delegate:self];
+    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
 }
-
 @end

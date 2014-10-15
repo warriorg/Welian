@@ -15,6 +15,8 @@
 #import "PublishModel.h"
 #import "IWTextView.h"
 #import "ZBMessageManagerFaceView.h"
+#import "ForwardPublishView.h"
+#import "WLStatusM.h"
 
 static NSString *picCellid = @"PicCellID";
 
@@ -26,6 +28,8 @@ static NSString *picCellid = @"PicCellID";
     UIView *_iamgeview;
     
     BOOL keyboardIsShow;//键盘是否显示
+    
+    PublishType _publishType;
 }
 
 @property (nonatomic,strong) ZBMessageManagerFaceView *faceView;
@@ -39,9 +43,30 @@ static NSString *picCellid = @"PicCellID";
 @property (nonatomic, strong) NSArray *friendArray;
 @property (nonatomic, strong) PublishModel *publishM;
 
+@property (nonatomic, strong) ForwardPublishView *forwardView;
+
 @end
 
 @implementation PublishStatusController
+
+- (ForwardPublishView*)forwardView
+{
+    if (_forwardView == nil) {
+        _forwardView = [[[NSBundle mainBundle] loadNibNamed:@"ForwardPublishView" owner:self options:nil] lastObject];
+    }
+    [_forwardView setStatusF:self.statusFrame];
+    return _forwardView;
+}
+
+- (instancetype)initWithType:(PublishType)publishType
+{
+    _publishType = publishType;
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 
 - (void)viewDidLoad
@@ -94,32 +119,14 @@ static NSString *picCellid = @"PicCellID";
     CGFloat high = iPhone5?250:150;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
-//    [self.textView setBackgroundColor:[UIColor orangeColor]];
+    [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.textView setFont:[UIFont systemFontOfSize:17]];
     [self.textView setDelegate:self];
     [self.textView becomeFirstResponder];
-    //    [self.textView setInputAccessoryView:self.inputttView];
-//        [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setReturnKeyType:UIReturnKeyDone];
     [self.view addSubview:self.textView];
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    [layout setSectionInset:UIEdgeInsetsMake(10, 15, 10, 15)];
-    [layout setMinimumLineSpacing:10.0];
-    //    [layout setHeaderReferenceSize:CGSizeMake(self.view.bounds.size.width, 34)];
-    
-    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.textView.frame)-INPUT_HEIGHT-10) collectionViewLayout:layout];
-    //    [self.collectionView setContentInset:UIEdgeInsetsMake(120, 0, 0, 0)];
-    // 注册cell
-    [self.collectionView registerClass:[PictureCell class] forCellWithReuseIdentifier:picCellid];
-    
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.collectionView];
-    
     
     
     self.inputttView = [[UIView alloc]initWithFrame:CGRectMake(0, SuperSize.height-INPUT_HEIGHT, SuperSize.width, INPUT_HEIGHT)];
@@ -131,17 +138,38 @@ static NSString *picCellid = @"PicCellID";
     [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputttView addSubview:_emojiBut];
     
-    // 选择照片
-    UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(90, 0, 44, 44)];
-//    [but setBackgroundColor:[UIColor redColor]];
-    [but addTarget:self action:@selector(showPicVC:) forControlEvents:UIControlEventTouchUpInside];
-    [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
-    [self.inputttView addSubview:but];
-    
-    
     self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, keyboardHeight)];//216-->196
     self.faceView.delegate = self;
     [self.view addSubview:self.faceView];
+    
+    if (_publishType == PublishTypeNomel) {
+        
+        // 选择照片
+        UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(90, 0, 44, 44)];
+        [but addTarget:self action:@selector(showPicVC:) forControlEvents:UIControlEventTouchUpInside];
+        [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
+        [self.inputttView addSubview:but];
+        
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        [layout setSectionInset:UIEdgeInsetsMake(10, 15, 10, 15)];
+        [layout setMinimumLineSpacing:10.0];
+        //    [layout setHeaderReferenceSize:CGSizeMake(self.view.bounds.size.width, 34)];
+        
+        self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.textView.frame)-INPUT_HEIGHT-10) collectionViewLayout:layout];
+        //    [self.collectionView setContentInset:UIEdgeInsetsMake(120, 0, 0, 0)];
+        // 注册cell
+        [self.collectionView registerClass:[PictureCell class] forCellWithReuseIdentifier:picCellid];
+        
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+        self.collectionView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:self.collectionView];
+    }else if (_publishType == PublishTypeForward){
+        [self.forwardView setFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, 320, 60)];
+        [self.view addSubview:self.forwardView];
+    }
+
     
 //    // 我的位置
 //    UIButton *addLocation = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 30)];
@@ -221,38 +249,6 @@ static NSString *picCellid = @"PicCellID";
     [self.textView resignFirstResponder];
 }
 
-
-//#pragma mark 监听键盘的显示与隐藏
-//-(void)inputKeyboardWillShow:(NSNotification *)notification{
-//    //键盘显示，设置toolbar的frame跟随键盘的frame
-//    CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-//    CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    
-//    [UIView animateWithDuration:animationTime animations:^{
-//        
-//        CGFloat keyboardY = [self.view convertRect:keyBoardFrame fromView:nil].origin.y;
-//        
-//        CGFloat inputViewFrameY = keyboardY - toolBarHeight;
-//        
-//        // for ipad modal form presentations
-//        CGFloat messageViewFrameBottom = self.view.frame.size.height - toolBarHeight;
-//        
-//        if(inputViewFrameY > messageViewFrameBottom){
-//            
-//            inputViewFrameY = messageViewFrameBottom;
-//        }
-//        self.inputttView.frame = CGRectMake(0,
-//                                inputViewFrameY,
-//                                self.inputttView.bounds.size.width,
-//                                toolBarHeight);
-//        
-//    } completion:^(BOOL finished) {
-//        
-//        
-//    }];
-//    
-//
-//}
 
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -519,63 +515,78 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - 确认发布
 - (void)confirmPublish
 {
-    [self.publishM setContent:self.textView.text];
-    self.publishM.with = [NSMutableArray array];
-    self.publishM.photos = [NSMutableArray array];
-    NSMutableDictionary *reqDataDic = [NSMutableDictionary dictionary];
-    if (self.publishM.content) {
-        [reqDataDic setObject:self.publishM.content forKey:@"content"];
-    }
-    if (self.publishM.address) {
-        [reqDataDic setObject:self.publishM.address forKey:@"address"];
-        [reqDataDic setObject:self.publishM.x forKey:@"x"];
-        [reqDataDic setObject:self.publishM.y forKey:@"y"];
-    }
-    
-    if (self.assets.count) {
-        for (ALAsset *asset in self.assets) {
-            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                                 scale:0.5
-                                           orientation:UIImageOrientationUp];
-            NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
-            NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            NSDictionary *imageDic = @{@"photo":imageStr,@"title":@"jpg"};
-            [self.publishM.photos addObject:imageDic];
-        }
-        [reqDataDic setObject:self.publishM.photos forKey:@"photos"];
-    }
-    if (self.friendArray.count) {
-        for (PeopleAddressBook *peleBook in self.friendArray) {
-            if (peleBook.Aphone) {
-                NSDictionary *peleDic = @{@"name":peleBook.name,@"phone":peleBook.Aphone};
-                [self.publishM.with addObject:peleDic];
-            }
-        }
-        [reqDataDic setObject:self.publishM.with forKey:@"with"];
-    }
-    
-    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+    if (_publishType == PublishTypeForward) {
         
-        [self dismissViewControllerAnimated:YES completion:^{
+        [WLHttpTool forwardFeedParameterDic:@{@"fid":@(self.statusFrame.status.fid),@"content":self.textView.text} success:^(id JSON) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+            
+        } fail:^(NSError *error) {
             
         }];
-    } fail:^(NSError *error) {
         
-    }];
-    
-    
+    }else if (_publishType == PublishTypeNomel)
+    {
+        [self.publishM setContent:self.textView.text];
+        self.publishM.with = [NSMutableArray array];
+        self.publishM.photos = [NSMutableArray array];
+        NSMutableDictionary *reqDataDic = [NSMutableDictionary dictionary];
+        if (self.publishM.content) {
+            [reqDataDic setObject:self.publishM.content forKey:@"content"];
+        }
+        if (self.publishM.address) {
+            [reqDataDic setObject:self.publishM.address forKey:@"address"];
+            [reqDataDic setObject:self.publishM.x forKey:@"x"];
+            [reqDataDic setObject:self.publishM.y forKey:@"y"];
+        }
+        
+        if (self.assets.count) {
+            for (ALAsset *asset in self.assets) {
+                UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                                     scale:0.5
+                                               orientation:UIImageOrientationUp];
+                NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+                NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                NSDictionary *imageDic = @{@"photo":imageStr,@"title":@"jpg"};
+                [self.publishM.photos addObject:imageDic];
+            }
+            [reqDataDic setObject:self.publishM.photos forKey:@"photos"];
+        }
+        if (self.friendArray.count) {
+            for (PeopleAddressBook *peleBook in self.friendArray) {
+                if (peleBook.Aphone) {
+                    NSDictionary *peleDic = @{@"name":peleBook.name,@"phone":peleBook.Aphone};
+                    [self.publishM.with addObject:peleDic];
+                }
+            }
+            [reqDataDic setObject:self.publishM.with forKey:@"with"];
+        }
+        
+        [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
 }
-
-
 
 #pragma mark - 取消
 - (void)cancelPublish
 {
+    [self.textView resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {

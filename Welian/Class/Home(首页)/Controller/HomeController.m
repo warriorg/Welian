@@ -31,6 +31,8 @@
 
 @implementation HomeController
 
+
+
 - (instancetype)initWithStyle:(UITableViewStyle)style withType:(NSString *)type
 {
     _type = type;
@@ -192,9 +194,11 @@
     // 2.给cell传递模型数据
     // 传递的模型：文字数据 + 子控件frame数据
     cell.statusFrame = _dataArry[indexPath.row];
+    [cell setHomeVC:self];
     
     // 转发
-    [cell.dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     // 赞
     [cell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     // 评论
@@ -205,19 +209,26 @@
     return cell;
 }
 
-#pragma mark - 转发
-- (void)transmitButClick:(UIButton*)but event:(id)event
-{
-    NSSet *touches = [event allTouches];
-    UITouch *touch = [touches anyObject];
-    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
-    if(indexPath)
-    {
-        WLStatusFrame *statF = _dataArry[indexPath.row];
-        DLog(@"%@",statF.status.user.name);
-    }
-}
+//#pragma mark - 转发
+//- (void)transmitButClick:(UIButton*)but event:(id)event
+//{
+//    NSSet *touches = [event allTouches];
+//    UITouch *touch = [touches anyObject];
+//    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+//    if(indexPath)
+//    {
+//        _clickIndex = indexPath;
+//        WLStatusFrame *statF = _dataArry[indexPath.row];
+//        NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+//        NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+//        shareButtonTitleArray = @[@"weLian动态",@"微信好友",@"微信朋友圈",@"新浪微博"];
+//        shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle",@"home_repost_weibo"];
+//        LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+//        [lxActivity showInView:self.view.window];
+//        DLog(@"%@",statF.status.user.name);
+//    }
+//}
 
 #pragma mark - 赞
 - (void)attitudeBtnClick:(UIButton*)but event:(id)event
@@ -264,8 +275,12 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
     if(indexPath)
     {
-        WLStatusFrame *statF = _dataArry[indexPath.row];
-        DLog(@"%@",statF.status.user.name);
+        
+        CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [commentInfo setStatusFrame:statusF];
+        [commentInfo setBeginEdit:YES];
+        [self.navigationController pushViewController:commentInfo animated:YES];
     }
 }
 
@@ -328,16 +343,5 @@
     [mgr.imageCache clearMemory];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

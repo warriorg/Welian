@@ -75,7 +75,7 @@
     PeopleAddressBook *people = self.dataArray[indexPath.row];
     [cell.textLabel setText:people.name];
     [cell.detailTextLabel setText:people.Aphone];
-    NSLog(@"cellname---%@\n cellphone---%@\n cellpppp---%@",people.name,people.Aphone,people.Bphone);
+    DLog(@"cellname---%@\n cellphone---%@\n cellpppp---%@",people.name,people.Aphone,people.Bphone);
     return cell;
 }
 

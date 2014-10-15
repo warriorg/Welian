@@ -12,7 +12,6 @@
 @interface MessageKeyboardView() <UITextFieldDelegate,UIScrollViewDelegate,ZBMessageManagerFaceViewDelegate>
 {
     UIButton *_emojiBut;
-    UITextField  *_commentTextView;
     MessageCommeBlock _messageBlock;
     
     UIView *_iamgeview;
@@ -78,7 +77,6 @@
 
 - (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
 {
-//    NSLog(@"%@",faceStr);
     if (dele) {
         _commentTextView.text = [_commentTextView.text stringByReplacingOccurrencesOfString:@"" withString:@""];
     }else{
@@ -176,7 +174,9 @@
 }
 
 -(void)inputKeyboardWillHide:(NSNotification *)notification{
-
+    if (!_emojiBut.selected) {
+        [self dismissKeyBoard];
+    }
     keyboardIsShow=NO;
 }
 

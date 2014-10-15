@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WLStatusDock.h"
+//#import "HomeController.h"
 @class WLStatusFrame;
 
 //typedef void(^WLCellMoreBlock)(WLStatusFrame *statusF);
@@ -33,6 +34,8 @@
  *  模型（数据 + 子控件的frame）
  */
 @property (nonatomic, strong) WLStatusFrame *statusFrame;
+
+@property (nonatomic, weak) UIViewController *homeVC;
 
 
 @end

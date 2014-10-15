@@ -30,11 +30,13 @@
 
 @implementation CommentInfoController
 
+
 - (WLStatusCell*)statusCell
 {
     if (_statusCell == nil) {
         _statusCell = [WLStatusCell cellWithTableView:nil];
         [_statusCell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:) forControlEvents:UIControlEventTouchDown];
+        [_statusCell setHomeVC:self];
     }
     [_statusCell setStatusFrame:self.statusFrame];
     return _statusCell;
@@ -58,14 +60,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forwardCommtion) name:KPublishOK object:nil];
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.reqestDic = [NSMutableDictionary dictionary];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadNewCommentListData) forControlEvents:UIControlEventValueChanged];
-    [self.refreshControl beginRefreshing];
     [self.tableView addSubview:self.refreshControl];
     
-    
+    [self.refreshControl beginRefreshing];
     [self loadNewCommentListData];
     
     [self.view addSubview:self.tableView];
@@ -83,9 +86,19 @@
         
     }];
     [self.view addSubview:self.messageView];
-    
+    if (_beginEdit) {
+        
+        [self.messageView.commentTextView becomeFirstResponder];
+    }
 
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
+}
+
+- (void)forwardCommtion
+{
+//    [self.messageView dismissKeyBoard];
+    self.statusFrame.status.forwardcount++;
+    self.statusCell;
 }
 
 
@@ -107,6 +120,7 @@
 
 - (void)loadMoreCommentData
 {
+    if (_dataArrayM.count<=0)    return;
     CommentCellFrame *commF = _dataArrayM.lastObject;
     [self.reqestDic setObject:commF.commentM.fcid forKey:@"fid"];
     
@@ -186,7 +200,6 @@
     CommentCellFrame *commFrame = _dataArrayM[indexPath.row];
     [self.messageView startCompile:commFrame.commentM.user];
 }
-
 
 
 #pragma mark - 赞

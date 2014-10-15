@@ -10,7 +10,6 @@
 #import "UserInfoModel.h"
 #import "Singleton.h"
 
-
 @interface UserInfoTool : NSObject
 single_interface(UserInfoTool)
 
