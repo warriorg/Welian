@@ -52,7 +52,7 @@
 @property (nonatomic, strong) NSString *provinceid;
 
 /**  省份名称   */
-@property (nonatomic, strong) NSString *provicename;
+@property (nonatomic, strong) NSString *provincename;
 
 /**  地址   */
 @property (nonatomic, strong) NSString *address;
@@ -63,8 +63,6 @@
 /**  城市名称   */
 @property (nonatomic, strong) NSString *cityname;
 
-
-
 /**  密码 验证码   */
 @property (nonatomic, strong) NSString *checkcode;
 
@@ -72,6 +70,6 @@
 @property (nonatomic, strong) NSString *sessionid;
 
 /**  uid唯一标示   */
-@property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSNumber *uid;
 
 @end

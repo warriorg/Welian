@@ -16,30 +16,7 @@
 /**
  *  电话
  */
-@property (nonatomic, strong) NSString *Aphone;
-@property (nonatomic, strong) NSString *Bphone;
-@property (nonatomic, strong) NSString *Cphone;
+@property (nonatomic, strong) NSString *mobile;
 
 
-
-/**
- *  公司
- */
-@property (nonatomic, strong) NSString *company;
-/**
- *  职位
- */
-@property (nonatomic, strong) NSString *job;
-/**
- *  邮箱
- */
-@property (nonatomic, strong) NSString *email;
-/**
- *  头像
- */
-@property (nonatomic, strong) UIImage *iconImage;
-/**
- *  地址
- */
-@property (nonatomic, strong) NSString *address;
 @end

@@ -24,7 +24,9 @@
 {
     [super viewWillAppear:animated];
     if ([[UserDefaults objectForKey:KAddressBook] integerValue]) {
-        self.dataArray = [NSArray arrayWithArray:[WLTool getAddressBookArray]];
+        [WLTool getAddressBookArray:^(NSArray *friendsAddress) {
+            self.dataArray = friendsAddress;
+        }];
     }else {
         self.dataArray = [NSArray array];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"  啊啊" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -74,8 +76,8 @@
     }
     PeopleAddressBook *people = self.dataArray[indexPath.row];
     [cell.textLabel setText:people.name];
-    [cell.detailTextLabel setText:people.Aphone];
-    DLog(@"cellname---%@\n cellphone---%@\n cellpppp---%@",people.name,people.Aphone,people.Bphone);
+    [cell.detailTextLabel setText:people.mobile];
+    DLog(@"cellname---%@\n cellphone---%@\n",people.name,people.mobile);
     return cell;
 }
 

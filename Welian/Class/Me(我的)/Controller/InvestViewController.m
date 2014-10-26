@@ -81,9 +81,9 @@ static NSString *idetfid = @"investcell";
     if (self.investReqstM.photo.length) {
         [dicM setObject:self.investReqstM.photo forKey:@"photo"];
         [dicM setObject:@"jpg" forKey:@"photoname"];
-        if (self.investM.items.count) {
+        if (self.investM.itemsArray.count) {
             
-            self.investReqstM.items = [self.investM.items componentsJoinedByString:@","];
+            self.investReqstM.items = [self.investM.itemsArray componentsJoinedByString:@","];
             [dicM setObject:self.investReqstM.items forKey:@"items"];
         }
     }else{
@@ -105,7 +105,7 @@ static NSString *idetfid = @"investcell";
         if (self.investM.url.length) {
             
         }
-        if (self.investM.investType==InvestAuthTypeRefused) {
+        if (self.investM.auth==InvestAuthTypeRefused) {
             
         }
         DLog(@"%@",JSON);

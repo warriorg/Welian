@@ -27,7 +27,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^PicDataBlock)(NSArray *picArray);
+typedef void (^PicDataBlock)(NSMutableArray *picArray);
 
 /**
  *  A view controller that shows selected photos and vidoes from user's photo library that let the user navigate the item page by page.
@@ -51,6 +51,6 @@ typedef void (^PicDataBlock)(NSArray *picArray);
  *
  *  @return An instance of `CTAssetPageViewController` initialized to show the asset items in `assets`.
  */
-- (id)initWithAssets:(NSArray *)assets picDatablock:(PicDataBlock)picArrayBlck;
+- (id)initWithAssets:(NSMutableArray *)assets picDatablock:(PicDataBlock)picArrayBlck;
 
 @end

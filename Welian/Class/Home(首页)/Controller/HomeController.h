@@ -10,7 +10,7 @@
 
 @interface HomeController : UITableViewController
 
-//* type=1 所有 0 自己  *//
-- (instancetype)initWithStyle:(UITableViewStyle)style withType:(NSString *)type;
+//* 有uid时按uid查 （0）为自己   不传uid 首页所有  *//
+- (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid;
 
 @end

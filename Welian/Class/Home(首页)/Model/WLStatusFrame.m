@@ -62,12 +62,12 @@
     
     CGFloat contentX = iconX;
     CGFloat contentY = CGRectGetMaxY(_iconViewF) + IWCellBorderWidth;
-    if (status.content) {
+    if (status.content.length) {
         // 3.内容
         CGSize contentSize = [status.content sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-        _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
+        _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height+5);
     }else {
-        _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
+        _contentLabelF = CGRectMake(contentX, CGRectGetMaxY(_iconViewF), 0, 0);
     }
     
     WLStatusM *retweetStatus = status.relationfeed;
@@ -90,7 +90,7 @@
         // 5.1.昵称
         CGFloat retweetNameX = IWCellBorderWidth;
         CGFloat retweetNameY = IWCellBorderWidth;
-        CGSize retweetNameSize = [[NSString stringWithFormat:@"@%@", retweetStatus.user.name] sizeWithFont:IWRetweetNameFont];
+        CGSize retweetNameSize = [[NSString stringWithFormat:@"该动态最早由%@发布", retweetStatus.user.name] sizeWithFont:IWRetweetNameFont];
         _retweetNameLabelF = (CGRect){{retweetNameX, retweetNameY}, retweetNameSize};
         
         // 5.2.内容
@@ -98,7 +98,12 @@
         CGFloat retweetContentY = CGRectGetMaxY(_retweetNameLabelF) + IWCellBorderWidth;
         
         CGSize retweetContentSize = [retweetStatus.content sizeWithFont:IWRetweetContentFont constrainedToSize:CGSizeMake(retweetWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-        _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, retweetContentSize.width, retweetContentSize.height + 20);
+        if (retweetStatus.content.length) {
+            
+            _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, retweetContentSize.width, retweetContentSize.height+5);
+        }else{
+            _retweetContentLabelF = CGRectMake(retweetContentX, CGRectGetMaxY(_retweetNameLabelF), 0,0);
+        }
         
         // 5.3.如果有配图
         if (retweetStatus.photos.count) {
@@ -117,7 +122,7 @@
         retweetHeight += IWCellBorderWidth;
         
         // 5.4.整体
-        _retweetViewF = CGRectMake(retweetX, retweetY, retweetWidth, retweetHeight);
+        _retweetViewF = CGRectMake(retweetX, retweetY, retweetWidth - 2 * IWCellBorderWidth, retweetHeight);
     }
 
     // 6.整个cell的高度
@@ -128,8 +133,9 @@
     } else { // 只有文字
         _cellHeight = CGRectGetMaxY(_contentLabelF);
     }
+    
     _dockY = _cellHeight+IWCellBorderWidth;
-    _cellHeight += IWCellBorderWidth + IWCellBorderWidth + IWStatusDockH;
+    _cellHeight += IWCellBorderWidth + IWStatusDockH;
     
 }
 

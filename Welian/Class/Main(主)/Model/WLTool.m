@@ -9,6 +9,9 @@
 #import "WLTool.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "NSString+val.h"
+#import "YTKKeyValueStore.h"
+#import "MJExtension.h"
 
 @interface WLTool()
 
@@ -16,79 +19,79 @@
 
 @implementation WLTool
 
-#pragma mark - 获取通讯录信息
-+ (NSArray*)getAddressBookArray
+//获取通讯录中的所有属性，并存储在 textView 中，已检验，切实可行。兼容io6 和 ios 7 ，而且ios7还没有权限确认提示。
++ (void)getAddressBookArray:(WLToolBlock)friendsAddressBlock
 {
     CFErrorRef error = nil;
     //新建一个通讯录类
     ABAddressBookRef addressBooks = ABAddressBookCreateWithOptions(nil, &error);
     
-//    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-//    //这个只会在第一次访问时调用
-//    ABAddressBookRequestAccessWithCompletion(addressBooks, ^(bool greanted, CFErrorRef error){
-//        dispatch_semaphore_signal(sema);
-//        if (greanted) {
-//            NSLog(@"ABAddressBookSetAuthorization success.");
-//        }else {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"  啊啊" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//            [alert show];
-//        }
-//    });
     
+    CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBooks);
     NSMutableArray* contactArray = [[NSMutableArray alloc]init];
-    //获取通讯录中的所有人
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBooks);
-    if (CFArrayGetCount(allPeople)<=0) {
-        return contactArray;
-    }
-    for(int i = 0; i < CFArrayGetCount(allPeople); i++)
+    for(int i = 0; i < CFArrayGetCount(results); i++)
     {
-        PeopleAddressBook *peoAdd = [[PeopleAddressBook alloc] init];
-        ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+        ABRecordRef person = CFArrayGetValueAtIndex(results, i);
+        //读取firstname
+        NSString *personName = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+
+        //读取lastname
+        NSString *lastname = (NSString*)CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+
         
-        if (ABRecordCopyValue(person, kABPersonLastNameProperty)&&(ABRecordCopyValue(person, kABPersonFirstNameProperty))== nil) {
-            peoAdd.name = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-            
-        }else if (ABRecordCopyValue(person, kABPersonLastNameProperty) == nil&&(ABRecordCopyValue(person, kABPersonFirstNameProperty))){
-            peoAdd.name = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-        }else if (ABRecordCopyValue(person, kABPersonLastNameProperty)&&(ABRecordCopyValue(person, kABPersonFirstNameProperty))){
-            
-            NSString *first =(NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-            NSString *last = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-            peoAdd.name = [NSString stringWithFormat:@"%@%@",last,first];
-        }
-        
-        //读取联系人公司信息
-        
-        peoAdd.company = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonOrganizationProperty));
-        //读取电话信息，和emial类似，也分为工作电话，家庭电话，工作传真，家庭传真。。。。
-        
+        //读取电话多值
         ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
-        
-        if ((phone != nil)&&ABMultiValueGetCount(phone)>0) {
+        for (int k = 0; k<ABMultiValueGetCount(phone); k++)
+        {
+//              PeopleAddressBook *peoAdd = [[PeopleAddressBook alloc] init];
             
-            for (int m = 0; m < ABMultiValueGetCount(phone); m++) {
-                NSString * aPhone = (NSString *)CFBridgingRelease( ABMultiValueCopyValueAtIndex(phone, m));
-                NSString * aLabel = (NSString *)CFBridgingRelease(ABMultiValueCopyLabelAtIndex(phone, m));
-                
-                if ([aLabel isEqualToString:@"_$!<Mobile>!$_"]&&aPhone) {
-                    peoAdd.Aphone= aPhone;
-                    
+            //获取該Label下的电话值
+            NSString * personPhone = (NSString *)CFBridgingRelease( ABMultiValueCopyValueAtIndex(phone, k));
+            
+            personPhone = [personPhone stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            
+            if ([NSString phoneValidate:personPhone]) {
+                NSMutableString *name = [[NSMutableString alloc] init];
+                if (personName) {
+                    [name appendString:personName];
                 }
-                
-                if ([aLabel isEqualToString:@"_$!<WorkFAX>!$_"]) {
-                    peoAdd.Bphone = aPhone;
+                if (lastname) {
+                    [name appendString:lastname];
                 }
+//                [peoAdd setName:name];
+//                [peoAdd setMobile:personPhone];
                 
-                if ([aLabel isEqualToString:@"_$!<Work>!$_"]) {
-                    peoAdd.Cphone= aPhone;
-                }
+                [contactArray addObject:@{@"name":name,@"mobile":personPhone}];
             }
         }
-        [contactArray addObject:peoAdd];
-        
     }
-    return contactArray;
+    CFRelease(results);
+    CFRelease(addressBooks);
+    
+    [WLHttpTool uploadPhonebookParameterDic:contactArray success:^(id JSON) {
+        NSArray *array = JSON;
+        NSMutableArray *friends = [NSMutableArray arrayWithCapacity:array.count];
+        for (NSDictionary *dic  in array) {
+            FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+            [friendBook setKeyValues:dic];
+            [friends addObject:friendBook];
+        }
+//        YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"aaa.db"];
+//        
+//        NSString *friendTableName = @"friendTableName";
+//        [store createTableWithName:friendTableName];
+//        
+//        // 保存
+//        NSString *key = @"1";
+//        [store putObject:JSON withId:key intoTable:friendTableName];
+//        
+//        // 查询
+//        NSLog(@"query data result: %@", [store getObjectById:key fromTable:friendTableName]);
+        
+        friendsAddressBlock(friends);
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 

@@ -20,7 +20,9 @@ typedef enum {
 ///*  认证图片 */
 @property (nonatomic, strong) NSString *url;
 ///*  投资案例 */
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) NSArray *itemsArray;
+
+@property (nonatomic, strong) NSString *items;
 ///*  审核进度 */
-@property (nonatomic, assign) InvestAuthType investType;
+@property (nonatomic, assign) InvestAuthType auth;
 @end

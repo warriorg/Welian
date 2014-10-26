@@ -11,7 +11,6 @@
 #import "UserInfoTool.h"
 #import "WLHUDView.h"
 
-
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
 
@@ -52,6 +51,12 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KPublishOK @"PublishStatusOK"
 
 
+#define KWLDataDBName @"wlDataDBName.db"
+
+#define KMyAllFriendsKey @"KMyAllFriendsKey"
+
+#define KHomeDataKey @"KHomeDataKey"
+
 // 文件路径
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
 
@@ -69,6 +74,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define UserIconImage @"UserIconImage"
 
+// 所有好友数据
+#define KAllFriendsData [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"allFriendsdata.plist"]
+
+
 //当前系统版本
 #define isIOS6 [[UIDevice currentDevice].systemVersion intValue]==6?1:0
 
@@ -80,7 +89,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
 // 3.全局背景色
-#define IWGlobalBg IWColor(226, 226, 226)
+#define IWGlobalBg IWColor(246, 246, 246)
 
 
 /*
@@ -99,7 +108,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 被转发昵称
 #define IWRetweetNameColor IWColor(81, 126, 175)
 // 被转发内容
-#define IWRetweetContentColor IWColor(109, 109, 109)
+#define IWRetweetContentColor IWColor(70, 70, 70)
 // 线条浅灰颜色
 #define WLLineColor IWColor(232, 234, 239)
 
@@ -107,16 +116,16 @@ fprintf(stderr, "-----------------------------------\n");                       
  7.一条微博上的字体
  */
 // 昵称
-#define IWNameFont [UIFont boldSystemFontOfSize:15]
+#define IWNameFont [UIFont boldSystemFontOfSize:16]
 // 时间
-#define IWTimeFont [UIFont systemFontOfSize:12]
+#define IWTimeFont [UIFont systemFontOfSize:13]
 // 内容
-#define IWContentFont [UIFont systemFontOfSize:15]
+#define IWContentFont [UIFont systemFontOfSize:16]
 
 // 转发的昵称
-#define IWRetweetNameFont [UIFont systemFontOfSize:15]
+#define IWRetweetNameFont [UIFont systemFontOfSize:16]
 // 转发的内容
-#define IWRetweetContentFont IWRetweetNameFont
+#define IWRetweetContentFont IWContentFont
 
 // 每次加载cell的个数
 #define KCellConut 15
@@ -151,8 +160,24 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 头像图片的尺寸
 #define IWIconWHDefault 50
-#define IWIconWHSmall 34
+#define IWIconWHSmall 40
 #define IWIconWHBig 85
 
+
+// 返回结果的键
+#define BPushRequestErrorCodeKey   @"error_code"
+#define BPushRequestErrorMsgKey    @"error_msg"
+#define BPushRequestRequestIdKey   @"request_id"
+#define BPushRequestAppIdKey       @"app_id"
+#define BPushRequestUserIdKey      @"user_id"
+#define BPushRequestChannelIdKey   @"channel_id"
+#define BPushRequestResponseParamsKey  @"response_params" // 服务端返回的原始值，其内容和以上的部分值可能有重合
+
+// 方法名, 用BPushRequestMethodKey取出的值
+#define BPushRequestMethod_Bind    @"bind"
+#define BPushRequestMethod_Unbind    @"unbind"
+#define BPushRequestMethod_SetTag  @"set_tag"
+#define BPushRequestMethod_DelTag  @"del_tag"
+#define BPushRequestMethod_ListTag  @"list_tag"
 
 #endif

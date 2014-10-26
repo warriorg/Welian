@@ -14,11 +14,11 @@
 
 #define NumPerLine 7
 #define Lines    3
-#define FaceSize  30
+#define FaceSize  34
 /*
 ** 两边边缘间隔
  */
-#define EdgeDistance 20
+#define EdgeDistance 10
 /*
  ** 上下边缘间隔
  */
@@ -48,19 +48,19 @@
                                                       FaceSize)];
                 
                 if (i*7+x+1 ==21) {
-                    [expressionButton setBackgroundImage:[UIImage imageNamed:@"DeleteEmoticonBtn_ios7@2x.png"]
+                    [expressionButton setImage:[UIImage imageNamed:@"DeleteEmoticonBtn_ios7@2x.png"]
                                                 forState:UIControlStateNormal];
-                    expressionButton.tag = 0;
-        
+                    expressionButton.tag = 999+0;
+    
                 }else{
                     NSString *imageStr = [NSString stringWithFormat:@"Expression_%d@2x.png",index*20+i*7+x+1];
-                    [expressionButton setBackgroundImage:[UIImage imageNamed:imageStr]
+                    [expressionButton setImage:[UIImage imageNamed:imageStr]
                                                 forState:UIControlStateNormal];
-                    expressionButton.tag = 20*index+i*7+x+1;
+                    expressionButton.tag = 999+20*index+i*7+x+1;
                 }
                 [expressionButton addTarget:self
                                      action:@selector(faceClick:)
-                           forControlEvents:UIControlEventTouchDown];
+                           forControlEvents:UIControlEventTouchUpInside];
             }
         }
     }
@@ -71,11 +71,11 @@
     
     NSString *faceName;
     BOOL isDelete;
-    if (button.tag ==0){
+    if (button.tag ==999+0){
         faceName = nil;
         isDelete = YES;
     }else{
-        NSString *expressstring = [NSString stringWithFormat:@"Expression_%d",button.tag];
+        NSString *expressstring = [NSString stringWithFormat:@"Expression_%d",button.tag-999];
         NSString *plistStr = [[NSBundle mainBundle]pathForResource:@"expressionImage_custom" ofType:@"plist"];
         NSDictionary *plistDic = [[NSDictionary  alloc]initWithContentsOfFile:plistStr];
 //        DLog(@"%@",[plistDic description]);

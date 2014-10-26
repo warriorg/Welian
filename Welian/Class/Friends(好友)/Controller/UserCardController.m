@@ -30,9 +30,9 @@
     [_mobileLabel setText:userinfoM.mobile];
     [_emilLabel setText:userinfoM.email];
     
-    if (userinfoM.provicename || userinfoM.cityname || userinfoM.address) {
+    if (userinfoM.provincename || userinfoM.cityname || userinfoM.address) {
         
-        [_addresLabel setText:[NSString stringWithFormat:@"%@-%@%@",userinfoM.provicename,userinfoM.cityname,userinfoM.address]];
+        [_addresLabel setText:[NSString stringWithFormat:@"%@-%@%@",userinfoM.provincename,userinfoM.cityname,userinfoM.address]];
     }
     
     NSInteger investint = [userinfoM.investorauth integerValue];

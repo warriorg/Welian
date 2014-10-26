@@ -20,9 +20,8 @@
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "ShareEngine.h"
-
-#define SHARE_CONTENT @"Code4App, 移动开发好帮手。"
-#define SHARE_URL @"http://www.code4app.com/"
+#import "ShareView.h"
+#import "UserInfoBasicVC.h"
 
 @interface WLStatusCell () <UIActionSheetDelegate,MLEmojiLabelDelegate,LXActivityDelegate>
 {
@@ -115,6 +114,8 @@
     self.backgroundColor = [UIColor clearColor];
     // 1.头像
     _iconView = [[UIImageView alloc] init];
+    [_iconView setUserInteractionEnabled:YES];
+    [_iconView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
     [self.contentView addSubview:_iconView];
     
     // 2.昵称
@@ -169,10 +170,22 @@
     _moreBut.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
     _moreBut.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.contentView addSubview:_moreBut];
-    
-//    [_moreBut addTarget:self action:@selector(moreClick:) forControlEvents:UIControlEventTouchUpInside];
-
 }
+
+
+- (void)tapiconImage:(UITapGestureRecognizer *)tap
+{
+    WLBasicTrends *user = _statusFrame.status.user;
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [mode setUid:user.uid];
+    [mode setAvatar:user.avatar];
+    [mode setName:user.name];
+    
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+    [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+}
+
+
 
 /**
  *  添加转发微博的子控件
@@ -182,7 +195,7 @@
     // 0.整体
     _retweetView = [[UIImageView alloc] init];
     [_retweetView setUserInteractionEnabled:YES];
-//    _retweetView.image = [UIImage resizedImage:@"timeline_retweet_background" leftScale:0.9 topScale:0.7];
+    _retweetView.image = [UIImage resizedImage:@"timeline_retweet_background" leftScale:0.9 topScale:0.7];
     [self.contentView addSubview:_retweetView];
     
     // 1.昵称
@@ -266,43 +279,6 @@
     NSLog(@"%d",(int)imageIndex);
 }
 
-- (void)didClickOnCancelButton
-{
-    NSLog(@"didClickOnCancelButton");
-}
-
-
-//#pragma mark - shareEngineDelegate
-//- (void)shareEngineDidLogIn:(WeiboType)weibotype
-//{
-////    [shareTableView reloadData];
-//}
-//
-//- (void)shareEngineDidLogOut:(WeiboType)weibotype
-//{
-////    [shareTableView reloadData];
-//}
-//
-//- (void)shareEngineSendSuccess
-//{
-//    UIAlertView *shareAlert = [[UIAlertView alloc] initWithTitle:@"发送成功" message:@"内容成功发送到微博！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//    [shareAlert show];
-//}
-//
-//- (void)shareEngineSendFail:(NSError *)error
-//{
-//    NSString *failDescription = @"请重试！";
-//    if (20019 == error.code)
-//    {
-//        failDescription = @"重复发送了相同的内容！";
-//    }
-//    UIAlertView *shareAlert = [[UIAlertView alloc] initWithTitle:@"发送失败" message:failDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//    [shareAlert show];
-//}
-
-
-
-
 
 
 - (void)setStatusFrame:(WLStatusFrame *)statusFrame
@@ -368,14 +344,13 @@
         
         // 5.1.昵称
         _retweetNameLabel.frame = statusFrame.retweetNameLabelF;
-        _retweetNameLabel.text = [NSString stringWithFormat:@"@%@", retweetStatus.user.name];
+        _retweetNameLabel.text = [NSString stringWithFormat:@"该动态最早由%@发布", retweetStatus.user.name];
         
         // 5.2.正文
         _retweetContentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
         _retweetContentLabel.customEmojiPlistName = @"expressionImage_custom";
         _retweetContentLabel.frame = statusFrame.retweetContentLabelF;
         _retweetContentLabel.text = retweetStatus.content;
-        
         
         // 5.3.配图
         if (retweetStatus.photos.count) {

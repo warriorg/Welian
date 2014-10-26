@@ -30,7 +30,6 @@ static HttpTool *engine;
 - (void)reqestParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {
     if (isHUD) {
-        
         [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
     }
     NSString *parameterStr = [self dicTostring:parameterDic];
@@ -67,6 +66,7 @@ static HttpTool *engine;
     }
     NSString *parameterStr = [self dicTostring:parameterDic];
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":mode.sessionid};
     [self formatUrlAndParameters:parmetDic];
     
@@ -81,7 +81,7 @@ static HttpTool *engine;
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
           [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-            [WLHUDView showErrorHUD:@"senddidddd超时"];
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);

@@ -50,8 +50,8 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"加入weLian"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
-//    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
+
+    self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"密码":@"",@"职务":@""}];
     [self.view addSubview:self.tableView];
 }
 
@@ -61,6 +61,7 @@
     NSString *name = [self.dataDic objectForKey:@"姓名"];
     NSString *danwei = [self.dataDic objectForKey:@"单位"];
     NSString *zhiwu = [self.dataDic objectForKey:@"职务"];
+    NSString *mima = [self.dataDic objectForKey:@"密码"];
     if (!name.length) {
         [WLHUDView showErrorHUD:@"姓名不能为空"];
         return;
@@ -77,24 +78,28 @@
         [WLHUDView showErrorHUD:@"头像不能为空"];
         return;
     }
-    UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    [modeinfo setName:name];
-//    [modeinfo setAvatar:avatar];
-    [modeinfo setCompany:danwei];
-    [modeinfo setPosition:zhiwu];
-    [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
+    if (!mima.length) {
+        [WLHUDView showErrorHUD:@"密码不能为空"];
+    }
     
-    [WLHttpTool saveProfileAvatarParameterDic:@{@"name":name,@"company":danwei,@"position":zhiwu,@"avatar":avatar,@"avatarname":@"jpg"} success:^(id JSON) {
+    [WLHttpTool registerParameterDic:@{@"name":name,@"company":danwei,@"position":zhiwu,@"avatar":avatar,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
-        if ([datadic objectForKey:@"avatar"]) {
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            [mode setAvatar:[datadic objectForKey:@"avatar"]];
+        if ([datadic objectForKey:@"url"]) {
+            
+            UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            [modeinfo setName:name];
+            [modeinfo setCompany:danwei];
+            [modeinfo setPosition:zhiwu];
+            [modeinfo setCheckcode:mima];
+            [modeinfo setAvatar:[datadic objectForKey:@"url"]];
+            [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
+            MainViewController *mainVC = [[MainViewController alloc] init];
+            [self.view.window setRootViewController:mainVC];
         }
-        MainViewController *mainVC = [[MainViewController alloc] init];
-        [self.view.window setRootViewController:mainVC];
     } fail:^(NSError *error) {
         
     }];
+
 }
 
 
@@ -155,15 +160,13 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
-    
-    
 }
-
 
 #pragma mark ---tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    NSArray *array = self.dataDic.allKeys;
+    return array.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -196,29 +199,48 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0) {
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            [self.dataDic setObject:userInfo forKey:@"姓名"];
-            [self.tableView reloadData];
-        }];
-        [nameVC setUserInfoStr:self.dataDic[@"姓名"]];
-        [self.navigationController pushViewController:nameVC animated:YES];
-        
-    }else if (indexPath.row ==1){
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            [self.dataDic setObject:userInfo forKey:@"单位"];
-            [self.tableView reloadData];
-        }];
-        [nameVC setUserInfoStr:self.dataDic[@"单位"]];
-        [self.navigationController pushViewController:nameVC animated:YES];
-    }else if (indexPath.row == 2){
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            [self.dataDic setObject:userInfo forKey:@"职务"];
-            [self.tableView reloadData];
-        }];
-        [nameVC setUserInfoStr:self.dataDic[@"职务"]];
-        [self.navigationController pushViewController:nameVC animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSArray *aa = self.dataDic.allKeys;
+    for (NSString *tit in aa) {
+        if ([cell.textLabel.text isEqualToString:tit]) {
+            NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                [self.dataDic setObject:userInfo forKey:tit];
+                [self.tableView reloadData];
+            }];
+            [nameVC setUserInfoStr:self.dataDic[tit]];
+            [nameVC setTitle:tit];
+            [self.navigationController pushViewController:nameVC animated:YES];
+        }
     }
+
+//    if (indexPath.row==0) {
+//        
+//        
+//    }else if (indexPath.row ==1){
+//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+//            [self.dataDic setObject:userInfo forKey:@"单位"];
+//            [self.tableView reloadData];
+//        }];
+//        [nameVC setUserInfoStr:self.dataDic[@"单位"]];
+//        [nameVC setTitle:@"单位"];
+//        [self.navigationController pushViewController:nameVC animated:YES];
+//    }else if (indexPath.row == 2){
+//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+//            [self.dataDic setObject:userInfo forKey:@"职务"];
+//            [self.tableView reloadData];
+//        }];
+//        [nameVC setUserInfoStr:self.dataDic[@"职务"]];
+//        [nameVC setTitle:@"职务"];
+//        [self.navigationController pushViewController:nameVC animated:YES];
+//    }else if (indexPath.row ==3){
+//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+//            [self.dataDic setObject:userInfo forKey:@"密码"];
+//            [self.tableView reloadData];
+//        }];
+//        [nameVC setUserInfoStr:self.dataDic[@"密码"]];
+//        [nameVC setTitle:@"密码"];
+//        [self.navigationController pushViewController:nameVC animated:YES];
+//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

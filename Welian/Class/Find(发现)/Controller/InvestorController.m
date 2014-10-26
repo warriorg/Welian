@@ -49,7 +49,7 @@
     self.disArray = @[@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111"];
     
     UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    NSInteger uid = [mo.uid integerValue];
+
     
 //    [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {
 //        self.dataArray = [NSArray arrayWithArray:JSON];

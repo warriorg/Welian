@@ -150,9 +150,9 @@
         }else if (indexPath.row ==3){
             [cell.detailTextLabel setText:mode.email];
         }else if (indexPath.row==4){
-            if (mode.provicename||mode.cityname) {
+            if (mode.provincename||mode.cityname) {
                 
-                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provicename,mode.cityname]];
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provincename,mode.cityname]];
             }
         }else if (indexPath.row ==5){
             [cell.detailTextLabel setText:mode.address];
@@ -284,7 +284,7 @@
 - (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
 {
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    [mode setProvicename:locationDic[@"provname"]];
+    [mode setProvincename:locationDic[@"provname"]];
     [mode setCityname:locationDic[@"cityname"]];
     [mode setCityid:locationDic[@"cityid"]];
     [mode setProvinceid:locationDic[@"provid"]];

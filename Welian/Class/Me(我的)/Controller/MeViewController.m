@@ -129,7 +129,7 @@ static NSString *meinfocellid = @"MeinfoCell";
             
             controller = [[MyLocationController alloc] init];
         }else if (indexPath.row ==1){
-            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain withType:@"0"];
+            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
             [controller setTitle:@"我的动态"];
         }
 

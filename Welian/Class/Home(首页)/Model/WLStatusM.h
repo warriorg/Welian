@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class WLBasicTrends;
+#import "WLBasicTrends.h"
 
 
 @interface WLStatusM : NSObject

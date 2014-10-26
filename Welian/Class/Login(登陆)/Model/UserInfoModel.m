@@ -20,7 +20,7 @@
     [encoder encodeObject:_position forKey:@"_userJob"];
     [encoder encodeObject:_company forKey:@"_userIncName"];
     [encoder encodeObject:_cityname forKey:@"_cityname"];
-    [encoder encodeObject:_provicename forKey:@"_provicename"];
+    [encoder encodeObject:_provincename forKey:@"_provincename"];
     [encoder encodeObject:_checkcode forKey:@"_checkcode"];
     [encoder encodeObject:_sessionid forKey:@"_sessionId"];
     [encoder encodeObject:_cityid forKey:@"_cityid"];
@@ -44,7 +44,7 @@
         self.company = [aDecoder decodeObjectForKey:@"_userIncName"];
         self.position = [aDecoder decodeObjectForKey:@"_userJob"];
         self.cityname = [aDecoder decodeObjectForKey:@"_cityname"];
-        self.provicename = [aDecoder decodeObjectForKey:@"_provicename"];
+        self.provincename = [aDecoder decodeObjectForKey:@"_provincename"];
         self.checkcode = [aDecoder decodeObjectForKey:@"_checkcode"];
         self.sessionid = [aDecoder decodeObjectForKey:@"_sessionId"];
         self.cityid = [aDecoder decodeObjectForKey:@"_cityid"];

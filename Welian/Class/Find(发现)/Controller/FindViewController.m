@@ -9,10 +9,13 @@
 #import "FindViewController.h"
 #import "InvestorController.h"
 #import "UserCardController.h"
+#import "TOWebViewController.h"
+#import "InvestorUsersListController.h"
 
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_data;
+    NSArray *_urlArray;
 }
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -20,10 +23,31 @@
 
 @implementation FindViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!_urlArray) {
+        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
+            _urlArray = [NSArray arrayWithArray:JSON];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (!_urlArray) {
+        
+        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
+            _urlArray = [NSArray arrayWithArray:JSON];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+    
     // 加载数据
     [self loadDatalist];
     // 加载页面
@@ -96,26 +120,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-//    UserCardController *cardVC = [[UserCardController alloc] init];
-//    [self.navigationController pushViewController:cardVC animated:YES];
-//    return;
-    InvestorController *investorVC = [[InvestorController alloc] init];
-    // 1.取出这行对应的字典数据
-    NSDictionary *dict = _data[indexPath.section][indexPath.row];
-    // 2.设置文字
-    [investorVC setTitle:dict[@"name"]];
-    [self.navigationController pushViewController:investorVC animated:YES];
-    return;
-    
-    UIViewController *controller;
-    if (indexPath.section==0) {
-
-    }else if (indexPath.section == 3){
-
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSDictionary *webDic ;
+    for (NSDictionary *urlDic  in _urlArray) {
+        if ([cell.textLabel.text isEqualToString:urlDic[@"name"]]) {
+            webDic = urlDic;
+            break;
+        }
     }
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    if (indexPath.section==1) {
+        InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
+        [investorListVC setTitle:@"投资人"];
+        [self.navigationController pushViewController:investorListVC animated:YES];
+    }else{
+        if (webDic==nil) return;
+        
+        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:webDic[@"url"]];
+        webVC.showPageTitles = NO;
+        [webVC setTitle:webDic[@"name"]];
+         [self.navigationController pushViewController:webVC animated:YES];
+    }
     
 }
 

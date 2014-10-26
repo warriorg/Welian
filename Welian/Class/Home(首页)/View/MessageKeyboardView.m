@@ -40,15 +40,15 @@
         
         _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-IWCellBorderWidth-40, 5, 40, 40)];
         [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_emoji"] forState:UIControlStateNormal];
-        [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_add"] forState:UIControlStateSelected];
+        [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_keybroad"] forState:UIControlStateSelected];
         [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_emojiBut];
         
-        _commentTextView = [[UITextField alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 5, _emojiBut.frame.origin.x-IWCellBorderWidth, 40)];
+        _commentTextView = [[UITextField alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
         [_commentTextView.layer setMasksToBounds:YES];
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
-        [_commentTextView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+        [_commentTextView.layer setBorderColor:[WLLineColor CGColor]];
         [_commentTextView setFont:[UIFont systemFontOfSize:17]];
         [_commentTextView setReturnKeyType:UIReturnKeySend];
         [_commentTextView setPlaceholder:@"写评论..."];
@@ -78,7 +78,24 @@
 - (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
 {
     if (dele) {
-        _commentTextView.text = [_commentTextView.text stringByReplacingOccurrencesOfString:@"" withString:@""];
+        
+        NSString *inputString = _commentTextView.text;
+        
+        NSString *string = nil;
+        NSInteger stringLength = inputString.length;
+        if (stringLength > 0) {
+            if ([@"]" isEqualToString:[inputString substringFromIndex:stringLength-1]]) {
+                if ([inputString rangeOfString:@"["].location == NSNotFound){
+                    string = [inputString substringToIndex:stringLength - 1];
+                } else {
+                    string = [inputString substringToIndex:[inputString rangeOfString:@"[" options:NSBackwardsSearch].location];
+                }
+            } else {
+                string = [inputString substringToIndex:stringLength - 1];
+            }
+        }
+
+        _commentTextView.text = string;
     }else{
         
         _commentTextView.text = [_commentTextView.text stringByAppendingString:faceStr];

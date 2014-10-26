@@ -15,19 +15,42 @@
 #import "SchoolModel.h"
 #import "CompanyModel.h"
 #import "CommentCellFrame.h"
+#import "InvestorUserM.h"
+#import "pinyin.h"
+#import "PinYin4Objc.h"
+#import "ChineseString.h"
+#import "WLStatusM.h"
+#import "FriendsUserModel.h"
+#import "FriendsAddressBook.h"
+#import "WLDataDBTool.h"
 
 @implementation WLHttpTool
 
-#pragma mark - 登陆获取验证码/密码
-+ (void)loginGetCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+#pragma mark - 忘记密码
++ (void)forgetPasswordParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
-        if ([JSON objectForKey:@"checkcode"]) {
-            UserInfoModel *mod = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            [mod setCheckcode:[JSON objectForKey:@"checkcode"]];
-            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mod];
-        }
+    NSDictionary *dic = @{@"type":@"forgetPassword",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
+}
 
+
+#pragma mark - 获取验证码
++ (void)getCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+ NSDictionary *dic = @{@"type":@"getCheckCode",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [mode setSessionid:[JSON objectForKey:@"sessionid"]];
+        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+        
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -38,7 +61,10 @@
 #pragma mark - 验证 验证码
 + (void)checkCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"checkCode",@"data":parameterDic};
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        DLog(@"%@",JSON);
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
@@ -50,7 +76,9 @@
 #pragma mark - 用户登陆
 + (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestParameters:parameterDic successBlock:^(id JSON) {
+    
+    NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -58,9 +86,9 @@
 }
 
 #pragma mark - 用户注册填写信息
-+ (void)saveProfileAvatarParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
++ (void)registerParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    NSDictionary *dic = @{@"type":@"saveProfileAvatar",@"data":parameterDic};
+    NSDictionary *dic = @{@"type":@"register",@"data":parameterDic};
     
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
@@ -68,6 +96,21 @@
         failurBlock (error);
     } withHUD:YES andDim:YES];
 }
+
+
+#pragma mark - 上传所有通讯录
++ (void)uploadPhonebookParameterDic:(NSMutableArray *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"uploadPhonebook",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *datajson = JSON;
+        succeBlock (datajson);
+    } failure:^(NSError *error) {
+        failurBlock (error);
+    } withHUD:YES andDim:YES];
+}
+
 
 #pragma mark - 修改用户信息
 + (void)saveProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -106,23 +149,36 @@
 }
 
 #pragma mark - 加载好友最新动态
-+ (void)loadFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
++ (void)loadFeedParameterDic:(NSDictionary *)parameterDic andLoadType:(NSNumber *)uid success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic;
     
-    if ([[parameterDic objectForKey:@"uid"] integerValue]== 0) {
+    if (uid) {
         dic = @{@"type":@"loadUserFeed",@"data":parameterDic};
     }else {
-        dic = @{@"type":@"loadFeed",@"data":parameterDic};
-    
+        dic = @{@"type":@"loadFeed",@"data":parameterDic};    
     }
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+        
         if (JSON) {
+
+            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+                
+                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                NSString *tableName = [NSString stringWithFormat:@"u%@",mode.uid];
+                NSInteger i = 0;
+                for (NSDictionary *dic in jsonarray) {
+
+                    [[WLDataDBTool sharedService] putObject:dic  withId:[NSString stringWithFormat:@"%d",i] intoTable:tableName];
+                    i++;
+                }
+                
+            }
             
             WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
             succeBlock (result);
         }
-//        [WLHUDView showSuccessHUD:@""];
         
     } failure:^(NSError *error) {
         
@@ -182,8 +238,9 @@
         InvestAuthModel *investM = [[InvestAuthModel alloc] init];
         if (datadic.allKeys) {
             [investM setUrl:[datadic objectForKey:@"url"]];
-            [investM setInvestType:[datadic objectForKey:@"auth"]];
-            investM.items = [[datadic objectForKey:@"items"] componentsSeparatedByString:@","];
+            [investM setAuth:[datadic objectForKey:@"auth"]];
+            [investM setItems:[datadic objectForKey:@"items"]];
+            investM.itemsArray = [[datadic objectForKey:@"items"] componentsSeparatedByString:@","];
         }
         succeBlock (investM);
     } failure:^(NSError *error) {
@@ -229,7 +286,8 @@
 #pragma mark - 删除评论
 + (void)deleteFeedCommentParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"deleteFeedComment",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -297,23 +355,131 @@
 #pragma mark - 根据uid取用户信息  0取自己
 + (void)loadProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"loadProfile",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:YES andDim:NO];
 }
 
-#pragma mark - 根据uid取用户好友  0取自己
+#pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    NSString *tabelName = [NSString stringWithFormat:@"u%@",mode.uid];
+    NSArray *myFriends = [[WLDataDBTool sharedService] getObjectById:KMyAllFriendsKey fromTable:tabelName];
+    if (myFriends) {
+        
+        NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:myFriends.count];
+        for (NSDictionary *modic in myFriends) {
+            
+            UserInfoModel *mode = [[UserInfoModel alloc] init];
+            [mode setKeyValues:modic];
+            [mutabArray addObject:mode];
+        }
+        
+        succeBlock ([self getChineseStringArr:mutabArray]);
+        
+    }else{
+        NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
+        [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+            NSArray *json = [NSArray arrayWithArray:JSON];
+            [[WLDataDBTool sharedService] putObject:json withId:KMyAllFriendsKey intoTable:tabelName];
+            
+            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            for (NSDictionary *modic in json) {
+                
+                UserInfoModel *mode = [[UserInfoModel alloc] init];
+                [mode setKeyValues:modic];
+                [mutabArray addObject:mode];
+            }
+            
+            succeBlock ([self getChineseStringArr:mutabArray]);
+        } failure:^(NSError *error) {
+            failurBlock(error);
+        } withHUD:NO andDim:NO];
+    }
+}
+
+#pragma mark - 请求添加为好友
++ (void)requestFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
     
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"requestFriend",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:NO andDim:NO];
+    } withHUD:YES andDim:NO];
 }
+
+
+
++ (NSMutableArray *)getChineseStringArr:(NSArray *)arrToSort {
+    
+    NSMutableArray *_sectionHeadsKeys = [NSMutableArray array];
+    NSMutableArray *chineseStringsArray = [NSMutableArray array];
+    for (UserInfoModel *mode in arrToSort) {
+        ChineseString *chineseString=[[ChineseString alloc]init];
+        chineseString.string=[NSString stringWithString:mode.name];
+        chineseString.modeUser = mode;
+        
+        if(![chineseString.string isEqualToString:@""]){
+            //join the pinYin
+            NSString *pinYinResult = [NSString string];
+            HanyuPinyinOutputFormat *format = [[HanyuPinyinOutputFormat alloc] init];
+            
+            NSString *nameStr = [[PinyinHelper toHanyuPinyinStringWithNSString:chineseString.string  withHanyuPinyinOutputFormat:format withNSString:@""] uppercaseString];
+            for(int j = 0;j < nameStr.length; j++) {
+                NSString *singlePinyinLetter = [[NSString stringWithFormat:@"%c",[nameStr characterAtIndex:j]] uppercaseString];
+                
+                pinYinResult = [pinYinResult stringByAppendingString:singlePinyinLetter];
+            }
+            chineseString.pinYin = pinYinResult;
+        } else {
+            chineseString.pinYin = @"";
+        }
+        [chineseStringsArray addObject:chineseString];
+    }
+    
+    //sort the ChineseStringArr by pinYin
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"pinYin" ascending:YES]];
+    [chineseStringsArray sortUsingDescriptors:sortDescriptors];
+    
+    
+    NSMutableArray *arrayForArrays = [NSMutableArray array];
+    BOOL checkValueAtIndex= NO;  //flag to check
+    NSMutableArray *TempArrForGrouping = nil;
+    
+    for(int index = 0; index < [chineseStringsArray count]; index++)
+    {
+        ChineseString *chineseStr = (ChineseString *)[chineseStringsArray objectAtIndex:index];
+        NSMutableString *strchar= [NSMutableString stringWithString:chineseStr.pinYin];
+        NSString *sr= [strchar substringToIndex:1];
+        //sr containing here the first character of each string
+        if(![_sectionHeadsKeys containsObject:[sr uppercaseString]])//here I'm checking whether the character already in the selection header keys or not
+        {
+            [_sectionHeadsKeys addObject:[sr uppercaseString]];
+            TempArrForGrouping = [[NSMutableArray alloc] initWithObjects:nil];
+            checkValueAtIndex = NO;
+        }
+        if([_sectionHeadsKeys containsObject:[sr uppercaseString]])
+        {
+            [TempArrForGrouping addObject:chineseStr.modeUser];
+            if(checkValueAtIndex == NO)
+            {
+                [arrayForArrays addObject:@{@"key":sr,@"userF":TempArrForGrouping}];
+                checkValueAtIndex = YES;
+            }
+        }
+    }
+    return arrayForArrays;
+}
+
+
+
 
 #pragma mark - 根据fid取一条动态信息
 + (void)loadOneFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -328,12 +494,34 @@
 #pragma mark - 取发现
 + (void)loadFoundParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"loadFound",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 取投资人列表
++ (void)loadInvestorUserParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"loadInvestorUser",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *dataArray = [NSArray arrayWithArray:JSON];
+        NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:dataArray.count];
+        for (NSDictionary *dic in dataArray) {
+            
+            InvestorUserM *investorM = [[InvestorUserM alloc] init];
+            [investorM setKeyValues:dic];
+            [dataAM addObject:investorM];
+        }
+        succeBlock (dataAM);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:YES andDim:NO];
 }
+
+
 
 #pragma mark - 添加教育经历
 + (void)addSchoolParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -414,7 +602,6 @@
 #pragma mark - 删除工作经历
 + (void)deleteUserCompanyParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [WLHUDView showHUDWithStr:@"" dim:NO];
     NSDictionary *dic = @{@"type":@"deleteUserCompany",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         [WLHUDView showSuccessHUD:@"删除成功"];
@@ -424,6 +611,96 @@
         failurBlock(error);
     } withHUD:YES andDim:YES];
 }
+
+
+#pragma mark - 取用户详细信息
++ (void)loadUserInfoParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+
+    NSDictionary *dic = @{@"type":@"loadUserInfo",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSDictionary *dataDic = [NSDictionary dictionaryWithDictionary:JSON];
+        // 动态
+        NSDictionary *feed = [dataDic objectForKey:@"feed"];
+        WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
+        
+        // 投资案例
+        NSDictionary *investor = [dataDic objectForKey:@"investor"];
+        InvestAuthModel *investorM = [InvestAuthModel objectWithKeyValues:investor];
+        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
+        
+        // 详细信息
+        NSDictionary *profile = [dataDic objectForKey:@"profile"];
+        UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+        
+        // 创业者
+        NSDictionary *startup = [dataDic objectForKey:@"startup"];
+        
+        // 工作经历列表
+        NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
+        NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
+        for (NSDictionary *dic in usercompany) {
+            CompanyModel *usercompanyM = [CompanyModel objectWithKeyValues:dic];
+            [companyArrayM addObject:usercompanyM];
+        }
+        
+        // 教育经历列表
+        NSArray *userschool = [dataDic objectForKey:@"userschool"];
+        NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
+        for (NSDictionary *dic  in userschool) {
+            SchoolModel *userschoolM = [SchoolModel objectWithKeyValues:dic];
+            [schoolArrayM addObject:userschoolM];
+        }
+        
+        succeBlock(@{@"feed":feedM,@"investor":investorM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+    } failure:^(NSError *error) {
+        [WLHUDView showErrorHUD:@""];
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
+
+#pragma mark - 取共同好友
++ (void)loadSameFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"loadSameFriend",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithDictionary:JSON];
+        NSArray *sameFA = [dataDic objectForKey:@"samefriends"];
+        NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
+        for (NSDictionary *infoD in sameFA) {
+            FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
+            [fmode setKeyValues:infoD];
+        }
+        [dataDic setObject:sameFrindM forKey:@"samefriends"];
+        succeBlock(dataDic);
+    } failure:^(NSError *error) {
+
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
+#pragma mark - 搜索用户
++(void)searchUserParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"searchUser",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        NSArray *json = JSON;
+        NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+        for (NSDictionary *modic in json) {
+            
+            UserInfoModel *mode = [[UserInfoModel alloc] init];
+            [mode setKeyValues:modic];
+            [mutabArray addObject:mode];
+        }
+        succeBlock(mutabArray);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
+}
+
 
 
 @end

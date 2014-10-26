@@ -161,7 +161,6 @@ NSString * const CTAssetScrollViewTappedNotification = @"CTAssetScrollViewTapped
 }
 
 
-
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -179,14 +178,14 @@ NSString * const CTAssetScrollViewTappedNotification = @"CTAssetScrollViewTapped
     {
         // scale image properly
         ALAsset *asset = [self.dataSource assetAtIndex:index];
-        CGFloat scale  = ([asset isVideo]) ? 0.5f : 1.0f;
         
         UIImage *image;
         
         if (asset.defaultRepresentation)
         {
+
             image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                        scale:scale
+                                        scale:0.5
                                   orientation:UIImageOrientationUp];
         }
         else

@@ -41,8 +41,8 @@
 - (void)setInvestM:(InvestAuthModel *)investM
 {
     _investM = investM;
-    if (investM.items.count) {
-        for (NSString *item in investM.items) {
+    if (investM.itemsArray.count) {
+        for (NSString *item in investM.itemsArray) {
             [self.dataArrayM addObject:item];
         }
         [self.tableView reloadData];

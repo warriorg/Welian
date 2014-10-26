@@ -30,7 +30,7 @@ typedef enum {
 /**  头像图片   */
 @property (nonatomic, strong) NSString *avatar;
 /**  uid   */
-@property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSNumber *uid;
 
 /**  0 非，1 投资人，2 创业者，3 兼   */
 @property (nonatomic, assign) WLVerifiedType status;

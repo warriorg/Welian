@@ -29,13 +29,12 @@ MBProgressHUD *HUD;
 + (void)showSuccessHUD:(NSString *)labeltext
 {
     [self showCustomHUD:labeltext imageview:Ksuccess];
-    [HUD hide:YES afterDelay:1];
 }
 
 + (void)showErrorHUD:(NSString *)labeltext
 {
     [self showCustomHUD:labeltext imageview:Kerror];
-    [HUD hide:YES afterDelay:1];
+    
 }
 
 + (void)showCustomHUD:(NSString *)labeltext imageview:(NSString *)imageName
@@ -43,6 +42,7 @@ MBProgressHUD *HUD;
     [self showHUDWithStr:labeltext dim:NO];
     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     HUD.mode = MBProgressHUDModeCustomView;
+    [HUD hide:YES afterDelay:1];
 }
 
 
@@ -51,7 +51,7 @@ MBProgressHUD *HUD;
     [self hiddenHud];
     HUD = [MBProgressHUD showHUDAddedTo:[self window] animated:YES];
     [HUD setUserInteractionEnabled:dim];
-    [HUD setDimBackground:dim];
+//    [HUD setDimBackground:dim];
     [HUD setLabelText:title];
     return HUD;
 }

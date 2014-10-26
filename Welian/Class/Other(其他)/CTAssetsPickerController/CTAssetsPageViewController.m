@@ -39,7 +39,7 @@
     NSInteger _currently;
     PicDataBlock _picBlcok;
 }
-@property (nonatomic, strong) NSArray *assets;
+@property (nonatomic, strong) NSMutableArray *assets;
 @property (nonatomic, assign, getter = isStatusBarHidden) BOOL statusBarHidden;
 
 @end
@@ -50,7 +50,7 @@
 
 @implementation CTAssetsPageViewController
 
-- (id)initWithAssets:(NSArray *)assets picDatablock:(PicDataBlock)picArrayBlck
+- (id)initWithAssets:(NSMutableArray *)assets picDatablock:(PicDataBlock)picArrayBlck
 {
     
     self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
@@ -72,7 +72,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    _picBlcok(self.assets);
+    _picBlcok([NSMutableArray arrayWithArray:self.assets]);
 }
 
 

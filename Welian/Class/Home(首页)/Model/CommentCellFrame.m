@@ -40,7 +40,7 @@
     CGFloat contentX = nameX;
     CGFloat contentY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth;
     CGSize contentSize = [commentM.comment sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-    _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
+    _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height+5);
     
     if (CGRectGetMaxY(_contentLabelF)<CGRectGetMaxY(_iconViewF)) {
         _cellHeight = CGRectGetMaxY(_iconViewF)+IWCellBorderWidth;

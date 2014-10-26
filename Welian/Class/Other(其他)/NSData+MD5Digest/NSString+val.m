@@ -25,14 +25,17 @@
     return [emailTest evaluateWithObject:email];
 }
 
-//以字母开头，只能包含“字母”，“数字”，“下划线”，长度7~15
+//以字母开头，只能包含“字母”，“数字”，“下划线”，长度6~18
 + (BOOL)passwordValidate:(NSString *)password{
     
-    NSString *pwdRegex = @"^([a-zA-Z]|[a-zA-Z0-9_]|[0-9]){5,14}$";
+    NSString *pwdRegex = @"^([a-zA-Z]|[a-zA-Z0-9_]|[0-9]){5,17}$";
     NSPredicate *pwdTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",pwdRegex];
     NSLog(@"%d",[pwdTest evaluateWithObject:password]);
     return [pwdTest evaluateWithObject:password];
 }
+
+
+
 //数字开头，长度7~11
 + (BOOL)studentNumberValidate:(NSString *)number{
     

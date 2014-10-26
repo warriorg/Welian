@@ -17,10 +17,11 @@
 #import "ZBMessageManagerFaceView.h"
 #import "ForwardPublishView.h"
 #import "WLStatusM.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 static NSString *picCellid = @"PicCellID";
 
-@interface PublishStatusController () <UITextViewDelegate,CTAssetsPickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,ZBMessageManagerFaceViewDelegate>
+@interface PublishStatusController () <UITextViewDelegate,CTAssetsPickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,ZBMessageManagerFaceViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 {
     UIButton *_emojiBut;
@@ -30,12 +31,13 @@ static NSString *picCellid = @"PicCellID";
     BOOL keyboardIsShow;//键盘是否显示
     
     PublishType _publishType;
+    ALAssetsLibrary *_alassets;
 }
 
 @property (nonatomic,strong) ZBMessageManagerFaceView *faceView;
 
 @property (nonatomic, strong) UIView *inputttView;
-@property (nonatomic, copy) NSArray *assets;
+@property (nonatomic, copy)   NSMutableArray *assets;
 @property (nonatomic, strong) IWTextView *textView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -58,6 +60,7 @@ static NSString *picCellid = @"PicCellID";
     return _forwardView;
 }
 
+
 - (instancetype)initWithType:(PublishType)publishType
 {
     _publishType = publishType;
@@ -72,6 +75,8 @@ static NSString *picCellid = @"PicCellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _alassets = [[ALAssetsLibrary alloc] init];
+    _assets = [NSMutableArray arrayWithArray:_assets];
     keyboardIsShow=NO;
     self.publishM = [[PublishModel alloc] init];
     [self setUiItems];
@@ -106,7 +111,6 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)dealloc
 {
-    
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
@@ -119,7 +123,7 @@ static NSString *picCellid = @"PicCellID";
     CGFloat high = iPhone5?250:150;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
-    [self.textView setBackgroundColor:[UIColor orangeColor]];
+//    [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.textView setFont:[UIFont systemFontOfSize:17]];
@@ -134,13 +138,9 @@ static NSString *picCellid = @"PicCellID";
     
     _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(20, 2, 44, 44)];
     [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_emoji"] forState:UIControlStateNormal];
-    [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_add"] forState:UIControlStateSelected];
+    [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_keybroad"] forState:UIControlStateSelected];
     [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputttView addSubview:_emojiBut];
-    
-    self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, keyboardHeight)];//216-->196
-    self.faceView.delegate = self;
-    [self.view addSubview:self.faceView];
     
     if (_publishType == PublishTypeNomel) {
         
@@ -169,6 +169,11 @@ static NSString *picCellid = @"PicCellID";
         [self.forwardView setFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, 320, 60)];
         [self.view addSubview:self.forwardView];
     }
+
+    
+    self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, SuperSize.height, self.view.frame.size.width, keyboardHeight)];//216-->196
+    self.faceView.delegate = self;
+    [self.view addSubview:self.faceView];
 
     
 //    // 我的位置
@@ -201,13 +206,13 @@ static NSString *picCellid = @"PicCellID";
     [but setSelected:!but.selected];
     
     //如果直接点击表情，通过toolbar的位置来判断
-    if (self.inputttView.frame.origin.y== self.view.bounds.size.height - INPUT_HEIGHT&&self.inputttView.frame.size.height==INPUT_HEIGHT) {
+    if (self.inputttView.frame.origin.y== SuperSize.height - INPUT_HEIGHT&&self.inputttView.frame.size.height==INPUT_HEIGHT) {
         
         [UIView animateWithDuration:Time animations:^{
-            self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-keyboardHeight-INPUT_HEIGHT,  self.view.bounds.size.width,INPUT_HEIGHT);
+            self.inputttView.frame = CGRectMake(0, SuperSize.height-keyboardHeight-INPUT_HEIGHT,  SuperSize.width,INPUT_HEIGHT);
         }];
         [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height-keyboardHeight,self.view.frame.size.width, keyboardHeight)];
+            [self.faceView setFrame:CGRectMake(0, SuperSize.height-keyboardHeight,SuperSize.width, keyboardHeight)];
         }];
         [self.textView resignFirstResponder];
         return;
@@ -215,7 +220,7 @@ static NSString *picCellid = @"PicCellID";
     //如果键盘没有显示，点击表情了，隐藏表情，显示键盘
     if (!keyboardIsShow) {
         [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, keyboardHeight)];
+            [self.faceView setFrame:CGRectMake(0, SuperSize.height, SuperSize.width, keyboardHeight)];
         }];
         [self.textView becomeFirstResponder];
         
@@ -223,11 +228,11 @@ static NSString *picCellid = @"PicCellID";
         [self.textView resignFirstResponder];
         //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
         [UIView animateWithDuration:Time animations:^{
-            self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-keyboardHeight-self.inputttView.frame.size.height,  self.view.bounds.size.width,self.inputttView.frame.size.height);
+            self.inputttView.frame = CGRectMake(0, SuperSize.height-keyboardHeight-INPUT_HEIGHT,  SuperSize.width,INPUT_HEIGHT);
         }];
         
         [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height-keyboardHeight,self.view.frame.size.width, keyboardHeight)];
+            [self.faceView setFrame:CGRectMake(0, SuperSize.height-keyboardHeight,SuperSize.width, keyboardHeight)];
         }];
     }
 }
@@ -239,11 +244,11 @@ static NSString *picCellid = @"PicCellID";
 -(void)dismissKeyBoard{
     //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
     [UIView animateWithDuration:Time animations:^{
-        self.inputttView.frame = CGRectMake(0, self.view.frame.size.height-INPUT_HEIGHT,  self.view.bounds.size.width,INPUT_HEIGHT);
+        self.inputttView.frame = CGRectMake(0, SuperSize.height-INPUT_HEIGHT,  SuperSize.width,INPUT_HEIGHT);
     }];
     
     [UIView animateWithDuration:Time animations:^{
-        [self.faceView setFrame:CGRectMake(0, self.view.frame.size.height,self.view.frame.size.width, keyboardHeight)];
+        [self.faceView setFrame:CGRectMake(0, SuperSize.height,SuperSize.width, keyboardHeight)];
     }];
     [_emojiBut setSelected:NO];
     [self.textView resignFirstResponder];
@@ -256,17 +261,29 @@ static NSString *picCellid = @"PicCellID";
     [_emojiBut setSelected:NO];
 }
 
--(void)inputKeyboardWillHide:(NSNotification *)notification{
-    
-    keyboardIsShow=NO;
-}
 
 
 - (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
 {
-    //    NSLog(@"%@",faceStr);
     if (dele) {
-        self.textView.text = [self.textView.text stringByReplacingOccurrencesOfString:@"" withString:@""];
+        
+        NSString *inputString = self.textView.text;
+        
+        NSString *string = nil;
+        NSInteger stringLength = inputString.length;
+        if (stringLength > 0) {
+            if ([@"]" isEqualToString:[inputString substringFromIndex:stringLength-1]]) {
+                if ([inputString rangeOfString:@"["].location == NSNotFound){
+                    string = [inputString substringToIndex:stringLength - 1];
+                } else {
+                    string = [inputString substringToIndex:[inputString rangeOfString:@"[" options:NSBackwardsSearch].location];
+                }
+            } else {
+                string = [inputString substringToIndex:stringLength - 1];
+            }
+        }
+        
+        self.textView.text = string;
     }else{
         
         self.textView.text = [self.textView.text stringByAppendingString:faceStr];
@@ -289,12 +306,13 @@ static NSString *picCellid = @"PicCellID";
 
 
 
-
 #pragma mark - CollectionView代理
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
+    if (self.assets.count>0) {
+        return self.assets.count+1;
+    }
     return self.assets.count;
 }
 
@@ -309,7 +327,7 @@ static NSString *picCellid = @"PicCellID";
 - (PictureCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PictureCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:picCellid forIndexPath:indexPath];;
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+
     //    cell.textLabel.text = [self.dateFormatter stringFromDate:[asset valueForProperty:ALAssetPropertyDate]];
     //    cell.detailTextLabel.text = [asset valueForProperty:ALAssetPropertyType];
     
@@ -317,41 +335,125 @@ static NSString *picCellid = @"PicCellID";
     //                                               scale:1.0
     //                                         orientation:UIImageOrientationUp];
     //    [cell.picImageV setContentMode:UIViewContentModeScaleToFill];
-    [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
-    //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (self.assets.count>0) {
+        if (indexPath.row==self.assets.count) {
+            
+            [cell.picImageV setImage:[UIImage imageNamed:@"home_new_upload_picture_add"]];
+        }else{
+        ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+        [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+        }
+    }
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assets picDatablock:^(NSArray *picArray) {
-        if (picArray.count || self.textView.text.length) {
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        }
-        self.assets = picArray;
-        [self.collectionView reloadData];
-    }];
-    vc.pageIndex = indexPath.row;
+    if (indexPath.row == self.assets.count) {
+        [self showPicVC:nil];
+    }else{
+        CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assets picDatablock:^(NSMutableArray *picArray) {
+            if (picArray.count || self.textView.text.length) {
+                [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            }
+            self.assets = picArray;
+            [self.collectionView reloadData];
+        }];
+        vc.pageIndex = indexPath.row;
+        
+        [self.navigationController pushViewController:vc animated:YES];
     
-    [self.navigationController pushViewController:vc animated:YES];
+    }
 }
-
 
 
 - (void)showPicVC:(UIButton*)but
 {
+    
     [self dismissKeyBoard];
-    if (!self.assets)
-        self.assets = [[NSMutableArray alloc] init];
-    
-    CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
-    picker.assetsFilter         = [ALAssetsFilter allAssets];
-    //    picker.showsCancelButton    = NO;
-    picker.delegate             = self;
-    picker.selectedAssets       = [NSMutableArray arrayWithArray:self.assets];
-    
-    [self presentViewController:picker animated:YES completion:nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
+    [sheet showInView:self.view];
+
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {  // 拍照
+                // 判断相机可以使用
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            [imagePicker setAllowsEditing:YES];
+            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+            [self presentViewController:imagePicker animated:YES completion:^{
+                
+            }];
+        }else {
+                [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
+                return;
+            }
+        
+    }else if (buttonIndex ==1){ // 从相册选择
+        
+//        if (self.assets){
+//        
+//            self.assets = [NSMutableArray array];
+//        }
+        
+        CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+        picker.assetsFilter         = [ALAssetsFilter allAssets];
+        [picker setAssetsLibrary:_alassets];
+        //    picker.showsCancelButton    = NO;
+        picker.delegate             = self;
+        picker.selectedAssets       = [NSMutableArray arrayWithArray:self.assets];
+        
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
+    
+    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
+        
+       
+            // 保存图片到相册，调用的相关方法，查看是否保存成功
+            
+            [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
+               [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                   [picker dismissViewControllerAnimated:YES completion:^{
+
+                   }];
+                   [self.assets addObject:asset];
+                   [self.collectionView reloadData];
+
+               } failureBlock:^(NSError *error) {
+                   
+               }];
+            
+//            [_alassets saveImage:[info objectForKey:UIImagePickerControllerOriginalImage] toAlbum:@"weLian" withCompletionBlock:^(NSError *error) {
+//                
+//                
+//            } withSaveAlasset:^(ALAsset *asset) {
+//                if (asset) {  // 保存成功
+//                    
+//                    [self.assets addObject:asset];
+//                    [self.collectionView reloadData];
+//                    
+//                    
+//                }else{
+//                    
+//                }
+//            }];
+            
+        }];
+    }
+}
+
+
+
 
 
 - (void)textViewDidChange:(UITextView *)textView
@@ -432,7 +534,7 @@ static NSString *picCellid = @"PicCellID";
     if (assets.count || self.textView.text.length) {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
-    self.assets = assets;
+    self.assets = [NSMutableArray arrayWithArray:assets];
     //    [self reloadCollectionView];
     [self.collectionView reloadData];
 }
@@ -557,8 +659,8 @@ static NSString *picCellid = @"PicCellID";
         }
         if (self.friendArray.count) {
             for (PeopleAddressBook *peleBook in self.friendArray) {
-                if (peleBook.Aphone) {
-                    NSDictionary *peleDic = @{@"name":peleBook.name,@"phone":peleBook.Aphone};
+                if (peleBook.mobile) {
+                    NSDictionary *peleDic = @{@"name":peleBook.name,@"phone":peleBook.mobile};
                     [self.publishM.with addObject:peleDic];
                 }
             }
@@ -585,7 +687,6 @@ static NSString *picCellid = @"PicCellID";
         
     }];
 }
-
 
 
 - (void)didReceiveMemoryWarning

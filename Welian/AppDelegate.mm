@@ -11,11 +11,16 @@
 #import "MainViewController.h"
 #import "LogInController.h"
 #import "NavViewController.h"
-#import <AddressBook/AddressBook.h>
-#import <AddressBookUI/AddressBookUI.h>
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "ShareEngine.h"
+
+#import "BPush.h"
+#import "JSONKit.h"
+#import "OpenUDID.h"
+
+
+#define SUPPORT_IOS8 1
 
 @interface AppDelegate() <BMKGeneralDelegate>
 
@@ -27,7 +32,22 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // 百度推送
+    [BPush setupChannel:launchOptions];
+    [BPush setDelegate:self];
     
+#if SUPPORT_IOS8
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else
+#endif
+    {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+
     // 要使用百度地图，请先启动BaiduMapManager
 	_mapManager = [[BMKMapManager alloc]init];
 	BOOL ret = [_mapManager start:KBMK_Key generalDelegate:self];
@@ -36,22 +56,9 @@ BMKMapManager* _mapManager;
 	}
     
     // 添加微信分享
-//    [WXApi registerApp:@"wx4150b21797fa0a5e"];
     [[ShareEngine sharedShareEngine] registerApp];
     
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-    //这个只会在第一次访问时调用
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-        dispatch_semaphore_signal(sema);
-        if (greanted) {
-            [UserDefaults setObject:@"1" forKey:KAddressBook];
-            DLog(@"ABAddressBookSetAuthorization success.");
-        }else {
-            [UserDefaults setObject:@"0" forKey:KAddressBook];
-            
-        }
-    });
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     /**
      *  设置状态栏颜色
@@ -60,6 +67,7 @@ BMKMapManager* _mapManager;
     
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if (mode.sessionid) {
+        
         /**
          *  已登陆
          */
@@ -78,8 +86,98 @@ BMKMapManager* _mapManager;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    NSDictionary *apsDict = [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+    NSString *alert = [apsDict objectForKey:@"alert"];
+    if (alert) {
+        //        DLog(@"ADSF");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
+                                                            message:alert
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
     return YES;
 }
+
+
+#if SUPPORT_IOS8
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+#endif
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [BPush registerDeviceToken: deviceToken];
+    if (![UserDefaults objectForKey:BPushRequestUserIdKey]) {
+        
+        [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
+    }
+}
+
+
+// 必须，如果正确调用了setDelegate，在bindChannel之后，结果在这个回调中返回。
+// 若绑定失败，请进行重新绑定，确保至少绑定成功一次
+- (void) onMethod:(NSString*)method response:(NSDictionary*)data
+{
+        NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
+    if ([BPushRequestMethod_Bind isEqualToString:method]) {
+        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
+        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
+        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+        
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+        if (returnCode == BPushErrorCode_Success) {
+            
+            // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
+            [UserDefaults setObject:userid forKey:BPushRequestUserIdKey];
+            [UserDefaults setObject:channelid forKey:BPushRequestChannelIdKey];
+            DLog(@"百度推送 ----------------加载成功");
+        }
+    } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        if (returnCode == BPushErrorCode_Success) {
+            
+            [UserDefaults removeObjectForKey:BPushRequestChannelIdKey];
+            [UserDefaults removeObjectForKey:BPushRequestUserIdKey];
+
+        }
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    //    [[PushManager manaer] handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    NSString *badge = [[userInfo objectForKey:@"aps"] objectForKey:@"badge"];
+    NSString *sound = [[userInfo objectForKey:@"aps"] objectForKey:@"sound"];
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
+                                                            message:alert
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+    [application setApplicationIconBadgeNumber:1];
+    
+    [BPush handleNotification:userInfo];
+}
+
+
+
 
 - (void)onGetNetworkState:(int)iError
 {

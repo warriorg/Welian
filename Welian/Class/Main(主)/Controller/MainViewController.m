@@ -8,58 +8,38 @@
 
 #import "MainViewController.h"
 #import "HomeController.h"
-#import "FriendsController.h"
 #import "FindViewController.h"
 #import "MeViewController.h"
 #import "NavViewController.h"
+#import "MyFriendsController.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-//#import "BMKReverseGeoCodeOption.h"
 
 @interface MainViewController () <UINavigationControllerDelegate>
-{
-    
-//    // 地理编码器
-//    CLGeocoder              *_geocoder;
-//    
-//    // 地位器
-//    CLLocationManager       *_locationManager;
-}
+
 @end
 
 @implementation MainViewController
 
-
-//- (void)loadddddd
-//{
-//    if ([CLLocationManager locationServicesEnabled]) {
-//        // 1） 实例化定位管理器
-//        if (_locationManager == nil) {
-//            
-//            _locationManager = [[CLLocationManager alloc]init];
-//            
-//            // 2) 设置定位管理器的代理
-//            [_locationManager setDelegate:self];
-//            
-//            // 3) 设置定位管理器的精度
-//            [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-//            
-//            // 4) 开启用户定位功能
-//            [_locationManager startUpdatingLocation];
-//            
-//        }
-//    }
-//
-//}
-//
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-//{
-//    DLog(@"%@",locations);
-//}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+    //这个只会在第一次访问时调用
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+        dispatch_semaphore_signal(sema);
+        if (greanted) {
+            [UserDefaults setObject:@"1" forKey:KAddressBook];
+            DLog(@"ABAddressBookSetAuthorization success.");
+        }else {
+            [UserDefaults setObject:@"0" forKey:KAddressBook];
+            
+        }
+    });
+    
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
     
@@ -67,16 +47,17 @@
     // 首页
     UITabBarItem *homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
-    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain withType:@"1"];
+    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
+    
     [homeVC.navigationItem setTitle:@"动态"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
     
     
-    // 圈子
+    // 好友
     UITabBarItem *circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
-    FriendsController *friendsVC = [[FriendsController alloc] init];
+    MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStyleGrouped];
     NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
     [friendsNav setDelegate:self];
     [friendsVC.navigationItem setTitle:@"好友"];

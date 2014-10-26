@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PeopleAddressBook.h"
+#import "FriendsAddressBook.h"
 
+typedef void(^WLToolBlock)(NSArray *friendsAddress);
 @interface WLTool : NSObject
 
-+ (NSArray*)getAddressBookArray;
++ (void)getAddressBookArray:(WLToolBlock)friendsAddressBlock;
 
 @end

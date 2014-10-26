@@ -59,6 +59,11 @@
  */
 - (void)setupOriginalSubviews
 {
+    UIImage *image = [UIImage imageNamed:@"home_comment_small"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    [imageView setFrame:CGRectMake(self.bounds.size.width-image.size.width-IWCellBorderWidth, IWCellBorderWidth, image.size.width, image.size.height)];
+    [self.contentView addSubview:imageView];
+    
     // 清除cell默认的背景色(才能只显示背景view、背景图片)
     self.backgroundColor = [UIColor clearColor];
     // 1.头像
@@ -88,9 +93,7 @@
     _contentLabel.isNeedAtAndPoundSign = YES;
     _contentLabel.font = IWContentFont;
     _contentLabel.textColor = IWContentColor;
-    
     // 自动换行
-    //    _contentLabel.numberOfLines = 0;
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_contentLabel];
 }

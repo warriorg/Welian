@@ -19,13 +19,15 @@
 #import "WLStatusFrame.h"
 #import "UIImageView+WebCache.h"
 #import "CommentInfoController.h"
+#import "WLDataDBTool.h"
+#import "MJExtension.h"
 
 @interface HomeController () <UIActionSheetDelegate>
 {
     NSMutableArray *_dataArry;
-    NSString *_type;
     
     NSIndexPath *_clickIndex;
+    NSNumber *_uid;
 }
 @end
 
@@ -33,9 +35,9 @@
 
 
 
-- (instancetype)initWithStyle:(UITableViewStyle)style withType:(NSString *)type
+- (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid
 {
-    _type = type;
+    _uid = uid;
     self = [super initWithStyle:style];
     if (self) {
         _dataArry = [NSMutableArray array];
@@ -51,20 +53,42 @@
 - (void)beginPullDownRefreshing
 {
     [self.tableView setFooterHidden:YES];
-    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    NSInteger uid = [mo.uid integerValue];
+
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
-    if ([_type isEqualToString:@"0"]) {
+
+    if (_uid) {
         [darDic setObject:@(0) forKey:@"page"];
-        [darDic setObject:@(0) forKey:@"uid"];
-        
-    }else if ([_type isEqualToString:@"1"]){
+        [darDic setObject:_uid forKey:@"uid"];        
+    }else {
         [darDic setObject:@(0) forKey:@"start"];
-        [darDic setObject:@(uid) forKey:@"uid"];
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        NSString *tabelName = [NSString stringWithFormat:@"u%@",mode.uid];
+//        NSDictionary *dataDic = [[WLDataDBTool sharedService] getObjectById:KHomeDataKey fromTable:tabelName];
+        [_dataArry removeAllObjects];
+        NSMutableArray *arrr = [NSMutableArray array];
+        for (NSInteger i = 0; i<15; i++) {
+            
+            id aa =    [[WLDataDBTool sharedService] getObjectById:[NSString stringWithFormat:@"%d",i] fromTable:tabelName];
+            if (aa) {
+                    [arrr addObject:aa];
+            }
+        }
+        
+//        WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:dataDic];
+
+        
+        for (NSDictionary *dic in arrr) {
+            WLStatusM *statusM = [WLStatusM objectWithKeyValues:dic];
+            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
+            sf.status = statusM;
+            [_dataArry addObject:sf];
+        }
+        
+        [self.tableView reloadData];
     }
     
-    [WLHttpTool loadFeedParameterDic:darDic success:^(id JSON) {
+    [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         WLUserStatusesResult *userStatus = JSON;
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -94,24 +118,20 @@
 #pragma mark 加载更多数据
 - (void)loadMoreData
 {
-    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    NSInteger uid = [mo.uid integerValue];
     // 1.最后1条微博的ID
     WLStatusFrame *f = [_dataArry lastObject];
     int start = f.status.fid;
 
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
-    if ([_type isEqualToString:@"0"]) {
+    if (_uid) {
+        [darDic setObject:_uid forKey:@"uid"];
         [darDic setObject:@(start) forKey:@"page"];
-        [darDic setObject:@(0) forKey:@"uid"];
-        
-    }else if ([_type isEqualToString:@"1"]){
+    }else{
         [darDic setObject:@(start) forKey:@"start"];
-        [darDic setObject:@(uid) forKey:@"uid"];
     }
     
-    [WLHttpTool loadFeedParameterDic:darDic success:^(id JSON) {
+    [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         WLUserStatusesResult *userStatus = JSON;
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -158,13 +178,9 @@
 #pragma mark 设置界面属性
 - (void)buildUI
 {
-    if ([_type isEqualToString:@"0"]) {
-        
-    }else if ([_type isEqualToString:@"1"]){
-    
+    if (!_uid) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
     }
-    
     // 背景颜色
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:WLLineColor];
@@ -196,9 +212,6 @@
     cell.statusFrame = _dataArry[indexPath.row];
     [cell setHomeVC:self];
     
-    // 转发
-//    [cell.dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
-    
     // 赞
     [cell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     // 评论
@@ -209,26 +222,6 @@
     return cell;
 }
 
-//#pragma mark - 转发
-//- (void)transmitButClick:(UIButton*)but event:(id)event
-//{
-//    NSSet *touches = [event allTouches];
-//    UITouch *touch = [touches anyObject];
-//    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
-//    if(indexPath)
-//    {
-//        _clickIndex = indexPath;
-//        WLStatusFrame *statF = _dataArry[indexPath.row];
-//        NSArray *shareButtonTitleArray = [[NSArray alloc] init];
-//        NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
-//        shareButtonTitleArray = @[@"weLian动态",@"微信好友",@"微信朋友圈",@"新浪微博"];
-//        shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle",@"home_repost_weibo"];
-//        LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-//        [lxActivity showInView:self.view.window];
-//        DLog(@"%@",statF.status.user.name);
-//    }
-//}
 
 #pragma mark - 赞
 - (void)attitudeBtnClick:(UIButton*)but event:(id)event
