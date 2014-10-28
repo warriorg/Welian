@@ -12,8 +12,9 @@
 #import "FriendCell.h"
 #import "UserInfoBasicVC.h"
 #import "ShareEngine.h"
+#import <MessageUI/MessageUI.h>
 
-@interface AddFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate>
+@interface AddFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,MFMessageComposeViewControllerDelegate>
 {
     FriendsAddressBook *_selecFriend;
 }
@@ -229,16 +230,20 @@ static NSString *fridcellid = @"fridcellid";
             [[ShareEngine sharedShareEngine] sendWeChatMessage:@"请求添加为好友" andDescription:@"" WithUrl:@"" andImage:nil WithScene:weChat];
         }else{
             NSDictionary *dic =self.allArray[indexPath.section-1];
-            if ([[dic objectForKey:@"n"] isEqualToString:@"1"]) {
-                
                 NSArray *array = [dic objectForKey:@"array"];
-                _selecFriend = array[indexPath.row];
+            _selecFriend = array[indexPath.row];
+            
+            if ([[dic objectForKey:@"n"] isEqualToString:@"1"]) {
                 
                 UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_selecFriend.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
                 [alert show];
+            }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){  // 短信验证
+                
+                [self showMessageView:_selecFriend.mobile title:@"邀请好友" body:@"我正在玩weLian，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+                
             }
         }
         
@@ -249,6 +254,49 @@ static NSString *fridcellid = @"fridcellid";
         [self.navigationController pushViewController:userBasic animated:YES];
     }
 }
+
+
+#pragma mark - 短信邀请
+-(void)showMessageView : (NSString *)phone title : (NSString *)title body : (NSString *)body
+{
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+        controller.recipients = [NSArray arrayWithObject:phone];
+        controller.body = body;
+        controller.messageComposeDelegate = self;
+        [controller setTitle:title];//修改短信界面标题
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+}
+
+-(void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+        {
+            //click cancel button
+        }
+            break;
+        case MessageComposeResultFailed:// send failed
+            
+            break;
+            
+        case MessageComposeResultSent:
+        {
+            //do something
+        }
+            break;
+        default:
+            break;
+    } 
+    
+}
+
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -263,11 +311,6 @@ static NSString *fridcellid = @"fridcellid";
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
     [self.filterArray removeAllObjects];
-}
-
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
-{
-
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

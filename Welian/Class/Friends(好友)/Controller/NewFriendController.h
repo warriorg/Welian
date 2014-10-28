@@ -10,4 +10,6 @@
 
 @interface NewFriendController : UITableViewController
 
+
+
 @end

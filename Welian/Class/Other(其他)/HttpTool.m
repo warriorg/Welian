@@ -82,6 +82,8 @@ static HttpTool *engine;
           [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+        }else{
+            [WLHUDView hiddenHud];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);

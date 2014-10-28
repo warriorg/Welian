@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "InvestorUserM.h"
 
 @interface InvestorUserCell : UITableViewCell
 
@@ -22,7 +21,5 @@
 
 //** 投资案例 *//
 @property (weak, nonatomic) IBOutlet UILabel *caseLabel;
-
-@property (nonatomic, strong) InvestorUserM *investorM;
 
 @end

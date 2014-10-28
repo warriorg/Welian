@@ -11,7 +11,6 @@
 #import "CTAssetsPickerController.h"
 #import "PictureCell.h"
 #import "MyLocationController.h"
-#import "FriendsController.h"
 #import "PublishModel.h"
 #import "IWTextView.h"
 #import "ZBMessageManagerFaceView.h"
@@ -606,11 +605,7 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - 和谁在一起
 - (void)getTogether:(UIButton *)button
 {
-    FriendsController *frienVC = [[FriendsController alloc] initWithFrienBlock:^(NSMutableArray *frienArray) {
-        DLog(@"%@",frienArray);
-        self.friendArray = frienArray;
-    }];
-    [self.navigationController pushViewController:frienVC animated:YES];
+    
 }
 
 
@@ -658,12 +653,7 @@ static NSString *picCellid = @"PicCellID";
             [reqDataDic setObject:self.publishM.photos forKey:@"photos"];
         }
         if (self.friendArray.count) {
-            for (PeopleAddressBook *peleBook in self.friendArray) {
-                if (peleBook.mobile) {
-                    NSDictionary *peleDic = @{@"name":peleBook.name,@"phone":peleBook.mobile};
-                    [self.publishM.with addObject:peleDic];
-                }
-            }
+            
             [reqDataDic setObject:self.publishM.with forKey:@"with"];
         }
         

@@ -23,25 +23,30 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCQ-wy-Nsm">
-                        <rect key="frame" x="137" y="18" width="23" height="23"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <state key="normal" title="3">
-                            <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-9v-pSc">
+                        <rect key="frame" x="146" y="19" width="22" height="22"/>
+                        <state key="normal" title="1" backgroundImage="notification_badge1.png">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="disabled" backgroundImage="notification_badge1.png">
+                            <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <state key="selected">
+                            <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="iconImage" destination="VrS-1A-21b" id="TmZ-lL-xFX"/>
-                <outlet property="tipLabel" destination="eCQ-wy-Nsm" id="HI8-z7-bmi"/>
+                <outlet property="tipLabel" destination="nTN-9v-pSc" id="AAv-NB-sES"/>
                 <outlet property="titLabel" destination="1sk-aY-cNV" id="f6L-x7-wFG"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
         <image name="me_myfriend_add.png" width="42" height="42"/>
+        <image name="notification_badge1.png" width="17" height="17"/>
     </resources>
 </document>

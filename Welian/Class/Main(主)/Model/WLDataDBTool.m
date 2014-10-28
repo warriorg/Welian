@@ -18,13 +18,13 @@ static WLDataDBTool *wlDataDBTool;
 {
     if (wlDataDBTool == nil) {
         static dispatch_once_t onceToken;
-        
         dispatch_once(&onceToken, ^{
             wlDataDBTool = [[self alloc] initDBWithName:KWLDataDBName];
         });
     }
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    [wlDataDBTool createTableWithName:[NSString stringWithFormat:@"u%@",mode.uid]];
+    [wlDataDBTool createTableWithName:KHomeDataTableName];
+    [wlDataDBTool createTableWithName:KMyAllFriendsKey];
+    [wlDataDBTool createTableWithName:KNewFriendsTableName];
     return wlDataDBTool;
 }
 

@@ -13,6 +13,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 @interface WLHttpTool : NSObject
 
+#pragma mark - 版本号更新提示
++ (void)updateParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 #pragma mark - 忘记密码
 + (void)forgetPasswordParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
@@ -87,8 +90,8 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 根据uid取用户信息  0取自己
 + (void)loadProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
-#pragma mark - 根据uid取用户好友  0取自己
-+ (void)loadFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+#pragma mark - 根据uid取用户好友列表  0取自己
++ (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 请求添加为好友
 + (void)requestFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
@@ -128,5 +131,11 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 #pragma mark - 搜索用户
 +(void)searchUserParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 取新好友请求列表
++ (void)loadFriendRequestParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 确认添加好友
++ (void)addFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 @end

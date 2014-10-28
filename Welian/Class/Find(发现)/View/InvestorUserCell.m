@@ -7,7 +7,6 @@
 //
 
 #import "InvestorUserCell.h"
-#import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
 
 @implementation InvestorUserCell
@@ -17,12 +16,15 @@
     self =  [super initWithCoder:aDecoder];
     if (self) {
         [self setupBg];
-//        [self.iconImage.layer setCornerRadius:IWIconWHSmall*0.5];
-//        [self.iconImage.layer setMasksToBounds:YES];
-        
     }
     return self;
     
+}
+
+- (void)awakeFromNib
+{
+    [self.iconImage.layer setMasksToBounds:YES];
+    [self.iconImage.layer setCornerRadius:IWIconWHSmall*0.5];
 }
 
 /**
@@ -39,24 +41,6 @@
     selectedBg.image = [UIImage resizedImage:@"cellbackground_highlight"];
     self.selectedBackgroundView = selectedBg;
 }
-
-
-
-- (void)setInvestorM:(InvestorUserM *)investorM
-{
-    _investorM = investorM;
-    
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:investorM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    [_iconImage.layer setMasksToBounds:YES];
-    [_iconImage.layer setCornerRadius:IWIconWHSmall*0.5];
-    
-    [self.nameLabel setText:investorM.name];
-    
-    [self.infoLabel setText:[NSString stringWithFormat:@"%@  %@",investorM.position,investorM.company]];
-    
-    [self.caseLabel setText:[NSString stringWithFormat:@"投资案例:%@",investorM.items]];
-}
-
 
 
 @end

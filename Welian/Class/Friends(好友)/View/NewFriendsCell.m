@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [_tipLabel.layer setMasksToBounds:YES];
-    [_tipLabel.layer setCornerRadius:8];
+    [_tipLabel.layer setCornerRadius:11];
     
 }
 

@@ -32,6 +32,9 @@
 @property (nonatomic, strong) NSNumber *startupauth;
 
 /**  请求信息   */
-@property (nonatomic, strong) NSString *Message;
+@property (nonatomic, strong) NSString *message;
+
+//** 是否通过*/
+@property (nonatomic, strong) NSString *isAgree;
 
 @end

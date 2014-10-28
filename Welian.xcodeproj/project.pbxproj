@@ -451,6 +451,9 @@
 		F5382B1219FD0B6400FAA5B6 /* NewFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */; };
 		F5382B1819FD108200FAA5B6 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F5382B5519FD60AF00FAA5B6 /* WLUserStatusesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */; };
+		F5382B5E19FE261D00FAA5B6 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
+		F5382B5F19FE261D00FAA5B6 /* FriendsNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5382B5D19FE261D00FAA5B6 /* FriendsNewCell.xib */; };
+		F5382B6219FFB1F000FAA5B6 /* FriendsFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B6119FFB1F000FAA5B6 /* FriendsFriendController.m */; };
 		F53C6EC219C5910D00FE9AE6 /* MeinfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53C6EC119C5910D00FE9AE6 /* MeinfoCell.m */; };
 		F53C6EC419C5925200FE9AE6 /* MeinfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53C6EC319C5925200FE9AE6 /* MeinfoCell.xib */; };
 		F53C6EC819C597B000FE9AE6 /* MeSttingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F53C6EC619C597B000FE9AE6 /* MeSttingCell.m */; };
@@ -458,7 +461,6 @@
 		F5477B0919D110FF00CF89FE /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0819D110FF00CF89FE /* LocationController.m */; };
 		F5477B0C19D148F100CF89FE /* PublishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0B19D148F100CF89FE /* PublishModel.m */; };
 		F5477B0F19D1895400CF89FE /* WLBasicTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0E19D1895400CF89FE /* WLBasicTrends.m */; };
-		F56254EC19C01BF700809D0B /* FriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254EB19C01BF700809D0B /* FriendsController.m */; };
 		F56254EF19C01C0800809D0B /* FindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254EE19C01C0800809D0B /* FindViewController.m */; };
 		F56254F219C01C1800809D0B /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
 		F56254F519C01C7E00809D0B /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F419C01C7E00809D0B /* NavViewController.m */; };
@@ -1257,6 +1259,11 @@
 		F5382B1719FD108200FAA5B6 /* NewFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendController.m; sourceTree = "<group>"; };
 		F5382B5319FD60AF00FAA5B6 /* WLUserStatusesResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLUserStatusesResult.h; sourceTree = "<group>"; };
 		F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLUserStatusesResult.m; sourceTree = "<group>"; };
+		F5382B5B19FE261D00FAA5B6 /* FriendsNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsNewCell.h; sourceTree = "<group>"; };
+		F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsNewCell.m; sourceTree = "<group>"; };
+		F5382B5D19FE261D00FAA5B6 /* FriendsNewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsNewCell.xib; sourceTree = "<group>"; };
+		F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendController.h; sourceTree = "<group>"; };
+		F5382B6119FFB1F000FAA5B6 /* FriendsFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsFriendController.m; sourceTree = "<group>"; };
 		F53C6EC019C5910D00FE9AE6 /* MeinfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeinfoCell.h; sourceTree = "<group>"; };
 		F53C6EC119C5910D00FE9AE6 /* MeinfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeinfoCell.m; sourceTree = "<group>"; };
 		F53C6EC319C5925200FE9AE6 /* MeinfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeinfoCell.xib; sourceTree = "<group>"; };
@@ -1269,8 +1276,6 @@
 		F5477B0B19D148F100CF89FE /* PublishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishModel.m; sourceTree = "<group>"; };
 		F5477B0D19D1895400CF89FE /* WLBasicTrends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBasicTrends.h; sourceTree = "<group>"; };
 		F5477B0E19D1895400CF89FE /* WLBasicTrends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBasicTrends.m; sourceTree = "<group>"; };
-		F56254EA19C01BF700809D0B /* FriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsController.h; sourceTree = "<group>"; };
-		F56254EB19C01BF700809D0B /* FriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsController.m; sourceTree = "<group>"; };
 		F56254ED19C01C0800809D0B /* FindViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindViewController.h; sourceTree = "<group>"; };
 		F56254EE19C01C0800809D0B /* FindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindViewController.m; sourceTree = "<group>"; };
 		F56254F019C01C1800809D0B /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
@@ -2692,14 +2697,14 @@
 		F5CE863219BFF44100A9D14C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F56254EA19C01BF700809D0B /* FriendsController.h */,
-				F56254EB19C01BF700809D0B /* FriendsController.m */,
 				F5239B4A19F4AD2A00D9E696 /* MyFriendsController.h */,
 				F5239B4B19F4AD2A00D9E696 /* MyFriendsController.m */,
 				F5382B1619FD108200FAA5B6 /* NewFriendController.h */,
 				F5382B1719FD108200FAA5B6 /* NewFriendController.m */,
 				F5C2D0FF19F909EF000610A1 /* AddFriendsController.h */,
 				F5C2D10019F909EF000610A1 /* AddFriendsController.m */,
+				F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */,
+				F5382B6119FFB1F000FAA5B6 /* FriendsFriendController.m */,
 				F532FD4719C93F0D005B887D /* UserCardController.h */,
 				F532FD4819C93F0D005B887D /* UserCardController.m */,
 				F532FD4919C93F0D005B887D /* UserCardController.xib */,
@@ -2728,6 +2733,9 @@
 				F5C2D11D19FA4E0D000610A1 /* AddWXFriendCell.h */,
 				F5C2D11E19FA4E0D000610A1 /* AddWXFriendCell.m */,
 				F5C2D11F19FA4E0D000610A1 /* AddWXFriendCell.xib */,
+				F5382B5B19FE261D00FAA5B6 /* FriendsNewCell.h */,
+				F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */,
+				F5382B5D19FE261D00FAA5B6 /* FriendsNewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3409,6 +3417,7 @@
 				F51FBBA219EFEE6C00D85D7F /* tabbar_discovery@2x.png in Resources */,
 				F516B93319C29843002D0605 /* login_user@2x.png in Resources */,
 				F51FBB8019EFEE6C00D85D7F /* me_myfriend_star_xs@2x.png in Resources */,
+				F5382B5F19FE261D00FAA5B6 /* FriendsNewCell.xib in Resources */,
 				F51FB7BF19EE2A9000D85D7F /* sns_icon_17@2x.png in Resources */,
 				F51FB7F119EE2A9000D85D7F /* sns_icon_8.png in Resources */,
 				F5324E7019EC122200A1D066 /* Expression_28@2x.png in Resources */,
@@ -3754,6 +3763,7 @@
 			files = (
 				F5382B1819FD108200FAA5B6 /* NewFriendController.m in Sources */,
 				F5239B9B19F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				F5382B5E19FE261D00FAA5B6 /* FriendsNewCell.m in Sources */,
 				F5C677F219D3BACF003987CC /* MJPhotoToolbar.m in Sources */,
 				F51FBA2A19EF723A00D85D7F /* UIImage+TOWebViewControllerIcons.m in Sources */,
 				F5324CE519EBB7C200A1D066 /* MessageKeyboardView.m in Sources */,
@@ -3847,6 +3857,7 @@
 				F5BA194119C18FE6005F91BE /* NameController.m in Sources */,
 				F5188AD819CF017600FE9273 /* UIImageView+HighlightedWebCache.m in Sources */,
 				F5C2D11C19F9FCCD000610A1 /* WLDataDBTool.m in Sources */,
+				F5382B6219FFB1F000FAA5B6 /* FriendsFriendController.m in Sources */,
 				F5B123AF19E7CE8F002B9E58 /* WeixinActivity.m in Sources */,
 				F5F3C8A419D2AA6000110C07 /* NSObject+MJMember.m in Sources */,
 				F5C2D11919F9F7F8000610A1 /* YTKKeyValueStore.m in Sources */,
@@ -3930,7 +3941,6 @@
 				F5239B4C19F4AD2A00D9E696 /* MyFriendsController.m in Sources */,
 				F5188AD419CF017600FE9273 /* UIButton+WebCache.m in Sources */,
 				F5324CDF19EB794200A1D066 /* CommentCell.m in Sources */,
-				F56254EC19C01BF700809D0B /* FriendsController.m in Sources */,
 				F5F3C88419D2A4E300110C07 /* WLStatusM.m in Sources */,
 				F520EDB219CFF84000E753E4 /* ALAsset+assetType.m in Sources */,
 				F53C6EC219C5910D00FE9AE6 /* MeinfoCell.m in Sources */,
@@ -4103,8 +4113,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
 				INFOPLIST_FILE = Welian/weLian.plist;
@@ -4119,7 +4129,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = weLian;
-				PROVISIONING_PROFILE = "8de91e76-22b3-446a-b08a-0cecdf6e5716";
+				PROVISIONING_PROFILE = "ca757199-7623-4638-8bfa-9ea2b5535c3b";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -4130,8 +4140,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
 				INFOPLIST_FILE = Welian/weLian.plist;
@@ -4145,7 +4155,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/LibBPush",
 				);
 				PRODUCT_NAME = weLian;
-				PROVISIONING_PROFILE = "8de91e76-22b3-446a-b08a-0cecdf6e5716";
+				PROVISIONING_PROFILE = "ca757199-7623-4638-8bfa-9ea2b5535c3b";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

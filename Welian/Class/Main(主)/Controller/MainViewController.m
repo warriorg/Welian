@@ -25,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -57,7 +57,7 @@
     
     // 好友
     UITabBarItem *circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
-    MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStyleGrouped];
+    MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
     [friendsNav setDelegate:self];
     [friendsVC.navigationItem setTitle:@"好友"];
@@ -81,10 +81,13 @@
     [meNav setTabBarItem:meItem];
     
     [self setViewControllers:@[homeNav,friendsNav,findNav,meNav]];
-    [homeItem setBadgeValue:@"3"];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 }
 
+- (void)newFriendPuthMessga
+{
+    [[self.viewControllers[1] tabBarItem] setBadgeValue:@"1"];
+}
 
 
 - (void)didReceiveMemoryWarning

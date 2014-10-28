@@ -13,8 +13,10 @@
 #import "YTKKeyValueStore.h"
 #import "MJExtension.h"
 
-@interface WLTool()
-
+@interface WLTool()<UIAlertViewDelegate>
+{
+    NSString *_upURL;
+}
 @end
 
 @implementation WLTool
@@ -94,5 +96,24 @@
     }];
 }
 
+
++ (void)updateVersions:(UpVersionBlock)versionBlock
+{
+    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    
+    [WLHttpTool updateParameterDic:@{@"platform":@"ios",@"version":localVersion} success:^(id JSON) {
+        NSDictionary *dic = JSON;
+        if ([[dic objectForKey:@"flag"] integerValue]==1) {
+            
+            versionBlock(dic);
+            
+            
+        }else{
+            [WLHUDView showSuccessHUD:@"当前已是最新版本！"];
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+}
 
 @end

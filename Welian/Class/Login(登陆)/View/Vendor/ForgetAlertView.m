@@ -108,8 +108,8 @@
             return;
         }
     }else{
-        if ([NSString passwordValidate:self.phoneTextF.text]) {
-            [WLHUDView showErrorHUD:@"以字母开头，长度为6-18位！"];
+        if (![NSString passwordValidate:self.phoneTextF.text]) {
+            [WLHUDView showErrorHUD:@"长度为6-18位！"];
             return;
         }
     }

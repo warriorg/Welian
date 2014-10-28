@@ -10,8 +10,12 @@
 #import "FriendsAddressBook.h"
 
 typedef void(^WLToolBlock)(NSArray *friendsAddress);
+typedef void (^UpVersionBlock)(NSDictionary *versionDic);
+
 @interface WLTool : NSObject
 
 + (void)getAddressBookArray:(WLToolBlock)friendsAddressBlock;
+
++ (void)updateVersions:(UpVersionBlock)versionBlock;
 
 @end

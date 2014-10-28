@@ -14,16 +14,18 @@
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "ShareEngine.h"
-
 #import "BPush.h"
 #import "JSONKit.h"
 #import "OpenUDID.h"
+#import "WLTool.h"
 
 
 #define SUPPORT_IOS8 1
 
 @interface AppDelegate() <BMKGeneralDelegate>
-
+{
+    NSString *_upURL;
+}
 @end
 
 @implementation AppDelegate
@@ -60,6 +62,9 @@ BMKMapManager* _mapManager;
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    application.applicationIconBadgeNumber =0;
+    
     /**
      *  设置状态栏颜色
      */
@@ -91,6 +96,8 @@ BMKMapManager* _mapManager;
     NSString *alert = [apsDict objectForKey:@"alert"];
     if (alert) {
         //        DLog(@"ADSF");
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
                                                             message:alert
                                                            delegate:self
@@ -98,9 +105,25 @@ BMKMapManager* _mapManager;
                                                   otherButtonTitles:nil];
         [alertView show];
     }
+    
+    // 版本更新
+    [WLTool updateVersions:^(NSDictionary *versionDic) {
+        NSString *msg = [versionDic objectForKey:@"msg"];
+        _upURL = [versionDic objectForKey:@"url"];
+        
+        [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+    }];
+
+    
     return YES;
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_upURL]];
+    }
+}
 
 #if SUPPORT_IOS8
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
@@ -116,6 +139,8 @@ BMKMapManager* _mapManager;
     if (![UserDefaults objectForKey:BPushRequestUserIdKey]) {
         
         [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
+    }else{
+                DLog(@"百度推送 ----------------加载成功");
     }
 }
 
@@ -151,27 +176,34 @@ BMKMapManager* _mapManager;
     }
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    //    [[PushManager manaer] handleRemoteNotification:userInfo];
-    completionHandler(UIBackgroundFetchResultNewData);
-}
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-    NSString *badge = [[userInfo objectForKey:@"aps"] objectForKey:@"badge"];
-    NSString *sound = [[userInfo objectForKey:@"aps"] objectForKey:@"sound"];
+//    NSString *badge = [[userInfo objectForKey:@"aps"] objectForKey:@"badge"];
+//    NSString *sound = [[userInfo objectForKey:@"aps"] objectForKey:@"sound"];
     
     if (application.applicationState == UIApplicationStateActive) {
         // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
                                                             message:alert
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
         [alertView show];
+    }else{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"后台进来"
+                                                            message:alert
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
     }
-    [application setApplicationIconBadgeNumber:1];
+
+    [application setApplicationIconBadgeNumber:0];
     
     [BPush handleNotification:userInfo];
 }
@@ -228,8 +260,6 @@ BMKMapManager* _mapManager;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    
-    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -9,10 +9,12 @@
 #import "SettingController.h"
 #import "UIImage+ImageEffects.h"
 #import "NameController.h"
+#import "WLTool.h"
 
 @interface SettingController ()
 {
     NSArray *_data;
+    NSString *_upURL;
 }
 
 @property (nonatomic, strong) UISwitch *remindSwitch;
@@ -116,6 +118,9 @@
     }else if (indexPath.section==1&&indexPath.row==1){
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [cell.detailTextLabel setText:mode.mobile];
+    }else if (indexPath.section==2&&indexPath.row==1){
+        NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+        [cell.detailTextLabel setText:localVersion];
     }
     return cell;
 }
@@ -123,6 +128,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section==1&&indexPath.row==1) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
@@ -133,7 +140,25 @@
         [phoneVC setUserInfoStr:mode.mobile];
         
         [self.navigationController pushViewController:phoneVC animated:YES];
+    }else if (indexPath.section==2&&indexPath.row==1){
+        [WLTool updateVersions:^(NSDictionary *versionDic) {
+            NSString *msg = [versionDic objectForKey:@"msg"];
+            _upURL = [versionDic objectForKey:@"url"];
+            
+            [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+
+        }];
     }
 }
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_upURL]];
+    }
+}
+
+
 
 @end

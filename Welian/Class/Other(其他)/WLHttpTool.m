@@ -26,6 +26,20 @@
 
 @implementation WLHttpTool
 
+#pragma mark - 版本号更新提示
++ (void)updateParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"update",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+
 #pragma mark - 忘记密码
 + (void)forgetPasswordParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
@@ -164,16 +178,9 @@
         if (JSON) {
 
             if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
-                
-                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                NSString *tableName = [NSString stringWithFormat:@"u%@",mode.uid];
-                NSInteger i = 0;
                 for (NSDictionary *dic in jsonarray) {
-
-                    [[WLDataDBTool sharedService] putObject:dic  withId:[NSString stringWithFormat:@"%d",i] intoTable:tableName];
-                    i++;
+                    [[WLDataDBTool sharedService] putObject:dic  withId:[dic objectForKey:@"fid"] intoTable:KHomeDataTableName];
                 }
-                
             }
             
             WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
@@ -365,18 +372,15 @@
 }
 
 #pragma mark - 根据uid取用户好友列表  0取自己
-+ (void)loadFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
++ (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    NSString *tabelName = [NSString stringWithFormat:@"u%@",mode.uid];
-    NSArray *myFriends = [[WLDataDBTool sharedService] getObjectById:KMyAllFriendsKey fromTable:tabelName];
-    if (myFriends) {
+    NSArray *myFriends = [[WLDataDBTool sharedService] getAllItemsFromTable:KMyAllFriendsKey];
+    if (isSQL) {
         
         NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:myFriends.count];
-        for (NSDictionary *modic in myFriends) {
-            
+        for (YTKKeyValueItem *modic in myFriends) {
             UserInfoModel *mode = [[UserInfoModel alloc] init];
-            [mode setKeyValues:modic];
+            [mode setKeyValues:modic.itemObject];
             [mutabArray addObject:mode];
         }
         
@@ -386,11 +390,9 @@
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             NSArray *json = [NSArray arrayWithArray:JSON];
-            [[WLDataDBTool sharedService] putObject:json withId:KMyAllFriendsKey intoTable:tabelName];
-            
             NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
             for (NSDictionary *modic in json) {
-                
+                [[WLDataDBTool sharedService] putObject:modic withId:[modic objectForKey:@"uid"] intoTable:KMyAllFriendsKey];
                 UserInfoModel *mode = [[UserInfoModel alloc] init];
                 [mode setKeyValues:modic];
                 [mutabArray addObject:mode];
@@ -701,6 +703,45 @@
     } withHUD:YES andDim:YES];
 }
 
+#pragma mark - 取新好友请求列表
++ (void)loadFriendRequestParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"loadFriendRequest",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        NSArray *json = JSON;
 
+        succeBlock(json);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 确认添加好友
++ (void)addFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"addFriend",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 取好友的好友（二度好友）
++ (void)loadUser2FriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"loadUser2Friend",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
 
 @end

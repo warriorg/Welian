@@ -8,6 +8,7 @@
 
 #import "YTKKeyValueStore.h"
 #import "Singleton.h"
+#import "YTKKeyValueStore.h"
 
 @interface WLDataDBTool : YTKKeyValueStore
 

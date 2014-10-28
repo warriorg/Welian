@@ -7,47 +7,124 @@
 //
 
 #import "NewFriendController.h"
+#import "FriendsNewCell.h"
+#import "NewFriendModel.h"
+#import "MJExtension.h"
+#import "WLDataDBTool.h"
+#import "UserInfoBasicVC.h"
 
+static NSString *frnewCellid = @"frnewCellid";
 @interface NewFriendController ()
-
+{
+    NSMutableArray *_dataArray;
+}
 @end
 
 @implementation NewFriendController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self ]
+    _dataArray = [NSMutableArray array];
+    [self setTitle:@"好友请求"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:frnewCellid];
+    [self.tableView setBackgroundColor:IWGlobalBg];
+    NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
     
+    for (YTKKeyValueItem *aa in arrr) {
+        NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
+        [_dataArray addObject:statusM];
+    }
+    [self.tableView reloadData];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 1.0;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+
+    return _dataArray.count;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:frnewCellid];
+    NewFriendModel *newFM = _dataArray[indexPath.row];
+    [cell setFriendM:newFM];
+    [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NewFriendModel *friendM = _dataArray[indexPath.row];
+    UserInfoModel *basMode = [[UserInfoModel alloc]init];
+    [basMode setKeyValues:[friendM keyValues]];
+    [basMode setUid:friendM.fid];
+
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:basMode];
+    
+    [self.navigationController pushViewController:userInfoVC animated:YES];
+    
+}
+
+
+#pragma mark - 删除
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NewFriendModel *friendM = _dataArray[indexPath.row];
+    // Remove the row from data model
+    [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",friendM.fid] fromTable:KNewFriendsTableName];
+    
+    [_dataArray removeObject:friendM];
+    
+    //移除tableView中的数据
+
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    
+}
+
+
+- (void)sureAddFriend:(UIButton *)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    if (indexPath) {
+        NewFriendModel *friendM = _dataArray[indexPath.row];
+        [WLHttpTool addFriendParameterDic:@{@"fid":friendM.fid} success:^(id JSON) {
+            [friendM setIsAgree:@"1"];
+            
+            [[WLDataDBTool sharedService] putObject:[friendM keyValues] withId:[NSString stringWithFormat:@"%@",friendM.fid] intoTable:KNewFriendsTableName];
+            [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            
+            UserInfoModel *basMode = [[UserInfoModel alloc]init];
+            [basMode setKeyValues:[friendM keyValues]];
+            [basMode setUid:friendM.fid];
+            [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

@@ -41,6 +41,17 @@
     self = [super initWithStyle:style];
     if (self) {
         _dataArry = [NSMutableArray array];
+        if (!_uid) {
+            NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
+            
+            for (YTKKeyValueItem *aa in arrr) {
+                WLStatusM *statusM = [WLStatusM objectWithKeyValues:aa.itemObject];
+                WLStatusFrame *sf = [[WLStatusFrame alloc] init];
+                sf.status = statusM;
+                [_dataArry addObject:sf];
+            }
+        }
+        
         self.refreshControl = [[UIRefreshControl alloc] init];
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.refreshControl beginRefreshing];
@@ -62,30 +73,6 @@
         [darDic setObject:_uid forKey:@"uid"];        
     }else {
         [darDic setObject:@(0) forKey:@"start"];
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        NSString *tabelName = [NSString stringWithFormat:@"u%@",mode.uid];
-//        NSDictionary *dataDic = [[WLDataDBTool sharedService] getObjectById:KHomeDataKey fromTable:tabelName];
-        [_dataArry removeAllObjects];
-        NSMutableArray *arrr = [NSMutableArray array];
-        for (NSInteger i = 0; i<15; i++) {
-            
-            id aa =    [[WLDataDBTool sharedService] getObjectById:[NSString stringWithFormat:@"%d",i] fromTable:tabelName];
-            if (aa) {
-                    [arrr addObject:aa];
-            }
-        }
-        
-//        WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:dataDic];
-
-        
-        for (NSDictionary *dic in arrr) {
-            WLStatusM *statusM = [WLStatusM objectWithKeyValues:dic];
-            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
-            sf.status = statusM;
-            [_dataArry addObject:sf];
-        }
-        
-        [self.tableView reloadData];
     }
     
     [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {

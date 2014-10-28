@@ -163,7 +163,6 @@
         
     };
     
-    
     // 忘记密码
     loginView.leftBlock = ^(){
         ForgetAlertView *forgetView = [[ForgetAlertView alloc] initWithDeputStr:@"请输入你的手机号码" andTextFidePlesh:@"手机号码"];

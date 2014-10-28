@@ -48,14 +48,18 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
 
 
+#define KNewFriendNotif @"KNewFriendNotif"
+
 #define KPublishOK @"PublishStatusOK"
 
 
 #define KWLDataDBName @"wlDataDBName.db"
 
-#define KMyAllFriendsKey @"KMyAllFriendsKey"
+#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KHomeDataKey @"KHomeDataKey"
+#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+
+#define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 // 文件路径
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
