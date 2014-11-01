@@ -30,7 +30,7 @@
 #import "CTAssetsGroupViewController.h"
 #import "CTAssetsPageViewController.h"
 #import "CTAssetsViewControllerTransition.h"
-
+#import "UIImage+ImageEffects.h"
 
 
 
@@ -421,7 +421,8 @@ NSString * const CTAssetsPickerSelectedAssetsChangedNotification = @"CTAssetsPic
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 35)];
     [button setTitle:self.toolbarTitle forState:UIControlStateNormal];
 //    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setBackgroundColor:[UIColor redColor]];
+    [button setBackgroundImage:[UIImage resizedImage:@"home_picture_add_ok_bg"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage resizedImage:@"home_picture_add_ok_bg_pre"] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(finishPickingAssets:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *title = [[UIBarButtonItem alloc] initWithCustomView:button];
     
@@ -447,9 +448,8 @@ NSString * const CTAssetsPickerSelectedAssetsChangedNotification = @"CTAssetsPic
 - (UIBarButtonItem *)leftBarItem
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 35)];
-    [button setTitle:@"原图" forState:UIControlStateNormal];
+//    [button setTitle:@"原图" forState:UIControlStateNormal];
     //    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setBackgroundColor:[UIColor redColor]];
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:button];
     return leftBar;
 }
@@ -459,7 +459,7 @@ NSString * const CTAssetsPickerSelectedAssetsChangedNotification = @"CTAssetsPic
     UIBarButtonItem *title = [self titleButtonItem];
     UIBarButtonItem *space = [self spaceButtonItem];
     UIBarButtonItem *leftBar = [self leftBarItem];
-    return @[leftBar, space, title];
+    return @[leftBar,space, title];
 }
 
 

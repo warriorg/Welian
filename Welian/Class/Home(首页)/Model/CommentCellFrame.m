@@ -39,7 +39,7 @@
     // 3.内容
     CGFloat contentX = nameX;
     CGFloat contentY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth;
-    CGSize contentSize = [commentM.comment sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
+    CGSize contentSize = [commentM.comment sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth-nameX, MAXFLOAT)];
     _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height+5);
     
     if (CGRectGetMaxY(_contentLabelF)<CGRectGetMaxY(_iconViewF)) {

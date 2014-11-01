@@ -139,7 +139,7 @@ fprintf(stderr, "-----------------------------------\n");                       
  8.常用的一些距离
  */
 // cell的边框宽度（cell的内边距）
-#define IWCellBorderWidth 10
+#define IWCellBorderWidth 12
 // tableview的边框宽度（tableView的内边距）
 #define IWTableBorderWidth 10
 // 每个cell之间的间距

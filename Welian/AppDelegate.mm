@@ -18,11 +18,12 @@
 #import "JSONKit.h"
 #import "OpenUDID.h"
 #import "WLTool.h"
+#import "LoginViewController.h"
 
 
 #define SUPPORT_IOS8 1
 
-@interface AppDelegate() <BMKGeneralDelegate>
+@interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     NSString *_upURL;
 }
@@ -71,20 +72,23 @@ BMKMapManager* _mapManager;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    if (mode.sessionid) {
+    if (mode.sessionid&&mode.mobile&&mode.checkcode) {
         
         /**
          *  已登陆
          */
         MainViewController *mainVC = [[MainViewController alloc] init];
+        [mainVC setDelegate:self];
         [self.window setRootViewController:mainVC];
 
     }else{
         /**
          *  未登陆
          */
-        LogInController *loginVC = [[LogInController alloc] init];
-        [self.window setRootViewController:loginVC];
+        
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
+        [self.window setRootViewController:nav];
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"====沙盒路径=======%@",paths);
@@ -108,10 +112,15 @@ BMKMapManager* _mapManager;
     
     // 版本更新
     [WLTool updateVersions:^(NSDictionary *versionDic) {
-        NSString *msg = [versionDic objectForKey:@"msg"];
-        _upURL = [versionDic objectForKey:@"url"];
+        if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
+            NSString *msg = [versionDic objectForKey:@"msg"];
+            _upURL = [versionDic objectForKey:@"url"];
+            
+            [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+        }else{
+
+        }
         
-        [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
     }];
 
     
@@ -151,10 +160,10 @@ BMKMapManager* _mapManager;
 {
         NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
     if ([BPushRequestMethod_Bind isEqualToString:method]) {
-        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+//        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
         NSString *userid = [res valueForKey:BPushRequestUserIdKey];
         NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
-        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+//        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
         
         int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
         

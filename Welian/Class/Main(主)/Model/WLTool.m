@@ -45,7 +45,6 @@
         ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
         for (int k = 0; k<ABMultiValueGetCount(phone); k++)
         {
-//              PeopleAddressBook *peoAdd = [[PeopleAddressBook alloc] init];
             
             //获取該Label下的电话值
             NSString * personPhone = (NSString *)CFBridgingRelease( ABMultiValueCopyValueAtIndex(phone, k));
@@ -54,14 +53,12 @@
             
             if ([NSString phoneValidate:personPhone]) {
                 NSMutableString *name = [[NSMutableString alloc] init];
-                if (personName) {
-                    [name appendString:personName];
-                }
                 if (lastname) {
                     [name appendString:lastname];
                 }
-//                [peoAdd setName:name];
-//                [peoAdd setMobile:personPhone];
+                if (personName) {
+                    [name appendString:personName];
+                }
                 
                 [contactArray addObject:@{@"name":name,@"mobile":personPhone}];
             }
@@ -78,18 +75,6 @@
             [friendBook setKeyValues:dic];
             [friends addObject:friendBook];
         }
-//        YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"aaa.db"];
-//        
-//        NSString *friendTableName = @"friendTableName";
-//        [store createTableWithName:friendTableName];
-//        
-//        // 保存
-//        NSString *key = @"1";
-//        [store putObject:JSON withId:key intoTable:friendTableName];
-//        
-//        // 查询
-//        NSLog(@"query data result: %@", [store getObjectById:key fromTable:friendTableName]);
-        
         friendsAddressBlock(friends);
     } fail:^(NSError *error) {
         
@@ -103,14 +88,7 @@
     
     [WLHttpTool updateParameterDic:@{@"platform":@"ios",@"version":localVersion} success:^(id JSON) {
         NSDictionary *dic = JSON;
-        if ([[dic objectForKey:@"flag"] integerValue]==1) {
-            
-            versionBlock(dic);
-            
-            
-        }else{
-            [WLHUDView showSuccessHUD:@"当前已是最新版本！"];
-        }
+        versionBlock(dic);
     } fail:^(NSError *error) {
         
     }];

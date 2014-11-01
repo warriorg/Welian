@@ -18,6 +18,7 @@
 #import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "NewFriendController.h"
+#import "FriendsFriendController.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,SWTableViewCellDelegate,ABPeoplePickerNavigationControllerDelegate>
 
@@ -74,6 +75,8 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setDelegate:self];
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
+    [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
+                             forKey:@"_searchResultsTableViewStyle"];
     [self.tableView setTableHeaderView:self.searchBar];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -95,6 +98,7 @@ static NSString *fridcellid = @"fridcellid";
     
     [self.searchDisplayVC.searchResultsTableView setSeparatorInset:UIEdgeInsetsZero];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
+    [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"NewFriendsCell" bundle:nil] forCellReuseIdentifier:newFriendcellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
@@ -123,7 +127,6 @@ static NSString *fridcellid = @"fridcellid";
     
 
 }
-
 
 -(void)loadMyAllFriends
 {
@@ -217,27 +220,39 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (tableView == self.searchDisplayVC.searchResultsTableView) {
-        return nil;
-    }else{
-        if (section==0) {
-            return @"{search}";
-        }else{
-            NSDictionary *dick = self.allArray[section-1];
-            return [NSString stringWithFormat:@"   %@",[dick objectForKey:@"key"]];
-        }
-    }
     
+    if (tableView == self.tableView) {
+        if (section) {
+            NSDictionary *dick = self.allArray[section-1];
+            UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+            sectionHeader.backgroundColor = WLLineColor;
+            sectionHeader.font = [UIFont systemFontOfSize:15];
+            sectionHeader.textColor = [UIColor grayColor];
+            sectionHeader.text = [NSString stringWithFormat:@"   %@",[dick objectForKey:@"key"]];
+            return sectionHeader;
+        }
+    }else{
+        UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+        sectionHeader.backgroundColor = WLLineColor;
+        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.textColor = [UIColor grayColor];
+        sectionHeader.text = [NSString stringWithFormat:@"    搜索结果"];
+        return sectionHeader;
+
+    }
+    return nil;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section==0) {
+    if (section==0&&tableView==self.tableView) {
         return 0.0;
     }else{
-        return 20.0;
+        return 25.0;
     }
 }
 
@@ -295,15 +310,24 @@ static NSString *fridcellid = @"fridcellid";
     UserInfoModel *userMode;
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         userMode = self.filterArray[indexPath.row];
-
+        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode];
+        
+        [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
         if (indexPath.section==0) {
-            [self.navigationController.tabBarItem setBadgeValue:nil];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            if (indexPath.row==0) {
+                [self.navigationController.tabBarItem setBadgeValue:nil];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                
+                NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+                
+                [self.navigationController pushViewController:friendNewVC animated:YES];
+            }else if (indexPath.row==1){
+                FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
+                [self.navigationController pushViewController:friendsfVC animated:YES];
+                
+            }
             
-            NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
-            
-            [self.navigationController pushViewController:friendNewVC animated:YES];
         }else{
             NSDictionary *usersDic = self.allArray[indexPath.section-1];
             NSArray *modear = usersDic[@"userF"];

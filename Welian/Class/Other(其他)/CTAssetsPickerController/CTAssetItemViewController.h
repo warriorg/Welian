@@ -31,9 +31,6 @@
 @protocol CTAssetItemViewControllerDataSource;
 
 
-
-
-
 @interface CTAssetItemViewController : UIViewController
 
 + (CTAssetItemViewController *)assetItemViewControllerForPageIndex:(NSInteger)pageIndex;

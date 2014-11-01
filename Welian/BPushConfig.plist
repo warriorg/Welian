@@ -5,7 +5,7 @@
 	<key>BPUSH_CHANNEL</key>
 	<string>91</string>
 	<key>PRODUCTION_MODE</key>
-	<false/>
+	<true/>
 	<key>DEBUG</key>
 	<true/>
 	<key>API_KEY</key>

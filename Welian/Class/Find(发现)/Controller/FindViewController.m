@@ -133,7 +133,10 @@
         [investorListVC setTitle:@"投资人"];
         [self.navigationController pushViewController:investorListVC animated:YES];
     }else{
-        if (webDic==nil) return;
+        if (webDic==nil) {
+            [WLHUDView showErrorHUD:@"网络异常！"];
+            return;
+        }
         
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:webDic[@"url"]];
         webVC.showPageTitles = NO;

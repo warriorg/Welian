@@ -307,6 +307,7 @@
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+
     [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [mode setAvatar:[JSON objectForKey:@"url"]];

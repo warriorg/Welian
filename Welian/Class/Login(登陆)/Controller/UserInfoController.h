@@ -10,4 +10,7 @@
 
 @interface UserInfoController : UIViewController
 
+@property (nonatomic, strong)NSString *phoneString;
+@property (nonatomic,strong) NSString *pwdString;
+
 @end

@@ -138,4 +138,7 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 确认添加好友
 + (void)addFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 取好友的好友（二度好友）
++ (void)loadUser2FriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 @end

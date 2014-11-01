@@ -23,7 +23,6 @@ typedef enum {
 
 @interface WLBasicTrends : NSObject
 
-
 /**   姓名  */
 @property (nonatomic, strong) NSString *name;
 

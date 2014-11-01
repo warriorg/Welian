@@ -22,12 +22,13 @@
 #import "WLDataDBTool.h"
 #import "MJExtension.h"
 
-@interface HomeController () <UIActionSheetDelegate>
+@interface HomeController () <UIActionSheetDelegate,CommentInfoVCDelegate>
 {
     NSMutableArray *_dataArry;
     
     NSIndexPath *_clickIndex;
     NSNumber *_uid;
+    NSIndexPath *_selectIndexPath;
 }
 @end
 
@@ -40,6 +41,11 @@
     _uid = uid;
     self = [super initWithStyle:style];
     if (self) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:self.refreshControl];
+        [self.refreshControl beginRefreshing];
+        
         _dataArry = [NSMutableArray array];
         if (!_uid) {
             NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
@@ -52,10 +58,7 @@
             }
         }
         
-        self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
-        [self.refreshControl beginRefreshing];
-        [self.tableView setContentSize:CGSizeMake(0, [UIScreen mainScreen].bounds.size.height)];
+//        [self.tableView setContentSize:CGSizeMake(0, [UIScreen mainScreen].bounds.size.height)];
         [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];
     }
     return self;
@@ -64,7 +67,6 @@
 - (void)beginPullDownRefreshing
 {
     [self.tableView setFooterHidden:YES];
-
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
 
@@ -95,7 +97,6 @@
         if (userStatus.data.count>0) {
             [self.tableView setFooterHidden:NO];
         }
-
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
@@ -178,6 +179,7 @@
 #pragma mark - 发表状态
 - (void)publishStatus
 {
+    
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
     
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
@@ -303,14 +305,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+    [commentInfo setDelegate:self];
     WLStatusFrame *statusF = _dataArry[indexPath.row];
-
     [commentInfo setStatusFrame:statusF];
-
+    _selectIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];
+}
+
+- (void)commentInfoController:(CommentInfoController *)commentVC isDelete:(BOOL)isdelete withStatusFrame:(WLStatusFrame *)statusF
+{
+    if (isdelete) {
+        [_dataArry removeObject:statusF];
+        [self.tableView deleteRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }else{
+        [_dataArry setObject:statusF atIndexedSubscript:_selectIndexPath.row];
+        [self.tableView reloadRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
 }
 
 

@@ -11,6 +11,7 @@
 #import "NameController.h"
 #import "MainViewController.h"
 #import "WLHUDView.h"
+#import "MJExtension.h"
 
 @interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -51,7 +52,7 @@
     [self.navigationItem setTitle:@"加入weLian"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
 
-    self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"密码":@"",@"职务":@""}];
+    self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
     [self.view addSubview:self.tableView];
 }
 
@@ -61,7 +62,7 @@
     NSString *name = [self.dataDic objectForKey:@"姓名"];
     NSString *danwei = [self.dataDic objectForKey:@"单位"];
     NSString *zhiwu = [self.dataDic objectForKey:@"职务"];
-    NSString *mima = [self.dataDic objectForKey:@"密码"];
+    NSString *mima = self.pwdString;
     if (!name.length) {
         [WLHUDView showErrorHUD:@"姓名不能为空"];
         return;
@@ -86,21 +87,47 @@
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
         if ([datadic objectForKey:@"url"]) {
             
-            UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            [modeinfo setName:name];
-            [modeinfo setCompany:danwei];
-            [modeinfo setPosition:zhiwu];
-            [modeinfo setCheckcode:mima];
-            [modeinfo setAvatar:[datadic objectForKey:@"url"]];
-            [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
-            MainViewController *mainVC = [[MainViewController alloc] init];
-            [self.view.window setRootViewController:mainVC];
+            NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+            [reqstDic setObject:self.phoneString forKey:@"mobile"];
+            [reqstDic setObject:self.pwdString forKey:@"password"];
+            [reqstDic setObject:@"ios" forKey:@"platform"];
+            if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+                
+                [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+                [reqstDic setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
+            }
+
+            [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+                NSDictionary *dataDic = JSON;
+                if (dataDic) {
+                    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                    [mode setKeyValues:dataDic];
+                    [mode setCheckcode:self.pwdString];
+                    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                    MainViewController *mainVC = [[MainViewController alloc] init];
+                    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+                }
+                
+            } fail:^(NSError *error) {
+                
+            }];
+//            UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//            [modeinfo setName:name];
+//            [modeinfo setCompany:danwei];
+//            [modeinfo setPosition:zhiwu];
+//            [modeinfo setCheckcode:mima];
+//            [modeinfo setAvatar:[datadic objectForKey:@"url"]];
+//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
+//            MainViewController *mainVC = [[MainViewController alloc] init];
+//            [self.view.window setRootViewController:mainVC];
         }
     } fail:^(NSError *error) {
         
     }];
 
 }
+
+
 
 
 #pragma mark - 选取头像照片

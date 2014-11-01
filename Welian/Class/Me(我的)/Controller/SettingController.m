@@ -10,8 +10,9 @@
 #import "UIImage+ImageEffects.h"
 #import "NameController.h"
 #import "WLTool.h"
+#import "NavViewController.h"
 
-@interface SettingController ()
+@interface SettingController () <UIActionSheetDelegate>
 {
     NSArray *_data;
     NSString *_upURL;
@@ -53,6 +54,8 @@
         [logout setTitle:@"退出登录" forState:UIControlStateNormal];
         
         //    logout.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+        [logout addTarget:self action:@selector(exitLoging:) forControlEvents:UIControlEventTouchUpInside];
+        
         self.tableView.tableFooterView = logout;
     }
     return self;
@@ -66,6 +69,25 @@
     return 0;
 }
 
+#pragma mark - 退出登陆
+- (void)exitLoging:(UIButton*)but
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确定要退出登陆？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登陆" otherButtonTitles:nil, nil];
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        UIStoryboard *storyBoard=[UIStoryboard storyboardWithName:@"LogInStoryboard" bundle:nil];
+        
+        NavViewController  *detailViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LogInStoryboardNav"];
+        UserInfoModel *mode = [[UserInfoModel alloc] init];
+        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+        
+        [self.view.window setRootViewController:detailViewController];
+    }
+}
 
 #pragma mark 读取plist文件的内容
 - (void)loadPlist
@@ -80,7 +102,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self setTitle:@"设置"];
     
 }
 
@@ -142,10 +164,15 @@
         [self.navigationController pushViewController:phoneVC animated:YES];
     }else if (indexPath.section==2&&indexPath.row==1){
         [WLTool updateVersions:^(NSDictionary *versionDic) {
-            NSString *msg = [versionDic objectForKey:@"msg"];
-            _upURL = [versionDic objectForKey:@"url"];
             
-            [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+            if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
+                NSString *msg = [versionDic objectForKey:@"msg"];
+                _upURL = [versionDic objectForKey:@"url"];
+                
+                [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+            }else{
+                [WLHUDView showSuccessHUD:@"已是最新版本！"];
+            }
 
         }];
     }

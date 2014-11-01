@@ -17,7 +17,7 @@
 
 - (NSString *)activityTitle
 {
-    return NSLocalizedString(@"WeChat Session", nil);
+    return NSLocalizedString(@"微信好友", nil);
 }
 
 @end

@@ -16,6 +16,7 @@
 #import "UIImage+ImageEffects.h"
 #import "HomeController.h"
 #import "ListdaController.h"
+#import "CommonFriendsController.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate>
 {
@@ -46,7 +47,7 @@ static NSString *staurCellid = @"staurCellid";
         [logout setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
         [logout setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [logout setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-        logout.frame = CGRectMake(20, 0, 280, 40);
+        logout.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
         // 4.设置按钮文字
         [logout setTitle:@"发送消息" forState:UIControlStateNormal];
         [_sendView addSubview:logout];
@@ -66,7 +67,7 @@ static NSString *staurCellid = @"staurCellid";
         [logout setBackgroundImage:[UIImage resizedImage:@"yellowbutton"] forState:UIControlStateNormal];
         [logout setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [logout setBackgroundImage:[UIImage resizedImage:@"yellowbutton_pressed"] forState:UIControlStateHighlighted];
-        logout.frame = CGRectMake(20, 0, 280, 40);
+        logout.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
         [logout addTarget:self action:@selector(requestFriend) forControlEvents:UIControlEventTouchUpInside];
         // 4.设置按钮文字
         [logout setTitle:@"+加为好友" forState:UIControlStateNormal];
@@ -89,7 +90,7 @@ static NSString *staurCellid = @"staurCellid";
 {
     if (buttonIndex==1) {
         [WLHttpTool requestFriendParameterDic:@{@"fid":_userMode.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
-            
+            [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
         } fail:^(NSError *error) {
             
         }];
@@ -108,7 +109,7 @@ static NSString *staurCellid = @"staurCellid";
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [WLHttpTool loadUserInfoParameterDic:@{@"uid":_userMode.uid} success:^(id JSON) {
             
-            [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(4)} success:^(id JSON) {
+            [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(100)} success:^(id JSON) {
                 _sameFriendArry = [JSON objectForKey:@"samefriends"];
                 [self.tableView reloadData];
             } fail:^(NSError *error) {
@@ -117,7 +118,9 @@ static NSString *staurCellid = @"staurCellid";
 
             _dataDicM = JSON;
             _userMode = [_dataDicM objectForKey:@"profile"];
-            if ([_userMode.friendship integerValue]==1) {
+            if ([_userMode.friendship integerValue]==-1) {
+                
+            }else if ([_userMode.friendship integerValue]==1) {
                 [self.tableView setTableFooterView:self.sendView];
             }else {
                 [self.tableView setTableFooterView:self.addFriendView];
@@ -132,6 +135,8 @@ static NSString *staurCellid = @"staurCellid";
         [self.tableView setBackgroundColor:IWGlobalBg];
         [self.tableView setSeparatorColor:WLLineColor];
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        // 增加底部额外的滚动区域
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     }
     return self;
 }
@@ -219,7 +224,7 @@ static NSString *staurCellid = @"staurCellid";
                 [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",_userMode.provincename,_userMode.cityname]];
             }else if(_sameFriendArry.count){
                 SameFriendsCell *samcell = [tableView dequeueReusableCellWithIdentifier:sameFriendcellid];
-                
+                [samcell setImageURLArray:_sameFriendArry];
                 return samcell;
             }else{
                 StaurCell *staucell = [tableView dequeueReusableCellWithIdentifier:staurCellid];
@@ -229,7 +234,7 @@ static NSString *staurCellid = @"staurCellid";
         }else if (indexPath.row==1){
             if ((_userMode.provincename||_userMode.cityname)&&_sameFriendArry.count) {
                 SameFriendsCell *samcell = [tableView dequeueReusableCellWithIdentifier:sameFriendcellid];
-                
+                [samcell setImageURLArray:_sameFriendArry];
                 return samcell;
             }else{
                 StaurCell *staucell = [tableView dequeueReusableCellWithIdentifier:staurCellid];
@@ -323,13 +328,14 @@ static NSString *staurCellid = @"staurCellid";
                 if (_userMode.provincename||_userMode.cityname) {
                     
                 }else if (_sameFriendArry.count){
-                    
+                    [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
                     [self.navigationController pushViewController:[[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid]animated:YES];
                 }
             }else if (indexPath.row==1){
                 if ((_userMode.provincename||_userMode.cityname)&&_sameFriendArry.count) {
                     
+                    [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
                     [self.navigationController pushViewController:[[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid]animated:YES];
                 }

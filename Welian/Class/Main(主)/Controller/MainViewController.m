@@ -17,7 +17,11 @@
 
 
 @interface MainViewController () <UINavigationControllerDelegate>
-
+{
+    UITabBarItem *homeItem;
+    UITabBarItem *selectItem;
+    HomeController *homeVC;
+}
 @end
 
 @implementation MainViewController
@@ -43,11 +47,26 @@
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
     
+
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
+    
+    UIImageView *a = [[UIImageView alloc] init];
+    [a setHidden:YES];
+    [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+
+        NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [UserDefaults setObject:avatarStr forKey:@"icon"];
+        
+    }];
+    [a setHidden:YES];
+    [self.view addSubview:a];
     
     // 首页
-    UITabBarItem *homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
+    homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
-    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
+    
+    homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     
     [homeVC.navigationItem setTitle:@"动态"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
@@ -82,6 +101,7 @@
     
     [self setViewControllers:@[homeNav,friendsNav,findNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
+    selectItem = homeItem;
 }
 
 - (void)newFriendPuthMessga
@@ -94,6 +114,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+
+    if (selectItem == homeItem && item == homeItem) {
+        [homeVC.refreshControl beginRefreshing];
+        [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];
+        [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
+    }
+
+        selectItem = item;
 }
 
 - (UITabBarItem*)itemWithTitle:(NSString *)title imageStr:(NSString *)imageStr selectedImageStr:(NSString *)selectedImageStr

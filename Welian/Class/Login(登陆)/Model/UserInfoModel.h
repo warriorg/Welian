@@ -72,4 +72,7 @@
 /**  uid唯一标示   */
 @property (nonatomic, strong) NSNumber *uid;
 
+/**  邀请url   */
+@property (nonatomic, strong) NSString *inviteurl;
+
 @end

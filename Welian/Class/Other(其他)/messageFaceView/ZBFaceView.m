@@ -14,7 +14,7 @@
 
 #define NumPerLine 7
 #define Lines    3
-#define FaceSize  34
+#define FaceSize  40
 /*
 ** 两边边缘间隔
  */
@@ -48,12 +48,12 @@
                                                       FaceSize)];
                 
                 if (i*7+x+1 ==21) {
-                    [expressionButton setImage:[UIImage imageNamed:@"DeleteEmoticonBtn_ios7@2x.png"]
+                    [expressionButton setImage:[UIImage imageNamed:@"DeleteEmoticonBtn_ios7.png"]
                                                 forState:UIControlStateNormal];
                     expressionButton.tag = 999+0;
     
                 }else{
-                    NSString *imageStr = [NSString stringWithFormat:@"Expression_%d@2x.png",index*20+i*7+x+1];
+                    NSString *imageStr = [NSString stringWithFormat:@"Expression_%d.png",index*20+i*7+x+1];
                     [expressionButton setImage:[UIImage imageNamed:imageStr]
                                                 forState:UIControlStateNormal];
                     expressionButton.tag = 999+20*index+i*7+x+1;

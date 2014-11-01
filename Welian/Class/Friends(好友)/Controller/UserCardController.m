@@ -30,16 +30,34 @@
     [_mobileLabel setText:userinfoM.mobile];
     [_emilLabel setText:userinfoM.email];
     
-    if (userinfoM.provincename || userinfoM.cityname || userinfoM.address) {
-        
-        [_addresLabel setText:[NSString stringWithFormat:@"%@-%@%@",userinfoM.provincename,userinfoM.cityname,userinfoM.address]];
+    NSMutableString *addresStr = [NSMutableString string];
+    if (userinfoM.provincename) {
+        [addresStr appendString:userinfoM.provincename];
     }
+    if (userinfoM.cityname) {
+        [addresStr appendString:userinfoM.cityname];
+    }
+    if (userinfoM.address) {
+        [addresStr appendString:userinfoM.address];
+    }
+        
+    [_addresLabel setText:addresStr];
     
     NSInteger investint = [userinfoM.investorauth integerValue];
-    [_investerImage setHidden:!investint];
+    if (investint==1) {
+        
+        [_investerImage setHidden:NO];
+    }else{
+        [_investerImage setHidden:YES];
+    }
     
     NSInteger startint = [userinfoM.startupauth integerValue];
-    [_entrepreneurImage setHidden:!startint];
+    if (startint==1) {
+        
+        [_entrepreneurImage setHidden:NO];
+    }else{
+        [_entrepreneurImage setHidden:YES];
+    }
     
     
     NSInteger relint = [userinfoM.friendship integerValue];
@@ -61,8 +79,7 @@
     }
     
     
-    
-    [self.scrollView setContentSize:CGSizeMake(0, self.view.bounds.size.height-60)];
+//    [self.scrollView setContentSize:CGSizeMake(0, self.view.bounds.size.height-60)];
 }
 
 - (void)shares

@@ -23,6 +23,7 @@
 #import "FriendsUserModel.h"
 #import "FriendsAddressBook.h"
 #import "WLDataDBTool.h"
+#import "UIImageView+WebCache.h"
 
 @implementation WLHttpTool
 
@@ -90,9 +91,9 @@
 #pragma mark - 用户登陆
 + (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
     NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -178,6 +179,7 @@
         if (JSON) {
 
             if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
                 for (NSDictionary *dic in jsonarray) {
                     [[WLDataDBTool sharedService] putObject:dic  withId:[dic objectForKey:@"fid"] intoTable:KHomeDataTableName];
                 }
@@ -673,6 +675,7 @@
         for (NSDictionary *infoD in sameFA) {
             FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
             [fmode setKeyValues:infoD];
+            [sameFrindM addObject:fmode];
         }
         [dataDic setObject:sameFrindM forKey:@"samefriends"];
         succeBlock(dataDic);

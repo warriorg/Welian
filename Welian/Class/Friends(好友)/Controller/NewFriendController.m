@@ -30,6 +30,11 @@ static NSString *frnewCellid = @"frnewCellid";
     [self.tableView setBackgroundColor:IWGlobalBg];
     NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
     
+    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:NO];
+    
+   arrr =  [arrr sortedArrayUsingDescriptors:@[bookNameDes]];
+    
+    
     for (YTKKeyValueItem *aa in arrr) {
         NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
         [_dataArray addObject:statusM];
@@ -119,7 +124,7 @@ static NSString *frnewCellid = @"frnewCellid";
             [basMode setKeyValues:[friendM keyValues]];
             [basMode setUid:friendM.fid];
             [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
-            
+            [WLHUDView showSuccessHUD:@"添加成功！"];
         } fail:^(NSError *error) {
             
         }];

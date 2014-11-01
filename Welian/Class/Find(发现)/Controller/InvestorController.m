@@ -48,7 +48,7 @@
 {
     self.disArray = @[@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111",@"1111"];
     
-    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
 
     
 //    [WLHttpTool loadFeedParameterDic:@{@"start":@(0),@"size":@(20),@"uid":@(uid)} success:^(id JSON) {

@@ -7,21 +7,103 @@
 //
 
 #import "FriendsFriendController.h"
+#import "MJRefresh.h"
+#import "InvestorUserCell.h"
+#import "UIImageView+WebCache.h"
+#import "FriendsinfoModel.h"
+#import "FriendsFriendModel.h"
+#import "MJExtension.h"
+#import "UIImageView+WebCache.h"
+#import "UserInfoBasicVC.h"
 
 @interface FriendsFriendController ()
-
+{
+    NSInteger page;
+}
+@property (nonatomic,strong) NSMutableArray *allArray;//所有数据数组
 @end
+
+static NSString *identifier = @"investorcellid";
 
 @implementation FriendsFriendController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!self.allArray.count) {
+        [self loadNewDataArray];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTitle:@"好友的好友"];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl beginRefreshing];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    [self.tableView setFooterHidden:YES];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView setBackgroundColor:WLLineColor];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
+}
+
+- (void)hideRefreshView
+{
+    [self.refreshControl endRefreshing];
+    [self.tableView footerEndRefreshing];
+}
+
+
+// 刷新数据
+- (void)loadNewDataArray
+{
+    page = 1;
+    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(20)} success:^(id JSON) {
+        [self hideRefreshView];
+        [self.allArray removeAllObjects];
+        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
+        
+        self.allArray = [NSMutableArray arrayWithArray:friendsM.friends];
+        [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
+        
+        [self.tableView reloadData];
+        
+        if ([friendsM.count integerValue]<20) {
+            [self.tableView setFooterHidden:YES];
+        }else{
+            [self.tableView setFooterHidden:NO];
+        }
+        page++;
+    } fail:^(NSError *error) {
+        [self hideRefreshView];
+    }];
+}
+
+// 加载更多
+- (void)loadMoreDataArray
+{
+    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(20)} success:^(id JSON) {
+        
+        [self hideRefreshView];
+        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
+        [self.allArray addObjectsFromArray:friendsM.friends];
+
+        [self.tableView reloadData];
+        NSArray *arr = JSON;
+        if (arr.count<20) {
+            [self.tableView setFooterHidden:YES];
+        }else{
+            [self.tableView setFooterHidden:NO];
+        }
+        page++;
+    } fail:^(NSError *error) {
+        [self hideRefreshView];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,70 +113,54 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+
+    return self.allArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    InvestorUserCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
+    
+    [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:friendinfoM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    [cell.nameLabel setText:friendinfoM.name];
+    [cell.infoLabel setText:[NSString stringWithFormat:@"%@  %@",friendinfoM.position,friendinfoM.company]];
+    
+    NSMutableString *labestr = [NSMutableString string];
+    for (UserInfoModel *mode in friendinfoM.samefriends) {
+        [labestr appendFormat:@"%@、",mode.name];
+    }
+    
+    if ([labestr hasSuffix:@"、"]) {
+        NSRange range = {[labestr length]-1,1};
+        [labestr deleteCharactersInRange:range];
+    }
+    if ([friendinfoM.samefriendcount integerValue]>2) {
+        [labestr appendFormat:@"等%@人可为您引荐",friendinfoM.samefriendcount];
+    }else{
+        [labestr appendString:@"可为您引荐"];
+    }
+    [cell.caseLabel setText:labestr];
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 103.0;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
+    
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM];
+    [self.navigationController pushViewController:userinfoVC animated:YES];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

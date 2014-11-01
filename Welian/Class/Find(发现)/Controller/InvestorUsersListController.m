@@ -11,6 +11,7 @@
 #import "InvestorUserCell.h"
 #import "UIImageView+WebCache.h"
 #import "InvestorUserM.h"
+#import "UserInfoBasicVC.h"
 
 @interface InvestorUsersListController () <UISearchBarDelegate,UISearchDisplayDelegate>
 {
@@ -40,7 +41,7 @@ static NSString *identifier = @"investorcellid";
 // 刷新数据
 - (void)loadNewDataArray
 {
-    page = 0;
+    page = 1;
     [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
         [self hideRefreshView];        
         [self.allArray removeAllObjects];
@@ -118,12 +119,6 @@ static NSString *identifier = @"investorcellid";
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
     [self.searchDisplayVC.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 
@@ -167,6 +162,30 @@ static NSString *identifier = @"investorcellid";
     return 103.0;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    InvestorUserM *invesM = self.allArray[indexPath.row];
+    if (tableView == self.searchDisplayVC.searchResultsTableView) {
+        invesM = self.filterArray[indexPath.row];
+    }
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [mode setName:invesM.name];
+    [mode setUid:invesM.uid];
+    [mode setCompany:invesM.company];
+    [mode setPosition:invesM.position];
+    [mode setAvatar:invesM.avatar];
+    [mode setFriendship:invesM.friendship];
+    [mode setInvestorauth:invesM.investorauth];
+    [mode setStartupauth:invesM.startupauth];
+    [mode setProvincename:invesM.provincename];
+    [mode setCityname:invesM.cityname];
+    
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+    
+    [self.navigationController pushViewController:userInfoVC animated:YES];
+}
 
 
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

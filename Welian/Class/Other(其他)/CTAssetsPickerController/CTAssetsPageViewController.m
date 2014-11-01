@@ -44,10 +44,6 @@
 
 @end
 
-
-
-
-
 @implementation CTAssetsPageViewController
 
 - (id)initWithAssets:(NSMutableArray *)assets picDatablock:(PicDataBlock)picArrayBlck

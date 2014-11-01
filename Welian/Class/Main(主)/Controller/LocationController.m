@@ -47,6 +47,14 @@
 
 - (void)statLocationMy
 {
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8) {
+//        //由于IOS8中定位的授权机制改变 需要进行手动授权
+//        CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+//        //获取授权认证
+//        [locationManager requestAlwaysAuthorization];
+//        [locationManager requestWhenInUseAuthorization];
+//    }
+    
     if ([CLLocationManager locationServicesEnabled]) {
         // 打开定位
         [self loadLocationVC];

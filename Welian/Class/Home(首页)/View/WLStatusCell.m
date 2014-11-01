@@ -22,6 +22,9 @@
 #import "ShareEngine.h"
 #import "ShareView.h"
 #import "UserInfoBasicVC.h"
+#import "HBVLinkedTextView.h"
+#import "UIColor+HBVHarmonies.h"
+#import "UserInfoBasicVC.h"
 
 @interface WLStatusCell () <UIActionSheetDelegate,MLEmojiLabelDelegate,LXActivityDelegate>
 {
@@ -44,7 +47,7 @@
     /** 转发微博的整体 */
     UIImageView *_retweetView;
     /** 转发微博的昵称 */
-    UILabel *_retweetNameLabel;
+    HBVLinkedTextView *_retweetNameLabel;
     /** 转发微博的配图 */
     WLPhotoListView *_retweetPhotoListView;
     /** 转发微博的内容 */
@@ -195,13 +198,15 @@
     // 0.整体
     _retweetView = [[UIImageView alloc] init];
     [_retweetView setUserInteractionEnabled:YES];
-    _retweetView.image = [UIImage resizedImage:@"timeline_retweet_background" leftScale:0.9 topScale:0.7];
+    _retweetView.image = [UIImage resizedImage:@"repost_bg_normal"];
+    _retweetView.highlightedImage = [UIImage resizedImage:@"repost_bg_highlight"];
     [self.contentView addSubview:_retweetView];
     
     // 1.昵称
-    _retweetNameLabel = [[UILabel alloc] init];
-    _retweetNameLabel.font = IWRetweetNameFont;
-    _retweetNameLabel.textColor = IWRetweetNameColor;
+    _retweetNameLabel = [[HBVLinkedTextView alloc] init];
+    [_retweetNameLabel setTextColor:[UIColor grayColor]];
+    _retweetNameLabel.font = [UIFont systemFontOfSize:15];
+//    _retweetNameLabel.textColor = IWRetweetNameColor;
     _retweetNameLabel.backgroundColor = [UIColor clearColor];
     [_retweetView addSubview:_retweetNameLabel];
     
@@ -232,14 +237,13 @@
     CGFloat dockH = IWStatusDockH;
     CGFloat dockX = 0;
     CGFloat dockY = _statusFrame.dockY;
-    CGFloat dockW = self.contentView.frame.size.width;
+    CGFloat dockW = [[UIScreen mainScreen] bounds].size.width;
     CGRect dockF = CGRectMake(dockX, dockY, dockW, dockH);
     
     // 2.创建和添加dock
     _dock = [[WLStatusDock alloc] initWithFrame:dockF];
     _dock.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [_dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.contentView addSubview:_dock];
 }
 
@@ -276,7 +280,6 @@
     }else if (imageIndex == 3){  // 新浪微博
         
     }
-    NSLog(@"%d",(int)imageIndex);
 }
 
 
@@ -325,7 +328,6 @@
 
     }
     
-    
     // 4.配图
     if (status.photos.count) {
         _photoListView.hidden = NO;
@@ -344,7 +346,15 @@
         
         // 5.1.昵称
         _retweetNameLabel.frame = statusFrame.retweetNameLabelF;
-        _retweetNameLabel.text = [NSString stringWithFormat:@"该动态最早由%@发布", retweetStatus.user.name];
+        [_retweetNameLabel setText:[NSString stringWithFormat:@"该动态最早由 %@ 发布", retweetStatus.user.name]];
+        
+        //Pass in the string, attributes, and a tap handling block
+        [_retweetNameLabel linkString:retweetStatus.user.name
+      defaultAttributes:[self exampleAttributes]
+  highlightedAttributes:[self exampleAttributes]
+             tapHandler:[self exampleHandlerWithTitle:@"Link a single string"]];
+        [_retweetNameLabel sizeToFit];
+        
         
         // 5.2.正文
         _retweetContentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -384,5 +394,30 @@
 
     // Configure the view for the selected state
 }
+
+
+- (LinkedStringTapHandler)exampleHandlerWithTitle:(NSString *)title
+{
+    LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
+        WLBasicTrends *status = _statusFrame.status.relationfeed.user;
+        UserInfoModel *mode = [[UserInfoModel alloc] init];
+        [mode setName:status.name];
+        [mode setAvatar:status.avatar];
+        [mode setUid:status.uid];
+        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+    };
+    
+    return exampleHandler;
+}
+
+
+
+- (NSMutableDictionary *)exampleAttributes
+{
+    return [@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
+              NSForegroundColorAttributeName:IWRetweetNameColor}mutableCopy];
+}
+
 
 @end

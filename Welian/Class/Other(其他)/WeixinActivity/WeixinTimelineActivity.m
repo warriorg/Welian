@@ -26,7 +26,7 @@
 
 - (NSString *)activityTitle
 {
-    return NSLocalizedString(@"WeChat Timeline", nil);
+    return NSLocalizedString(@"微信朋友圈", nil);
 }
 
 

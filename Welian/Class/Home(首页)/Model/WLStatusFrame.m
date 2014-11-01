@@ -90,8 +90,8 @@
         // 5.1.昵称
         CGFloat retweetNameX = IWCellBorderWidth;
         CGFloat retweetNameY = IWCellBorderWidth;
-        CGSize retweetNameSize = [[NSString stringWithFormat:@"该动态最早由%@发布", retweetStatus.user.name] sizeWithFont:IWRetweetNameFont];
-        _retweetNameLabelF = (CGRect){{retweetNameX, retweetNameY}, retweetNameSize};
+        CGSize retweetNameSize = [[NSString stringWithFormat:@"该动态最早由%@发布发布发布发布", retweetStatus.user.name] sizeWithFont:IWRetweetNameFont];
+        _retweetNameLabelF = (CGRect){{retweetNameX, 5}, retweetNameSize};
         
         // 5.2.内容
         CGFloat retweetContentX = retweetNameX;
@@ -122,7 +122,7 @@
         retweetHeight += IWCellBorderWidth;
         
         // 5.4.整体
-        _retweetViewF = CGRectMake(retweetX, retweetY, retweetWidth - 2 * IWCellBorderWidth, retweetHeight);
+        _retweetViewF = CGRectMake(0, retweetY, retweetWidth, retweetHeight);
     }
 
     // 6.整个cell的高度

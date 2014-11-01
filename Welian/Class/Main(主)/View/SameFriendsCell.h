@@ -18,5 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *fourImage;
 
+@property (nonatomic, strong) NSMutableArray *imageURLArray;
+
 
 @end

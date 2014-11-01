@@ -40,7 +40,9 @@ MBProgressHUD *HUD;
 + (void)showCustomHUD:(NSString *)labeltext imageview:(NSString *)imageName
 {
     [self showHUDWithStr:labeltext dim:NO];
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    if (imageName) {
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    }
     HUD.mode = MBProgressHUDModeCustomView;
     [HUD hide:YES afterDelay:1];
 }

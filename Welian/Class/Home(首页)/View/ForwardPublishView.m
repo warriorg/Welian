@@ -18,6 +18,9 @@
 {
     _statusF = statusF;
     WLStatusM *statusM = statusF.status;
+    if (statusM.relationfeed) {
+        statusM = statusM.relationfeed;
+    }
     [_nameLabel setText:statusM.user.name];
     
     _titelLabel.backgroundColor = [UIColor clearColor];

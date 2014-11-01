@@ -39,15 +39,27 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (_statusCell == nil) {
         _statusCell = [WLStatusCell cellWithTableView:nil];
         [_statusCell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:) forControlEvents:UIControlEventTouchDown];
+        [_statusCell.dock.commentBtn addTarget:self action:@selector(becomComment) forControlEvents:UIControlEventTouchUpInside];
         [_statusCell setHomeVC:self];
-        UIView *lveView = [[UIView alloc] initWithFrame:CGRectMake(0, self.statusFrame.dockY+5, self.view.bounds.size.width, 10)];
+        UIView *lveView = [[UIView alloc] initWithFrame:CGRectMake(0, self.statusFrame.dockY+7, self.view.bounds.size.width, 10)];
         [lveView setBackgroundColor:WLLineColor];
         [_statusCell addSubview:lveView];
+        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        if ([self.statusFrame.status.user.uid integerValue] == [mode.uid integerValue]) {
+            
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
+        }
+
     }
     [_statusCell setStatusFrame:self.statusFrame];
     [_statusCell.moreBut setHidden:YES];
     
     return _statusCell;
+}
+
+- (void)becomComment
+{
+    [self.messageView.commentTextView becomeFirstResponder];
 }
 
 - (UITableView *)tableView
@@ -56,7 +68,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50) style:UITableViewStyleGrouped];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [_tableView setSeparatorInset:UIEdgeInsetsMake(0, IWIconWHSmall+2*IWCellBorderWidth, 0, 0)];
-        [_tableView setBackgroundColor:WLLineColor];
+        [_tableView setBackgroundColor:[UIColor whiteColor]];
         [_tableView setDataSource:self];
         [_tableView setDelegate:self];
         [_tableView registerNib:[UINib nibWithNibName:@"NoCommentCell" bundle:nil] forCellReuseIdentifier:noCommentCell];
@@ -68,10 +80,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"评论"];
+    [self setTitle:@"详情"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forwardCommtion) name:KPublishOK object:nil];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@""] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
+    [self.view setBackgroundColor:WLLineColor];
     
     self.reqestDic = [NSMutableDictionary dictionary];
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -88,8 +99,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         [WLHttpTool addFeedCommentParameterDic:@{@"fid":@(self.statusFrame.status.fid),@"touid":self.statusFrame.status.user.uid,@"comment":comment} success:^(id JSON) {
            
             self.statusFrame.status.commentcount++;
-            
             [self loadNewCommentListData];
+            [self backDataStatusFrame:NO];
         } fail:^(NSError *error) {
             
         }];
@@ -106,7 +117,34 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)moreButClick:(UIBarButtonItem*)item
 {
-    
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除该条动态" otherButtonTitles:nil,nil];
+    [sheet setTag:800];
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag==800) {
+        if (buttonIndex==0) {
+            __weak CommentInfoController *commVC = self;
+            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
+                
+                [WLHUDView showSuccessHUD:@"删除动态成功！"];
+                [commVC backDataStatusFrame:YES];
+                 [self.navigationController popViewControllerAnimated:YES];
+            } fail:^(NSError *error) {
+                
+            }];
+        }
+        
+    }
+}
+
+- (void)backDataStatusFrame:(BOOL)isdelete
+{
+    if ([_delegate respondsToSelector:@selector(commentInfoController:isDelete:withStatusFrame:)]) {
+        [_delegate commentInfoController:self isDelete:isdelete withStatusFrame:_statusFrame];
+    }
 }
 
 
@@ -258,6 +296,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                 self.statusFrame.status.commentcount--;
                 [self.tableView reloadData];
                 self.statusCell;
+                [self backDataStatusFrame:NO];
             } fail:^(NSError *error) {
                 
             }];
@@ -278,6 +317,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             self.statusFrame.status.zan -= 1;
             self.statusCell;
             [but setEnabled:YES];
+            [self backDataStatusFrame:NO];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
         }];
@@ -288,6 +328,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             self.statusFrame.status.zan +=1;
             self.statusCell;
             [but setEnabled:YES];
+            [self backDataStatusFrame:NO];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
         }];

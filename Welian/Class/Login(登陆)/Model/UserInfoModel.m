@@ -14,6 +14,7 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
     [encoder encodeObject:_name forKey:@"_userName"];
+    [encoder encodeObject:_inviteurl forKey:@"_inviteurl"];
     [encoder encodeObject:_mobile forKey:@"_userPhone"];
     [encoder encodeObject:_email forKey:@"_userEmail"];
     [encoder encodeObject:_avatar forKey:@"_userIcon"];
@@ -38,6 +39,7 @@
 {
     if (self = [super init]) {
         self.name = [aDecoder decodeObjectForKey:@"_userName"];
+        self.inviteurl = [aDecoder decodeObjectForKey:@"_inviteurl"];
         self.mobile = [aDecoder decodeObjectForKey:@"_userPhone"];
         self.email = [aDecoder decodeObjectForKey:@"_userEmail"];
         self.avatar = [aDecoder decodeObjectForKey:@"_userIcon"];

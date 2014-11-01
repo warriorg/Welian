@@ -165,7 +165,7 @@ static NSString *picCellid = @"PicCellID";
         self.collectionView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:self.collectionView];
     }else if (_publishType == PublishTypeForward){
-        [self.forwardView setFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, 320, 60)];
+        [self.forwardView setFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, [[UIScreen mainScreen] bounds].size.width, 60)];
         [self.view addSubview:self.forwardView];
     }
 
@@ -309,7 +309,7 @@ static NSString *picCellid = @"PicCellID";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.assets.count>0) {
+    if (self.assets.count>0&&self.assets.count<9) {
         return self.assets.count+1;
     }
     return self.assets.count;
@@ -382,7 +382,7 @@ static NSString *picCellid = @"PicCellID";
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.delegate = self;
-            [imagePicker setAllowsEditing:YES];
+//            [imagePicker setAllowsEditing:YES];
             [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
             [self presentViewController:imagePicker animated:YES completion:^{
                 
@@ -412,7 +412,7 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
     
     if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
@@ -613,8 +613,12 @@ static NSString *picCellid = @"PicCellID";
 - (void)confirmPublish
 {
     if (_publishType == PublishTypeForward) {
+        NSNumber *fid = [NSNumber numberWithInt:self.statusFrame.status.fid];
         
-        [WLHttpTool forwardFeedParameterDic:@{@"fid":@(self.statusFrame.status.fid),@"content":self.textView.text} success:^(id JSON) {
+        if (self.statusFrame.status.relationfeed) {
+            fid = [NSNumber numberWithInt:self.statusFrame.status.relationfeed.fid];
+        }
+        [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
             [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
             
             [self dismissViewControllerAnimated:YES completion:^{
@@ -627,6 +631,10 @@ static NSString *picCellid = @"PicCellID";
         
     }else if (_publishType == PublishTypeNomel)
     {
+        if (!(self.textView.text.length||self.assets.count)) {
+            [WLHUDView showErrorHUD:@"内容为空！"];
+            return;
+        }
         [self.publishM setContent:self.textView.text];
         self.publishM.with = [NSMutableArray array];
         self.publishM.photos = [NSMutableArray array];

@@ -13,8 +13,9 @@
 #import "UserInfoBasicVC.h"
 #import "ShareEngine.h"
 #import <MessageUI/MessageUI.h>
+#import "UIImageView+WebCache.h"
 
-@interface AddFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,MFMessageComposeViewControllerDelegate>
+@interface AddFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,MFMessageComposeViewControllerDelegate,UIActionSheetDelegate>
 {
     FriendsAddressBook *_selecFriend;
 }
@@ -53,6 +54,8 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setDelegate:self];
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
+    [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
+                            forKey:@"_searchResultsTableViewStyle"];
     [self.tableView setTableHeaderView:self.searchBar];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -68,7 +71,7 @@ static NSString *fridcellid = @"fridcellid";
     
     [self.searchDisplayVC.searchResultsTableView setSeparatorInset:UIEdgeInsetsZero];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
-
+    [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
 }
 
 
@@ -157,7 +160,7 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (tableView == self.tableView) {
         if (section==0) {
@@ -165,17 +168,46 @@ static NSString *fridcellid = @"fridcellid";
         }else{
             if (self.allArray.count) {
                 NSDictionary * dic = self.allArray[section-1];
-                return [dic objectForKey:@"key"];
+                UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+                sectionHeader.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                sectionHeader.font = [UIFont systemFontOfSize:15];
+                sectionHeader.textColor = [UIColor grayColor];
+                sectionHeader.text = [dic objectForKey:@"key"];;
+                return sectionHeader;
             }else{
                 return nil;
             }
         }
         
-
     }else{
-        return @"  搜索结果";
+        UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+        sectionHeader.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.textColor = [UIColor grayColor];
+        sectionHeader.text = @"  搜索结果";
+        return sectionHeader;
     }
 }
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    if (tableView == self.tableView) {
+//        if (section==0) {
+//            return nil;
+//        }else{
+//            if (self.allArray.count) {
+//                NSDictionary * dic = self.allArray[section-1];
+//                return [dic objectForKey:@"key"];
+//            }else{
+//                return nil;
+//            }
+//        }
+//        
+//
+//    }else{
+//        return @"  搜索结果";
+//    }
+//}
 
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,7 +221,8 @@ static NSString *fridcellid = @"fridcellid";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidfriendid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidfriendid];
-                UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+                UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+                [detailLabel setTextAlignment:NSTextAlignmentRight];
                 [cell setAccessoryView:detailLabel];
             }
             NSDictionary *dic =self.allArray[indexPath.section-1];
@@ -203,6 +236,7 @@ static NSString *fridcellid = @"fridcellid";
                 [detai setText:@"邀请"];
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"3"]){
                 [detai setText:@"已添加"];
+                [detai setTextColor:[UIColor lightGrayColor]];
             }
             NSArray *array = [dic objectForKey:@"array"];
             FriendsAddressBook *friend = array[indexPath.row];
@@ -227,7 +261,9 @@ static NSString *fridcellid = @"fridcellid";
     if (tableView == self.tableView) {
         if (indexPath.section==0) {
             
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:@"请求添加为好友" andDescription:@"" WithUrl:@"" andImage:nil WithScene:weChat];
+            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"微信好友" otherButtonTitles:@"微信朋友圈", nil];
+            [sheet showInView:self.view];
+            
         }else{
             NSDictionary *dic =self.allArray[indexPath.section-1];
                 NSArray *array = [dic objectForKey:@"array"];
@@ -255,17 +291,38 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
+#pragma mark - 分享到微信
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
+    NSData *data = [[NSData alloc]initWithBase64EncodedString:[UserDefaults objectForKey:@"icon"] options:NSDataBase64Encoding64CharacterLineLength];
+    
+    UIImage *shareImage = [UIImage imageWithData:data];
+    
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩weLian",mode.name];
+    NSString *desStr = @"我正在玩weLian，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    
+    if (buttonIndex==0) {
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:shareImage WithScene:weChat];
+        
+    }else if(buttonIndex ==1){
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:shareImage WithScene:weChatFriend];
+    }
+}
+
 
 #pragma mark - 短信邀请
 -(void)showMessageView : (NSString *)phone title : (NSString *)title body : (NSString *)body
 {
+    [WLHUDView showCustomHUD:@"加载中..." imageview:nil];
         MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
         controller.recipients = [NSArray arrayWithObject:phone];
         controller.body = body;
         controller.messageComposeDelegate = self;
         [controller setTitle:title];//修改短信界面标题
         [self presentViewController:controller animated:YES completion:^{
-            
+            [WLHUDView hiddenHud];
         }];
 }
 
