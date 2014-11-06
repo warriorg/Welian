@@ -19,6 +19,12 @@
 /** 时间 */
 @property (nonatomic, assign, readonly) CGRect timeLabelF;
 
+/** 投资认证图标 */
+@property (nonatomic, assign, readonly) CGRect inversImageF;
+
+/** 职务，公司 */
+@property (nonatomic, assign, readonly) CGRect jobLabelF;
+
 /** 内容 */
 @property (nonatomic, assign, readonly) CGRect contentLabelF;
 /** 配图 */

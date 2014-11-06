@@ -21,7 +21,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *accBut;
 
-
 @property (nonatomic, strong) NewFriendModel *friendM;
 
 @end

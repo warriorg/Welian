@@ -29,14 +29,6 @@
 static NSString *identifier = @"investorcellid";
 @implementation InvestorUsersListController
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (!self.allArray.count) {
-        [self loadNewDataArray];
-    }
-}
-
 
 // 刷新数据
 - (void)loadNewDataArray
@@ -96,12 +88,12 @@ static NSString *identifier = @"investorcellid";
     
     self.searchBar = [[UISearchBar alloc] init];
     [self.searchBar setDelegate:self];
+    [self.searchBar setSearchBarStyle:UISearchBarStyleProminent];
     self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     [self.searchDisplayVC setDelegate:self];
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.tableView setTableHeaderView:self.searchBar];
-    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
@@ -113,14 +105,13 @@ static NSString *identifier = @"investorcellid";
     
     [self.tableView setBackgroundColor:WLLineColor];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
     
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
     [self.searchDisplayVC.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
+    [self loadNewDataArray];
 }
-
 
 
 - (void)didReceiveMemoryWarning {
@@ -182,7 +173,7 @@ static NSString *identifier = @"investorcellid";
     [mode setProvincename:invesM.provincename];
     [mode setCityname:invesM.cityname];
     
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
     
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }

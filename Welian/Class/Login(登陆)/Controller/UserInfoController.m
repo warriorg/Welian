@@ -230,10 +230,19 @@
     NSArray *aa = self.dataDic.allKeys;
     for (NSString *tit in aa) {
         if ([cell.textLabel.text isEqualToString:tit]) {
+            
+            IWVerifiedType verType;
+            if ([tit isEqualToString:@"姓名"]) {
+                verType = IWVerifiedTypeName;
+            }else if ([tit isEqualToString:@"单位"]){
+                verType = IWVerifiedTypeCompany;
+            }else if ([tit isEqualToString:@"职务"]){
+                verType = IWVerifiedTypeJob;
+            }
             NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                 [self.dataDic setObject:userInfo forKey:tit];
                 [self.tableView reloadData];
-            }];
+            } withType:verType];
             [nameVC setUserInfoStr:self.dataDic[tit]];
             [nameVC setTitle:tit];
             [self.navigationController pushViewController:nameVC animated:YES];

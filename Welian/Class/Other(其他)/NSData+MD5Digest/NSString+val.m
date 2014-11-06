@@ -71,4 +71,16 @@
     NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
     return [identityCardPredicate evaluateWithObject:identityCard];
 }
+
+- (CGSize)sizeWithFont:(UIFont*)font constrainedToSize:(CGSize)size
+{
+    NSDictionary *attribute = @{NSFontAttributeName:font};
+    NSInteger options = NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin;
+    
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:self attributes:attribute];
+    CGSize labelsize = [attrStr boundingRectWithSize:size options:options context:nil].size;
+
+    return labelsize;
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WLBasicTrends.h"
+#import "WLTextField.h"
 
 #define Time  0.25
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
@@ -19,7 +20,7 @@ typedef void(^MessageCommeBlock)(NSString *comment);
 
 @interface MessageKeyboardView : UIView
 
-@property (nonatomic, strong)  UITextField  *commentTextView;
+@property (nonatomic, strong)  WLTextField  *commentTextView;
 
 - (instancetype)initWithFrame:(CGRect)frame andSuperView:(UIView *)superView withMessageBlock:(MessageCommeBlock)messageBlock;
 

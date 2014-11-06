@@ -119,7 +119,7 @@ static NSString *picCellid = @"PicCellID";
 - (void)addUIView {
 
 //    CGFloat high = SuperSize.height-INPUT_HEIGHT;
-    CGFloat high = iPhone5?250:150;
+    CGFloat high = iPhone5?180:140;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
 //    [self.textView setBackgroundColor:[UIColor orangeColor]];
@@ -133,6 +133,9 @@ static NSString *picCellid = @"PicCellID";
     
     
     self.inputttView = [[UIView alloc]initWithFrame:CGRectMake(0, SuperSize.height-INPUT_HEIGHT, SuperSize.width, INPUT_HEIGHT)];
+    UIView *linView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 1)];
+    [linView setBackgroundColor:WLLineColor];
+    [self.inputttView addSubview:linView];
     [self.inputttView setBackgroundColor:[UIColor whiteColor]];
     
     _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(20, 2, 44, 44)];
@@ -426,6 +429,7 @@ static NSString *picCellid = @"PicCellID";
 
                    }];
                    [self.assets addObject:asset];
+                   [self.navigationItem.rightBarButtonItem setEnabled:YES];
                    [self.collectionView reloadData];
 
                } failureBlock:^(NSError *error) {

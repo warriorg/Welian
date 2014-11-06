@@ -37,6 +37,9 @@
     if (self) {
         
         [self setBackgroundColor:[UIColor whiteColor]];
+        UIView *linView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 1)];
+        [linView setBackgroundColor:WLLineColor];
+        [self addSubview:linView];
         
         _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-IWCellBorderWidth-40, 5, 40, 40)];
         [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_emoji"] forState:UIControlStateNormal];
@@ -44,7 +47,7 @@
         [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_emojiBut];
         
-        _commentTextView = [[UITextField alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
+        _commentTextView = [[WLTextField alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
         [_commentTextView.layer setMasksToBounds:YES];
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
@@ -201,7 +204,7 @@
 - (void)startCompile:(WLBasicTrends *)touser
 {
     [_commentTextView becomeFirstResponder];
-    [_commentTextView setText:[NSString stringWithFormat:@"@%@:",touser.name]];
+    [_commentTextView setPlaceholder:[NSString stringWithFormat:@"回复%@:",touser.name]];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

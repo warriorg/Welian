@@ -27,29 +27,38 @@ static NSString *identifier = @"investorcellid";
 
 @implementation FriendsFriendController
 
-- (void)viewWillAppear:(BOOL)animated
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    if (!self.allArray.count) {
+//        
+//    }
+//}
+
+- (instancetype)initWithStyle:(UITableViewStyle)style
 {
-    [super viewWillAppear:animated];
-    if (!self.allArray.count) {
-        [self loadNewDataArray];
+    self= [super initWithStyle:style];
+    if (self) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:self.refreshControl];
+        [self.refreshControl beginRefreshing];
+        
+        [self.tableView setBackgroundColor:WLLineColor];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+        [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
+        [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
     }
+    return self;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"好友的好友"];
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
-    [self.refreshControl beginRefreshing];
+    [self loadNewDataArray];
     
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
-    [self.tableView setFooterHidden:YES];
-    
-    [self.tableView setBackgroundColor:WLLineColor];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
 }
 
 - (void)hideRefreshView
@@ -62,9 +71,9 @@ static NSString *identifier = @"investorcellid";
 // 刷新数据
 - (void)loadNewDataArray
 {
+    [self.tableView setFooterHidden:YES];
     page = 1;
-    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(20)} success:^(id JSON) {
-        [self hideRefreshView];
+    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
         [self.allArray removeAllObjects];
         FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
         
@@ -72,10 +81,8 @@ static NSString *identifier = @"investorcellid";
         [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
         
         [self.tableView reloadData];
-        
-        if ([friendsM.count integerValue]<20) {
-            [self.tableView setFooterHidden:YES];
-        }else{
+        [self hideRefreshView];
+        if (friendsM.friends.count>=15) {
             [self.tableView setFooterHidden:NO];
         }
         page++;
@@ -87,19 +94,19 @@ static NSString *identifier = @"investorcellid";
 // 加载更多
 - (void)loadMoreDataArray
 {
-    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(20)} success:^(id JSON) {
+    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
         
-        [self hideRefreshView];
         FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
         [self.allArray addObjectsFromArray:friendsM.friends];
 
         [self.tableView reloadData];
-        NSArray *arr = JSON;
-        if (arr.count<20) {
+
+        if (friendsM.friends.count<15) {
             [self.tableView setFooterHidden:YES];
         }else{
             [self.tableView setFooterHidden:NO];
         }
+        [self hideRefreshView];
         page++;
     } fail:^(NSError *error) {
         [self hideRefreshView];
@@ -158,7 +165,7 @@ static NSString *identifier = @"investorcellid";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
     
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM];
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
     [self.navigationController pushViewController:userinfoVC animated:YES];
 }
 

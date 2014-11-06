@@ -220,6 +220,13 @@
     }else {
         [self.beginTextF resignFirstResponder];
         [self.endTextF resignFirstResponder];
+        IWVerifiedType vertype;
+        if (_wlUserLoadType) {
+            
+            vertype = IWVerifiedTypeCompany;
+        }else{
+            vertype = IWVerifiedTypeSchool;
+        }
         NameController *companyName = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
             if (_wlUserLoadType==0) {
                 [_schoolM setSchoolname:userInfo];
@@ -227,7 +234,7 @@
                 [_companyM setCompanyname:userInfo];
             }
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }];
+        } withType:vertype];
         if (_wlUserLoadType==0) {
             [companyName setUserInfoStr:_schoolM.schoolname];
         }else if (_wlUserLoadType ==1){

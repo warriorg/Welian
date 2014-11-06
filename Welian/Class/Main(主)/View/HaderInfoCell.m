@@ -8,6 +8,8 @@
 
 #import "HaderInfoCell.h"
 #import "UIImageView+WebCache.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 
 @interface HaderInfoCell()
 {
@@ -81,6 +83,8 @@
     _userM = userM;
     
     [_iconImage sd_setImageWithURL:[NSURL URLWithString:_userM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    [_iconImage setUserInteractionEnabled:YES];
+    [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
     
     CGSize timeSize = [userM.name sizeWithFont:[UIFont systemFontOfSize:17]];
     CGFloat labelx = CGRectGetMaxX(_iconImage.frame)+10;
@@ -103,7 +107,26 @@
         }
         [_infoLabel setFrame:CGRectMake(labelx, infLabelY, contentSize.width, contentSize.height)];
     }
-    
 }
+
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    // 1.封装图片数据
+    // 替换为中等尺寸图片
+    NSString *url = _userM.avatar;
+    MJPhoto *photo = [[MJPhoto alloc] init];
+    url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+    url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+    photo.url = [NSURL URLWithString:url]; // 图片路径
+    photo.srcImageView = _iconImage; // 来源于哪个UIImageView
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+    browser.photos = @[photo]; // 设置所有的图片
+    [browser show];
+    [browser.toolbar setHidden:YES];
+}
+
 
 @end

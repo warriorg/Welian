@@ -228,11 +228,11 @@ static NSString *fridcellid = @"fridcellid";
             NSDictionary *dic =self.allArray[indexPath.section-1];
             UILabel *detai =  (UILabel*)cell.accessoryView;
             if ([[dic objectForKey:@"n"] isEqualToString:@"1"]) {
-                [detai setTextColor:[UIColor greenColor]];
+                [detai setTextColor:[UIColor colorWithRed:60.0/255 green:200.0/255 blue:160.0/255 alpha:1]];
                 [detai setText:@"添加"];
 
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){
-                [detai setTextColor:[UIColor blueColor]];
+                [detai setTextColor:[UIColor colorWithRed:80.0/255 green:180.0/255 blue:240.0/255 alpha:1]];
                 [detai setText:@"邀请"];
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"3"]){
                 [detai setText:@"已添加"];
@@ -279,14 +279,13 @@ static NSString *fridcellid = @"fridcellid";
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){  // 短信验证
                 
                 [self showMessageView:_selecFriend.mobile title:@"邀请好友" body:@"我正在玩weLian，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
-                
             }
         }
         
     }else{
         
         UserInfoModel *mode = self.filterArray[indexPath.row];
-        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
         [self.navigationController pushViewController:userBasic animated:YES];
     }
 }
@@ -365,6 +364,7 @@ static NSString *fridcellid = @"fridcellid";
         }];
     }
 }
+
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
     [self.filterArray removeAllObjects];
@@ -372,7 +372,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-
+    [self.filterArray removeAllObjects];
     if ([self.filterArray count] == 0) {
         UITableView *tableView1 = self.searchDisplayController.searchResultsTableView;
         for( UIView *subview in tableView1.subviews ) {

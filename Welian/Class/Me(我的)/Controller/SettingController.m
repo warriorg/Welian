@@ -11,6 +11,7 @@
 #import "NameController.h"
 #import "WLTool.h"
 #import "NavViewController.h"
+#import "AboutViewController.h"
 
 @interface SettingController () <UIActionSheetDelegate>
 {
@@ -84,7 +85,7 @@
         NavViewController  *detailViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LogInStoryboardNav"];
         UserInfoModel *mode = [[UserInfoModel alloc] init];
         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-        
+        [UserDefaults removeObjectForKey:KFirstFID];
         [self.view.window setRootViewController:detailViewController];
     }
 }
@@ -134,13 +135,14 @@
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
-    if (indexPath.section==1&&indexPath.row==0) {
+    
+    if (indexPath.section==0&&indexPath.row==0) {
         [cell setAccessoryView:self.remindSwitch];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }else if (indexPath.section==1&&indexPath.row==1){
+    }else if (indexPath.section==0&&indexPath.row==1){
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [cell.detailTextLabel setText:mode.mobile];
-    }else if (indexPath.section==2&&indexPath.row==1){
+    }else if (indexPath.section==1&&indexPath.row==1){
         NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         [cell.detailTextLabel setText:localVersion];
     }
@@ -152,17 +154,21 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section==1&&indexPath.row==1) {
+    if (indexPath.section==0&&indexPath.row==1) {
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
             [mode setMobile:userInfo];
             [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }];
+        }withType:IWVerifiedTypeAddress];
         [phoneVC setUserInfoStr:mode.mobile];
         
         [self.navigationController pushViewController:phoneVC animated:YES];
-    }else if (indexPath.section==2&&indexPath.row==1){
+    }else if (indexPath.section==1&&indexPath.row==0){
+        AboutViewController *aboutVC = [[AboutViewController alloc] init];
+        [self.navigationController pushViewController:aboutVC animated:YES];
+        
+    }else if (indexPath.section==1&&indexPath.row==1){
         [WLTool updateVersions:^(NSDictionary *versionDic) {
             
             if ([[versionDic objectForKey:@"flag"] integerValue]==1) {

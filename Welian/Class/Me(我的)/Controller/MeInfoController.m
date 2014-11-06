@@ -45,8 +45,8 @@
     // 替换为中等尺寸图片
     NSString *url = mode.avatar;
     MJPhoto *photo = [[MJPhoto alloc] init];
-//    url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
-//    url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+    url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+    url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
     photo.url = [NSURL URLWithString:url]; // 图片路径
     photo.srcImageView = self.iconImage; // 来源于哪个UIImageView
     
@@ -204,7 +204,7 @@
                         
                     }];
                     
-                }];
+                } withType:IWVerifiedTypeName];
                 NameController *inffVC = (NameController*)controller;
                 [inffVC setUserInfoStr:mode.name];
             }else if (indexPath.row ==1){
@@ -218,7 +218,7 @@
                         
                     }];
                     
-                }];
+                } withType:IWVerifiedTypeCompany];
                 NameController *inffVC = (NameController*)controller;
                 [inffVC setUserInfoStr:mode.company];
             }else if (indexPath.row ==2){
@@ -233,7 +233,7 @@
                         
                     }];
                     
-                }];
+                } withType:IWVerifiedTypeJob];
                 NameController *inffVC = (NameController*)controller;
                 [inffVC setUserInfoStr:mode.position];
             }else if (indexPath.row ==3){
@@ -247,7 +247,7 @@
                         
                     }];
                     
-                }];
+                } withType:IWVerifiedTypeMailbox];
                 NameController *inffVC = (NameController*)controller;
                 [inffVC setUserInfoStr:mode.email];
             } else if (indexPath.row==4){
@@ -267,7 +267,7 @@
                     } fail:^(NSError *error) {
                         
                     }];
-                }];
+                } withType:IWVerifiedTypeAddress];
                 NameController *inffVC = (NameController*)controller;
                 [inffVC setUserInfoStr:mode.address];
             }
@@ -313,6 +313,8 @@
         [mode setAvatar:[JSON objectForKey:@"url"]];
         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         [self.iconImage setImage:image];
+
+        [UserDefaults setObject:avatarStr forKey:@"icon"];
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         

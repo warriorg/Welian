@@ -17,8 +17,9 @@
 #import "HomeController.h"
 #import "ListdaController.h"
 #import "CommonFriendsController.h"
+#import "WLDataDBTool.h"
 
-@interface UserInfoBasicVC () <UIAlertViewDelegate>
+@interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
     UserInfoModel *_userMode;
     NSMutableDictionary *_dataDicM;
@@ -29,12 +30,46 @@
 
 @property (nonatomic, strong) UIView *sendView;
 
+@property (nonatomic, strong) UIView *askView;
+
 @end
 
 static NSString *sameFriendcellid = @"sameFriendcellid";
 static NSString *staurCellid = @"staurCellid";
 
 @implementation UserInfoBasicVC
+
+- (UIView*)askView
+{
+    if (_askView==nil) {
+        _askView = [[UIView alloc] init];
+        [_askView setBounds:CGRectMake(0, 0, 0, 40)];
+        // 3.要在tableView底部添加一个按钮
+        UIButton *askbut = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [askbut setBackgroundImage:[UIImage resizedImage:@"greenbutton"] forState:UIControlStateNormal];
+        [askbut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [askbut setBackgroundImage:[UIImage resizedImage:@"greenbutton_pressed"] forState:UIControlStateHighlighted];
+        askbut.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
+        [askbut addTarget:self action:@selector(acceptFriendButClick) forControlEvents:UIControlEventTouchUpInside];
+        // 4.设置按钮文字
+        [askbut setTitle:@"通过验证" forState:UIControlStateNormal];
+        [_askView addSubview:askbut];
+    }
+    return _askView;
+}
+
+- (void)acceptFriendButClick
+{
+    if (self.acceptFriendBlock) {
+        self.acceptFriendBlock();
+    }
+}
+
+- (void)addSucceed
+{
+    [self.tableView setTableFooterView:self.sendView];
+}
 
 - (UIView*)sendView
 {
@@ -83,7 +118,6 @@ static NSString *staurCellid = @"staurCellid";
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
     [alert show];
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -97,8 +131,43 @@ static NSString *staurCellid = @"staurCellid";
     }
 }
 
+- (void)moreItmeClick:(UIBarButtonItem*)item
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] init];
+    [sheet setDelegate:self];
+    [sheet addButtonWithTitle:@"推荐给好友"];
+    if ([_userMode.friendship integerValue]==1) {
+        [sheet addButtonWithTitle:@"删除该好友"];
+        [sheet setDestructiveButtonIndex:1];
+    }
+    [sheet addButtonWithTitle:@"取消"];
+    [sheet setCancelButtonIndex:sheet.numberOfButtons-1];
+    [sheet showInView:self.view];
+}
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    DLog(@"adf");
+    if (buttonIndex==0) {  //推荐给好友
+        
+    }else if(buttonIndex==1){
+        if ([_userMode.friendship integerValue]==1) {  // 删除好友
+            [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
+                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
+                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
+                [self.navigationController popViewControllerAnimated:YES];
+                [WLHUDView showSuccessHUD:@"删除成功！"];
+            } fail:^(NSError *error) {
+                
+            }];
+            
+        }
+    }
+    
+}
+
+
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode isAsk:(BOOL)isask
 {
     _userMode = usermode;
     _dataDicM = [NSMutableDictionary dictionary];
@@ -107,9 +176,13 @@ static NSString *staurCellid = @"staurCellid";
         [self.tableView setSectionHeaderHeight:0.0];
         
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        if (!([mode.uid integerValue]==[_userMode.uid integerValue])) {
+            
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
+        }
         [WLHttpTool loadUserInfoParameterDic:@{@"uid":_userMode.uid} success:^(id JSON) {
             
-            [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(100)} success:^(id JSON) {
+            [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(1000)} success:^(id JSON) {
                 _sameFriendArry = [JSON objectForKey:@"samefriends"];
                 [self.tableView reloadData];
             } fail:^(NSError *error) {
@@ -118,17 +191,22 @@ static NSString *staurCellid = @"staurCellid";
 
             _dataDicM = JSON;
             _userMode = [_dataDicM objectForKey:@"profile"];
-            if ([_userMode.friendship integerValue]==-1) {
-                
-            }else if ([_userMode.friendship integerValue]==1) {
-                [self.tableView setTableFooterView:self.sendView];
-            }else {
-                [self.tableView setTableFooterView:self.addFriendView];
+            if (!isask) {
+                if ([_userMode.friendship integerValue]==-1) {
+                    
+                }else if ([_userMode.friendship integerValue]==1) {
+                    [self.tableView setTableFooterView:self.sendView];
+                }else {
+                    [self.tableView setTableFooterView:self.addFriendView];
+                }
             }
             [self.tableView reloadData];
         } fail:^(NSError *error) {
             
         }];
+        if (isask) {
+            [self.tableView setTableFooterView:self.askView];
+        }
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [self.tableView registerNib:[UINib nibWithNibName:@"SameFriendsCell" bundle:nil] forCellReuseIdentifier:sameFriendcellid];
         [self.tableView registerNib:[UINib nibWithNibName:@"StaurCell" bundle:nil] forCellReuseIdentifier:staurCellid];
@@ -160,9 +238,6 @@ static NSString *staurCellid = @"staurCellid";
     [self setTitle:@"个人信息"];
     
 }
-
-
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

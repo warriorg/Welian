@@ -27,6 +27,13 @@ single_implementation(ShareEngine)
 
 - (void)sendWeChatMessage:(NSString*)message andDescription:(NSString *)descriptStr WithUrl:(NSString*)appUrl andImage:(UIImage *)thumbImage WithScene:(WeiboType)weiboType;
 {
+    NSData * imageData = UIImageJPEGRepresentation(thumbImage,1);
+    NSInteger length = [imageData length]/1024;
+    if (length>32) {
+        NSData *thum = UIImageJPEGRepresentation(thumbImage, 32/length);
+        thumbImage = [UIImage imageWithData:thum];
+    }
+    
     if(weChat == weiboType)
     {
         [self sendAppContentWithMessage:message andDescription:descriptStr WithUrl:appUrl andImage:thumbImage WithScene:WXSceneSession];

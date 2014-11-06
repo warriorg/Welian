@@ -7,6 +7,7 @@
 //
 
 #import "CommentCellFrame.h"
+#import "MLEmojiLabel.h"
 
 @implementation CommentCellFrame
 
@@ -39,8 +40,14 @@
     // 3.内容
     CGFloat contentX = nameX;
     CGFloat contentY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth;
-    CGSize contentSize = [commentM.comment sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth-nameX, MAXFLOAT)];
-    _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height+5);
+    MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
+    [contLabel setText:commentM.comment];
+    contLabel.numberOfLines = 0;
+    contLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    contLabel.font = IWContentFont;
+    
+    CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:cellWidth - IWCellBorderWidth-contentX];
+    _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
     
     if (CGRectGetMaxY(_contentLabelF)<CGRectGetMaxY(_iconViewF)) {
         _cellHeight = CGRectGetMaxY(_iconViewF)+IWCellBorderWidth;

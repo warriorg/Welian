@@ -14,9 +14,10 @@
 #import "UserInfoBasicVC.h"
 
 static NSString *frnewCellid = @"frnewCellid";
-@interface NewFriendController ()
+@interface NewFriendController ()<UIAlertViewDelegate>
 {
     NSMutableArray *_dataArray;
+    NSIndexPath *_selectIndexPath;
 }
 @end
 
@@ -24,18 +25,30 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _dataArray = [NSMutableArray array];
     [self setTitle:@"好友请求"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:frnewCellid];
     [self.tableView setBackgroundColor:IWGlobalBg];
+    
     NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
     
-    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:NO];
-    
-   arrr =  [arrr sortedArrayUsingDescriptors:@[bookNameDes]];
-    
-    
     for (YTKKeyValueItem *aa in arrr) {
+        NSMutableDictionary *itaaDic = [NSMutableDictionary dictionaryWithDictionary:aa.itemObject];
+        [itaaDic setObject:@"1" forKey:@"isLook"];
+        
+        [[WLDataDBTool sharedService] putObject:itaaDic withId:aa.itemId intoTable:KNewFriendsTableName];
+        
+    }
+    
+    NSArray *paixuarrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
+    
+    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:YES];
+    
+   paixuarrr =  [paixuarrr sortedArrayUsingDescriptors:@[bookNameDes]];
+    
+    for (YTKKeyValueItem *aa in paixuarrr) {
+        
         NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
         [_dataArray addObject:statusM];
     }
@@ -53,8 +66,6 @@ static NSString *frnewCellid = @"frnewCellid";
 }
 
 #pragma mark - Table view data source
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     return _dataArray.count;
@@ -80,10 +91,17 @@ static NSString *frnewCellid = @"frnewCellid";
     NewFriendModel *friendM = _dataArray[indexPath.row];
     UserInfoModel *basMode = [[UserInfoModel alloc]init];
     [basMode setKeyValues:[friendM keyValues]];
-    [basMode setUid:friendM.fid];
-
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:basMode];
-    
+    BOOL isask = YES;
+    if ([friendM.isAgree isEqualToString:@"1"]||[friendM.type isEqualToString:@"friendCommand"]) {
+        isask = NO;
+    }
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:basMode isAsk:isask];
+    __weak NewFriendController *newFVC = self;
+    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
+    userInfoVC.acceptFriendBlock = ^(){
+        [newFVC jieshouFriend:indexPath];
+        [weakUserInfoVC addSucceed];
+    };
     [self.navigationController pushViewController:userInfoVC animated:YES];
     
 }
@@ -93,14 +111,19 @@ static NSString *frnewCellid = @"frnewCellid";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NewFriendModel *friendM = _dataArray[indexPath.row];
-    // Remove the row from data model
-    [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",friendM.fid] fromTable:KNewFriendsTableName];
-    
+    [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",friendM.uid] fromTable:KNewFriendsTableName];
     [_dataArray removeObject:friendM];
-    
     //移除tableView中的数据
-
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    
+    
+    if (![friendM.isAgree isEqualToString:@"1"]) {
+        [WLHttpTool deleteFriendRequestParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }
     
 }
 
@@ -112,67 +135,54 @@ static NSString *frnewCellid = @"frnewCellid";
     CGPoint currentTouchPosition = [touch locationInView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
     if (indexPath) {
-        NewFriendModel *friendM = _dataArray[indexPath.row];
-        [WLHttpTool addFriendParameterDic:@{@"fid":friendM.fid} success:^(id JSON) {
-            [friendM setIsAgree:@"1"];
+        _selectIndexPath = indexPath;
+        NewFriendModel *newFM = _dataArray[indexPath.row];
+        if ([newFM.type isEqualToString:@"friendRequest"]) {
+        [self jieshouFriend:indexPath];
+        }else if ([newFM.type isEqualToString:@"friendCommand"]){
             
-            [[WLDataDBTool sharedService] putObject:[friendM keyValues] withId:[NSString stringWithFormat:@"%@",friendM.fid] intoTable:KNewFriendsTableName];
-            [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFM.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
+            [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+            [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
+            [alert show];
+        }
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        
+        NewFriendModel *newFM = _dataArray[_selectIndexPath.row];
+        [WLHttpTool requestFriendParameterDic:@{@"fid":newFM.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
             
-            UserInfoModel *basMode = [[UserInfoModel alloc]init];
-            [basMode setKeyValues:[friendM keyValues]];
-            [basMode setUid:friendM.fid];
-            [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
-            [WLHUDView showSuccessHUD:@"添加成功！"];
         } fail:^(NSError *error) {
             
         }];
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+
+- (void)jieshouFriend:(NSIndexPath*)indexPath
+{
+    NewFriendModel *friendM = _dataArray[indexPath.row];
+    [WLHttpTool addFriendParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
+        [friendM setIsAgree:@"1"];
+        
+        [[WLDataDBTool sharedService] putObject:[friendM keyValues] withId:[NSString stringWithFormat:@"%@",friendM.uid] intoTable:KNewFriendsTableName];
+        [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        UserInfoModel *basMode = [[UserInfoModel alloc]init];
+        [basMode setKeyValues:[friendM keyValues]];
+        [basMode setUid:friendM.uid];
+        [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
+        [WLHUDView showSuccessHUD:@"添加成功！"];
+    } fail:^(NSError *error) {
+        
+    }];
+
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

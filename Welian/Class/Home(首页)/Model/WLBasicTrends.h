@@ -32,10 +32,15 @@ typedef enum {
 @property (nonatomic, strong) NSNumber *uid;
 
 /**  0 非，1 投资人，2 创业者，3 兼   */
-@property (nonatomic, assign) WLVerifiedType status;
+@property (nonatomic, assign) WLVerifiedType investorauth;
 
 /**  关系 0非，1好友，2好友的好友  */
 @property (nonatomic, assign) WLRelationType friendship;
 
+/**  公司   */
+@property (nonatomic, strong) NSString *company;
+
+/**  职务   */
+@property (nonatomic, strong) NSString *position;
 
 @end

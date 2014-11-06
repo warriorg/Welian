@@ -10,8 +10,14 @@
 
 @interface NewFriendModel : NSObject
 
+/**  是否已读   */
+@property (nonatomic, strong) NSString *isLook;
+
+/**  推送类型   */
+@property (nonatomic, strong) NSString *type;
+
 /**  uid   */
-@property (nonatomic, strong) NSNumber *fid;
+@property (nonatomic, strong) NSNumber *uid;
 
 /**  姓名   */
 @property (nonatomic, strong) NSString *name;
@@ -26,10 +32,10 @@
 @property (nonatomic, strong) NSString *avatar;
 
 /**  投资认证   */
-@property (nonatomic, strong) NSNumber *investorauth;
+//@property (nonatomic, strong) NSNumber *investorauth;
 
 /**  创业认证   */
-@property (nonatomic, strong) NSNumber *startupauth;
+//@property (nonatomic, strong) NSNumber *startupauth;
 
 /**  请求信息   */
 @property (nonatomic, strong) NSString *message;

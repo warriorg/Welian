@@ -21,14 +21,23 @@
     
     [_nameLabel setText:friendM.name];
     [_massgeLabel setText:friendM.message];
-    [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
-    [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-    if ([friendM.isAgree isEqualToString:@"0"]) {
-        [_accBut setHidden:NO];
-        [_accLabel setHidden:YES];
-    }else if([friendM.isAgree isEqualToString:@"1"]){
+    
+    if ([friendM.isAgree isEqualToString:@"1"]||[friendM.type isEqualToString:@"friendAdd"]) {
         [_accBut setHidden:YES];
         [_accLabel setHidden:NO];
+    }else {
+        if ([friendM.type isEqualToString:@"friendRequest"]) {
+            [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
+            [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
+        }else if([friendM.type isEqualToString:@"friendCommand"]){
+            
+            [_accBut setBackgroundImage:[UIImage resizedImage:@"yellowbutton"] forState:UIControlStateNormal];
+            [_accBut setBackgroundImage:[UIImage resizedImage:@"yellowbutton_pressed"] forState:UIControlStateHighlighted];
+            [_accBut setTitle:@"添加" forState:UIControlStateNormal];
+        }
+        
+        [_accBut setHidden:NO];
+        [_accLabel setHidden:YES];
     }
 }
 

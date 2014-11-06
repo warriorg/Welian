@@ -7,7 +7,10 @@
 //
 
 #import "BasicTableViewController.h"
+#import "InvestAuthModel.h"
 
 @interface InvestViewController : BasicTableViewController
+
+- (instancetype)initWithStyle:(UITableViewStyle)style andData:(InvestAuthModel*)invesM;
 
 @end

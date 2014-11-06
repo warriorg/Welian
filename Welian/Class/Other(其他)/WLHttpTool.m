@@ -198,7 +198,8 @@
 #pragma mark - 关键字搜索公司
 + (void)getCompanyParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"getCompany",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -210,7 +211,8 @@
 #pragma mark - 关键字搜索学校
 + (void)getSchoolParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"getSchool",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -220,7 +222,8 @@
 #pragma mark - 关键字搜索职位
 + (void)getJobParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+    NSDictionary *dic = @{@"type":@"getJob",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -244,14 +247,8 @@
     NSDictionary *dic = @{@"type":@"getInvestAuth",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
-        InvestAuthModel *investM = [[InvestAuthModel alloc] init];
-        if (datadic.allKeys) {
-            [investM setUrl:[datadic objectForKey:@"url"]];
-            [investM setAuth:[datadic objectForKey:@"auth"]];
-            [investM setItems:[datadic objectForKey:@"items"]];
-            investM.itemsArray = [[datadic objectForKey:@"items"] componentsSeparatedByString:@","];
-        }
-        succeBlock (investM);
+        
+        succeBlock (datadic);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:NO andDim:NO];
@@ -386,7 +383,7 @@
             [mutabArray addObject:mode];
         }
         
-        succeBlock ([self getChineseStringArr:mutabArray]);
+        succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:mutabArray]});
         
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
@@ -400,7 +397,7 @@
                 [mutabArray addObject:mode];
             }
             
-            succeBlock ([self getChineseStringArr:mutabArray]);
+            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
         } failure:^(NSError *error) {
             failurBlock(error);
         } withHUD:NO andDim:NO];
@@ -712,14 +709,28 @@
     NSDictionary *dic = @{@"type":@"loadFriendRequest",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
-        NSArray *json = JSON;
-
-        succeBlock(json);
+        succeBlock(JSON);
     } failure:^(NSError *error) {
         
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
+
+#pragma mark - 删除好友请求
++ (void)deleteFriendRequestParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteFriendRequest",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+
+
 
 #pragma mark - 确认添加好友
 + (void)addFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -734,6 +745,19 @@
     } withHUD:NO andDim:NO];
 }
 
+#pragma mark - 删除好友
++ (void)deleteFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteFriend",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
 #pragma mark - 取好友的好友（二度好友）
 + (void)loadUser2FriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
@@ -746,5 +770,20 @@
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
+
+#pragma mark - 取最新动态更新数量
++ (void)loadNewFeedCountParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    
+    NSDictionary *dic = @{@"type":@"loadNewFeedCount",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
 
 @end

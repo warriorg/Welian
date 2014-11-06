@@ -9,15 +9,16 @@
 #import "InvestViewController.h"
 #import "IconTableViewCell.h"
 #import "InvestListController.h"
-#import "InvestAuthModel.h"
 #import "InvestReqstModel.h"
 #import "WLHUDView.h"
 #import "AuthTypeView.h"
 
 @interface InvestViewController () <InvestListDelegate>
-@property (nonatomic, strong) NSArray *dataArray;
-@property (nonatomic, strong) InvestAuthModel *investM;
+{
+    InvestAuthModel *_investM;
+}
 
+@property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, strong) InvestReqstModel *investReqstM;
 
 @property (nonatomic, strong) AuthTypeView *authTypeV;
@@ -34,6 +35,16 @@ static NSString *idetfid = @"investcell";
     }
     return _authTypeV;
 }
+
+- (instancetype)initWithStyle:(UITableViewStyle)style andData:(InvestAuthModel*)invesM
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        _investM = invesM;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,7 +67,7 @@ static NSString *idetfid = @"investcell";
                 [self.authTypeV.titeLabel setText:@"认证失败"];
                 break;
             case -2:
-                [self.authTypeV.imageV setImage:[UIImage imageNamed:@"me_tip_yirenzheng"]];
+                [self.authTypeV.imageV setImage:[UIImage imageNamed:@"login_information"]];
                 [self.authTypeV.titeLabel setText:@"正在审核中，请耐心等待"];
                 break;
                 
@@ -66,10 +77,7 @@ static NSString *idetfid = @"investcell";
 
     }
     
-    
     self.investReqstM = [[InvestReqstModel alloc] init];
-    
-    [self addDatainfo];
     self.dataArray = @[@"名片",@"投资案例"];
 
     [self.tableView registerNib:[UINib nibWithNibName:@"IconTableViewCell" bundle:nil] forCellReuseIdentifier:idetfid];
@@ -81,9 +89,9 @@ static NSString *idetfid = @"investcell";
     if (self.investReqstM.photo.length) {
         [dicM setObject:self.investReqstM.photo forKey:@"photo"];
         [dicM setObject:@"jpg" forKey:@"photoname"];
-        if (self.investM.itemsArray.count) {
+        if (_investM.itemsArray.count) {
             
-            self.investReqstM.items = [self.investM.itemsArray componentsJoinedByString:@","];
+            self.investReqstM.items = [_investM.itemsArray componentsJoinedByString:@","];
             [dicM setObject:self.investReqstM.items forKey:@"items"];
         }
     }else{
@@ -92,24 +100,6 @@ static NSString *idetfid = @"investcell";
     }
     [WLHttpTool investAuthParameterDic:dicM success:^(id JSON) {
         [WLHUDView showSuccessHUD:@""];
-    } fail:^(NSError *error) {
-        
-    }];
-
-}
-
-- (void)addDatainfo
-{
-    [WLHttpTool getInvestAuthParameterDic:@{@"uid":@0} success:^(id JSON) {
-        self.investM = JSON;
-        if (self.investM.url.length) {
-            
-        }
-        if (self.investM.auth==InvestAuthTypeRefused) {
-            
-        }
-        DLog(@"%@",JSON);
-        [self.tableView reloadData];
     } fail:^(NSError *error) {
         
     }];
@@ -142,7 +132,7 @@ static NSString *idetfid = @"investcell";
         IconTableViewCell *iconCell = (IconTableViewCell*)cell;
         [iconCell.titleLabel setText:self.dataArray[indexPath.section]];
             
-        [iconCell.iconImage sd_setImageWithURL:[NSURL URLWithString:self.investM.url] placeholderImage:[UIImage imageNamed:@"me_touzirenrenzheng_card"] options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [iconCell.iconImage sd_setImageWithURL:[NSURL URLWithString:_investM.url] placeholderImage:[UIImage imageNamed:@"me_touzirenrenzheng_card"] options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             NSString *avatarStr = [UIImageJPEGRepresentation(image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             [self.investReqstM setPhoto:avatarStr];
         }];
@@ -165,7 +155,7 @@ static NSString *idetfid = @"investcell";
     }else if (indexPath.section ==1){
         InvestListController *investListVC = [[InvestListController alloc] init];
         [investListVC setDelegate:self];
-        [investListVC setInvestM:self.investM];
+        [investListVC setInvestM:_investM];
         [self.navigationController pushViewController:investListVC animated:YES];
     }
 }
@@ -188,7 +178,7 @@ static NSString *idetfid = @"investcell";
 
 - (void)investListVC:(InvestListController *)investListVC withItmesList:(NSArray *)itmesA
 {
-    [self.investM setItems:itmesA];
+    [_investM setItemsArray:itmesA];
 }
 
 

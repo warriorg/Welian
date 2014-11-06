@@ -56,13 +56,27 @@
                 sf.status = statusM;
                 [_dataArry addObject:sf];
             }
+            
+            [self loadFirstFID];
+            
         }
         
-//        [self.tableView setContentSize:CGSizeMake(0, [UIScreen mainScreen].bounds.size.height)];
         [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];
     }
     return self;
 }
+
+#pragma mark - 取第一条ID保存
+- (void)loadFirstFID
+{
+    // 1.第一条微博的ID
+    WLStatusFrame *f = [_dataArry firstObject];
+    NSString *start = [NSString stringWithFormat:@"%d",f.status.fid];
+    [UserDefaults setObject:start forKey:KFirstFID];
+    [UserDefaults synchronize];
+}
+
+
 
 - (void)beginPullDownRefreshing
 {
@@ -89,12 +103,17 @@
             sf.status = statusM;
             [_dataArry addObject:sf];
         }
+        if (!_uid) {
+            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+            [[self.navigationController tabBarItem]setBadgeValue:nil];
+            [self loadFirstFID];
+        }
         
         [self.tableView reloadData];
         
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
-        if (userStatus.data.count>0) {
+        if (userStatus.data.count>=KCellConut) {
             [self.tableView setFooterHidden:NO];
         }
     } fail:^(NSError *error) {
@@ -149,7 +168,6 @@
     }];
 
 }
-
 
 
 
@@ -257,7 +275,6 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
     if(indexPath)
     {
-        
         CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [commentInfo setStatusFrame:statusF];

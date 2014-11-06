@@ -19,13 +19,16 @@
 #import "OpenUDID.h"
 #import "WLTool.h"
 #import "LoginViewController.h"
-
+#import "NewFriendModel.h"
+#import "MJExtension.h"
+#import "WLDataDBTool.h"
 
 #define SUPPORT_IOS8 1
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     NSString *_upURL;
+    MainViewController *mainVC;
 }
 @end
 
@@ -64,8 +67,6 @@ BMKMapManager* _mapManager;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    application.applicationIconBadgeNumber =0;
-    
     /**
      *  设置状态栏颜色
      */
@@ -77,7 +78,7 @@ BMKMapManager* _mapManager;
         /**
          *  已登陆
          */
-        MainViewController *mainVC = [[MainViewController alloc] init];
+        mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
         [self.window setRootViewController:mainVC];
 
@@ -96,18 +97,33 @@ BMKMapManager* _mapManager;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    NSDictionary *apsDict = [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+    NSDictionary *userInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+    
+    NSDictionary *apsDict =  [userInfo objectForKey:@"aps"];
     NSString *alert = [apsDict objectForKey:@"alert"];
     if (alert) {
-        //        DLog(@"ADSF");
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
-                                                            message:alert
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        NSString *type = [userInfo objectForKey:@"type"];
+        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
+        [newfrendM setMessage:alert];
+        NSDictionary *newDic = [newfrendM keyValues];
+        
+        if ([type isEqualToString:@"friendAdd"]) {
+            [newfrendM setIsAgree:@"1"];
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        }
+        
+        [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
+        
+        //        DLog(@"ADSF");
+        
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
+//                                                            message:alert
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"OK"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
     }
     
     // 版本更新
@@ -122,8 +138,8 @@ BMKMapManager* _mapManager;
         }
         
     }];
-
-    
+//    [self loadFriendRequest];
+     application.applicationIconBadgeNumber =0;
     return YES;
 }
 
@@ -187,33 +203,52 @@ BMKMapManager* _mapManager;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSString *type = [userInfo objectForKey:@"type"];
+//    NSString *uid = [userInfo objectForKey:@"uid"];
+//    NSString *name = [userInfo objectForKey:@"name"];
+//    NSString *avatar = [userInfo objectForKey:@"avatar"];
+//    NSString *company = [userInfo objectForKey:@"company"];
+//    NSString *position = [userInfo objectForKey:@"position"];
+    
+    
+//     [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    
+    NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
+    [newfrendM setMessage:alert];
+    NSDictionary *newDic = [newfrendM keyValues];
+    if ([type isEqualToString:@"friendAdd"]) {
+        [newfrendM setIsAgree:@"1"];
+    }else{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+    }
+    
+    [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
+    
 //    NSString *badge = [[userInfo objectForKey:@"aps"] objectForKey:@"badge"];
 //    NSString *sound = [[userInfo objectForKey:@"aps"] objectForKey:@"sound"];
     
-    if (application.applicationState == UIApplicationStateActive) {
-        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
-                                                            message:alert
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }else{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"后台进来"
-                                                            message:alert
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
+//    if (application.applicationState == UIApplicationStateActive) {
+//        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+//        
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
+//                                                            message:alert
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"OK"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
+//    }else{
+//        
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"后台进来"
+//                                                            message:alert
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"OK"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
+//    }
 
     [application setApplicationIconBadgeNumber:0];
-    
+
     [BPush handleNotification:userInfo];
 }
 
@@ -252,23 +287,68 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
+    DLog(@"应用程序将要进入非活动状态，即将进入后台");
+    }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    DLog(@"如果应用程序支持后台运行，则应用程序已经进入后台运行");
+    
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    DLog(@"应用程序将要进入活动状态，即将进入前台运行");
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
+        NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
+        
+        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
+            NSNumber *count = [JSON objectForKey:@"count"];
+            if (![count integerValue]) return;
+            
+            [[mainVC.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
+            
+            [application setApplicationIconBadgeNumber:[count integerValue]];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+    [self loadFriendRequest];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
+- (void)loadFriendRequest
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if (!mode.sessionid) return;
+    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
+        
+        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
+        for (NSDictionary *dic  in jsonArray) {
+            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
+           YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
+            if (![item.itemObject objectForKey:@"isLook"]) {
+                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [mutablDic setObject:@"friendRequest" forKey:@"type"];
+                [mutablDic setObject:fid forKey:@"uid"];
+                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+            }
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
+
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    DLog(@"应用程序已进入前台，处于活动状态");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

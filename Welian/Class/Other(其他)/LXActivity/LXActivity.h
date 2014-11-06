@@ -16,7 +16,8 @@
 
 @interface LXActivity : UIView
 
-- (id)initWithTitle:(NSString *)title delegate:(id<LXActivityDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
+- (id)initWithDelegate:(id<LXActivityDelegate>)delegate ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
+
 - (void)showInView:(UIView *)view;
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
 
-@interface FriendCell : SWTableViewCell
+@interface FriendCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImagg;
 

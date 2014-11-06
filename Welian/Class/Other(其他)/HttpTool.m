@@ -87,7 +87,7 @@ static HttpTool *engine;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
-        [WLHUDView showErrorHUD:error.localizedDescription];
+//        [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }

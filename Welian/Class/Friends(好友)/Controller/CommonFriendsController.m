@@ -65,7 +65,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserInfoModel *modeIM = _friendsA[indexPath.row];
-    UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM];
+    UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
     [self.navigationController pushViewController:userinfVC animated:YES];
 }
 

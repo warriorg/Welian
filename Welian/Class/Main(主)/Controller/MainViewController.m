@@ -14,7 +14,7 @@
 #import "MyFriendsController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-
+#import "WLDataDBTool.h"
 
 @interface MainViewController () <UINavigationControllerDelegate>
 {
@@ -26,10 +26,38 @@
 
 @implementation MainViewController
 
+- (void)loadFriendRequest
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if (!mode.sessionid) return;
+    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
+        
+        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
+        for (NSDictionary *dic  in jsonArray) {
+            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
+            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
+            if (![item.itemObject objectForKey:@"isLook"]) {
+                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [mutablDic setObject:@"friendRequest" forKey:@"type"];
+                [mutablDic setObject:fid forKey:@"uid"];
+                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
+                
+                [self newFriendPuthMessga];
+            }
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
+    [self loadFriendRequest];
+    
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -52,7 +80,6 @@
 
     
     UIImageView *a = [[UIImageView alloc] init];
-    [a setHidden:YES];
     [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
         NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -109,6 +136,11 @@
     [[self.viewControllers[1] tabBarItem] setBadgeValue:@"1"];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [WLHUDView hiddenHud];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -122,7 +154,14 @@
     if (selectItem == homeItem && item == homeItem) {
         [homeVC.refreshControl beginRefreshing];
         [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];
-        [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
+        // 延迟2秒执行：
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            // code to be executed on the main queue after delay
+            [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
+        });
+
     }
 
         selectItem = item;

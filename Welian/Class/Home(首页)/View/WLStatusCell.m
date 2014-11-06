@@ -34,13 +34,17 @@
     UILabel *_nameLabel;
     /** 时间 */
     UILabel *_timeLabel;
+    // 投资认证图标
+    UIImageView *_investImage;
+    
+    UILabel *_jobLabel;
+    
     /** 来源 */
 //    UILabel *_sourceLabel;
     /** 内容 */
     MLEmojiLabel *_contentLabel;
     /** 配图 */
     WLPhotoListView *_photoListView;
-    
     /** 关系图标 */
     UIImageView *_mbView;
     
@@ -128,18 +132,27 @@
     _nameLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_nameLabel];
     
+    // 投资认证图标
+    _investImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_tou_big"]];
+    [self.contentView addSubview:_investImage];
+    
     // 3.时间
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = IWTimeFont;
-    _timeLabel.textColor = [UIColor darkGrayColor];
+    _timeLabel.textColor = [UIColor lightGrayColor];
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];
+    
+    _jobLabel = [[UILabel alloc] init];
+    _jobLabel.font = IWTimeFont;
+    _jobLabel.textColor = [UIColor lightGrayColor];
+    [_jobLabel setBackgroundColor:[UIColor clearColor]];
+    [self.contentView addSubview:_jobLabel];
 
     // 5.内容
     _contentLabel = [[MLEmojiLabel alloc]init];
     _contentLabel.numberOfLines = 0;
     _contentLabel.emojiDelegate = self;
-    _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _contentLabel.isNeedAtAndPoundSign = YES;
     _contentLabel.font = IWContentFont;
@@ -184,7 +197,7 @@
     [mode setAvatar:user.avatar];
     [mode setName:user.name];
     
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
     [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
 }
 
@@ -252,9 +265,10 @@
 {
     NSArray *shareButtonTitleArray = [[NSArray alloc] init];
     NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
-    shareButtonTitleArray = @[@"weLian动态",@"微信好友",@"微信朋友圈",@"新浪微博"];
-    shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle",@"home_repost_weibo"];
-    LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    shareButtonTitleArray = @[@"weLian动态",@"微信好友",@"微信朋友圈"];
+    shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle"];
+    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+
     [lxActivity showInView:self.window];
 }
 
@@ -262,7 +276,7 @@
 - (void)didClickOnImageIndex:(NSInteger)imageIndex
 {
     WLStatusM *statusM = self.statusFrame.status;
-    
+    NSString *name = [NSString stringWithFormat:@"%@的动态",statusM.user.name];
     if (imageIndex == 0) {  // weLian
         
         PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
@@ -272,10 +286,10 @@
         }];
         
     }else if (imageIndex == 1){  // 微信好友
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.user.name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChat];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChat];
         
     }else if (imageIndex == 2){  // 微信朋友圈
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.user.name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChatFriend];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_iconView.image WithScene:weChatFriend];
 
     }else if (imageIndex == 3){  // 新浪微博
         
@@ -307,6 +321,19 @@
     _nameLabel.frame = statusFrame.nameLabelF;
     _nameLabel.text = user.name;
 
+    // 认证图标
+    [_investImage setFrame:statusFrame.inversImageF];
+    
+    if (user.investorauth==WLVerifiedTypeInvestor) {
+        [_investImage setHidden:NO];
+    }else{
+        [_investImage setHidden:YES];
+    }
+    
+    [_jobLabel setFrame:statusFrame.jobLabelF];
+    [_jobLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
+    
+    
     _mbView.hidden = NO;
     _mbView.frame = statusFrame.mbViewF;
     
@@ -325,7 +352,6 @@
         }else if (user.friendship == WLRelationTypeFriendsFriend){
             [_mbView setImage:[UIImage imageNamed:@"home_label_friendsfriend"]];
         }
-
     }
     
     // 4.配图
@@ -379,6 +405,9 @@
     _contentLabel.customEmojiPlistName = @"expressionImage_custom";
     _contentLabel.frame = statusFrame.contentLabelF;
     _contentLabel.text = status.content;
+//    CGSize sizelabel = [_contentLabel preferredSizeWithMaxWidth:statusFrame.contentLabelF.size.width];
+//    [_contentLabel setBounds:CGRectMake(0, 0, sizelabel.width, sizelabel.height)];
+
     
     // 7.时间
     _timeLabel.text = status.created;
@@ -404,10 +433,9 @@
         [mode setName:status.name];
         [mode setAvatar:status.avatar];
         [mode setUid:status.uid];
-        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode];
+        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
         [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
     };
-    
     return exampleHandler;
 }
 

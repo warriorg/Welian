@@ -49,7 +49,6 @@ static NSString *noCommentCell = @"NoCommentCell";
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
         }
-
     }
     [_statusCell setStatusFrame:self.statusFrame];
     [_statusCell.moreBut setHidden:YES];
@@ -96,8 +95,16 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height, self.view.frame.size.width, 50) andSuperView:self.view withMessageBlock:^(NSString *comment) {
 
-        [WLHttpTool addFeedCommentParameterDic:@{@"fid":@(self.statusFrame.status.fid),@"touid":self.statusFrame.status.user.uid,@"comment":comment} success:^(id JSON) {
-           
+        NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
+        [reqstDicM setObject:@(self.statusFrame.status.fid) forKey:@"fid"];
+        [reqstDicM setObject:comment forKey:@"comment"];
+        
+        if (_selecCommFrame) {
+            [reqstDicM setObject:_selecCommFrame.commentM.user.uid forKey:@"touid"];
+        }
+        
+        [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
+
             self.statusFrame.status.commentcount++;
             [self loadNewCommentListData];
             [self backDataStatusFrame:NO];
@@ -106,6 +113,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         }];
         
     }];
+    
     [self.view addSubview:self.messageView];
     if (_beginEdit) {
         
@@ -150,7 +158,6 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)forwardCommtion
 {
-//    [self.messageView dismissKeyBoard];
     self.statusFrame.status.forwardcount++;
     self.statusCell;
 }
@@ -219,7 +226,6 @@ static NSString *noCommentCell = @"NoCommentCell";
 //
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
     return self.statusCell;
 }
 
@@ -255,6 +261,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         CommentCell *cell = [CommentCell cellWithTableView:tableView];
         // 传递的模型：文字数据 + 子控件frame数据
         cell.commentCellFrame = _dataArrayM[indexPath.row];
+        cell.commentVC = self;
         return cell;
 
     }else{

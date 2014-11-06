@@ -24,10 +24,14 @@
 //获取通讯录中的所有属性，并存储在 textView 中，已检验，切实可行。兼容io6 和 ios 7 ，而且ios7还没有权限确认提示。
 + (void)getAddressBookArray:(WLToolBlock)friendsAddressBlock
 {
+    if (![[UserDefaults objectForKey:KAddressBook] isEqualToString:@"1"]) {
+        [WLHUDView showCustomHUD:@"“设置 >隐私 >通讯录”打开" imageview:nil];
+        friendsAddressBlock(nil);
+        return;
+    }
     CFErrorRef error = nil;
     //新建一个通讯录类
     ABAddressBookRef addressBooks = ABAddressBookCreateWithOptions(nil, &error);
-    
     
     CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBooks);
     NSMutableArray* contactArray = [[NSMutableArray alloc]init];

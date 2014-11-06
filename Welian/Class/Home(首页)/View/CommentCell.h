@@ -24,5 +24,6 @@
  */
 @property (nonatomic, strong) CommentCellFrame *commentCellFrame;
 
+@property (nonatomic, weak) UIViewController *commentVC;
 
 @end

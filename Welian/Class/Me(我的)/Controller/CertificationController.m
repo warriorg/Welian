@@ -9,9 +9,14 @@
 #import "CertificationController.h"
 #import "PioneeringController.h"
 #import "InvestViewController.h"
+#import "InvestAuthModel.h"
+
 
 @interface CertificationController ()
-
+{
+    NSDictionary *_dataDic;
+    InvestAuthModel *_invesM;
+}
 @end
 
 @implementation CertificationController
@@ -21,7 +26,30 @@
 {
     [super viewDidLoad];
     self.dataArray = @[@"投资人认证"];
+    [self addDatainfo];
 }
+
+- (void)addDatainfo
+{
+    [WLHttpTool getInvestAuthParameterDic:@{@"uid":@0} success:^(id JSON) {
+        _dataDic = JSON;
+        _invesM = [[InvestAuthModel alloc] init];
+        if (_dataDic.allKeys) {
+            [_invesM setUrl:[_dataDic objectForKey:@"url"]];
+            [_invesM setAuth:[_dataDic objectForKey:@"auth"]];
+            [_invesM setItems:[_dataDic objectForKey:@"items"]];
+            _invesM.itemsArray = [[_dataDic objectForKey:@"items"] componentsSeparatedByString:@","];
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            [mode setInvestorauth:[_dataDic objectForKey:@"auth"]];
+            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+            [self.tableView reloadData];
+        }
+
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -33,7 +61,9 @@
     static NSString *cellid = @"cellid";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (nil == cell) {
+
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+        [cell.imageView setImage:[UIImage imageNamed:@"me_renzheng_tou"]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         UIButton *tayBut = [[UIButton alloc] initWithFrame:CGRectMake(220, 13, 70, 22)];
@@ -67,7 +97,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row==0) {
-        InvestViewController *invesVC = [[InvestViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        InvestViewController *invesVC = [[InvestViewController alloc] initWithStyle:UITableViewStyleGrouped andData:_invesM];
         [invesVC setTitle:self.dataArray[indexPath.row]];
         [self.navigationController pushViewController:invesVC animated:YES];
     }else if (indexPath.row==1){

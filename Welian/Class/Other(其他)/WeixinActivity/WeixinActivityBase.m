@@ -69,15 +69,12 @@
 {
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
     req.scene = scene;
-//    req.bText = NO;
+
     req.message = WXMediaMessage.message;
-//    if (scene == WXSceneSession) {
-//        req.message.title = [NSString stringWithFormat:NSLocalizedString(@"%@ Share",nil), NSLocalizedStringFromTable(@"CFBundleDisplayName", @"InfoPlist", nil)];
-//        req.message.description = title;
-//    } else {
+
     req.message.title = title;
     req.message.description = description;
-//    }
+
     [self setThumbImage:req];
     if (url) {
         WXWebpageObject *webObject = WXWebpageObject.object;

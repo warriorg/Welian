@@ -10,6 +10,7 @@
 #import "MLEmojiLabel.h"
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
+#import "UserInfoBasicVC.h"
 
 @interface CommentCell() <MLEmojiLabelDelegate>
 {
@@ -47,7 +48,6 @@
         // 1.添加原创微博的子控件
         [self setupOriginalSubviews];
         
-        
         // 4.设置背景
         [self setupBg];
     }
@@ -69,6 +69,8 @@
     // 1.头像
     _iconView = [[UIImageView alloc] init];
     [self.contentView addSubview:_iconView];
+    [_iconView setUserInteractionEnabled:YES];
+    [_iconView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
     
     // 2.昵称
     _nameLabel = [[UILabel alloc] init];
@@ -97,6 +99,21 @@
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_contentLabel];
 }
+
+- (void)tapiconImage:(UITapGestureRecognizer *)tap
+{
+    WLBasicTrends *user = _commentCellFrame.commentM.user;
+
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+
+    [mode setUid:user.uid];
+    [mode setAvatar:user.avatar];
+    [mode setName:user.name];
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+    [self.commentVC.navigationController pushViewController:userinfoVC animated:YES];
+}
+
+
 
 /**
  *  设置背景

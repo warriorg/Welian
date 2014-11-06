@@ -127,7 +127,9 @@ static NSString *meinfocellid = @"MeinfoCell";
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
             
-            controller = [[MyLocationController alloc] init];
+//            controller = [[MyLocationController alloc] init];
+            [WLHUDView showCustomHUD:@"即将上线，敬请期待！" imageview:nil];
+            return;
         }else if (indexPath.row ==1){
             controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
             [controller setTitle:@"我的动态"];

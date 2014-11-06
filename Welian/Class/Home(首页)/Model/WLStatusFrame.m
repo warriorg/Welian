@@ -10,7 +10,8 @@
 #import "WLStatusM.h"
 #import "WLBasicTrends.h"
 #import "WLPhotoListView.h"
-
+#import "NSString+val.h"
+#import "MLEmojiLabel.h"
 
 @implementation WLStatusFrame
 
@@ -39,12 +40,25 @@
     CGSize nameSize = [status.user.name sizeWithFont:IWNameFont];
     _nameLabelF = (CGRect){{nameX, nameY}, nameSize};
     
+    // 投资图标
+    CGFloat inverX = CGRectGetMaxX(_nameLabelF)+5;
+    CGFloat inverY = nameY;
+    _inversImageF = CGRectMake(inverX, inverY, 20, 20);
+    
     // 7.时间
-    CGFloat timeX = nameX;
-    CGFloat timeY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth * 0.5;
+    CGFloat timeX = CGRectGetMaxX(_nameLabelF)+5;
+    if (user.investorauth==WLVerifiedTypeInvestor) {
+        timeX = CGRectGetMaxX(_inversImageF)+5;
+    }
+    
+    CGFloat timeY = nameY+2;
     CGSize timeSize = [status.created sizeWithFont:IWTimeFont];
     _timeLabelF = (CGRect){{timeX, timeY}, timeSize};
     
+    
+    CGFloat jobX = nameX;
+    CGFloat jobY = CGRectGetMaxY(_nameLabelF);
+    _jobLabelF = CGRectMake(jobX, jobY, cellWidth-jobX-IWCellBorderWidth, 22);
     
     
     //    // 朋友关系图片
@@ -59,13 +73,20 @@
     CGFloat mbY = iconY;
     _mbViewF = CGRectMake(mbX, mbY, mbW, 17);
 
-    
+    // 3.内容
     CGFloat contentX = iconX;
     CGFloat contentY = CGRectGetMaxY(_iconViewF) + IWCellBorderWidth;
     if (status.content.length) {
-        // 3.内容
-        CGSize contentSize = [status.content sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
-        _contentLabelF = CGRectMake(contentX, contentY, contentSize.width, contentSize.height+5);
+        MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
+        [contLabel setText:status.content];
+        contLabel.numberOfLines = 0;
+        contLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        contLabel.font = IWContentFont;
+        
+        CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:cellWidth - 2 * IWCellBorderWidth];
+        
+//        CGSize contentSize = [status.content sizeWithFont:IWContentFont constrainedToSize:CGSizeMake(cellWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
+        _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
     }else {
         _contentLabelF = CGRectMake(contentX, CGRectGetMaxY(_iconViewF), 0, 0);
     }
@@ -97,10 +118,18 @@
         CGFloat retweetContentX = retweetNameX;
         CGFloat retweetContentY = CGRectGetMaxY(_retweetNameLabelF) + IWCellBorderWidth;
         
-        CGSize retweetContentSize = [retweetStatus.content sizeWithFont:IWRetweetContentFont constrainedToSize:CGSizeMake(retweetWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
+//        CGSize retweetContentSize = [retweetStatus.content sizeWithFont:IWRetweetContentFont constrainedToSize:CGSizeMake(retweetWidth - 2 * IWCellBorderWidth, MAXFLOAT)];
         if (retweetStatus.content.length) {
             
-            _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, retweetContentSize.width, retweetContentSize.height+5);
+            MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
+            [contLabel setText:retweetStatus.content];
+            contLabel.numberOfLines = 0;
+            contLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            contLabel.font = IWContentFont;
+            
+            CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:cellWidth - 2 * IWCellBorderWidth];
+            
+            _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, sizelabel.width, sizelabel.height+5);
         }else{
             _retweetContentLabelF = CGRectMake(retweetContentX, CGRectGetMaxY(_retweetNameLabelF), 0,0);
         }

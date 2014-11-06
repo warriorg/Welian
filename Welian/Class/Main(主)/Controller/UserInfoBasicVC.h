@@ -10,7 +10,10 @@
 
 @interface UserInfoBasicVC : BasicTableViewController
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel*)usermode;
+@property (nonatomic, copy) dispatch_block_t acceptFriendBlock;
 
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode isAsk:(BOOL)isask;
+
+- (void)addSucceed;
 
 @end

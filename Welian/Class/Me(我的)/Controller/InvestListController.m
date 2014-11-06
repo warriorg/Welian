@@ -58,6 +58,7 @@
 #pragma mark - 加载页面UI
 - (void)loadUIview
 {
+    [self setTitle:@"投资案例"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInvest)];
     
 }
@@ -76,7 +77,7 @@
         if ([_delegate respondsToSelector:@selector(investListVC:withItmesList:)]) {
             [_delegate investListVC:self withItmesList:self.dataArrayM];
         }
-    }];
+    } withType:IWVerifiedTypeAddress];
 
     [self.navigationController pushViewController:invesVC animated:YES];
 }

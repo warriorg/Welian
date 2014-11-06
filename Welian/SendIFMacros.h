@@ -42,7 +42,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 服务器地址
 #define WLHttpServer  @"http://122.226.44.105:8080"
 
-#define ww @"http://192.168.1.191:80"
+#define ww @"http://192.168.199.212:8080     http://122.226.44.105:8080"
 
 // 百度地图key
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
@@ -78,23 +78,24 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define UserIconImage @"UserIconImage"
 
+// 第一条微博fid
+#define KFirstFID @"firstFid"
+
+
 // 所有好友数据
 #define KAllFriendsData [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"allFriendsdata.plist"]
-
 
 //当前系统版本
 #define isIOS6 [[UIDevice currentDevice].systemVersion intValue]==6?1:0
 
 // 主色透明效果
-#define KBasesColor [UIColor colorWithRed:8/255.0 green:61/255.0 blue:84/255.0 alpha:0.8]
-
+#define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.98]
 
 // 2.获得RGB颜色
 #define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
 // 3.全局背景色
 #define IWGlobalBg IWColor(246, 246, 246)
-
 
 /*
  6.一条微博上的颜色

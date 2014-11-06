@@ -22,6 +22,7 @@
         // 1.初始化9个图片对象
         for (int i = 0; i<IWPhotoMaxCount; i++) {
             WLPhotoView *photoView = [[WLPhotoView alloc] init];
+            [photoView setContentScaleFactor:[[UIScreen mainScreen] scale]];
             [self addSubview:photoView];
         }
     }
@@ -48,7 +49,8 @@
         if (picCount == 1) {
             
             photoView.contentMode = UIViewContentModeScaleAspectFit;
-            photoView.clipsToBounds = NO;
+            photoView.clipsToBounds = YES;
+            [photoView setContentMode:UIViewContentModeCenter];
         } else { // 多张
             photoView.contentMode = UIViewContentModeScaleAspectFill;
             // 超出边界范围的内容都裁剪
@@ -127,7 +129,7 @@
 {
     // 1.只有1张图片
     if (count == 1) {
-        return CGSizeMake(290, 120+5);
+        return CGSizeMake(180, 120+5);
     }
 
     // 1.每一行的最大列数
