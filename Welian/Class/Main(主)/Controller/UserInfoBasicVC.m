@@ -155,6 +155,7 @@ static NSString *staurCellid = @"staurCellid";
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
                 [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
                 [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
+                [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];
                 [WLHUDView showSuccessHUD:@"删除成功！"];
             } fail:^(NSError *error) {

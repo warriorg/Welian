@@ -517,6 +517,7 @@
 		F57909CB19C2E3F2009DB1B2 /* tabbar_c@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909A419C2E3F2009DB1B2 /* tabbar_c@2x.png */; };
 		F57909CC19C2E3F2009DB1B2 /* tabbar_c_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909A519C2E3F2009DB1B2 /* tabbar_c_selected@2x.png */; };
 		F57909EE19C2E9C3009DB1B2 /* PublishStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57909ED19C2E9C3009DB1B2 /* PublishStatusController.m */; };
+		F57D8F791A0CC5F3009195FF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F57D8F761A0CC5F3009195FF /* libMobClickLibrary.a */; };
 		F57DD47A19FBC432002EF1EF /* ListdaController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57DD47919FBC432002EF1EF /* ListdaController.m */; };
 		F57DD47E19FBE6DF002EF1EF /* NoCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F57DD47C19FBE6DF002EF1EF /* NoCommentCell.m */; };
 		F57DD47F19FBE6DF002EF1EF /* NoCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F57DD47D19FBE6DF002EF1EF /* NoCommentCell.xib */; };
@@ -557,7 +558,6 @@
 		F5B123B219E7CE8F002B9E58 /* WeixinTimelineActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B123A519E7CE8F002B9E58 /* WeixinTimelineActivity.m */; };
 		F5B123E719E7EEBC002B9E58 /* AuthTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B123E619E7EEBC002B9E58 /* AuthTypeView.m */; };
 		F5B123E919E7EECC002B9E58 /* AuthTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B123E819E7EECC002B9E58 /* AuthTypeView.xib */; };
-		F5B123EB19E7F2C0002B9E58 /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B123EA19E7F2C0002B9E58 /* Empty.xib */; };
 		F5B123EE19E81875002B9E58 /* LocationprovinceController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B123ED19E81875002B9E58 /* LocationprovinceController.m */; };
 		F5BA193919C16D4D005F91BE /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193819C16D4D005F91BE /* UserInfoController.m */; };
 		F5BA193C19C17394005F91BE /* InfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BA193B19C17394005F91BE /* InfoHeaderView.m */; };
@@ -1371,6 +1371,9 @@
 		F57909A519C2E3F2009DB1B2 /* tabbar_c_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_c_selected@2x.png"; sourceTree = "<group>"; };
 		F57909EC19C2E9C3009DB1B2 /* PublishStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishStatusController.h; sourceTree = "<group>"; };
 		F57909ED19C2E9C3009DB1B2 /* PublishStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishStatusController.m; sourceTree = "<group>"; };
+		F57D8F761A0CC5F3009195FF /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		F57D8F771A0CC5F3009195FF /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		F57D8F781A0CC5F3009195FF /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		F57DD47819FBC432002EF1EF /* ListdaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListdaController.h; sourceTree = "<group>"; };
 		F57DD47919FBC432002EF1EF /* ListdaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListdaController.m; sourceTree = "<group>"; };
 		F57DD47B19FBE6DF002EF1EF /* NoCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoCommentCell.h; sourceTree = "<group>"; };
@@ -1427,7 +1430,6 @@
 		F5B123E519E7EEBC002B9E58 /* AuthTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthTypeView.h; sourceTree = "<group>"; };
 		F5B123E619E7EEBC002B9E58 /* AuthTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthTypeView.m; sourceTree = "<group>"; };
 		F5B123E819E7EECC002B9E58 /* AuthTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthTypeView.xib; sourceTree = "<group>"; };
-		F5B123EA19E7F2C0002B9E58 /* Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
 		F5B123EC19E81875002B9E58 /* LocationprovinceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationprovinceController.h; sourceTree = "<group>"; };
 		F5B123ED19E81875002B9E58 /* LocationprovinceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationprovinceController.m; sourceTree = "<group>"; };
 		F5BA193719C16D4D005F91BE /* UserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoController.h; sourceTree = "<group>"; };
@@ -1725,6 +1727,7 @@
 				F5CE85FE19BFF2AB00A9D14C /* Foundation.framework in Frameworks */,
 				F5CE860019BFF2AB00A9D14C /* CoreGraphics.framework in Frameworks */,
 				F532FD4F19C952E9005B887D /* AddressBookUI.framework in Frameworks */,
+				F57D8F791A0CC5F3009195FF /* libMobClickLibrary.a in Frameworks */,
 				F5B123AE19E7CE8F002B9E58 /* libWeChatSDK.a in Frameworks */,
 				F532FD4D19C952E3005B887D /* AddressBook.framework in Frameworks */,
 				F5CE868919BFF4BC00A9D14C /* Security.framework in Frameworks */,
@@ -2483,6 +2486,16 @@
 			path = "首页images";
 			sourceTree = "<group>";
 		};
+		F57D8F751A0CC5F3009195FF /* UMAnalytics_Sdk_3.1.8 */ = {
+			isa = PBXGroup;
+			children = (
+				F57D8F761A0CC5F3009195FF /* libMobClickLibrary.a */,
+				F57D8F771A0CC5F3009195FF /* MobClick.h */,
+				F57D8F781A0CC5F3009195FF /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics_Sdk_3.1.8;
+			sourceTree = "<group>";
+		};
 		F59C15821A0B854D00093BD8 /* iconx6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3118,7 +3131,6 @@
 				F5B123E519E7EEBC002B9E58 /* AuthTypeView.h */,
 				F5B123E619E7EEBC002B9E58 /* AuthTypeView.m */,
 				F5B123E819E7EECC002B9E58 /* AuthTypeView.xib */,
-				F5B123EA19E7F2C0002B9E58 /* Empty.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3126,6 +3138,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				F57D8F751A0CC5F3009195FF /* UMAnalytics_Sdk_3.1.8 */,
 				F5BCDEB01A03BF7200183F64 /* HBVLinkedTextView */,
 				F5BCDE6B1A038B2000183F64 /* BaiduMap_IOSSDK_v2.5.0_Lib */,
 				F5C2D12419FA85FB000610A1 /* LibBPush */,
@@ -3556,7 +3569,6 @@
 				F57909B219C2E3F2009DB1B2 /* home_picture_add_dropdown@2x.png in Resources */,
 				F5E4BB7219FFFD6E007BEBD2 /* login_register_btn_pre@2x.png in Resources */,
 				F57909B019C2E3F2009DB1B2 /* home_new_upload_picture_enlarge_delete_bg@2x.png in Resources */,
-				F5B123EB19E7F2C0002B9E58 /* Empty.xib in Resources */,
 				F51FBB8E19EFEE6C00D85D7F /* me_set_switch_off@2x.png in Resources */,
 				F51FB7D919EE2A9000D85D7F /* sns_icon_3.png in Resources */,
 				F5CE869C19BFF6C100A9D14C /* LogInController.xib in Resources */,
@@ -4263,6 +4275,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareEngine/TCWeiBoSDK/SSO",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/LibBPush",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = weLian;
@@ -4291,6 +4304,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareEngine/TCWeiBoSDK/SSO",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/LibBPush",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 				);
 				PRODUCT_NAME = weLian;
 				PROVISIONING_PROFILE = "3234f3bf-9300-4e31-99f2-09ac85617234";

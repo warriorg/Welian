@@ -9,6 +9,12 @@
 #import "HttpTool.h"
 #import "WLHUDView.h"
 
+@interface HttpTool()
+{
+    NSDictionary *_seleDic;
+}
+@end
+
 @implementation HttpTool
 
 static HttpTool *engine;
@@ -81,7 +87,14 @@ static HttpTool *engine;
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
           [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+            _seleDic = parameterDic;
+//            [self againConnectParameters:parameterDic successBlock:^(id JSON) {
+//                success(JSON);
+//            } failure:^(NSError *error) {
+//                failureBlock(error);
+//            } withHUD:isHUD andDim:isDim];
+            
+//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else{
             [WLHUDView hiddenHud];
         }
@@ -91,6 +104,63 @@ static HttpTool *engine;
         failureBlock(error);
     }];
 }
+
+
+- (void)againConnectParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    NSMutableDictionary *loginDicM = [NSMutableDictionary dictionary];
+    [loginDicM setObject:mode.mobile forKey:@"mobile"];
+    [loginDicM setObject:mode.checkcode forKey:@"password"];
+    [loginDicM setObject:@"ios" forKey:@"platform"];
+    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+        
+        [loginDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        [loginDicM setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
+    }
+
+    NSDictionary *loginDic = @{@"type":@"login",@"data":loginDicM};
+    NSString *parameterStr = [self dicTostring:loginDic];
+    NSDictionary *parmetDic = @{@"json":parameterStr};
+    
+    [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
+        DLog(@"%@",dic);
+        if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
+            [WLHUDView hiddenHud];
+            NSDictionary *dataDic = [dic objectForKey:@"data"];
+            if (dataDic) {
+                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                [mode setSessionid:[dataDic objectForKey:@"sessionid"]];
+                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                
+                [self reqestWithSessIDParameters:_seleDic successBlock:^(id JSON) {
+                    if (JSON) { // 成功
+                        [WLHUDView hiddenHud];
+                        success(JSON);
+                        
+                    }else{ // 失败
+                        [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+                    }
+                    
+                    
+                } failure:^(NSError *error) {
+                    failureBlock(error);
+                } withHUD:isHUD andDim:isDim];
+                
+            }
+            
+        }else { // 失败
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+        }
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 
 - (void)formatUrlAndParameters:(NSDictionary*)parameters{
     //格式化url和参数
@@ -104,7 +174,6 @@ static HttpTool *engine;
     NSString *api = [NSString stringWithFormat:@"====\n%@/%@?%@\n=======", WLHttpServer,@"server/index", paraString];
     DLog(@"api:%@", api);
 }
-
 
 - (NSString*)dicTostring:(NSDictionary*)parameterDic
 {

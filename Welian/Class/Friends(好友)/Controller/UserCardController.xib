@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -96,6 +96,22 @@
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="290" id="0q7-SE-YEL"/>
+                                <constraint firstAttribute="height" constant="401" id="Zjr-R8-Vy5"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="0q7-SE-YEL"/>
+                                    <exclude reference="Zjr-R8-Vy5"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="0q7-SE-YEL"/>
+                                    <include reference="Zjr-R8-Vy5"/>
+                                </mask>
+                            </variation>
                         </view>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aV0-ZC-LW9">
                             <rect key="frame" x="15" y="438" width="290" height="30"/>
@@ -107,10 +123,55 @@
                             </connections>
                         </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="kmS-Nt-AVs" firstAttribute="top" secondItem="QoK-he-ayh" secondAttribute="top" constant="20" id="Jo6-hs-ByS"/>
+                        <constraint firstAttribute="centerX" secondItem="kmS-Nt-AVs" secondAttribute="centerX" id="lIG-dV-zWS"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Jo6-hs-ByS"/>
+                            <exclude reference="lIG-dV-zWS"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Jo6-hs-ByS"/>
+                            <include reference="lIG-dV-zWS"/>
+                        </mask>
+                    </variation>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="QoK-he-ayh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5Jp-vT-vK6"/>
+                <constraint firstItem="QoK-he-ayh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Cr-ge-gcK"/>
+                <constraint firstAttribute="bottom" secondItem="QoK-he-ayh" secondAttribute="bottom" id="Ayf-o6-DyZ"/>
+                <constraint firstAttribute="trailing" secondItem="QoK-he-ayh" secondAttribute="trailing" id="gFZ-0u-oKB"/>
+                <constraint firstAttribute="centerX" secondItem="QoK-he-ayh" secondAttribute="centerX" id="oQJ-0l-t3Q"/>
+                <constraint firstAttribute="centerY" secondItem="QoK-he-ayh" secondAttribute="centerY" id="rFT-hV-p6V"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="5Jp-vT-vK6"/>
+                    <exclude reference="8Cr-ge-gcK"/>
+                    <exclude reference="Ayf-o6-DyZ"/>
+                    <exclude reference="gFZ-0u-oKB"/>
+                    <exclude reference="oQJ-0l-t3Q"/>
+                    <exclude reference="rFT-hV-p6V"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="5Jp-vT-vK6"/>
+                    <include reference="8Cr-ge-gcK"/>
+                    <include reference="Ayf-o6-DyZ"/>
+                    <include reference="gFZ-0u-oKB"/>
+                    <include reference="oQJ-0l-t3Q"/>
+                    <include reference="rFT-hV-p6V"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="171" y="318"/>
         </view>
     </objects>
     <resources>
@@ -121,9 +182,4 @@
         <image name="me_mycard_lacation.png" width="20" height="20"/>
         <image name="me_mycard_phonelogo.png" width="20" height="20"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

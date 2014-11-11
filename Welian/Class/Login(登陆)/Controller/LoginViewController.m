@@ -63,7 +63,7 @@
     [self.view addSubview:self.signInButton];
     
     self.logInButtoon = [[UIButton alloc] initWithFrame:CGRectMake(butX, butY+30+35, butW, butH)];
-    [self.logInButtoon setTitle:@"登陆" forState:UIControlStateNormal];
+    [self.logInButtoon setTitle:@"登录" forState:UIControlStateNormal];
     [self.logInButtoon setBackgroundImage:[UIImage resizedImage:@"login_btn.png"] forState:UIControlStateNormal];
     [self.logInButtoon setBackgroundImage:[UIImage resizedImage:@"login_btn_pre"] forState:UIControlStateHighlighted];
     [self.logInButtoon addTarget:self action:@selector(logInButtoonClick:) forControlEvents:UIControlEventTouchUpInside];

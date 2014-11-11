@@ -73,7 +73,7 @@
 #pragma mark - 退出登陆
 - (void)exitLoging:(UIButton*)but
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确定要退出登陆？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登陆" otherButtonTitles:nil, nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确定要退出登录？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil, nil];
     [sheet showInView:self.view];
 }
 

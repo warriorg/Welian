@@ -51,11 +51,36 @@
     }];
 }
 
+- (void)loadNewStustupdata
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
+        NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
+        
+        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
+            NSNumber *count = [JSON objectForKey:@"count"];
+            if (![count integerValue]) return;
+            
+                [[self.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
+            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[count integerValue]];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
     [self loadFriendRequest];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);

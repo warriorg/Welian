@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -31,7 +31,7 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="weLian" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lEM-vI-Aix">
                         <rect key="frame" x="70" y="32" width="200" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="200" id="BT2-KU-omj"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="BT2-KU-omj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +39,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="lEM-vI-Aix" secondAttribute="trailing" constant="17" id="63g-rR-2RN"/>
                     <constraint firstItem="inm-M0-G6o" firstAttribute="top" secondItem="HUc-qa-3Xs" secondAttribute="top" constant="12" id="75g-ax-GdD"/>
                     <constraint firstItem="inm-M0-G6o" firstAttribute="leading" secondItem="hT4-F7-iZ1" secondAttribute="trailing" constant="15" id="8J0-tD-tzb"/>
                     <constraint firstItem="lEM-vI-Aix" firstAttribute="top" secondItem="HUc-qa-3Xs" secondAttribute="top" constant="32" id="AMc-UA-N9l"/>

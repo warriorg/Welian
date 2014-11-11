@@ -27,11 +27,13 @@
         _search = [[UISearchBar alloc] initWithFrame:CGRectZero];
         [_search setText:self.userInfoStr];
         [_search setDelegate:self];
-        [_search setFrame:CGRectMake(-20, 0, self.view.bounds.size.width+20, 44)];
+        [_search setFrame:CGRectMake(-20, 0, self.view.bounds.size.width+20, 45)];
+        [_search setSearchBarStyle:UISearchBarStyleProminent];
         [_search setBackgroundColor:[UIColor whiteColor]];
         [_search setTintColor:[UIColor whiteColor]];
         [_search setBarTintColor:[UIColor whiteColor]];
         UITextField *adaf = [[[[_search subviews] objectAtIndex:0] subviews] objectAtIndex:1];
+        
         [adaf setFont:[UIFont systemFontOfSize:17]];
         [adaf.leftView setHidden:YES];
         [adaf setTextAlignment:NSTextAlignmentLeft];
@@ -102,6 +104,7 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         [_tableView setDataSource:self];
         [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+//        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_tableView setDelegate:self];
     }
     return _tableView;
@@ -204,6 +207,7 @@
     return 2;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section==0) {
@@ -216,7 +220,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 47.0;
+    return 44.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

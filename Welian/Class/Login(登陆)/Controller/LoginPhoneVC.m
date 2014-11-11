@@ -70,7 +70,7 @@
 
 - (void)loadUIView
 {
-    [self setTitle:@"登陆"];
+    [self setTitle:@"登录"];
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(loginPhonePWD:)];
     
@@ -82,6 +82,7 @@
     [self.phoneTextField setDelegate:self];
     [self.phoneTextField setBackgroundColor:[UIColor whiteColor]];
     [self.phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
+    [self.phoneTextField setReturnKeyType:UIReturnKeyNext];
     [self.view addSubview:self.phoneTextField];
     
     self.pwdTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.phoneTextField.frame)+1, size.width, 44)];
@@ -90,6 +91,7 @@
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
     [self.pwdTextField setSecureTextEntry:YES];
     [self.pwdTextField setDelegate:self];
+    [self.pwdTextField setReturnKeyType:UIReturnKeyGo];
     [self.view addSubview:self.pwdTextField];
     
     CGFloat butW = 75;
@@ -99,8 +101,6 @@
     [forgetBut setTitle:@"忘记密码?" forState:UIControlStateNormal];
     [forgetBut addTarget:self action:@selector(forgetPwd:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:forgetBut];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

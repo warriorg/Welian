@@ -46,7 +46,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 百度地图key
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
+// 友盟Appkey
+#define UMENG_APPKEY @"545c8c97fd98c59807006c67"
 
+#define KupdataMyAllFriends @"KupdataMyAllFriends"
+
+// 首页动态更新个数通知
+#define KNEWStustUpdate  @"KNEWStustUpdate"
 
 #define KNewFriendNotif @"KNewFriendNotif"
 

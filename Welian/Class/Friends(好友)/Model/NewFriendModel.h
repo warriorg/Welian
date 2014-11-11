@@ -10,6 +10,9 @@
 
 @interface NewFriendModel : NSObject
 
+/**  添加时间   */
+@property (nonatomic, strong) NSString *created;
+
 /**  是否已读   */
 @property (nonatomic, strong) NSString *isLook;
 

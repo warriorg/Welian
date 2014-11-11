@@ -32,26 +32,19 @@ static NSString *frnewCellid = @"frnewCellid";
     [self.tableView setBackgroundColor:IWGlobalBg];
     
     NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
-    
+    NSMutableArray *aaaYT = [NSMutableArray array];
     for (YTKKeyValueItem *aa in arrr) {
         NSMutableDictionary *itaaDic = [NSMutableDictionary dictionaryWithDictionary:aa.itemObject];
         [itaaDic setObject:@"1" forKey:@"isLook"];
-        
         [[WLDataDBTool sharedService] putObject:itaaDic withId:aa.itemId intoTable:KNewFriendsTableName];
         
-    }
-    
-    NSArray *paixuarrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
-    
-    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:YES];
-    
-   paixuarrr =  [paixuarrr sortedArrayUsingDescriptors:@[bookNameDes]];
-    
-    for (YTKKeyValueItem *aa in paixuarrr) {
-        
         NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
-        [_dataArray addObject:statusM];
+        [aaaYT addObject:statusM];
     }
+    
+    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+    
+    _dataArray =  [NSMutableArray arrayWithArray:[aaaYT sortedArrayUsingDescriptors:@[bookNameDes]]];
     [self.tableView reloadData];
 }
 
@@ -179,6 +172,9 @@ static NSString *frnewCellid = @"frnewCellid";
         [basMode setKeyValues:[friendM keyValues]];
         [basMode setUid:friendM.uid];
         [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        
         [WLHUDView showSuccessHUD:@"添加成功！"];
     } fail:^(NSError *error) {
         

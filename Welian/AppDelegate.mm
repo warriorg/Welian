@@ -22,6 +22,7 @@
 #import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "WLDataDBTool.h"
+#import "MobClick.h"
 
 #define SUPPORT_IOS8 1
 
@@ -41,6 +42,14 @@ BMKMapManager* _mapManager;
     // 百度推送
     [BPush setupChannel:launchOptions];
     [BPush setDelegate:self];
+    
+    // 友盟统计
+    [self umengTrack];
+    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    
+    if ([localVersion isEqualToString:@"1.0.1"]) {
+        [[WLDataDBTool sharedService] createTableWithName:KNewFriendsTableName];
+    }
     
 #if SUPPORT_IOS8
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
@@ -115,15 +124,6 @@ BMKMapManager* _mapManager;
         }
         
         [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-        
-        //        DLog(@"ADSF");
-        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
-//                                                            message:alert
-//                                                           delegate:self
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
     }
     
     // 版本更新
@@ -143,6 +143,30 @@ BMKMapManager* _mapManager;
     return YES;
 }
 
+#pragma mark - 友盟统计
+- (void)umengTrack {
+    
+    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
+//    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+    //
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:@"www.welian.com"];
+    //   reportPolicy为枚举类型,可以为 REALTIME, BATCH,SENDDAILY,SENDWIFIONLY几种
+    //   channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
+    
+    
+    //      [MobClick checkUpdate];   //自动更新检查, 如果需要自定义更新请使用下面的方法,需要接收一个(NSDictionary *)appInfo的参数
+    //    [MobClick checkUpdateWithDelegate:self selector:@selector(updateMethod:)];
+    
+//    [MobClick updateOnlineConfig];  //在线参数配置
+//    
+//    //    1.6.8之前的初始化方法
+//    //    [MobClick setDelegate:self reportPolicy:REALTIME];  //建议使用新方法
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+}
+
+
+#pragma mark - 版本更新跳转
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
@@ -168,7 +192,6 @@ BMKMapManager* _mapManager;
                 DLog(@"百度推送 ----------------加载成功");
     }
 }
-
 
 // 必须，如果正确调用了setDelegate，在bindChannel之后，结果在这个回调中返回。
 // 若绑定失败，请进行重新绑定，确保至少绑定成功一次
@@ -210,8 +233,6 @@ BMKMapManager* _mapManager;
 //    NSString *company = [userInfo objectForKey:@"company"];
 //    NSString *position = [userInfo objectForKey:@"position"];
     
-    
-//     [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     
     NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
@@ -224,28 +245,6 @@ BMKMapManager* _mapManager;
     }
     
     [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-    
-//    NSString *badge = [[userInfo objectForKey:@"aps"] objectForKey:@"badge"];
-//    NSString *sound = [[userInfo objectForKey:@"aps"] objectForKey:@"sound"];
-    
-//    if (application.applicationState == UIApplicationStateActive) {
-//        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
-//        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"好友请求"
-//                                                            message:alert
-//                                                           delegate:self
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
-//    }else{
-//        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"后台进来"
-//                                                            message:alert
-//                                                           delegate:self
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
-//    }
 
     [application setApplicationIconBadgeNumber:0];
 
@@ -300,22 +299,8 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:KNEWStustUpdate object:self];
     DLog(@"应用程序将要进入活动状态，即将进入前台运行");
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
-        NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
-        
-        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
-            NSNumber *count = [JSON objectForKey:@"count"];
-            if (![count integerValue]) return;
-            
-            [[mainVC.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
-            
-            [application setApplicationIconBadgeNumber:[count integerValue]];
-        } fail:^(NSError *error) {
-            
-        }];
-    }
     [self loadFriendRequest];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }

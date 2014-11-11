@@ -44,13 +44,15 @@ static NSString *fridcellid = @"fridcellid";
 {
     [super viewWillAppear:animated];
     
-    [self loadMyAllFriends];
+//    [self loadMyAllFriends];
 //    [self loadNewFriendsList];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadMyAllFriends];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         self.allArray = [JSON objectForKey:@"array"];
         _count= [[JSON objectForKey:@"count"] integerValue];
