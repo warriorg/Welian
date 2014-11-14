@@ -21,6 +21,10 @@
 #import "CommentInfoController.h"
 #import "WLDataDBTool.h"
 #import "MJExtension.h"
+#import "HomeView.h"
+#import "MessageController.h"
+#import "UIBarButtonItem+Badge.h"
+
 
 @interface HomeController () <UIActionSheetDelegate,CommentInfoVCDelegate>
 {
@@ -30,11 +34,22 @@
     NSNumber *_uid;
     NSIndexPath *_selectIndexPath;
 }
+
+@property (nonatomic, strong) HomeView *homeView;
+
 @end
 
 @implementation HomeController
 
-
+- (HomeView *)homeView
+{
+    if (_homeView == nil) {
+        _homeView = [[HomeView alloc] initWithFrame:self.tableView.frame];
+        [_homeView setHomeController:self];
+        [self.view addSubview:_homeView];
+    }
+    return _homeView;
+}
 
 - (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid
 {
@@ -105,8 +120,12 @@
         }
         if (!_uid) {
             [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-            [[self.navigationController tabBarItem]setBadgeValue:nil];
             [self loadFirstFID];
+            if (!_dataArry.count) {
+                [self.homeView setHidden:NO];
+            }else{
+                [self.homeView setHidden:YES];
+            }
         }
         
         [self.tableView reloadData];
@@ -176,22 +195,76 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginPullDownRefreshing) name:KPublishOK object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageHomenotif) name:KMessageHomeNotif object:nil];
+    
     [self beginPullDownRefreshing];
     // 1.设置界面属性
     [self buildUI];
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - 来了新消息
+- (void)messageHomenotif
+{
+    NSInteger badge = [self.navigationItem.leftBarButtonItem.badgeValue integerValue];
+    badge++;
+    NSString *badgeStr = [NSString stringWithFormat:@"%d",badge];
+    [UserDefaults setObject:badgeStr forKey:KMessagebadge];
+    [self.navigationController.tabBarItem setBadgeValue:badgeStr];
+    [self.navigationItem.leftBarButtonItem setBadgeValue:badgeStr];
+}
+
 
 #pragma mark 设置界面属性
 - (void)buildUI
 {
     if (!_uid) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
+        
+        // Build your regular UIBarButtonItem with Custom View
+        UIImage *image = [UIImage imageNamed:@"navbar_remind"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:image forState:UIControlStateNormal];
+        button.frame = CGRectMake(0,0,35, 35);
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 12)];
+        [button addTarget:self action:@selector(messageButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+        
+        // Make BarButton Item
+        UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.leftBarButtonItem = navLeftButton;
+        self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor redColor];
+        NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
+        if (badge>0) {
+            self.navigationItem.leftBarButtonItem.badgeValue = [UserDefaults objectForKey:KMessagebadge];
+//            [self.navigationController.tabBarItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
+        }
     }
     // 背景颜色
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:WLLineColor];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, IWTableBorderWidth, 0);
 }
+
+#pragma mark - 消息页面
+- (void)messageButtonPress:(id)sender
+{
+    BOOL isAllMessage = YES;
+    if ([UserDefaults objectForKey:KMessagebadge]) {
+        isAllMessage = NO;
+    }
+    
+    MessageController *messageVC = [[MessageController alloc] initWithStyle:UITableViewStyleGrouped isAllMessage:isAllMessage];
+    
+    [self.navigationController pushViewController:messageVC animated:YES];
+    
+    self.navigationItem.leftBarButtonItem.badgeValue = nil;
+    [self.navigationController.tabBarItem setBadgeValue:nil];
+}
+
 
 
 #pragma mark - 发表状态

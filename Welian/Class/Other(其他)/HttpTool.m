@@ -8,6 +8,7 @@
 
 #import "HttpTool.h"
 #import "WLHUDView.h"
+#import "BPush.h"
 
 @interface HttpTool()
 {
@@ -67,9 +68,19 @@ static HttpTool *engine;
 - (void)reqestWithSessIDParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {
     
+//    if (![UserDefaults objectForKey:BPushRequestUserIdKey]) {
+//        
+//        [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
+//        
+//        DLog(@"%@---%@---%@",[BPush getChannelId],[BPush getUserId],[BPush getAppId]);
+//    }else{
+//        DLog(@"百度推送 ----------------加载成功");
+//    }
+    
     if (isHUD) {
         [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
     }
+    
     NSString *parameterStr = [self dicTostring:parameterDic];
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     
@@ -104,6 +115,38 @@ static HttpTool *engine;
         failureBlock(error);
     }];
 }
+
+// 必须，如果正确调用了setDelegate，在bindChannel之后，结果在这个回调中返回。
+// 若绑定失败，请进行重新绑定，确保至少绑定成功一次
+- (void) onMethod:(NSString*)method response:(NSDictionary*)data
+{
+    NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
+    if ([BPushRequestMethod_Bind isEqualToString:method]) {
+        //        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
+        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
+        //        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+        
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+        if (returnCode == BPushErrorCode_Success) {
+            
+            // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
+            [UserDefaults setObject:userid forKey:BPushRequestUserIdKey];
+            [UserDefaults setObject:channelid forKey:BPushRequestChannelIdKey];
+            DLog(@"百度推送 ----------------加载成功");
+        }
+    } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        if (returnCode == BPushErrorCode_Success) {
+            
+            [UserDefaults removeObjectForKey:BPushRequestChannelIdKey];
+            [UserDefaults removeObjectForKey:BPushRequestUserIdKey];
+            
+        }
+    }
+}
+
 
 
 - (void)againConnectParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim

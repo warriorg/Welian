@@ -23,6 +23,7 @@
 #import "MJExtension.h"
 #import "WLDataDBTool.h"
 #import "MobClick.h"
+#import "MessageHomeModel.h"
 
 #define SUPPORT_IOS8 1
 
@@ -211,6 +212,15 @@ BMKMapManager* _mapManager;
             // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
             [UserDefaults setObject:userid forKey:BPushRequestUserIdKey];
             [UserDefaults setObject:channelid forKey:BPushRequestChannelIdKey];
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            if (mode.sessionid) {
+                [WLHttpTool updateClientSuccess:^(id JSON) {
+                    
+                } fail:^(NSError *error) {
+                    
+                }];
+
+            }
             DLog(@"百度推送 ----------------加载成功");
         }
     } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
@@ -232,20 +242,29 @@ BMKMapManager* _mapManager;
 //    NSString *avatar = [userInfo objectForKey:@"avatar"];
 //    NSString *company = [userInfo objectForKey:@"company"];
 //    NSString *position = [userInfo objectForKey:@"position"];
-    
+    DLog(@"%@",userInfo);
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     
-    NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
-    [newfrendM setMessage:alert];
-    NSDictionary *newDic = [newfrendM keyValues];
-    if ([type isEqualToString:@"friendAdd"]) {
-        [newfrendM setIsAgree:@"1"];
+    
+    if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {
+        
+        [[WLDataDBTool sharedService] putObject:userInfo withId:[NSString stringWithFormat:@"%@",[userInfo objectForKey:@"comentid"]] intoTable:KMessageHomeTableName];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:KMessageHomeNotif object:self];
+        
     }else{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
+        [newfrendM setMessage:alert];
+        NSDictionary *newDic = [newfrendM keyValues];
+        if ([type isEqualToString:@"friendAdd"]) {
+            [newfrendM setIsAgree:@"1"];
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        }
+        
+        [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
     }
     
-    [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-
     [application setApplicationIconBadgeNumber:0];
 
     [BPush handleNotification:userInfo];
@@ -317,7 +336,6 @@ BMKMapManager* _mapManager;
            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
             if (![item.itemObject objectForKey:@"isLook"]) {
                 NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                [mutablDic setObject:@"friendRequest" forKey:@"type"];
                 [mutablDic setObject:fid forKey:@"uid"];
                 [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
                 

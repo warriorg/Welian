@@ -139,13 +139,13 @@
     // 3.时间
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = IWTimeFont;
-    _timeLabel.textColor = [UIColor lightGrayColor];
+    _timeLabel.textColor = IWSourceColor;
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];
     
     _jobLabel = [[UILabel alloc] init];
     _jobLabel.font = IWTimeFont;
-    _jobLabel.textColor = [UIColor lightGrayColor];
+    _jobLabel.textColor = IWSourceColor;
     [_jobLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:_jobLabel];
 
@@ -373,7 +373,6 @@
         // 5.1.昵称
         _retweetNameLabel.frame = statusFrame.retweetNameLabelF;
         [_retweetNameLabel setText:[NSString stringWithFormat:@"该动态最早由 %@ 发布", retweetStatus.user.name]];
-        
         //Pass in the string, attributes, and a tap handling block
         [_retweetNameLabel linkString:retweetStatus.user.name
       defaultAttributes:[self exampleAttributes]

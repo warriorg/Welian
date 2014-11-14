@@ -40,9 +40,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://122.226.44.105:8080"
+#define WLHttpServer  @"http://192.168.1.212:8080"
 
-#define ww @"http://192.168.199.212:8080     http://122.226.44.105:8080"
+#define ww @"http://192.168.1.212:8080     http://122.226.44.105:8080"
 
 // 百度地图key
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
@@ -53,6 +53,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 首页动态更新个数通知
 #define KNEWStustUpdate  @"KNEWStustUpdate"
+
+// 首页消息通知
+#define KMessageHomeNotif @"KMessageHomeNotif"
+
+#define KMessagebadge @"KMessagebadge"
 
 #define KNewFriendNotif @"KNewFriendNotif"
 
@@ -66,6 +71,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+
+#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+
 
 // 文件路径
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
@@ -86,13 +94,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 第一条微博fid
 #define KFirstFID @"firstFid"
-
-
-// 所有好友数据
-#define KAllFriendsData [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"allFriendsdata.plist"]
-
-//当前系统版本
-#define isIOS6 [[UIDevice currentDevice].systemVersion intValue]==6?1:0
 
 // 主色透明效果
 #define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.98]
@@ -129,7 +130,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 昵称
 #define IWNameFont [UIFont boldSystemFontOfSize:16]
 // 时间
-#define IWTimeFont [UIFont systemFontOfSize:13]
+#define IWTimeFont [UIFont systemFontOfSize:12]
 // 内容
 #define IWContentFont [UIFont systemFontOfSize:16]
 
@@ -137,6 +138,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define IWRetweetNameFont [UIFont systemFontOfSize:16]
 // 转发的内容
 #define IWRetweetContentFont IWContentFont
+// 赞，转发姓名
+#define WLZanNameFont [UIFont systemFontOfSize:15]
+
 
 // 每次加载cell的个数
 #define KCellConut 15

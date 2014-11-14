@@ -68,7 +68,7 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)addSucceed
 {
-    [self.tableView setTableFooterView:self.sendView];
+//    [self.tableView setTableFooterView:self.sendView];
 }
 
 - (UIView*)sendView
@@ -196,7 +196,7 @@ static NSString *staurCellid = @"staurCellid";
                 if ([_userMode.friendship integerValue]==-1) {
                     
                 }else if ([_userMode.friendship integerValue]==1) {
-                    [self.tableView setTableFooterView:self.sendView];
+//                    [self.tableView setTableFooterView:self.sendView];
                 }else {
                     [self.tableView setTableFooterView:self.addFriendView];
                 }

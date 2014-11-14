@@ -481,11 +481,12 @@
 
 
 
-
 #pragma mark - 根据fid取一条动态信息
 + (void)loadOneFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    [[HttpTool sharedService] reqestWithSessIDParameters:parameterDic successBlock:^(id JSON) {
+     NSDictionary *dic = @{@"type":@"loadOneFeed",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -617,7 +618,6 @@
 #pragma mark - 取用户详细信息
 + (void)loadUserInfoParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-
     NSDictionary *dic = @{@"type":@"loadUserInfo",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSDictionary *dataDic = [NSDictionary dictionaryWithDictionary:JSON];
@@ -784,6 +784,43 @@
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
+
+
+#pragma mark - 取转发和点赞人
++ (void)loadFeedZanAndForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+
+    NSDictionary *dic = @{@"type":@"loadFeedZanAndForward",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 更新BaiduId请求
++ (void)updateClientSuccess:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
+    [parameterDic setObject:@"ios" forKey:@"platform"];
+    
+    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]&&[UserDefaults objectForKey:BPushRequestUserIdKey]) {
+        [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        [parameterDic setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
+        
+    }
+    NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
 
 
 @end

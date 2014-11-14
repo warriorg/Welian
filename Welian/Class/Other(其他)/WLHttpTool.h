@@ -150,5 +150,11 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 取最新动态更新数量
 + (void)loadNewFeedCountParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 取转发和点赞人
++ (void)loadFeedZanAndForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 更新BaiduId请求
++ (void)updateClientSuccess:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 @end
 

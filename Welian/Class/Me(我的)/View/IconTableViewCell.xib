@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -19,7 +18,6 @@
                         <rect key="frame" x="15" y="0.0" width="109" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="109" id="Uoc-hD-j0z"/>
-                            <constraint firstAttribute="height" constant="60" id="eE7-Yl-uTn"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -29,25 +27,31 @@
                         <rect key="frame" x="228" y="8" width="59" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="5Gj-f4-EeW"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="59" id="8s2-MJ-0GU"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="59" id="7c9-OX-5Gd"/>
                             <constraint firstAttribute="height" constant="44" id="Tpe-wv-L2K"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="ebx-Rm-NeV"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="Hbb-dx-jAX" secondAttribute="centerY" id="90P-RD-Au0"/>
-                    <constraint firstAttribute="centerY" secondItem="sOF-e7-C6b" secondAttribute="centerY" id="C6s-Pj-VqG"/>
+                    <constraint firstAttribute="bottom" secondItem="Hbb-dx-jAX" secondAttribute="bottom" id="AmW-qT-0Vn"/>
                     <constraint firstItem="Hbb-dx-jAX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="L8M-bL-Ufv"/>
-                    <constraint firstAttribute="trailing" secondItem="sOF-e7-C6b" secondAttribute="trailing" id="MKH-OO-dHQ"/>
-                    <constraint firstAttribute="centerY" secondItem="sOF-e7-C6b" secondAttribute="centerY" id="b1i-Hj-COB"/>
-                    <constraint firstAttribute="trailing" secondItem="sOF-e7-C6b" secondAttribute="trailing" id="dhs-2i-M55"/>
-                    <constraint firstItem="sOF-e7-C6b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fX3-sd-0mS"/>
+                    <constraint firstItem="Hbb-dx-jAX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="eUc-6k-Z9C"/>
+                    <constraint firstAttribute="centerY" secondItem="sOF-e7-C6b" secondAttribute="centerY" id="fbU-eq-u2o"/>
+                    <constraint firstAttribute="trailing" secondItem="sOF-e7-C6b" secondAttribute="trailing" id="j1y-n9-lHJ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="iconImage" destination="sOF-e7-C6b" id="DeM-wX-Eb9"/>
                 <outlet property="titleLabel" destination="Hbb-dx-jAX" id="RxY-on-4dQ"/>
             </connections>
+            <point key="canvasLocation" x="171" y="171"/>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

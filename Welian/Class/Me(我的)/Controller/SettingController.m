@@ -12,6 +12,7 @@
 #import "WLTool.h"
 #import "NavViewController.h"
 #import "AboutViewController.h"
+#import "BPush.h"
 
 @interface SettingController () <UIActionSheetDelegate>
 {
@@ -85,6 +86,9 @@
         NavViewController  *detailViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LogInStoryboardNav"];
         UserInfoModel *mode = [[UserInfoModel alloc] init];
         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+        [BPush unbindChannel];
+//        [UserDefaults removeObjectForKey:BPushRequestUserIdKey];
+//        [UserDefaults removeObjectForKey:BPushRequestChannelIdKey];
         [UserDefaults removeObjectForKey:KFirstFID];
         [self.view.window setRootViewController:detailViewController];
     }

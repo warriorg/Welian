@@ -12,11 +12,11 @@
 
 @interface ForwardPublishView : UIView
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
-@property (weak, nonatomic) IBOutlet MLEmojiLabel *titelLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+//
+//@property (weak, nonatomic) IBOutlet MLEmojiLabel *titelLabel;
+//
+//@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 @property (nonatomic, strong) WLStatusFrame *statusF;
 

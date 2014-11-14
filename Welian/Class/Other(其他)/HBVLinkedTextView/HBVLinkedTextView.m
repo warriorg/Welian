@@ -71,7 +71,6 @@
 }
 
 // Link an array of strings with specifically defined linked text attributes
-
 - (void)linkStrings:(NSArray *)strings defaultAttributes:(NSDictionary *)defaultAttributes highlightedAttributes:(NSDictionary *)highlightedAttributes tapHandler:(LinkedStringTapHandler)tapHandler
 {
     if (!strings || !defaultAttributes || !highlightedAttributes || tapHandler == NULL) {

@@ -87,7 +87,7 @@ static NSString *meinfocellid = @"MeinfoCell";
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [cell.MyNameLabel setText:mode.name];
         [cell.deleLabel setText:[NSString stringWithFormat:@"%@    %@",mode.position,mode.company]];
-        [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         return cell;
     }else{
         if (nil == cell) {

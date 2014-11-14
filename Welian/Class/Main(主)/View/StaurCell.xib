@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="staurCellid" id="KGk-i7-Jjw" customClass="StaurCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="staurCellid" rowHeight="60" id="KGk-i7-Jjw" customClass="StaurCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -17,18 +17,15 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最新动态" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6B-Nx-AmB">
                         <rect key="frame" x="15" y="19" width="68" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="PLN-lB-DhD"/>
-                            <constraint firstAttribute="width" constant="68" id="c9a-lM-1cH"/>
+                            <constraint firstAttribute="width" constant="68" id="plK-ax-TfJ"/>
+                            <constraint firstAttribute="height" constant="21" id="va5-QL-2kB"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rdn-nv-3eD">
-                        <rect key="frame" x="97" y="10" width="190" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="Cve-eg-mNc"/>
-                        </constraints>
+                        <rect key="frame" x="98" y="10" width="189" height="39.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
@@ -36,39 +33,38 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zYg-85-X5A">
                         <rect key="frame" x="247" y="10" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="Scr-io-nHj"/>
-                            <constraint firstAttribute="height" constant="40" id="Vdx-Jq-uS2"/>
+                            <constraint firstAttribute="height" constant="40" id="CWR-bj-ibs"/>
+                            <constraint firstAttribute="width" constant="40" id="Em2-bf-lXi"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y9a-ei-drT">
                         <rect key="frame" x="193" y="10" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="N7C-Cn-dHM"/>
-                            <constraint firstAttribute="width" constant="40" id="nlr-7o-d8Y"/>
+                            <constraint firstAttribute="width" constant="40" id="H5f-DT-DrK"/>
+                            <constraint firstAttribute="height" constant="40" id="L9X-ow-jcI"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y9V-gr-dV8">
                         <rect key="frame" x="138" y="10" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="FhB-8n-yXB"/>
-                            <constraint firstAttribute="height" constant="40" id="G9C-a5-MRA"/>
+                            <constraint firstAttribute="height" constant="40" id="Up0-x7-Oij"/>
+                            <constraint firstAttribute="width" constant="40" id="wWa-Az-N0m"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Rdn-nv-3eD" firstAttribute="leading" secondItem="c6B-Nx-AmB" secondAttribute="trailing" constant="14" id="53A-jr-362"/>
-                    <constraint firstItem="c6B-Nx-AmB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="5DC-Ag-70i"/>
-                    <constraint firstAttribute="centerY" secondItem="zYg-85-X5A" secondAttribute="centerY" id="A7Z-0v-sBn"/>
-                    <constraint firstAttribute="centerY" secondItem="Rdn-nv-3eD" secondAttribute="centerY" id="J6k-w6-S1n"/>
-                    <constraint firstItem="y9a-ei-drT" firstAttribute="leading" secondItem="y9V-gr-dV8" secondAttribute="trailing" constant="15" id="LG6-aN-ApG"/>
-                    <constraint firstAttribute="trailing" secondItem="zYg-85-X5A" secondAttribute="trailing" id="Pde-OU-UfD"/>
-                    <constraint firstAttribute="centerY" secondItem="c6B-Nx-AmB" secondAttribute="centerY" id="Suc-Nc-tcf"/>
-                    <constraint firstItem="Rdn-nv-3eD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="cqE-co-Msi"/>
-                    <constraint firstAttribute="trailing" secondItem="Rdn-nv-3eD" secondAttribute="trailing" id="g1j-hN-91Y"/>
-                    <constraint firstAttribute="centerY" secondItem="y9V-gr-dV8" secondAttribute="centerY" id="lJc-Yg-uc5"/>
-                    <constraint firstAttribute="bottom" secondItem="Rdn-nv-3eD" secondAttribute="bottom" constant="9.5" id="rua-Fq-ncQ"/>
-                    <constraint firstItem="zYg-85-X5A" firstAttribute="leading" secondItem="y9a-ei-drT" secondAttribute="trailing" constant="14" id="zVV-CO-qlV"/>
-                    <constraint firstAttribute="centerY" secondItem="y9a-ei-drT" secondAttribute="centerY" id="zl8-W8-XXn"/>
+                    <constraint firstItem="Rdn-nv-3eD" firstAttribute="leading" secondItem="c6B-Nx-AmB" secondAttribute="trailing" constant="15" id="8Q4-5v-DGl"/>
+                    <constraint firstItem="zYg-85-X5A" firstAttribute="leading" secondItem="y9a-ei-drT" secondAttribute="trailing" constant="14" id="B8K-jQ-Qgd"/>
+                    <constraint firstAttribute="bottom" secondItem="Rdn-nv-3eD" secondAttribute="bottom" constant="10" id="CVJ-2g-yxN"/>
+                    <constraint firstAttribute="centerY" secondItem="zYg-85-X5A" secondAttribute="centerY" id="NN4-iW-92Y"/>
+                    <constraint firstAttribute="trailing" secondItem="Rdn-nv-3eD" secondAttribute="trailing" id="R7f-ce-1ek"/>
+                    <constraint firstAttribute="centerY" secondItem="c6B-Nx-AmB" secondAttribute="centerY" id="gUU-V1-BR2"/>
+                    <constraint firstItem="c6B-Nx-AmB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="maZ-1C-VAO"/>
+                    <constraint firstAttribute="centerY" secondItem="y9V-gr-dV8" secondAttribute="centerY" id="o14-uT-Mgk"/>
+                    <constraint firstAttribute="trailing" secondItem="zYg-85-X5A" secondAttribute="trailing" id="odz-TG-rkT"/>
+                    <constraint firstItem="y9a-ei-drT" firstAttribute="leading" secondItem="y9V-gr-dV8" secondAttribute="trailing" constant="15" id="phS-XJ-tGD"/>
+                    <constraint firstAttribute="centerY" secondItem="y9a-ei-drT" secondAttribute="centerY" id="tGs-d6-dU0"/>
+                    <constraint firstItem="Rdn-nv-3eD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="taX-vj-wmL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -77,6 +73,12 @@
                 <outlet property="threeImage" destination="y9V-gr-dV8" id="KWi-em-9l5"/>
                 <outlet property="twoImage" destination="y9a-ei-drT" id="FKA-Z4-ske"/>
             </connections>
+            <point key="canvasLocation" x="222" y="304"/>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

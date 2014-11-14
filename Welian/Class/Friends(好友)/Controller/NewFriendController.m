@@ -25,7 +25,6 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _dataArray = [NSMutableArray array];
     [self setTitle:@"好友请求"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:frnewCellid];
@@ -55,7 +54,6 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
 
 #pragma mark - Table view data source
@@ -108,7 +106,6 @@ static NSString *frnewCellid = @"frnewCellid";
     [_dataArray removeObject:friendM];
     //移除tableView中的数据
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-    
     
     if (![friendM.isAgree isEqualToString:@"1"]) {
         [WLHttpTool deleteFriendRequestParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {

@@ -38,7 +38,6 @@
             YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
             if (![item.itemObject objectForKey:@"isLook"]) {
                 NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                [mutablDic setObject:@"friendRequest" forKey:@"type"];
                 [mutablDic setObject:fid forKey:@"uid"];
                 [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
                 
@@ -61,8 +60,8 @@
             NSNumber *count = [JSON objectForKey:@"count"];
             if (![count integerValue]) return;
             
-                [[self.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
-            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[count integerValue]];
+//                [[self.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
+//            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[count integerValue]];
         } fail:^(NSError *error) {
             
         }];
@@ -81,6 +80,7 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
+   
     [self loadFriendRequest];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
@@ -102,7 +102,6 @@
     
 
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-
     
     UIImageView *a = [[UIImageView alloc] init];
     [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -117,6 +116,7 @@
     // 首页
     homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
+    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     
@@ -124,7 +124,6 @@
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
-    
     
     // 好友
     UITabBarItem *circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];

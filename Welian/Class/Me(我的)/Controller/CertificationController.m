@@ -66,7 +66,7 @@
         [cell.imageView setImage:[UIImage imageNamed:@"me_renzheng_tou"]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        UIButton *tayBut = [[UIButton alloc] initWithFrame:CGRectMake(220, 13, 70, 22)];
+        UIButton *tayBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width-100, 13, 70, 22)];
         [tayBut setEnabled:NO];
         [cell.contentView addSubview:tayBut];
         [tayBut setHidden:NO];

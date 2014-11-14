@@ -29,7 +29,7 @@
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         _iconImage = [[UIImageView alloc] init];
         
-        [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"discovery_chuang.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         [_iconImage setUserInteractionEnabled:YES];
         [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
 //        [_iconImage setContentMode:UIViewContentModeScaleAspectFit];
@@ -135,7 +135,7 @@
     [cell.textLabel setText:dict[@"title"]];
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if (indexPath.section==0) {
-        [self.iconImage setFrame:CGRectMake(240, 10, 40, 40)];
+        [self.iconImage setFrame:CGRectMake(self.view.bounds.size.width-70, 10, 40, 40)];
         [cell.contentView addSubview:self.iconImage];
         
 //        [cell setAccessoryView:self.iconImage];

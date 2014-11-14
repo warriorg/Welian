@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,19 +15,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="还没有评论哦~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ann-yw-rrX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="320" id="ihe-LP-a89"/>
-                        </constraints>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ann-yw-rrX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2Hj-mS-Ah2"/>
-                    <constraint firstItem="ann-yw-rrX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Xc7-eN-Kfc"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="ann-yw-rrX" secondAttribute="bottom" constant="-8.5" id="mSW-n2-IWz"/>
+                    <constraint firstAttribute="bottom" secondItem="ann-yw-rrX" secondAttribute="bottom" constant="0.5" id="IvP-HL-l8L"/>
+                    <constraint firstAttribute="trailing" secondItem="ann-yw-rrX" secondAttribute="trailing" id="ODN-pi-mOm"/>
+                    <constraint firstItem="ann-yw-rrX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ZKf-KM-gtn"/>
+                    <constraint firstItem="ann-yw-rrX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gjS-18-0wp"/>
                 </constraints>
             </tableViewCellContentView>
         </tableViewCell>

@@ -14,11 +14,19 @@
 #import "MessageKeyboardView.h"
 #import "ZBMessageManagerFaceView.h"
 #import "NoCommentCell.h"
+#import "FeedAndZanModel.h"
+#import "MJExtension.h"
+#import "FeedAndZanFrameM.h"
+#import "FeedAndZanCell.h"
 
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     NSMutableArray *_dataArrayM;
     CommentCellFrame *_selecCommFrame;
+    NSMutableArray *_feedArrayM;
+    NSMutableArray *_zanArrayM;
+    
+    FeedAndZanFrameM *_feedAndZanFM;
 }
 @property (nonatomic, strong) WLStatusCell *statusCell;
 @property (nonatomic, strong) NSMutableDictionary *reqestDic;
@@ -26,6 +34,7 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) MessageKeyboardView *messageView;
+
 
 @end
 
@@ -56,6 +65,40 @@ static NSString *noCommentCell = @"NoCommentCell";
     return _statusCell;
 }
 
+// 加载赞和转发数据
+- (void)loadnewFeedZanAndForward
+{
+    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
+        if (_feedAndZanFM) return;
+        
+        NSArray *feedarray = [JSON objectForKey:@"forwards"];
+        NSArray *zanarray = [JSON objectForKey:@"zans"];
+        
+        if (feedarray.count) {
+            for (NSDictionary *feeddic in feedarray) {
+                FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:feeddic];
+                [_feedArrayM addObject:mode];
+            }
+        }
+        if (zanarray.count) {
+            for (NSDictionary *zandic in zanarray) {
+                FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:zandic];
+                [_zanArrayM addObject:mode];
+            }
+        }
+        if (zanarray.count || feedarray.count) {
+            
+            _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
+            [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
+            [self.tableView reloadData];
+        }
+        
+        DLog(@"%@",JSON);
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
 - (void)becomComment
 {
     [self.messageView.commentTextView becomeFirstResponder];
@@ -71,9 +114,13 @@ static NSString *noCommentCell = @"NoCommentCell";
         [_tableView setDataSource:self];
         [_tableView setDelegate:self];
         [_tableView registerNib:[UINib nibWithNibName:@"NoCommentCell" bundle:nil] forCellReuseIdentifier:noCommentCell];
-//        [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     }
     return _tableView;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -82,14 +129,15 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self setTitle:@"详情"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forwardCommtion) name:KPublishOK object:nil];
     [self.view setBackgroundColor:WLLineColor];
-    
+    _feedArrayM = [NSMutableArray array];
+    _zanArrayM = [NSMutableArray array];
     self.reqestDic = [NSMutableDictionary dictionary];
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(loadNewCommentListData) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(loadnewcommentAndFeedZanAndForward) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
     [self.refreshControl beginRefreshing];
-    [self loadNewCommentListData];
+    [self loadnewcommentAndFeedZanAndForward];
     
     [self.view addSubview:self.tableView];
     
@@ -122,6 +170,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
 }
+
 
 - (void)moreButClick:(UIBarButtonItem*)item
 {
@@ -160,6 +209,18 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     self.statusFrame.status.forwardcount++;
     self.statusCell;
+   UserInfoModel *usermode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
+    FeedAndZanModel *fzmodel = [[FeedAndZanModel alloc] init];
+    [fzmodel setUser:usermode];
+    [_feedArrayM insertObject:fzmodel atIndex:0];
+    [self refreshDataChangde];
+}
+
+- (void)loadnewcommentAndFeedZanAndForward
+{
+    [self loadNewCommentListData];
+    [self loadnewFeedZanAndForward];
 }
 
 
@@ -188,6 +249,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
         
         [_dataArrayM addObjectsFromArray:JSON];
+        
         [self hiddenRefresh];
         
         [self.tableView reloadData];
@@ -210,6 +272,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (_dataArrayM.count<KCellConut) {
         [self.tableView setFooterHidden:YES];
     }else{
+        NSInteger page = [[self.reqestDic objectForKey:@"page"] integerValue];
+        page++;
+        [self.reqestDic setObject:@(page) forKey:@"page"];
         [self.tableView setFooterHidden:NO];
     }
 }
@@ -237,42 +302,100 @@ static NSString *noCommentCell = @"NoCommentCell";
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger a = 0;
+    if (_feedAndZanFM) {
+        a +=1;
+    }
     if (_dataArrayM.count) {
         
-        return _dataArrayM.count;
+        return _dataArrayM.count+a;
     }else{
-        return 1;
+        return 1+a;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dataArrayM.count) {
-        CommentCellFrame *commFrame = _dataArrayM[indexPath.row];
-        return commFrame.cellHeight;
+        if (_feedAndZanFM) {
+            if (indexPath.row==0) {
+                
+                return _feedAndZanFM.cellHigh;
+            }else{
+                CommentCellFrame *commFrame = _dataArrayM[indexPath.row-1];
+                return commFrame.cellHeight;
+            }
+        }else{
+            CommentCellFrame *commFrame = _dataArrayM[indexPath.row];
+            return commFrame.cellHeight;
+        }
+        
     }else{
-        return 90;
+        if (_feedAndZanFM) {
+            if (indexPath.row==0) {
+                return _feedAndZanFM.cellHigh;
+            }else{
+                return 90;
+            }
+        }else{
+            return 90;
+        }
     }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_dataArrayM.count) {
-        CommentCell *cell = [CommentCell cellWithTableView:tableView];
-        // 传递的模型：文字数据 + 子控件frame数据
-        cell.commentCellFrame = _dataArrayM[indexPath.row];
-        cell.commentVC = self;
-        return cell;
-
+    if (_feedAndZanFM) {
+        if (indexPath.row==0) {
+            static NSString *feedAndZancellid = @"feedAndZancellid";
+            FeedAndZanCell *cell = [tableView dequeueReusableCellWithIdentifier:feedAndZancellid];
+            if (cell == nil) {
+                cell = [[FeedAndZanCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:feedAndZancellid];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                [cell setCommentVC:self];
+            }
+            [cell setFeedAndZanFrame:_feedAndZanFM];
+            return cell;
+        }else{
+            if (_dataArrayM.count) {
+                CommentCell *cell = [CommentCell cellWithTableView:tableView];
+                // 传递的模型：文字数据 + 子控件frame数据
+                cell.commentCellFrame = _dataArrayM[indexPath.row-1];
+                cell.commentVC = self;
+                return cell;
+                
+            }else{
+                NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+                return cell;
+            }
+        }
     }else{
-        NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
-        return cell;
+        if (_dataArrayM.count) {
+            CommentCell *cell = [CommentCell cellWithTableView:tableView];
+            // 传递的模型：文字数据 + 子控件frame数据
+            cell.commentCellFrame = _dataArrayM[indexPath.row];
+            cell.commentVC = self;
+            return cell;
+        }else{
+            NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+            return cell;
+        }
+
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _selecCommFrame = _dataArrayM[indexPath.row];
+
+    if (_feedAndZanFM) {
+        if (indexPath.row==0) {
+            return;
+        }
+        _selecCommFrame = _dataArrayM[indexPath.row-1];
+    }else{
+        _selecCommFrame = _dataArrayM[indexPath.row];
+    }
+
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"回复" otherButtonTitles:@"删除", nil];
@@ -303,14 +426,13 @@ static NSString *noCommentCell = @"NoCommentCell";
                 self.statusFrame.status.commentcount--;
                 [self.tableView reloadData];
                 self.statusCell;
+                
                 [self backDataStatusFrame:NO];
             } fail:^(NSError *error) {
                 
             }];
         }
     }
-
-
 }
 
 
@@ -318,7 +440,19 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)attitudeBtnClick:(UIButton*)but
 {
     [but setEnabled:NO];
+   UserInfoModel *usermode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
     if (self.statusFrame.status.iszan==1) {
+        FeedAndZanModel *seleMode= nil;
+        for (FeedAndZanModel *mode in _zanArrayM) {
+            if ([mode.user.uid integerValue] == [usermode.uid integerValue]) {
+                seleMode = mode;
+                break;
+            }
+        }
+        [_zanArrayM removeObject:seleMode];
+        [self refreshDataChangde];
+        
         [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
             [self.statusFrame.status setIszan:0];
             self.statusFrame.status.zan -= 1;
@@ -329,6 +463,10 @@ static NSString *noCommentCell = @"NoCommentCell";
             [but setEnabled:YES];
         }];
     }else{
+        FeedAndZanModel *fzmodel = [[FeedAndZanModel alloc] init];
+        [fzmodel setUser:usermode];
+        [_zanArrayM insertObject:fzmodel atIndex:0];
+        [self refreshDataChangde];
         
         [WLHttpTool addFeedZanParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
             [self.statusFrame.status setIszan:1];
@@ -342,7 +480,20 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
 }
 
+- (void)refreshDataChangde
+{
+    if (_zanArrayM.count||_feedArrayM.count) {
+        if (!_feedAndZanFM) {
+            _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
+        }
+        [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
+        
+    }else{
+        _feedAndZanFM = nil;
+    }
+    [self.tableView reloadData];
 
+}
 
 
 @end

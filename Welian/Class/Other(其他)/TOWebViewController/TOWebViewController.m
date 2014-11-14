@@ -832,6 +832,8 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
     {
         NSArray *browserActivities = @[[TOActivitySafari new], [TOActivityChrome new],[[WeixinSessionActivity alloc] init], [[WeixinTimelineActivity alloc] init]];
         
+//        UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[[NSString stringWithFormat:@"%@的名片,%@,%@",self.userinfoM.name,self.userinfoM.position,self.userinfoM.company], self.iconImageV.image, [NSURL URLWithString:[NSString stringWithFormat:@"%@",self.userinfoM.shareurl]]] applicationActivities:activity];
+        
         UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.url] applicationActivities:browserActivities];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)

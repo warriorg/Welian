@@ -50,15 +50,6 @@ static NSString *picCellid = @"PicCellID";
 
 @implementation PublishStatusController
 
-- (ForwardPublishView*)forwardView
-{
-    if (_forwardView == nil) {
-        _forwardView = [[[NSBundle mainBundle] loadNibNamed:@"ForwardPublishView" owner:self options:nil] lastObject];
-    }
-    [_forwardView setStatusF:self.statusFrame];
-    return _forwardView;
-}
-
 
 - (instancetype)initWithType:(PublishType)publishType
 {
@@ -152,7 +143,6 @@ static NSString *picCellid = @"PicCellID";
         [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
         [self.inputttView addSubview:but];
         
-        
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         [layout setSectionInset:UIEdgeInsetsMake(10, 15, 10, 15)];
         [layout setMinimumLineSpacing:10.0];
@@ -168,7 +158,8 @@ static NSString *picCellid = @"PicCellID";
         self.collectionView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:self.collectionView];
     }else if (_publishType == PublishTypeForward){
-        [self.forwardView setFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, [[UIScreen mainScreen] bounds].size.width, 60)];
+        self.forwardView = [[ForwardPublishView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, [[UIScreen mainScreen] bounds].size.width, 60)];
+        [self.forwardView setStatusF:self.statusFrame];
         [self.view addSubview:self.forwardView];
     }
 
