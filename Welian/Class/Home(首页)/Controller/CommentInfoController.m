@@ -47,12 +47,13 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_statusCell == nil) {
         _statusCell = [WLStatusCell cellWithTableView:nil];
-        [_statusCell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:) forControlEvents:UIControlEventTouchDown];
-        [_statusCell.dock.commentBtn addTarget:self action:@selector(becomComment) forControlEvents:UIControlEventTouchUpInside];
+        
+//        [_statusCell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:) forControlEvents:UIControlEventTouchDown];
+//        [_statusCell.dock.commentBtn addTarget:self action:@selector(becomComment) forControlEvents:UIControlEventTouchUpInside];
         [_statusCell setHomeVC:self];
-        UIView *lveView = [[UIView alloc] initWithFrame:CGRectMake(0, self.statusFrame.dockY+7, self.view.bounds.size.width, 10)];
-        [lveView setBackgroundColor:WLLineColor];
-        [_statusCell addSubview:lveView];
+//        UIView *lveView = [[UIView alloc] initWithFrame:CGRectMake(0, self.statusFrame.contentFrame.dockY+7, self.view.bounds.size.width, 10)];
+//        [lveView setBackgroundColor:WLLineColor];
+//        [_statusCell addSubview:lveView];
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         if ([self.statusFrame.status.user.uid integerValue] == [mode.uid integerValue]) {
             
@@ -88,12 +89,10 @@ static NSString *noCommentCell = @"NoCommentCell";
         }
         if (zanarray.count || feedarray.count) {
             
-            _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
+            _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
             [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
             [self.tableView reloadData];
         }
-        
-        DLog(@"%@",JSON);
     } fail:^(NSError *error) {
         
     }];
@@ -243,15 +242,15 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)loadMoreCommentData
 {
     if (_dataArrayM.count<=0)    return;
-    CommentCellFrame *commF = _dataArrayM.lastObject;
-    [self.reqestDic setObject:commF.commentM.fcid forKey:@"fid"];
     
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-        
-        [_dataArrayM addObjectsFromArray:JSON];
+        NSArray *dataarr = JSON;
+        [_dataArrayM addObjectsFromArray:dataarr];
         
         [self hiddenRefresh];
-        
+        if (dataarr.count<KCellConut) {
+            self.tableView.footerHidden = YES;
+        }
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         
@@ -286,7 +285,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return self.statusFrame.cellHeight+20;
+    return self.statusFrame.contentFrame.cellHeight+20;
 }
 //
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

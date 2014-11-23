@@ -20,35 +20,38 @@
 {
     UITabBarItem *homeItem;
     UITabBarItem *selectItem;
+    UITabBarItem *circleItem;
     HomeController *homeVC;
+    
+    
 }
 @end
 
 @implementation MainViewController
 
-- (void)loadFriendRequest
-{
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    if (!mode.sessionid) return;
-    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
-        
-        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
-        for (NSDictionary *dic  in jsonArray) {
-            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
-            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
-            if (![item.itemObject objectForKey:@"isLook"]) {
-                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                [mutablDic setObject:fid forKey:@"uid"];
-                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
-                
-                [self newFriendPuthMessga];
-            }
-        }
-        
-    } fail:^(NSError *error) {
-        
-    }];
-}
+//- (void)loadFriendRequest
+//{
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    if (!mode.sessionid) return;
+//    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
+//        
+//        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
+//        for (NSDictionary *dic  in jsonArray) {
+//            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
+//            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
+//            if (![item.itemObject objectForKey:@"isLook"]) {
+//                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//                [mutablDic setObject:fid forKey:@"uid"];
+//                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
+//                
+//                [self newFriendPuthMessga];
+//            }
+//        }
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
+//}
 
 - (void)loadNewStustupdata
 {
@@ -60,13 +63,10 @@
             NSNumber *count = [JSON objectForKey:@"count"];
             if (![count integerValue]) return;
             
-//                [[self.viewControllers[0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%@",count]];
-//            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[count integerValue]];
         } fail:^(NSError *error) {
             
         }];
     }
-
 }
 
 - (void)dealloc
@@ -78,10 +78,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 有新好友通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
+    
+    // 有新动态通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
-   
-    [self loadFriendRequest];
+    
+    // 首页动态通知
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageMainnotif) name:KMessageHomeNotif object:nil];
+//    [self loadFriendRequest];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -117,7 +123,6 @@
     homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
     [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
-    
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     
     [homeVC.navigationItem setTitle:@"动态"];
@@ -126,7 +131,9 @@
     [homeNav setTabBarItem:homeItem];
     
     // 好友
-    UITabBarItem *circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
+    circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
+    [circleItem setBadgeValue:[UserDefaults objectForKey:KFriendbadge]];
+    
     MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
     [friendsNav setDelegate:self];
@@ -155,9 +162,16 @@
     selectItem = homeItem;
 }
 
+- (void)messageMainnotif
+{
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
+    [homeItem setBadgeValue:badgeStr];
+}
+
 - (void)newFriendPuthMessga
 {
-    [[self.viewControllers[1] tabBarItem] setBadgeValue:@"1"];
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]];
+    [circleItem setBadgeValue:badgeStr];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -194,8 +208,8 @@
 - (UITabBarItem*)itemWithTitle:(NSString *)title imageStr:(NSString *)imageStr selectedImageStr:(NSString *)selectedImageStr
 {
     UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imageStr] selectedImage:[UIImage imageNamed:selectedImageStr]];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName :KBasesColor,NSFontAttributeName:[UIFont systemFontOfSize:13]} forState:UIControlStateSelected];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor],NSFontAttributeName:[UIFont systemFontOfSize:13]} forState:UIControlStateNormal];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName :KBasesColor,NSFontAttributeName:[UIFont systemFontOfSize:12]} forState:UIControlStateSelected];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor],NSFontAttributeName:[UIFont systemFontOfSize:12]} forState:UIControlStateNormal];
     return item;
 }
 

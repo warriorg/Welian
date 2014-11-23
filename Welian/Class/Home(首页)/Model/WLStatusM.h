@@ -49,6 +49,15 @@
 //** 分享URL *//
 @property (nonatomic, strong) NSString *shareurl;
 
+/**  评论列表   */
+@property (nonatomic, strong) NSArray *commentsArray;
+
+/**  赞 列表   */
+@property (nonatomic, strong) NSArray *zansArray;
+
+/**  转发列表   */
+@property (nonatomic, strong) NSArray *forwardsArray;
+
 /**  和谁一起   */
 //@property (nonatomic, strong) NSArray *with;
 

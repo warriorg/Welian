@@ -43,9 +43,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-//    [self loadMyAllFriends];
-//    [self loadNewFriendsList];
+    [self loadNewFriendsList];
 }
 
 - (void)viewDidLoad {
@@ -68,7 +66,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KNewFriendNotif object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)addUI
@@ -114,15 +112,13 @@ static NSString *fridcellid = @"fridcellid";
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     NewFriendsCell *ncell = (NewFriendsCell*)[self.tableView cellForRowAtIndexPath:path];
     
-    [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",self.navigationController.tabBarItem.badgeValue] forState:UIControlStateDisabled];
+    [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]] forState:UIControlStateDisabled];
         
-    if ([self.navigationController.tabBarItem.badgeValue integerValue]) {
-            
+    if ([[UserDefaults objectForKey:KFriendbadge] integerValue]) {
         [ncell.tipLabel setHidden:NO];
     }else{
         [ncell.tipLabel setHidden:YES];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)loadMyAllFriends
@@ -319,7 +315,7 @@ static NSString *fridcellid = @"fridcellid";
                 [self.navigationController pushViewController:friendNewVC animated:YES];
                 
                 [self.navigationController.tabBarItem setBadgeValue:nil];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [UserDefaults removeObjectForKey:KFriendbadge];
                 
             }else if (indexPath.row==1){
                 FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];

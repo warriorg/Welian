@@ -14,15 +14,64 @@
 #import "CommentInfoController.h"
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
+#import "NotstringView.h"
+#import "UIImage+ImageEffects.h"
 
 @interface MessageController ()
 {
     NSMutableArray *_messageDataArray;
+    NSArray *_allMessgeArray;
 }
+
+@property (nonatomic, strong) NotstringView *notView;
+
+@property (nonatomic, strong) UIButton *footButton;
 
 @end
 
 @implementation MessageController
+
+- (UIView *)footButton
+{
+    if (_footButton== nil) {
+        _footButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+//        [_footButton setBackgroundImage:[UIImage resizedImage:@"tabbar_b"] forState:UIControlStateNormal];
+        [_footButton setTitleColor:[UIColor colorWithWhite:0.8 alpha:1] forState:UIControlStateNormal];
+//        [_footButton setBackgroundImage:[UIImage resizedImage:@"tabbar_b@2x"] forState:UIControlStateHighlighted];
+        // tableFooterView的宽度是不需要设置。默认就是整个tableView的宽度
+        _footButton.bounds = CGRectMake(0, 0, 0, 44);
+        [_footButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        
+        // 4.设置按钮文字
+        [_footButton setTitle:@"查看更早的信息" forState:UIControlStateNormal];
+        
+        [_footButton addTarget:self action:@selector(loadAllMessgeData:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _footButton;
+}
+
+
+- (void)loadAllMessgeData:(UIButton*)but
+{
+    [self.tableView setTableFooterView:nil];
+    [_messageDataArray removeAllObjects];
+    for (NSDictionary *mesitme in _allMessgeArray) {
+        MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesitme];
+        MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
+        [messageFrameM setMessageDataM:messageM];
+        [_messageDataArray addObject:messageFrameM];
+    }
+    [self.tableView reloadData];
+}
+
+- (NotstringView *)notView
+{
+    if (_notView == nil ) {
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"还没有消息通知哦！" andImageName:@"remind_big_logo"];
+    }
+    return _notView;
+}
 
 - (instancetype)initWithStyle:(UITableViewStyle)style isAllMessage:(BOOL)isAllMessage
 {
@@ -33,36 +82,57 @@
         [self.tableView setSectionHeaderHeight:0.1];
         [self.tableView setBackgroundColor:[UIColor whiteColor]];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        [self.tableView setSectionFooterHeight:0];
         
        NSArray *dataA = [[WLDataDBTool sharedService] getAllItemsFromTable:KMessageHomeTableName];
-        NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:NO];
-        dataA = [dataA sortedArrayUsingDescriptors:@[bookNameDes]];
-        
-        if (isAllMessage) {
-            for (YTKKeyValueItem *mesitme in dataA) {
-                MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesitme.itemObject];
-                MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
-                [messageFrameM setMessageDataM:messageM];
-                [_messageDataArray addObject:messageFrameM];
-            }
-            [self.tableView reloadData];
+
+        if (dataA.count) {
+            [self.notView removeFromSuperview];
             
-        }else{
-            for (YTKKeyValueItem *mesitme in dataA) {
-                
-                NSMutableDictionary *mesDic = [NSMutableDictionary dictionaryWithDictionary:mesitme.itemObject];
-                MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesDic];
-                if (![messageM.isLook isEqualToString:@"1"]) {
-                    
+            NSMutableArray *itmeArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
+            
+            for (YTKKeyValueItem *itemob in dataA) {
+                [itmeArrayM addObject:itemob.itemObject];
+            }
+            NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+            
+            [itmeArrayM sortUsingDescriptors:@[bookNameDes]];
+            
+            _allMessgeArray = [NSArray arrayWithArray:itmeArrayM];
+            
+            if (isAllMessage) {
+                for (NSDictionary *mesitme in itmeArrayM) {
+                    MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesitme];
                     MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
                     [messageFrameM setMessageDataM:messageM];
                     [_messageDataArray addObject:messageFrameM];
-                    [mesDic setObject:@"1" forKey:@"isLook"];
                 }
                 
-                [[WLDataDBTool sharedService] putObject:mesDic withId:[mesDic objectForKey:@"comentid"] intoTable:KMessageHomeTableName];
+                [self.tableView reloadData];
+                
+            }else{
+                for (NSDictionary *mesitme in itmeArrayM) {
+
+                    if (![[mesitme objectForKey:@"isLook"] isEqualToString:@"1"]) {
+                        MessageHomeModel *messageM = [[MessageHomeModel alloc] init];
+                        [messageM setKeyValues:mesitme];
+                        
+                        [messageM setIsLook:@"1"];
+                        MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
+                        [messageFrameM setMessageDataM:messageM];
+                        
+                        [_messageDataArray addObject:messageFrameM];
+                        
+                        [[WLDataDBTool sharedService] putObject:[messageM keyValues] withId:messageM.commentid intoTable:KMessageHomeTableName];
+                    }
+                }
+                [self.tableView setTableFooterView:self.footButton];
+                [self.tableView reloadData];
             }
-            [self.tableView reloadData];
+        
+        }else{
+
+            [self.tableView addSubview:self.notView];
         }
     }
     return self;
@@ -85,11 +155,16 @@
 }
 
 #pragma mark - Table view data source
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 0.1;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

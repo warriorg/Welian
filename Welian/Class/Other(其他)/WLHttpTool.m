@@ -184,9 +184,7 @@
                     [[WLDataDBTool sharedService] putObject:dic  withId:[dic objectForKey:@"fid"] intoTable:KHomeDataTableName];
                 }
             }
-            
-            WLUserStatusesResult *result = [WLUserStatusesResult objectWithKeyValues:@{@"data":JSON}];
-            succeBlock (result);
+            succeBlock (jsonarray);
         }
         
     } failure:^(NSError *error) {
@@ -806,12 +804,40 @@
     NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
     [parameterDic setObject:@"ios" forKey:@"platform"];
     
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]&&[UserDefaults objectForKey:BPushRequestUserIdKey]) {
+    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
         [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-        [parameterDic setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
-        
     }
     NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+
+#pragma mark - 取一条评论、赞、转发
++ (void)loadOneFeedRelationParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    
+    NSDictionary *dic = @{@"type":@"loadOneFeedRelation",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+
+#pragma mark - 取动态消息列表
++ (void)loadFeedRelationParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    
+    NSDictionary *dic = @{@"type":@"loadFeedRelation",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
         succeBlock(JSON);

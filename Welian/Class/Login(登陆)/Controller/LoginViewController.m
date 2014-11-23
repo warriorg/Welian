@@ -69,7 +69,6 @@
     [self.logInButtoon addTarget:self action:@selector(logInButtoonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.logInButtoon setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.logInButtoon];
-    
 }
 
 - (void)signInButtonClick:(UIButton*)but

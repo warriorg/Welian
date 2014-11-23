@@ -25,7 +25,7 @@
     // 姓名
     CGFloat nameX = CGRectGetMaxX(_iconImageF)+10;
     CGFloat nameY = iconY;
-    CGFloat nameW = cellW -nameX-30;
+    CGFloat nameW = cellW -nameX-100;
     CGFloat nameH = 22;
     _nameLabelF = CGRectMake(nameX, nameY, nameW, nameH);
     

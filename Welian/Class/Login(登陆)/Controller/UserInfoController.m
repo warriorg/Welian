@@ -49,7 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationItem setTitle:@"加入weLian"];
+    [self.navigationItem setTitle:@"加入微链"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
 
     self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
@@ -94,7 +94,6 @@
             if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
                 
                 [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-                [reqstDic setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
             }
 
             [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {

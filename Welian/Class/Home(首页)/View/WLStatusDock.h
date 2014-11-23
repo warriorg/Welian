@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class WLStatusM;
+@class WLContentCellFrame;
 
 
-@interface WLStatusDock : UIImageView
+@interface WLStatusDock : UIView
 
 //* 转发*//
 @property (nonatomic, strong) UIButton *repostBtn;
@@ -21,6 +21,6 @@
 //* 赞*//
 @property (nonatomic, strong) UIButton *attitudeBtn;
 
-@property (nonatomic, strong) WLStatusM *status;
+@property (nonatomic, strong) WLContentCellFrame *contentFrame;
 
 @end

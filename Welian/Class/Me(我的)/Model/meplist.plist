@@ -17,14 +17,6 @@
 			<key>row</key>
 			<string>0</string>
 			<key>name</key>
-			<string>消息</string>
-			<key>icon</key>
-			<string>me_mail.png</string>
-		</dict>
-		<dict>
-			<key>row</key>
-			<string>1</string>
-			<key>name</key>
 			<string>发布</string>
 			<key>icon</key>
 			<string>me_write.png</string>

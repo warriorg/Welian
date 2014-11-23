@@ -8,26 +8,42 @@
 
 #import "FeedAndZanFrameM.h"
 
+@interface FeedAndZanFrameM()
+{
+    CGFloat _cellWidth;
+}
+@end
+
 @implementation FeedAndZanFrameM
+
+- (instancetype)initWithWidth:(CGFloat)width
+{
+    self = [super init];
+    if (self) {
+     _cellWidth = width;
+        
+    }
+    return self;
+}
 
 - (void)setFeedAndzanDic:(NSDictionary *)feedAndzanDic
 {
     _feedAndzanDic = feedAndzanDic;
-    CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width;
+//    CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width;
 
-    CGFloat imageX = 15;
-    CGFloat imageY = 15;
+    CGFloat imageX = 5;
+    CGFloat imageY = 0;
     _cellHigh = imageY;
     
     UIImage *image = [UIImage imageNamed:@"good_small"];
-    _zanImageF = CGRectMake(imageX, imageY, image.size.width, image.size.height);
+    _zanImageF = CGRectMake(imageX, 10, image.size.width, image.size.height);
     
     NSArray *feedArray = [feedAndzanDic objectForKey:@"forwards"];
     NSArray *zanArray = [feedAndzanDic objectForKey:@"zans"];
     
     NSDictionary *attrsDictionary = @{NSFontAttributeName:WLZanNameFont};
     
-    CGFloat labelW = cellWidth- CGRectGetMaxX(_zanImageF)-20;
+    CGFloat labelW = _cellWidth- CGRectGetMaxX(_zanImageF)-25;
     NSMutableString *zanStrM = [NSMutableString string];
     if (zanArray.count) {
         for (FeedAndZanModel *zanModel  in zanArray) {
@@ -42,14 +58,14 @@
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:zanStrM attributes:attrsDictionary];
         CGFloat zanlabelH = [self textViewHeightForAttributedText:attributedText andWidth:labelW];
         
-        _zanLabelF = CGRectMake(CGRectGetMaxX(_zanImageF)+10, imageY-10, labelW, zanlabelH);
+        _zanLabelF = CGRectMake(CGRectGetMaxX(_zanImageF)+5, imageY, labelW, zanlabelH);
         _zanNameStr = zanStrM;
-        _cellHigh = CGRectGetMaxY(_zanLabelF)+10;
+        _cellHigh = CGRectGetMaxY(_zanLabelF);
     }
     
     NSMutableString *feedStrM = [NSMutableString string];
     if (feedArray.count) {
-        _feedImageF = CGRectMake(imageX, _cellHigh, image.size.width, image.size.height);
+        _feedImageF = CGRectMake(imageX, _cellHigh+10, image.size.width, image.size.height);
         
         for (FeedAndZanModel *feedModel in feedArray) {
             if (feedModel != feedArray.lastObject) {
@@ -62,11 +78,11 @@
         
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:feedStrM attributes:attrsDictionary];
         CGFloat feedlabelH = [self textViewHeightForAttributedText:attributedText andWidth:labelW];
-        _feedLabelF = CGRectMake(CGRectGetMaxY(_zanImageF)+10, _cellHigh-10, labelW, feedlabelH);
+        
+        _feedLabelF = CGRectMake(CGRectGetMaxX(_zanImageF)+5, _cellHigh, labelW, feedlabelH);
         _feedNameStr = feedStrM;
-        _cellHigh = CGRectGetMaxY(_feedLabelF)+10;
+        _cellHigh = CGRectGetMaxY(_feedLabelF);
     }
-    
 }
 
 

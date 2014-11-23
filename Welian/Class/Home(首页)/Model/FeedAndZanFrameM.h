@@ -11,15 +11,17 @@
 
 @interface FeedAndZanFrameM : NSObject
 
-@property (nonatomic, assign) CGRect zanImageF;
-@property (nonatomic, assign) CGRect zanLabelF;
-@property (nonatomic, assign) CGRect feedImageF;
-@property (nonatomic, assign) CGRect feedLabelF;
+- (instancetype)initWithWidth:(CGFloat)width;
 
-@property (nonatomic, assign) CGFloat cellHigh;
+@property (nonatomic, assign, readonly) CGRect zanImageF;
+@property (nonatomic, assign, readonly) CGRect zanLabelF;
+@property (nonatomic, assign, readonly) CGRect feedImageF;
+@property (nonatomic, assign, readonly) CGRect feedLabelF;
 
-@property (nonatomic, strong) NSMutableString *zanNameStr;
-@property (nonatomic, strong) NSMutableString *feedNameStr;
+@property (nonatomic, assign, readonly) CGFloat cellHigh;
+
+@property (nonatomic, strong, readonly) NSMutableString *zanNameStr;
+@property (nonatomic, strong, readonly) NSMutableString *feedNameStr;
 
 @property (nonatomic, strong) NSDictionary *feedAndzanDic;
 @end

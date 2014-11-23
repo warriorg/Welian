@@ -24,6 +24,7 @@
 #import "HomeView.h"
 #import "MessageController.h"
 #import "UIBarButtonItem+Badge.h"
+#import "FeedAndZanModel.h"
 
 
 @interface HomeController () <UIActionSheetDelegate,CommentInfoVCDelegate>
@@ -66,9 +67,7 @@
             NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
             
             for (YTKKeyValueItem *aa in arrr) {
-                WLStatusM *statusM = [WLStatusM objectWithKeyValues:aa.itemObject];
-                WLStatusFrame *sf = [[WLStatusFrame alloc] init];
-                sf.status = statusM;
+                WLStatusFrame *sf = [self dataFrameWith:aa.itemObject];
                 [_dataArry addObject:sf];
             }
             
@@ -92,7 +91,6 @@
 }
 
 
-
 - (void)beginPullDownRefreshing
 {
     [self.tableView setFooterHidden:YES];
@@ -107,19 +105,17 @@
     }
     
     [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
-        WLUserStatusesResult *userStatus = JSON;
+        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
         // 1.在拿到最新微博数据的同时计算它的frame
-//        NSMutableArray *newFrames = [NSMutableArray array];
         [_dataArry removeAllObjects];
         
-        for (WLStatusM *statusM in userStatus.data) {
-            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
-            sf.status = statusM;
+        for (NSDictionary *dic in jsonarray) {
+            
+             WLStatusFrame *sf = [self dataFrameWith:dic];
             [_dataArry addObject:sf];
         }
         if (!_uid) {
-            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
             [self loadFirstFID];
             if (!_dataArry.count) {
                 [self.homeView setHidden:NO];
@@ -132,13 +128,43 @@
         
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
-        if (userStatus.data.count>=KCellConut) {
+        if (jsonarray.count>=KCellConut) {
             [self.tableView setFooterHidden:NO];
         }
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
     }];
+}
+
+- (WLStatusFrame*)dataFrameWith:(NSDictionary *)statusDic
+{
+    WLStatusM *statusM = [WLStatusM objectWithKeyValues:statusDic];
+    
+    NSArray *feedarray = [statusDic objectForKey:@"forwards"];
+    NSArray *zanarray = [statusDic objectForKey:@"zans"];
+    
+    NSMutableArray *forwardsM = [NSMutableArray array];
+    if (feedarray.count) {
+        for (NSDictionary *feeddic in feedarray) {
+            FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:feeddic];
+            [forwardsM addObject:mode];
+        }
+    }
+    [statusM setForwardsArray:forwardsM];
+    
+    NSMutableArray *zanArrayM = [NSMutableArray array];
+    if (zanarray.count) {
+        for (NSDictionary *zandic in zanarray) {
+            FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:zandic];
+            [zanArrayM addObject:mode];
+        }
+    }
+    [statusM setZansArray:zanArrayM];
+    
+    WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
+    sf.status = statusM;
+    return sf;
 }
 
 #pragma mark 加载更多数据
@@ -158,14 +184,13 @@
     }
     
     [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
-        WLUserStatusesResult *userStatus = JSON;
+        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
         // 1.在拿到最新微博数据的同时计算它的frame
         NSMutableArray *newFrames = [NSMutableArray array];
         
-        for (WLStatusM *statusM in userStatus.data) {
-            WLStatusFrame *sf = [[WLStatusFrame alloc] init];
-            sf.status = statusM;
+        for (NSDictionary *dic in jsonarray) {
+            WLStatusFrame *sf = [self dataFrameWith:dic];
             [newFrames addObject:sf];
         }
         
@@ -177,7 +202,7 @@
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
         
-        if (userStatus.data.count<KCellConut) {
+        if (jsonarray.count<KCellConut) {
             [self.tableView setFooterHidden:YES];
         }
         
@@ -210,11 +235,7 @@
 #pragma mark - 来了新消息
 - (void)messageHomenotif
 {
-    NSInteger badge = [self.navigationItem.leftBarButtonItem.badgeValue integerValue];
-    badge++;
-    NSString *badgeStr = [NSString stringWithFormat:@"%d",badge];
-    [UserDefaults setObject:badgeStr forKey:KMessagebadge];
-    [self.navigationController.tabBarItem setBadgeValue:badgeStr];
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
     [self.navigationItem.leftBarButtonItem setBadgeValue:badgeStr];
 }
 
@@ -240,7 +261,6 @@
         NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
         if (badge>0) {
             self.navigationItem.leftBarButtonItem.badgeValue = [UserDefaults objectForKey:KMessagebadge];
-//            [self.navigationController.tabBarItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
         }
     }
     // 背景颜色
@@ -264,7 +284,6 @@
     self.navigationItem.leftBarButtonItem.badgeValue = nil;
     [self.navigationController.tabBarItem setBadgeValue:nil];
 }
-
 
 
 #pragma mark - 发表状态
@@ -293,9 +312,9 @@
     [cell setHomeVC:self];
     
     // 赞
-    [cell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
-    // 评论
-    [cell.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+//    // 评论
+//    [cell.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
@@ -390,7 +409,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [_dataArry[indexPath.row] cellHeight];
+    return [_dataArry[indexPath.row] cellHigh]+5;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

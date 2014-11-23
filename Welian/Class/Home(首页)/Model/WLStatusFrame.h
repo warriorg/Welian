@@ -7,45 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WLContentCellFrame.h"
+#import "FeedAndZanFrameM.h"
 
 @class WLStatusM;
 
 @interface WLStatusFrame : NSObject
 
-/** 头像 */
-@property (nonatomic, assign, readonly) CGRect iconViewF;
-/** 昵称 */
-@property (nonatomic, assign, readonly) CGRect nameLabelF;
-/** 时间 */
-@property (nonatomic, assign, readonly) CGRect timeLabelF;
+- (instancetype)initWithWidth:(CGFloat)width;
 
-/** 投资认证图标 */
-@property (nonatomic, assign, readonly) CGRect inversImageF;
 
-/** 职务，公司 */
-@property (nonatomic, assign, readonly) CGRect jobLabelF;
+/**  内容的frame   */
+@property (nonatomic, strong, readonly)  WLContentCellFrame *contentFrame;
 
-/** 内容 */
-@property (nonatomic, assign, readonly) CGRect contentLabelF;
-/** 配图 */
-@property (nonatomic, assign, readonly) CGRect photoListViewF;
-/** 朋友关系图标 */
-@property (nonatomic, assign, readonly) CGRect mbViewF;
+/**  赞和转发人 frame   */
+@property (nonatomic, strong, readonly) FeedAndZanFrameM *feedAndZanFM;
 
-/** 转发微博的整体 */
-@property (nonatomic, assign, readonly) CGRect retweetViewF;
-/** 转发微博的昵称 */
-@property (nonatomic, assign, readonly) CGRect retweetNameLabelF;
-/** 转发微博的配图 */
-@property (nonatomic, assign, readonly) CGRect retweetPhotoListViewF;
-/** 转发微博的内容 */
-@property (nonatomic, assign, readonly) CGRect retweetContentLabelF;
-
-/** 转发微博的内容 */
-@property (nonatomic, assign, readonly) CGFloat cellHeight;
-
-/** dock Y  */
-@property (nonatomic, assign, readonly) CGFloat dockY;
+@property (nonatomic, assign, readonly) CGFloat cellHigh;
 
 /**
  *  微博数据模型

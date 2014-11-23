@@ -13,14 +13,13 @@
 
 //typedef void(^WLCellMoreBlock)(WLStatusFrame *statusF);
 
-
 @interface WLStatusCell : UITableViewCell
 
 /** 右上角按钮 */
 @property (nonatomic, strong) UIButton *moreBut;
 
 /** 微博工具条 */
-@property (nonatomic, strong) WLStatusDock *dock;
+//@property (nonatomic, strong) WLStatusDock *dock;
 
 /**
  *  创建一个cell

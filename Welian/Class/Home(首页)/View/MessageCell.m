@@ -87,8 +87,8 @@
     _commentLabel.emojiDelegate = self;
     _commentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _commentLabel.isNeedAtAndPoundSign = YES;
-    _commentLabel.font = IWContentFont;
-    _commentLabel.textColor = IWContentColor;
+    _commentLabel.font = WLZanNameFont;
+    _commentLabel.textColor = IWRetweetContentColor;
     _commentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_commentLabel];
     
@@ -126,7 +126,7 @@
     MessageHomeModel *messageDataM = messageFrameModel.messageDataM;
     
     [_iconImage setFrame:messageFrameModel.iconImageF];
-    [_iconImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    [_iconImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
     [_nameLabel setFrame:messageFrameModel.nameLabelF];
     [_nameLabel setText:messageDataM.name];
@@ -152,15 +152,14 @@
         }
         [_zanfeedImage sizeToFit];
     }
-    [_timeLabel setText:messageDataM.tiem];
+    [_timeLabel setText:[self created:messageDataM.created]];
     [_timeLabel setFrame:messageFrameModel.timeLabelF];
 
-    
     [_photImage setFrame:messageFrameModel.photImageF];
-    if (![messageDataM.feedpic isEqualToString:@"null"]) {
+    if (messageDataM.feedpic.length) {
         [_trendsLabel setHidden:YES];
         [_photImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.feedpic] placeholderImage:[UIImage imageNamed:@"picture_loading"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    }else{
+    }else if(messageDataM.feedcontent.length){
         [_trendsLabel setHidden:NO];
         [_photImage setImage:[UIImage resizedImage:@"login_input"]];
         _trendsLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -176,10 +175,36 @@
 }
 
 
+- (NSString *)created:(NSString *)time
+{
+    // 1.获得微博的发送时间
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *send = [fmt dateFromString:time];
+    
+    // 2.当前时间
+    NSDate *now = [NSDate date];
+    
+    // 3.获得当前时间和发送时间 的 间隔  (now - send)
+    NSString *timeStr = nil;
+    NSTimeInterval delta = [now timeIntervalSinceDate:send];
+    if (delta < 60) { // 一分钟内
+        timeStr = @"刚刚";
+    } else if (delta < 60 * 60) { // 一个小时内
+        timeStr = [NSString stringWithFormat:@"%.f分钟前", delta/60];
+    } else if (delta < 60 * 60 * 24) { // 一天内
+        timeStr = [NSString stringWithFormat:@"%.f小时前", delta/60/60];
+    } else { // 几天前
+        fmt.dateFormat = @"MM-dd";
+        timeStr = [fmt stringFromDate:send];
+    }
+    return timeStr;
+}
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
 }
 
 @end

@@ -11,7 +11,7 @@
 @interface MessageHomeModel : NSObject
 
 /**  该条消息的id   */
-@property (nonatomic, strong) NSString *comentid;
+@property (nonatomic, strong) NSString *commentid;
 
 /**  是否看过   */
 @property (nonatomic, strong) NSString *isLook;
@@ -42,6 +42,6 @@
 
 
 /**  时间   */
-@property (nonatomic, strong) NSString *tiem;
+@property (nonatomic, strong) NSString *created;
 
 @end

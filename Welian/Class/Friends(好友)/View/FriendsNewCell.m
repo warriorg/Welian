@@ -20,7 +20,7 @@
     [_iconImage.layer setCornerRadius:20];
     
     [_nameLabel setText:friendM.name];
-    [_massgeLabel setText:friendM.message];
+    [_massgeLabel setText:friendM.msg];
     
     if ([friendM.isAgree isEqualToString:@"1"]||[friendM.type isEqualToString:@"friendAdd"]) {
         [_accBut setHidden:YES];

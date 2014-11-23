@@ -79,7 +79,7 @@ static NSString *picCellid = @"PicCellID";
     [self.navigationItem setTitle:@"发布动态"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmPublish)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPublish)];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+//    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     //    self.backGScroll = [[UIScrollView alloc] initWithFrame:self.view.frame];
     //    [self.view addSubview:self.backGScroll];
 }

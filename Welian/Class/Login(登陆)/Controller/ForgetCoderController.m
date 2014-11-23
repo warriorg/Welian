@@ -100,7 +100,6 @@
     
     if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
         [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-        [reqstDic setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
     }
     
     [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {

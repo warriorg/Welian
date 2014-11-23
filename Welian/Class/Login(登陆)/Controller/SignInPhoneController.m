@@ -57,7 +57,7 @@
     
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneTextField.frame)+15, size.width-40, 40)];
     [textLabel setNumberOfLines:0];
-    [textLabel setText:@"该手机号码作为您在weLian的登陆账号，weLian不会在任何地方泄露您的手机号码。"];
+    [textLabel setText:@"该手机号码作为您在微链的登陆账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];
     [textLabel setFont:[UIFont systemFontOfSize:13.0]];
     [self.view addSubview:textLabel];
@@ -88,7 +88,6 @@
         
         if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
             [reqstDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-            [reqstDicM setObject:[UserDefaults objectForKey:BPushRequestUserIdKey] forKey:@"baiduuid"];
         }
         
         [WLHttpTool getCheckCodeParameterDic:reqstDicM success:^(id JSON) {

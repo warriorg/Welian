@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"关于weLian"];
+    [self setTitle:@"关于微链"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     UIImage *aboutImage = [UIImage imageNamed:@"about_welian_logo"];

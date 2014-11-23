@@ -40,9 +40,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://192.168.1.212:8080"
+#define WLHttpServer  @"http://test.welian.com:8080"
 
-#define ww @"http://192.168.1.212:8080     http://122.226.44.105:8080"
+#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080"
 
 // 百度地图key
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
@@ -58,6 +58,8 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KMessageHomeNotif @"KMessageHomeNotif"
 
 #define KMessagebadge @"KMessagebadge"
+
+#define KFriendbadge @"KFriendbadge"
 
 #define KNewFriendNotif @"KNewFriendNotif"
 
@@ -139,7 +141,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 转发的内容
 #define IWRetweetContentFont IWContentFont
 // 赞，转发姓名
-#define WLZanNameFont [UIFont systemFontOfSize:15]
+#define WLZanNameFont [UIFont boldSystemFontOfSize:14]
 
 
 // 每次加载cell的个数
@@ -165,34 +167,20 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define WLFriendsFriend 65
 
 // 每张图片的尺寸
-#define IWPhotoWH 85
+#define IWPhotoWH 70
 
 // 微博工具条的高度
-#define IWStatusDockH 40
+#define IWStatusDockH 35
 
 // 认证图标的尺寸
 #define IWVertifyWH 18
 
 // 头像图片的尺寸
-#define IWIconWHDefault 50
 #define IWIconWHSmall 40
-#define IWIconWHBig 85
 
 
 // 返回结果的键
-#define BPushRequestErrorCodeKey   @"error_code"
-#define BPushRequestErrorMsgKey    @"error_msg"
-#define BPushRequestRequestIdKey   @"request_id"
-#define BPushRequestAppIdKey       @"app_id"
-#define BPushRequestUserIdKey      @"user_id"
 #define BPushRequestChannelIdKey   @"channel_id"
-#define BPushRequestResponseParamsKey  @"response_params" // 服务端返回的原始值，其内容和以上的部分值可能有重合
 
-// 方法名, 用BPushRequestMethodKey取出的值
-#define BPushRequestMethod_Bind    @"bind"
-#define BPushRequestMethod_Unbind    @"unbind"
-#define BPushRequestMethod_SetTag  @"set_tag"
-#define BPushRequestMethod_DelTag  @"del_tag"
-#define BPushRequestMethod_ListTag  @"list_tag"
 
 #endif

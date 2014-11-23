@@ -9,14 +9,11 @@
 #import "AppDelegate.h"
 #import "BMapKit.h"
 #import "MainViewController.h"
-#import "LogInController.h"
+//#import "LogInController.h"
 #import "NavViewController.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "ShareEngine.h"
-#import "BPush.h"
-#import "JSONKit.h"
-#import "OpenUDID.h"
 #import "WLTool.h"
 #import "LoginViewController.h"
 #import "NewFriendModel.h"
@@ -24,8 +21,12 @@
 #import "WLDataDBTool.h"
 #import "MobClick.h"
 #import "MessageHomeModel.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
-#define SUPPORT_IOS8 1
+// production
+#define kAppId           @"CgF0UHbnv0827eFprsyYT9"
+#define kAppKey          @"eAJBPqawMhAi406E0FcSh3"
+#define kAppSecret       @"rOSsO1iPvj6H39gltxdDJ6"
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
@@ -38,42 +39,41 @@
 
 BMKMapManager* _mapManager;
 
+
+- (void)registerRemoteNotification
+{
+#ifdef __IPHONE_8_0
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:nil];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
+    } else {
+        UIRemoteNotificationType apn_type = (UIRemoteNotificationType)(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge);
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:apn_type];
+    }
+#else
+    UIRemoteNotificationType apn_type = (UIRemoteNotificationType)(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge);
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:apn_type];
+#endif
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // 百度推送
-    [BPush setupChannel:launchOptions];
-    [BPush setDelegate:self];
-    
     // 友盟统计
     [self umengTrack];
-    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     
-    if ([localVersion isEqualToString:@"1.0.1"]) {
-        [[WLDataDBTool sharedService] createTableWithName:KNewFriendsTableName];
-    }
-    
-#if SUPPORT_IOS8
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }else
-#endif
-    {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    }
-
     // 要使用百度地图，请先启动BaiduMapManager
 	_mapManager = [[BMKMapManager alloc]init];
 	BOOL ret = [_mapManager start:KBMK_Key generalDelegate:self];
 	if (!ret) {
         
 	}
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     // 添加微信分享
     [[ShareEngine sharedShareEngine] registerApp];
-    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -85,18 +85,13 @@ BMKMapManager* _mapManager;
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
         
-        /**
-         *  已登陆
-         */
+        /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
         [self.window setRootViewController:mainVC];
 
     }else{
-        /**
-         *  未登陆
-         */
-        
+        /** 未登陆 */
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
         [self.window setRootViewController:nav];
@@ -107,27 +102,31 @@ BMKMapManager* _mapManager;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    NSDictionary *userInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+    // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
+    [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
     
-    NSDictionary *apsDict =  [userInfo objectForKey:@"aps"];
-    NSString *alert = [apsDict objectForKey:@"alert"];
-    if (alert) {
-        
-        NSString *type = [userInfo objectForKey:@"type"];
-        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
-        [newfrendM setMessage:alert];
-        NSDictionary *newDic = [newfrendM keyValues];
-        
-        if ([type isEqualToString:@"friendAdd"]) {
-            [newfrendM setIsAgree:@"1"];
-        }else{
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-        }
-        
-        [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-    }
+    // [2]:注册APNS
+    [self registerRemoteNotification];
+    
+    // [2-EXT]: 获取启动时收到的APN
+//    NSDictionary* message = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//    if (message) {
+//        NSString *payloadMsg = [message objectForKey:@"payload"];
+//        NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
+//    }
+    
+//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     // 版本更新
+    [self detectionUpdataVersionDic];
+    return YES;
+}
+
+
+#pragma mark - 检测版本更新
+- (void)detectionUpdataVersionDic
+{
     [WLTool updateVersions:^(NSDictionary *versionDic) {
         if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
             NSString *msg = [versionDic objectForKey:@"msg"];
@@ -135,37 +134,9 @@ BMKMapManager* _mapManager;
             
             [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
         }else{
-
         }
-        
     }];
-//    [self loadFriendRequest];
-     application.applicationIconBadgeNumber =0;
-    return YES;
 }
-
-#pragma mark - 友盟统计
-- (void)umengTrack {
-    
-    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
-//    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    //
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:@"www.welian.com"];
-    //   reportPolicy为枚举类型,可以为 REALTIME, BATCH,SENDDAILY,SENDWIFIONLY几种
-    //   channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
-    
-    
-    //      [MobClick checkUpdate];   //自动更新检查, 如果需要自定义更新请使用下面的方法,需要接收一个(NSDictionary *)appInfo的参数
-    //    [MobClick checkUpdateWithDelegate:self selector:@selector(updateMethod:)];
-    
-//    [MobClick updateOnlineConfig];  //在线参数配置
-//    
-//    //    1.6.8之前的初始化方法
-//    //    [MobClick setDelegate:self reportPolicy:REALTIME];  //建议使用新方法
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
-}
-
 
 #pragma mark - 版本更新跳转
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -175,7 +146,91 @@ BMKMapManager* _mapManager;
     }
 }
 
-#if SUPPORT_IOS8
+
+- (void)startSdkWith:(NSString *)appID appKey:(NSString *)appKey appSecret:(NSString *)appSecret
+{
+    if (!_gexinPusher) {
+        _sdkStatus = SdkStatusStoped;
+        
+        self.appID = appID;
+        self.appKey = appKey;
+        self.appSecret = appSecret;
+        _clientId = nil;
+        
+        NSError *err = nil;
+        _gexinPusher = [GexinSdk createSdkWithAppId:_appID
+                                             appKey:_appKey
+                                          appSecret:_appSecret
+                                         appVersion:@"0.0.0"
+                                           delegate:self
+                                              error:&err];
+        if (!_gexinPusher) {
+            
+        } else {
+            _sdkStatus = SdkStatusStarting;
+        }
+    }
+}
+
+- (void)stopSdk
+{
+    if (_gexinPusher) {
+        [_gexinPusher destroy];
+        _gexinPusher = nil;
+        
+        _sdkStatus = SdkStatusStoped;
+        
+        _clientId = nil;
+    }
+}
+
+
+- (BOOL)checkSdkInstance
+{
+    if (!_gexinPusher) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:@"SDK未启动" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)setDeviceToken:(NSString *)aToken
+{
+    if (![self checkSdkInstance]) {
+        return;
+    }
+    
+    [_gexinPusher registerDeviceToken:aToken];
+}
+
+- (BOOL)setTags:(NSArray *)aTags error:(NSError **)error
+{
+    if (![self checkSdkInstance]) {
+        return NO;
+    }
+    
+    return [_gexinPusher setTags:aTags];
+}
+
+- (NSString *)sendMessage:(NSData *)body error:(NSError **)error {
+    if (![self checkSdkInstance]) {
+        return nil;
+    }
+    
+    return [_gexinPusher sendMessage:body error:error];
+}
+
+#pragma mark - 友盟统计
+- (void)umengTrack {
+    
+    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
+//    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:@"www.welian.com"];
+}
+
+#if __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
     //register to receive notifications
@@ -185,167 +240,86 @@ BMKMapManager* _mapManager;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [BPush registerDeviceToken: deviceToken];
-    if (![UserDefaults objectForKey:BPushRequestUserIdKey]) {
-        
-        [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
-    }else{
-                DLog(@"百度推送 ----------------加载成功");
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    _deviceToken = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    // [3]:向个推服务器注册deviceToken
+    if (_gexinPusher) {
+        [_gexinPusher registerDeviceToken:_deviceToken];
     }
 }
 
-// 必须，如果正确调用了setDelegate，在bindChannel之后，结果在这个回调中返回。
-// 若绑定失败，请进行重新绑定，确保至少绑定成功一次
-- (void) onMethod:(NSString*)method response:(NSDictionary*)data
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-        NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
-    if ([BPushRequestMethod_Bind isEqualToString:method]) {
-//        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
-        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
-        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
-//        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
-        
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        
-        if (returnCode == BPushErrorCode_Success) {
-            
-            // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
-            [UserDefaults setObject:userid forKey:BPushRequestUserIdKey];
-            [UserDefaults setObject:channelid forKey:BPushRequestChannelIdKey];
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            if (mode.sessionid) {
-                [WLHttpTool updateClientSuccess:^(id JSON) {
-                    
-                } fail:^(NSError *error) {
-                    
-                }];
-
-            }
-            DLog(@"百度推送 ----------------加载成功");
-        }
-    } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        if (returnCode == BPushErrorCode_Success) {
-            
-            [UserDefaults removeObjectForKey:BPushRequestChannelIdKey];
-            [UserDefaults removeObjectForKey:BPushRequestUserIdKey];
-
-        }
+    // [3-EXT]:如果APNS注册失败，通知个推服务器
+    if (_gexinPusher) {
+        [_gexinPusher registerDeviceToken:@""];
     }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+}
+
+#pragma mark - 接收推送收取一条
+- (void)inceptMessage:(NSDictionary*)userInfo
+{
     NSString *type = [userInfo objectForKey:@"type"];
-//    NSString *uid = [userInfo objectForKey:@"uid"];
-//    NSString *name = [userInfo objectForKey:@"name"];
-//    NSString *avatar = [userInfo objectForKey:@"avatar"];
-//    NSString *company = [userInfo objectForKey:@"company"];
-//    NSString *position = [userInfo objectForKey:@"position"];
-    DLog(@"%@",userInfo);
-    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithDictionary:[userInfo objectForKey:@"data"]];
+    [dataDic setObject:type forKey:@"type"];
     
-    
-    if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {
-        
-        [[WLDataDBTool sharedService] putObject:userInfo withId:[NSString stringWithFormat:@"%@",[userInfo objectForKey:@"comentid"]] intoTable:KMessageHomeTableName];
-        
+    if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
+
+        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
+        NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
+        badge++;
+        [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
         [[NSNotificationCenter defaultCenter] postNotificationName:KMessageHomeNotif object:self];
         
-    }else{
-        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:userInfo];
-        [newfrendM setMessage:alert];
-        NSDictionary *newDic = [newfrendM keyValues];
+    }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){   // 好友消息推送
+        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
         if ([type isEqualToString:@"friendAdd"]) {
             [newfrendM setIsAgree:@"1"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         }else{
+            
+            NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
+            badge++;
+            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
         }
         
-        [[WLDataDBTool sharedService] putObject:newDic withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-    }
-    
-    [application setApplicationIconBadgeNumber:0];
-
-    [BPush handleNotification:userInfo];
-}
-
-
-
-
-- (void)onGetNetworkState:(int)iError
-{
-    if (0 == iError) {
-        DLog(@"百度地图-------------联网成功");
-    }
-    else{
-        DLog(@"百度地图------------- %d",iError);
-    }
-    
-}
-
-- (void)onGetPermissionState:(int)iError
-{
-    if (0 == iError) {
-        DLog(@"百度地图-------------授权成功");
-    }
-    else {
-        DLog(@"百度地图------------- %d",iError);
+        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
     }
 }
 
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-    // 清除内存中的图片缓存
-    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
-    [mgr cancelAll];
-    [mgr.imageCache clearMemory];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DLog(@"应用程序将要进入非活动状态，即将进入后台");
+    if (!([UserDefaults objectForKey:KFriendbadge]||[UserDefaults objectForKey:KMessagebadge])) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
+}
+
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     DLog(@"如果应用程序支持后台运行，则应用程序已经进入后台运行");
+    // [EXT] 切后台关闭SDK，让SDK第一时间断线，让个推先用APN推送
+    [self stopSdk];
     
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:KNEWStustUpdate object:self];
     DLog(@"应用程序将要进入活动状态，即将进入前台运行");
-    [self loadFriendRequest];
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
 
-- (void)loadFriendRequest
-{
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    if (!mode.sessionid) return;
-    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
-        
-        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
-        for (NSDictionary *dic  in jsonArray) {
-            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
-           YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
-            if (![item.itemObject objectForKey:@"isLook"]) {
-                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                [mutablDic setObject:fid forKey:@"uid"];
-                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-            }
-        }
-        
-    } fail:^(NSError *error) {
-        
-    }];
 }
 
 
@@ -353,10 +327,16 @@ BMKMapManager* _mapManager;
 {
     DLog(@"应用程序已进入前台，处于活动状态");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // [EXT] 重新上线
+    [self startSdkWith:_appID appKey:_appKey appSecret:_appSecret];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    
+    if (!([UserDefaults objectForKey:KFriendbadge]||[UserDefaults objectForKey:KMessagebadge])) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
@@ -369,4 +349,48 @@ BMKMapManager* _mapManager;
 {
     return [[ShareEngine sharedShareEngine] handleOpenURL:url];
 }
+
+#pragma mark - GexinSdkDelegate
+- (void)GexinSdkDidRegisterClient:(NSString *)clientId
+{
+    // [4-EXT-1]: 个推SDK已注册
+    _sdkStatus = SdkStatusStarted;
+    _clientId = clientId;
+    [UserDefaults setObject:clientId forKey:BPushRequestChannelIdKey];
+    //    [self stopSdk];
+}
+
+- (void)GexinSdkDidReceivePayload:(NSString *)payloadId fromApplication:(NSString *)appId
+{
+    // [4]: 收到个推消息
+    _payloadId = payloadId;
+    
+    NSData *payload = [_gexinPusher retrivePayloadById:payloadId];
+    NSDictionary *payloadDic = [NSJSONSerialization JSONObjectWithData:payload options:0 error:nil];
+    [self inceptMessage:payloadDic];
+    DLog(@"-----------个推消息--------%@    \n%d",payloadDic,++_lastPayloadIndex);
+}
+
+
+- (void)GexinSdkDidSendMessage:(NSString *)messageId result:(int)result {
+    // [4-EXT]:发送上行消息结果反馈
+//    NSString *record = [NSString stringWithFormat:@"Received sendmessage:%@ result:%d", messageId, result];
+}
+
+- (void)GexinSdkDidOccurError:(NSError *)error
+{
+    // [EXT]:个推错误报告，集成步骤发生的任何错误都在这里通知，如果集成后，无法正常收到消息，查看这里的通知。
+    DLog(@"%@",[NSString stringWithFormat:@">>>[GexinSdk error]:%@", [error localizedDescription]]);
+
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    // 清除内存中的图片缓存
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
+}
+
+
 @end

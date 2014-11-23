@@ -22,7 +22,7 @@
         // 1.初始化9个图片对象
         for (int i = 0; i<IWPhotoMaxCount; i++) {
             WLPhotoView *photoView = [[WLPhotoView alloc] init];
-            [photoView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+//            [photoView setContentScaleFactor:[[UIScreen mainScreen] scale]];
             [self addSubview:photoView];
         }
     }
@@ -125,7 +125,7 @@
 }
 
 
-+ (CGSize)photoListSizeWithCount:(int)count
++ (CGSize)photoListSizeWithCount:(int)count 
 {
     // 1.只有1张图片
     if (count == 1) {
@@ -145,7 +145,7 @@
     CGFloat photoListW = colCount * IWPhotoWH + (colCount - 1) * IWPhotoMargin;
     CGFloat photoListH = rowCount * IWPhotoWH + (rowCount - 1) * IWPhotoMargin;
     
-    return CGSizeMake(photoListW, photoListH+5);
+    return CGSizeMake(photoListW, photoListH);
 }
 
 

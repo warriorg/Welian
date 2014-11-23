@@ -12,7 +12,7 @@
 #import "WLTool.h"
 #import "NavViewController.h"
 #import "AboutViewController.h"
-#import "BPush.h"
+#import "LoginViewController.h"
 
 @interface SettingController () <UIActionSheetDelegate>
 {
@@ -81,15 +81,13 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
-        UIStoryboard *storyBoard=[UIStoryboard storyboardWithName:@"LogInStoryboard" bundle:nil];
         
-        NavViewController  *detailViewController = [storyBoard instantiateViewControllerWithIdentifier:@"LogInStoryboardNav"];
         UserInfoModel *mode = [[UserInfoModel alloc] init];
         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-        [BPush unbindChannel];
-//        [UserDefaults removeObjectForKey:BPushRequestUserIdKey];
-//        [UserDefaults removeObjectForKey:BPushRequestChannelIdKey];
         [UserDefaults removeObjectForKey:KFirstFID];
+        
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
         [self.view.window setRootViewController:detailViewController];
     }
 }

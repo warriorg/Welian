@@ -99,7 +99,7 @@ static NSString *fridcellid = @"fridcellid";
         }
         
         if (wlFriend.count) {
-            [self.allArray addObject:@{@"n":@"1",@"key":[NSString stringWithFormat:@"  %d个通讯录好友待添加",wlFriend.count],@"array":wlFriend}];
+            [self.allArray addObject:@{@"n":@"1",@"key":[NSString stringWithFormat:@"  %d个通讯录好友已加入微链",wlFriend.count],@"array":wlFriend}];
         }
         if (noFriend.count) {
             [self.allArray addObject:@{@"n":@"2",@"key":[NSString stringWithFormat:@"  %d个通讯录好友可邀请",noFriend.count],@"array":noFriend}];
@@ -278,7 +278,7 @@ static NSString *fridcellid = @"fridcellid";
                 [alert show];
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){  // 短信验证
                 
-                [self showMessageView:_selecFriend.mobile title:@"邀请好友" body:@"我正在玩weLian，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+                [self showMessageView:_selecFriend.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
             }
         }
         
@@ -299,8 +299,8 @@ static NSString *fridcellid = @"fridcellid";
     
     UIImage *shareImage = [UIImage imageWithData:data];
     
-    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩weLian",mode.name];
-    NSString *desStr = @"我正在玩weLian，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
+    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
     
     if (buttonIndex==0) {
         [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:shareImage WithScene:weChat];
