@@ -25,11 +25,11 @@
 #import "MessageController.h"
 #import "UIBarButtonItem+Badge.h"
 #import "FeedAndZanModel.h"
-
+#import "CommentMode.h"
 
 @interface HomeController () <UIActionSheetDelegate,CommentInfoVCDelegate>
 {
-    NSMutableArray *_dataArry;
+   __block NSMutableArray *_dataArry;
     
     NSIndexPath *_clickIndex;
     NSNumber *_uid;
@@ -161,6 +161,16 @@
         }
     }
     [statusM setZansArray:zanArrayM];
+    
+    NSArray *comments = [statusDic objectForKey:@"comments"];
+    NSMutableArray *commentArrayM = [NSMutableArray array];
+    if (comments.count) {
+        for (NSDictionary *commDic in comments) {
+            CommentMode *commMode = [CommentMode objectWithKeyValues:commDic];
+            [commentArrayM addObject:commMode];
+        }
+    }
+    [statusM setCommentsArray:commentArrayM];
     
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
@@ -306,73 +316,20 @@
 {
     // 1.取出一个cell
     WLStatusCell *cell = [WLStatusCell cellWithTableView:tableView];
+    [cell setHomeVC:self];
     // 2.给cell传递模型数据
     // 传递的模型：文字数据 + 子控件frame数据
     cell.statusFrame = _dataArry[indexPath.row];
-    [cell setHomeVC:self];
-    
-    // 赞
-//    [cell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
-//    // 评论
-//    [cell.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
-    
+    cell.feedzanBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    };
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
-}
-
-
-#pragma mark - 赞
-- (void)attitudeBtnClick:(UIButton*)but event:(id)event
-{
-    NSSet *touches = [event allTouches];
-    UITouch *touch = [touches anyObject];
-    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
-    if(indexPath)
-    {
-        [but setEnabled:NO];
-        WLStatusFrame *statF = _dataArry[indexPath.row];
-        if (statF.status.iszan==1) {
-            [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statF.status.fid)} success:^(id JSON) {
-                [statF.status setIszan:0];
-                statF.status.zan -= 1;
-                [_dataArry replaceObjectAtIndex:indexPath.row withObject:statF];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                [but setEnabled:YES];
-            } fail:^(NSError *error) {
-                [but setEnabled:YES];
-            }];
-        }else{
-        
-            [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statF.status.fid)} success:^(id JSON) {
-                [statF.status setIszan:1];
-                statF.status.zan +=1;
-                [_dataArry replaceObjectAtIndex:indexPath.row withObject:statF];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                [but setEnabled:YES];
-            } fail:^(NSError *error) {
-                [but setEnabled:YES];
-            }];
-        }
-    }
-}
-
-#pragma mark- 评论
-- (void)commentBtnClick:(UIButton*)but event:(id)event
-{
-    NSSet *touches = [event allTouches];
-    UITouch *touch = [touches anyObject];
-    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
-    if(indexPath)
-    {
-        CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
-        WLStatusFrame *statusF = _dataArry[indexPath.row];
-        [commentInfo setStatusFrame:statusF];
-        [commentInfo setBeginEdit:YES];
-        [self.navigationController pushViewController:commentInfo animated:YES];
-    }
 }
 
 #pragma mark - 更多按钮
@@ -398,7 +355,7 @@
         
         [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
             
-            [_dataArry removeObjectAtIndex:_clickIndex.row];
+            [_dataArry removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
         } fail:^(NSError *error) {
             

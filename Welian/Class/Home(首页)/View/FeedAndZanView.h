@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong) FeedAndZanFrameM *feedAndZanFrame;
 
-@property (nonatomic, strong) UIViewController *commentVC;
+@property (nonatomic, weak) UIViewController *commentVC;
 
 @end

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommentHomeViewFrame.h"
 
 @interface CommentCellView : UIImageView
 
+@property (nonatomic, strong) CommentHomeViewFrame *commenFrame;
 
+@property (nonatomic, weak) UIViewController *commentVC;
 
 @end

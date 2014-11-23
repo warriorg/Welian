@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WLContentCellFrame.h"
 #import "FeedAndZanFrameM.h"
-
+#import "CommentHomeViewFrame.h"
 @class WLStatusM;
 
 @interface WLStatusFrame : NSObject
@@ -22,6 +22,9 @@
 
 /**  赞和转发人 frame   */
 @property (nonatomic, strong, readonly) FeedAndZanFrameM *feedAndZanFM;
+
+/**  评论 frame   */
+@property (nonatomic, strong, readonly) CommentHomeViewFrame *commentListFrame;
 
 @property (nonatomic, assign, readonly) CGFloat cellHigh;
 

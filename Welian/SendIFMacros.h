@@ -141,7 +141,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 转发的内容
 #define IWRetweetContentFont IWContentFont
 // 赞，转发姓名
-#define WLZanNameFont [UIFont boldSystemFontOfSize:14]
+#define WLZanNameFont [UIFont systemFontOfSize:14]
 
 
 // 每次加载cell的个数

@@ -42,7 +42,6 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    //    _cellMoreBlock = moreBlock;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // 1.添加原创微博的子控件

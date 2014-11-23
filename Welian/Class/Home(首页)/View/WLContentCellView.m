@@ -19,6 +19,7 @@
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "ShareEngine.h"
+#import "CommentInfoController.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,LXActivityDelegate>
 {
@@ -35,6 +36,7 @@
     /** 转发微博的内容 */
     MLEmojiLabel *_retweetContentLabel;
 }
+
 @end
 
 
@@ -77,6 +79,11 @@
     
     // 添加工具条
     _dock = [[WLStatusDock alloc] init];
+    // 赞
+    [_dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    //    // 评论
+    [_dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     [_dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_dock];
 }
@@ -178,6 +185,59 @@
     _dock.contentFrame = contenFrame;
     [_dock setFrame:contenFrame.dockFrame];
 }
+
+#pragma mark - 赞
+- (void)attitudeBtnClick:(UIButton*)but event:(id)event
+{
+    [but setEnabled:NO];
+    WLStatusM *statM = _statusFrame.status;
+        if (statM.iszan==1) {
+            NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            
+            for (FeedAndZanModel *zanM in statM.zansArray) {
+                if ([zanM.user.uid integerValue] == [mode.uid integerValue]) {
+                    [zans removeObject:zanM];
+                }
+            }
+            [statM setZansArray:zans];
+            [statM setIszan:0];
+            statM.zan -= 1;
+            
+            [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.fid)} success:^(id JSON) {
+                [but setEnabled:YES];
+            } fail:^(NSError *error) {
+                [but setEnabled:YES];
+            }];
+        }else{
+            NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
+            FeedAndZanModel *zanmodel = [[FeedAndZanModel alloc] init];
+            [zanmodel setUser:[[UserInfoTool sharedUserInfoTool] getUserInfoModel]];
+            [zans insertObject:zanmodel atIndex:0];
+            [statM setZansArray:zans];
+            [statM setIszan:1];
+            statM.zan +=1;
+            [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.fid)} success:^(id JSON) {
+                [but setEnabled:YES];
+            } fail:^(NSError *error) {
+                [but setEnabled:YES];
+            }];
+        }
+    
+    if (self.feedzanBlock) {
+        self.feedzanBlock (statM);
+    }
+}
+
+#pragma mark- 评论
+- (void)commentBtnClick:(UIButton*)but event:(id)event
+{
+    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+    [commentInfo setStatusFrame:_statusFrame];
+    [commentInfo setBeginEdit:YES];
+    [self.homeVC.navigationController pushViewController:commentInfo animated:YES];
+}
+
 
 #pragma mark - 转发
 - (void)transmitButClick:(UIButton*)but event:(id)event

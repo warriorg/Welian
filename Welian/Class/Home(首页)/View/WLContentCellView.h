@@ -9,15 +9,20 @@
 #import <UIKit/UIKit.h>
 @class WLStatusFrame;
 @class WLStatusDock;
+@class WLStatusM;
+
+typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
 
 @interface WLContentCellView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
-@property (nonatomic, strong) UIViewController *homeVC;
+@property (nonatomic, weak) UIViewController *homeVC;
 
 /** 微博工具条 */
 @property (nonatomic, strong) WLStatusDock *dock;
+
+@property (nonatomic, copy) FeedAndZanBlock feedzanBlock;
 
 /**
  *  模型（数据 + 子控件的frame）

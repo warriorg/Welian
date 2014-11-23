@@ -51,9 +51,17 @@
     if (status.forwardsArray.count) {
         [daafa setObject:status.forwardsArray forKey:@"forwards"];
     }
-    _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:_cellWidth];
-    [_feedAndZanFM setFeedAndzanDic:daafa];
-    _cellHigh += _feedAndZanFM.cellHigh;
+    if (status.zansArray.count||status.forwardsArray.count) {
+        _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:_cellWidth];
+        [_feedAndZanFM setFeedAndzanDic:daafa];
+        _cellHigh += _feedAndZanFM.cellHigh;
+    }
+    
+    if (status.commentsArray.count) {
+        _commentListFrame = [[CommentHomeViewFrame alloc] initWithWidth:_cellWidth];
+        [_commentListFrame setStatusM:status];
+        _cellHigh += _commentListFrame.cellHigh;
+    }
     
 }
 

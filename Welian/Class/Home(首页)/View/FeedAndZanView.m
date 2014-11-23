@@ -36,7 +36,6 @@
         [self addSubview:_feedimageview];
         
         _zanLabel = [[HBVLinkedTextView alloc] init];
-        [_zanLabel setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
         [_zanLabel setTextColor:[UIColor grayColor]];
         _zanLabel.font = WLZanNameFont;
         _zanLabel.backgroundColor = [UIColor clearColor];
@@ -60,22 +59,13 @@
     NSMutableArray *zannameA = [NSMutableArray array];
     NSMutableArray *feednameA = [NSMutableArray array];
     
-    [_zanLabel reset];
-    [_feedLabel reset];
-    
-//    _feedLabel.scrollEnabled = NO;
-//    _feedLabel.allowsEditingTextAttributes = NO;
-//    _feedLabel.selectable = NO;
-//    
-//    _zanLabel.scrollEnabled = NO;
-//    _zanLabel.allowsEditingTextAttributes = NO;
-//    _zanLabel.selectable = NO;
-    
     if (zanArray.count) {
         [_zanimageview setHidden:NO];
         [_zanLabel setHidden:NO];
+        [_zanLabel setUserInteractionEnabled:YES];
         [_zanimageview setFrame:feedAndZanFrame.zanImageF];
         [_zanLabel setFrame:feedAndZanFrame.zanLabelF];
+        [_zanLabel setText:feedAndZanFrame.zanNameStr];
         
         for (FeedAndZanModel *zanModel  in zanArray) {
             [zannameA addObject:zanModel.user.name];
@@ -84,17 +74,19 @@
              defaultAttributes:[self exampleAttributes]
          highlightedAttributes:[self exampleAttributes]
                     tapHandler:[self exampleHandlerWithTitle:@"zan"]];
-        [_zanLabel setText:feedAndZanFrame.zanNameStr];
         
     }else{
+        [_zanLabel setUserInteractionEnabled:NO];
         [_zanLabel setHidden:YES];
         [_zanimageview setHidden:YES];
     }
     if (feedArray.count) {
         [_feedLabel setHidden:NO];
+        [_feedLabel setUserInteractionEnabled:YES];
         [_feedimageview setHidden:NO];
         [_feedLabel setFrame:feedAndZanFrame.feedLabelF];
         [_feedimageview setFrame:feedAndZanFrame.feedImageF];
+        [_feedLabel setText:feedAndZanFrame.feedNameStr];
         for (FeedAndZanModel *feedModel in feedArray) {
             [feednameA addObject:feedModel.user.name];
         }
@@ -102,12 +94,12 @@
               defaultAttributes:[self exampleAttributes]
           highlightedAttributes:[self exampleAttributes]
                      tapHandler:[self exampleHandlerWithTitle:@"feed"]];
-        [_feedLabel setText:feedAndZanFrame.feedNameStr];
     }else{
         [_feedLabel setHidden:YES];
+        [_feedLabel setUserInteractionEnabled:NO];
         [_feedimageview setHidden:YES];
     }
-    DLog(@"%@----%@",feedAndZanFrame.zanNameStr,feedAndZanFrame.feedNameStr);
+//    DLog(@"%@----%@",feedAndZanFrame.zanNameStr,feedAndZanFrame.feedNameStr);
 }
 
 - (NSMutableDictionary *)exampleAttributes

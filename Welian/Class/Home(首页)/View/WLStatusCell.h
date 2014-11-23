@@ -10,13 +10,16 @@
 #import "WLStatusDock.h"
 //#import "HomeController.h"
 @class WLStatusFrame;
+@class WLStatusM;
 
-//typedef void(^WLCellMoreBlock)(WLStatusFrame *statusF);
+typedef void(^WLFeedAndZanBlock)(WLStatusM *statusM);
 
 @interface WLStatusCell : UITableViewCell
 
 /** 右上角按钮 */
 @property (nonatomic, strong) UIButton *moreBut;
+
+@property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
 
 /** 微博工具条 */
 //@property (nonatomic, strong) WLStatusDock *dock;

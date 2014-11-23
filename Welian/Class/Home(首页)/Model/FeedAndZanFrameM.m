@@ -31,7 +31,7 @@
     _feedAndzanDic = feedAndzanDic;
 //    CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width;
 
-    CGFloat imageX = 5;
+    CGFloat imageX = 10;
     CGFloat imageY = 0;
     _cellHigh = imageY;
     
@@ -43,7 +43,7 @@
     
     NSDictionary *attrsDictionary = @{NSFontAttributeName:WLZanNameFont};
     
-    CGFloat labelW = _cellWidth- CGRectGetMaxX(_zanImageF)-25;
+    CGFloat labelW = _cellWidth- CGRectGetMaxX(_zanImageF)-20;
     NSMutableString *zanStrM = [NSMutableString string];
     if (zanArray.count) {
         for (FeedAndZanModel *zanModel  in zanArray) {
@@ -65,7 +65,7 @@
     
     NSMutableString *feedStrM = [NSMutableString string];
     if (feedArray.count) {
-        _feedImageF = CGRectMake(imageX, _cellHigh+10, image.size.width, image.size.height);
+        _feedImageF = CGRectMake(imageX, _cellHigh, image.size.width, image.size.height);
         
         for (FeedAndZanModel *feedModel in feedArray) {
             if (feedModel != feedArray.lastObject) {
@@ -79,7 +79,7 @@
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:feedStrM attributes:attrsDictionary];
         CGFloat feedlabelH = [self textViewHeightForAttributedText:attributedText andWidth:labelW];
         
-        _feedLabelF = CGRectMake(CGRectGetMaxX(_zanImageF)+5, _cellHigh, labelW, feedlabelH);
+        _feedLabelF = CGRectMake(CGRectGetMaxX(_zanImageF)+5, _cellHigh-10, labelW, feedlabelH);
         _feedNameStr = feedStrM;
         _cellHigh = CGRectGetMaxY(_feedLabelF);
     }

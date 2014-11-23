@@ -28,6 +28,7 @@
 
 #import "WLContentCellView.h"
 #import "FeedAndZanView.h"
+#import "CommentCellView.h"
 
 @interface WLStatusCell () <UIActionSheetDelegate>
 {
@@ -35,8 +36,11 @@
     WLCellHead *_cellHeadView;
 //    /** 内容 */
     WLContentCellView *_contentView;
-    
+    // 赞和转发
     FeedAndZanView *_feznView;
+    
+    // 评论
+    CommentCellView *_commentView;
     
     UserInfoModel *_mode;
 }
@@ -67,12 +71,22 @@
         [self.contentView addSubview:_cellHeadView];
 
         _contentView = [[WLContentCellView alloc] init];
+        __weak WLStatusCell *weakcell = self;
+        _contentView.feedzanBlock = ^(WLStatusM *statusM){
+            if (weakcell.feedzanBlock) {
+                weakcell.feedzanBlock (statusM);
+            }
+            
+        };
         [self.contentView addSubview:_contentView];
-        
         
         _feznView = [[FeedAndZanView alloc] init];
         [_feznView setImage:[UIImage resizedImage:@"home_grc_background" leftScale:0.1 topScale:0.9]];
         [self.contentView addSubview:_feznView];
+        
+        _commentView = [[CommentCellView alloc] init];
+        [_commentView setImage:[UIImage resizedImage:@"repost_bg"]];
+        [self.contentView addSubview:_commentView];
         
         // 8.更多按钮
         _moreBut = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -124,7 +138,6 @@
     _statusFrame = statusFrame;
     
     WLStatusM *status = statusFrame.status;
-    
     WLBasicTrends *user = status.user;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
     
@@ -142,16 +155,32 @@
     
     [_contentView setStatusFrame:statusFrame];
     [_contentView setFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, contenFrame.cellHeight)];
+    [_contentView setHomeVC:self.homeVC];
+    
+    CGFloat commenY = CGRectGetMaxY(_contentView.frame);
     
     if (status.zansArray.count||status.forwardsArray.count) {
         [_feznView setHidden:NO];
         [_feznView setFrame:CGRectMake(60, CGRectGetMaxY(_contentView.frame)-5, [UIScreen mainScreen].bounds.size.width-60-10, statusFrame.feedAndZanFM.cellHigh)];
         [_feznView setFeedAndZanFrame:statusFrame.feedAndZanFM];
+        commenY = CGRectGetMaxY(_feznView.frame);
+        [_feznView setCommentVC:self.homeVC];
     }else{
         [_feznView setHidden:YES];
     }
+    
 
+    if (status.commentcount) {
+        [_commentView setHidden:NO];
+        [_commentView setCommenFrame:statusFrame.commentListFrame];
+        [_commentView setFrame:CGRectMake(60, commenY+2, [UIScreen mainScreen].bounds.size.width-60-10, statusFrame.commentListFrame.cellHigh)];
+        [_commentView setCommentVC:self.homeVC];
+    }else{
+        [_commentView setHidden:YES];
+    }
 }
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
