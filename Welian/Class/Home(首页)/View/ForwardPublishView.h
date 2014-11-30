@@ -7,17 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WLStatusFrame.h"
+#import "WLStatusM.h"
 #import "MLEmojiLabel.h"
 
 @interface ForwardPublishView : UIView
 
-//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-//
-//@property (weak, nonatomic) IBOutlet MLEmojiLabel *titelLabel;
-//
-//@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
-@property (nonatomic, strong) WLStatusFrame *statusF;
+@property (nonatomic, strong) WLStatusM *status;
 
 @end

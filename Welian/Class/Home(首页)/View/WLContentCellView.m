@@ -9,19 +9,21 @@
 #import "WLContentCellView.h"
 #import "MLEmojiLabel.h"
 #import "WLPhotoListView.h"
-#import "HBVLinkedTextView.h"
 #import "UIImage+ImageEffects.h"
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
 #import "WLStatusDock.h"
 #import "UserInfoBasicVC.h"
-#import "LXActivity.h"
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "ShareEngine.h"
 #import "CommentInfoController.h"
+#import "CommentHeadFrame.h"
+#import "TOWebViewController.h"
+#import "MJExtension.h"
+#import "M80AttributedLabel.h"
 
-@interface WLContentCellView () <MLEmojiLabelDelegate,LXActivityDelegate>
+@interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
     /** 内容 */
     MLEmojiLabel *_contentLabel;
@@ -30,11 +32,13 @@
     /** 转发微博的整体 */
     UIImageView *_retweetView;
     /** 转发微博的昵称 */
-    HBVLinkedTextView *_retweetNameLabel;
+    M80AttributedLabel *_retweetNameLabel;
     /** 转发微博的配图 */
     WLPhotoListView *_retweetPhotoListView;
     /** 转发微博的内容 */
     MLEmojiLabel *_retweetContentLabel;
+    
+//    UIButton *_openupBut;
 }
 
 @end
@@ -67,11 +71,18 @@
     _contentLabel.numberOfLines = 0;
     _contentLabel.emojiDelegate = self;
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _contentLabel.isNeedAtAndPoundSign = YES;
     _contentLabel.font = IWContentFont;
     _contentLabel.textColor = IWContentColor;
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_contentLabel];
+    
+    // 收起-展开按钮
+//    _openupBut = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_openupBut setBackgroundColor:[UIColor redColor]];
+//    [_openupBut setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    [_openupBut addTarget:self action:@selector(openupisok:) forControlEvents:UIControlEventTouchUpInside];
+//    [self addSubview:_openupBut];
+    
     
     // 6.配图
     _photoListView = [[WLPhotoListView alloc] init];
@@ -81,8 +92,6 @@
     _dock = [[WLStatusDock alloc] init];
     // 赞
     [_dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
-    //    // 评论
-    [_dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     
     [_dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_dock];
@@ -100,10 +109,11 @@
     [self addSubview:_retweetView];
     
     // 1.昵称
-    _retweetNameLabel = [[HBVLinkedTextView alloc] init];
+    _retweetNameLabel = [[M80AttributedLabel alloc] init];
     [_retweetNameLabel setTextColor:[UIColor grayColor]];
     _retweetNameLabel.font = [UIFont systemFontOfSize:15];
-    //    _retweetNameLabel.textColor = IWRetweetNameColor;
+    _retweetNameLabel.delegate = self;
+    [_retweetNameLabel setUnderLineForLink:NO];
     _retweetNameLabel.backgroundColor = [UIColor clearColor];
     [_retweetView addSubview:_retweetNameLabel];
     
@@ -115,7 +125,6 @@
     _retweetContentLabel.numberOfLines = 0;
     _retweetContentLabel.emojiDelegate = self;
     _retweetContentLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _retweetContentLabel.isNeedAtAndPoundSign = YES;
     [_retweetView addSubview:_retweetContentLabel];
     
     // 3.配图
@@ -124,12 +133,43 @@
 }
 
 
+- (void)setCommentFrame:(CommentHeadFrame *)commentFrame
+{
+    _commentFrame = commentFrame;
+    WLStatusM *status = commentFrame.status;
+    WLContentCellFrame *contenFrame = commentFrame.contentFrame;
+    [self setViewDataAndFrame:status frame:contenFrame];
+}
+
 - (void)setStatusFrame:(WLStatusFrame *)statusFrame
 {
     _statusFrame = statusFrame;
     
     WLStatusM *status = statusFrame.status;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
+    [self setViewDataAndFrame:status frame:contenFrame];
+    
+}
+
+
+- (void)setViewDataAndFrame:(WLStatusM *)status frame:(WLContentCellFrame *)contenFrame
+{
+    // 3.正文
+    _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+    _contentLabel.customEmojiPlistName = @"expressionImage_custom";
+    CGRect textFrame = contenFrame.contentLabelF;
+//    if (contenFrame.contentLabelF.size.height>140) {
+//        textFrame.size.height=140;
+//        [_openupBut setHidden:NO];
+//        [_openupBut setFrame:CGRectMake(textFrame.origin.x, CGRectGetMaxY(textFrame)+5, 30, 30)];
+//        [_openupBut.titleLabel setText:@"展开"];
+//    }else{
+//        [_openupBut setHidden:YES];
+//    }
+    _contentLabel.frame = textFrame;
+    _contentLabel.text = status.content;
+    
+    
     
     // 4.配图
     if (status.photos.count) {
@@ -149,13 +189,12 @@
         
         // 5.1.昵称
         _retweetNameLabel.frame = contenFrame.retweetNameLabelF;
-        [_retweetNameLabel setText:[NSString stringWithFormat:@"该动态最早由 %@ 发布", retweetStatus.user.name]];
-        //Pass in the string, attributes, and a tap handling block
-        [_retweetNameLabel linkString:retweetStatus.user.name
-                    defaultAttributes:[self exampleAttributes]
-                highlightedAttributes:[self exampleAttributes]
-                           tapHandler:[self exampleHandlerWithTitle:@"Link a single string"]];
-        [_retweetNameLabel sizeToFit];
+        NSString *nametext = [NSString stringWithFormat:@"该动态最早由 %@ 发布", retweetStatus.user.name];
+        [_retweetNameLabel setText:nametext];
+        NSRange range = [nametext rangeOfString:retweetStatus.user.name];
+        [_retweetNameLabel addCustomLink:[NSValue valueWithRange:range]
+                    forRange:range
+                   linkColor:IWRetweetNameColor];
         
         // 5.2.正文
         _retweetContentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -175,22 +214,35 @@
         _retweetView.hidden = YES;
     }
     
-    // 6.正文
-    _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    _contentLabel.customEmojiPlistName = @"expressionImage_custom";
-    _contentLabel.frame = contenFrame.contentLabelF;
-    _contentLabel.text = status.content;
-    
     // 9.给dock传递微博模型数据
     _dock.contentFrame = contenFrame;
     [_dock setFrame:contenFrame.dockFrame];
 }
 
+#pragma mark - 收起or展开
+- (void)openupisok:(UIButton*)but
+{
+    if ([but.titleLabel.text isEqualToString:@"收起"]) {
+        self.openupBlock(NO);
+        
+    }else if ([but.titleLabel.text isEqualToString:@"展开"]){
+        self.openupBlock(YES);
+    }
+}
+
+
 #pragma mark - 赞
 - (void)attitudeBtnClick:(UIButton*)but event:(id)event
 {
     [but setEnabled:NO];
-    WLStatusM *statM = _statusFrame.status;
+    WLStatusM *statM;
+    if (_statusFrame) {
+        
+        statM = _statusFrame.status;
+    }else if(_commentFrame){
+        
+        statM = _commentFrame.status;
+    }
         if (statM.iszan==1) {
             NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
@@ -229,74 +281,98 @@
     }
 }
 
-#pragma mark- 评论
-- (void)commentBtnClick:(UIButton*)but event:(id)event
-{
-    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
-    [commentInfo setStatusFrame:_statusFrame];
-    [commentInfo setBeginEdit:YES];
-    [self.homeVC.navigationController pushViewController:commentInfo animated:YES];
-}
-
-
 #pragma mark - 转发
+#warning  - +——+——+————+-=——+——++——+——+——+——转发
 - (void)transmitButClick:(UIButton*)but event:(id)event
 {
-    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
-    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
-    shareButtonTitleArray = @[@"微链动态",@"微信好友",@"微信朋友圈"];
-    shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle"];
-    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-    
-    [lxActivity showInView:self.window];
+    WLStatusM *statusM = _statusFrame.status;
+    if (!statusM) {
+        statusM = _commentFrame.status;
+    }
+    PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+    [publishVC setStatus:statusM];
+    [self.homeVC presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+        
+    }];
+
+//    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+//    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+//    shareButtonTitleArray = @[@"微链动态",@"微信好友",@"微信朋友圈"];
+//    shareButtonImageNameArray = @[@"home_repost_welian",@"home_repost_wechat",@"home_repost_friendcirle"];
+//    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+//    
+//    [lxActivity showInView:self.window];
 }
 
-#pragma mark - LXActivityDelegate
-- (void)didClickOnImageIndex:(NSInteger)imageIndex
+//#pragma mark - LXActivityDelegate
+//- (void)didClickOnImageIndex:(NSInteger)imageIndex
+//{
+//    WLStatusM *statusM = self.statusFrame.status;
+//    if (!self.statusFrame) {
+//        statusM = self.commentFrame.status;
+//    }
+//    
+//    NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
+//    if (imageIndex == 0) {  // weLian
+//        
+//        PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+//        [publishVC setStatus:statusM];
+//        [self.homeVC presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+//            
+//        }];
+//        
+//    }else if (imageIndex == 1){  // 微信好友
+//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:nil WithScene:weChat];
+//        
+//    }else if (imageIndex == 2){  // 微信朋友圈
+//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:nil WithScene:weChatFriend];
+//        
+//    }else if (imageIndex == 3){  // 新浪微博
+//        
+//    }
+//}
+
+- (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
 {
-    WLStatusM *statusM = self.statusFrame.status;
-    NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
-    if (imageIndex == 0) {  // weLian
-        
-        PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
-        [publishVC setStatusFrame:self.statusFrame];
-        [self.homeVC presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
-            
-        }];
-        
-    }else if (imageIndex == 1){  // 微信好友
-//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_cellHeadView.iconImageView.image WithScene:weChat];
-        
-    }else if (imageIndex == 2){  // 微信朋友圈
-//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:_cellHeadView.iconImageView.image WithScene:weChatFriend];
-        
-    }else if (imageIndex == 3){  // 新浪微博
-        
+    WLBasicTrends *status = _statusFrame.status.relationfeed.user;
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [mode setName:status.name];
+    [mode setAvatar:status.avatar];
+    [mode setUid:status.uid];
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+    [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+}
+
+//- (LinkedStringTapHandler)exampleHandlerWithTitle:(NSString *)title
+//{
+//    LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
+//        WLBasicTrends *status = _statusFrame.status.relationfeed.user;
+//        UserInfoModel *mode = [[UserInfoModel alloc] init];
+//        [mode setName:status.name];
+//        [mode setAvatar:status.avatar];
+//        [mode setUid:status.uid];
+//        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+//    };
+//    return exampleHandler;
+//}
+//
+//
+//
+//- (NSMutableDictionary *)exampleAttributes
+//{
+//    return [@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
+//              NSForegroundColorAttributeName:IWRetweetNameColor}mutableCopy];
+//}
+
+
+- (void)mlEmojiLabel:(MLEmojiLabel *)emojiLabel didSelectLink:(NSString *)link withType:(MLEmojiLabelLinkType)type
+{
+    if (type == MLEmojiLabelLinkTypeURL) {
+        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
+        [webVC setShowActionButton:NO];
+        [self.homeVC.navigationController pushViewController:webVC animated:YES];
     }
 }
-
-
-- (LinkedStringTapHandler)exampleHandlerWithTitle:(NSString *)title
-{
-    LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
-        WLBasicTrends *status = _statusFrame.status.relationfeed.user;
-        UserInfoModel *mode = [[UserInfoModel alloc] init];
-        [mode setName:status.name];
-        [mode setAvatar:status.avatar];
-        [mode setUid:status.uid];
-        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
-    };
-    return exampleHandler;
-}
-
-
-
-- (NSMutableDictionary *)exampleAttributes
-{
-    return [@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
-              NSForegroundColorAttributeName:IWRetweetNameColor}mutableCopy];
-}
-
 
 @end

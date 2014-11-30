@@ -10,8 +10,11 @@
 @class WLStatusFrame;
 @class WLStatusDock;
 @class WLStatusM;
+@class CommentHeadFrame;
 
 typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
+
+typedef void (^OpenUpBlock)(BOOL isOpen);
 
 @interface WLContentCellView : UIView
 
@@ -24,9 +27,13 @@ typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
 
 @property (nonatomic, copy) FeedAndZanBlock feedzanBlock;
 
+@property (nonatomic, copy) OpenUpBlock openupBlock;
+
 /**
  *  模型（数据 + 子控件的frame）
  */
 @property (nonatomic, strong) WLStatusFrame *statusFrame;
+
+@property (nonatomic, strong) CommentHeadFrame *commentFrame;
 
 @end

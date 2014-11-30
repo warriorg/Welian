@@ -22,8 +22,7 @@
     CGFloat iconX = IWCellBorderWidth;
     CGFloat iconY = IWCellBorderWidth;
     
-    //    CGSize iconSize = [IWIconView iconSizeWithIconType:IWIconTypeSmall];;
-    _iconViewF = (CGRect){{iconX, iconY}, CGSizeMake(IWIconWHSmall, IWIconWHSmall)};
+    _iconViewF = (CGRect){{iconX, iconY}, CGSizeMake(35, 35)};
     
     // 2.昵称
     CGFloat nameX = CGRectGetMaxX(_iconViewF) + IWCellBorderWidth;
@@ -34,14 +33,19 @@
     // 7.时间
     CGFloat timeX = CGRectGetMaxX(_nameLabelF)+IWCellBorderWidth;
     CGFloat timeY = iconY;
-    CGSize timeSize = [commentM.created sizeWithFont:IWTimeFont];
+    CGSize timeSize = CGSizeMake(80, 15);
     _timeLabelF = (CGRect){{timeX, timeY}, timeSize};
+    
     
     // 3.内容
     CGFloat contentX = nameX;
     CGFloat contentY = CGRectGetMaxY(_nameLabelF) + IWCellBorderWidth;
     MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
-    [contLabel setText:commentM.comment];
+    NSString *labelstr = commentM.comment;
+    if (commentM.touser) {
+        labelstr = [NSString stringWithFormat:@"回复 %@：%@",commentM.touser.name,commentM.comment];
+    }
+    [contLabel setText:labelstr];
     contLabel.numberOfLines = 0;
     contLabel.lineBreakMode = NSLineBreakByCharWrapping;
     contLabel.font = IWContentFont;

@@ -78,30 +78,35 @@
     return self;
 }
 
-- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
+- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele isSend:(BOOL)send
 {
-    if (dele) {
-        
-        NSString *inputString = _commentTextView.text;
-        
-        NSString *string = nil;
-        NSInteger stringLength = inputString.length;
-        if (stringLength > 0) {
-            if ([@"]" isEqualToString:[inputString substringFromIndex:stringLength-1]]) {
-                if ([inputString rangeOfString:@"["].location == NSNotFound){
-                    string = [inputString substringToIndex:stringLength - 1];
-                } else {
-                    string = [inputString substringToIndex:[inputString rangeOfString:@"[" options:NSBackwardsSearch].location];
-                }
-            } else {
-                string = [inputString substringToIndex:stringLength - 1];
-            }
-        }
-
-        _commentTextView.text = string;
+    if (send) {
+        [self textFieldShouldReturn:_commentTextView];
     }else{
-        
-        _commentTextView.text = [_commentTextView.text stringByAppendingString:faceStr];
+        if (dele) {
+            
+            NSString *inputString = _commentTextView.text;
+            
+            NSString *string = nil;
+            NSInteger stringLength = inputString.length;
+            if (stringLength > 0) {
+                if ([@"]" isEqualToString:[inputString substringFromIndex:stringLength-1]]) {
+                    if ([inputString rangeOfString:@"["].location == NSNotFound){
+                        string = [inputString substringToIndex:stringLength - 1];
+                    } else {
+                        string = [inputString substringToIndex:[inputString rangeOfString:@"[" options:NSBackwardsSearch].location];
+                    }
+                } else {
+                    string = [inputString substringToIndex:stringLength - 1];
+                }
+            }
+            
+            _commentTextView.text = string;
+        }else{
+            
+            _commentTextView.text = [_commentTextView.text stringByAppendingString:faceStr];
+        }
+    
     }
 }
 

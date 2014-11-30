@@ -18,23 +18,26 @@
 #import "MJExtension.h"
 #import "FeedAndZanFrameM.h"
 #import "FeedAndZanCell.h"
+#import "CommentHeadView.h"
+#import "LXActivity.h"
+#import "ShareEngine.h"
 
-@interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+@interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,LXActivityDelegate>
 {
     NSMutableArray *_dataArrayM;
     CommentCellFrame *_selecCommFrame;
-    NSMutableArray *_feedArrayM;
-    NSMutableArray *_zanArrayM;
+   __block NSMutableArray *_feedArrayM;
+    __block NSMutableArray *_zanArrayM;
     
     FeedAndZanFrameM *_feedAndZanFM;
 }
-@property (nonatomic, strong) WLStatusCell *statusCell;
+
+@property (nonatomic, strong) CommentHeadView *commentHeadView;
+@property (nonatomic, strong) CommentHeadFrame *commentHFrame;
 @property (nonatomic, strong) NSMutableDictionary *reqestDic;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-
 @property (nonatomic, strong) MessageKeyboardView *messageView;
-
 
 @end
 
@@ -42,39 +45,48 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 @implementation CommentInfoController
 
-
-- (WLStatusCell*)statusCell
+- (CommentHeadFrame*)commentHFrame
 {
-    if (_statusCell == nil) {
-        _statusCell = [WLStatusCell cellWithTableView:nil];
-        
-//        [_statusCell.dock.attitudeBtn addTarget:self action:@selector(attitudeBtnClick:) forControlEvents:UIControlEventTouchDown];
-//        [_statusCell.dock.commentBtn addTarget:self action:@selector(becomComment) forControlEvents:UIControlEventTouchUpInside];
-        [_statusCell setHomeVC:self];
-//        UIView *lveView = [[UIView alloc] initWithFrame:CGRectMake(0, self.statusFrame.contentFrame.dockY+7, self.view.bounds.size.width, 10)];
-//        [lveView setBackgroundColor:WLLineColor];
-//        [_statusCell addSubview:lveView];
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        if ([self.statusFrame.status.user.uid integerValue] == [mode.uid integerValue]) {
-            
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
+    if (_commentHFrame == nil) {
+        _commentHFrame = [[CommentHeadFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
+        if (!_feedAndZanFM) {
+            _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
         }
     }
-    [_statusCell setStatusFrame:self.statusFrame];
-    [_statusCell.moreBut setHidden:YES];
-    
-    return _statusCell;
+    [_feedAndZanFM setCellWidth:[UIScreen mainScreen].bounds.size.width];
+    [_commentHFrame setStatus:self.statusM];
+    return _commentHFrame;
+}
+
+- (CommentHeadView *)commentHeadView
+{
+    if (_commentHeadView == nil) {
+        _commentHeadView = [[CommentHeadView alloc] init];
+        [_commentHeadView setHomeVC:self];
+//            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
+//        }
+    }
+    [_commentHeadView setCommHeadFrame:self.commentHFrame];
+    __weak CommentInfoController *commin = self;
+    _commentHeadView.feezanBlock = ^(WLStatusM *statusM){
+        
+        [commin backDataStatusFrame:NO];
+        [commin refreshDataChangde:statusM];
+    };
+    return _commentHeadView;
 }
 
 // 加载赞和转发数据
 - (void)loadnewFeedZanAndForward
 {
-    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
-        if (_feedAndZanFM) return;
+    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":@(self.statusM.fid)} success:^(id JSON) {
         
         NSArray *feedarray = [JSON objectForKey:@"forwards"];
         NSArray *zanarray = [JSON objectForKey:@"zans"];
-        
+        [_feedArrayM removeAllObjects];
+        [_zanArrayM removeAllObjects];
         if (feedarray.count) {
             for (NSDictionary *feeddic in feedarray) {
                 FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:feeddic];
@@ -87,12 +99,8 @@ static NSString *noCommentCell = @"NoCommentCell";
                 [_zanArrayM addObject:mode];
             }
         }
-        if (zanarray.count || feedarray.count) {
-            
-            _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
-            [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
-            [self.tableView reloadData];
-        }
+        [self refreshDataChangde:nil];
+        
     } fail:^(NSError *error) {
         
     }];
@@ -108,7 +116,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50) style:UITableViewStyleGrouped];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-        [_tableView setSeparatorInset:UIEdgeInsetsMake(0, IWIconWHSmall+2*IWCellBorderWidth, 0, 0)];
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
         [_tableView setBackgroundColor:[UIColor whiteColor]];
         [_tableView setDataSource:self];
         [_tableView setDelegate:self];
@@ -128,6 +136,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self setTitle:@"详情"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forwardCommtion) name:KPublishOK object:nil];
     [self.view setBackgroundColor:WLLineColor];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
+    
     _feedArrayM = [NSMutableArray array];
     _zanArrayM = [NSMutableArray array];
     self.reqestDic = [NSMutableDictionary dictionary];
@@ -141,20 +151,19 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.view addSubview:self.tableView];
     
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height, self.view.frame.size.width, 50) andSuperView:self.view withMessageBlock:^(NSString *comment) {
-
+        
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-        [reqstDicM setObject:@(self.statusFrame.status.fid) forKey:@"fid"];
+        [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
         [reqstDicM setObject:comment forKey:@"comment"];
         
         if (_selecCommFrame) {
             [reqstDicM setObject:_selecCommFrame.commentM.user.uid forKey:@"touid"];
-        }
+        } 
         
         [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
-
-            self.statusFrame.status.commentcount++;
+            
+            self.statusM.commentcount++;
             [self loadNewCommentListData];
-            [self backDataStatusFrame:NO];
         } fail:^(NSError *error) {
             
         }];
@@ -166,54 +175,137 @@ static NSString *noCommentCell = @"NoCommentCell";
         
         [self.messageView.commentTextView becomeFirstResponder];
     }
-
+    
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
 }
 
 
 - (void)moreButClick:(UIBarButtonItem*)item
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除该条动态" otherButtonTitles:nil,nil];
-    [sheet setTag:800];
-    [sheet showInView:self.view];
+    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
+    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
+    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];
+    shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
+    
+    NSArray *buttons = @[@"举报"];
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
+        buttons = @[@"删除该动态",@"举报"];
+    }
+    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+    
+    
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除该条动态" otherButtonTitles:nil,nil];
+//    [sheet setTag:800];
+//    [sheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+
+#pragma mark - LXActivityDelegate
+- (void)didClickOnImageIndex:(NSString *)imageIndex
 {
-    if (actionSheet.tag==800) {
-        if (buttonIndex==0) {
-            __weak CommentInfoController *commVC = self;
-            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
-                
+    WLStatusM *statusM = self.statusM;
+    NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
+    UIImage *iconImage = self.commentHeadView.cellHeadView.iconImageView.image;
+    
+    if ([imageIndex isEqualToString:@"删除该动态"]) {
+        __weak CommentInfoController *commVC = self;
+            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(self.statusM.fid)} success:^(id JSON) {
+
                 [WLHUDView showSuccessHUD:@"删除动态成功！"];
+
                 [commVC backDataStatusFrame:YES];
-                 [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             } fail:^(NSError *error) {
                 
             }];
-        }
+
+    }else if ([imageIndex isEqualToString:@"举报"]){
+        [WLHttpTool complainParameterDic:@{@"fid":@(self.statusM.fid)} success:^(id JSON) {
+            [WLHUDView showSuccessHUD:@"举报成功！稍后我们会核查信息"];
+        } fail:^(NSError *error) {
+            
+        }];
         
+    }else if ([imageIndex isEqualToString:@"微信好友"]){
+        
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChat];
+    }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChatFriend];
     }
+//    WLStatusM *statusM = self.statusFrame.status;
+//    if (!self.statusFrame) {
+//        statusM = self.commentFrame.status;
+//    }
+//
+//    NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
+//    if (imageIndex == 0) {  // weLian
+//
+//        PublishStatusController *publishVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+//        [publishVC setStatus:statusM];
+//        [self.homeVC presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+//
+//        }];
+//
+//    }else if (imageIndex == 1){  // 微信好友
+//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:nil WithScene:weChat];
+//
+//    }else if (imageIndex == 2){  // 微信朋友圈
+//        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:nil WithScene:weChatFriend];
+//
+//    }else if (imageIndex == 3){  // 新浪微博
+//
+//    }
 }
+
+
+
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (actionSheet.tag==800) {
+//        if (buttonIndex==0) {
+//            __weak CommentInfoController *commVC = self;
+//            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(self.statusM.fid)} success:^(id JSON) {
+//                
+//                [WLHUDView showSuccessHUD:@"删除动态成功！"];
+//                
+//                [commVC backDataStatusFrame:YES];
+//                [self.navigationController popViewControllerAnimated:YES];
+//            } fail:^(NSError *error) {
+//                
+//            }];
+//        }
+//        
+//    }
+//}
 
 - (void)backDataStatusFrame:(BOOL)isdelete
 {
-    if ([_delegate respondsToSelector:@selector(commentInfoController:isDelete:withStatusFrame:)]) {
-        [_delegate commentInfoController:self isDelete:isdelete withStatusFrame:_statusFrame];
+    if (isdelete) {
+        
+        if (self.deleteStustBlock) {
+            self.deleteStustBlock(self.statusM);
+        }
+    }else{
+        if (self.feedzanBlock) {
+            self.feedzanBlock(self.statusM);
+        }
     }
+    self.commentHeadView;
 }
 
 
 - (void)forwardCommtion
 {
-    self.statusFrame.status.forwardcount++;
-    self.statusCell;
-   UserInfoModel *usermode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    self.statusM.forwardcount++;
+    self.commentHeadView;
+    UserInfoModel *usermode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     
     FeedAndZanModel *fzmodel = [[FeedAndZanModel alloc] init];
     [fzmodel setUser:usermode];
     [_feedArrayM insertObject:fzmodel atIndex:0];
-    [self refreshDataChangde];
+    [self refreshDataChangde:nil];
 }
 
 - (void)loadnewcommentAndFeedZanAndForward
@@ -226,11 +318,11 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)loadNewCommentListData
 {
     [self.tableView setFooterHidden:YES];
-    [self.reqestDic setObject:@(self.statusFrame.status.fid) forKey:@"fid"];
+    [self.reqestDic setObject:@(self.statusM.fid) forKey:@"fid"];
     [self.reqestDic setObject:@(KCellConut) forKey:@"size"];
     [self.reqestDic setObject:@(1) forKey:@"page"];
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-
+        
         _dataArrayM = JSON;
         [self hiddenRefresh];
         [self.tableView reloadData];
@@ -285,12 +377,12 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return self.statusFrame.contentFrame.cellHeight+20;
+    return self.commentHFrame.cellHigh;
 }
 //
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.statusCell;
+    return self.commentHeadView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -299,7 +391,6 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger a = 0;
     if (_feedAndZanFM) {
@@ -319,7 +410,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         if (_feedAndZanFM) {
             if (indexPath.row==0) {
                 
-                return _feedAndZanFM.cellHigh;
+                return _feedAndZanFM.cellHigh+5;
             }else{
                 CommentCellFrame *commFrame = _dataArrayM[indexPath.row-1];
                 return commFrame.cellHeight;
@@ -332,7 +423,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     }else{
         if (_feedAndZanFM) {
             if (indexPath.row==0) {
-                return _feedAndZanFM.cellHigh;
+                return _feedAndZanFM.cellHigh+5;
             }else{
                 return 90;
             }
@@ -351,8 +442,8 @@ static NSString *noCommentCell = @"NoCommentCell";
             if (cell == nil) {
                 cell = [[FeedAndZanCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:feedAndZancellid];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                [cell setCommentVC:self];
             }
+            [cell setCommentVC:self];
             [cell setFeedAndZanFrame:_feedAndZanFM];
             return cell;
         }else{
@@ -379,13 +470,12 @@ static NSString *noCommentCell = @"NoCommentCell";
             NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
             return cell;
         }
-
+        
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if (_feedAndZanFM) {
         if (indexPath.row==0) {
             return;
@@ -394,19 +484,18 @@ static NSString *noCommentCell = @"NoCommentCell";
     }else{
         _selecCommFrame = _dataArrayM[indexPath.row];
     }
-
+    
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"回复" otherButtonTitles:@"删除", nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:nil, nil];
         [sheet setTag:555+0];
         [sheet showInView:self.view];
     }else{
-//        [self.messageView startCompile:_selecCommFrame.commentM.user];
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"回复" otherButtonTitles:nil, nil];
         [sheet setTag:555+1];
         [sheet showInView:self.view];
     }
-
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -418,13 +507,11 @@ static NSString *noCommentCell = @"NoCommentCell";
         
     }else if(actionSheet.tag==555+0){
         if (buttonIndex==0) {
-            [self.messageView startCompile:_selecCommFrame.commentM.user];
-        }else if (buttonIndex==1){
             [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
                 [_dataArrayM removeObject:_selecCommFrame];
-                self.statusFrame.status.commentcount--;
+                self.statusM.commentcount--;
                 [self.tableView reloadData];
-                self.statusCell;
+                self.commentHeadView;
                 
                 [self backDataStatusFrame:NO];
             } fail:^(NSError *error) {
@@ -435,63 +522,31 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 
-#pragma mark - 赞
-- (void)attitudeBtnClick:(UIButton*)but
+- (void)refreshDataChangde:(WLStatusM *)status
 {
-    [but setEnabled:NO];
-   UserInfoModel *usermode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    
-    if (self.statusFrame.status.iszan==1) {
-        FeedAndZanModel *seleMode= nil;
-        for (FeedAndZanModel *mode in _zanArrayM) {
-            if ([mode.user.uid integerValue] == [usermode.uid integerValue]) {
-                seleMode = mode;
-                break;
-            }
-        }
-        [_zanArrayM removeObject:seleMode];
-        [self refreshDataChangde];
+    if (status) {
+        [_zanArrayM removeAllObjects];
+        [_feedArrayM removeAllObjects];
         
-        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
-            [self.statusFrame.status setIszan:0];
-            self.statusFrame.status.zan -= 1;
-            self.statusCell;
-            [but setEnabled:YES];
-            [self backDataStatusFrame:NO];
-        } fail:^(NSError *error) {
-            [but setEnabled:YES];
-        }];
-    }else{
-        FeedAndZanModel *fzmodel = [[FeedAndZanModel alloc] init];
-        [fzmodel setUser:usermode];
-        [_zanArrayM insertObject:fzmodel atIndex:0];
-        [self refreshDataChangde];
-        
-        [WLHttpTool addFeedZanParameterDic:@{@"fid":@(self.statusFrame.status.fid)} success:^(id JSON) {
-            [self.statusFrame.status setIszan:1];
-            self.statusFrame.status.zan +=1;
-            self.statusCell;
-            [but setEnabled:YES];
-            [self backDataStatusFrame:NO];
-        } fail:^(NSError *error) {
-            [but setEnabled:YES];
-        }];
+        [_zanArrayM addObjectsFromArray:status.zansArray];
+        [_feedArrayM addObjectsFromArray:status.forwardsArray];
     }
-}
-
-- (void)refreshDataChangde
-{
     if (_zanArrayM.count||_feedArrayM.count) {
         if (!_feedAndZanFM) {
             _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
         }
+        [_feedAndZanFM setCellWidth:[UIScreen mainScreen].bounds.size.width];
         [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
         
     }else{
         _feedAndZanFM = nil;
     }
-    [self.tableView reloadData];
+    
+    [self.statusM setZansArray:_zanArrayM];
+    [self.statusM setForwardsArray:_feedArrayM];
 
+    [self.tableView reloadData];
+    
 }
 
 

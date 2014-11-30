@@ -12,7 +12,7 @@
 
 #define Time  0.25
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
-#define  keyboardHeight 216
+#define  keyboardHeight 200
 #define  toolBarHeight 50
 #define  buttonWh 34
 

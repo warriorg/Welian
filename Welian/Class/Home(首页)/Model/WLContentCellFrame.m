@@ -38,7 +38,7 @@
     _status = status;
     
     // 1.内容
-    CGFloat contentX = 60;
+    CGFloat contentX = 10;
     CGFloat contentY = 0;
     if (status.content.length) {
         MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
@@ -48,8 +48,11 @@
         contLabel.font = IWContentFont;
         
         CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - IWCellBorderWidth];
-        
+        if (sizelabel.height>140) {
+            
+        }
         _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
+        
     }else {
         _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
     }
@@ -58,7 +61,7 @@
     if (status.photos.count) {
         // 4.如果有配图
         CGFloat photoListX = contentX;
-        CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + IWCellBorderWidth;
+        CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + 5;
         
         // 根据图片数量计算相册的尺寸
         CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos.count];
@@ -67,7 +70,7 @@
     } else if (retweetStatus) {
         // 5.如果有转发微博
         CGFloat retweetX = contentX;
-        CGFloat retweetY = CGRectGetMaxY(_contentLabelF) + IWCellBorderWidth;
+        CGFloat retweetY = CGRectGetMaxY(_contentLabelF) + 5;
         CGFloat retweetWidth = _cellWidth-IWCellBorderWidth;
         CGFloat retweetHeight = 0;
         
@@ -78,7 +81,7 @@
         
         // 5.2.内容
         CGFloat retweetContentX = retweetNameX;
-        CGFloat retweetContentY = CGRectGetMaxY(_retweetNameLabelF) + IWCellBorderWidth;
+        CGFloat retweetContentY = CGRectGetMaxY(_retweetNameLabelF) + 5;
         
         if (retweetStatus.content.length) {
             
@@ -88,7 +91,7 @@
             contLabel.lineBreakMode = NSLineBreakByCharWrapping;
             contLabel.font = IWContentFont;
             
-            CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - 2 * IWCellBorderWidth];
+            CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - 3 * IWCellBorderWidth];
             
             _retweetContentLabelF = CGRectMake(retweetContentX, retweetContentY, sizelabel.width, sizelabel.height+5);
         }else{
@@ -98,7 +101,7 @@
         // 5.3.如果有配图
         if (retweetStatus.photos.count) {
             CGFloat retweetPhotoListX = retweetContentX;
-            CGFloat retweetPhotoListY = CGRectGetMaxY(_retweetContentLabelF) + IWCellBorderWidth;
+            CGFloat retweetPhotoListY = CGRectGetMaxY(_retweetContentLabelF) + 5;
             
             // 根据图片数量计算相册的尺寸
             CGSize retweetPhotoListSize = [WLPhotoListView photoListSizeWithCount:retweetStatus.photos.count];
@@ -109,7 +112,7 @@
         } else {
             retweetHeight = CGRectGetMaxY(_retweetContentLabelF);
         }
-        retweetHeight += IWCellBorderWidth;
+        retweetHeight += 5;
         
         // 5.4.整体
         _retweetViewF = CGRectMake(retweetX, retweetY, retweetWidth, retweetHeight);

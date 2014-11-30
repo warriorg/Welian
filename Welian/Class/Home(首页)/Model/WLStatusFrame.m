@@ -8,10 +8,7 @@
 
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
-#import "WLBasicTrends.h"
-#import "WLPhotoListView.h"
-#import "NSString+val.h"
-#import "MLEmojiLabel.h"
+
 
 @interface WLStatusFrame()
 {
@@ -48,6 +45,7 @@
     if (status.zansArray.count) {
         [daafa setObject:status.zansArray forKey:@"zans"];
     }
+    
     if (status.forwardsArray.count) {
         [daafa setObject:status.forwardsArray forKey:@"forwards"];
     }

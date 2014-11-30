@@ -33,6 +33,7 @@
     _feedAndZanFrame = feedAndZanFrame;
     [_feedAndZanView setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, feedAndZanFrame.cellHigh)];
     [_feedAndZanView setFeedAndZanFrame:feedAndZanFrame];
+    [_feedAndZanView setCommentVC:self.commentVC];
 }
 
 - (void)awakeFromNib {

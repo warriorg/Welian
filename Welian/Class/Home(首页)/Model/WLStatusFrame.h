@@ -16,7 +16,6 @@
 
 - (instancetype)initWithWidth:(CGFloat)width;
 
-
 /**  内容的frame   */
 @property (nonatomic, strong, readonly)  WLContentCellFrame *contentFrame;
 

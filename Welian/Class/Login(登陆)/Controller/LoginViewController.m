@@ -44,6 +44,8 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"login_bg@2x" ofType:@"png"];
     if (iPhone5) {
         path = [[NSBundle mainBundle] pathForResource:@"login_bg_big568h@2x" ofType:@"png"];
+    }else if(!iPhone4){
+        path = [[NSBundle mainBundle] pathForResource:@"login_bg_bigiphone6@2x" ofType:@"png"];
     }
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];

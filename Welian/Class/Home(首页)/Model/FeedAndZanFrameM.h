@@ -13,6 +13,7 @@
 
 - (instancetype)initWithWidth:(CGFloat)width;
 
+@property (nonatomic, assign) CGFloat cellWidth;
 @property (nonatomic, assign, readonly) CGRect zanImageF;
 @property (nonatomic, assign, readonly) CGRect zanLabelF;
 @property (nonatomic, assign, readonly) CGRect feedImageF;

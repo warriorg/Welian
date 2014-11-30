@@ -51,7 +51,7 @@
     [_iconImageView.layer setMasksToBounds:YES];
     [_iconImageView.layer setCornerRadius:IWIconWHSmall*0.5];
     [_iconImageView setUserInteractionEnabled:YES];
-//    [_iconImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
+    [_iconImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
     [self addSubview:_iconImageView];
     
     // 投资者
@@ -126,6 +126,18 @@
         [_chuangImageView setHidden:YES];
     }
 }
+
+- (void)tapiconImage:(UITapGestureRecognizer *)tap
+{
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [mode setUid:_user.uid];
+    [mode setAvatar:_user.avatar];
+    [mode setName:_user.name];
+    
+    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+    [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];
+}
+
 
 /**
  *  重写setFrame:和setBounds:方法的目的：不让别人修改自己内部的尺寸

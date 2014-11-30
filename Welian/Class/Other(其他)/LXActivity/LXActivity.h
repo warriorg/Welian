@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @protocol LXActivityDelegate <NSObject>
-- (void)didClickOnImageIndex:(NSInteger)imageIndex;
+- (void)didClickOnImageIndex:(NSString *)imageIndex;
 @optional
 - (void)didClickOnCancelButton;
 @end
 
 @interface LXActivity : UIView
 
-- (id)initWithDelegate:(id<LXActivityDelegate>)delegate ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
+- (id)initWithDelegate:(id<LXActivityDelegate>)delegate WithTitle:(NSString *)title otherButtonTitles:(NSArray*)buttonsTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
 
 - (void)showInView:(UIView *)view;
 

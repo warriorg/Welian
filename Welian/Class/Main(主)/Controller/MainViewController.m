@@ -14,7 +14,6 @@
 #import "MyFriendsController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#import "WLDataDBTool.h"
 
 @interface MainViewController () <UINavigationControllerDelegate>
 {

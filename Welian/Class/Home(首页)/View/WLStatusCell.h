@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WLStatusDock.h"
-//#import "HomeController.h"
 @class WLStatusFrame;
 @class WLStatusM;
 
@@ -20,9 +18,6 @@ typedef void(^WLFeedAndZanBlock)(WLStatusM *statusM);
 @property (nonatomic, strong) UIButton *moreBut;
 
 @property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
-
-/** 微博工具条 */
-//@property (nonatomic, strong) WLStatusDock *dock;
 
 /**
  *  创建一个cell

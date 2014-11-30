@@ -162,5 +162,8 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 取动态消息列表
 + (void)loadFeedRelationParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 举报--投诉
++ (void)complainParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 @end
 

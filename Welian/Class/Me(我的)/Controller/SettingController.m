@@ -139,11 +139,14 @@
     [cell.textLabel setText:dict[@"title"]];
     
     if (indexPath.section==0&&indexPath.row==0) {
-        [cell setAccessoryView:self.remindSwitch];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }else if (indexPath.section==0&&indexPath.row==1){
         UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [cell.detailTextLabel setText:mode.mobile];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+//        [cell setAccessoryView:self.remindSwitch];
+
+    }else if (indexPath.section==0&&indexPath.row==1){
+        
     }else if (indexPath.section==1&&indexPath.row==1){
         NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         [cell.detailTextLabel setText:localVersion];
@@ -157,15 +160,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section==0&&indexPath.row==1) {
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            [mode setMobile:userInfo];
-            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }withType:IWVerifiedTypeAddress];
-        [phoneVC setUserInfoStr:mode.mobile];
-        
-        [self.navigationController pushViewController:phoneVC animated:YES];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+//            [mode setMobile:userInfo];
+//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        }withType:IWVerifiedTypeAddress];
+//        [phoneVC setUserInfoStr:mode.mobile];
+//        
+//        [self.navigationController pushViewController:phoneVC animated:YES];
     }else if (indexPath.section==1&&indexPath.row==0){
         AboutViewController *aboutVC = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];

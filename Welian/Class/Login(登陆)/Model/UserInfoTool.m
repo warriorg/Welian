@@ -14,14 +14,6 @@
 }
 single_implementation(UserInfoTool)
 
-//- (id)init
-//{
-//    if (self = [super init]) {
-//        _userInfoM = [NSKeyedUnarchiver unarchiveObjectWithFile:kFile];
-//    }
-//    return self;
-//}
-
 - (UserInfoModel*)getUserInfoModel
 {
     if (_userInfoM== nil) {

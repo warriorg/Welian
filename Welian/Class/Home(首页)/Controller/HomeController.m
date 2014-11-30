@@ -19,7 +19,6 @@
 #import "WLStatusFrame.h"
 #import "UIImageView+WebCache.h"
 #import "CommentInfoController.h"
-#import "WLDataDBTool.h"
 #import "MJExtension.h"
 #import "HomeView.h"
 #import "MessageController.h"
@@ -27,7 +26,7 @@
 #import "FeedAndZanModel.h"
 #import "CommentMode.h"
 
-@interface HomeController () <UIActionSheetDelegate,CommentInfoVCDelegate>
+@interface HomeController () <UIActionSheetDelegate>
 {
    __block NSMutableArray *_dataArry;
     
@@ -327,6 +326,7 @@
         [self.tableView reloadData];
 //        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     };
+    
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -373,24 +373,42 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
-    [commentInfo setDelegate:self];
+//    [commentInfo setDelegate:self];
     WLStatusFrame *statusF = _dataArry[indexPath.row];
-    [commentInfo setStatusFrame:statusF];
+    [commentInfo setStatusM:statusF.status];
     _selectIndexPath = indexPath;
+    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+        DLog(@"fdsadf");
+    };
+    
+    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry removeObject:statusF];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        DLog(@"sanchu");
+        
+    };
+    
     [self.navigationController pushViewController:commentInfo animated:YES];
 }
 
-- (void)commentInfoController:(CommentInfoController *)commentVC isDelete:(BOOL)isdelete withStatusFrame:(WLStatusFrame *)statusF
-{
-    if (isdelete) {
-        [_dataArry removeObject:statusF];
-        [self.tableView deleteRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }else{
-        [_dataArry setObject:statusF atIndexedSubscript:_selectIndexPath.row];
-        [self.tableView reloadRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-    
-}
+//- (void)commentInfoController:(CommentInfoController *)commentVC isDelete:(BOOL)isdelete withStatusFrame:(WLStatusM *)statusM
+//{
+//    if (isdelete) {
+//        [_dataArry removeObject:statusF];
+//        [self.tableView deleteRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    }else{
+//        [_dataArry setObject:statusF atIndexedSubscript:_selectIndexPath.row];
+//        [self.tableView reloadRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    }
+//    
+//}
 
 
 - (void)didReceiveMemoryWarning

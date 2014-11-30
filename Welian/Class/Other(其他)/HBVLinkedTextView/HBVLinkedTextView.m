@@ -31,15 +31,6 @@
 
 #pragma mark - Public Methods
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -337,19 +328,19 @@
     }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    NSString *tappedString = [self handleTouches:touches];
-    if (tappedString != self.activeString) {
-        if (self.activeString) {
-            NSDictionary *defaultAttributes = self.linkedTextDefaultAttributeDictionary[self.activeString];
-            [self setAttributes:defaultAttributes forLinkedString:self.activeString];
-        }
-        self.activeString = tappedString;
-        NSDictionary *highlightedAttributes = self.linkedTextHighlightAttributeDictionary[tappedString];
-        [self setAttributes:highlightedAttributes forLinkedString:tappedString];
-    }
-}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    NSString *tappedString = [self handleTouches:touches];
+//    if (tappedString != self.activeString) {
+//        if (self.activeString) {
+//            NSDictionary *defaultAttributes = self.linkedTextDefaultAttributeDictionary[self.activeString];
+//            [self setAttributes:defaultAttributes forLinkedString:self.activeString];
+//        }
+//        self.activeString = tappedString;
+//        NSDictionary *highlightedAttributes = self.linkedTextHighlightAttributeDictionary[tappedString];
+//        [self setAttributes:highlightedAttributes forLinkedString:tappedString];
+//    }
+//}
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -418,14 +409,5 @@
     self.editable = NO;
     
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

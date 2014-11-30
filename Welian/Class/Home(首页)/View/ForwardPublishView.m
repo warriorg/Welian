@@ -45,12 +45,11 @@
     return self;
 }
 
-- (void)setStatusF:(WLStatusFrame *)statusF
+- (void)setStatus:(WLStatusM *)status
 {
     
     
-    _statusF = statusF;
-    WLStatusM *statusM = statusF.status;
+    WLStatusM *statusM = status;
     if (statusM.relationfeed) {
         statusM = statusM.relationfeed;
     }

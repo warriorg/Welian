@@ -12,10 +12,11 @@
 
 #import "ZBMessageManagerFaceView.h"
 #import "ZBExpressionSectionBar.h"
+#import "UIImage+ImageEffects.h"
 
 
 #define FaceSectionBarHeight  36   // 表情下面控件
-#define FacePageControlHeight 30  // 表情pagecontrol
+#define FacePageControlHeight 20  // 表情pagecontrol
 
 #define Pages 5
 
@@ -36,7 +37,7 @@
 - (void)setup{
     self.backgroundColor = [UIColor colorWithRed:248.0f/255 green:248.0f/255 blue:255.0f/255 alpha:1.0];
     
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0.0f,20.0f,CGRectGetWidth(self.bounds),CGRectGetHeight(self.bounds)-FacePageControlHeight-FaceSectionBarHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0.0f,10.0f,CGRectGetWidth(self.bounds),CGRectGetHeight(self.bounds)-FacePageControlHeight-FaceSectionBarHeight)];
     scrollView.delegate = self;
     [self addSubview:scrollView];
     [scrollView setPagingEnabled:YES];
@@ -56,6 +57,12 @@
     [pageControl setCurrentPageIndicatorTintColor:[UIColor grayColor]];
     pageControl.numberOfPages = Pages;
     pageControl.currentPage   = 0;
+    
+    _sendBut = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width-50-15, CGRectGetMaxY(scrollView.frame)+5, 50, 34)];
+    [_sendBut setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
+    [_sendBut addTarget:self action:@selector(sendButClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_sendBut];
 }
 
 #pragma mark  scrollView Delegate
@@ -66,10 +73,18 @@
     
 }
 
+#pragma mark - 发送
+- (void)sendButClick:(UIButton*)send
+{
+    if ([self.delegate respondsToSelector:@selector(SendTheFaceStr:isDelete:isSend:)]) {
+        [self.delegate SendTheFaceStr:nil isDelete:NO isSend:YES];
+    }
+}
+
 #pragma mark ZBFaceView Delegate
 - (void)didSelecteFace:(NSString *)faceName andIsSelecteDelete:(BOOL)del{
-    if ([self.delegate respondsToSelector:@selector(SendTheFaceStr:isDelete:) ]) {
-        [self.delegate SendTheFaceStr:faceName isDelete:del];
+    if ([self.delegate respondsToSelector:@selector(SendTheFaceStr:isDelete:isSend:) ]) {
+        [self.delegate SendTheFaceStr:faceName isDelete:del isSend:NO];
     }
 }
 

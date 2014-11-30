@@ -7,20 +7,20 @@
 //
 
 #import "CommentCellView.h"
-#import "HBVLinkedTextView.h"
+#import "M80AttributedLabel.h"
 #import "CommentMode.h"
 #import "UserInfoBasicVC.h"
 #import "WLStatusM.h"
 #import "CommentInfoController.h"
 
-@interface CommentCellView()
+@interface CommentCellView() <M80AttributedLabelDelegate>
 {
-    HBVLinkedTextView *oneLabel;
-    HBVLinkedTextView *twoLabel;
-    HBVLinkedTextView *threeLabel;
-    HBVLinkedTextView *fourLabel;
-    HBVLinkedTextView *fiveLabel;
-    HBVLinkedTextView *moreLabel;
+    M80AttributedLabel *oneLabel;
+    M80AttributedLabel *twoLabel;
+    M80AttributedLabel *threeLabel;
+    M80AttributedLabel *fourLabel;
+    M80AttributedLabel *fiveLabel;
+    M80AttributedLabel *moreLabel;
 }
 @end
 
@@ -37,7 +37,7 @@
         fourLabel = [self newHBVLabel];
         fiveLabel = [self newHBVLabel];
         moreLabel = [self newHBVLabel];
-        [moreLabel setTextAlignment:NSTextAlignmentCenter];
+        [moreLabel setTextAlignment:kCTTextAlignmentCenter];
     }
     return self;
 }
@@ -57,16 +57,14 @@
         if (i==0) {
             [oneLabel setFrame:commenFrame.oneLabelFrame];
             [oneLabel setText:commenFrame.oneLabelStr];
-
-            [oneLabel linkStrings:nameArray
-                 defaultAttributes:[self exampleAttributes]
-             highlightedAttributes:[self exampleAttributes]
-                        tapHandler:[self exampleHandlerWithTitle:@"0"]];
-            [twoLabel setUserInteractionEnabled:NO];
-            [threeLabel setUserInteractionEnabled:NO];
-            [fourLabel setUserInteractionEnabled:NO];
-            [fiveLabel setUserInteractionEnabled:NO];
-            [moreLabel setUserInteractionEnabled:NO];
+            
+            for (NSString *name in nameArray) {
+                NSRange range = [commenFrame.oneLabelStr  rangeOfString:name];
+                [oneLabel addCustomLink:[NSValue valueWithRange:range]
+                                 forRange:range
+                                linkColor:IWRetweetNameColor];
+            }
+            
             [twoLabel setHidden:YES];
             [threeLabel setHidden:YES];
             [fourLabel setHidden:YES];
@@ -74,111 +72,139 @@
             [moreLabel setHidden:YES];
         }else if (i==1){
             [twoLabel setHidden:NO];
-            [twoLabel setUserInteractionEnabled:YES];
             [twoLabel setFrame:commenFrame.twoLabelFrame];
             [twoLabel setText:commenFrame.twoLabelStr];
-            [twoLabel linkStrings:nameArray
-               defaultAttributes:[self exampleAttributes]
-           highlightedAttributes:[self exampleAttributes]
-                      tapHandler:[self exampleHandlerWithTitle:@"1"]];
+            for (NSString *name in nameArray) {
+                
+                NSRange range = [commenFrame.twoLabelStr rangeOfString:name];
+                [twoLabel addCustomLink:[NSValue valueWithRange:range]
+                               forRange:range
+                              linkColor:IWRetweetNameColor];
+            }
             
         }else if (i==2){
             [threeLabel setHidden:NO];
-            [threeLabel setUserInteractionEnabled:YES];
             [threeLabel setFrame:commenFrame.threeLabelFrame];
             [threeLabel setText:commenFrame.threeLabelStr];
-            [threeLabel linkStrings:nameArray
-               defaultAttributes:[self exampleAttributes]
-           highlightedAttributes:[self exampleAttributes]
-                      tapHandler:[self exampleHandlerWithTitle:@"2"]];
+            for (NSString *name in nameArray) {
+                
+                NSRange range = [commenFrame.threeLabelStr rangeOfString:name];
+                [threeLabel addCustomLink:[NSValue valueWithRange:range]
+                               forRange:range
+                              linkColor:IWRetweetNameColor];
+            }
+
             
         }else if (i==3){
             [fourLabel setHidden:NO];
-            [fourLabel setUserInteractionEnabled:YES];
             [fourLabel setFrame:commenFrame.fourLabelFrame];
             [fourLabel setText:commenFrame.fourLabelStr];
-            [fourLabel linkStrings:nameArray
-               defaultAttributes:[self exampleAttributes]
-           highlightedAttributes:[self exampleAttributes]
-                      tapHandler:[self exampleHandlerWithTitle:@"3"]];
+            for (NSString *name in nameArray) {
+                NSRange range = [commenFrame.fourLabelStr rangeOfString:name];
+                [fourLabel addCustomLink:[NSValue valueWithRange:range]
+                                 forRange:range
+                                linkColor:IWRetweetNameColor];
+            }
             
         }else if (i==4){
             [fiveLabel setHidden:NO];
-            [fiveLabel setUserInteractionEnabled:YES];
             [fiveLabel setFrame:commenFrame.fiveLabelFrame];
             [fiveLabel setText:commenFrame.fiveLabelStr];
-            [fiveLabel linkStrings:nameArray
-               defaultAttributes:[self exampleAttributes]
-           highlightedAttributes:[self exampleAttributes]
-                      tapHandler:[self exampleHandlerWithTitle:@"4"]];
+            for (NSString *name in nameArray) {
+                NSRange range = [commenFrame.fiveLabelStr rangeOfString:name];
+                [fiveLabel addCustomLink:[NSValue valueWithRange:range]
+                                forRange:range
+                               linkColor:IWRetweetNameColor];
+            }
             
         }
     }
     if (commenFrame.statusM.commentcount>5) {
         [moreLabel setHidden:NO];
-        [moreLabel setUserInteractionEnabled:YES];
         [moreLabel setFrame:commenFrame.moreLabelFrame];
         [moreLabel setText:commenFrame.moreLabelStr];
-        [moreLabel linkString:commenFrame.moreLabelStr
-            defaultAttributes:[self exampleAttributes]
-        highlightedAttributes:[self exampleAttributes]
-                   tapHandler:[self exampleHandlerWithTitle:@"5"]];
+        NSRange range = [commenFrame.moreLabelStr rangeOfString:commenFrame.moreLabelStr];
+        [moreLabel addCustomLink:[NSValue valueWithRange:range] forRange:range linkColor:IWRetweetNameColor];
     }
 }
 
-- (NSMutableDictionary *)exampleAttributes
-{
-    return [@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14],
-              NSForegroundColorAttributeName:IWRetweetNameColor}mutableCopy];
-}
 
-- (LinkedStringTapHandler)exampleHandlerWithTitle:(NSString *)title
+- (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
 {
-    NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
-    NSInteger indx = [title integerValue];
-    if (indx != 5) {
-        CommentMode *commMode = commentDataArray[indx];
-        LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
-            WLBasicTrends *usmode;
-            if ([linkedString isEqualToString:commMode.user.name]) {
-                usmode = commMode.user;
-            }else if ([linkedString isEqualToString:commMode.touser.name]){
-                usmode = commMode.touser;
-            }
-            UserInfoModel *userModel = [[UserInfoModel alloc] init];
-            [userModel setUid:usmode.uid];
-            [userModel setAvatar:usmode.avatar];
-            [userModel setName:usmode.name];
-            [userModel setPosition:usmode.position];
-            [userModel setCompany:usmode.company];
-            
-            UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
-            [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
+    NSRange range = [linkData rangeValue];
+     NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
+    WLBasicTrends *usmode;
+    if (label == oneLabel) {
+        CommentMode *commMode = commentDataArray[0];
+        NSString *linkedString = [_commenFrame.oneLabelStr substringWithRange:range];
+        if ([linkedString isEqualToString:commMode.user.name]) {
+            usmode = commMode.user;
+        }else if ([linkedString isEqualToString:commMode.touser.name]){
+            usmode = commMode.touser;
+        }
+    }else if(label == twoLabel){
+        CommentMode *commMode = commentDataArray[1];
+        NSString *linkedString = [_commenFrame.twoLabelStr substringWithRange:range];
+        if ([linkedString isEqualToString:commMode.user.name]) {
+            usmode = commMode.user;
+        }else if ([linkedString isEqualToString:commMode.touser.name]){
+            usmode = commMode.touser;
+        }
 
-        };
-        return exampleHandler;
-    }else if(indx == 5){
-        
-        LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
-            
-            
-        };
-        return exampleHandler;
-//        CommentInfoController *commentInfoVC = [[CommentInfoController alloc] init];
-////        commentInfoVC setStatusFrame:<#(WLStatusFrame *)#>
-//        [self.commentVC.navigationController pushViewController:commentInfoVC animated:YES];
+    }else if (label == threeLabel){
+        CommentMode *commMode = commentDataArray[2];
+        NSString *linkedString = [_commenFrame.threeLabelStr substringWithRange:range];
+        if ([linkedString isEqualToString:commMode.user.name]) {
+            usmode = commMode.user;
+        }else if ([linkedString isEqualToString:commMode.touser.name]){
+            usmode = commMode.touser;
+        }
+
+    }else if (label == fourLabel){
+        CommentMode *commMode = commentDataArray[3];
+        NSString *linkedString = [_commenFrame.fourLabelStr substringWithRange:range];
+        if ([linkedString isEqualToString:commMode.user.name]) {
+            usmode = commMode.user;
+        }else if ([linkedString isEqualToString:commMode.touser.name]){
+            usmode = commMode.touser;
+        }
+
+    }else if (label == fiveLabel){
+        CommentMode *commMode = commentDataArray[4];
+        NSString *linkedString = [_commenFrame.fiveLabelStr substringWithRange:range];
+        if ([linkedString isEqualToString:commMode.user.name]) {
+            usmode = commMode.user;
+        }else if ([linkedString isEqualToString:commMode.touser.name]){
+            usmode = commMode.touser;
+        }
+
+    }else if (label == moreLabel){
+        CommentInfoController *commentInfoVC = [[CommentInfoController alloc] init];
+        [commentInfoVC setStatusM:_commenFrame.statusM];
+        [self.commentVC.navigationController pushViewController:commentInfoVC animated:YES];
         
     }
-    return nil;
+    
+    if (!usmode)  return;
+    UserInfoModel *userModel = [[UserInfoModel alloc] init];
+    [userModel setUid:usmode.uid];
+    [userModel setAvatar:usmode.avatar];
+    [userModel setName:usmode.name];
+    [userModel setPosition:usmode.position];
+    [userModel setCompany:usmode.company];
+
+    UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
+    [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
     
 }
 
-
-- (HBVLinkedTextView *)newHBVLabel
+- (M80AttributedLabel *)newHBVLabel
 {
-    HBVLinkedTextView *HBlabel = [[HBVLinkedTextView alloc] init];
+    M80AttributedLabel *HBlabel = [[M80AttributedLabel alloc] init];
     [HBlabel setTextColor:[UIColor darkGrayColor]];
     HBlabel.font = WLZanNameFont;
+    [HBlabel setUnderLineForLink:NO];
+    [HBlabel setDelegate:self];
     HBlabel.backgroundColor = [UIColor clearColor];
     [self addSubview:HBlabel];
     return HBlabel;

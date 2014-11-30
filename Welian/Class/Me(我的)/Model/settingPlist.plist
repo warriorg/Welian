@@ -7,14 +7,6 @@
 			<key>row</key>
 			<string>0</string>
 			<key>title</key>
-			<string>新消息提醒</string>
-			<key>content</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>row</key>
-			<string>1</string>
-			<key>title</key>
 			<string>手机号</string>
 			<key>content</key>
 			<string></string>

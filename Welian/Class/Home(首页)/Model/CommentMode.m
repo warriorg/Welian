@@ -38,11 +38,10 @@
     } else if (delta < 60 * 60 * 24) { // 一天内
         timeStr = [NSString stringWithFormat:@"%.f小时前", delta/60/60];
     } else { // 几天前
-        fmt.dateFormat = @"yyyy-MM-dd HH:mm";
+        fmt.dateFormat = @"MM-dd";
         timeStr = [fmt stringFromDate:send];
     }
     return timeStr;
 }
-
 
 @end

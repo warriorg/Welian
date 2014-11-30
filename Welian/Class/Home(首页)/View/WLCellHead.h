@@ -14,6 +14,7 @@
 // 头像
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) WLBasicTrends *user;
-//@property (nonatomic, strong) UIViewController *controllVC;
+
+@property (nonatomic, weak) UIViewController *controllVC;
 
 @end

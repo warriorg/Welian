@@ -7,28 +7,20 @@
 //
 
 #import "WLStatusCell.h"
-#import "TQRichTextView.h"
-#import "WLPhotoListView.h"
-#import "WLStatusDock.h"
 #import "UIImage+ImageEffects.h"
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
 #import "WLBasicTrends.h"
 #import "UIImageView+WebCache.h"
-#import "MLEmojiLabel.h"
-#import "LXActivity.h"
 #import "PublishStatusController.h"
-#import "NavViewController.h"
 #import "ShareEngine.h"
-#import "UserInfoBasicVC.h"
-#import "HBVLinkedTextView.h"
-#import "UIColor+HBVHarmonies.h"
-#import "UserInfoBasicVC.h"
 #import "WLCellHead.h"
-
 #import "WLContentCellView.h"
 #import "FeedAndZanView.h"
 #import "CommentCellView.h"
+#import "WLStatusDock.h"
+#import "CommentInfoController.h"
+#import "MJExtension.h"
 
 @interface WLStatusCell () <UIActionSheetDelegate>
 {
@@ -66,8 +58,8 @@
         
         // 清除cell默认的背景色(才能只显示背景view、背景图片)
         self.backgroundColor = [UIColor clearColor];
-        _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 70)];
-        [_cellHeadView.iconImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
+        
+        _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
         [self.contentView addSubview:_cellHeadView];
 
         _contentView = [[WLContentCellView alloc] init];
@@ -76,8 +68,16 @@
             if (weakcell.feedzanBlock) {
                 weakcell.feedzanBlock (statusM);
             }
-            
         };
+        _contentView.openupBlock = ^(BOOL isopen){
+            if (isopen) {
+
+            }else{
+                
+            }
+        };
+        //    // 评论
+        [_contentView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_contentView];
         
         _feznView = [[FeedAndZanView alloc] init];
@@ -93,8 +93,8 @@
         [_moreBut setImage:[UIImage imageNamed:@"me_mywriten_more"] forState:UIControlStateNormal];
         // 8.3.设置按钮永远停留在右上角
         CGFloat btnWH = 35;
-        CGFloat btnY = IWTableBorderWidth;
-        CGFloat btnX = self.contentView.frame.size.width - btnWH-10;
+        CGFloat btnY = 0;
+        CGFloat btnX = self.contentView.frame.size.width - btnWH;
         _moreBut.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
         _moreBut.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
         [self.contentView addSubview:_moreBut];
@@ -106,6 +106,16 @@
 }
 
 
+#pragma mark- 评论
+- (void)commentBtnClick:(UIButton*)but event:(id)event
+{
+    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+    [commentInfo setStatusM:_statusFrame.status];
+    [commentInfo setBeginEdit:YES];
+    [self.homeVC.navigationController pushViewController:commentInfo animated:YES];
+}
+
+
 /**
  *  设置背景
  */
@@ -113,30 +123,17 @@
 {
     // 1.默认
     UIImageView *bg = [[UIImageView alloc] init];
-    bg.image = [UIImage resizedImage:@"cellbackground_normal" leftScale:0.9 topScale:0.5];
+    bg.image = [UIImage resizedImage:@"homeCellbackground_normal" leftScale:0.9 topScale:0.5];
     self.backgroundView = bg;
     // 2.选中
     UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"cellbackground_highlight" leftScale:0.9 topScale:0.5];
+    selectedBg.image = [UIImage resizedImage:@"homeCellbackground_highlight" leftScale:0.9 topScale:0.5];
     self.selectedBackgroundView = selectedBg;
-}
-
-- (void)tapiconImage:(UITapGestureRecognizer *)tap
-{
-    WLBasicTrends *user = _statusFrame.status.user;
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
-    [mode setUid:user.uid];
-    [mode setAvatar:user.avatar];
-    [mode setName:user.name];
-    
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-    [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
 }
 
 - (void)setStatusFrame:(WLStatusFrame *)statusFrame
 {
     _statusFrame = statusFrame;
-    
     WLStatusM *status = statusFrame.status;
     WLBasicTrends *user = status.user;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
@@ -146,15 +143,15 @@
     }
     if ([_mode.uid integerValue]==[user.uid integerValue]) {
         [_moreBut setHidden:NO];
-        
     }else{
         [_moreBut setHidden:YES];
     }
 
     [_cellHeadView setUser:user];
+    [_cellHeadView setControllVC:self.homeVC];
     
     [_contentView setStatusFrame:statusFrame];
-    [_contentView setFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, contenFrame.cellHeight)];
+    [_contentView setFrame:CGRectMake(50, 60, [UIScreen mainScreen].bounds.size.width-50, contenFrame.cellHeight)];
     [_contentView setHomeVC:self.homeVC];
     
     CGFloat commenY = CGRectGetMaxY(_contentView.frame);
@@ -169,7 +166,6 @@
         [_feznView setHidden:YES];
     }
     
-
     if (status.commentcount) {
         [_commentView setHidden:NO];
         [_commentView setCommenFrame:statusFrame.commentListFrame];

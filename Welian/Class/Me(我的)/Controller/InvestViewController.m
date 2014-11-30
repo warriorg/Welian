@@ -162,6 +162,7 @@ static NSString *idetfid = @"investcell";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     

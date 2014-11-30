@@ -14,7 +14,6 @@
 #import "NavViewController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#import "WLDataDBTool.h"
 #import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "NewFriendController.h"

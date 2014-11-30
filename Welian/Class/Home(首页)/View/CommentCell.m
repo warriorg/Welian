@@ -48,7 +48,7 @@
         [self setupOriginalSubviews];
         
         // 4.设置背景
-        [self setupBg];
+//        [self setupBg];
     }
     return self;
 }
@@ -73,7 +73,7 @@
     
     // 2.昵称
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.font = IWNameFont;
+    _nameLabel.font = [UIFont boldSystemFontOfSize:15];
     // 清除背景颜色
     _nameLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_nameLabel];
@@ -92,7 +92,7 @@
     _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _contentLabel.isNeedAtAndPoundSign = YES;
-    _contentLabel.font = IWContentFont;
+    _contentLabel.font = [UIFont systemFontOfSize:14];
     _contentLabel.textColor = IWContentColor;
     // 自动换行
     _contentLabel.backgroundColor = [UIColor clearColor];
@@ -114,20 +114,20 @@
 
 
 
-/**
- *  设置背景
- */
-- (void)setupBg
-{
-    // 1.默认
-    UIImageView *bg = [[UIImageView alloc] init];
-    bg.image = [UIImage resizedImage:@"background_white"];
-    self.backgroundView = bg;
-    // 2.选中
-    UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"background_grey"];
-    self.selectedBackgroundView = selectedBg;
-}
+///**
+// *  设置背景
+// */
+//- (void)setupBg
+//{
+//    // 1.默认
+//    UIImageView *bg = [[UIImageView alloc] init];
+//    bg.image = [UIImage resizedImage:@"background_white"];
+//    self.backgroundView = bg;
+//    // 2.选中
+//    UIImageView *selectedBg = [[UIImageView alloc] init];
+//    selectedBg.image = [UIImage resizedImage:@"background_grey"];
+//    self.selectedBackgroundView = selectedBg;
+//}
 
 
 - (void)setCommentCellFrame:(CommentCellFrame *)commentCellFrame
@@ -155,7 +155,11 @@
     _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
     _contentLabel.customEmojiPlistName = @"expressionImage_custom";
     _contentLabel.frame = commentCellFrame.contentLabelF;
-    _contentLabel.text = commentM.comment;
+    NSString *labelstr = commentM.comment;
+    if (commentM.touser) {
+        labelstr = [NSString stringWithFormat:@"回复 %@：%@",commentM.touser.name,commentM.comment];
+    }
+    _contentLabel.text = labelstr;
 }
 
 @end

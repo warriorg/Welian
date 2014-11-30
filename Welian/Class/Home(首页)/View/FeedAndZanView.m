@@ -7,15 +7,16 @@
 //
 
 #import "FeedAndZanView.h"
-#import "HBVLinkedTextView.h"
+//#import "HBVLinkedTextView.h"
+#import "M80AttributedLabel.h"
 #import "UserInfoBasicVC.h"
 
-@interface FeedAndZanView()
+@interface FeedAndZanView() <M80AttributedLabelDelegate>
 {
     UIImageView *_zanimageview;
-    HBVLinkedTextView *_zanLabel;
+    M80AttributedLabel *_zanLabel;
     
-    HBVLinkedTextView *_feedLabel;
+    M80AttributedLabel *_feedLabel;
     UIImageView *_feedimageview;
     
 }
@@ -35,14 +36,18 @@
         _feedimageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"repost_small"]];
         [self addSubview:_feedimageview];
         
-        _zanLabel = [[HBVLinkedTextView alloc] init];
+        _zanLabel = [[M80AttributedLabel alloc] init];
         [_zanLabel setTextColor:[UIColor grayColor]];
+        [_zanLabel setDelegate:self];
+        [_zanLabel setUnderLineForLink:NO];
         _zanLabel.font = WLZanNameFont;
         _zanLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_zanLabel];
         
-        _feedLabel = [[HBVLinkedTextView alloc] init];
+        _feedLabel = [[M80AttributedLabel alloc] init];
         [_feedLabel setTextColor:[UIColor grayColor]];
+        [_feedLabel setDelegate:self];
+        [_feedLabel setUnderLineForLink:NO];
         _feedLabel.font = WLZanNameFont;
         _feedLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_feedLabel];
@@ -56,74 +61,65 @@
     NSDictionary *dataDic = feedAndZanFrame.feedAndzanDic;
     NSArray *zanArray = [dataDic objectForKey:@"zans"];
     NSArray *feedArray = [dataDic objectForKey:@"forwards"];
-    NSMutableArray *zannameA = [NSMutableArray array];
-    NSMutableArray *feednameA = [NSMutableArray array];
     
     if (zanArray.count) {
         [_zanimageview setHidden:NO];
         [_zanLabel setHidden:NO];
-        [_zanLabel setUserInteractionEnabled:YES];
         [_zanimageview setFrame:feedAndZanFrame.zanImageF];
         [_zanLabel setFrame:feedAndZanFrame.zanLabelF];
         [_zanLabel setText:feedAndZanFrame.zanNameStr];
         
         for (FeedAndZanModel *zanModel  in zanArray) {
-            [zannameA addObject:zanModel.user.name];
+            
+            NSRange range = [feedAndZanFrame.zanNameStr rangeOfString:zanModel.user.name];
+            [_zanLabel addCustomLink:[NSValue valueWithRange:range]
+                                    forRange:range
+                                   linkColor:IWRetweetNameColor];
         }
-        [_zanLabel linkStrings:zannameA
-             defaultAttributes:[self exampleAttributes]
-         highlightedAttributes:[self exampleAttributes]
-                    tapHandler:[self exampleHandlerWithTitle:@"zan"]];
         
     }else{
-        [_zanLabel setUserInteractionEnabled:NO];
         [_zanLabel setHidden:YES];
         [_zanimageview setHidden:YES];
     }
     if (feedArray.count) {
         [_feedLabel setHidden:NO];
-        [_feedLabel setUserInteractionEnabled:YES];
         [_feedimageview setHidden:NO];
         [_feedLabel setFrame:feedAndZanFrame.feedLabelF];
         [_feedimageview setFrame:feedAndZanFrame.feedImageF];
         [_feedLabel setText:feedAndZanFrame.feedNameStr];
         for (FeedAndZanModel *feedModel in feedArray) {
-            [feednameA addObject:feedModel.user.name];
+            NSRange range = [feedAndZanFrame.feedNameStr rangeOfString:feedModel.user.name];
+            [_feedLabel addCustomLink:[NSValue valueWithRange:range]
+                            forRange:range
+                           linkColor:IWRetweetNameColor];
         }
-        [_feedLabel linkStrings:feednameA
-              defaultAttributes:[self exampleAttributes]
-          highlightedAttributes:[self exampleAttributes]
-                     tapHandler:[self exampleHandlerWithTitle:@"feed"]];
     }else{
         [_feedLabel setHidden:YES];
-        [_feedLabel setUserInteractionEnabled:NO];
         [_feedimageview setHidden:YES];
     }
-//    DLog(@"%@----%@",feedAndZanFrame.zanNameStr,feedAndZanFrame.feedNameStr);
 }
 
-- (NSMutableDictionary *)exampleAttributes
+- (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
 {
-    return [@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14],
-              NSForegroundColorAttributeName:IWRetweetNameColor}mutableCopy];
-}
-
-- (LinkedStringTapHandler)exampleHandlerWithTitle:(NSString *)title
-{
-    NSDictionary *dataDic = self.feedAndZanFrame.feedAndzanDic;
     
-    LinkedStringTapHandler exampleHandler = ^(NSString *linkedString) {
+    NSDictionary *dataDic = self.feedAndZanFrame.feedAndzanDic;
+    NSRange range = [linkData rangeValue];
+    if ([linkData isKindOfClass:[NSString class]]) {
+        
+    }else {
+        
         UserInfoModel *mode;
-        if ([title isEqualToString:@"zan"]) {
-            
+        if (label == _zanLabel ) {
+            NSString *linkedString = [_feedAndZanFrame.zanNameStr substringWithRange:range];
             NSArray *zanArray = [dataDic objectForKey:@"zans"];
             for (FeedAndZanModel *zanmode in zanArray) {
                 if ([zanmode.user.name isEqualToString:linkedString]) {
                     mode = zanmode.user;
                 }
             }
-        }else if ([title isEqualToString:@"feed"]){
             
+        }else if (label == _feedLabel){
+            NSString *linkedString = [_feedAndZanFrame.feedNameStr substringWithRange:range];
             NSArray *feedArray = [dataDic objectForKey:@"forwards"];
             for (FeedAndZanModel *feedmode in feedArray) {
                 if ([feedmode.user.name isEqualToString:linkedString]) {
@@ -131,12 +127,10 @@
                 }
             }
         }
+        if (!mode) return;
         UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
         [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
-        
-    };
-    return exampleHandler;
+    }
 }
-
 
 @end

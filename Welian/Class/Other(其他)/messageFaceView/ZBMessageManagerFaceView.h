@@ -15,11 +15,13 @@
 
 @protocol ZBMessageManagerFaceViewDelegate <NSObject>
 
-- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele;
+- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele isSend:(BOOL)send;
 
 @end
 
 @interface ZBMessageManagerFaceView : UIView<UIScrollViewDelegate,ZBFaceViewDelegate>
+
+@property (nonatomic, strong)  UIButton *sendBut;
 
 @property (nonatomic,weak)id<ZBMessageManagerFaceViewDelegate>delegate;
 

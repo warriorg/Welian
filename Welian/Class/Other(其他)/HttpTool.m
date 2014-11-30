@@ -183,7 +183,7 @@ static HttpTool *engine;
     str = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
     str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     return str;
 }

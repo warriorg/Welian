@@ -26,6 +26,7 @@ static WLDataDBTool *wlDataDBTool;
     [wlDataDBTool createTableWithName:KMyAllFriendsKey];
     [wlDataDBTool createTableWithName:KNewFriendsTableName];
     [wlDataDBTool createTableWithName:KMessageHomeTableName];
+    [wlDataDBTool createTableWithName:KWLStutarDataTableName];
     return wlDataDBTool;
 }
 

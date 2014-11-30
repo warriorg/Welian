@@ -10,6 +10,7 @@
 #import "WLHttpTool.h"
 #import "UserInfoTool.h"
 #import "WLHUDView.h"
+#import "WLDataDBTool.h"
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
@@ -40,7 +41,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://test.welian.com:8080"
+#define WLHttpServer  @"http://122.226.44.105:8080"
 
 #define ww @"http://122.226.44.105:8080  http://test.welian.com:8080"
 
@@ -75,6 +76,8 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+
+#define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 
 // 文件路径
@@ -120,7 +123,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 来源
 #define IWSourceColor IWColor(153, 153, 153)
 // 被转发昵称
-#define IWRetweetNameColor IWColor(81, 126, 175)
+#define IWRetweetNameColor IWColor(43, 94, 171)
 // 被转发内容
 #define IWRetweetContentColor IWColor(70, 70, 70)
 // 线条浅灰颜色
@@ -152,7 +155,7 @@ fprintf(stderr, "-----------------------------------\n");                       
  8.常用的一些距离
  */
 // cell的边框宽度（cell的内边距）
-#define IWCellBorderWidth 12
+#define IWCellBorderWidth 10
 // tableview的边框宽度（tableView的内边距）
 #define IWTableBorderWidth 10
 // 每个cell之间的间距

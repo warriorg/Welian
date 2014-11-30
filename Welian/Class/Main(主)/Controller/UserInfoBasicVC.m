@@ -17,7 +17,6 @@
 #import "HomeController.h"
 #import "ListdaController.h"
 #import "CommonFriendsController.h"
-#import "WLDataDBTool.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {

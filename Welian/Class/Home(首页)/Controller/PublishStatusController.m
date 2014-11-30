@@ -159,12 +159,13 @@ static NSString *picCellid = @"PicCellID";
         [self.view addSubview:self.collectionView];
     }else if (_publishType == PublishTypeForward){
         self.forwardView = [[ForwardPublishView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, [[UIScreen mainScreen] bounds].size.width, 60)];
-        [self.forwardView setStatusF:self.statusFrame];
+        [self.forwardView setStatus:self.status];
         [self.view addSubview:self.forwardView];
     }
 
     
     self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, SuperSize.height, self.view.frame.size.width, keyboardHeight)];//216-->196
+    [self.faceView.sendBut setHidden:YES];
     self.faceView.delegate = self;
     [self.view addSubview:self.faceView];
 
@@ -256,8 +257,9 @@ static NSString *picCellid = @"PicCellID";
 
 
 
-- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
+- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele isSend:(BOOL)send
 {
+
     if (dele) {
         
         NSString *inputString = self.textView.text;
@@ -406,6 +408,7 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
     
@@ -608,10 +611,10 @@ static NSString *picCellid = @"PicCellID";
 - (void)confirmPublish
 {
     if (_publishType == PublishTypeForward) {
-        NSNumber *fid = [NSNumber numberWithInt:self.statusFrame.status.fid];
+        NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
         
-        if (self.statusFrame.status.relationfeed) {
-            fid = [NSNumber numberWithInt:self.statusFrame.status.relationfeed.fid];
+        if (self.status.relationfeed) {
+            fid = [NSNumber numberWithInt:self.status.relationfeed.fid];
         }
         [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
             [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];

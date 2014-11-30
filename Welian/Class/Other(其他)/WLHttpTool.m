@@ -176,14 +176,19 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
-        if (JSON) {
-
+        if (jsonarray.count) {
+            BOOL isok = NO;
             if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+                isok = YES;
                 [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
-                for (NSDictionary *dic in jsonarray) {
-                    [[WLDataDBTool sharedService] putObject:dic  withId:[dic objectForKey:@"fid"] intoTable:KHomeDataTableName];
-                }
             }
+            for (NSDictionary *dicJson in jsonarray) {
+                if (isok) {
+                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+                }
+                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+            }
+            
             succeBlock (jsonarray);
         }
         
@@ -847,6 +852,18 @@
     } withHUD:NO andDim:NO];
 }
 
+#pragma mark - 举报--投诉
++ (void)complainParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"complain",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
 
 
 @end

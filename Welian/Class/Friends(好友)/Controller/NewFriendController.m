@@ -10,7 +10,6 @@
 #import "FriendsNewCell.h"
 #import "NewFriendModel.h"
 #import "MJExtension.h"
-#import "WLDataDBTool.h"
 #import "UserInfoBasicVC.h"
 
 static NSString *frnewCellid = @"frnewCellid";

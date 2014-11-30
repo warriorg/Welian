@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "BMapKit.h"
 #import "MainViewController.h"
-//#import "LogInController.h"
 #import "NavViewController.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
@@ -18,7 +17,6 @@
 #import "LoginViewController.h"
 #import "NewFriendModel.h"
 #import "MJExtension.h"
-#import "WLDataDBTool.h"
 #import "MobClick.h"
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
@@ -107,16 +105,6 @@ BMKMapManager* _mapManager;
     
     // [2]:注册APNS
     [self registerRemoteNotification];
-    
-    // [2-EXT]: 获取启动时收到的APN
-//    NSDictionary* message = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-//    if (message) {
-//        NSString *payloadMsg = [message objectForKey:@"payload"];
-//        NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], payloadMsg];
-//    }
-    
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     // 版本更新
     [self detectionUpdataVersionDic];
@@ -268,6 +256,8 @@ BMKMapManager* _mapManager;
 - (void)inceptMessage:(NSDictionary*)userInfo
 {
     NSString *type = [userInfo objectForKey:@"type"];
+    if (!type) return;
+    
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithDictionary:[userInfo objectForKey:@"data"]];
     [dataDic setObject:type forKey:@"type"];
     

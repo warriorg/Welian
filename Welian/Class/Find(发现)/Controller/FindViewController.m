@@ -139,8 +139,8 @@
         }
         
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:webDic[@"url"]];
-        webVC.showPageTitles = NO;
-        [webVC setTitle:webDic[@"name"]];
+//        webVC.showPageTitles = NO;
+//        [webVC setTitle:webDic[@"name"]];
          [self.navigationController pushViewController:webVC animated:YES];
     }
     

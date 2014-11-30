@@ -614,6 +614,7 @@ didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
                 if(self.emojiDelegate&&[self.emojiDelegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
                     //type的数组和i刚好对应
                     [self.emojiDelegate mlEmojiLabel:self didSelectLink:content withType:i];
+                    
                 }
             }
         }
