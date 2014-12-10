@@ -416,15 +416,15 @@ static NSString *picCellid = @"PicCellID";
         
        
             // 保存图片到相册，调用的相关方法，查看是否保存成功
-            
             [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
                [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-                   [picker dismissViewControllerAnimated:YES completion:^{
-
-                   }];
                    [self.assets addObject:asset];
                    [self.navigationItem.rightBarButtonItem setEnabled:YES];
                    [self.collectionView reloadData];
+                   [picker dismissViewControllerAnimated:YES completion:^{
+
+                   }];
+                   
 
                } failureBlock:^(NSError *error) {
                    
@@ -613,9 +613,9 @@ static NSString *picCellid = @"PicCellID";
     if (_publishType == PublishTypeForward) {
         NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
         
-        if (self.status.relationfeed) {
-            fid = [NSNumber numberWithInt:self.status.relationfeed.fid];
-        }
+//        if (self.status.relationfeed) {
+//            fid = [NSNumber numberWithInt:self.status.relationfeed.fid];
+//        }
         [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
             [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
             

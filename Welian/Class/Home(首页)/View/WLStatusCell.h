@@ -12,12 +12,16 @@
 
 typedef void(^WLFeedAndZanBlock)(WLStatusM *statusM);
 
+typedef void (^WLFeedTuiBlock)(WLStatusM *starusM);
+
 @interface WLStatusCell : UITableViewCell
 
 /** 右上角按钮 */
 @property (nonatomic, strong) UIButton *moreBut;
 
 @property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
+
+@property (nonatomic, copy) WLFeedTuiBlock feedTuiBlock;
 
 /**
  *  创建一个cell

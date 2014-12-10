@@ -23,7 +23,6 @@
 #import "HomeView.h"
 #import "MessageController.h"
 #import "UIBarButtonItem+Badge.h"
-#import "FeedAndZanModel.h"
 #import "CommentMode.h"
 
 @interface HomeController () <UIActionSheetDelegate>
@@ -32,7 +31,6 @@
     
     NSIndexPath *_clickIndex;
     NSNumber *_uid;
-    NSIndexPath *_selectIndexPath;
 }
 
 @property (nonatomic, strong) HomeView *homeView;
@@ -92,7 +90,7 @@
 
 - (void)beginPullDownRefreshing
 {
-    [self.tableView setFooterHidden:YES];
+//    [self.tableView setFooterHidden:YES];
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
 
@@ -103,7 +101,7 @@
         [darDic setObject:@(0) forKey:@"start"];
     }
     
-    [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
+    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -127,8 +125,8 @@
         
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
-        if (jsonarray.count>=KCellConut) {
-            [self.tableView setFooterHidden:NO];
+        if (jsonarray.count<KCellConut) {
+            [self.tableView setFooterHidden:YES];
         }
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
@@ -146,7 +144,7 @@
     NSMutableArray *forwardsM = [NSMutableArray array];
     if (feedarray.count) {
         for (NSDictionary *feeddic in feedarray) {
-            FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:feeddic];
+            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:feeddic];
             [forwardsM addObject:mode];
         }
     }
@@ -155,7 +153,7 @@
     NSMutableArray *zanArrayM = [NSMutableArray array];
     if (zanarray.count) {
         for (NSDictionary *zandic in zanarray) {
-            FeedAndZanModel *mode = [FeedAndZanModel objectWithKeyValues:zandic];
+            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:zandic];
             [zanArrayM addObject:mode];
         }
     }
@@ -192,7 +190,7 @@
         [darDic setObject:@(start) forKey:@"start"];
     }
     
-    [WLHttpTool loadFeedParameterDic:darDic andLoadType:_uid success:^(id JSON) {
+    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -231,7 +229,12 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageHomenotif) name:KMessageHomeNotif object:nil];
     
-    [self beginPullDownRefreshing];
+    if (_uid) {
+      [self beginPullDownRefreshing];
+    }else{
+        [self performSelector:@selector(beginPullDownRefreshing) withObject:nil afterDelay:3.0];
+    }
+    
     // 1.设置界面属性
     [self buildUI];
 }
@@ -326,6 +329,12 @@
         [self.tableView reloadData];
 //        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     };
+    cell.feedTuiBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+    };
     
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
@@ -372,18 +381,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
-//    [commentInfo setDelegate:self];
     WLStatusFrame *statusF = _dataArry[indexPath.row];
+    
+    if (statusF.status.type==2) return;
+    
+    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
-    _selectIndexPath = indexPath;
     commentInfo.feedzanBlock = ^(WLStatusM *statusM){
         
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
         [self.tableView reloadData];
-        DLog(@"fdsadf");
+    };
+    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
     };
     
     commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
@@ -397,18 +413,6 @@
     
     [self.navigationController pushViewController:commentInfo animated:YES];
 }
-
-//- (void)commentInfoController:(CommentInfoController *)commentVC isDelete:(BOOL)isdelete withStatusFrame:(WLStatusM *)statusM
-//{
-//    if (isdelete) {
-//        [_dataArry removeObject:statusF];
-//        [self.tableView deleteRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-//    }else{
-//        [_dataArry setObject:statusF atIndexedSubscript:_selectIndexPath.row];
-//        [self.tableView reloadRowsAtIndexPaths:@[_selectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-//    }
-//    
-//}
 
 
 - (void)didReceiveMemoryWarning

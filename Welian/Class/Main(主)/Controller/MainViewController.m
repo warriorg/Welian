@@ -173,11 +173,6 @@
     [circleItem setBadgeValue:badgeStr];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    [WLHUDView hiddenHud];
-}
-
 
 - (void)didReceiveMemoryWarning
 {

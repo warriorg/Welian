@@ -38,7 +38,6 @@
     [self beginPullDownRefreshing];
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -137,11 +136,20 @@
     if (self.wlUserLoadType == WLSchool) {
         SchoolModel *schoolM = self.dataArray[indexPath.section];
         [cell.textLabel setText:schoolM.schoolname];
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d年%d月  -  %d年%d月",schoolM.startyear,schoolM.startmonth,schoolM.endyear,schoolM.endmonth]];
+        if (schoolM.endyear==-1) {
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  至今",(long)schoolM.startyear,(long)schoolM.startmonth]];
+        }else{
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  %ld年%ld月",(long)schoolM.startyear,(long)schoolM.startmonth,(long)schoolM.endyear,(long)schoolM.endmonth]];
+        }
+        
     }else if (self.wlUserLoadType == WLCompany){
         CompanyModel *companyM = self.dataArray[indexPath.section];
         [cell.textLabel setText:companyM.companyname];
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d年%d月  -  %d年%d月",companyM.startyear,companyM.startmonth,companyM.endyear,companyM.endmonth]];
+        if (companyM.endyear==-1) {
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  至今",(long)companyM.startyear,(long)companyM.startmonth]];
+        }else{
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  %ld年%ld月",(long)companyM.startyear,(long)companyM.startmonth,(long)companyM.endyear,(long)companyM.endmonth]];
+        }
     }
     
     return cell;

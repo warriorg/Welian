@@ -62,7 +62,7 @@
                 NSRange range = [commenFrame.oneLabelStr  rangeOfString:name];
                 [oneLabel addCustomLink:[NSValue valueWithRange:range]
                                  forRange:range
-                                linkColor:IWRetweetNameColor];
+                                linkColor:WLRGB(52, 116, 186)];
             }
             
             [twoLabel setHidden:YES];
@@ -79,7 +79,7 @@
                 NSRange range = [commenFrame.twoLabelStr rangeOfString:name];
                 [twoLabel addCustomLink:[NSValue valueWithRange:range]
                                forRange:range
-                              linkColor:IWRetweetNameColor];
+                              linkColor:WLRGB(52, 116, 186)];
             }
             
         }else if (i==2){
@@ -91,7 +91,7 @@
                 NSRange range = [commenFrame.threeLabelStr rangeOfString:name];
                 [threeLabel addCustomLink:[NSValue valueWithRange:range]
                                forRange:range
-                              linkColor:IWRetweetNameColor];
+                              linkColor:WLRGB(52, 116, 186)];
             }
 
             
@@ -103,7 +103,7 @@
                 NSRange range = [commenFrame.fourLabelStr rangeOfString:name];
                 [fourLabel addCustomLink:[NSValue valueWithRange:range]
                                  forRange:range
-                                linkColor:IWRetweetNameColor];
+                                linkColor:WLRGB(52, 116, 186)];
             }
             
         }else if (i==4){
@@ -114,7 +114,7 @@
                 NSRange range = [commenFrame.fiveLabelStr rangeOfString:name];
                 [fiveLabel addCustomLink:[NSValue valueWithRange:range]
                                 forRange:range
-                               linkColor:IWRetweetNameColor];
+                               linkColor:WLRGB(52, 116, 186)];
             }
             
         }
@@ -124,7 +124,7 @@
         [moreLabel setFrame:commenFrame.moreLabelFrame];
         [moreLabel setText:commenFrame.moreLabelStr];
         NSRange range = [commenFrame.moreLabelStr rangeOfString:commenFrame.moreLabelStr];
-        [moreLabel addCustomLink:[NSValue valueWithRange:range] forRange:range linkColor:IWRetweetNameColor];
+        [moreLabel addCustomLink:[NSValue valueWithRange:range] forRange:range linkColor:WLRGB(52, 116, 186)];
     }
 }
 
@@ -195,14 +195,13 @@
 
     UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
     [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
-    
 }
 
 - (M80AttributedLabel *)newHBVLabel
 {
     M80AttributedLabel *HBlabel = [[M80AttributedLabel alloc] init];
-    [HBlabel setTextColor:[UIColor darkGrayColor]];
-    HBlabel.font = WLZanNameFont;
+    [HBlabel setTextColor:[UIColor colorWithWhite:0.15 alpha:1.0]];
+    HBlabel.font = WLFONT(13);
     [HBlabel setUnderLineForLink:NO];
     [HBlabel setDelegate:self];
     HBlabel.backgroundColor = [UIColor clearColor];

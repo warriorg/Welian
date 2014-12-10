@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="Bg9-Gn-n7h">
+            <objects>
+                <viewController id="Ved-93-WuY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1FN-33-lXd"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yyf-PK-1Hf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="i1b-ak-k0U">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="BK7-w5-VvZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BK7-w5-VvZ" secondAttribute="trailing" id="Z88-fx-dtS"/>
+                            <constraint firstItem="BK7-w5-VvZ" firstAttribute="leading" secondItem="i1b-ak-k0U" secondAttribute="leading" id="iMe-d2-gH1"/>
+                            <constraint firstItem="BK7-w5-VvZ" firstAttribute="top" secondItem="i1b-ak-k0U" secondAttribute="top" id="sMd-SD-0Un"/>
+                            <constraint firstItem="Yyf-PK-1Hf" firstAttribute="top" secondItem="BK7-w5-VvZ" secondAttribute="bottom" id="xoE-pB-Nc5"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RM4-I5-7tI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="506" y="140"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="login_bg.png" width="320" height="480"/>
+    </resources>
+</document>

@@ -37,8 +37,9 @@
         _commentBtn = [self addBtn:@"评论" image:@"me_mywriten_comment"];
         
         // 3.添加转发
-        _repostBtn = [self addBtn:@"转发" image:@"me_mywriten_repeat"];
-        
+        _repostBtn = [self addBtn:@"转推" image:@"me_mywriten_repeat"];
+        [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repeat_no"] forState:UIControlStateDisabled];
+//        [_repostBtn setTitleColor:WLRGB(230, 230, 230) forState:UIControlStateDisabled];
     }
     return self;
 }
@@ -65,7 +66,7 @@
     // 按钮文字
     [btn setTitle:title forState:UIControlStateNormal];
     
-    btn.titleLabel.font = [UIFont systemFontOfSize:10];
+    btn.titleLabel.font = WLFONT(10);
     
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);
     [self addSubview:btn];
@@ -94,13 +95,31 @@
     [self setBtn:_commentBtn title:@"评论" count:status.commentcount index:1];
     
     // 3.设置转发数
-    [self setBtn:_repostBtn title:@"转发" count:status.forwardcount index:2];
+    [self setBtn:_repostBtn title:@"转推" count:status.forwardcount index:2];
     
     
     if (status.iszan==1) { // 已赞
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
     }else {
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good"] forState:UIControlStateNormal];
+    }
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
+    if ([status.user.uid integerValue]==[mode.uid integerValue]) {
+        [_repostBtn setEnabled:NO];
+    }else{
+        [_repostBtn setEnabled:YES];
+        if (status.isforward == 1) { // 已推
+            [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repea_pre"] forState:UIControlStateNormal];
+        }else{
+            [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repeat"] forState:UIControlStateNormal];
+        }
+    }
+    // 推荐好友 不进详情
+    if (status.type==2) {
+        [_commentBtn setEnabled:NO];
+    }else{
+        [_commentBtn setEnabled:YES];
     }
 }
 

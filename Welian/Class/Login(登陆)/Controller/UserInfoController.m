@@ -16,10 +16,13 @@
 @interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSString *avatar;
+    NSArray *_dataArray;
+   __block NSString *_nameStr;
+   __block NSString *_danweiStr;
+   __block NSString *_zhiwuStr;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) InfoHeaderView *infoHeader;
-@property (nonatomic, strong) NSMutableDictionary *dataDic;
 @end
 
 @implementation UserInfoController
@@ -51,27 +54,26 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"加入微链"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
-
-    self.dataDic = [NSMutableDictionary dictionaryWithDictionary:@{@"姓名":@"",@"单位":@"",@"职务":@""}];
+    
+    // 2.读取数据
+    _dataArray = @[@"姓名",@"单位",@"职务"];
+    
     [self.view addSubview:self.tableView];
 }
 
 #pragma mark - 保存并登陆
 - (void)saveAndLogin
 {
-    NSString *name = [self.dataDic objectForKey:@"姓名"];
-    NSString *danwei = [self.dataDic objectForKey:@"单位"];
-    NSString *zhiwu = [self.dataDic objectForKey:@"职务"];
     NSString *mima = self.pwdString;
-    if (!name.length) {
+    if (!_nameStr.length) {
         [WLHUDView showErrorHUD:@"姓名不能为空"];
         return;
     }
-    if (!danwei.length) {
+    if (!_danweiStr.length) {
         [WLHUDView showErrorHUD:@"单位不能为空"];
         return;
     }
-    if (!zhiwu.length) {
+    if (!_zhiwuStr.length) {
         [WLHUDView showErrorHUD:@"职务不能为空"];
         return;
     }
@@ -83,7 +85,7 @@
         [WLHUDView showErrorHUD:@"密码不能为空"];
     }
     
-    [WLHttpTool registerParameterDic:@{@"name":name,@"company":danwei,@"position":zhiwu,@"avatar":avatar,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
+    [WLHttpTool registerParameterDic:@{@"name":_nameStr,@"company":_danweiStr,@"position":_zhiwuStr,@"avatar":avatar,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
         if ([datadic objectForKey:@"url"]) {
             
@@ -109,16 +111,8 @@
                 
             } fail:^(NSError *error) {
                 
-            }];
-//            UserInfoModel *modeinfo = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-//            [modeinfo setName:name];
-//            [modeinfo setCompany:danwei];
-//            [modeinfo setPosition:zhiwu];
-//            [modeinfo setCheckcode:mima];
-//            [modeinfo setAvatar:[datadic objectForKey:@"url"]];
-//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:modeinfo];
-//            MainViewController *mainVC = [[MainViewController alloc] init];
-//            [self.view.window setRootViewController:mainVC];
+            } isHUD:YES];
+
         }
     } fail:^(NSError *error) {
         
@@ -199,8 +193,7 @@
 #pragma mark ---tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *array = self.dataDic.allKeys;
-    return array.count;
+    return _dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -215,9 +208,17 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellid"];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
-    NSArray *array = self.dataDic.allKeys;
-    [cell.textLabel setText:array[indexPath.row]];
-    [cell.detailTextLabel setText:[self.dataDic objectForKey:array[indexPath.row]]];
+    
+    [cell.textLabel setText:_dataArray[indexPath.row]];
+    NSString *str = @"";
+    if (indexPath.row==0) {
+        str = _nameStr;
+    }else if (indexPath.row ==1){
+        str = _danweiStr;
+    }else if (indexPath.row ==2){
+        str = _zhiwuStr;
+    }
+    [cell.detailTextLabel setText:str];
     return cell;
 }
 
@@ -233,56 +234,46 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSArray *aa = self.dataDic.allKeys;
-    for (NSString *tit in aa) {
-        if ([cell.textLabel.text isEqualToString:tit]) {
-            
-            IWVerifiedType verType;
-            if ([tit isEqualToString:@"姓名"]) {
-                verType = IWVerifiedTypeName;
-            }else if ([tit isEqualToString:@"单位"]){
-                verType = IWVerifiedTypeCompany;
-            }else if ([tit isEqualToString:@"职务"]){
-                verType = IWVerifiedTypeJob;
-            }
-            NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                [self.dataDic setObject:userInfo forKey:tit];
-                [self.tableView reloadData];
-            } withType:verType];
-            [nameVC setUserInfoStr:self.dataDic[tit]];
-            [nameVC setTitle:tit];
-            [self.navigationController pushViewController:nameVC animated:YES];
-        }
+    NSString *tit = _dataArray[indexPath.row];
+    
+    if ([tit isEqualToString:@"姓名"]) {
+        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+            _nameStr = userInfo;
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        } withType:IWVerifiedTypeName];
+        [nameVC setUserInfoStr:_nameStr];
+        [nameVC setTitle:tit];
+        [self.navigationController pushViewController:nameVC animated:YES];
+    }else if ([tit isEqualToString:@"单位"]){
+        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+            _danweiStr = userInfo;
+[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        } withType:IWVerifiedTypeCompany];
+        [nameVC setUserInfoStr:_danweiStr];
+        [nameVC setTitle:tit];
+        [self.navigationController pushViewController:nameVC animated:YES];
+    }else if ([tit isEqualToString:@"职务"]){
+        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+            _zhiwuStr = userInfo;
+[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        } withType:IWVerifiedTypeJob];
+        [nameVC setUserInfoStr:_zhiwuStr];
+        [nameVC setTitle:tit];
+        [self.navigationController pushViewController:nameVC animated:YES];
     }
-
-//    if (indexPath.row==0) {
-//        
-//        
-//    }else if (indexPath.row ==1){
-//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-//            [self.dataDic setObject:userInfo forKey:@"单位"];
-//            [self.tableView reloadData];
-//        }];
-//        [nameVC setUserInfoStr:self.dataDic[@"单位"]];
-//        [nameVC setTitle:@"单位"];
-//        [self.navigationController pushViewController:nameVC animated:YES];
-//    }else if (indexPath.row == 2){
-//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-//            [self.dataDic setObject:userInfo forKey:@"职务"];
-//            [self.tableView reloadData];
-//        }];
-//        [nameVC setUserInfoStr:self.dataDic[@"职务"]];
-//        [nameVC setTitle:@"职务"];
-//        [self.navigationController pushViewController:nameVC animated:YES];
-//    }else if (indexPath.row ==3){
-//        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-//            [self.dataDic setObject:userInfo forKey:@"密码"];
-//            [self.tableView reloadData];
-//        }];
-//        [nameVC setUserInfoStr:self.dataDic[@"密码"]];
-//        [nameVC setTitle:@"密码"];
-//        [self.navigationController pushViewController:nameVC animated:YES];
+//    for (NSString *tit in _dataArray) {
+//        if ([cell.textLabel.text isEqualToString:tit]) {
+//            
+//            IWVerifiedType verType;
+//            if ([tit isEqualToString:@"姓名"]) {
+//                verType = IWVerifiedTypeName;
+//            }else if ([tit isEqualToString:@"单位"]){
+//                verType = IWVerifiedTypeCompany;
+//            }else if ([tit isEqualToString:@"职务"]){
+//                verType = IWVerifiedTypeJob;
+//            }
+//            
+//        }
 //    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

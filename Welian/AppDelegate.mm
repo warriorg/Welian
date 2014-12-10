@@ -21,15 +21,29 @@
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
+#ifdef DEBUG
+// deve
+#define kAppId           @"L6zsShWHhs8xXG1gomsVa7"
+#define kAppKey          @"xGTIv3IgVO8AL2LmFQadP5"
+#define kAppSecret       @"ogs57h2IUyARfHzgAvW5X3"
+
+#else
+
 // production
 #define kAppId           @"CgF0UHbnv0827eFprsyYT9"
 #define kAppKey          @"eAJBPqawMhAi406E0FcSh3"
 #define kAppSecret       @"rOSsO1iPvj6H39gltxdDJ6"
 
+#endif
+
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
-    NSString *_upURL;
     MainViewController *mainVC;
+    NSInteger _update; //0不提示更新 1不强制更新，2强制更新
+     NSString *_upURL; // 更新地址
+    NSString *_msg;  // 更新提示语
+    UIAlertView *_updataalert;
+//    UIAlertView *_logoutAlert;
 }
 @end
 
@@ -59,6 +73,10 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // 版本更新
+    [self detectionUpdataVersionDic];
+    
     // 友盟统计
     [self umengTrack];
     
@@ -83,11 +101,35 @@ BMKMapManager* _mapManager;
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
         
+        NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+        [reqstDic setObject:mode.mobile forKey:@"mobile"];
+        [reqstDic setObject:mode.checkcode forKey:@"password"];
+        [reqstDic setObject:@"ios" forKey:@"platform"];
+        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+            
+            [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        }
+
+        [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+            NSDictionary *dataDic = JSON;
+            if (dataDic) {
+                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                [mode setKeyValues:dataDic];
+                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                
+                // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
+//                [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
+            }
+            
+        } fail:^(NSError *error) {
+            
+        } isHUD:NO];
+
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
         [self.window setRootViewController:mainVC];
-
+        
     }else{
         /** 未登陆 */
         LoginViewController *loginVC = [[LoginViewController alloc] init];
@@ -100,14 +142,12 @@ BMKMapManager* _mapManager;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    
     // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
     
     // [2]:注册APNS
     [self registerRemoteNotification];
-    
-    // 版本更新
-    [self detectionUpdataVersionDic];
     return YES;
 }
 
@@ -119,18 +159,38 @@ BMKMapManager* _mapManager;
         if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
             NSString *msg = [versionDic objectForKey:@"msg"];
             _upURL = [versionDic objectForKey:@"url"];
+            _update = [[versionDic objectForKey:@"update"] integerValue];
+            _msg = msg;
+            if (_update==0) { //自己检测
+                
+                
+            }else if(_update == 1){  // 弹出提示
+                
+                _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil];
+                [_updataalert show];
+            }else if (_update == 2){  // 强制更新
+               _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
+                [_updataalert show];
+            }
             
-            [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
         }else{
         }
     }];
 }
 
-#pragma mark - 版本更新跳转
+#pragma mark - 版本更新跳转- 退出登录
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_upURL]];
+    if (alertView == _updataalert) {
+        if (_update==1) {
+            if (buttonIndex==1) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_upURL]];
+            }
+        }else if (_update==2){
+            if (buttonIndex==0) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_upURL]];
+            }
+        }
     }
 }
 
@@ -212,7 +272,7 @@ BMKMapManager* _mapManager;
 #pragma mark - 友盟统计
 - (void)umengTrack {
     
-    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
+    [MobClick setCrashReportEnabled:YES]; // 如果不需要捕捉异常，注释掉此行
 //    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
     [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:@"www.welian.com"];
@@ -279,13 +339,41 @@ BMKMapManager* _mapManager;
             NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
             badge++;
             [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
         }
         
+        if (!newfrendM.created) {
+            NSDate *nowdate = [NSDate date];
+            NSDateFormatter* fmt = [[NSDateFormatter alloc] init];
+            fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+            fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+            newfrendM.created = [fmt stringFromDate:nowdate];
+        }
+        
         [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
+    }else if ([type isEqualToString:@"logout"]){
+        
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+        [self logout];
     }
 }
+
+- (void)logout
+{
+    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [UserDefaults removeObjectForKey:KFirstFID];
+    
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
+    [self.window setRootViewController:detailViewController];
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -319,6 +407,11 @@ BMKMapManager* _mapManager;
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     // [EXT] 重新上线
     [self startSdkWith:_appID appKey:_appKey appSecret:_appSecret];
+    if (_update == 2){  // 强制更新
+        _updataalert =  [[UIAlertView alloc] initWithTitle:@"更新提示" message:_msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
+        [_updataalert show];
+    }
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -347,6 +440,11 @@ BMKMapManager* _mapManager;
     _sdkStatus = SdkStatusStarted;
     _clientId = clientId;
     [UserDefaults setObject:clientId forKey:BPushRequestChannelIdKey];
+    [WLHttpTool updateClientSuccess:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    }];
     //    [self stopSdk];
 }
 

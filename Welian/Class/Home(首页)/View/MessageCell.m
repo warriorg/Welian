@@ -83,13 +83,13 @@
     [self.contentView addSubview:_nameLabel];
     
     _commentLabel = [[MLEmojiLabel alloc]init];
-    _commentLabel.numberOfLines = 0;
     _commentLabel.emojiDelegate = self;
     _commentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _commentLabel.isNeedAtAndPoundSign = YES;
     _commentLabel.font = WLZanNameFont;
     _commentLabel.textColor = IWRetweetContentColor;
     _commentLabel.backgroundColor = [UIColor clearColor];
+    _commentLabel.numberOfLines = 0;
     [self.contentView addSubview:_commentLabel];
     
     

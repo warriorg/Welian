@@ -11,15 +11,11 @@
 
 typedef void(^WLFeedAndZanBlock)(WLStatusM *statusM);
 
+typedef void (^WLFeedTuiBlock)(WLStatusM *starusM);
+
 typedef void(^WLDeleteStustBlock) (WLStatusM *statusM);
 
 @class CommentInfoController;
-
-//@protocol CommentInfoVCDelegate <NSObject>
-//
-//- (void)commentInfoController:(CommentInfoController*)commentVC isDelete:(BOOL)isdelete withStatusFrame:(WLStatusM*)statusM;
-//
-//@end
 
 @interface CommentInfoController : UIViewController
 
@@ -27,10 +23,10 @@ typedef void(^WLDeleteStustBlock) (WLStatusM *statusM);
 
 @property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
 
+@property (nonatomic, copy) WLFeedTuiBlock feedTuiBlock;
+
 @property (nonatomic, copy) WLDeleteStustBlock deleteStustBlock;
 
 @property (nonatomic, strong) WLStatusM *statusM;
-
-//@property (nonatomic, weak) id<CommentInfoVCDelegate>delegate;
 
 @end

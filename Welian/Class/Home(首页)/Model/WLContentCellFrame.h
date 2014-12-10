@@ -18,13 +18,13 @@
 /** 配图 */
 @property (nonatomic, assign, readonly) CGRect photoListViewF;
 /** 转发的整体 */
-@property (nonatomic, assign, readonly) CGRect retweetViewF;
+//@property (nonatomic, assign, readonly) CGRect retweetViewF;
 /** 转发的昵称 */
-@property (nonatomic, assign, readonly) CGRect retweetNameLabelF;
+//@property (nonatomic, assign, readonly) CGRect retweetNameLabelF;
 /** 转发的配图 */
-@property (nonatomic, assign, readonly) CGRect retweetPhotoListViewF;
+//@property (nonatomic, assign, readonly) CGRect retweetPhotoListViewF;
 /** 转发的内容 */
-@property (nonatomic, assign, readonly) CGRect retweetContentLabelF;
+//@property (nonatomic, assign, readonly) CGRect retweetContentLabelF;
 
 /** 整体的高度 */
 @property (nonatomic, assign, readonly) CGFloat cellHeight;

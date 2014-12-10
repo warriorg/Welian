@@ -20,8 +20,6 @@
     UILabel *_nameLabel;
     /** 时间 */
     UILabel *_timeLabel;
-    /** 来源 */
-    //    UILabel *_sourceLabel;
     /** 内容 */
     MLEmojiLabel *_contentLabel;
 }
@@ -47,8 +45,6 @@
         // 1.添加原创微博的子控件
         [self setupOriginalSubviews];
         
-        // 4.设置背景
-//        [self setupBg];
     }
     return self;
 }
@@ -92,8 +88,8 @@
     _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _contentLabel.isNeedAtAndPoundSign = YES;
-    _contentLabel.font = [UIFont systemFontOfSize:14];
-    _contentLabel.textColor = IWContentColor;
+    _contentLabel.font = WLFONT(14);
+    _contentLabel.textColor = WLRGB(51, 51, 51);
     // 自动换行
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_contentLabel];
@@ -102,33 +98,15 @@
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
     WLBasicTrends *user = _commentCellFrame.commentM.user;
-
+    
     UserInfoModel *mode = [[UserInfoModel alloc] init];
-
+    
     [mode setUid:user.uid];
     [mode setAvatar:user.avatar];
     [mode setName:user.name];
     UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
     [self.commentVC.navigationController pushViewController:userinfoVC animated:YES];
 }
-
-
-
-///**
-// *  设置背景
-// */
-//- (void)setupBg
-//{
-//    // 1.默认
-//    UIImageView *bg = [[UIImageView alloc] init];
-//    bg.image = [UIImage resizedImage:@"background_white"];
-//    self.backgroundView = bg;
-//    // 2.选中
-//    UIImageView *selectedBg = [[UIImageView alloc] init];
-//    selectedBg.image = [UIImage resizedImage:@"background_grey"];
-//    self.selectedBackgroundView = selectedBg;
-//}
-
 
 - (void)setCommentCellFrame:(CommentCellFrame *)commentCellFrame
 {

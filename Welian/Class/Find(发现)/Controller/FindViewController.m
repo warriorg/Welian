@@ -138,9 +138,13 @@
             return;
         }
         
-        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:webDic[@"url"]];
-//        webVC.showPageTitles = NO;
-//        [webVC setTitle:webDic[@"name"]];
+        NSString *urlStr = webDic[@"url"];
+        if (indexPath.row==1) {
+            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            urlStr = [NSString stringWithFormat:@"%@/%@",@"http://testmy.welian.com/event/lists",mode.sessionid];
+        }
+        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
+        
          [self.navigationController pushViewController:webVC animated:YES];
     }
     

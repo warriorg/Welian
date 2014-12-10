@@ -67,6 +67,7 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)addSucceed
 {
+    [self.tableView setTableFooterView:nil];
 //    [self.tableView setTableFooterView:self.sendView];
 }
 
@@ -146,7 +147,6 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    DLog(@"adf");
     if (buttonIndex==0) {  //推荐给好友
         
     }else if(buttonIndex==1){
@@ -394,7 +394,7 @@ static NSString *staurCellid = @"staurCellid";
         [self.navigationController pushViewController:workVC animated:YES];
     }else if([celltext isEqualToString:@"投资案例"]){
         InvestAuthModel *inves = [_dataDicM objectForKey:@"investor"];
-//        NSArray *items = [inves.items componentsSeparatedByString:@","];
+
         ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.itemsArray andType:@"3"];
         [self.navigationController pushViewController:investVC animated:YES];
     }else{

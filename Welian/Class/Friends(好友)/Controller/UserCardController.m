@@ -103,7 +103,7 @@
     [_iconImageV.layer setCornerRadius:self.iconImageV.bounds.size.width*0.5];
     [_iconImageV.layer setMasksToBounds:YES];
     [_iconImageV.layer setBorderWidth:4];
-    [_iconImageV.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    [_iconImageV.layer setBorderColor:[WLRGB(194, 211, 217) CGColor]];
     
     [self.bageView.layer setCornerRadius:5.0];
     [self.bageView.layer setMasksToBounds:YES];

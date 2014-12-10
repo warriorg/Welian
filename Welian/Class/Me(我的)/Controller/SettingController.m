@@ -81,15 +81,24 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
-        
-        UserInfoModel *mode = [[UserInfoModel alloc] init];
-        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-        [UserDefaults removeObjectForKey:KFirstFID];
-        
-        LoginViewController *loginVC = [[LoginViewController alloc] init];
-        NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
-        [self.view.window setRootViewController:detailViewController];
+        [self logout];
     }
+}
+
+- (void)logout
+{
+    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [UserDefaults removeObjectForKey:KFirstFID];
+    
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
+    [self.view.window setRootViewController:detailViewController];
 }
 
 #pragma mark 读取plist文件的内容

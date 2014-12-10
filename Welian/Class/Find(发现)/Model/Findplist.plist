@@ -30,23 +30,5 @@
 			<string>discovery_tou.png</string>
 		</dict>
 	</array>
-	<array>
-		<dict>
-			<key>row</key>
-			<string>0</string>
-			<key>name</key>
-			<string>人才</string>
-			<key>icon</key>
-			<string>discovery_person.png</string>
-		</dict>
-		<dict>
-			<key>row</key>
-			<string>0</string>
-			<key>name</key>
-			<string>职位</string>
-			<key>icon</key>
-			<string>discovery_position.png</string>
-		</dict>
-	</array>
 </array>
 </plist>

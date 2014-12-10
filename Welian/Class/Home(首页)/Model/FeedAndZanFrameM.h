@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FeedAndZanModel.h"
 
 @interface FeedAndZanFrameM : NSObject
 

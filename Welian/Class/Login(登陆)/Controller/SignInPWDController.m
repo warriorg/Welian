@@ -71,6 +71,7 @@
     [self.pwdTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
     [self.pwdTextField setDelegate:self];
+    [self.pwdTextField setSecureTextEntry:YES];
     [self.view addSubview:self.pwdTextField];
     
 }

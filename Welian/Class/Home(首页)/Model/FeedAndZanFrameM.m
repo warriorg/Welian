@@ -22,7 +22,7 @@
 {
     if (_HBlabel == nil) {
         _HBlabel = [[M80AttributedLabel alloc] init];
-        [_HBlabel setFont:WLZanNameFont];
+        [_HBlabel setFont:WLFONT(13)];
     }
     return _HBlabel;
 }
@@ -59,12 +59,12 @@
     CGFloat labelW = _cellWidth- CGRectGetMaxX(_zanImageF)-20;
     NSMutableString *zanStrM = [NSMutableString string];
     if (zanArray.count) {
-        for (FeedAndZanModel *zanModel  in zanArray) {
+        for (UserInfoModel *zanModel  in zanArray) {
             if (zanModel != zanArray.lastObject) {
                 
-                [zanStrM appendFormat:@"%@，",zanModel.user.name];
+                [zanStrM appendFormat:@"%@，",zanModel.name];
             }else{
-                [zanStrM appendFormat:@"%@",zanModel.user.name];
+                [zanStrM appendFormat:@"%@",zanModel.name];
             }
         }
         CGFloat zanlabelH = [self textViewHeightForAttributedText:zanStrM andWidth:labelW];
@@ -79,14 +79,14 @@
         _cellHigh +=5;            
         }
 
-        _feedImageF = CGRectMake(imageX, _cellHigh+3, image.size.width, image.size.height);
+        _feedImageF = CGRectMake(imageX-3, _cellHigh+3, image.size.width+5, image.size.height);
         
-        for (FeedAndZanModel *feedModel in feedArray) {
+        for (UserInfoModel *feedModel in feedArray) {
             if (feedModel != feedArray.lastObject) {
                 
-                [feedStrM appendFormat:@"%@，",feedModel.user.name];
+                [feedStrM appendFormat:@"%@，",feedModel.name];
             }else{
-                [feedStrM appendFormat:@"%@",feedModel.user.name];
+                [feedStrM appendFormat:@"%@",feedModel.name];
             }
         }
         CGFloat feedlabelH = [self textViewHeightForAttributedText:feedStrM andWidth:labelW];

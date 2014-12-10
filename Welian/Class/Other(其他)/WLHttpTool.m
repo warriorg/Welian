@@ -27,6 +27,13 @@
 
 @implementation WLHttpTool
 
+#pragma mark - 取消所有请求
++ (void)cancelAllRequestHttpTool
+{
+    [[[HttpTool sharedService] operationQueue] cancelAllOperations];
+}
+
+
 #pragma mark - 版本号更新提示
 + (void)updateParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
@@ -89,7 +96,7 @@
 
 
 #pragma mark - 用户登陆
-+ (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
++ (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock isHUD:(BOOL)ishud
 {
     NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
@@ -97,7 +104,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:YES];
+    } withHUD:ishud andDim:ishud];
 }
 
 #pragma mark - 用户注册填写信息
@@ -188,15 +195,48 @@
                 }
                 [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
             }
-            
-            succeBlock (jsonarray);
         }
-        
+        succeBlock (jsonarray);
     } failure:^(NSError *error) {
         
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
+
+
+#pragma mark - loadFeeds取动态（新）
++(void)loadFeedsParameterDic:(NSDictionary *)parameterDic andLoadType:(NSNumber *)uid success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic;
+    
+    if (uid) {
+        dic = @{@"type":@"loadUserFeed2",@"data":parameterDic};
+    }else {
+        dic = @{@"type":@"loadFeeds",@"data":parameterDic};
+    }
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+        
+        if (jsonarray.count) {
+            BOOL isok = NO;
+            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+                isok = YES;
+                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+            }
+            for (NSDictionary *dicJson in jsonarray) {
+                if (isok) {
+                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+                }
+                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+            }
+        }
+        succeBlock (jsonarray);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
 
 #pragma mark - 关键字搜索公司
 + (void)getCompanyParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -314,7 +354,7 @@
     } withHUD:YES andDim:NO];
 }
 
-#pragma mark - 转发评论
+#pragma mark - 转推评论
 + (void)forwardFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"forwardFeed",@"data":parameterDic};
@@ -323,7 +363,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:YES];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 添加动态赞
@@ -392,15 +432,19 @@
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             NSArray *json = [NSArray arrayWithArray:JSON];
-            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
-            for (NSDictionary *modic in json) {
-                [[WLDataDBTool sharedService] putObject:modic withId:[modic objectForKey:@"uid"] intoTable:KMyAllFriendsKey];
-                UserInfoModel *mode = [[UserInfoModel alloc] init];
-                [mode setKeyValues:modic];
-                [mutabArray addObject:mode];
+            if (json.count) {
+                NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+                [[WLDataDBTool sharedService] clearTable:KMyAllFriendsKey];
+                for (NSDictionary *modic in json) {
+                    [[WLDataDBTool sharedService] putObject:modic withId:[modic objectForKey:@"uid"] intoTable:KMyAllFriendsKey];
+                    UserInfoModel *mode = [[UserInfoModel alloc] init];
+                    [mode setKeyValues:modic];
+                    [mutabArray addObject:mode];
+                }
+                
+                succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
             }
             
-            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
         } failure:^(NSError *error) {
             failurBlock(error);
         } withHUD:NO andDim:NO];
@@ -630,8 +674,25 @@
         
         // 投资案例
         NSDictionary *investor = [dataDic objectForKey:@"investor"];
-        InvestAuthModel *investorM = [InvestAuthModel objectWithKeyValues:investor];
-        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
+//        InvestAuthModel *investorM = [InvestAuthModel objectWithKeyValues:investor];
+//        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
+        InvestAuthModel *investorM = [[InvestAuthModel alloc] init];
+        [investorM setUrl:[investor objectForKey:@"url"]];
+        [investorM setAuth:[[investor objectForKey:@"auth"] integerValue]];
+        NSArray *items = [investor objectForKey:@"items"];
+        NSMutableArray *itemsArray = [NSMutableArray arrayWithCapacity:items.count];
+        NSMutableString *itemStr = [NSMutableString string];
+        for (NSDictionary *item in items) {
+            [itemsArray addObject:[item objectForKey:@"item"]];
+            if (item==items.lastObject) {
+                [itemStr appendString:[item objectForKey:@"item"]];
+            }else{
+                [itemStr appendFormat:@"%@,",[item objectForKey:@"item"]];
+            }
+        }
+        [investorM setItemsArray:itemsArray];
+        [investorM setItems:itemStr];
+//        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
         
         // 详细信息
         NSDictionary *profile = [dataDic objectForKey:@"profile"];
@@ -792,8 +853,7 @@
 #pragma mark - 取转发和点赞人
 + (void)loadFeedZanAndForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-
-    NSDictionary *dic = @{@"type":@"loadFeedZanAndForward",@"data":parameterDic};
+    NSDictionary *dic = @{@"type":@"loadFeedZanAndForward2",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
         succeBlock(JSON);
@@ -813,13 +873,17 @@
         [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
     }
     NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
-        
-        succeBlock(JSON);
-    } failure:^(NSError *error) {
-        
-        failurBlock(error);
-    } withHUD:NO andDim:NO];
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    if (mode.sessionid) {
+        [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+            
+            succeBlock(JSON);
+        } failure:^(NSError *error) {
+            
+            failurBlock(error);
+        } withHUD:NO andDim:NO];
+    }
+    
 }
 
 
@@ -856,6 +920,45 @@
 + (void)complainParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"complain",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 退出登录
++ (void)logoutParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"logout",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 转推
++ (void)addFeedTuiParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"addFeedTui",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 取消转推
++ (void)deleteFeedForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteFeedForward",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
         succeBlock(JSON);

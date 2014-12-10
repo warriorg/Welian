@@ -50,9 +50,9 @@
     
     
     WLStatusM *statusM = status;
-    if (statusM.relationfeed) {
-        statusM = statusM.relationfeed;
-    }
+//    if (statusM.relationfeed) {
+//        statusM = statusM.relationfeed;
+//    }
 
     
     WLPhoto *photoM = [statusM.photos firstObject];

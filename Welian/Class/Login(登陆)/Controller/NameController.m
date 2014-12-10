@@ -7,96 +7,35 @@
 //
 
 #import "NameController.h"
+#import "WLTextField.h"
 
-@interface NameController () <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UISearchBarDelegate>
+@interface NameController () <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UserInfoBlock _userBlock;
     IWVerifiedType _verType;
+    BOOL _isSave;
 }
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) UISearchBar *search;
+@property (nonatomic, strong) WLTextField *searchTextField;
+
+@property (nonatomic, retain) NSOperationQueue *searchQueue;
 
 @end
 
 @implementation NameController
 
-- (UISearchBar *)search
+- (WLTextField *)searchTextField
 {
-    if (nil== _search) {
-        _search = [[UISearchBar alloc] initWithFrame:CGRectZero];
-        [_search setText:self.userInfoStr];
-        [_search setDelegate:self];
-        [_search setFrame:CGRectMake(-20, 0, self.view.bounds.size.width+20, 45)];
-        [_search setSearchBarStyle:UISearchBarStyleProminent];
-        [_search setBackgroundColor:[UIColor whiteColor]];
-        [_search setTintColor:[UIColor whiteColor]];
-        [_search setBarTintColor:[UIColor whiteColor]];
-        UITextField *adaf = [[[[_search subviews] objectAtIndex:0] subviews] objectAtIndex:1];
-        
-        [adaf setFont:[UIFont systemFontOfSize:17]];
-        [adaf.leftView setHidden:YES];
-        [adaf setTextAlignment:NSTextAlignmentLeft];
+    if (_searchTextField == nil) {
+        _searchTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+        [_searchTextField addTarget:self action:@selector(searchTextFiled:) forControlEvents:UIControlEventEditingChanged];
+        [_searchTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+        [_searchTextField setText:self.userInfoStr];
+        [_searchTextField becomeFirstResponder];
     }
-    
-    return _search;
+    return _searchTextField;
 }
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    if (searchText.length) {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        
-        if (_verType==IWVerifiedTypeCompany) {
-            
-            [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
-        }else if (_verType == IWVerifiedTypeJob){
-            [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
-            
-        }else if (_verType == IWVerifiedTypeSchool){
-            
-            [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
-        }
-        
-    }else{
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        self.dataArray = nil;
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
-        [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-        
-    }
-}
-
-//- (UITextField*)infoTextF
-//{
-//    if (nil == _infoTextF) {
-//        _infoTextF = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, self.view.bounds.size.width-15, 47)];
-//        [_infoTextF setClearButtonMode:UITextFieldViewModeWhileEditing];
-//        [_infoTextF addTarget:self action:@selector(beginSearchData:) forControlEvents:UIControlEventEditingChanged];
-//        [_infoTextF setDelegate:self];
-//        [_infoTextF setText:self.userInfoStr];
-//    }
-//    return _infoTextF;
-//}
-
 
 - (UITableView *)tableView
 {
@@ -104,7 +43,6 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         [_tableView setDataSource:self];
         [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-//        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_tableView setDelegate:self];
     }
     return _tableView;
@@ -120,16 +58,12 @@
     return self;
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self.search becomeFirstResponder];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveInfo:)];
+    self.searchQueue = [[NSOperationQueue alloc] init];
+    [self.searchQueue setMaxConcurrentOperationCount:1];
     
     if (self.userInfoStr.length>0) {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
@@ -139,67 +73,71 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (_isSave) {
+        _userBlock(self.searchTextField.text);
+    }
+}
+
 - (void)saveInfo:(UIBarButtonItem*)itme
 {
-    _userBlock(self.search.text);
+    _isSave = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-
-//#pragma mark TextField代理
-//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-//{
-//    if (range.location==0&&string.length) {
-//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-//    }
-//    if (range.location==0&&string.length==0) {
-//        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-//    }
-////    [self beginSearchData:textField];
-//    return YES;
-//}
-
-//- (void)beginSearchData:(UITextField *)textField
-//{
-//    DLog(@"%@",textField.text);
-//    if (textField.text.length) {
-//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-//        
-//        if (_verType==IWVerifiedTypeCompany) {
-//            
-//            [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":textField.text} success:^(id JSON) {
-//                
-//                
-//            } fail:^(NSError *error) {
-//                
-//            }];
-//        }else if (_verType == IWVerifiedTypeJob){
-//            [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":textField.text} success:^(id JSON) {
-//                
-//            } fail:^(NSError *error) {
-//                
-//            }];
-//            
-//        }else if (_verType == IWVerifiedTypeSchool){
-//            
-//            [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(20),@"keyword":textField.text} success:^(id JSON) {
-//                
-//            } fail:^(NSError *error) {
-//                
-//            }];
-//        }
-//
-//    }else{
-//        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-//    }
-//}
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField
+- (void)searchTextFiled:(WLTextField *)textFiled
 {
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    return YES;
+    if (textFiled.text.length) {
+         [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }else{
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+    [self.searchQueue cancelAllOperations];
+    [self.searchQueue addOperationWithBlock:^{
+        
+        [self beginSearchData:textFiled.text];
+        
+    }];
 }
+
+
+- (void)beginSearchData:(NSString *)searchText
+{
+    if (searchText.length) {
+        if (_verType==IWVerifiedTypeCompany) {
+            
+            [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+                self.dataArray = JSON;
+                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+        }else if (_verType == IWVerifiedTypeJob){
+            [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+                self.dataArray = JSON;
+                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+            
+        }else if (_verType == IWVerifiedTypeSchool){
+            
+            [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+                self.dataArray = JSON;
+                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+        }
+        
+    }
+}
+
 
 #pragma mark tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -254,7 +192,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"onecellID"];
         if (cell==nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"onecellID"];
-            [cell.contentView addSubview:self.search];
+            [cell.contentView addSubview:self.searchTextField];
         }
         return cell;
     }else{
@@ -274,7 +212,8 @@
 {
     if (indexPath.section) {
         NSString *name = [_dataArray[indexPath.row] objectForKey:@"name"];
-        _userBlock(name);
+        [self.searchTextField setText:name];
+        _isSave = YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

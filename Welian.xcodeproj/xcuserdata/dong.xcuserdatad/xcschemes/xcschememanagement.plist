@@ -9,9 +9,29 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>weLianDev.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>weLianDis.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>F566497A1A2AFD56008A5830</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F5664C341A2AFDD5008A5830</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F5CE85F919BFF2AB00A9D14C</key>
 		<dict>
 			<key>primary</key>

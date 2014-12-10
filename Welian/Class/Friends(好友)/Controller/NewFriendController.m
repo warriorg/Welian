@@ -11,6 +11,8 @@
 #import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "UserInfoBasicVC.h"
+#import "AddFriendsController.h"
+#import "NavViewController.h"
 
 static NSString *frnewCellid = @"frnewCellid";
 @interface NewFriendController ()<UIAlertViewDelegate>
@@ -28,6 +30,7 @@ static NSString *frnewCellid = @"frnewCellid";
     [self setTitle:@"好友请求"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:frnewCellid];
     [self.tableView setBackgroundColor:IWGlobalBg];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     
     NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
     NSMutableArray *aaaYT = [NSMutableArray array];
@@ -37,6 +40,12 @@ static NSString *frnewCellid = @"frnewCellid";
         [[WLDataDBTool sharedService] putObject:itaaDic withId:aa.itemId intoTable:KNewFriendsTableName];
         
         NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
+        YTKKeyValueItem *item =[[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",statusM.uid] fromTable:KMyAllFriendsKey];
+        if (item) {
+            statusM.isAgree = @"1";
+        }else{
+            statusM.isAgree = nil;
+        }
         [aaaYT addObject:statusM];
     }
     
@@ -44,6 +53,13 @@ static NSString *frnewCellid = @"frnewCellid";
     
     _dataArray =  [NSMutableArray arrayWithArray:[aaaYT sortedArrayUsingDescriptors:@[bookNameDes]]];
     [self.tableView reloadData];
+}
+
+- (void)addFriendClick
+{
+    [self presentViewController:[[NavViewController alloc] initWithRootViewController:[[AddFriendsController alloc] initWithStyle:UITableViewStylePlain]] animated:YES completion:^{
+        
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -127,7 +143,7 @@ static NSString *frnewCellid = @"frnewCellid";
         _selectIndexPath = indexPath;
         NewFriendModel *newFM = _dataArray[indexPath.row];
         if ([newFM.type isEqualToString:@"friendRequest"]) {
-        [self jieshouFriend:indexPath];
+            [self jieshouFriend:indexPath];
         }else if ([newFM.type isEqualToString:@"friendCommand"]){
             
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];

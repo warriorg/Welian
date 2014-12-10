@@ -172,7 +172,6 @@
     return KTableRowH;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -209,6 +208,7 @@
                 [inffVC setUserInfoStr:mode.name];
             }else if (indexPath.row ==1){
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    
                     [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
                         [mode setCompany:userInfo];
                         [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];

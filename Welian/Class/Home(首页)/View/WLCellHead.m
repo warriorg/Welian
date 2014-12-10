@@ -7,9 +7,10 @@
 //
 
 #import "WLCellHead.h"
-#import "WLBasicTrends.h"
+#import "WLStatusM.h"
 #import "UIImageView+WebCache.h"
 #import "UserInfoBasicVC.h"
+#import "UIImage+ImageEffects.h"
 
 
 #define KIconX 10
@@ -17,7 +18,7 @@
 #define KTouImageW 11
 #define KFriendLW 80
 
-@interface WLCellHead()
+@interface WLCellHead() <UIAlertViewDelegate>
 {
     // 投资认证
     UIImageView *_touziImageView;
@@ -29,6 +30,8 @@
     UILabel *_friendLabel;
     // 职务和公司
     UILabel *_zhiwulncLabel;
+    // 添加好友
+    UIButton *_addFriendBut;
 }
 
 @end
@@ -69,30 +72,46 @@
     // 姓名
     CGFloat nameX = CGRectGetMaxX(_iconImageView.frame)+8;
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameX, KIconX, frame.size.width-nameX-90, 20)];
-    _nameLabel.font = IWNameFont;
+    _nameLabel.font = WLFONTBLOD(15);
+    _nameLabel.textColor = WLRGB(51, 51, 51);
     _nameLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_nameLabel];
     
     // 职务和公司
     _zhiwulncLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameX, CGRectGetMaxY(_nameLabel.frame)+5, frame.size.width-nameX-KIconX, 15)];
     [_zhiwulncLabel setBackgroundColor:[UIColor clearColor]];
-    _zhiwulncLabel.font = IWTimeFont;
-    _zhiwulncLabel.textColor = IWSourceColor;
+    _zhiwulncLabel.font = WLFONT(12);
+    _zhiwulncLabel.textColor = WLRGB(178, 178, 178);
     [self addSubview:_zhiwulncLabel];
     
     // 朋友关系
     _friendLabel = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width-KFriendLW-KIconX, KIconX, KFriendLW, 15)];
     [_friendLabel setTextAlignment:NSTextAlignmentRight];
     [_friendLabel setHidden:YES];
-    [_friendLabel setFont:IWTimeFont];
-    [_friendLabel setTextColor:IWSourceColor];
+    [_friendLabel setFont:WLFONT(11)];
+    [_friendLabel setTextColor:WLRGB(173, 173, 173)];
     [self addSubview:_friendLabel];
     
+    _addFriendBut = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70, 5, 60, 25)];
+    [_addFriendBut setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
+    [_addFriendBut setBackgroundImage:[UIImage resizedImage:@"osusume_add_bg"] forState:UIControlStateNormal];
+    
+    [_addFriendBut setTitle:@"加好友" forState:UIControlStateNormal];
+    [_addFriendBut setTitleColor:WLRGB(40, 94, 172) forState:UIControlStateNormal];
+    [_addFriendBut.titleLabel setFont:WLFONT(12)];
+
+    [_addFriendBut addTarget:self action:@selector(addFriendButClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_addFriendBut setImage:[UIImage imageNamed:@"osusume_friend_add_already"] forState:UIControlStateDisabled];
+    [_addFriendBut setTitleColor:WLRGB(173, 173, 173) forState:UIControlStateDisabled];
+    [_addFriendBut setBackgroundImage:[UIImage resizedImage:@"osusume_already_bg"] forState:UIControlStateDisabled];
+    [_addFriendBut setTitle:@"已发送" forState:UIControlStateDisabled];
+    [self addSubview:_addFriendBut];
 }
 
-- (void)setUser:(WLBasicTrends *)user
+- (void)setUserStat:(WLStatusM *)userStat
 {
-    _user = user;
+    _userStat = userStat;
+    WLBasicTrends *user = userStat.user;
     // 姓名
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
@@ -101,7 +120,7 @@
     
     // 职务和公司
     [_zhiwulncLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
-    
+
     // 好友关系
     if (user.friendship == WLRelationTypeFriend) {
         [_friendLabel setText:@"朋友"];
@@ -111,6 +130,13 @@
         [_friendLabel setHidden:NO];
     }else{
         [_friendLabel setHidden:YES];
+    }
+    if (userStat.type==2) {
+        [_friendLabel setHidden:YES];
+        [_addFriendBut setHidden:NO];
+        
+    }else{
+        [_addFriendBut setHidden:YES];
     }
     
     // 是否创业和投资者
@@ -130,28 +156,54 @@
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
     UserInfoModel *mode = [[UserInfoModel alloc] init];
-    [mode setUid:_user.uid];
-    [mode setAvatar:_user.avatar];
-    [mode setName:_user.name];
+    WLBasicTrends *user = _userStat.user;
+    [mode setUid:user.uid];
+    [mode setAvatar:user.avatar];
+    [mode setName:user.name];
+    NSString *da = [NSString stringWithFormat:@"%d",user.friendship];
+    
+    [mode setFriendship:da];
     
     UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
     [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];
 }
 
 
+#pragma mark - 添加推荐好友
+- (void)addFriendButClick:(UIButton *)but
+{
+    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_userStat.user.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [WLHttpTool requestFriendParameterDic:@{@"fid":_userStat.user.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
+            [_addFriendBut setEnabled:NO];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+}
+
 /**
  *  重写setFrame:和setBounds:方法的目的：不让别人修改自己内部的尺寸
  */
-- (void)setFrame:(CGRect)newFrame
-{
-    newFrame.size = self.frame.size;
-    [super setFrame:newFrame];
-}
-
-- (void)setBounds:(CGRect)newBounds
-{
-    newBounds.size = self.bounds.size;
-    [super setBounds:newBounds];
-}
+//- (void)setFrame:(CGRect)newFrame
+//{
+//    newFrame.size = self.frame.size;
+//    [super setFrame:newFrame];
+//}
+//
+//- (void)setBounds:(CGRect)newBounds
+//{
+//    newBounds.size = self.bounds.size;
+//    [super setBounds:newBounds];
+//}
 
 @end

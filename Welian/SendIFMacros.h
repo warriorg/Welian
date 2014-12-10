@@ -11,6 +11,7 @@
 #import "UserInfoTool.h"
 #import "WLHUDView.h"
 #import "WLDataDBTool.h"
+#import "UIColor+_6jinzhi.h"
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
@@ -41,9 +42,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://122.226.44.105:8080"
+#define WLHttpServer  @"http://test.welian.com:8080"
 
-#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080"
+#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
 
 // 百度地图key
 #define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
@@ -65,6 +66,8 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KNewFriendNotif @"KNewFriendNotif"
 
 #define KPublishOK @"PublishStatusOK"
+
+#define KLogoutNotif @"KLogoutNotif"
 
 
 #define KWLDataDBName @"wlDataDBName.db"
@@ -102,6 +105,48 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 主色透明效果
 #define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.98]
+
+/**
+ *  系统字体
+ *
+ *  @param X 字号
+ *
+ *  @return 返回字体对象
+ */
+#define WLFONT(X)                 [UIFont systemFontOfSize:X]
+
+/**
+ *  系统加粗字体
+ *
+ *  @param X 字号
+ *
+ *  @return 返回字体对象
+ */
+#define WLFONTBLOD(X)             [UIFont boldSystemFontOfSize:X]
+
+/**
+ *  系统颜色
+ *
+ *  @param r
+ *  @param g
+ *  @param b
+ *  @param a
+ *
+ *  @return 系统颜色
+ */
+#define WLRGBA(r, g, b, a)        [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
+/**
+ *  系统颜色
+ *
+ *  @param r
+ *  @param g
+ *  @param b
+ *
+ *  @return
+ */
+#define WLRGB(r, g, b)       WLRGBA(r, g, b, 1)
+
 
 // 2.获得RGB颜色
 #define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
@@ -149,7 +194,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 每次加载cell的个数
 #define KCellConut 15
-
 
 /**
  8.常用的一些距离

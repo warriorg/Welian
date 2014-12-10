@@ -48,7 +48,7 @@
     [contLabel setText:labelstr];
     contLabel.numberOfLines = 0;
     contLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    contLabel.font = IWContentFont;
+    contLabel.font = WLFONT(14);
     
     CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:cellWidth - IWCellBorderWidth-contentX];
     _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);

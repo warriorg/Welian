@@ -17,19 +17,9 @@
 			<key>row</key>
 			<string>0</string>
 			<key>name</key>
-			<string>发布</string>
+			<string>我的动态</string>
 			<key>icon</key>
 			<string>me_write.png</string>
-		</dict>
-	</array>
-	<array>
-		<dict>
-			<key>row</key>
-			<string>0</string>
-			<key>name</key>
-			<string>认证</string>
-			<key>icon</key>
-			<string>me_yes.png</string>
 		</dict>
 	</array>
 	<array>

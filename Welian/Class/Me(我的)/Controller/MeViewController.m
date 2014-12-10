@@ -112,7 +112,6 @@ static NSString *meinfocellid = @"MeinfoCell";
 }
 
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -137,10 +136,12 @@ static NSString *meinfocellid = @"MeinfoCell";
         }
 
     }else if (indexPath.section==2){
-        controller = [[CertificationController alloc] init];
-        [controller setTitle:@"认证"];
-    }else if (indexPath.section == 3){
+//        controller = [[CertificationController alloc] init];
+//        [controller setTitle:@"认证"];
         controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
+
+    }else if (indexPath.section == 3){
+//        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }
     
      [self.navigationController pushViewController:controller animated:YES];

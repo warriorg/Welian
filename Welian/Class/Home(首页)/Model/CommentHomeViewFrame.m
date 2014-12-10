@@ -26,7 +26,7 @@
     self = [super init];
     if (self) {
         self.HBlabel = [[M80AttributedLabel alloc] init];
-        self.HBlabel.font = WLZanNameFont;
+        self.HBlabel.font = WLFONT(13);
         _cellWidth = width;
     }
     return self;

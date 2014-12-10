@@ -14,6 +14,8 @@
 
 typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
 
+typedef void (^FeedTuiBlock)(WLStatusM *starusM);
+
 typedef void (^OpenUpBlock)(BOOL isOpen);
 
 @interface WLContentCellView : UIView
@@ -24,8 +26,11 @@ typedef void (^OpenUpBlock)(BOOL isOpen);
 
 /** 微博工具条 */
 @property (nonatomic, strong) WLStatusDock *dock;
-
+// 赞
 @property (nonatomic, copy) FeedAndZanBlock feedzanBlock;
+
+// 转推
+@property (nonatomic, copy) FeedTuiBlock feedTuiBlock;
 
 @property (nonatomic, copy) OpenUpBlock openupBlock;
 

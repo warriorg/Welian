@@ -26,7 +26,6 @@ static HttpTool *engine;
         dispatch_once(&onceToken, ^{
             engine = [[self alloc] initWithBaseURL:[NSURL URLWithString:WLHttpServer]];
             engine.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//            engine.responseSerializer = [AFHTTPResponseSerializer serializer];
         });
     }
     return engine;
@@ -78,7 +77,7 @@ static HttpTool *engine;
     [self formatUrlAndParameters:parmetDic];
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        DLog(@"%@",[operation responseString]);
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
@@ -89,7 +88,6 @@ static HttpTool *engine;
           [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             _seleDic = parameterDic;
-            
             
             
         }else{
@@ -150,8 +148,6 @@ static HttpTool *engine;
         }else { // 失败
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
         }
-
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -171,6 +167,7 @@ static HttpTool *engine;
     DLog(@"api:%@", api);
 }
 
+
 - (NSString*)dicTostring:(NSDictionary*)parameterDic
 {
     NSError *error = nil;
@@ -178,7 +175,6 @@ static HttpTool *engine;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameterDic options:NSJSONWritingPrettyPrinted error:&error];
     
     NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
     
     str = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
     str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];

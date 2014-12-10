@@ -72,6 +72,13 @@
     return _notView;
 }
 
+- (void)cleacMessage
+{
+    [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
+    [_messageDataArray removeAllObjects];
+    [self.tableView reloadData];
+}
+
 - (instancetype)initWithStyle:(UITableViewStyle)style isAllMessage:(BOOL)isAllMessage
 {
     self = [super initWithStyle:style];
@@ -82,6 +89,10 @@
         [self.tableView setBackgroundColor:[UIColor whiteColor]];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         [self.tableView setSectionFooterHeight:0];
+        if (isAllMessage) {
+            
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空列表" style:UIBarButtonItemStyleBordered target:self action:@selector(cleacMessage)];
+        }
         
        NSArray *dataA = [[WLDataDBTool sharedService] getAllItemsFromTable:KMessageHomeTableName];
 

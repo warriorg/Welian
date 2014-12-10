@@ -27,7 +27,7 @@
     [self setTitle:@"验证手机1/3"];
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(forgetPhoneNext:)];
-    
+
     CGSize size = self.view.bounds.size;
     self.phoneTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
     [self.phoneTextField setPlaceholder:@"手机号码"];
@@ -43,7 +43,6 @@
     [textLabel setTextColor:[UIColor lightGrayColor]];
     [textLabel setFont:[UIFont systemFontOfSize:13.0]];
     [self.view addSubview:textLabel];
-    
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

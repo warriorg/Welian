@@ -37,6 +37,9 @@
 {
     _status = status;
     _cellHigh = 60;
+    if (status.type) { // 0正常动态，1转推动态，2推荐动态
+        _cellHigh = 90;
+    }
     _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth];
     [_contentFrame setStatus:status];
     _cellHigh += _contentFrame.cellHeight;
@@ -49,6 +52,7 @@
     if (status.forwardsArray.count) {
         [daafa setObject:status.forwardsArray forKey:@"forwards"];
     }
+    
     if (status.zansArray.count||status.forwardsArray.count) {
         _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:_cellWidth];
         [_feedAndZanFM setFeedAndzanDic:daafa];

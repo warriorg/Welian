@@ -300,6 +300,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserInfoModel *userMode;
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         userMode = self.filterArray[indexPath.row];
@@ -332,7 +333,6 @@ static NSString *fridcellid = @"fridcellid";
             [self.navigationController pushViewController:userInfoVC animated:YES];
         }
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

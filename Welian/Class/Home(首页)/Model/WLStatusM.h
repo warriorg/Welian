@@ -13,6 +13,15 @@
 
 @interface WLStatusM : NSObject
 
+/**  0正常动态，1转推动态，2推荐动态   */
+@property (nonatomic, assign) int type;
+
+/***  列表中动态最大id，用户新动态提示   */
+@property (nonatomic, assign) int topid;
+
+/**  推荐理由（你的通讯录中有N个好友与TA是微链好友）   */
+@property (nonatomic, strong) NSString *commandmsg;
+
 /**  微博UID   */
 @property (nonatomic, assign) int fid;
 
@@ -31,6 +40,9 @@
 /**  1已赞 0未赞  */
 @property (nonatomic, assign) int iszan;
 
+/**  是否推过 1已推 0未推  */
+@property (nonatomic, assign) int isforward;
+
 /**  纬度   */
 @property (nonatomic, assign) float  x;
 /**  经度   */
@@ -39,8 +51,11 @@
 /** object	微博作者的用户信息字段 详细 */
 @property (nonatomic, strong) WLBasicTrends *user;
 
+/**  转推的人   */
+@property (nonatomic, strong) WLBasicTrends *tuiuser;
+
 /** object	被转发的原微博信息字段，当该微博为转发微博时返回 详细 */
-@property (nonatomic, strong) WLStatusM *relationfeed;
+//@property (nonatomic, strong) WLStatusM *relationfeed;
 
 
 /** object 	微博配图地址。多图时返回多图链接。无配图返回“[]”  */

@@ -7,7 +7,6 @@
 //
 
 #import "FeedAndZanView.h"
-//#import "HBVLinkedTextView.h"
 #import "M80AttributedLabel.h"
 #import "UserInfoBasicVC.h"
 
@@ -37,18 +36,18 @@
         [self addSubview:_feedimageview];
         
         _zanLabel = [[M80AttributedLabel alloc] init];
-        [_zanLabel setTextColor:[UIColor grayColor]];
+        [_zanLabel setTextColor:[UIColor darkGrayColor]];
         [_zanLabel setDelegate:self];
         [_zanLabel setUnderLineForLink:NO];
-        _zanLabel.font = WLZanNameFont;
+        _zanLabel.font = WLFONT(13);
         _zanLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_zanLabel];
         
         _feedLabel = [[M80AttributedLabel alloc] init];
-        [_feedLabel setTextColor:[UIColor grayColor]];
+        [_feedLabel setTextColor:[UIColor darkGrayColor]];
         [_feedLabel setDelegate:self];
         [_feedLabel setUnderLineForLink:NO];
-        _feedLabel.font = WLZanNameFont;
+        _feedLabel.font = WLFONT(13);
         _feedLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_feedLabel];
     }
@@ -69,12 +68,12 @@
         [_zanLabel setFrame:feedAndZanFrame.zanLabelF];
         [_zanLabel setText:feedAndZanFrame.zanNameStr];
         
-        for (FeedAndZanModel *zanModel  in zanArray) {
+        for (UserInfoModel *zanModel  in zanArray) {
             
-            NSRange range = [feedAndZanFrame.zanNameStr rangeOfString:zanModel.user.name];
+            NSRange range = [feedAndZanFrame.zanNameStr rangeOfString:zanModel.name];
             [_zanLabel addCustomLink:[NSValue valueWithRange:range]
                                     forRange:range
-                                   linkColor:IWRetweetNameColor];
+                                   linkColor:WLRGB(52, 116, 186)];
         }
         
     }else{
@@ -87,8 +86,8 @@
         [_feedLabel setFrame:feedAndZanFrame.feedLabelF];
         [_feedimageview setFrame:feedAndZanFrame.feedImageF];
         [_feedLabel setText:feedAndZanFrame.feedNameStr];
-        for (FeedAndZanModel *feedModel in feedArray) {
-            NSRange range = [feedAndZanFrame.feedNameStr rangeOfString:feedModel.user.name];
+        for (UserInfoModel *feedModel in feedArray) {
+            NSRange range = [feedAndZanFrame.feedNameStr rangeOfString:feedModel.name];
             [_feedLabel addCustomLink:[NSValue valueWithRange:range]
                             forRange:range
                            linkColor:IWRetweetNameColor];
@@ -112,18 +111,18 @@
         if (label == _zanLabel ) {
             NSString *linkedString = [_feedAndZanFrame.zanNameStr substringWithRange:range];
             NSArray *zanArray = [dataDic objectForKey:@"zans"];
-            for (FeedAndZanModel *zanmode in zanArray) {
-                if ([zanmode.user.name isEqualToString:linkedString]) {
-                    mode = zanmode.user;
+            for (UserInfoModel *zanmode in zanArray) {
+                if ([zanmode.name isEqualToString:linkedString]) {
+                    mode = zanmode;
                 }
             }
             
         }else if (label == _feedLabel){
             NSString *linkedString = [_feedAndZanFrame.feedNameStr substringWithRange:range];
             NSArray *feedArray = [dataDic objectForKey:@"forwards"];
-            for (FeedAndZanModel *feedmode in feedArray) {
-                if ([feedmode.user.name isEqualToString:linkedString]) {
-                    mode = feedmode.user;
+            for (UserInfoModel *feedmode in feedArray) {
+                if ([feedmode.name isEqualToString:linkedString]) {
+                    mode = feedmode;
                 }
             }
         }

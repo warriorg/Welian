@@ -37,6 +37,11 @@
             }
         };
         
+        _contentView.feedTuiBlock = ^(WLStatusM *statusM){
+            if (weakcell.feedTuiBlock) {
+                weakcell.feedTuiBlock (statusM);
+            }
+        };
         [self addSubview:_contentView];
     }
     return self;
@@ -47,10 +52,10 @@
     _commHeadFrame = commHeadFrame;
     
     WLStatusM *status = commHeadFrame.status;
-    WLBasicTrends *user = status.user;
+
     WLContentCellFrame *contenFrame = commHeadFrame.contentFrame;
     
-    [_cellHeadView setUser:user];
+    [_cellHeadView setUserStat:status];
     [_cellHeadView setControllVC:self.homeVC];
     
     [_contentView setCommentFrame:commHeadFrame];

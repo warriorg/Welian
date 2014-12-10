@@ -13,6 +13,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 @interface WLHttpTool : NSObject
 
+#pragma mark - 取消所有请求
++ (void)cancelAllRequestHttpTool;
+
 #pragma mark - 版本号更新提示
 + (void)updateParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
@@ -26,7 +29,7 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 + (void)checkCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 用户登陆
-+ (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
++ (void)loginParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock isHUD:(BOOL)ishud;
 
 #pragma mark - 用户注册填写信息
 + (void)registerParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
@@ -50,6 +53,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 #pragma mark - 加载好友最新动态
 + (void)loadFeedParameterDic:(NSDictionary *)parameterDic andLoadType:(NSNumber *)uid success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - loadFeeds取动态（新）
++(void)loadFeedsParameterDic:(NSDictionary *)parameterDic andLoadType:(NSNumber *)uid success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 关键字搜索职位
 + (void)getJobParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
@@ -164,6 +170,15 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 #pragma mark - 举报--投诉
 + (void)complainParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 退出登录
++ (void)logoutParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 转推
++ (void)addFeedTuiParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 取消转推
++ (void)deleteFeedForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 @end
 

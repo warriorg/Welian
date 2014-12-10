@@ -21,12 +21,16 @@
 #import "WLStatusDock.h"
 #import "CommentInfoController.h"
 #import "MJExtension.h"
+#import "M80AttributedLabel.h"
 
-@interface WLStatusCell () <UIActionSheetDelegate>
+@interface WLStatusCell () <UIActionSheetDelegate,M80AttributedLabelDelegate>
 {
+    UIImageView *_imageV;
+    M80AttributedLabel *_tuiUserLabel;
+    
     //** 头部view   *//
     WLCellHead *_cellHeadView;
-//    /** 内容 */
+    //    ** 内容 */
     WLContentCellView *_contentView;
     // 赞和转发
     FeedAndZanView *_feznView;
@@ -59,6 +63,18 @@
         // 清除cell默认的背景色(才能只显示背景view、背景图片)
         self.backgroundColor = [UIColor clearColor];
         
+        _tuiUserLabel = [[M80AttributedLabel alloc] init];
+        [_tuiUserLabel setTextColor:WLRGB(52, 116, 186)];
+        _tuiUserLabel.font = WLFONT(13);
+        [_tuiUserLabel setUnderLineForLink:NO];
+        [_tuiUserLabel setDelegate:self];
+        _tuiUserLabel.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_tuiUserLabel];
+        
+        _imageV = [[UIImageView alloc] init];
+        [_imageV setContentMode:UIViewContentModeScaleAspectFit];
+        [self.contentView addSubview:_imageV];
+        
         _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
         [self.contentView addSubview:_cellHeadView];
 
@@ -67,6 +83,11 @@
         _contentView.feedzanBlock = ^(WLStatusM *statusM){
             if (weakcell.feedzanBlock) {
                 weakcell.feedzanBlock (statusM);
+            }
+        };
+        _contentView.feedTuiBlock = ^(WLStatusM *statusM){
+            if (weakcell.feedTuiBlock) {
+                weakcell.feedTuiBlock (statusM);
             }
         };
         _contentView.openupBlock = ^(BOOL isopen){
@@ -105,13 +126,11 @@
     return self;
 }
 
-
 #pragma mark- 评论
 - (void)commentBtnClick:(UIButton*)but event:(id)event
 {
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:_statusFrame.status];
-    [commentInfo setBeginEdit:YES];
     [self.homeVC.navigationController pushViewController:commentInfo animated:YES];
 }
 
@@ -127,7 +146,7 @@
     self.backgroundView = bg;
     // 2.选中
     UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"homeCellbackground_highlight" leftScale:0.9 topScale:0.5];
+    selectedBg.image = [UIImage resizedImage:@"homeCellbackground_highlight" leftScale:0.98 topScale:0.5];
     self.selectedBackgroundView = selectedBg;
 }
 
@@ -136,8 +155,9 @@
     _statusFrame = statusFrame;
     WLStatusM *status = statusFrame.status;
     WLBasicTrends *user = status.user;
+    WLBasicTrends *tuiuser = status.tuiuser;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
-    
+    CGSize mainSize = [UIScreen mainScreen].bounds.size;
     if (!_mode) {
         _mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     }
@@ -146,19 +166,49 @@
     }else{
         [_moreBut setHidden:YES];
     }
-
-    [_cellHeadView setUser:user];
+    
+    [_cellHeadView setUserStat:status];
     [_cellHeadView setControllVC:self.homeVC];
+    CGFloat y = 0;
+    CGRect headFrame = _cellHeadView.frame;
+    if (status.type) {
+        y= 30;
+        headFrame.origin.y = 30;
+        [_cellHeadView setFrame:headFrame];
+        [_imageV setFrame:CGRectMake(60, 17, 15, 15)];
+        [_imageV setHidden:NO];
+        [_tuiUserLabel setHidden:NO];
+        [_tuiUserLabel setFrame:CGRectMake(CGRectGetMaxX(_imageV.frame)+5, 17, mainSize.width-CGRectGetMaxX(_imageV.frame)-10, 20)];
+        if (status.type==1) { // 转推
+            NSString *tuiname = [NSString stringWithFormat:@"%@转推了",tuiuser.name];
+            [_imageV setImage:[UIImage imageNamed:@"tui"]];
+            [_tuiUserLabel setText:tuiname];
+            NSRange range = [tuiname rangeOfString:tuiname];
+            [_tuiUserLabel addCustomLink:[NSValue valueWithRange:range]
+                                forRange:range
+                               linkColor:WLRGB(52, 116, 186)];
+            
+        }else if (status.type ==2){  // 推荐好友
+            [_imageV setImage:[UIImage imageNamed:@"osusume"]];
+            [_tuiUserLabel setText:status.commandmsg];
+        }
+    }else{
+        y= 0;
+        headFrame.origin.y = 0;
+        [_cellHeadView setFrame:headFrame];
+        [_imageV setHidden:YES];
+        [_tuiUserLabel setHidden:YES];
+    }
     
     [_contentView setStatusFrame:statusFrame];
-    [_contentView setFrame:CGRectMake(50, 60, [UIScreen mainScreen].bounds.size.width-50, contenFrame.cellHeight)];
+    [_contentView setFrame:CGRectMake(50, CGRectGetMaxY(_cellHeadView.frame), mainSize.width-50, contenFrame.cellHeight)];
     [_contentView setHomeVC:self.homeVC];
     
     CGFloat commenY = CGRectGetMaxY(_contentView.frame);
     
     if (status.zansArray.count||status.forwardsArray.count) {
         [_feznView setHidden:NO];
-        [_feznView setFrame:CGRectMake(60, CGRectGetMaxY(_contentView.frame)-5, [UIScreen mainScreen].bounds.size.width-60-10, statusFrame.feedAndZanFM.cellHigh)];
+        [_feznView setFrame:CGRectMake(60,CGRectGetMaxY(_contentView.frame)-5, mainSize.width-60-10, statusFrame.feedAndZanFM.cellHigh)];
         [_feznView setFeedAndZanFrame:statusFrame.feedAndZanFM];
         commenY = CGRectGetMaxY(_feznView.frame);
         [_feznView setCommentVC:self.homeVC];
@@ -169,14 +219,17 @@
     if (status.commentcount) {
         [_commentView setHidden:NO];
         [_commentView setCommenFrame:statusFrame.commentListFrame];
-        [_commentView setFrame:CGRectMake(60, commenY+2, [UIScreen mainScreen].bounds.size.width-60-10, statusFrame.commentListFrame.cellHigh)];
+        [_commentView setFrame:CGRectMake(60, commenY+1, mainSize.width-60-10, statusFrame.commentListFrame.cellHigh)];
         [_commentView setCommentVC:self.homeVC];
     }else{
         [_commentView setHidden:YES];
     }
 }
 
-
+- (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
+{
+    NSLog(@"fasdfa");
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -27,13 +27,6 @@ static NSString *identifier = @"investorcellid";
 
 @implementation FriendsFriendController
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    if (!self.allArray.count) {
-//        
-//    }
-//}
 
 - (instancetype)initWithStyle:(UITableViewStyle)style
 {

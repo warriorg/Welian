@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class WLBasicTrends;
+@class WLStatusM;
 
 @interface WLCellHead : UIView
 // 头像
 @property (nonatomic, strong) UIImageView *iconImageView;
-@property (nonatomic, strong) WLBasicTrends *user;
+@property (nonatomic, strong) WLStatusM *userStat;
 
 @property (nonatomic, weak) UIViewController *controllVC;
 

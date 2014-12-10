@@ -30,7 +30,7 @@
     
     NSString *pwdRegex = @"^([a-zA-Z]|[a-zA-Z0-9_]|[0-9]){5,17}$";
     NSPredicate *pwdTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",pwdRegex];
-    NSLog(@"%d",[pwdTest evaluateWithObject:password]);
+    DLog(@"%d",[pwdTest evaluateWithObject:password]);
     return [pwdTest evaluateWithObject:password];
 }
 
@@ -41,7 +41,7 @@
     
     NSString *numberRe = @"^[0-9]{6,10}";
     NSPredicate *numberTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",numberRe];
-    NSLog(@"%d",[numberTest evaluateWithObject:number]);
+    DLog(@"%d",[numberTest evaluateWithObject:number]);
     return [numberTest evaluateWithObject:number];
 }
 //判断是否为空

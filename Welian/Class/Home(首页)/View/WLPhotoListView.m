@@ -47,10 +47,9 @@
         // 2.1.取出对应位置的子控件
         WLPhotoView *photoView = self.subviews[i];
         if (picCount == 1) {
-            
+            [photoView setContentMode:UIViewContentModeTopLeft];
             photoView.contentMode = UIViewContentModeScaleAspectFit;
-            photoView.clipsToBounds = YES;
-            [photoView setContentMode:UIViewContentModeCenter];
+            photoView.clipsToBounds = NO;
         } else { // 多张
             photoView.contentMode = UIViewContentModeScaleAspectFill;
             // 超出边界范围的内容都裁剪
@@ -74,7 +73,8 @@
             [photoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
             
             if (picCount == 1) { // 1张
-                photoView.frame = CGRectMake(0, 0, 180, 120);
+                CGSize size = [self onePhotoSize:photoView.photo.url];
+                photoView.frame = CGRectMake(0, 0, size.width, size.height);
                 continue;
             }
             
@@ -124,23 +124,80 @@
     [browser show];
 }
 
+// 一张图片时计算宽高
+- (CGSize)onePhotoSize:(NSString *)urlStr
+{
+    NSArray *array = [urlStr componentsSeparatedByString:@"-"];
+    CGFloat w = 180;
+    CGFloat h = 150;
+    if (array.count>1) {
+        w = [array[1] floatValue];
+        h = [[array[2] stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@""] floatValue];
+        h = [[array[2] stringByReplacingOccurrencesOfString:@".jpg" withString:@""] floatValue];
+        h = [[array[2] stringByReplacingOccurrencesOfString:@"_x.png" withString:@""] floatValue];
+        h = [[array[2] stringByReplacingOccurrencesOfString:@".png" withString:@""] floatValue];
+        if (w>h || w==h) {
+            CGFloat se = 1.0;
+            if (w>180) {
+                se = 180/w;
+                w = 180;
+            }
+            h = h*se;
+        }else{
+            CGFloat se = 1.0;
+            if (h>150) {
+                se = 150/h;
+                h= 150;
+            }
+            w = w*se;
+        }
+    }
+    return CGSizeMake(w, h);
+}
 
-+ (CGSize)photoListSizeWithCount:(int)count 
++ (CGSize)photoListSizeWithCount:(NSArray *)count
 {
     // 1.只有1张图片
-    if (count == 1) {
-        return CGSizeMake(180, 120+5);
+    if (count.count == 1) {
+        WLPhoto *photo = count[0];
+        NSArray *array = [photo.url componentsSeparatedByString:@"-"];
+        CGFloat w = 180;
+        CGFloat h = 150;
+        if (array.count>1) {
+            w = [array[1] floatValue];
+            h = [[array[2] stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@""] floatValue];
+            h = [[array[2] stringByReplacingOccurrencesOfString:@".jpg" withString:@""] floatValue];
+            h = [[array[2] stringByReplacingOccurrencesOfString:@"_x.png" withString:@""] floatValue];
+            h = [[array[2] stringByReplacingOccurrencesOfString:@".png" withString:@""] floatValue];
+            if (w>h || w==h) {
+                CGFloat se = 1.0;
+                if (w>180) {
+                    se = 180/w;
+                    w = 180;
+                }
+                h = h*se;
+            }else{
+                CGFloat se = 1.0;
+                if (h>150) {
+                    se = 150/h;
+                    h= 150;
+                }
+                w = w*se;
+            }
+        }
+        return CGSizeMake(w, h);
+
     }
 
     // 1.每一行的最大列数
-    int maxColPerRow = count == 4 ? 2 : 3;
+    int maxColPerRow = count.count == 4 ? 2 : 3;
     
     // 2.列数
-    int colCount = count >= maxColPerRow ? maxColPerRow : count;
+    int colCount = count.count >= maxColPerRow ? maxColPerRow : count.count;
     
     // 3.行数
     // 行数 = (总个数 + 每行最多显示数 - 1) / 每行最多显示数
-    int rowCount = (count + maxColPerRow - 1) / maxColPerRow;
+    int rowCount = (count.count + maxColPerRow - 1) / maxColPerRow;
     
     CGFloat photoListW = colCount * IWPhotoWH + (colCount - 1) * IWPhotoMargin;
     CGFloat photoListH = rowCount * IWPhotoWH + (rowCount - 1) * IWPhotoMargin;

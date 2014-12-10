@@ -139,6 +139,17 @@
     // 设置缩放比例
     [self adjustFrame];
 }
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    CGRect imageViewFrame = _imageView.frame;
+    CGRect screenBounds = [UIScreen mainScreen].bounds;
+    if(imageViewFrame.size.height > screenBounds.size.height) { imageViewFrame.origin.y = 0.0f;
+    } else {
+        imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height) / 2.0;
+    }
+    _imageView.frame = imageViewFrame;
+}
+
 #pragma mark 调整frame
 - (void)adjustFrame
 {
@@ -191,6 +202,7 @@
     } else {
         _imageView.frame = imageFrame;
     }
+//    [_imageView setCenter:self.center];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -216,7 +228,7 @@
     // 清空底部的小图
     _photo.srcImageView.image = nil;
     
-    CGFloat duration = 0.15;
+    CGFloat duration = 0.25;
     if (_photo.srcImageView.clipsToBounds) {
         [self performSelector:@selector(reset) withObject:nil afterDelay:duration];
     }

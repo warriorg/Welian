@@ -12,6 +12,8 @@
 
 typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
 
+typedef void (^WLFeedTuiBlock)(WLStatusM *starusM);
+
 @interface CommentHeadView : UIView
  //** 头部view   *//
 @property (nonatomic, strong) WLCellHead *cellHeadView;
@@ -19,6 +21,8 @@ typedef void (^FeedAndZanBlock)(WLStatusM *starusM);
 @property (nonatomic, strong) CommentHeadFrame *commHeadFrame;
 
 @property (nonatomic, copy) FeedAndZanBlock feezanBlock;
+
+@property (nonatomic, copy) WLFeedTuiBlock feedTuiBlock;
 
 @property (nonatomic, strong) UIViewController *homeVC;
 
