@@ -86,15 +86,15 @@
     _commentLabel.emojiDelegate = self;
     _commentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _commentLabel.isNeedAtAndPoundSign = YES;
-    _commentLabel.font = WLZanNameFont;
-    _commentLabel.textColor = IWRetweetContentColor;
+    _commentLabel.font = WLFONT(14);
+    _commentLabel.textColor = WLRGB(125, 125, 125);
     _commentLabel.backgroundColor = [UIColor clearColor];
     _commentLabel.numberOfLines = 0;
     [self.contentView addSubview:_commentLabel];
     
     
     _timeLabel = [[UILabel alloc] init];
-    [_timeLabel setTextColor:IWSourceColor];
+    [_timeLabel setTextColor:WLRGB(173, 173, 173)];
     [_timeLabel setFont:IWTimeFont];
     [self.contentView addSubview:_timeLabel];
     
@@ -107,10 +107,10 @@
     _trendsLabel = [[MLEmojiLabel alloc]init];
     _trendsLabel.numberOfLines = 0;
     _trendsLabel.emojiDelegate = self;
-    _trendsLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    _trendsLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _trendsLabel.isNeedAtAndPoundSign = YES;
-    _trendsLabel.font = [UIFont systemFontOfSize:15];
-    _trendsLabel.textColor = IWContentColor;
+    _trendsLabel.font = WLFONT(12);
+    _trendsLabel.textColor = WLRGB(173, 173, 173);
     _trendsLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_trendsLabel];
     
@@ -158,10 +158,10 @@
     [_photImage setFrame:messageFrameModel.photImageF];
     if (messageDataM.feedpic.length) {
         [_trendsLabel setHidden:YES];
-        [_photImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.feedpic] placeholderImage:[UIImage imageNamed:@"picture_loading"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [_photImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.feedpic] placeholderImage:[UIImage resizedImage:@"repost_bg"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     }else if(messageDataM.feedcontent.length){
         [_trendsLabel setHidden:NO];
-        [_photImage setImage:[UIImage resizedImage:@"login_input"]];
+        [_photImage setImage:[UIImage resizedImage:@"repost_bg"]];
         _trendsLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
         _trendsLabel.customEmojiPlistName = @"expressionImage_custom";
         [_trendsLabel setFrame:messageFrameModel.trendsLabelF];

@@ -68,8 +68,7 @@
                 [_dataArry addObject:sf];
             }
             
-            [self loadFirstFID];
-            
+            [self loadFirstFID];    
         }
         
         [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];

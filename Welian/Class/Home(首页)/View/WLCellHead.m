@@ -119,7 +119,9 @@
     [_nameLabel setText:user.name];
     
     // 职务和公司
-    [_zhiwulncLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
+    if (user.position) {
+        [_zhiwulncLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
+    }
 
     // 好友关系
     if (user.friendship == WLRelationTypeFriend) {

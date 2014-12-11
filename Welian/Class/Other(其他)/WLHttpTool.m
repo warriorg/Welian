@@ -527,12 +527,11 @@
 }
 
 
-
 #pragma mark - 根据fid取一条动态信息
 + (void)loadOneFeedParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-     NSDictionary *dic = @{@"type":@"loadOneFeed",@"data":parameterDic};
-    
+     NSDictionary *dic = @{@"type":@"loadOneFeed2",@"data":parameterDic};
+
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {

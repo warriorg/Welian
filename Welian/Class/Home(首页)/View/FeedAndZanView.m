@@ -90,7 +90,7 @@
             NSRange range = [feedAndZanFrame.feedNameStr rangeOfString:feedModel.name];
             [_feedLabel addCustomLink:[NSValue valueWithRange:range]
                             forRange:range
-                           linkColor:IWRetweetNameColor];
+                           linkColor:WLRGB(43, 94, 171)];
         }
     }else{
         [_feedLabel setHidden:YES];

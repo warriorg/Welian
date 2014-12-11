@@ -81,6 +81,34 @@ static NSString *noCommentCell = @"NoCommentCell";
     return _commentHeadView;
 }
 
+- (void)loadloadOneFeed2
+{
+    
+    [WLHttpTool loadOneFeedParameterDic:@{@"fid":@(self.statusM.topid)} success:^(id JSON) {
+        NSDictionary *statusDic = JSON;
+        [[WLDataDBTool sharedService] putObject:statusDic withId:[NSString stringWithFormat:@"%@",[statusDic objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+
+        WLStatusM *loadstatusM = [WLStatusM objectWithKeyValues:statusDic];
+        [self.statusM setContent:loadstatusM.content];
+        [self.statusM setCommentcount:loadstatusM.commentcount];
+        [self.statusM setCreated:statusDic[@"created"]];
+        [self.statusM setFid:loadstatusM.fid];
+        [self.statusM setForwardcount:loadstatusM.forwardcount];
+        [self.statusM setIszan:[statusDic[@"iszan"] intValue]];
+        [self.statusM setIsforward:[statusDic[@"isforward"] intValue]];
+        [self.statusM setShareurl:loadstatusM.shareurl];
+        [self.statusM setType:loadstatusM.type];
+        [self.statusM setUser:loadstatusM.user];
+        [self.statusM setZan:loadstatusM.zan];
+        [self.statusM setPhotos:loadstatusM.photos];
+        self.commentHeadView;
+        [self refreshDataChangde:self.statusM];
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
+
 // 加载赞和转发数据
 - (void)loadnewFeedZanAndForward
 {
@@ -88,6 +116,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         
         NSArray *feedarray = [JSON objectForKey:@"forwards"];
         NSArray *zanarray = [JSON objectForKey:@"zans"];
+
         [_feedArrayM removeAllObjects];
         [_zanArrayM removeAllObjects];
         if (feedarray.count) {
@@ -96,13 +125,14 @@ static NSString *noCommentCell = @"NoCommentCell";
                 [_feedArrayM addObject:mode];
             }
         }
+        
         if (zanarray.count) {
             for (NSDictionary *zandic in zanarray) {
                 UserInfoModel *mode = [UserInfoModel objectWithKeyValues:zandic];
                 [_zanArrayM addObject:mode];
             }
         }
-        [self refreshDataChangde:_statusM];
+        [self refreshDataChangde:self.statusM];
         
     } fail:^(NSError *error) {
         
@@ -248,8 +278,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)loadnewcommentAndFeedZanAndForward
 {
-    [self loadNewCommentListData];
+    [self loadloadOneFeed2];
     [self loadnewFeedZanAndForward];
+    [self loadNewCommentListData];
 }
 
 
@@ -448,6 +479,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         if (buttonIndex==0) {
             [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
                 [_dataArrayM removeObject:_selecCommFrame];
+                _selecCommFrame = nil;
                 self.statusM.commentcount--;
                 [self.tableView reloadData];
                 self.commentHeadView;
@@ -463,12 +495,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)refreshDataChangde:(WLStatusM *)status
 {
-    if (status) {
-        [_zanArrayM removeAllObjects];
-        [_feedArrayM removeAllObjects];
-        
-        [_zanArrayM addObjectsFromArray:status.zansArray];
-        [_feedArrayM addObjectsFromArray:status.forwardsArray];
+    if (status.zansArray.count || status.forwardsArray.count) {
+        _zanArrayM = [NSMutableArray arrayWithArray:self.statusM.zansArray];
+        _feedArrayM = [NSMutableArray arrayWithArray:self.statusM.forwardsArray];
     }
     if (_zanArrayM.count||_feedArrayM.count) {
         if (!_feedAndZanFM) {
@@ -481,8 +510,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         _feedAndZanFM = nil;
     }
     
-//    [self.statusM setZansArray:_zanArrayM];
-//    [self.statusM setForwardsArray:_feedArrayM];
+    [self.statusM setZansArray:_zanArrayM];
+    [self.statusM setForwardsArray:_feedArrayM];
 
     [self.tableView reloadData];
     

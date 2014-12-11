@@ -26,7 +26,7 @@
         //0.添加时间
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.font = IWTimeFont;
-        _timeLabel.textColor = IWSourceColor;
+        _timeLabel.textColor = WLRGB(173, 173, 173);
         _timeLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_timeLabel];
         
@@ -39,7 +39,6 @@
         // 3.添加转发
         _repostBtn = [self addBtn:@"转推" image:@"me_mywriten_repeat"];
         [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repeat_no"] forState:UIControlStateDisabled];
-//        [_repostBtn setTitleColor:WLRGB(230, 230, 230) forState:UIControlStateDisabled];
     }
     return self;
 }

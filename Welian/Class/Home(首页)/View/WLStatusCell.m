@@ -208,7 +208,7 @@
     
     if (status.zansArray.count||status.forwardsArray.count) {
         [_feznView setHidden:NO];
-        [_feznView setFrame:CGRectMake(60,CGRectGetMaxY(_contentView.frame)-5, mainSize.width-60-10, statusFrame.feedAndZanFM.cellHigh)];
+        [_feznView setFrame:CGRectMake(61,CGRectGetMaxY(_contentView.frame)-5, mainSize.width-61-10, statusFrame.feedAndZanFM.cellHigh)];
         [_feznView setFeedAndZanFrame:statusFrame.feedAndZanFM];
         commenY = CGRectGetMaxY(_feznView.frame);
         [_feznView setCommentVC:self.homeVC];
@@ -219,7 +219,7 @@
     if (status.commentcount) {
         [_commentView setHidden:NO];
         [_commentView setCommenFrame:statusFrame.commentListFrame];
-        [_commentView setFrame:CGRectMake(60, commenY+1, mainSize.width-60-10, statusFrame.commentListFrame.cellHigh)];
+        [_commentView setFrame:CGRectMake(61, commenY+1, mainSize.width-61-10, statusFrame.commentListFrame.cellHigh)];
         [_commentView setCommentVC:self.homeVC];
     }else{
         [_commentView setHidden:YES];

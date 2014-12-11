@@ -205,7 +205,6 @@
     keyboardIsShow=NO;
 }
 
-
 - (void)startCompile:(WLBasicTrends *)touser
 {
     [_commentTextView becomeFirstResponder];

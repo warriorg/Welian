@@ -34,7 +34,7 @@
         [label setText:@"还没有动态内容哦，赶快发布一条动态或去寻找好友吧！"];
         [label setNumberOfLines:0];
         [label setFont:[UIFont systemFontOfSize:14]];
-        [label setTextColor:IWColor(162, 182, 190)];
+        [label setTextColor:WLRGB(162, 182, 190)];
         [self addSubview:label];
         
         UIButton *publeshBut = [[UIButton alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(label.frame)+25, (frame.size.width-100)*0.5, 40)];

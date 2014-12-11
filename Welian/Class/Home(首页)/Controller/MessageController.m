@@ -35,16 +35,11 @@
     if (_footButton== nil) {
         _footButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
-//        [_footButton setBackgroundImage:[UIImage resizedImage:@"tabbar_b"] forState:UIControlStateNormal];
-        [_footButton setTitleColor:[UIColor colorWithWhite:0.8 alpha:1] forState:UIControlStateNormal];
-//        [_footButton setBackgroundImage:[UIImage resizedImage:@"tabbar_b@2x"] forState:UIControlStateHighlighted];
+        [_footButton setTitleColor:[UIColor colorWithWhite:0.7 alpha:1] forState:UIControlStateNormal];
         // tableFooterView的宽度是不需要设置。默认就是整个tableView的宽度
         _footButton.bounds = CGRectMake(0, 0, 0, 44);
         [_footButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        
-        // 4.设置按钮文字
         [_footButton setTitle:@"查看更早的信息" forState:UIControlStateNormal];
-        
         [_footButton addTarget:self action:@selector(loadAllMessgeData:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _footButton;
@@ -204,9 +199,10 @@
     
     MessageFrameModel *messageFrameModel = _messageDataArray[indexPath.row];
     MessageHomeModel *messagedata = messageFrameModel.messageDataM;
-//    NSInteger fid = [messagedata.feedid integerValue];
     YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:messagedata.feedid fromTable:KWLStutarDataTableName];
     WLStatusM *statusM = [WLStatusM objectWithKeyValues:item.itemObject];
+    [statusM setFid:[messagedata.feedid intValue]];
+    [statusM setTopid:[messagedata.feedid intValue]];
     CommentInfoController *commentVC = [[CommentInfoController alloc] init];
     [commentVC setStatusM:statusM];
     [self.navigationController pushViewController:commentVC animated:YES];

@@ -42,7 +42,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 // 服务器地址
-#define WLHttpServer  @"http://test.welian.com:8080"
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 #define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
 
@@ -147,32 +147,11 @@ fprintf(stderr, "-----------------------------------\n");                       
  */
 #define WLRGB(r, g, b)       WLRGBA(r, g, b, 1)
 
-
-// 2.获得RGB颜色
-#define IWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-
 // 3.全局背景色
-#define IWGlobalBg IWColor(246, 246, 246)
+#define IWGlobalBg WLRGB(246, 246, 246)
 
-/*
- 6.一条微博上的颜色
- */
-// 昵称
-#define IWNameColor IWColor(88, 88, 88)
-// 会员昵称颜色
-#define IWMBNameColor IWColor(244, 103, 8)
-// 时间
-#define IWTimeColor IWColor(200, 200, 200)
-// 内容
-#define IWContentColor IWColor(52, 52, 52)
-// 来源
-#define IWSourceColor IWColor(153, 153, 153)
-// 被转发昵称
-#define IWRetweetNameColor IWColor(43, 94, 171)
-// 被转发内容
-#define IWRetweetContentColor IWColor(70, 70, 70)
 // 线条浅灰颜色
-#define WLLineColor IWColor(232, 234, 239)
+#define WLLineColor WLRGB(232, 234, 239)
 
 /*
  7.一条微博上的字体

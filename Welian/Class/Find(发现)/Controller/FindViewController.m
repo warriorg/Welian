@@ -141,7 +141,7 @@
         NSString *urlStr = webDic[@"url"];
         if (indexPath.row==1) {
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            urlStr = [NSString stringWithFormat:@"%@/%@",@"http://testmy.welian.com/event/lists",mode.sessionid];
+            urlStr = [NSString stringWithFormat:@"%@/%@",@"http://my.welian.com/event/lists",mode.sessionid];
         }
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
         

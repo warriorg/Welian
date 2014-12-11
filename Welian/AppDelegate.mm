@@ -73,10 +73,16 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     // 版本更新
     [self detectionUpdataVersionDic];
-    
+    //判断是不是第一次启动应用
+    // 清除1.0.5数据
+    if ([XcodeAppVersion isEqualToString:@"1.0.6"] && (![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+        [[WLDataDBTool sharedService] clearTable:KWLStutarDataTableName];
+        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
+     }
     // 友盟统计
     [self umengTrack];
     

@@ -46,12 +46,12 @@
 {
     _feedAndzanDic = feedAndzanDic;
 
-    CGFloat imageX = 10;
+    CGFloat imageX = 5;
     CGFloat imageY = 10;
     _cellHigh = imageY;
     
     UIImage *image = [UIImage imageNamed:@"good_small"];
-    _zanImageF = CGRectMake(imageX, imageY+3, image.size.width, image.size.height);
+    _zanImageF = CGRectMake(imageX, imageY, image.size.width, image.size.height);
     
     NSArray *feedArray = [feedAndzanDic objectForKey:@"forwards"];
     NSArray *zanArray = [feedAndzanDic objectForKey:@"zans"];
@@ -79,7 +79,7 @@
         _cellHigh +=5;            
         }
 
-        _feedImageF = CGRectMake(imageX-3, _cellHigh+3, image.size.width+5, image.size.height);
+        _feedImageF = CGRectMake(imageX, _cellHigh, image.size.width, image.size.height);
         
         for (UserInfoModel *feedModel in feedArray) {
             if (feedModel != feedArray.lastObject) {

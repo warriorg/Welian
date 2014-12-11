@@ -225,6 +225,7 @@
         [statM setIsforward:1];
         statM.forwardcount +=1;
         [WLHttpTool forwardFeedParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+            [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
