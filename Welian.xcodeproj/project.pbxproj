@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10389B571A3EC46D001A785C /* UIView+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B561A3EC46D001A785C /* UIView+Size.m */; };
+		10389B581A3EC46D001A785C /* UIView+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B561A3EC46D001A785C /* UIView+Size.m */; };
+		10389B5D1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B5A1A3EC789001A785C /* NSUserDefaults+Standard.m */; };
+		10389B5E1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B5A1A3EC789001A785C /* NSUserDefaults+Standard.m */; };
+		10389B5F1A3EC789001A785C /* UIView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B5C1A3EC789001A785C /* UIView+Extend.m */; };
+		10389B601A3EC789001A785C /* UIView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B5C1A3EC789001A785C /* UIView+Extend.m */; };
 		F51DB63C1A3018DE0005EA6C /* login_bg_big568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63A1A3018DE0005EA6C /* login_bg_big568h@2x.png */; };
 		F51DB63D1A3018DE0005EA6C /* login_bg_big568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63A1A3018DE0005EA6C /* login_bg_big568h@2x.png */; };
 		F51DB63E1A3018DE0005EA6C /* login_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63B1A3018DE0005EA6C /* login_bg@2x.png */; };
@@ -1411,6 +1417,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10389B551A3EC46D001A785C /* UIView+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Size.h"; sourceTree = "<group>"; };
+		10389B561A3EC46D001A785C /* UIView+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Size.m"; sourceTree = "<group>"; };
+		10389B591A3EC789001A785C /* NSUserDefaults+Standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+Standard.h"; sourceTree = "<group>"; };
+		10389B5A1A3EC789001A785C /* NSUserDefaults+Standard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+Standard.m"; sourceTree = "<group>"; };
+		10389B5B1A3EC789001A785C /* UIView+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extend.h"; sourceTree = "<group>"; };
+		10389B5C1A3EC789001A785C /* UIView+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extend.m"; sourceTree = "<group>"; };
+		10389B611A3EC8E3001A785C /* Other.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Other.h; sourceTree = "<group>"; };
 		F5021ADF1A22F8EF008B1534 /* CommentHeadFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadFrame.h; sourceTree = "<group>"; };
 		F5021AE01A22F8EF008B1534 /* CommentHeadFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHeadFrame.m; sourceTree = "<group>"; };
 		F5021AE21A22FC39008B1534 /* CommentHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadView.h; sourceTree = "<group>"; };
@@ -2517,6 +2530,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10389B541A3EC46C001A785C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				10389B591A3EC789001A785C /* NSUserDefaults+Standard.h */,
+				10389B5A1A3EC789001A785C /* NSUserDefaults+Standard.m */,
+				10389B5B1A3EC789001A785C /* UIView+Extend.h */,
+				10389B5C1A3EC789001A785C /* UIView+Extend.m */,
+				10389B551A3EC46D001A785C /* UIView+Size.h */,
+				10389B561A3EC46D001A785C /* UIView+Size.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		F507F25319E637E900661A90 /* 认证 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3907,6 +3933,8 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				10389B611A3EC8E3001A785C /* Other.h */,
+				10389B541A3EC46C001A785C /* Category */,
 				F5B88FDF1A35793200290B4F /* UIColor+_6jinzhi.h */,
 				F5B88FE01A35793200290B4F /* UIColor+_6jinzhi.m */,
 				F5D3567C1A260F75005EF094 /* M80AttributedLabel */,
@@ -5216,6 +5244,7 @@
 				F56649A31A2AFD56008A5830 /* WLPhoto.m in Sources */,
 				F56649A41A2AFD56008A5830 /* FeedAndZanView.m in Sources */,
 				F56649A51A2AFD56008A5830 /* AppDelegate.mm in Sources */,
+				10389B5D1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */,
 				F56649A61A2AFD56008A5830 /* TQRichTextView.m in Sources */,
 				F56649A71A2AFD56008A5830 /* UIBarButtonItem+Badge.m in Sources */,
 				F56649A81A2AFD56008A5830 /* ChineseString.m in Sources */,
@@ -5265,6 +5294,7 @@
 				F56649D31A2AFD56008A5830 /* CTAssetScrollView.m in Sources */,
 				F56649D41A2AFD56008A5830 /* UIWebView+AFNetworking.m in Sources */,
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
+				10389B571A3EC46D001A785C /* UIView+Size.m in Sources */,
 				F56649D61A2AFD56008A5830 /* UIAlertView+AFNetworking.m in Sources */,
 				F56649D71A2AFD56008A5830 /* UIImage+MultiFormat.m in Sources */,
 				F56649D81A2AFD56008A5830 /* FMResultSet.m in Sources */,
@@ -5318,6 +5348,7 @@
 				F5664A091A2AFD56008A5830 /* WLContentCellView.m in Sources */,
 				F5664A0A1A2AFD56008A5830 /* HaderInfoCell.m in Sources */,
 				F5664A0B1A2AFD56008A5830 /* WLStatusDock.m in Sources */,
+				10389B5F1A3EC789001A785C /* UIView+Extend.m in Sources */,
 				F5664A0C1A2AFD56008A5830 /* FeedAndZanCell.m in Sources */,
 				F5664A0D1A2AFD56008A5830 /* CommentInfoController.m in Sources */,
 				F5664A0E1A2AFD56008A5830 /* UserInfoController.m in Sources */,
@@ -5450,12 +5481,14 @@
 				F5664C4C1A2AFDD5008A5830 /* MJPhotoProgressView.m in Sources */,
 				F5664C4D1A2AFDD5008A5830 /* UserInfoModel.m in Sources */,
 				F5664C4E1A2AFDD5008A5830 /* MLEmojiLabel.m in Sources */,
+				10389B5E1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */,
 				F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */,
 				F5664C501A2AFDD5008A5830 /* MBProgressHUD.m in Sources */,
 				F5664C511A2AFDD5008A5830 /* MJMember.m in Sources */,
 				F5664C521A2AFDD5008A5830 /* WorksListController.m in Sources */,
 				F5664C531A2AFDD5008A5830 /* SettingController.m in Sources */,
 				F5664C541A2AFDD5008A5830 /* SDWebImagePrefetcher.m in Sources */,
+				10389B581A3EC46D001A785C /* UIView+Size.m in Sources */,
 				F5664C551A2AFDD5008A5830 /* UIButton+AFNetworking.m in Sources */,
 				F5664C561A2AFDD5008A5830 /* NavViewController.m in Sources */,
 				F5664C571A2AFDD5008A5830 /* FriendsUserModel.m in Sources */,
@@ -5553,6 +5586,7 @@
 				F5664CB31A2AFDD5008A5830 /* ZBMessageManagerFaceView.m in Sources */,
 				F5664CB41A2AFDD5008A5830 /* InfoHeaderView.m in Sources */,
 				F5664CB51A2AFDD5008A5830 /* InvestorUserM.m in Sources */,
+				10389B601A3EC789001A785C /* UIView+Extend.m in Sources */,
 				F5664CB61A2AFDD5008A5830 /* UIImageView+MJWebCache.m in Sources */,
 				F5664CB71A2AFDD5008A5830 /* CommentMode.m in Sources */,
 				F5664CB81A2AFDD5008A5830 /* CommentCellView.m in Sources */,
