@@ -144,8 +144,8 @@
             urlStr = [NSString stringWithFormat:@"%@/%@",@"http://my.welian.com/event/lists",mode.sessionid];
         }
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
-        
-         [self.navigationController pushViewController:webVC animated:YES];
+        webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+        [self.navigationController pushViewController:webVC animated:YES];
     }
     
 }
