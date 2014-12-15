@@ -138,6 +138,7 @@
             return;
         }
         
+    
         NSString *urlStr = webDic[@"url"];
         if (indexPath.row==1) {
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
