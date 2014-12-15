@@ -291,15 +291,30 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.reqestDic setObject:@(KCellConut) forKey:@"size"];
     [self.reqestDic setObject:@(1) forKey:@"page"];
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-        
         _dataArrayM = JSON;
         [self hiddenRefresh];
         if (!_dataArrayM.count) return;
+        NSMutableArray *commentArray = [NSMutableArray array];
+        for (CommentCellFrame *cellF in _dataArrayM) {
+            
+            [commentArray addObject:cellF.commentM];
+        }
+        [self.statusM setCommentsArray:commentArray];
+        [self updataCommentBlock];
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
     }];
 }
+
+- (void)updataCommentBlock
+{
+        __weak CommentInfoController *weakSelf = self;
+    if (weakSelf.commentBlock) {
+        weakSelf.commentBlock(weakSelf.statusM);
+    }
+}
+
 
 - (void)loadMoreCommentData
 {
@@ -517,5 +532,10 @@ static NSString *noCommentCell = @"NoCommentCell";
     
 }
 
+
+- (void)dealloc
+{
+    DLog(@"das");
+}
 
 @end

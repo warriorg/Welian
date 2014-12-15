@@ -15,7 +15,6 @@
 
 @interface WorksListController ()
 @property (nonatomic, strong) NSMutableArray *dataArray;
-//@property (nonatomic, strong) UIImageView *nostringImage;
 @property (nonatomic, strong) NoListView *nolistView;
 @end
 
@@ -109,10 +108,6 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 60.0;
-}
 
 #pragma mark - tableView代理
 
@@ -159,6 +154,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0;
+}
+
 
 #pragma mark - 删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -207,9 +208,9 @@
     AddWorkOrEducationController *addWkOrEdVC;
     
     if (self.wlUserLoadType==WLSchool) {
-        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:0];
-    }else if (self.wlUserLoadType == WLCompany){
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
+    }else if (self.wlUserLoadType == WLCompany){
+        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:2];
     }
     NavViewController *navVC = [[NavViewController alloc] initWithRootViewController:addWkOrEdVC];
     [self presentViewController:navVC animated:YES completion:^{

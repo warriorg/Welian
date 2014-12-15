@@ -17,4 +17,10 @@
 /**  ucid   */
 @property (nonatomic, assign) NSInteger ucid;
 
+/**  职位名称   */
+@property (nonatomic, strong) NSString *jobname;
+
+/**  职位id   */
+@property (nonatomic, assign) NSInteger jobid;
+
 @end

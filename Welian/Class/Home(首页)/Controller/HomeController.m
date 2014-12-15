@@ -31,6 +31,7 @@
     
     NSIndexPath *_clickIndex;
     NSNumber *_uid;
+    NSIndexPath *_seletIndexPath;
 }
 
 @property (nonatomic, strong) HomeView *homeView;
@@ -257,7 +258,6 @@
     if (!_uid) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
         
-        // Build your regular UIBarButtonItem with Custom View
         UIImage *image = [UIImage imageNamed:@"navbar_remind"];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:image forState:UIControlStateNormal];
@@ -400,6 +400,12 @@
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
         [self.tableView reloadData];
     };
+    commentInfo.commentBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        [statusF setStatus:statusM];
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+    };
     
     commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
         WLStatusFrame *statusF = _dataArry[indexPath.row];
@@ -409,7 +415,7 @@
         DLog(@"sanchu");
         
     };
-    
+    _seletIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];
 }
 

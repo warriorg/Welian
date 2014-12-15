@@ -34,6 +34,7 @@
         [_beginTextF setPlaceholder:@"请选择"];
         [_beginTextF setTextAlignment:NSTextAlignmentRight];
         [_beginTextF setTintColor:KBasesColor];
+        [_beginTextF setInputView:self.datePick];
     }
     return _beginTextF;
 }
@@ -45,6 +46,7 @@
         [_endTextF setTextAlignment:NSTextAlignmentRight];
         [_endTextF setPlaceholder:@"请选择"];
         [_endTextF setTintColor:KBasesColor];
+        [_endTextF setInputView:self.datePick];
     }
     return _endTextF;
 }
@@ -79,11 +81,11 @@
         
         if (wlUserLoadType) {
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的公司"]];
-            self.dataArray = @[@"公司名称",@"入职时间",@"离职时间"];
+            self.dataArray = @[@[@"公司名称",@"职位"],@[@"入职时间",@"离职时间"]];
             _companyM = [[CompanyModel alloc] init];
         }else{
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的母校"]];
-            self.dataArray = @[@"院校名称",@"入学时间",@"毕业时间"];
+            self.dataArray = @[@[@"院校名称",@"专业"],@[@"入学时间",@"毕业时间"]];
             _schoolM = [[SchoolModel alloc] init];
         }
     
@@ -101,7 +103,7 @@
 
 - (void)savedata
 {
-    if (_wlUserLoadType==0) {
+    if (_wlUserLoadType==1) {
 
         if (_schoolM.schoolname&&_schoolM.startyear&&_schoolM.endyear) {
             NSDictionary *daDic = [_schoolM keyValues];
@@ -113,7 +115,7 @@
                 
             }];
         }
-    }else if (_wlUserLoadType == 1){
+    }else if (_wlUserLoadType == 2){
         if (_companyM.companyname&&_companyM.startyear&&_companyM.endyear) {
             NSDictionary *datDic = [_companyM keyValues];
             [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
@@ -144,10 +146,15 @@
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.dataArray.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    return 3;
+    NSArray *sectionarray = self.dataArray[section];
+    return sectionarray.count;
 }
 
 
@@ -157,50 +164,85 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        [cell.detailTextLabel setTextColor:[UIColor blackColor]];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     CGSize size = cell.bounds.size;
     
-    if (_wlUserLoadType==0) {
-        if (indexPath.row==0) {
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            [cell.detailTextLabel setText:_schoolM.schoolname];
-        }else if(indexPath.row ==1){
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            
-            [self.beginTextF setInputView:self.datePick];
-            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-            
-            [cell.contentView addSubview:self.beginTextF];
-        }else if (indexPath.row==2){
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            [self.endTextF setInputView:self.datePick];
-            [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-            
-            [cell.contentView addSubview:self.endTextF];
+    if (_wlUserLoadType ==1) {
+        if (indexPath.section==0) {
+            if (indexPath.row==0) {
+                [cell.detailTextLabel setText:_schoolM.schoolname];
+            }else if (indexPath.row==1){
+                [cell.detailTextLabel setText:_schoolM.specialtyname];
+            }
+        }else if (indexPath.section ==1){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            if (indexPath.row==0) {
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld",(long)_schoolM.startyear]];
+            }else if (indexPath.row==1){
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld",(long)_schoolM.endyear]];
+            }
         }
+    }else if (_wlUserLoadType ==2){
+        if (indexPath.section==0) {
+            if (indexPath.row==0) {
+                [cell.detailTextLabel setText:_companyM.companyname];
+            }else if (indexPath.row==1){
+                [cell.detailTextLabel setText:_companyM.jobname];
+            }
+        }else if (indexPath.section ==1){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            if (indexPath.row==0) {
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld",(long)_companyM.startyear]];
+            }else if (indexPath.row==1){
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld",(long)_companyM.endyear]];
+            }
 
-    }else if (_wlUserLoadType==1){
-        if (indexPath.row==0) {
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            [cell.detailTextLabel setText:_companyM.companyname];
-        }else if(indexPath.row ==1){
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            
-            [self.beginTextF setInputView:self.datePick];
-            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-            
-            [cell.contentView addSubview:self.beginTextF];
-        }else if (indexPath.row==2){
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            [self.endTextF setInputView:self.datePick];
-            [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-            
-            [cell.contentView addSubview:self.endTextF];
         }
 
     }
-    [cell.textLabel setText:self.dataArray[indexPath.row]];
+    
+    
+//    if (_wlUserLoadType==1) {
+//        if (indexPath.row==0) {
+//            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+//            [cell.detailTextLabel setText:_schoolM.schoolname];
+//        }else if(indexPath.row ==1){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//            
+//            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
+//            if (!self.beginTextF.superview) {
+//                [cell.contentView addSubview:self.beginTextF];
+//            }
+//        }else if (indexPath.row==2){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//            [self.endTextF setInputView:self.datePick];
+//            [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
+//            
+//            [cell.contentView addSubview:self.endTextF];
+//        }
+//
+//    }else if (_wlUserLoadType==2){
+//        if (indexPath.row==0) {
+//            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+//            [cell.detailTextLabel setText:_companyM.companyname];
+//        }else if(indexPath.row ==1){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//            [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
+//            
+//            [cell.contentView addSubview:self.beginTextF];
+//        }else if (indexPath.row==2){
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//            [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
+//            
+//            [cell.contentView addSubview:self.endTextF];
+//        }
+//
+//    }
+    NSArray *sectionArray = self.dataArray[indexPath.section];
+    [cell.textLabel setText:sectionArray[indexPath.row]];
     CGPoint center = cell.center;
     center.x += 100;
     [cell.detailTextLabel setCenter:center];
@@ -228,16 +270,16 @@
             vertype = IWVerifiedTypeSchool;
         }
         NameController *companyName = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            if (_wlUserLoadType==0) {
+            if (_wlUserLoadType==1) {
                 [_schoolM setSchoolname:userInfo];
-            }else if (_wlUserLoadType == 1){
+            }else if (_wlUserLoadType == 2){
                 [_companyM setCompanyname:userInfo];
             }
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         } withType:vertype];
-        if (_wlUserLoadType==0) {
+        if (_wlUserLoadType==1) {
             [companyName setUserInfoStr:_schoolM.schoolname];
-        }else if (_wlUserLoadType ==1){
+        }else if (_wlUserLoadType ==2){
             [companyName setUserInfoStr:_companyM.companyname];
         }
         [self.navigationController pushViewController:companyName animated:YES];
@@ -251,7 +293,7 @@
     formatter.dateFormat = @"yyyy年MM月";
     NSString *dateStr = [formatter stringFromDate:sender.date];
     
-    if (_wlUserLoadType==0) {
+    if (_wlUserLoadType==1) {
         /*添加你自己响应代码*/
         if (self.beginTextF.isFirstResponder) {
             formatter.dateFormat = @"yyyy";
@@ -266,7 +308,7 @@
             [_schoolM setEndmonth:[[formatter stringFromDate:sender.date] integerValue]];
             [self.endTextF setText:dateStr];
         }
-    }else if (_wlUserLoadType ==1){
+    }else if (_wlUserLoadType ==2){
         /*添加你自己响应代码*/
         if (self.beginTextF.isFirstResponder) {
             formatter.dateFormat = @"yyyy";

@@ -119,12 +119,12 @@
     [self.view addSubview:a];
     
     // 首页
-    homeItem = [self itemWithTitle:@"动态" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
+    homeItem = [self itemWithTitle:@"创业圈" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
     
     [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     
-    [homeVC.navigationItem setTitle:@"动态"];
+    [homeVC.navigationItem setTitle:@"创业圈"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
@@ -138,7 +138,6 @@
     [friendsNav setDelegate:self];
     [friendsVC.navigationItem setTitle:@"好友"];
     [friendsNav setTabBarItem:circleItem];
-    
     
     // 发现
     UITabBarItem *findItem = [self itemWithTitle:@"发现" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];

@@ -17,4 +17,10 @@
 /**  usid   */
 @property (nonatomic, assign) NSInteger usid;
 
+/**  专业名称   */
+@property (nonatomic, strong) NSString *specialtyname;
+
+/**  专业id   */
+@property (nonatomic, assign) NSInteger specialtyid;
+
 @end

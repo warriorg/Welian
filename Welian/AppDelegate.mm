@@ -34,6 +34,10 @@
 #define kAppKey          @"eAJBPqawMhAi406E0FcSh3"
 #define kAppSecret       @"rOSsO1iPvj6H39gltxdDJ6"
 
+//#define kAppId           @"FJMYq8FQuT8tkyPCTKavD3"
+//#define kAppKey          @"CSC0bLaL7J6wIHC0a9EYJ9"
+//#define kAppSecret       @"tMBHhQ9iMJ6CAti03m4z93"
+
 #endif
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>

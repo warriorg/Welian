@@ -22,6 +22,16 @@
 			<string>me_write.png</string>
 		</dict>
 	</array>
+    <array>
+        <dict>
+            <key>row</key>
+            <string>0</string>
+            <key>name</key>
+            <string>我是投资人</string>
+            <key>icon</key>
+            <string>me_yes.png</string>
+        </dict>
+    </array>
 	<array>
 		<dict>
 			<key>row</key>

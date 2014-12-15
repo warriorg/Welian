@@ -29,7 +29,6 @@
 static NSString *identifier = @"investorcellid";
 @implementation InvestorUsersListController
 
-
 // 刷新数据
 - (void)loadNewDataArray
 {

@@ -9,8 +9,8 @@
 #import "BasicTableViewController.h"
 
 typedef enum {
-    WLSchool = 0,   // 教育
-    WLCompany = 1,  // 工作
+    WLSchool = 1,   // 教育
+    WLCompany = 2,  // 工作
 } WLUserLoadType;
 
 
