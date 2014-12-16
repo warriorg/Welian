@@ -405,17 +405,24 @@ static NSString *staurCellid = @"staurCellid";
                 }else if (_sameFriendArry.count){
                     [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
-                    [self.navigationController pushViewController:[[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid]animated:YES];
+                    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                    [homeVC setTitle:@"最新动态"];
+                    [self.navigationController pushViewController:homeVC animated:YES];
                 }
             }else if (indexPath.row==1){
                 if ((_userMode.provincename||_userMode.cityname)&&_sameFriendArry.count) {
                     
                     [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
-                    [self.navigationController pushViewController:[[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid]animated:YES];
+                    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                    [homeVC setTitle:@"最新动态"];
+                    [self.navigationController pushViewController:homeVC animated:YES];
                 }
             }else if (indexPath.row==2){
-                [self.navigationController pushViewController:[[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid]animated:YES];
+                
+                HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                [homeVC setTitle:@"最新动态"];
+                [self.navigationController pushViewController:homeVC animated:YES];
             }
         }
     
