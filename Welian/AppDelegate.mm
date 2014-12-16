@@ -20,6 +20,7 @@
 #import "MobClick.h"
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
+//#import "KeyboardManager.h"
 
 #ifdef DEBUG
 // deve
@@ -103,6 +104,9 @@ BMKMapManager* _mapManager;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    // 设置全局键盘管理
+    
+    
     /**
      *  设置状态栏颜色
      */
@@ -158,8 +162,30 @@ BMKMapManager* _mapManager;
     
     // [2]:注册APNS
     [self registerRemoteNotification];
+    
     return YES;
 }
+
+
+#pragma mark - 设置全局键盘管理
+- (void)initKeyboardManager{
+    //Enabling keyboard manager
+//    [[IQKeyboardManager sharedManager] setEnable:NO];
+    
+//    [[IQKeyboardManager sharedManager] setKeyboardDistanceFromTextField:50];
+//    //Enabling autoToolbar behaviour. If It is set to NO. You have to manually create UIToolbar for keyboard.
+//    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
+//    
+//    //Setting toolbar behavious to IQAutoToolbarBySubviews. Set it to IQAutoToolbarByTag to manage previous/next according to UITextField's tag property in increasing order.
+//    [[IQKeyboardManager sharedManager] setToolbarManageBehaviour:IQAutoToolbarBySubviews];
+//    [[IQKeyboardManager sharedManager] setShouldPlayInputClicks:NO];
+    //Resign textField if touched outside of UITextField/UITextView.
+//    [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
+    
+    //Giving permission to modify TextView's frame
+//    [[IQKeyboardManager sharedManager] setCanAdjustTextView:YES];
+}
+
 
 
 #pragma mark - 检测版本更新
