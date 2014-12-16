@@ -79,7 +79,22 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:frnewCellid];
+    
+    NewFriendModel *newFM = _dataArray[indexPath.row];
+//    cell.friendM = newFM;
+    float width = [[UIScreen mainScreen] bounds].size.width - 40 - 50 - 60;
+    //计算第一个label的高度
+    CGSize size1 = [newFM.name calculateSize:CGSizeMake(width, FLT_MAX) font:cell.nameLabel.font];
+    //计算第二个label的高度
+    CGSize size2 = [newFM.msg calculateSize:CGSizeMake(width, FLT_MAX) font:cell.massgeLabel.font];
+    
+    float height = size1.height + size2.height + 18;
+    if (height > 60) {
+        return height;
+    }else{
+        return 60;
+    }
 }
 
 

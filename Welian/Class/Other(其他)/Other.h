@@ -13,5 +13,6 @@
 #import "UIView+Size.h"
 #import "UIView+Extend.h"
 #import "NSUserDefaults+Standard.h"
+#import "NSString+Extend.h"
 
 #endif
