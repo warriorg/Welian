@@ -12,13 +12,35 @@
 #import "SchoolModel.h"
 #import "CompanyModel.h"
 #import "NoListView.h"
+#import "WorkListCell.h"
+#import "ISchoolResult.h"
+#import "ICompanyResult.h"
 
 @interface WorksListController ()
+{
+    WLUserLoadType _wlUserLoadType;
+}
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NoListView *nolistView;
 @end
 
+static NSString *cellid = @"workscellid";
 @implementation WorksListController
+
+- (instancetype)initWithType:(WLUserLoadType)type
+{
+    self = [super init];
+    if (self) {
+        _wlUserLoadType = type;
+        if (type==WLCompany) {
+
+            self.dataArray = [NSMutableArray arrayWithArray:[CompanyModel allCompanyModels]];
+        }else if (type == WLSchool){
+            self.dataArray = [NSMutableArray arrayWithArray:[SchoolModel allSchoolModels]];
+        }
+    }
+    return self;
+}
 
 - (NoListView*)nolistView
 {
@@ -44,6 +66,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl beginRefreshing];
+
+    [self.tableView registerNib:[UINib nibWithNibName:@"WorkListCell" bundle:nil] forCellReuseIdentifier:cellid];
     // 加载ui
     [self loadUIview];
 }
@@ -58,10 +82,14 @@
 #pragma mark - 加载数据
 - (void)loadDataArray
 {
-    if (self.wlUserLoadType == WLSchool) {
+    if (_wlUserLoadType == WLSchool) {
+        
         [WLHttpTool loadUserSchoolParameterDic:@{} success:^(id JSON) {
             [self.refreshControl endRefreshing];
-            self.dataArray = JSON;
+            for (ISchoolResult *iSchool in JSON) {
+                [SchoolModel createCompanyModel:iSchool];
+            }
+            self.dataArray = [NSMutableArray arrayWithArray:[SchoolModel allSchoolModels]];
             if (self.dataArray.count) {
                 [self.tableView reloadData];
                 [self.nolistView removeFromSuperview];
@@ -74,11 +102,15 @@
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
         }];
-    }else if (self.wlUserLoadType == WLCompany){
+    }else if (_wlUserLoadType == WLCompany){
+        
         [WLHttpTool loadUserCompanyParameterDic:@{} success:^(id JSON) {
             [self.refreshControl endRefreshing];
             
-            self.dataArray = JSON;
+            for (ICompanyResult *iCompany in JSON) {
+                [CompanyModel createCompanyModel:iCompany];
+            }
+            self.dataArray = [NSMutableArray arrayWithArray:[CompanyModel allCompanyModels]];
             if (self.dataArray.count) {
                 [self.tableView reloadData];
                 [self.nolistView removeFromSuperview];
@@ -123,27 +155,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellid = @"cellid";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellid];
-    }
-    if (self.wlUserLoadType == WLSchool) {
+
+    WorkListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    if (_wlUserLoadType == WLSchool) {
         SchoolModel *schoolM = self.dataArray[indexPath.section];
-        [cell.textLabel setText:schoolM.schoolname];
-        if (schoolM.endyear==-1) {
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  至今",(long)schoolM.startyear,(long)schoolM.startmonth]];
+        [cell.titeLabel setText:schoolM.schoolname];
+        [cell.detieLabel setText:schoolM.specialtyname];
+        if (schoolM.endyear.integerValue==-1) {
+            [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",schoolM.startyear,schoolM.startmonth]];
         }else{
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  %ld年%ld月",(long)schoolM.startyear,(long)schoolM.startmonth,(long)schoolM.endyear,(long)schoolM.endmonth]];
+            [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  %@年%@月",schoolM.startyear,schoolM.startmonth,schoolM.endyear,schoolM.endmonth]];
         }
         
-    }else if (self.wlUserLoadType == WLCompany){
+    }else if (_wlUserLoadType == WLCompany){
         CompanyModel *companyM = self.dataArray[indexPath.section];
-        [cell.textLabel setText:companyM.companyname];
-        if (companyM.endyear==-1) {
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  至今",(long)companyM.startyear,(long)companyM.startmonth]];
+        [cell.titeLabel setText:companyM.companyname];
+        [cell.detieLabel setText:companyM.jobname];
+        if (companyM.endyear.integerValue==-1) {
+            [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",companyM.startyear,companyM.startmonth]];
         }else{
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld年%ld月  -  %ld年%ld月",(long)companyM.startyear,(long)companyM.startmonth,(long)companyM.endyear,(long)companyM.endmonth]];
+            [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  %@年%@月",companyM.startyear,companyM.startmonth,companyM.endyear,companyM.endmonth]];
         }
     }
     
@@ -153,11 +184,84 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AddWorkOrEducationController *addWkOrEdVC;
+
+    if (_wlUserLoadType ==WLSchool) {
+        SchoolModel *schoolM = self.dataArray[indexPath.section];
+        ISchoolResult *iSchool = [[ISchoolResult alloc] init];
+        [iSchool setSchoolid:schoolM.schoolid];
+        [iSchool setSchoolname:schoolM.schoolname];
+        [iSchool setSpecialtyid:schoolM.specialtyid];
+        [iSchool setSpecialtyname:schoolM.specialtyname];
+        [iSchool setStartmonth:schoolM.startmonth];
+        [iSchool setStartyear:schoolM.startyear];
+        [iSchool setEndmonth:schoolM.endmonth];
+        [iSchool setEndyear:schoolM.endyear];
+        [iSchool setUsid:schoolM.usid];
+        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
+        [addWkOrEdVC setSchoolM:iSchool];
+        
+    }else if (_wlUserLoadType ==WLCompany){
+        CompanyModel *companyM = self.dataArray[indexPath.section];
+        ICompanyResult *iCompany = [[ICompanyResult alloc] init];
+        [iCompany setUcid:companyM.ucid];
+        [iCompany setCompanyid:companyM.companyid];
+        [iCompany setCompanyname:companyM.companyname];
+        [iCompany setJobid:companyM.jobid];
+        [iCompany setJobname:companyM.jobname];
+        [iCompany setStartyear:companyM.startyear];
+        [iCompany setStartmonth:companyM.startmonth];
+        [iCompany setEndyear:companyM.endyear];
+        [iCompany setEndmonth:companyM.endmonth];
+        addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:2];
+        [addWkOrEdVC setCompanyM:iCompany];
+    }
+    NavViewController *navVC = [[NavViewController alloc] initWithRootViewController:addWkOrEdVC];
+    [self presentViewController:navVC animated:YES completion:^{
+        
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.0;
+    
+    BOOL ishave = NO;
+    NSString *titStr = @"";
+    NSString *deltiStr = @"";
+    if (_wlUserLoadType ==WLSchool) {
+        SchoolModel *schoolM = self.dataArray[indexPath.section];
+        titStr = schoolM.schoolname;
+        if (schoolM.specialtyname) {
+            deltiStr = schoolM.specialtyname;
+            ishave = YES;
+        }
+    }else if (_wlUserLoadType ==WLCompany){
+        CompanyModel *companyM = self.dataArray[indexPath.section];
+        titStr = companyM.companyname;
+        if (companyM.jobname) {
+            deltiStr = companyM.jobname;
+            ishave = YES;
+        }
+    }
+    WorkListCell *workCell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    //    cell.friendM = newFM;
+    float width = [[UIScreen mainScreen] bounds].size.width - 30;
+    float moreH = 0.0f;
+    //计算第一个label的高度
+    CGSize size1 = [titStr calculateSize:CGSizeMake(width, FLT_MAX) font:workCell.titeLabel.font];
+    if (size1.height>18) {
+        moreH += size1.height-18;
+    }
+    
+    if (ishave) {
+        //计算第二个label的高度
+        CGSize size2 = [deltiStr calculateSize:CGSizeMake(width, FLT_MAX) font:workCell.detieLabel.font];
+        if (size2.height>18) {
+            moreH+= size2.height-18;
+        }
+        return 80+moreH;
+    }
+    return 60+moreH;
 }
 
 
@@ -165,33 +269,35 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove the row from data model
-    if (self.wlUserLoadType == WLSchool) {
+    if (_wlUserLoadType == WLSchool) {
         SchoolModel *scmode = self.dataArray[indexPath.section];
-        [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":@(scmode.usid)} success:^(id JSON) {
-            
+        [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":scmode.usid} success:^(id JSON) {
+            // 删除数据库数据
+            [scmode delete];
             [self.dataArray removeObjectAtIndex:indexPath.section];
             if (self.dataArray.count==0) {
                 [self.tableView addSubview:self.nolistView];
             }
             NSIndexSet *indexset = [NSIndexSet indexSetWithIndex:indexPath.section];
             //移除tableView中的数据
-            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationRight];
+            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationNone];
             
         } fail:^(NSError *error) {
             
         }];
-    }else if (self.wlUserLoadType == WLCompany){
+    }else if (_wlUserLoadType == WLCompany){
         CompanyModel *commode = self.dataArray[indexPath.section];
-        [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":@(commode.ucid)} success:^(id JSON) {
-            
+        [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":commode.ucid} success:^(id JSON) {
+            // 删除数据库数据
+            [commode delete];
+            //
             [self.dataArray removeObjectAtIndex:indexPath.section];
-            
             if (self.dataArray.count==0) {
                 [self.tableView addSubview:self.nolistView];
             }
             NSIndexSet *indexset = [NSIndexSet indexSetWithIndex:indexPath.section];
             //移除tableView中的数据
-            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationRight];
+            [tableView deleteSections:indexset withRowAnimation:UITableViewRowAnimationNone];
             
         } fail:^(NSError *error) {
             
@@ -207,9 +313,9 @@
 {
     AddWorkOrEducationController *addWkOrEdVC;
     
-    if (self.wlUserLoadType==WLSchool) {
+    if (_wlUserLoadType==WLSchool) {
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
-    }else if (self.wlUserLoadType == WLCompany){
+    }else if (_wlUserLoadType == WLCompany){
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:2];
     }
     NavViewController *navVC = [[NavViewController alloc] initWithRootViewController:addWkOrEdVC];

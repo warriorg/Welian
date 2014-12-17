@@ -16,6 +16,6 @@ typedef enum {
 
 @interface WorksListController : BasicTableViewController
 
-@property (nonatomic, assign) WLUserLoadType wlUserLoadType;
+- (instancetype)initWithType:(WLUserLoadType)type;
 
 @end

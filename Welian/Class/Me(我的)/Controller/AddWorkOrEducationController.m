@@ -11,11 +11,11 @@
 #import "SchoolModel.h"
 #import "CompanyModel.h"
 #import "MJExtension.h"
+#import "ICompanyResult.h"
+#import "ISchoolResult.h"
 
 @interface AddWorkOrEducationController () <UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 {
-    SchoolModel *_schoolM;
-    CompanyModel *_companyM;
     int _wlUserLoadType;
     NSMutableArray *_yerStrArray;
     NSMutableArray *_dayStrArray;
@@ -29,7 +29,6 @@
 @property (nonatomic, strong) UITextField *endTextF;
 @property (nonatomic, strong) UIPickerView *datePick;
 @property (nonatomic, strong) UIView *inputToolView;
-
 @property (nonatomic, strong) UIView *oneinputToolView;
 
 @end
@@ -46,7 +45,7 @@
         [_oneinputToolView addSubview:linview];
         UIButton *confirm = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width-60, 0, 50, 44)];
         [confirm setTitle:@"确认" forState:UIControlStateNormal];
-        [confirm setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [confirm setTitleColor:WLRGB(56, 109, 183) forState:UIControlStateNormal];
         [confirm addTarget:self action:@selector(confirmdate) forControlEvents:UIControlEventTouchUpInside];
         [_oneinputToolView addSubview:confirm];
     }
@@ -63,12 +62,12 @@
         [_inputToolView addSubview:linview];
         UIButton *confirm = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width-60, 0, 50, 44)];
         [confirm setTitle:@"确认" forState:UIControlStateNormal];
-        [confirm setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [confirm setTitleColor:WLRGB(56, 109, 183) forState:UIControlStateNormal];
         [confirm addTarget:self action:@selector(confirmdate) forControlEvents:UIControlEventTouchUpInside];
         [_inputToolView addSubview:confirm];
         UIButton *tonow = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, 44)];
         [tonow setTitle:@"至今" forState:UIControlStateNormal];
-        [tonow setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [tonow setTitleColor:WLRGB(56, 109, 183) forState:UIControlStateNormal];
         [tonow addTarget:self action:@selector(toupnowdate) forControlEvents:UIControlEventTouchUpInside];
         [_inputToolView addSubview:tonow];
     }
@@ -90,12 +89,12 @@
     
     if (_endTextF.isFirstResponder){
         if (_wlUserLoadType ==1) {
-            [_schoolM setEndyear:yerint];
-            [_schoolM setEndmonth:monthInt];
+            [_schoolM setEndyear:@(yerint)];
+            [_schoolM setEndmonth:@(monthInt)];
 
         }else if (_wlUserLoadType ==2){
-            [_companyM setEndyear:yerint];
-            [_companyM setEndmonth:monthInt];
+            [_companyM setEndyear:@(yerint)];
+            [_companyM setEndmonth:@(monthInt)];
         }
         [self.endTextF setText:@"至今"];
         [self confirmdate];
@@ -112,6 +111,15 @@
         [_beginTextF setInputView:self.datePick];
         [_beginTextF setDelegate:self];
         [_beginTextF setInputAccessoryView:self.oneinputToolView];
+        if (_wlUserLoadType ==1) {
+            if (_schoolM.startyear) {
+                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.startyear,_schoolM.startmonth]];
+            }
+        }else if (_wlUserLoadType ==2){
+            if (_companyM.startyear) {
+                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.startyear,_companyM.startmonth]];
+            }
+        }
     }
     return _beginTextF;
 }
@@ -126,6 +134,19 @@
         [_endTextF setTintColor:KBasesColor];
         [_endTextF setInputView:self.datePick];
         [_endTextF setInputAccessoryView:self.inputToolView];
+        if (_wlUserLoadType ==1) {
+            if (_schoolM.endyear.integerValue==-1) {
+                [_endTextF setText:@"至今"];
+            }else if (_schoolM.endyear) {
+                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.endyear,_schoolM.endmonth]];
+            }
+        }else if (_wlUserLoadType ==2){
+            if (_companyM.endyear.integerValue==-1) {
+                [_endTextF setText:@"至今"];
+            }else if (_companyM.endyear) {
+                [_endTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.endyear,_companyM.endmonth]];
+            }
+        }
     }
     return _endTextF;
 }
@@ -157,19 +178,19 @@
     NSInteger day = 0;
     if (_beginTextF.isFirstResponder) {
         if (_wlUserLoadType==1) {
-            yer = _schoolM.startyear;
-            day = _schoolM.startmonth;
+            yer = _schoolM.startyear.integerValue;
+            day = _schoolM.startmonth.integerValue;
         }else if (_wlUserLoadType ==2){
-            yer = _companyM.startyear;
-            day = _companyM.startmonth;
+            yer = _companyM.startyear.integerValue;
+            day = _companyM.startmonth.integerValue;
         }
     }else if (_endTextF.isFirstResponder){
         if (_wlUserLoadType==1) {
-            yer = _schoolM.endyear;
-            day = _schoolM.endmonth;
+            yer = _schoolM.endyear.integerValue;
+            day = _schoolM.endmonth.integerValue;
         }else if (_wlUserLoadType ==2){
-            yer = _companyM.endyear;
-            day = _companyM.endmonth;
+            yer = _companyM.endyear.integerValue;
+            day = _companyM.endmonth.integerValue;
         }
     }
     NSInteger a = 0;
@@ -206,22 +227,24 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(savedata)];
         [self.tableView setSectionHeaderHeight:30.0];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-        UILabel *teseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
+        UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
+        UILabel *teseLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, self.view.bounds.size.width, 20)];
+//        [teseLabel setBackgroundColor:[UIColor redColor]];
         [teseLabel setTextColor:[UIColor lightGrayColor]];
+        [teseLabel setFont:WLFONT(15)];
         [teseLabel setBackgroundColor:[UIColor clearColor]];
-        [self.tableView setTableHeaderView:teseLabel];
-        
+        [headerV addSubview:teseLabel];
+        [self.tableView setTableHeaderView:headerV];
+
         if (wlUserLoadType ==2) {
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的公司"]];
             self.dataArray = @[@[@"公司名称",@"职位"],@[@"入职时间",@"离职时间"]];
-            _companyM = [[CompanyModel alloc] init];
+//            _companyM = [[ICompanyResult alloc] init];
         }else if(wlUserLoadType ==1){
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的母校"]];
             self.dataArray = @[@[@"院校名称",@"专业"],@[@"入学时间",@"毕业时间"]];
-            _schoolM = [[SchoolModel alloc] init];
+//            _schoolM = [[ISchoolResult alloc] init];
         }
-    
-        
     }
     return self;
 }
@@ -241,6 +264,8 @@
             NSDictionary *daDic = [_schoolM keyValues];
             
             [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
+                [_schoolM setUsid:@([[JSON objectForKey:@"usid"] integerValue])];
+                [SchoolModel createCompanyModel:_schoolM];
                 [WLHUDView showSuccessHUD:@"保存成功！"];
                 [self dismissVC];
             } fail:^(NSError *error) {
@@ -253,6 +278,9 @@
         if (_companyM.companyname.length&&_companyM.startyear&&_companyM.endyear&&_companyM.startmonth&&_companyM.endmonth&&_companyM.jobname.length) {
             NSDictionary *datDic = [_companyM keyValues];
             [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
+                [_companyM setUcid:@([[JSON objectForKey:@"ucid"] integerValue])];
+                [CompanyModel createCompanyModel:_companyM];
+                
                 [WLHUDView showSuccessHUD:@"保存成功！"];
                 [self dismissVC];
             } fail:^(NSError *error) {
@@ -468,15 +496,15 @@
         }
     }
     if (_wlUserLoadType ==1) {
-        [_schoolM setStartyear:[_yerStrArray[seletStatYer] integerValue]];
-        [_schoolM setEndyear:[_yerStrArray[seletEndYer] integerValue]];
-        [_schoolM setStartmonth:[_dayStrArray[seletStatDay] integerValue]];
-        [_schoolM setEndmonth:[_dayStrArray[seletEndDay] integerValue]];
+        [_schoolM setStartyear:_yerStrArray[seletStatYer]];
+        [_schoolM setEndyear:_yerStrArray[seletEndYer]];
+        [_schoolM setStartmonth:_dayStrArray[seletStatDay]];
+        [_schoolM setEndmonth:_dayStrArray[seletEndDay]];
     }else if (_wlUserLoadType ==2){
-        [_companyM setStartyear:[_yerStrArray[seletStatYer] integerValue]];
-        [_companyM setEndyear:[_yerStrArray[seletEndYer] integerValue]];
-        [_companyM setStartmonth:[_dayStrArray[seletStatDay] integerValue]];
-        [_companyM setEndmonth:[_dayStrArray[seletEndDay] integerValue]];
+        [_companyM setStartyear:_yerStrArray[seletStatYer]];
+        [_companyM setEndyear:_yerStrArray[seletEndYer]];
+        [_companyM setStartmonth:_dayStrArray[seletStatDay]];
+        [_companyM setEndmonth:_dayStrArray[seletEndDay]];
     }
     
     if (_beginTextF.isFirstResponder) {

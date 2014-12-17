@@ -183,12 +183,10 @@
     }else{
         UIViewController *controller;
         if (indexPath.section==2) {
-            controller = [[WorksListController alloc] init];
-            WorksListController *workVC = (WorksListController*)controller;
             if (indexPath.row==0) {
-                [workVC setWlUserLoadType:WLSchool];
+                controller = [[WorksListController alloc] initWithType:WLSchool];
             }else {
-                [workVC setWlUserLoadType:WLCompany];
+                controller = [[WorksListController alloc] initWithType:WLCompany];
             }
         }else {
 

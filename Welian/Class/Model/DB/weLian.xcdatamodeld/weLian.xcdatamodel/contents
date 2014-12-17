@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="BaseUser" representedClassName="BaseUser" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="CompanyModel" representedClassName="CompanyModel" parentEntity="SchoolCompanyDate" syncable="YES">
+        <attribute name="companyid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="companyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="jobname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ucid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
+        <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="endyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="startmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="startyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="SchoolModel" representedClassName="SchoolModel" parentEntity="SchoolCompanyDate" syncable="YES">
+        <attribute name="schoolid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="schoolname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialtyid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="specialtyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="usid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="BaseUser" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="SchoolCompanyDate" positionX="-36" positionY="27" width="128" height="103"/>
+        <element name="CompanyModel" positionX="-9" positionY="72" width="128" height="118"/>
+        <element name="SchoolModel" positionX="9" positionY="108" width="128" height="118"/>
+    </elements>
+</model>

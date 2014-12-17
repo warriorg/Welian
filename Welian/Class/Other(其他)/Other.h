@@ -14,5 +14,7 @@
 #import "UIView+Extend.h"
 #import "NSUserDefaults+Standard.h"
 #import "NSString+Extend.h"
+#import "e0571CoreData.h"
+#import "NSManagedObject+ManagedObjectQuery.h"
 
 #endif

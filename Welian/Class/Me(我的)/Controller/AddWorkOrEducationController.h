@@ -7,9 +7,13 @@
 //
 
 #import "BasicTableViewController.h"
+@class ISchoolResult;
+@class ICompanyResult;
 
 @interface AddWorkOrEducationController : BasicTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType;
+@property (nonatomic, strong) ISchoolResult *schoolM;
+@property (nonatomic, strong) ICompanyResult *companyM;
 
 @end

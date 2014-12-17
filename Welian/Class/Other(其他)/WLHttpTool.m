@@ -12,8 +12,6 @@
 #import "WLUserStatusesResult.h"
 #import "MJExtension.h"
 #import "InvestAuthModel.h"
-#import "SchoolModel.h"
-#import "CompanyModel.h"
 #import "CommentCellFrame.h"
 #import "InvestorUserM.h"
 #import "pinyin.h"
@@ -24,6 +22,8 @@
 #import "FriendsAddressBook.h"
 #import "WLDataDBTool.h"
 #import "UIImageView+WebCache.h"
+#import "ICompanyResult.h"
+#import "ISchoolResult.h"
 
 @implementation WLHttpTool
 
@@ -591,13 +591,14 @@
     NSDictionary *dic = @{@"type":@"loadUserSchool",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataA = [NSArray arrayWithArray:JSON];
-        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
-        for (NSDictionary *dic in dataA) {
-            SchoolModel *schoolM = [[SchoolModel alloc] init];
-            [schoolM setKeyValues:dic];
-            [dataArrayM addObject:schoolM];
-        }
-        succeBlock(dataArrayM);
+        NSArray *result = [ISchoolResult objectsWithInfo:dataA];
+//        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
+//        for (NSDictionary *dic in dataA) {
+//            SchoolModel *schoolM = [[SchoolModel alloc] init];
+//            [schoolM setKeyValues:dic];
+//            [dataArrayM addObject:schoolM];
+//        }
+        succeBlock(result);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:NO andDim:NO];
@@ -623,13 +624,15 @@
     NSDictionary *dic = @{@"type":@"loadUserCompany",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataA = [NSArray arrayWithArray:JSON];
-        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
-        for (NSDictionary *dic in dataA) {
-            CompanyModel *companyM= [[CompanyModel alloc] init];
-            [companyM setKeyValues:dic];
-            [dataArrayM addObject:companyM];
-        }
-        succeBlock(dataArrayM);
+        NSArray *result = [ICompanyResult objectsWithInfo:dataA];
+        DLog(@"reuslt:   %@",result);
+//        NSMutableArray *dataArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
+//        for (NSDictionary *dic in dataA) {
+//            CompanyModel *companyM= [[CompanyModel alloc] init];
+//            [companyM setKeyValues:dic];
+//            [dataArrayM addObject:companyM];
+//        }
+        succeBlock(result);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:NO andDim:NO];
@@ -704,7 +707,7 @@
         NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
         NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
         for (NSDictionary *dic in usercompany) {
-            CompanyModel *usercompanyM = [CompanyModel objectWithKeyValues:dic];
+            ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
             [companyArrayM addObject:usercompanyM];
         }
         
@@ -712,7 +715,7 @@
         NSArray *userschool = [dataDic objectForKey:@"userschool"];
         NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
         for (NSDictionary *dic  in userschool) {
-            SchoolModel *userschoolM = [SchoolModel objectWithKeyValues:dic];
+            ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
             [schoolArrayM addObject:userschoolM];
         }
         

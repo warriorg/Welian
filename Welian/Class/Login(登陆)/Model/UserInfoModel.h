@@ -10,7 +10,6 @@
 
 @interface UserInfoModel : NSObject <NSCoding>
 
-
 /**  对外分享url   */
 @property (nonatomic, strong) NSString *shareurl;
 
