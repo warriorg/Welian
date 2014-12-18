@@ -557,13 +557,6 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataArray = [NSArray arrayWithArray:JSON];
          NSArray *result = [InvestorUserM objectsWithInfo:dataArray];
-//        NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:dataArray.count];
-//        for (NSDictionary *dic in dataArray) {
-//            
-//            InvestorUserM *investorM = [[InvestorUserM alloc] init];
-//            [investorM setKeyValues:dic];
-//            [dataAM addObject:investorM];
-//        }
         succeBlock (result);
     } failure:^(NSError *error) {
         failurBlock(error);
