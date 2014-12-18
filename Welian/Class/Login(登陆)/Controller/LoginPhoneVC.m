@@ -91,6 +91,7 @@
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
     [self.pwdTextField setSecureTextEntry:YES];
     [self.pwdTextField setDelegate:self];
+    [self.pwdTextField setKeyboardType:UIKeyboardTypeDefault];
     [self.pwdTextField setReturnKeyType:UIReturnKeyGo];
     [self.view addSubview:self.pwdTextField];
     

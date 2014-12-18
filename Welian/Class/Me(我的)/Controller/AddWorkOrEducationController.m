@@ -433,16 +433,19 @@
         } withType:vertype];
         if (_wlUserLoadType==1) {
             if (indexPath.row==0) {
-                
                 [companyName setUserInfoStr:_schoolM.schoolname];
+                [companyName setTitle:@"院校名称"];
             }else if (indexPath.row ==1){
                 [companyName setUserInfoStr:_schoolM.specialtyname];
+                [companyName setTitle:@"专业"];
             }
         }else if (_wlUserLoadType ==2){
             if (indexPath.row==0) {
                 [companyName setUserInfoStr:_companyM.companyname];
+                [companyName setTitle:@"公司名称"];
             }else if (indexPath.row==1){
                 [companyName setUserInfoStr:_companyM.jobname];
+                [companyName setTitle:@"职位"];
             }
         }
         [self.navigationController pushViewController:companyName animated:YES];

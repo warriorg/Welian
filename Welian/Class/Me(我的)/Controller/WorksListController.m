@@ -200,7 +200,6 @@ static NSString *cellid = @"workscellid";
         [iSchool setUsid:schoolM.usid];
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
         [addWkOrEdVC setSchoolM:iSchool];
-        
     }else if (_wlUserLoadType ==WLCompany){
         CompanyModel *companyM = self.dataArray[indexPath.section];
         ICompanyResult *iCompany = [[ICompanyResult alloc] init];
@@ -315,6 +314,7 @@ static NSString *cellid = @"workscellid";
     
     if (_wlUserLoadType==WLSchool) {
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
+        
     }else if (_wlUserLoadType == WLCompany){
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:2];
     }

@@ -261,20 +261,6 @@
         [nameVC setTitle:tit];
         [self.navigationController pushViewController:nameVC animated:YES];
     }
-//    for (NSString *tit in _dataArray) {
-//        if ([cell.textLabel.text isEqualToString:tit]) {
-//            
-//            IWVerifiedType verType;
-//            if ([tit isEqualToString:@"姓名"]) {
-//                verType = IWVerifiedTypeName;
-//            }else if ([tit isEqualToString:@"单位"]){
-//                verType = IWVerifiedTypeCompany;
-//            }else if ([tit isEqualToString:@"职务"]){
-//                verType = IWVerifiedTypeJob;
-//            }
-//            
-//        }
-//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

@@ -8,7 +8,6 @@
 
 #import "SettingController.h"
 #import "UIImage+ImageEffects.h"
-#import "NameController.h"
 #import "WLTool.h"
 #import "NavViewController.h"
 #import "AboutViewController.h"

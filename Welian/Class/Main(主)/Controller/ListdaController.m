@@ -10,6 +10,7 @@
 #import "ISchoolResult.h"
 #import "ICompanyResult.h"
 #import "WorkListCell.h"
+#import "NotstringView.h"
 
 @interface ListdaController ()
 
@@ -18,10 +19,20 @@
     NSArray *_listArray;
 }
 
+@property (nonatomic, strong) NotstringView *notView;
+
 @end
 
 static NSString *cellid = @"workscellid";
 @implementation ListdaController
+
+- (NotstringView *)notView
+{
+    if (_notView == nil ) {
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"这家伙很懒，什么都没有留下。" andImageName:@"remind_big_nostring"];
+    }
+    return _notView;
+}
 
 - (instancetype)initWithStyle:(UITableViewStyle)style WithList:(NSArray*)listData andType:(NSString*)type
 {
@@ -36,7 +47,12 @@ static NSString *cellid = @"workscellid";
         }else if ([type isEqualToString:@"3"]){
             [self setTitle:@"投资案例"];
         }
-        [self.tableView registerNib:[UINib nibWithNibName:@"WorkListCell" bundle:nil] forCellReuseIdentifier:cellid];
+        if (listData.count) {
+            
+            [self.tableView registerNib:[UINib nibWithNibName:@"WorkListCell" bundle:nil] forCellReuseIdentifier:cellid];
+        }else{
+            [self.tableView addSubview:self.notView];
+        }
     }
     return self;
 }

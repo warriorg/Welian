@@ -1444,6 +1444,8 @@
 		F5E380B61A41B1680084F7F3 /* WorkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E380B31A41B1680084F7F3 /* WorkListCell.m */; };
 		F5E380B71A41B1680084F7F3 /* WorkListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5E380B41A41B1680084F7F3 /* WorkListCell.xib */; };
 		F5E380B81A41B1680084F7F3 /* WorkListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5E380B41A41B1680084F7F3 /* WorkListCell.xib */; };
+		F5E69B331A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */; };
+		F5E69B341A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2435,6 +2437,7 @@
 		F5E4BB911A020D96007BEBD2 /* FriendsinfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsinfoModel.m; sourceTree = "<group>"; };
 		F5E4BB931A023E78007BEBD2 /* CommonFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonFriendsController.h; sourceTree = "<group>"; };
 		F5E4BB941A023E78007BEBD2 /* CommonFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonFriendsController.m; sourceTree = "<group>"; };
+		F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remind_big_nostring@2x.png"; sourceTree = "<group>"; };
 		F5EE25E51A131E5500B0E836 /* Icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@2x.png"; sourceTree = "<group>"; };
 		F5EE25E61A131E5500B0E836 /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@3x.png"; sourceTree = "<group>"; };
 		F5EE25E71A131E5500B0E836 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -2845,6 +2848,7 @@
 		F51FBAF119EFEE6C00D85D7F /* 我的images */ = {
 			isa = PBXGroup;
 			children = (
+				F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */,
 				F51FBAF219EFEE6C00D85D7F /* badge_chuang_big@2x.png */,
 				F51FBAF319EFEE6C00D85D7F /* badge_tou_big@2x.png */,
 				F59C157E1A0B849700093BD8 /* greenbutton_pressed@2x.png */,
@@ -4625,6 +4629,7 @@
 				F5664B2E1A2AFD56008A5830 /* icon_timeline-8@2x.png in Resources */,
 				F5664B2F1A2AFD56008A5830 /* homeCellbackground_normal@2x.png in Resources */,
 				F5664B301A2AFD56008A5830 /* login_bg_black@2x.png in Resources */,
+				F5E69B331A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */,
 				F5664B311A2AFD56008A5830 /* Expression_7@2x.png in Resources */,
 				F5664B321A2AFD56008A5830 /* expressionImage_custom.plist in Resources */,
 				F51DB63C1A3018DE0005EA6C /* login_bg_big568h@2x.png in Resources */,
@@ -5314,6 +5319,7 @@
 				F5664ED81A2AFDD5008A5830 /* login_bg_up@2x.png in Resources */,
 				F5664ED91A2AFDD5008A5830 /* Expression_81@2x.png in Resources */,
 				F5664EDA1A2AFDD5008A5830 /* me_circle_chat_keybroad@2x.png in Resources */,
+				F5E69B341A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */,
 				F5664EDB1A2AFDD5008A5830 /* sns_icon_25@2x.png in Resources */,
 				F5664EDC1A2AFDD5008A5830 /* Expression_100@2x.png in Resources */,
 				F5664EDD1A2AFDD5008A5830 /* sns_icon_30@2x.png in Resources */,

@@ -486,20 +486,26 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag==555+1) {
-        if (buttonIndex==0) {
+        if (buttonIndex==0) {  // 回复评论
             [self.messageView startCompile:_selecCommFrame.commentM.user];
         }
         
     }else if(actionSheet.tag==555+0){
-        if (buttonIndex==0) {
+        if (buttonIndex==0) {  // 删除评论
             [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
                 [_dataArrayM removeObject:_selecCommFrame];
-                _selecCommFrame = nil;
+                NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_dataArrayM.count];
+                for (CommentCellFrame *comCellF in _dataArrayM) {
+                    [commentAM addObject:comCellF.commentM];
+                }
+                [self.statusM setCommentsArray:commentAM];
                 self.statusM.commentcount--;
+                [self updataCommentBlock];
+                _selecCommFrame = nil;
                 [self.tableView reloadData];
+
                 self.commentHeadView;
                 
-                [self backDataStatusFrame:NO];
             } fail:^(NSError *error) {
                 
             }];
@@ -510,10 +516,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)refreshDataChangde:(WLStatusM *)status
 {
-    if (status.zansArray.count || status.forwardsArray.count) {
-        _zanArrayM = [NSMutableArray arrayWithArray:self.statusM.zansArray];
-        _feedArrayM = [NSMutableArray arrayWithArray:self.statusM.forwardsArray];
-    }
+    _zanArrayM = [NSMutableArray arrayWithArray:status.zansArray];
+    _feedArrayM = [NSMutableArray arrayWithArray:status.forwardsArray];
     if (_zanArrayM.count||_feedArrayM.count) {
         if (!_feedAndZanFM) {
             _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
