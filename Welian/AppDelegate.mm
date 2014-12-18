@@ -417,6 +417,9 @@ BMKMapManager* _mapManager;
     if (!([UserDefaults objectForKey:KFriendbadge]||[UserDefaults objectForKey:KMessagebadge])) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
+    
+    //隐藏活动中的键盘,防止重新进入程序 uitextfiled 偏移问题
+    [[[application keyWindow].rootViewController.view findFirstResponder] resignFirstResponder];
 }
 
 

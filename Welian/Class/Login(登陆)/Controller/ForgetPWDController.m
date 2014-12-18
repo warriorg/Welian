@@ -29,8 +29,7 @@
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(savePWDClick:)];
     
-    CGSize size = self.view.bounds.size;
-    self.pwdTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
+    self.pwdTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
     [self.pwdTextField setPlaceholder:@"请输入新的密码"];
     [self.pwdTextField setDelegate:self];
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];

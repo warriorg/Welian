@@ -16,7 +16,6 @@
 @interface LoginPhoneVC ()<UITextFieldDelegate>
 
 @property (strong, nonatomic)  WLTextField *phoneTextField;
-
 @property (strong, nonatomic)  WLTextField *pwdTextField;
 
 @end
@@ -27,6 +26,14 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
+    
+    if (_phoneTextField.text.length == 0){
+        [_phoneTextField becomeFirstResponder];
+    }else{
+        if (_pwdTextField.text.length == 0) {
+            [_pwdTextField becomeFirstResponder];
+        }
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -54,49 +61,47 @@
 {
     _phoneString = phoneString;
     
+    //设置手机号码
+    _phoneTextField.text = _phoneString;
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //加载页面数据
     [self loadUIView];
-    if ([NSString phoneValidate:self.phoneString]) {
-        [self.phoneTextField setText:self.phoneString];
-        [self.pwdTextField becomeFirstResponder];
-    }else{
-    
-        [self.phoneTextField becomeFirstResponder];
-    }
 }
 
 - (void)loadUIView
 {
     [self setTitle:@"登录"];
+    //设置背景色
     [self.view setBackgroundColor:WLLineColor];
+    //设置右上角
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(loginPhonePWD:)];
     
-    CGSize size = self.view.bounds.size;
+    //手机号码
+    WLTextField *phoneTF = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
+    phoneTF.placeholder = @"手机号码";
+    phoneTF.text = lastLoginMobile;
+    phoneTF.returnKeyType = UIReturnKeyNext;
+    phoneTF.keyboardType = UIKeyboardTypeNumberPad;
+    phoneTF.delegate = self;
+    [self.view addSubview:phoneTF];
+    self.phoneTextField = phoneTF;
     
-    self.phoneTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
-    [self.phoneTextField setPlaceholder:@"手机号码"];
-    [self.phoneTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [self.phoneTextField setDelegate:self];
-    [self.phoneTextField setBackgroundColor:[UIColor whiteColor]];
-    [self.phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
-    [self.phoneTextField setReturnKeyType:UIReturnKeyNext];
-    [self.view addSubview:self.phoneTextField];
-    
-    self.pwdTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.phoneTextField.frame)+1, size.width, 44)];
-    [self.pwdTextField setPlaceholder:@"密码"];
-    [self.pwdTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
-    [self.pwdTextField setSecureTextEntry:YES];
-    [self.pwdTextField setDelegate:self];
-    [self.pwdTextField setKeyboardType:UIKeyboardTypeDefault];
-    [self.pwdTextField setReturnKeyType:UIReturnKeyGo];
-    [self.view addSubview:self.pwdTextField];
+    //密码
+    WLTextField *pwdTF = [[WLTextField alloc] initWithFrame:Rect(0, phoneTF.bottom + 1, self.view.width, TextFieldHeight)];
+    pwdTF.placeholder = @"密码";
+    pwdTF.secureTextEntry = YES;
+    pwdTF.returnKeyType = UIReturnKeyGo;
+    pwdTF.keyboardType = UIKeyboardTypeDefault;
+    pwdTF.delegate = self; 
+    [self.view addSubview:pwdTF];
+    self.pwdTextField = pwdTF;
     
     CGFloat butW = 75;
-    UIButton *forgetBut = [[UIButton alloc] initWithFrame:CGRectMake(size.width-butW-20, CGRectGetMaxY(self.pwdTextField.frame)+15, butW, 30)];
+    UIButton *forgetBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - butW - 20, pwdTF.bottom + 15, butW, 30)];
     [forgetBut.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [forgetBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [forgetBut setTitle:@"忘记密码?" forState:UIControlStateNormal];
@@ -115,8 +120,7 @@
 }
 
 - (void)loginPhonePWD:(UIBarButtonItem *)sender {
-    [self.phoneTextField resignFirstResponder];
-    [self.pwdTextField resignFirstResponder];
+    [[self.view findFirstResponder] resignFirstResponder];
     
     if (![NSString phoneValidate:self.phoneTextField.text]) {
         [WLHUDView showErrorHUD:@"手机号码有误！"];
@@ -142,7 +146,13 @@
             [mode setKeyValues:dataDic];
             [mode setCheckcode:self.pwdTextField.text];
             
+            //记录最后一次登陆的手机号
+            SaveLoginMobile(self.phoneTextField.text);
+            
+            //保存用户信息到本地 归档
             [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+            
+            //进入主页面
             MainViewController *mainVC = [[MainViewController alloc] init];
             [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
             
