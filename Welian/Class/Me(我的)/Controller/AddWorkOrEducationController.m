@@ -301,6 +301,16 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //数据模型初始化
+    if (_wlUserLoadType == 1){
+        if (!_schoolM) {
+            _schoolM = [[ISchoolResult alloc] init];
+        }
+    }else{
+        if (!_companyM) {
+            _companyM = [[ICompanyResult alloc] init];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
