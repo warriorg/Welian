@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "InvestorUserM.h"
 #import "UserInfoBasicVC.h"
+#import "InvestorUser.h"
 
 @interface InvestorUsersListController () <UISearchBarDelegate,UISearchDisplayDelegate>
 {
@@ -35,10 +36,13 @@ static NSString *identifier = @"investorcellid";
     page = 1;
     [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
         [self hideRefreshView];        
-        [self.allArray removeAllObjects];
-        NSArray *arr = JSON;
-        self.allArray = [NSMutableArray arrayWithArray:JSON];
 
+        NSArray *arr = JSON;
+        for (InvestorUserM *invest in JSON) {
+            [InvestorUser createInvestor:invest];
+        }
+        [self.allArray removeAllObjects];
+        self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
         [self.tableView reloadData];
         if (arr.count<20) {
             [self.tableView setFooterHidden:YES];
@@ -53,7 +57,6 @@ static NSString *identifier = @"investorcellid";
 // 加载更多
 - (void)loadMoreDataArray
 {
-
     [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
         
         [self hideRefreshView];
@@ -79,9 +82,19 @@ static NSString *identifier = @"investorcellid";
 }
 
 
+- (instancetype)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        
+        self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
+
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.searchQueue = [[NSOperationQueue alloc] init];
     [self.searchQueue setMaxConcurrentOperationCount:1];
     
@@ -101,10 +114,9 @@ static NSString *identifier = @"investorcellid";
     
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
     [self.tableView setFooterHidden:YES];
-    
     [self.tableView setBackgroundColor:WLLineColor];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
+//    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
     [self.searchDisplayVC.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -166,9 +178,9 @@ static NSString *identifier = @"investorcellid";
     [mode setCompany:invesM.company];
     [mode setPosition:invesM.position];
     [mode setAvatar:invesM.avatar];
-    [mode setFriendship:invesM.friendship];
-    [mode setInvestorauth:invesM.investorauth];
-    [mode setStartupauth:invesM.startupauth];
+    [mode setFriendship:invesM.friendship.stringValue];
+    [mode setInvestorauth:invesM.investorauth.stringValue];
+    [mode setStartupauth:invesM.startupauth.stringValue];
     [mode setProvincename:invesM.provincename];
     [mode setCityname:invesM.cityname];
     

@@ -1446,6 +1446,8 @@
 		F5E380B81A41B1680084F7F3 /* WorkListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5E380B41A41B1680084F7F3 /* WorkListCell.xib */; };
 		F5E69B331A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */; };
 		F5E69B341A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */; };
+		F5E69B371A42D263001B19E5 /* InvestorUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E69B361A42D263001B19E5 /* InvestorUser.m */; };
+		F5E69B381A42D263001B19E5 /* InvestorUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E69B361A42D263001B19E5 /* InvestorUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1665,8 +1667,8 @@
 		F51FBA2519EF723A00D85D7F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TOWebViewControllerLocalizable.strings"; sourceTree = "<group>"; };
 		F51FBA2B19EF973600D85D7F /* InvestorUsersListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestorUsersListController.h; sourceTree = "<group>"; };
 		F51FBA2C19EF973600D85D7F /* InvestorUsersListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestorUsersListController.m; sourceTree = "<group>"; };
-		F51FBA3419EFA74400D85D7F /* InvestorUserM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestorUserM.h; sourceTree = "<group>"; };
-		F51FBA3519EFA74400D85D7F /* InvestorUserM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestorUserM.m; sourceTree = "<group>"; };
+		F51FBA3419EFA74400D85D7F /* InvestorUserM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvestorUserM.h; path = "../../Find(发现)/Model/InvestorUserM.h"; sourceTree = "<group>"; };
+		F51FBA3519EFA74400D85D7F /* InvestorUserM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvestorUserM.m; path = "../../Find(发现)/Model/InvestorUserM.m"; sourceTree = "<group>"; };
 		F51FBA3B19EFAC9A00D85D7F /* InvestorUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestorUserCell.h; sourceTree = "<group>"; };
 		F51FBA3C19EFAC9A00D85D7F /* InvestorUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestorUserCell.m; sourceTree = "<group>"; };
 		F51FBA3D19EFAC9A00D85D7F /* InvestorUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvestorUserCell.xib; sourceTree = "<group>"; };
@@ -2438,6 +2440,8 @@
 		F5E4BB931A023E78007BEBD2 /* CommonFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonFriendsController.h; sourceTree = "<group>"; };
 		F5E4BB941A023E78007BEBD2 /* CommonFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonFriendsController.m; sourceTree = "<group>"; };
 		F5E69B321A42AF21001B19E5 /* remind_big_nostring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remind_big_nostring@2x.png"; sourceTree = "<group>"; };
+		F5E69B351A42D263001B19E5 /* InvestorUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestorUser.h; sourceTree = "<group>"; };
+		F5E69B361A42D263001B19E5 /* InvestorUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestorUser.m; sourceTree = "<group>"; };
 		F5EE25E51A131E5500B0E836 /* Icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@2x.png"; sourceTree = "<group>"; };
 		F5EE25E61A131E5500B0E836 /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@3x.png"; sourceTree = "<group>"; };
 		F5EE25E71A131E5500B0E836 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -3429,6 +3433,8 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				F5E69B351A42D263001B19E5 /* InvestorUser.h */,
+				F5E69B361A42D263001B19E5 /* InvestorUser.m */,
 				F59E76191A4071330028FBAF /* BaseUser.h */,
 				F59E761A1A4071330028FBAF /* BaseUser.m */,
 				F59E76151A4071330028FBAF /* SchoolModel.h */,
@@ -3444,6 +3450,8 @@
 		F59E76081A405CE70028FBAF /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				F51FBA3419EFA74400D85D7F /* InvestorUserM.h */,
+				F51FBA3519EFA74400D85D7F /* InvestorUserM.m */,
 				F59E761D1A411E4C0028FBAF /* ICompanyResult.h */,
 				F59E761E1A411E4C0028FBAF /* ICompanyResult.m */,
 				F5A3F8F41A41855900F06DDD /* ISchoolResult.h */,
@@ -3770,8 +3778,6 @@
 			isa = PBXGroup;
 			children = (
 				F532FCD319C7FB05005B887D /* Findplist.plist */,
-				F51FBA3419EFA74400D85D7F /* InvestorUserM.h */,
-				F51FBA3519EFA74400D85D7F /* InvestorUserM.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5526,6 +5532,7 @@
 				F5664A1A1A2AFD56008A5830 /* M80AttributedLabelAttachment.m in Sources */,
 				F5664A1B1A2AFD56008A5830 /* SDWebImageCompat.m in Sources */,
 				F5664A1C1A2AFD56008A5830 /* FMDatabase.m in Sources */,
+				F5E69B371A42D263001B19E5 /* InvestorUser.m in Sources */,
 				F5664A1D1A2AFD56008A5830 /* PublishModel.m in Sources */,
 				F5664A1E1A2AFD56008A5830 /* FriendsAddressBook.m in Sources */,
 				F5664A1F1A2AFD56008A5830 /* ChineseToPinyinResource.m in Sources */,
@@ -5761,6 +5768,7 @@
 				F5664CB11A2AFDD5008A5830 /* SDImageCache.m in Sources */,
 				F5664CB21A2AFDD5008A5830 /* WLTextField.m in Sources */,
 				F5B88FE61A35A4D600290B4F /* FeedAndZanModel.m in Sources */,
+				F5E69B381A42D263001B19E5 /* InvestorUser.m in Sources */,
 				F5664CB31A2AFDD5008A5830 /* ZBMessageManagerFaceView.m in Sources */,
 				F5664CB41A2AFDD5008A5830 /* InfoHeaderView.m in Sources */,
 				F5664CB51A2AFDD5008A5830 /* InvestorUserM.m in Sources */,

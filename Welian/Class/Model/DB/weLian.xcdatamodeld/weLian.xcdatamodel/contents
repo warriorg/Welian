@@ -12,6 +12,23 @@
         <attribute name="jobname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ucid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="InvestorUser" representedClassName="InvestorUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cityid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendship" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="investorauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="inviteurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="items" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="provinceid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="provincename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startupauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
         <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="endyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -27,8 +44,9 @@
     </entity>
     <elements>
         <element name="BaseUser" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="SchoolCompanyDate" positionX="-36" positionY="27" width="128" height="103"/>
         <element name="CompanyModel" positionX="-9" positionY="72" width="128" height="118"/>
+        <element name="SchoolCompanyDate" positionX="-36" positionY="27" width="128" height="103"/>
         <element name="SchoolModel" positionX="9" positionY="108" width="128" height="118"/>
+        <element name="InvestorUser" positionX="-27" positionY="81" width="128" height="268"/>
     </elements>
 </model>
