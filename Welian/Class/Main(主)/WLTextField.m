@@ -10,6 +10,16 @@
 
 @implementation WLTextField
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     return CGRectInset( bounds , 10 , 0 );

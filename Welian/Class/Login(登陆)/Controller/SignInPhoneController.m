@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadUIView];
-    [self.phoneTextField becomeFirstResponder];
+    [_phoneTextField becomeFirstResponder];
 }
 
 - (void)loadUIView
@@ -45,17 +45,14 @@
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(coderPhoneClick:)];
     
-    CGSize size = self.view.bounds.size;
-    self.phoneTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
-    [self.phoneTextField setPlaceholder:@"手机号码"];
-    [self.phoneTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [self.phoneTextField setDelegate:self];
-    [self.phoneTextField setBackgroundColor:[UIColor whiteColor]];
-    [self.phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
-    [self.view addSubview:self.phoneTextField];
+    self.phoneTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
+    [_phoneTextField setPlaceholder:@"手机号码"];
+    [_phoneTextField setDelegate:self];
+    [_phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
+    [self.view addSubview:_phoneTextField];
     
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneTextField.frame)+15, size.width-40, 40)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, _phoneTextField.bottom+15, self.view.width-40, 40)];
     [textLabel setNumberOfLines:0];
     [textLabel setText:@"该手机号码作为您在微链的登陆账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];

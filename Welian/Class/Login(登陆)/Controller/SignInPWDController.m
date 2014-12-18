@@ -45,8 +45,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(nextPush:)];
     
     CGSize size = self.view.bounds.size;
-    
-    self.coderTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
+    self.coderTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
     [self.coderTextField setPlaceholder:@"验证码"];
     [self.coderTextField setDelegate:self];
     [self.coderTextField setBackgroundColor:[UIColor whiteColor]];
