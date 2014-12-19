@@ -99,13 +99,13 @@ static NSString *fridcellid = @"fridcellid";
         }
         
         if (wlFriend.count) {
-            [self.allArray addObject:@{@"n":@"1",@"key":[NSString stringWithFormat:@"  %d个通讯录好友已加入微链",wlFriend.count],@"array":wlFriend}];
+            [self.allArray addObject:@{@"n":@"1",@"key":[NSString stringWithFormat:@"  %lu个通讯录好友已加入微链",(unsigned long)wlFriend.count],@"array":wlFriend}];
         }
         if (noFriend.count) {
-            [self.allArray addObject:@{@"n":@"2",@"key":[NSString stringWithFormat:@"  %d个通讯录好友可邀请",noFriend.count],@"array":noFriend}];
+            [self.allArray addObject:@{@"n":@"2",@"key":[NSString stringWithFormat:@"  %lu个通讯录好友可邀请",(unsigned long)noFriend.count],@"array":noFriend}];
         }
         if (myFriend.count) {
-            [self.allArray addObject:@{@"n":@"3",@"key":[NSString stringWithFormat:@"  %d个通讯录好友已添加",myFriend.count],@"array":myFriend}];
+            [self.allArray addObject:@{@"n":@"3",@"key":[NSString stringWithFormat:@"  %lu个通讯录好友已添加",(unsigned long)myFriend.count],@"array":myFriend}];
         }
         [self.refreshControl endRefreshing];
         [self.tableView reloadData];
@@ -274,7 +274,8 @@ static NSString *fridcellid = @"fridcellid";
                 UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_selecFriend.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
+                
+                [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
                 [alert show];
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){  // 短信验证
                 

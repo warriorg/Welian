@@ -12,7 +12,6 @@
 #import "UIImage+ImageEffects.h"
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
-#import "WLStatusDock.h"
 #import "UserInfoBasicVC.h"
 #import "PublishStatusController.h"
 #import "NavViewController.h"

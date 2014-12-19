@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WLStatusDock.h"
 @class WLStatusFrame;
-@class WLStatusDock;
 @class WLStatusM;
 @class CommentHeadFrame;
 

@@ -21,12 +21,27 @@
     UITabBarItem *selectItem;
     UITabBarItem *circleItem;
     HomeController *homeVC;
-    
-    
 }
+
+@property (nonatomic, strong) UIView *navTitleView;
+
 @end
 
 @implementation MainViewController
+
+- (UIView *)navTitleView
+{
+    if (_navTitleView == nil) {
+        _navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+        UILabel *titLabel = [[UILabel alloc] initWithFrame:_navTitleView.bounds];
+        [titLabel setText:@"创业圈"];
+        [titLabel setFont:WLFONTBLOD(17)];
+        [titLabel setTextColor:[UIColor whiteColor]];
+        [titLabel setTextAlignment:NSTextAlignmentCenter];
+        [_navTitleView addSubview:titLabel];
+    }
+    return _navTitleView;
+}
 
 //- (void)loadFriendRequest
 //{
@@ -67,6 +82,8 @@
         }];
     }
 }
+
+
 
 - (void)dealloc
 {
@@ -123,8 +140,8 @@
     
     [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
-    
-    [homeVC.navigationItem setTitle:@"创业圈"];
+    [homeVC.navigationItem setTitleView:self.navTitleView];
+//    [homeVC.navigationItem setTitle:@"创业圈"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];

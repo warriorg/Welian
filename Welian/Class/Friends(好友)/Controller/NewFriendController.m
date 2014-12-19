@@ -164,7 +164,8 @@ static NSString *frnewCellid = @"frnewCellid";
             UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFM.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@",mode.name]];
+            
+            [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
             [alert show];
         }
     }
