@@ -36,6 +36,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //铺到状态栏底下而是从状态栏下面
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBarHidden = YES;
 }
 
