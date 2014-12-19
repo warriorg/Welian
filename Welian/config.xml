@@ -34,7 +34,7 @@
 
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
-    <content src="index1.html" />
+<!--    <content src="index1.html" />-->
 
     <!-- Preferences for iOS -->
     <preference name="AllowInlineMediaPlayback" value="false" />
@@ -52,6 +52,7 @@
     <preference name="ShowSplashScreenSpinner" value="true" />
     <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="TopActivityIndicator" value="gray" />
+    <preference name="BackupWebStorage" value="local" />
 
 
     <feature name="Geolocation">

@@ -10,6 +10,7 @@
 
 @interface ActivityViewController : CDVViewController
 
+- (void)hideHeader;
 - (void)backToFindVC;
 - (void)shareWithInfo;
 

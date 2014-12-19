@@ -15,6 +15,14 @@
 
 @implementation ActivityViewController
 
+//隐藏头部
+- (void)hideHeader
+{
+    self.navigationController.navigationBarHidden = YES;
+    //隐藏旋转
+    [WLHUDView hiddenHud];
+}
+
 //返回发现
 - (void)backToFindVC
 {
@@ -36,13 +44,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    //铺到状态栏底下而是从状态栏下面
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    DLog(@" plugin----- %@", [self getCommandInstance:@"Welian"]);
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    //旋转
+    self.title = @"活动";
+    [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
 - (void)didReceiveMemoryWarning {
