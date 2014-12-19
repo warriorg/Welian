@@ -11,6 +11,7 @@
 #import "UserCardController.h"
 #import "TOWebViewController.h"
 #import "InvestorUsersListController.h"
+#import "ActivityViewController.h"
 
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
 {
@@ -138,15 +139,25 @@
             return;
         }
         
-    
-        NSString *urlStr = webDic[@"url"];
-        if (indexPath.row==1) {
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            urlStr = [NSString stringWithFormat:@"%@/%@",@"http://my.welian.com/event/lists",mode.sessionid];
+        if (indexPath.row == 0) {
+            NSString *urlStr = webDic[@"url"];
+            //原来的活动页面
+//            if (indexPath.row==1) {
+//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//                urlStr = [NSString stringWithFormat:@"%@/%@",@"http://my.welian.com/event/lists",mode.sessionid];
+//            }
+            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
+            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+            [self.navigationController pushViewController:webVC animated:YES];
+        }else if (indexPath.row == 1){
+            //活动页面，进行phoneGap页面加载
+            ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+//            activityVC.useSplashScreen = YES;
+            activityVC.wwwFolderName = @"www";
+            activityVC.startPage = @"index.html";
+            [self.navigationController pushViewController:activityVC animated:YES];
+//            [self presentViewController:activityVC animated:YES completion:nil];
         }
-        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
-        webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
-        [self.navigationController pushViewController:webVC animated:YES];
     }
     
 }
