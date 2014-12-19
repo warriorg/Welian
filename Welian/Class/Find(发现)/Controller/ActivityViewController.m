@@ -27,7 +27,7 @@
 {
     NSArray *activity = @[[[WeixinSessionActivity alloc] init], [[WeixinTimelineActivity alloc] init]];
 //    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@""]]];
-    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[@"test share",[NSURL URLWithString:@"www.baidu.com"]] applicationActivities:activity];
+    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[@"标题,内容 ,share2",[NSURL URLWithString:@"www.baidu.com"]] applicationActivities:activity];
     //将不会被显示出来的列表
     activityView.excludedActivityTypes = @[UIActivityTypeMail,UIActivityTypeMessage,UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint];
     [self presentViewController:activityView animated:YES completion:nil];
