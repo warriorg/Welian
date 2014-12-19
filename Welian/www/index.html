@@ -57,6 +57,6 @@
     function wechatPay(){
         cordova.exec(successCallback, errorCallback, SERVICE, 'wechatPay', args);
     }
-    window.onload = pageOnComplete;
+    setTimeout(pageOnComplete, 3000);
 </script>
 </html>
