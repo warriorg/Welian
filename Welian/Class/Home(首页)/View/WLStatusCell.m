@@ -15,7 +15,6 @@
 #import "PublishStatusController.h"
 #import "ShareEngine.h"
 #import "WLCellHead.h"
-#import "WLContentCellView.h"
 #import "FeedAndZanView.h"
 #import "CommentCellView.h"
 #import "WLStatusDock.h"
@@ -30,11 +29,8 @@
     
     //** 头部view   *//
     WLCellHead *_cellHeadView;
-    //    ** 内容 */
-    WLContentCellView *_contentView;
     // 赞和转发
     FeedAndZanView *_feznView;
-    
     // 评论
     CommentCellView *_commentView;
     
@@ -78,28 +74,27 @@
         _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
         [self.contentView addSubview:_cellHeadView];
 
-        _contentView = [[WLContentCellView alloc] init];
+        _contentAndDockView = [[WLContentCellView alloc] init];
         __weak WLStatusCell *weakcell = self;
-        _contentView.feedzanBlock = ^(WLStatusM *statusM){
+        _contentAndDockView.feedzanBlock = ^(WLStatusM *statusM){
             if (weakcell.feedzanBlock) {
                 weakcell.feedzanBlock (statusM);
             }
         };
-        _contentView.feedTuiBlock = ^(WLStatusM *statusM){
+        _contentAndDockView.feedTuiBlock = ^(WLStatusM *statusM){
             if (weakcell.feedTuiBlock) {
                 weakcell.feedTuiBlock (statusM);
             }
         };
-        _contentView.openupBlock = ^(BOOL isopen){
+        _contentAndDockView.openupBlock = ^(BOOL isopen){
             if (isopen) {
 
             }else{
                 
             }
         };
-        //    // 评论
-        [_contentView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:_contentView];
+        
+        [self.contentView addSubview:_contentAndDockView];
         
         _feznView = [[FeedAndZanView alloc] init];
         [_feznView setImage:[UIImage resizedImage:@"home_grc_background" leftScale:0.1 topScale:0.9]];
@@ -124,14 +119,6 @@
         [self setupBg];
     }
     return self;
-}
-
-#pragma mark- 评论
-- (void)commentBtnClick:(UIButton*)but event:(id)event
-{
-    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
-    [commentInfo setStatusM:_statusFrame.status];
-    [self.homeVC.navigationController pushViewController:commentInfo animated:YES];
 }
 
 
@@ -200,15 +187,15 @@
         [_tuiUserLabel setHidden:YES];
     }
     
-    [_contentView setStatusFrame:statusFrame];
-    [_contentView setFrame:CGRectMake(50, CGRectGetMaxY(_cellHeadView.frame), mainSize.width-50, contenFrame.cellHeight)];
-    [_contentView setHomeVC:self.homeVC];
+    [_contentAndDockView setStatusFrame:statusFrame];
+    [_contentAndDockView setFrame:CGRectMake(50, CGRectGetMaxY(_cellHeadView.frame), mainSize.width-50, contenFrame.cellHeight)];
+    [_contentAndDockView setHomeVC:self.homeVC];
     
-    CGFloat commenY = CGRectGetMaxY(_contentView.frame);
+    CGFloat commenY = CGRectGetMaxY(_contentAndDockView.frame);
     
     if (status.zansArray.count||status.forwardsArray.count) {
         [_feznView setHidden:NO];
-        [_feznView setFrame:CGRectMake(61,CGRectGetMaxY(_contentView.frame)-5, mainSize.width-61-10, statusFrame.feedAndZanFM.cellHigh)];
+        [_feznView setFrame:CGRectMake(61,CGRectGetMaxY(_contentAndDockView.frame)-5, mainSize.width-61-10, statusFrame.feedAndZanFM.cellHigh)];
         [_feznView setFeedAndZanFrame:statusFrame.feedAndZanFM];
         commenY = CGRectGetMaxY(_feznView.frame);
         [_feznView setCommentVC:self.homeVC];

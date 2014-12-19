@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WLContentCellView.h"
+
 @class WLStatusFrame;
 @class WLStatusM;
+
 
 typedef void(^WLFeedAndZanBlock)(WLStatusM *statusM);
 
@@ -22,6 +25,9 @@ typedef void (^WLFeedTuiBlock)(WLStatusM *starusM);
 @property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
 
 @property (nonatomic, copy) WLFeedTuiBlock feedTuiBlock;
+
+//    ** 内容 */
+@property (nonatomic, strong) WLContentCellView *contentAndDockView;
 
 /**
  *  创建一个cell

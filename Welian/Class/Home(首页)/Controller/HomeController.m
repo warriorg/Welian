@@ -318,6 +318,7 @@
     // 1.取出一个cell
     WLStatusCell *cell = [WLStatusCell cellWithTableView:tableView];
     [cell setHomeVC:self];
+    
     // 2.给cell传递模型数据
     // 传递的模型：文字数据 + 子控件frame数据
     cell.statusFrame = _dataArry[indexPath.row];
@@ -334,10 +335,24 @@
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
         [self.tableView reloadData];
     };
-    
+    //    // 评论
+    [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+#pragma mark- 评论
+- (void)commentBtnClick:(UIButton*)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    if(indexPath)
+    {
+        [self pushCommentInfoVC:indexPath];
+    }
 }
 
 #pragma mark - 更多按钮
@@ -380,6 +395,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self pushCommentInfoVC:indexPath];
+}
+
+#pragma mark - 进入详情页
+- (void)pushCommentInfoVC:(NSIndexPath*)indexPath
+{
     WLStatusFrame *statusF = _dataArry[indexPath.row];
     
     if (statusF.status.type==2) return;
