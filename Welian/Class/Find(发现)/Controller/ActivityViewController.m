@@ -16,12 +16,12 @@
 @implementation ActivityViewController
 
 //隐藏头部
-- (void)hideHeader
-{
-    self.navigationController.navigationBarHidden = YES;
-    //隐藏旋转
-    [WLHUDView hiddenHud];
-}
+//- (void)hideHeader
+//{
+//    self.navigationController.navigationBarHidden = YES;
+//    //隐藏旋转
+//    [WLHUDView hiddenHud];
+//}
 
 //返回发现
 - (void)backToFindVC
@@ -46,6 +46,7 @@
     [super viewWillAppear:animated];
     //铺到状态栏底下而是从状态栏下面
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -54,8 +55,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     //旋转
-    self.title = @"活动";
-    [WLHUDView showHUDWithStr:nil dim:NO];
+//    self.title = @"活动";
+//    [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
 - (void)didReceiveMemoryWarning {
