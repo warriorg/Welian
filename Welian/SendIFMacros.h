@@ -63,20 +63,26 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
 
-// 首页动态更新个数通知
+// 首页动态有 更新通知
 #define KNEWStustUpdate  @"KNEWStustUpdate"
+
+// 首页动态更新个数
+#define KNewStaustbadge @"KNewStaustbadge"
 
 // 首页消息通知
 #define KMessageHomeNotif @"KMessageHomeNotif"
 
+// 首页消息提示个数
 #define KMessagebadge @"KMessagebadge"
 
+// 好友页新好友提示个数
 #define KFriendbadge @"KFriendbadge"
 
+// 新好友通知
 #define KNewFriendNotif @"KNewFriendNotif"
-
+// 发布动态成功
 #define KPublishOK @"PublishStatusOK"
-
+// 退出登录通知
 #define KLogoutNotif @"KLogoutNotif"
 
 

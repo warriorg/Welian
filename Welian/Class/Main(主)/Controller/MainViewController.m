@@ -15,6 +15,60 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
+@interface NavTitleView : UIView
+{
+    UIView *prompt;
+    UILabel *titLabel;
+}
+- (void)hidePrompt;
+- (void)showPrompt;
+- (void)settitStr:(NSString *)titStr;
+
+@end
+
+@implementation NavTitleView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        titLabel = [[UILabel alloc] initWithFrame:frame];
+//        [titLabel setCenter:self.center];
+        [titLabel setFont:WLFONTBLOD(17)];
+        [titLabel setTextColor:[UIColor whiteColor]];
+        [titLabel setTextAlignment:NSTextAlignmentCenter];
+        [self addSubview:titLabel];
+        prompt = [[UIView alloc] init];
+        [prompt setBackgroundColor:[UIColor redColor]];
+        [prompt.layer setCornerRadius:5];
+        [prompt.layer setMasksToBounds:YES];
+        [prompt setHidden:YES];
+        [self addSubview:prompt];
+    }
+    return self;
+}
+
+- (void)settitStr:(NSString *)titStr
+{
+    [titLabel setText:titStr];
+    [titLabel sizeToFit];
+    [titLabel setCenter:self.center];
+
+    [prompt setFrame:CGRectMake(CGRectGetMaxX(titLabel.frame), 0, 10, 10)];
+}
+
+- (void)showPrompt
+{
+    [prompt setHidden:NO];
+}
+- (void)hidePrompt
+{
+    [prompt setHidden:YES];
+}
+
+
+@end
+
 @interface MainViewController () <UINavigationControllerDelegate>
 {
     UITabBarItem *homeItem;
@@ -23,49 +77,21 @@
     HomeController *homeVC;
 }
 
-@property (nonatomic, strong) UIView *navTitleView;
+@property (nonatomic, strong) NavTitleView *navTitleView;
 
 @end
 
 @implementation MainViewController
 
-- (UIView *)navTitleView
+- (NavTitleView *)navTitleView
 {
     if (_navTitleView == nil) {
-        _navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-        UILabel *titLabel = [[UILabel alloc] initWithFrame:_navTitleView.bounds];
-        [titLabel setText:@"创业圈"];
-        [titLabel setFont:WLFONTBLOD(17)];
-        [titLabel setTextColor:[UIColor whiteColor]];
-        [titLabel setTextAlignment:NSTextAlignmentCenter];
-        [_navTitleView addSubview:titLabel];
+        _navTitleView = [[NavTitleView alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+        [_navTitleView settitStr:@"创业圈"];
     }
     return _navTitleView;
 }
 
-//- (void)loadFriendRequest
-//{
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-//    if (!mode.sessionid) return;
-//    [WLHttpTool loadFriendRequestParameterDic:@{@"page":@(1),@"size":@(1000)} success:^(id JSON) {
-//        
-//        NSArray *jsonArray = [NSArray arrayWithArray:JSON];
-//        for (NSDictionary *dic  in jsonArray) {
-//            NSString *fid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fid"]];
-//            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:fid fromTable:KNewFriendsTableName];
-//            if (![item.itemObject objectForKey:@"isLook"]) {
-//                NSMutableDictionary *mutablDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-//                [mutablDic setObject:fid forKey:@"uid"];
-//                [[WLDataDBTool sharedService] putObject:mutablDic withId:fid intoTable:KNewFriendsTableName];
-//                
-//                [self newFriendPuthMessga];
-//            }
-//        }
-//        
-//    } fail:^(NSError *error) {
-//        
-//    }];
-//}
 
 - (void)loadNewStustupdata
 {
@@ -75,14 +101,34 @@
         
         [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
             NSNumber *count = [JSON objectForKey:@"count"];
-            if (![count integerValue]) return;
-            
+            [UserDefaults setInteger:[count integerValue] forKey:KNewStaustbadge];
+            [self updataItembadge];
         } fail:^(NSError *error) {
             
         }];
     }
 }
 
+
+// 根据更新信息设置 提示角标
+- (void)updataItembadge
+{
+    // 首页
+    if ([UserDefaults integerForKey:KNewStaustbadge]) {
+        [self.navTitleView showPrompt];
+        [homeItem setImage:[UIImage imageNamed:@""]];
+        [homeItem setSelectedImage:[UIImage imageNamed:@""]];
+    }else{
+        [self.navTitleView hidePrompt];
+        [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
+        [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
+        if ([UserDefaults objectForKey:KMessagebadge]) {
+            NSString *badgeStr = [UserDefaults objectForKey:KMessagebadge];
+            [homeItem setBadgeValue:badgeStr];
+        }
+    }
+    
+}
 
 
 - (void)dealloc
@@ -101,9 +147,8 @@
     // 有新动态通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
     
-    // 首页动态通知
-   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageMainnotif) name:KMessageHomeNotif object:nil];
-//    [self loadFriendRequest];
+    // 首页动态消息通知
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataItembadge) name:KMessageHomeNotif object:nil];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -121,7 +166,6 @@
     
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
-    
 
     UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     
@@ -137,12 +181,11 @@
     
     // 首页
     homeItem = [self itemWithTitle:@"创业圈" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
-    
-    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
+//    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     [homeVC.navigationItem setTitleView:self.navTitleView];
-//    [homeVC.navigationItem setTitle:@"创业圈"];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
+    
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
     
@@ -175,13 +218,15 @@
     [self setViewControllers:@[homeNav,friendsNav,findNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
     selectItem = homeItem;
+    
+    [self updataItembadge];
 }
 
-- (void)messageMainnotif
-{
-    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
-    [homeItem setBadgeValue:badgeStr];
-}
+//- (void)messageMainnotif
+//{
+//    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
+//    [homeItem setBadgeValue:badgeStr];
+//}
 
 - (void)newFriendPuthMessga
 {
