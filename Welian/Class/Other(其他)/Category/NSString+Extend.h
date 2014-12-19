@@ -12,4 +12,8 @@
 
 - (CGSize)calculateSize:(CGSize)size font:(UIFont *)font;
 
+//将NSString转化为NSArray或者NSDictionary
+- (id)JSONValue;
+
+
 @end

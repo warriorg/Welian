@@ -10,11 +10,15 @@
 #define Welian_Other_h
 
 
+#pragma mark - CoreData
+#import "e0571CoreData.h"
+#import "NSManagedObject+ManagedObjectQuery.h"
+
+#pragma mark - Categorys
+#import "NSObject+Extend.h"
 #import "UIView+Size.h"
 #import "UIView+Extend.h"
 #import "NSUserDefaults+Standard.h"
 #import "NSString+Extend.h"
-#import "e0571CoreData.h"
-#import "NSManagedObject+ManagedObjectQuery.h"
 
 #endif
