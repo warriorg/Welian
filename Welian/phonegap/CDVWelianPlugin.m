@@ -164,17 +164,17 @@
 //页面预加载成功
 - (void)pageOnComplete:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"pageOnComplete : %@",command.arguments);
+    DLog(@"pageOnComplete : %@",command.arguments);
     
     //预加载结束隐藏头部和加载条
-    ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
-    [activityVC hideHeader];
+//    ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
+//    [activityVC hideHeader];
 }
 
 //返回sessionId
 - (void)getSessionId:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"getSessionId : %@",command.arguments);
+    DLog(@"getSessionId : %@",command.arguments);
     NSString *sessionId = [[UserInfoTool sharedUserInfoTool] getUserInfoModel].sessionid;
     [self send:command backInfo:sessionId];
 }
@@ -182,14 +182,14 @@
 //返回头部高度
 - (void)getHeadHeight:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"getHeadHeight : %@",command.arguments);
+    DLog(@"getHeadHeight : %@",command.arguments);
     [self send:command backInfo:@"64"];
 }
 
 //分享
 - (void)share:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"share : %@",command.arguments);
+    DLog(@"share : %@",command.arguments);
     
     // 这是classid,在下面的PluginResult进行数据的返回时,将会用到它
     self.callbackID = command.callbackId;
@@ -205,7 +205,7 @@
 //返回用户信息
 - (void)getUserInfo:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"getUserInfo : %@",command.arguments);
+    DLog(@"getUserInfo : %@",command.arguments);
     
     NSDictionary *userinfo = [[[UserInfoTool sharedUserInfoTool] getUserInfoModel] keyValues];
     NSString *jsonString = userinfo.toJSONString;
@@ -216,7 +216,7 @@
 //返回上一个页面
 - (void)backToDiscover:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"backToDiscover : %@",command.arguments);
+    DLog(@"backToDiscover : %@",command.arguments);
     
     //当前controller返回主页面
     ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
@@ -226,7 +226,7 @@
 //调用微信支付
 - (void)wechatPay:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"wechatPay : %@",command.arguments);
+    DLog(@"wechatPay : %@",command.arguments);
     [self send:command backInfo:@"微信支付"];
 }
 
