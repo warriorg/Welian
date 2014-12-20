@@ -19,8 +19,6 @@
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		A414FE271A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
-		A4776AC21A4426810022E211 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4776ABF1A44266F0022E211 /* libCordova.a */; };
-		A4776AC51A4427D20022E211 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4776ABF1A44266F0022E211 /* libCordova.a */; };
 		A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -1486,6 +1484,9 @@
 		F5CE861919BFF2AB00A9D14C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE860119BFF2AB00A9D14C /* UIKit.framework */; };
 		F5CE862119BFF2AB00A9D14C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5CE861F19BFF2AB00A9D14C /* InfoPlist.strings */; };
 		F5CE862319BFF2AB00A9D14C /* WelianTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CE862219BFF2AB00A9D14C /* WelianTests.m */; };
+		F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
+		F5D075451A45956200D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
+		F5D075481A45956C00D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
 		F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
 		F5E380B51A41B1680084F7F3 /* WorkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E380B31A41B1680084F7F3 /* WorkListCell.m */; };
 		F5E380B61A41B1680084F7F3 /* WorkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E380B31A41B1680084F7F3 /* WorkListCell.m */; };
@@ -1498,23 +1499,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A4776ABE1A44266F0022E211 /* PBXContainerItemProxy */ = {
+		F5D075411A45954C00D31157 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */;
+			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 68A32D7114102E1C006B237C;
 			remoteInfo = CordovaLib;
 		};
-		A4776AC01A4426790022E211 /* PBXContainerItemProxy */ = {
+		F5D075431A45955C00D31157 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */;
+			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
 		};
-		A4776AC31A4427CC0022E211 /* PBXContainerItemProxy */ = {
+		F5D075461A45956800D31157 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */;
+			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
@@ -1533,7 +1534,6 @@
 		10389B671A3F0740001A785C /* NSString+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extend.m"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
-		A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = Welian/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A4F646B01A43C290002E66FC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -2501,6 +2501,7 @@
 		F5CE86CE19C012A000A9D14C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		F5CE86D019C0162200A9D14C /* HomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeController.h; sourceTree = "<group>"; };
 		F5CE86D119C0162200A9D14C /* HomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeController.m; sourceTree = "<group>"; };
+		F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = Welian/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		F5D3567D1A260F75005EF094 /* M80AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M80AttributedLabel.h; sourceTree = "<group>"; };
 		F5D3567E1A260F75005EF094 /* M80AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M80AttributedLabel.m; sourceTree = "<group>"; };
 		F5D3567F1A260F75005EF094 /* M80AttributedLabelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M80AttributedLabelAttachment.h; sourceTree = "<group>"; };
@@ -2641,7 +2642,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4776AC21A4426810022E211 /* libCordova.a in Frameworks */,
+				F5D075481A45956C00D31157 /* libCordova.a in Frameworks */,
 				A4F646BD1A43C2FB002E66FC /* CoreMotion.framework in Frameworks */,
 				A4F646BB1A43C2E0002E66FC /* AudioToolbox.framework in Frameworks */,
 				A4F646B91A43C2D5002E66FC /* AVFoundation.framework in Frameworks */,
@@ -2675,6 +2676,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5D075451A45956200D31157 /* libCordova.a in Frameworks */,
+				F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */,
 				F5664D351A2AFDD5008A5830 /* AddressBook.framework in Frameworks */,
 				F5664D321A2AFDD5008A5830 /* AddressBookUI.framework in Frameworks */,
 				A4776ACC1A44288B0022E211 /* AudioToolbox.framework in Frameworks */,
@@ -2685,7 +2688,6 @@
 				A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */,
 				A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */,
 				A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */,
-				A4776AC51A4427D20022E211 /* libCordova.a in Frameworks */,
 				F5664D2A1A2AFDD5008A5830 /* CoreTelephony.framework in Frameworks */,
 				F5664D2B1A2AFDD5008A5830 /* libbaidumapapi.a in Frameworks */,
 				F5664D2C1A2AFDD5008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
@@ -2732,14 +2734,6 @@
 				A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */,
 			);
 			path = Category;
-			sourceTree = "<group>";
-		};
-		A4776ABB1A44266F0022E211 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A4776ABF1A44266F0022E211 /* libCordova.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		A4F6479F1A43DA4B002E66FC /* phonegap */ = {
@@ -3825,7 +3819,7 @@
 		F5CE85FC19BFF2AB00A9D14C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */,
+				F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */,
 				A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */,
 				A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */,
 				A4F646B81A43C2D5002E66FC /* AVFoundation.framework */,
@@ -4409,6 +4403,14 @@
 			path = "登录注册images";
 			sourceTree = "<group>";
 		};
+		F5D0753E1A45954C00D31157 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5D075421A45954C00D31157 /* libCordova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F5D3567C1A260F75005EF094 /* M80AttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -4537,7 +4539,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A4776AC11A4426790022E211 /* PBXTargetDependency */,
+				F5D075471A45956800D31157 /* PBXTargetDependency */,
 			);
 			name = weLianDev;
 			productName = Welian;
@@ -4555,7 +4557,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A4776AC41A4427CC0022E211 /* PBXTargetDependency */,
+				F5D075441A45955C00D31157 /* PBXTargetDependency */,
 			);
 			name = weLianDis;
 			productName = Welian;
@@ -4618,8 +4620,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A4776ABB1A44266F0022E211 /* Products */;
-					ProjectRef = A4776ABA1A44266F0022E211 /* CordovaLib.xcodeproj */;
+					ProductGroup = F5D0753E1A45954C00D31157 /* Products */;
+					ProjectRef = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -4632,11 +4634,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A4776ABF1A44266F0022E211 /* libCordova.a */ = {
+		F5D075421A45954C00D31157 /* libCordova.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCordova.a;
-			remoteRef = A4776ABE1A44266F0022E211 /* PBXContainerItemProxy */;
+			remoteRef = F5D075411A45954C00D31157 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -6122,15 +6124,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A4776AC11A4426790022E211 /* PBXTargetDependency */ = {
+		F5D075441A45955C00D31157 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CordovaLib;
-			targetProxy = A4776AC01A4426790022E211 /* PBXContainerItemProxy */;
+			targetProxy = F5D075431A45955C00D31157 /* PBXContainerItemProxy */;
 		};
-		A4776AC41A4427CC0022E211 /* PBXTargetDependency */ = {
+		F5D075471A45956800D31157 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CordovaLib;
-			targetProxy = A4776AC31A4427CC0022E211 /* PBXContainerItemProxy */;
+			targetProxy = F5D075461A45956800D31157 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6180,6 +6182,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(OBJROOT)/UninstalledProducts/include",
+				);
 				INFOPLIST_FILE = "weLian copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -6213,6 +6220,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(OBJROOT)/UninstalledProducts/include",
+				);
 				INFOPLIST_FILE = "weLian copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -6245,6 +6257,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(OBJROOT)/UninstalledProducts/include",
+				);
 				INFOPLIST_FILE = "weLianDev copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -6257,7 +6274,10 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Obj-C",
+				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "weLianDev copy";
 				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";
@@ -6275,6 +6295,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(OBJROOT)/UninstalledProducts/include",
+				);
 				INFOPLIST_FILE = "weLianDev copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -6286,7 +6311,10 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
 				);
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Obj-C",
+				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "weLianDev copy";
 				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";

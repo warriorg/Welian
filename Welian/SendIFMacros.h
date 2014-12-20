@@ -52,7 +52,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 //测试环境
 //#define WLHttpServer  @"http://test.welian.com:8080"
 //正式环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 //#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
 
