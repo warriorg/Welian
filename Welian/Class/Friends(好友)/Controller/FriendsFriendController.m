@@ -15,17 +15,28 @@
 #import "MJExtension.h"
 #import "UIImageView+WebCache.h"
 #import "UserInfoBasicVC.h"
+#import "NotstringView.h"
 
 @interface FriendsFriendController ()
 {
     NSInteger page;
 }
 @property (nonatomic,strong) NSMutableArray *allArray;//所有数据数组
+
+@property (nonatomic, strong) NotstringView *notView;
 @end
 
 static NSString *identifier = @"investorcellid";
 
 @implementation FriendsFriendController
+
+- (NotstringView *)notView
+{
+    if (_notView == nil ) {
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"还没有好友的好友。" andImageName:@"remind_big_nostring"];
+    }
+    return _notView;
+}
 
 
 - (instancetype)initWithStyle:(UITableViewStyle)style
@@ -79,6 +90,9 @@ static NSString *identifier = @"investorcellid";
             [self.tableView setFooterHidden:NO];
         }
         page++;
+        if (!self.allArray.count) {
+            [self.tableView addSubview:self.notView];
+        }
     } fail:^(NSError *error) {
         [self hideRefreshView];
     }];

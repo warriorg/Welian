@@ -695,7 +695,7 @@
         UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
         
         // 创业者
-        NSDictionary *startup = [dataDic objectForKey:@"startup"];
+//        NSDictionary *startup = [dataDic objectForKey:@"startup"];
         
         // 工作经历列表
         NSArray *usercompany = [dataDic objectForKey:@"usercompany"];

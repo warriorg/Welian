@@ -29,6 +29,7 @@
         
         UILabel *titLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+10, frame.size.width, 40)];
         [titLabel setText:titStr];
+        [titLabel setNumberOfLines:0];
         [titLabel setTextAlignment:NSTextAlignmentCenter];
         [titLabel setTextColor:WLRGB(170, 178, 182)];
         [self addSubview:titLabel];

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <base href="./" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>活动</title>
+    <link href="common/css/font.min.css" rel="stylesheet" />
+    <link href="common/css/common.css" rel="stylesheet" />
+    <link href="activity/css/detail.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="app-wrap">
+        <div class="app-page app-detail app-page-selected" id="pageDetail">
+            <header class="app-bar">
+                <button class="app-bar-btn app-bar-btn-left J_BackBtn">
+                    <span class="fa fa-angle-left fa-2x"></span>
+                </button>
+                <h1>活动详情</h1>
+                <button class="app-bar-btn app-bar-btn-right J_ShareBtn">
+                    <span class="fa fa-share-alt"></span>
+                </button>
+            </header>
+            <div class="app-content">
+                <div class="J_DetailContent scroll-content">
+                    <div></div>
+                </div>
+                <div class="entries J_EntryPage">
+                    <div class="head">已报名
+                        <label id="J_EntryNum" class="J_EntryNum">0</label>人
+                    </div>
+                    <div class="J_EntryList scroll-content entry-list">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div class="ticket J_TicketView"></div>
+                <div class="entry-button J_Status">
+                    <button id="J_EntryButton">我要报名</button>
+                </div>
+            </div>
+            <div class="dropback fade J_DetailDropBack"></div>
+            <div class="dropback in ticket-dropback J_TicketDropback"></div>
+        </div>
+        <div class="app-page app-order" id="pageOrder">
+            <header class="app-bar">
+                <button class="app-bar-btn app-bar-btn-left J_BackBtn">
+                    <span class="fa fa-angle-left fa-2x"></span>
+                </button>
+                <h1>我要购票</h1>
+            </header>
+            <div class="app-content">
+                <div class="content">
+                    <div class="activity-info">
+                        <h3>管家类app的创业逻辑</h3>
+                        <p><span class="date">12-12(周五)</span><span class="time">13:00~15:00</span>
+                        </p>
+                    </div>
+                    <div class="tickets-info"></div>
+                    <div class="split"></div>
+                    <div class="user-info">
+                        <div>确认信息</div>
+                        <ul>
+                            <li>
+                                <label class="label-control">姓名</label>
+                                <div class="input-control J_UserName"></div>
+                            </li>
+                            <li>
+                                <label class="label-control">手机</label>
+                                <div class="input-control J_UserMobile">
+                                    <div>
+                            </li>
+                            <li>
+                                <label class="label-control">单位</label>
+                                <div class="input-control J_UserCompany"></div>
+                            </li>
+                            <li>
+                                <label class="label-control">职务</label>
+                                <div class="input-control J_UserPosition"></div>
+                            </li>
+                        </ul>
+                        </div>
+                        <div class="ordre-info">
+                            <div class="information">
+                                <span>总金额：<label class="total-money J_TotalMoney">700</label>元</span>
+                                <a>付款说明</a>
+                            </div>
+                            <div class="btn-pay J_BtnPay">微信支付</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+<script src="common/js/sea.js"></script>
+<script src="common/js/config.js"></script>
+<script src="cordova.js"></script>
+
+<script>
+    seajs.use('activity/detail', function(main) {
+              document.addEventListener('deviceready', function() {
+                                        main.init();
+                                        }, false);
+              });
+    </script>
+
+
+</html>

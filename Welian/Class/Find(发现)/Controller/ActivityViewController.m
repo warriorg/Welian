@@ -7,15 +7,19 @@
 //
 
 #import "ActivityViewController.h"
-#import "WeixinActivity.h"
+#import "LXActivity.h"
+#import "ShareEngine.h"
 
-@interface ActivityViewController ()
-
+@interface ActivityViewController () <LXActivityDelegate>
+{
+    NSDictionary *_shareData;
+    LXActivity *lxActivity;
+}
 @end
 
 @implementation ActivityViewController
 
-//隐藏头部
+////隐藏头部
 //- (void)hideHeader
 //{
 //    self.navigationController.navigationBarHidden = YES;
@@ -31,22 +35,48 @@
 }
 
 //分享
-- (void)shareWithInfo
+- (void)shareWithInfo:(NSDictionary *)commandDic
 {
-    NSArray *activity = @[[[WeixinSessionActivity alloc] init], [[WeixinTimelineActivity alloc] init]];
-//    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@""]]];
-    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[@"标题,内容 ,share2",[NSURL URLWithString:@"www.baidu.com"]] applicationActivities:activity];
-    //将不会被显示出来的列表
-    activityView.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToWeibo,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypePostToTencentWeibo,UIActivityTypeAirDrop];
+    _shareData = commandDic;
+    NSArray *shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];;
+    NSArray *shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
+    if (lxActivity) {
+        [lxActivity removeFromSuperview];
+        lxActivity = nil;
+    }
+    lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:nil ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+
+#pragma mark - LXActivityDelegate
+- (void)didClickOnImageIndex:(NSString *)imageIndex
+{
+    if (_shareData) {
+        NSDictionary *sharDic = nil;
+        WeiboType type = 0;
+        if ([imageIndex isEqualToString:@"微信好友"]){
+            sharDic = _shareData[@"friend"];
+            type = weChat;
+        }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
+            sharDic = _shareData[@"friendCircle"];
+            type = weChatFriend;
+        }
+
+        NSString *desc = sharDic[@"desc"];
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sharDic[@"img"]]]];
+        NSString *link = sharDic[@"link"];
+        NSString *title = sharDic[@"title"];
+
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+    }
     
-    [self presentViewController:activityView animated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //铺到状态栏底下而是从状态栏下面
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -54,9 +84,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    //铺到状态栏底下而是从状态栏下面
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     //旋转
-//    self.title = @"活动";
+    self.title = @"活动";
 //    [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
@@ -65,6 +96,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    DLog(@"fdsa");
+}
 /*
 #pragma mark - Navigation
 

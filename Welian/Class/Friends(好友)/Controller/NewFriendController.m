@@ -13,6 +13,7 @@
 #import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
+#import "NotstringView.h"
 
 static NSString *frnewCellid = @"frnewCellid";
 @interface NewFriendController ()<UIAlertViewDelegate>
@@ -20,9 +21,21 @@ static NSString *frnewCellid = @"frnewCellid";
     NSMutableArray *_dataArray;
     NSIndexPath *_selectIndexPath;
 }
+
+@property (nonatomic, strong) NotstringView *notView;
+
 @end
 
 @implementation NewFriendController
+
+- (NotstringView *)notView
+{
+    if (_notView == nil ) {
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"还没有新的好友，点击右上角添加好友。" andImageName:@"remind_big_nostring"];
+    }
+    return _notView;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,7 +65,12 @@ static NSString *frnewCellid = @"frnewCellid";
     NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
     
     _dataArray =  [NSMutableArray arrayWithArray:[aaaYT sortedArrayUsingDescriptors:@[bookNameDes]]];
-    [self.tableView reloadData];
+    if (_dataArray.count) {
+        
+        [self.tableView reloadData];
+    }else{
+        [self.tableView addSubview:self.notView];
+    }
 }
 
 - (void)addFriendClick

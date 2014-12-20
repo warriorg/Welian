@@ -12,6 +12,7 @@
 
 //- (void)hideHeader;
 - (void)backToFindVC;
-- (void)shareWithInfo;
+//分享
+- (void)shareWithInfo:(NSDictionary *)commandDic;
 
 @end

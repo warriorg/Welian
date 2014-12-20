@@ -154,7 +154,7 @@
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
 //            activityVC.useSplashScreen = YES;
             activityVC.wwwFolderName = @"www";
-            activityVC.startPage = @"index.html";
+            activityVC.startPage = @"activity.html";
             [self.navigationController pushViewController:activityVC animated:YES];
 //            [self presentViewController:activityVC animated:YES completion:nil];
         }

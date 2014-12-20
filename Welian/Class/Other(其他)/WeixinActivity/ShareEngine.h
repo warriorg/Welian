@@ -12,9 +12,9 @@
 
 typedef enum
 {
-    sinaWeibo,
-    weChat,
-    weChatFriend
+    sinaWeibo = 1,
+    weChat = 2,
+    weChatFriend = 3
 }WeiboType;
 
 #define kWeChatAppId        @"wx4150b21797fa0a5e"
@@ -23,7 +23,6 @@ typedef enum
 
 @interface ShareEngine : NSObject <WXApiDelegate>
 single_interface(ShareEngine)
-
 @property (nonatomic, assign) id<ShareEngineDelegate> delegate;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
