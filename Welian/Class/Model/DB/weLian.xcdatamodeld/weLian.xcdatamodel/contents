@@ -45,8 +45,8 @@
     <elements>
         <element name="BaseUser" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="CompanyModel" positionX="-9" positionY="72" width="128" height="118"/>
+        <element name="InvestorUser" positionX="-27" positionY="81" width="128" height="268"/>
         <element name="SchoolCompanyDate" positionX="-36" positionY="27" width="128" height="103"/>
         <element name="SchoolModel" positionX="9" positionY="108" width="128" height="118"/>
-        <element name="InvestorUser" positionX="-27" positionY="81" width="128" height="268"/>
     </elements>
 </model>

@@ -133,15 +133,16 @@ static NSString *meinfocellid = @"MeinfoCell";
         }else if (indexPath.row ==1){
 //            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
 //            [controller setTitle:@"我的动态"];
-        }
 
+        }
     }else if (indexPath.section==2){
-        controller = [[CertificationController alloc] init];
-        [controller setTitle:@"认证"];
+        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
+//        controller = [[CertificationController alloc] init];
+//        [controller setTitle:@"认证"];
         
 
     }else if (indexPath.section == 3){
-        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
+//        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }
     
      [self.navigationController pushViewController:controller animated:YES];

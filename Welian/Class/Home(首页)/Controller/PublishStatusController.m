@@ -101,6 +101,7 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)dealloc
 {
+    DLog(@"dsa");
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
@@ -674,6 +675,7 @@ static NSString *picCellid = @"PicCellID";
         }];
     }
 }
+
 
 #pragma mark - 取消
 - (void)cancelPublish

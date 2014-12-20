@@ -115,5 +115,6 @@
 
     <feature name="Welian">
         <param name="ios-package" value="CDVWelianPlugin" />
+        <param name="onload" value="true" />
     </feature>
 </widget>

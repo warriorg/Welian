@@ -24,6 +24,7 @@
 #import "MessageController.h"
 #import "UIBarButtonItem+Badge.h"
 #import "CommentMode.h"
+#import "MainViewController.h"
 
 @interface HomeController () <UIActionSheetDelegate>
 {
@@ -120,9 +121,10 @@
                 [self.homeView setHidden:YES];
             }
         }
-        
+        [UserDefaults setInteger:0 forKey:KNewStaustbadge];
+        [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
-        
+
         [self.refreshControl endRefreshing];
         [self.tableView footerEndRefreshing];
         if (jsonarray.count<KCellConut) {
@@ -249,6 +251,7 @@
 {
     NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
     [self.navigationItem.leftBarButtonItem setBadgeValue:badgeStr];
+    [[MainViewController sharedMainViewController] updataItembadge];
 }
 
 

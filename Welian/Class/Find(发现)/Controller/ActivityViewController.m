@@ -37,7 +37,8 @@
 //    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@""]]];
     UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[@"标题,内容 ,share2",[NSURL URLWithString:@"www.baidu.com"]] applicationActivities:activity];
     //将不会被显示出来的列表
-    activityView.excludedActivityTypes = @[UIActivityTypeMail,UIActivityTypeMessage,UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint];
+    activityView.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToWeibo,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypePostToTencentWeibo,UIActivityTypeAirDrop];
+    
     [self presentViewController:activityView animated:YES completion:nil];
 }
 

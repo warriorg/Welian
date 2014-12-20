@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Singleton.h"
 
 @interface MainViewController : UITabBarController
+single_interface(MainViewController)
+
+// 根据更新信息设置 提示角标
+- (void)updataItembadge;
 
 @end

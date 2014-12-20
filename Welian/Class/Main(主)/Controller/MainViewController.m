@@ -54,7 +54,7 @@
     [titLabel sizeToFit];
     [titLabel setCenter:self.center];
 
-    [prompt setFrame:CGRectMake(CGRectGetMaxX(titLabel.frame), 0, 10, 10)];
+    [prompt setFrame:CGRectMake(CGRectGetMaxX(titLabel.frame)-2, 0, 10, 10)];
 }
 
 - (void)showPrompt
@@ -82,6 +82,8 @@
 @end
 
 @implementation MainViewController
+
+single_implementation(MainViewController)
 
 - (NavTitleView *)navTitleView
 {
@@ -114,10 +116,10 @@
 - (void)updataItembadge
 {
     // 首页
-    if ([UserDefaults integerForKey:KNewStaustbadge]) {
+    if ([UserDefaults integerForKey:KNewStaustbadge]&&![UserDefaults objectForKey:KMessagebadge]) {
         [self.navTitleView showPrompt];
-        [homeItem setImage:[UIImage imageNamed:@""]];
-        [homeItem setSelectedImage:[UIImage imageNamed:@""]];
+        [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }else{
         [self.navTitleView hidePrompt];
         [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
@@ -127,7 +129,6 @@
             [homeItem setBadgeValue:badgeStr];
         }
     }
-    
 }
 
 
@@ -188,6 +189,8 @@
     
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
+    [self updataItembadge];
+    
     
     // 好友
     circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
@@ -217,9 +220,8 @@
     
     [self setViewControllers:@[homeNav,friendsNav,findNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
+
     selectItem = homeItem;
-    
-    [self updataItembadge];
 }
 
 //- (void)messageMainnotif
