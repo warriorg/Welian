@@ -158,7 +158,7 @@
     [_cellHeadView setControllVC:self.homeVC];
     CGFloat y = 0;
     CGRect headFrame = _cellHeadView.frame;
-    if (status.type) {
+    if (status.type==1||status.type==2) {
         y= 30;
         headFrame.origin.y = 30;
         [_cellHeadView setFrame:headFrame];
