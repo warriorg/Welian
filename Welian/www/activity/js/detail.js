@@ -18,9 +18,10 @@ define(function(require, exports, module) {
         cache = {},
         sessionId = '',
         entryListPageNum = 1, //报名列表读取列表页码
-        clientHeight = $('body').height(), //文档高度
+        clientHeight = $(window).height(), //文档高度
         headHeight = $('.app-bar').height(),
         statusHeight = $('.J_Status').height();
+    $('body').height(clientHeight);
 
     require('iscroll');
     /**
@@ -200,7 +201,7 @@ define(function(require, exports, module) {
         $('.J_TicketView .top span').removeClass('fa-angle-double-up');
         $('.J_TicketView').css('-webkit-transform', 'translateY(0px)');
         $('.J_TicketView .top').attr('check', 'down');
-        if (!isBuy) {
+        if (!isBuy && false) {
             $button.off('tap');
             $button.text('确认购票');
             $button.tap(buy);
@@ -218,7 +219,7 @@ define(function(require, exports, module) {
         $('.J_TicketView .top span').removeClass('fa-angle-double-down');
         $('.J_TicketView').css('-webkit-transform', 'translateY(' + (y + 1) + 'px)');
         $('.J_TicketView .top').attr('check', 'up');
-        if (!isBuy) {
+        if (!isBuy && false) {
             $button.off('tap');
             $button.text('我要购票');
             $button.tap(showTickets);
@@ -346,8 +347,12 @@ define(function(require, exports, module) {
      */
     function setDomHeight() {
         var bodyHeight = clientHeight - headHeight;
-        //设置详情内容元素高度
-        $('.J_DetailContent').height(clientHeight - headHeight - statusHeight);
+        //设置详情内容元素高
+        if (detail.ticket_type == 0) {
+            $('.J_DetailContent').height(clientHeight - headHeight - statusHeight);
+        } else {
+            $('.J_DetailContent').height(clientHeight - headHeight - statusHeight - 38);
+        }
         //设置报名列表高度
         $('.J_EntryList').height(bodyHeight - $('.J_EntryPage .head').height());
         $('.J_EntryPage').css('top', headHeight + 'px');
@@ -379,11 +384,9 @@ define(function(require, exports, module) {
                     $('.J_DetailEntry').on('tap', function() {
                         showEntryList();
                     });
-                    //设置页面滚动
-                    new IScroll('.J_DetailContent');
                     //设置票务页码
                     if (detail.ticket_type == 1) {
-                        //setTickets();
+                        setTickets();
                     }
                     //修改报名人数
                     $('#J_EntryNum').text(detail.join);
@@ -418,16 +421,19 @@ define(function(require, exports, module) {
         //独立的详情页，根据链接传递的活动ID获取页面
         else {
             //返回app的activity
-            $('#pageDetail J_BackBtn').tap(function(e) {
+            $('#pageDetail .J_BackBtn').tap(function(e) {
                 N.backToDiscover();
             });
             //读取活动信息
             var id = getActivityId();
-            loadDetail(id);
-            N.getHeaderHeight(function(height) {
-                headHeight = height;
-                C.setHeadHeight(height);
-                setDomHeight();
+            loadDetail(id, function() {
+                N.getHeaderHeight(function(height) {
+                    headHeight = height;
+                    C.setHeadHeight(height);
+                    setDomHeight();
+                    //设置页面滚动
+                    new IScroll('.J_DetailContent');
+                });
             });
         }
         //关闭报名列表
@@ -439,7 +445,7 @@ define(function(require, exports, module) {
             closeEntryPage();
         });
 
-        if (C.getOs() == 2) {
+        if (C.getOs() == 2 && prevPage) {
             seajs.use(['plugins/back'], function() {
                 //绑定页面右滑返回事件
                 $('#pageDetail').back({
