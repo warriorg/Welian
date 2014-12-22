@@ -267,6 +267,7 @@
                 //普通链接
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
                 [webVC setShowActionButton:NO];
+                webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
                 [self.homeVC.navigationController pushViewController:webVC animated:YES];
             }
         }
