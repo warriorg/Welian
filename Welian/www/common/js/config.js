@@ -17,7 +17,7 @@ seajs.config({
         'json': 'common/json.js'
     },
     vars: {
-        'apiUrl' : 'http://testmy.welian.com/apistore/event/',
+        'apiUrl' : 'http://my.welian.com/apistore/event/',
         'TYPE_GET_ACTIVITY_LIST' : 'loadActives',
         'TYPE_GET_ENTRIES': 'loadActiveJoins',
         'TYPE_GET_ACTIVITY_CITY': 'loadActiveCity',
