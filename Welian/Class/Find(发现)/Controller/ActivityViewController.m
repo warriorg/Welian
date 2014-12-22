@@ -22,8 +22,10 @@
 //隐藏头部
 - (void)hideHeader
 {
+//    self.webView.frame = self.view.frame;
+    
     //延迟1秒
-    [self performSelector:@selector(test) withObject:self afterDelay:.1];
+    [self performSelector:@selector(test) withObject:self afterDelay:.5];
     
     //隐藏旋转
     [WLHUDView hiddenHud];
