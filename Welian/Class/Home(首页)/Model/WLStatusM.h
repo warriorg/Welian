@@ -13,7 +13,8 @@
 
 @interface WLStatusM : NSObject
 
-/**  0正常动态，1转推动态，2推荐动态   */
+/**   0 正常动态，1 转推的动态，2推荐的动态，3活动动态，4话题动态，5转推的活动动态
+ 6 转推的话题动态  */
 @property (nonatomic, assign) int type;
 
 /***  列表中动态最大id，用户新动态提示   */

@@ -22,8 +22,10 @@
 //隐藏头部
 - (void)hideHeader
 {
+//    self.webView.frame = self.view.frame;
+    
     //延迟1秒
-    [self performSelector:@selector(test) withObject:self afterDelay:.1];
+    [self performSelector:@selector(test) withObject:self afterDelay:.5];
     
     //隐藏旋转
     [WLHUDView hiddenHud];
@@ -96,12 +98,11 @@
     //    self.extendedLayoutIncludesOpaqueBars = YES;
 //    self.modalPresentationCapturesStatusBarAppearance = YES;
     
+    //预加载高度控制
     self.webView.top = -ViewCtrlTopBarHeight;
     self.webView.height = self.view.height + ViewCtrlTopBarHeight;
     
-//    [self.view setDebug:YES];
-    //旋转
-    self.title = @"活动";
+    //预加载
     [WLHUDView showHUDWithStr:nil dim:NO];
 }
 

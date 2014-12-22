@@ -245,23 +245,33 @@
 - (void)mlEmojiLabel:(MLEmojiLabel *)emojiLabel didSelectLink:(NSString *)link withType:(MLEmojiLabelLinkType)type
 {
     if (type == MLEmojiLabelLinkTypeURL) {
+        WLStatusM *wlStatusM = nil;
+        if (_statusFrame) {
+            wlStatusM = _statusFrame.status;
+        }
+        if (_commentFrame) {
+            wlStatusM = _statusFrame.status;
+        }
         
-        [WLHttpTool getLongUrlFromShort:link
-                                success:^(id JSON) {
-                                    DLog(@"解析后的原url地址：%@",JSON);
-                                    NSArray *info = [JSON componentsSeparatedByString:@"/"];
-                                    NSString *sessionId = [info lastObject];
-                                    //活动页面，进行phoneGap页面加载
-                                    ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-                                    activityVC.wwwFolderName = @"www";
-                                    activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
-                                    [self.homeVC.navigationController pushViewController:activityVC animated:YES];
-                                } fail:^(NSError *error) {
-                                    
-                                }];
-//        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
-//        [webVC setShowActionButton:NO];
-//        [self.homeVC.navigationController pushViewController:webVC animated:YES];
+        if (wlStatusM) {
+            //活动动态
+            if (wlStatusM.type == 3) {
+                NSArray *info = [link componentsSeparatedByString:@"/"];
+                NSString *sessionId = [info lastObject];
+                //活动页面，进行phoneGap页面加载
+                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+                activityVC.title = @"活动详情";
+                activityVC.wwwFolderName = @"www";
+                activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
+                [self.homeVC.navigationController pushViewController:activityVC animated:YES];
+            }else{
+                //普通链接
+                TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
+                [webVC setShowActionButton:NO];
+                webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                [self.homeVC.navigationController pushViewController:webVC animated:YES];
+            }
+        }
     }
 }
 
