@@ -19,19 +19,26 @@
 
 @implementation ActivityViewController
 
-////隐藏头部
-//- (void)hideHeader
-//{
-//    self.navigationController.navigationBarHidden = YES;
-//    //隐藏旋转
-//    [WLHUDView hiddenHud];
-//}
+//隐藏头部
+- (void)hideHeader
+{
+    //延迟1秒
+    [self performSelector:@selector(test) withObject:self afterDelay:.1];
+    
+    //隐藏旋转
+    [WLHUDView hiddenHud];
+}
+
+- (void)test {
+    self.webView.top = 0;
+    self.navigationController.navigationBarHidden = YES;
+}
 
 //返回发现
 - (void)backToFindVC
 {
-    self.navigationController.navigationBarHidden = NO;
     [self.navigationController popViewControllerAnimated:YES];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 //分享
@@ -77,7 +84,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -86,9 +93,16 @@
     self.view.backgroundColor = [UIColor whiteColor];
     //铺到状态栏底下而是从状态栏下面
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    //    self.extendedLayoutIncludesOpaqueBars = YES;
+//    self.modalPresentationCapturesStatusBarAppearance = YES;
+    
+    self.webView.top = -ViewCtrlTopBarHeight;
+    self.webView.height = self.view.height + ViewCtrlTopBarHeight;
+    
+//    [self.view setDebug:YES];
     //旋转
     self.title = @"活动";
-//    [WLHUDView showHUDWithStr:nil dim:NO];
+    [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
 - (void)didReceiveMemoryWarning {

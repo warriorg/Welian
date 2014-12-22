@@ -19,8 +19,8 @@
 {
     DLog(@"pageOnComplete : %@",command.arguments);
     //预加载结束隐藏头部和加载条
-//    ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
-//    [activityVC hideHeader];
+    ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
+    [activityVC hideHeader];
 }
 
 //返回sessionId
