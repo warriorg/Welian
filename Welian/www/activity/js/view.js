@@ -86,8 +86,8 @@ define(function(require, exports, module) {
                         </div>\
                         <div class="property address">\
                             <i class="fa fa-map-marker"></i>\
-                            <label>{{address}}</label>\
-                            <span class="fa fa-chevron-right"></span>\
+                            <span>{{address}}</span>\
+                            <!--<span class="fa fa-chevron-right"></span>-->\
                         </div>\
                         <div class="property status J_DetailEntry">\
                             <i class="fa fa-users"></i>{{entry}}\

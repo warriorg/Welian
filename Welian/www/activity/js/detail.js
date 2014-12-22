@@ -394,7 +394,15 @@ define(function(require, exports, module) {
                         var shareObj = shareContent();
                         N.share(JSON.stringify(shareObj));
                     });
-                    N.pageLoadComplete();
+                    
+                    N.getHeaderHeight(function(height) {
+                        headHeight = height;
+                        C.setHeadHeight(height);
+                        setDomHeight();
+                        //设置页面滚动
+                        new IScroll('.J_DetailContent');
+                        N.pageLoadComplete();
+                    });
                     callback && callback();
                 });
             });
@@ -409,10 +417,6 @@ define(function(require, exports, module) {
     exports.init = function(prevPage) {
         //有上一页
         if (prevPage) {
-            N.getHeaderHeight(function(height) {
-                headHeight = height;
-                setDomHeight();
-            });
             //详情页返回列表页
             $('#pageDetail .J_BackBtn').tap(function(e) {
                 backToPrev(prevPage);
@@ -426,15 +430,7 @@ define(function(require, exports, module) {
             });
             //读取活动信息
             var id = getActivityId();
-            loadDetail(id, function() {
-                N.getHeaderHeight(function(height) {
-                    headHeight = height;
-                    C.setHeadHeight(height);
-                    setDomHeight();
-                    //设置页面滚动
-                    new IScroll('.J_DetailContent');
-                });
-            });
+            loadDetail(id);
         }
         //关闭报名列表
         $('.J_CloseEntryList').tap(function() {
