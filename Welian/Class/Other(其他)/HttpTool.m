@@ -100,6 +100,63 @@ static HttpTool *engine;
     }];
 }
 
+#pragma mark - Get请求
+- (void)reqestGetWithPath:(NSString *)path successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
+{
+    if (isHUD) {
+        [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
+    }
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.weibo.com/"]];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    NSDictionary *param = @{@"url_short" : path,@"access_token":@"2.00HxKmmFXflFGDae47a42e3ciWDcPE"};
+    [manager GET:@"2/short_url/expand.json" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [WLHUDView hiddenHud];
+        NSDictionary *dic = [[operation responseString] JSONValue];
+        DLog(@"reqestGetWithPath :--%@",dic);
+        NSDictionary *urls = dic[@"urls"][0];
+    
+        //返回 解析后的长链接
+        success([urls objectForKey:@"url_long"]);
+        
+        /*
+         {"urls":[
+         {"result":true,"url_short":"http://t.cn/Rz1XA2l","url_long":"http://my.welian.com/event/info/117","type":0,"transcode":0}
+         ]}
+         url_short:短链接
+         url_long:原始长链接
+         result: 短链的可用状态，true：可用、false：不可用
+         type:链接的类型，0：普通网页、1：视频、2：音乐、3：活动、5、投票
+         */
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failureBlock(error);
+    }];
+    
+//    [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        DLog(@"%@",[operation responseString]);
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
+//        DLog(@"%@",dic);
+//        if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
+//            [WLHUDView hiddenHud];
+//            success([dic objectForKey:@"data"]);
+//            
+//        }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
+//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+//        }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
+//            _seleDic = parameterDic;
+//            
+//            
+//        }else{
+//            [WLHUDView hiddenHud];
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        DLog(@"%@",error);
+//        //        [WLHUDView showErrorHUD:error.localizedDescription];
+//        failureBlock(error);
+//    }];
+}
+
 
 - (void)againConnectParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {

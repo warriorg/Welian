@@ -21,6 +21,7 @@
 #import "TOWebViewController.h"
 #import "MJExtension.h"
 #import "M80AttributedLabel.h"
+#import "ActivityViewController.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
@@ -244,9 +245,23 @@
 - (void)mlEmojiLabel:(MLEmojiLabel *)emojiLabel didSelectLink:(NSString *)link withType:(MLEmojiLabelLinkType)type
 {
     if (type == MLEmojiLabelLinkTypeURL) {
-        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
-        [webVC setShowActionButton:NO];
-        [self.homeVC.navigationController pushViewController:webVC animated:YES];
+        
+        [WLHttpTool getLongUrlFromShort:link
+                                success:^(id JSON) {
+                                    DLog(@"解析后的原url地址：%@",JSON);
+                                    NSArray *info = [JSON componentsSeparatedByString:@"/"];
+                                    NSString *sessionId = [info lastObject];
+                                    //活动页面，进行phoneGap页面加载
+                                    ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+                                    activityVC.wwwFolderName = @"www";
+                                    activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
+                                    [self.homeVC.navigationController pushViewController:activityVC animated:YES];
+                                } fail:^(NSError *error) {
+                                    
+                                }];
+//        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
+//        [webVC setShowActionButton:NO];
+//        [self.homeVC.navigationController pushViewController:webVC animated:YES];
     }
 }
 

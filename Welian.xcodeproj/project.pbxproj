@@ -6253,8 +6253,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
 				HEADER_SEARCH_PATHS = (
@@ -6280,7 +6280,7 @@
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "weLianDev copy";
-				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";
+				PROVISIONING_PROFILE = "82cac17d-630e-4c61-ab1e-4434b8d06c3c";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -6291,8 +6291,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Teleport Networks Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rongjun Liu (7T2KCECF86)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
 				HEADER_SEARCH_PATHS = (
@@ -6317,7 +6317,7 @@
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "weLianDev copy";
-				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";
+				PROVISIONING_PROFILE = "82cac17d-630e-4c61-ab1e-4434b8d06c3c";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};

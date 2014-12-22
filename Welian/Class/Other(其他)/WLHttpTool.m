@@ -965,4 +965,16 @@
 }
 
 
+#pragma mark - 解析短链接
++ (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    [[HttpTool sharedService] reqestGetWithPath:shortUrl
+                                   successBlock:^(id JSON) {
+                                       succeBlock(JSON);
+                                   } failure:^(NSError *error) {
+                                       failurBlock(error);
+                                   } withHUD:NO andDim:NO];
+}
+
+
 @end

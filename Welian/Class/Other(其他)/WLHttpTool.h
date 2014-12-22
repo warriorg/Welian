@@ -180,5 +180,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 取消转推
 + (void)deleteFeedForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+
+#pragma mark - 解析短链接
++ (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 @end
 
