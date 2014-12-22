@@ -256,7 +256,7 @@
         if (wlStatusM) {
             //活动动态
             if (wlStatusM.type == 3) {
-                NSArray *info = [link componentsSeparatedByString:@"/"];
+                NSArray *info = [link componentsSeparatedByString:@"#"];
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];

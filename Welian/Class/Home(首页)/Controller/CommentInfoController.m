@@ -84,7 +84,11 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)loadloadOneFeed2
 {
     
-    [WLHttpTool loadOneFeedParameterDic:@{@"fid":@(self.statusM.topid)} success:^(id JSON) {
+    int fid = self.statusM.topid;
+    if (fid==0) {
+        fid = self.statusM.fid;
+    }
+    [WLHttpTool loadOneFeedParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
         NSDictionary *statusDic = JSON;
         [[WLDataDBTool sharedService] putObject:statusDic withId:[NSString stringWithFormat:@"%@",[statusDic objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
 
@@ -112,7 +116,11 @@ static NSString *noCommentCell = @"NoCommentCell";
 // 加载赞和转发数据
 - (void)loadnewFeedZanAndForward
 {
-    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":@(self.statusM.topid)} success:^(id JSON) {
+    int fid = self.statusM.topid;
+    if (fid==0) {
+        fid = self.statusM.fid;
+    }
+    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
         
         NSArray *feedarray = [JSON objectForKey:@"forwards"];
         NSArray *zanarray = [JSON objectForKey:@"zans"];
@@ -179,7 +187,11 @@ static NSString *noCommentCell = @"NoCommentCell";
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height, self.view.frame.size.width, 50) andSuperView:self.view withMessageBlock:^(NSString *comment) {
         
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
+
         [reqstDicM setObject:@(self.statusM.topid) forKey:@"fid"];
+        if (self.statusM.topid==0) {
+        [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
+        }
         [reqstDicM setObject:comment forKey:@"comment"];
         
         if (_selecCommFrame) {
