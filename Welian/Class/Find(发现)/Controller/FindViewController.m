@@ -152,7 +152,7 @@
         }else if (indexPath.row == 1){
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-//            activityVC.useSplashScreen = YES;
+            activityVC.title = @"活动";
             activityVC.wwwFolderName = @"www";
             activityVC.startPage = @"activity.html";
             [self.navigationController pushViewController:activityVC animated:YES];

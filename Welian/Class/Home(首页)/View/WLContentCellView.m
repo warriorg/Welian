@@ -260,6 +260,7 @@
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+                activityVC.title = @"活动详情";
                 activityVC.wwwFolderName = @"www";
                 activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
                 [self.homeVC.navigationController pushViewController:activityVC animated:YES];
@@ -271,20 +272,6 @@
                 [self.homeVC.navigationController pushViewController:webVC animated:YES];
             }
         }
-        
-//        [WLHttpTool getLongUrlFromShort:link
-//                                success:^(id JSON) {
-//                                    DLog(@"解析后的原url地址：%@",JSON);
-//                                    NSArray *info = [JSON componentsSeparatedByString:@"/"];
-//                                    NSString *sessionId = [info lastObject];
-//                                    //活动页面，进行phoneGap页面加载
-//                                    ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-//                                    activityVC.wwwFolderName = @"www";
-//                                    activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
-//                                    [self.homeVC.navigationController pushViewController:activityVC animated:YES];
-//                                } fail:^(NSError *error) {
-//                                    
-//                                }];
     }
 }
 

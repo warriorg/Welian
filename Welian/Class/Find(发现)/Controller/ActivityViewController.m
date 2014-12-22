@@ -98,12 +98,11 @@
     //    self.extendedLayoutIncludesOpaqueBars = YES;
 //    self.modalPresentationCapturesStatusBarAppearance = YES;
     
+    //预加载高度控制
     self.webView.top = -ViewCtrlTopBarHeight;
     self.webView.height = self.view.height + ViewCtrlTopBarHeight;
     
-//    [self.view setDebug:YES];
-    //旋转
-    self.title = @"活动";
+    //预加载
     [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
