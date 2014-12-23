@@ -41,9 +41,13 @@ define(function(require, exports, module) {
             //生产报名列表
             V.setEntryPage(entries, function(isNodata) {
                 if (isNodata) {
-                    $entryList.append('<li class="nodata">还没有人报名哦~</li>');
+                    if ($('.J_EntryList .item').length > 0) {
+                        $entryList.append('<li class="nodata">没有更多人了~</li>');
+                    } else {
+                        $entryList.append('<li class="nodata">还没有人报名哦~</li>');
+                    }
                 } else {
-                    if (entries.length < 10) {
+                    if (entries.length < 15) {
                         $entryList.append('<li class="nodata">没有更多人了~</li>');
                     } else {
                         $entryList.append('<li class="nodata">点击加载更多</li>');
@@ -54,9 +58,9 @@ define(function(require, exports, module) {
                     }
                 }
             });
-            if(entryScroll == null){
+            if (entryScroll == null) {
                 entryScroll = new IScroll('.J_EntryList');
-            }else{
+            } else {
                 entryScroll.refresh();
             }
         });
@@ -399,7 +403,7 @@ define(function(require, exports, module) {
                         var shareObj = shareContent();
                         N.share(JSON.stringify(shareObj));
                     });
-                    
+
                     N.getHeaderHeight(function(height) {
                         headHeight = height;
                         C.setHeadHeight(height);
