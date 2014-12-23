@@ -47,7 +47,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define SaveLoginMobile(mobile) [NSUserDefaults setString:mobile forKey:@"kLastLoginMobile"]
 #define lastLoginMobile [NSUserDefaults stringForKey:@"kLastLoginMobile"]
 // 百度地图key
-#define KBMK_Key  KINFODic(@"KBMK_Key")
+#define KBMK_Key                 KINFODic(@"KBMK_Key")
+
+// 微信appid
+#define kWeChatAppId             KINFODic(@"KWeChatAppId")
 
 // 友盟Appkey
 #define UMENG_APPKEY             KINFODic(@"UMENG_APPKEY")

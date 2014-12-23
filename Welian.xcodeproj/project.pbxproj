@@ -2903,7 +2903,7 @@
 		F53CF49C1A20809B00AB19E8 /* repost_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repost_bg@2x.png"; sourceTree = "<group>"; };
 		F53CF49E1A20B2B700AB19E8 /* CommentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCellView.h; sourceTree = "<group>"; };
 		F53CF49F1A20B2B700AB19E8 /* CommentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCellView.m; sourceTree = "<group>"; };
-		F53DC5871A49192600F5F712 /* weLianDis copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weLianDis copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F53DC5871A49192600F5F712 /* weLianAppDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianAppDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53DC5881A49192700F5F712 /* weLianAppDis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianAppDis-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianAppDis-Info.plist"; sourceTree = "<absolute>"; };
 		F545FA4E1A066B6F0057CFC6 /* DockItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockItem.h; sourceTree = "<group>"; };
 		F545FA4F1A066B6F0057CFC6 /* DockItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockItem.m; sourceTree = "<group>"; };
@@ -2927,9 +2927,9 @@
 		F56254F119C01C1800809D0B /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
 		F56254F319C01C7E00809D0B /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
 		F56254F419C01C7E00809D0B /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
-		F5664C321A2AFD56008A5830 /* weLian copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weLian copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5664C321A2AFD56008A5830 /* weLianDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5664C331A2AFD56008A5830 /* weLianDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianDev-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianDev-Info.plist"; sourceTree = "<absolute>"; };
-		F5664EEC1A2AFDD5008A5830 /* weLianDev copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weLianDev copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5664EEC1A2AFDD5008A5830 /* weLianDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5664EED1A2AFDD6008A5830 /* weLianDis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianDis-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianDis-Info.plist"; sourceTree = "<absolute>"; };
 		F569A7FE1A31919900B677B0 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		F569A8001A31B2FE00B677B0 /* repost_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repost_small@2x.png"; sourceTree = "<group>"; };
@@ -4591,9 +4591,9 @@
 			isa = PBXGroup;
 			children = (
 				F5CE861519BFF2AB00A9D14C /* weLian.temp_caseinsensitive_renameTests.xctest */,
-				F5664C321A2AFD56008A5830 /* weLian copy.app */,
-				F5664EEC1A2AFDD5008A5830 /* weLianDev copy.app */,
-				F53DC5871A49192600F5F712 /* weLianDis copy.app */,
+				F5664C321A2AFD56008A5830 /* weLianDev.app */,
+				F5664EEC1A2AFDD5008A5830 /* weLianDis.app */,
+				F53DC5871A49192600F5F712 /* weLianAppDis.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5327,7 +5327,7 @@
 			);
 			name = weLianAppDis;
 			productName = Welian;
-			productReference = F53DC5871A49192600F5F712 /* weLianDis copy.app */;
+			productReference = F53DC5871A49192600F5F712 /* weLianAppDis.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F566497A1A2AFD56008A5830 /* weLianDev */ = {
@@ -5345,7 +5345,7 @@
 			);
 			name = weLianDev;
 			productName = Welian;
-			productReference = F5664C321A2AFD56008A5830 /* weLian copy.app */;
+			productReference = F5664C321A2AFD56008A5830 /* weLianDev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5664C341A2AFDD5008A5830 /* weLianDis */ = {
@@ -5363,7 +5363,7 @@
 			);
 			name = weLianDis;
 			productName = Welian;
-			productReference = F5664EEC1A2AFDD5008A5830 /* weLianDev copy.app */;
+			productReference = F5664EEC1A2AFDD5008A5830 /* weLianDis.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5CE861419BFF2AB00A9D14C /* weLian.temp_caseinsensitive_renameTests */ = {
@@ -7743,7 +7743,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianDis copy";
+				PRODUCT_NAME = weLianAppDis;
 				PROVISIONING_PROFILE = "1022e755-0976-4bc6-8bcd-cb811151c67f";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -7780,7 +7780,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianDis copy";
+				PRODUCT_NAME = weLianAppDis;
 				PROVISIONING_PROFILE = "1022e755-0976-4bc6-8bcd-cb811151c67f";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -7818,7 +7818,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLian copy";
+				PRODUCT_NAME = weLianDev;
 				PROVISIONING_PROFILE = "7e756789-9ea0-49ab-8a86-abb83924ca78";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -7855,7 +7855,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLian copy";
+				PRODUCT_NAME = weLianDev;
 				PROVISIONING_PROFILE = "7e756789-9ea0-49ab-8a86-abb83924ca78";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -7893,7 +7893,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianDev copy";
+				PRODUCT_NAME = weLianDis;
 				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -7930,7 +7930,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianDev copy";
+				PRODUCT_NAME = weLianDis;
 				PROVISIONING_PROFILE = "2e2e1239-c4be-41dc-9d93-980d1209dd48";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

@@ -23,6 +23,15 @@ single_implementation(ShareEngine)
 {
     //向微信注册
     [WXApi registerApp:kWeChatAppId];
+    DLog(@"%@",kWeChatAppId);
+}
+
+- (NSUInteger)getBytesLengthWithSring:(NSString *)str{
+    NSUInteger len = 0;
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    len = [str lengthOfBytesUsingEncoding:enc];
+    
+    return len;
 }
 
 - (void)sendWeChatMessage:(NSString*)message andDescription:(NSString *)descriptStr WithUrl:(NSString*)appUrl andImage:(UIImage *)thumbImage WithScene:(WeiboType)weiboType;
@@ -33,6 +42,11 @@ single_implementation(ShareEngine)
         NSData *thum = UIImageJPEGRepresentation(thumbImage, 32/length);
         thumbImage = [UIImage imageWithData:thum];
     }
+    
+//    NSUInteger titlength =[self getBytesLengthWithSring:message];
+//    NSUInteger desclength = [self getBytesLengthWithSring:descriptStr];
+//    NSUInteger appUrllength = [self getBytesLengthWithSring:appUrl];
+    
     
     if(weChat == weiboType)
     {

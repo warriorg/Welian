@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UMENG_ChannelId</key>
-	<string>www.welian.com</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -65,5 +63,7 @@
 	<false/>
 	<key>UMENG_APPKEY</key>
 	<string>545c8c97fd98c59807006c67</string>
+	<key>UMENG_ChannelId</key>
+	<string>www.welian.com</string>
 </dict>
 </plist>
