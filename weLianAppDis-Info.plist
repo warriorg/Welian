@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.chuansongmen.weLian</string>
+	<string>com.chuansongmen.welianos</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>1.0.6</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -29,12 +29,22 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx4150b21797fa0a5e</string>
+				<string>wx5e4e9a58776baed3</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.3</string>
+	<string>1.0.6</string>
+	<key>KBMK_Key</key>
+	<string>cbtkHchgOfETh6dZdWi1rytI</string>
+	<key>KGTAppId</key>
+	<string>FJMYq8FQuT8tkyPCTKavD3</string>
+	<key>KGTAppKey</key>
+	<string>CSC0bLaL7J6wIHC0a9EYJ9</string>
+	<key>KGTAppSecret</key>
+	<string>tMBHhQ9iMJ6CAti03m4z93</string>
+	<key>KPlatformType</key>
+	<string>ios-app</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -49,5 +59,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UMENG_APPKEY</key>
+	<string>545c8c97fd98c59807006c67</string>
+	<key>UMENG_ChannelId</key>
+	<string></string>
+	<key>kWeChatAppId</key>
+	<string>wx5e4e9a58776baed3</string>
 </dict>
 </plist>

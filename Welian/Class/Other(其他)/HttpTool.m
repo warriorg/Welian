@@ -164,7 +164,7 @@ static HttpTool *engine;
     NSMutableDictionary *loginDicM = [NSMutableDictionary dictionary];
     [loginDicM setObject:mode.mobile forKey:@"mobile"];
     [loginDicM setObject:mode.checkcode forKey:@"password"];
-    [loginDicM setObject:@"ios" forKey:@"platform"];
+    [loginDicM setObject:KPlatformType forKey:@"platform"];
     if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
         
         [loginDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];

@@ -863,7 +863,7 @@
 + (void)updateClientSuccess:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
-    [parameterDic setObject:@"ios" forKey:@"platform"];
+    [parameterDic setObject:KPlatformType forKey:@"platform"];
     
     if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
         [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];

@@ -11,7 +11,6 @@
 #import <Foundation/Foundation.h>
 
 #define UMOnlineConfigDidFinishedNotification @"OnlineConfigDidFinishedNotification"
-#define XcodeAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
 
 typedef enum {

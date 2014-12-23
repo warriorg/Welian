@@ -92,7 +92,7 @@
             NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
             [reqstDic setObject:self.phoneString forKey:@"mobile"];
             [reqstDic setObject:self.pwdString forKey:@"password"];
-            [reqstDic setObject:@"ios" forKey:@"platform"];
+            [reqstDic setObject:KPlatformType forKey:@"platform"];
             if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
                 
                 [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
