@@ -22,9 +22,6 @@
 
 #define iPhone4 ([UIScreen mainScreen].bounds.size.height == 480)
 
-
-//#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
-
 //输出详细log,显示方法及所在的行数
 // 2.日志输出宏定义
 #ifdef DEBUG
@@ -65,12 +62,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+//#define WLHttpServer  @"http://test.welian.com:8080"
 //正式环境
-//#define WLHttpServer  @"http://www.welian.com:8080"
-
-//#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
-
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
@@ -124,7 +118,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KAddressBook @"AddressBok"
 
-#define UserIconImage @"UserIconImage"
 
 // 第一条微博fid
 #define KFirstFID @"firstFid"
@@ -232,7 +225,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 //每个controller 中第一个控件距离顶部的高度
 #define kFirstMarginTop 20
-
 
 
 // 返回结果的键

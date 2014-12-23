@@ -158,7 +158,7 @@ single_implementation(MainViewController)
         dispatch_semaphore_signal(sema);
         if (greanted) {
             [UserDefaults setObject:@"1" forKey:KAddressBook];
-            DLog(@"ABAddressBookSetAuthorization success.");
+
         }else {
             [UserDefaults setObject:@"0" forKey:KAddressBook];
             
