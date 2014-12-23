@@ -16,12 +16,6 @@
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
 
-#define UserDefaults [NSUserDefaults standardUserDefaults]
-
-//本地数据存储
-#define SaveLoginMobile(mobile) [NSUserDefaults setString:mobile forKey:@"kLastLoginMobile"]
-#define lastLoginMobile [NSUserDefaults stringForKey:@"kLastLoginMobile"]
-
 //iphone5适配
 // 1.判断是否为iPhone5的宏
 #define iPhone5 ([UIScreen mainScreen].bounds.size.height == 568)
@@ -47,6 +41,27 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define DLog(...)
 #endif
 
+// 配置文件
+
+#define KINFODic(key) [[[NSBundle mainBundle] infoDictionary] objectForKey:key]
+
+#define XcodeAppVersion KINFODic(@"CFBundleShortVersionString")
+//本地数据存储
+#define SaveLoginMobile(mobile) [NSUserDefaults setString:mobile forKey:@"kLastLoginMobile"]
+#define lastLoginMobile [NSUserDefaults stringForKey:@"kLastLoginMobile"]
+// 百度地图key
+#define KBMK_Key  KINFODic(@"KBMK_Key")
+
+// 友盟Appkey
+#define UMENG_APPKEY             KINFODic(@"UMENG_APPKEY")
+#define UMENG_ChannelId          KINFODic(@"UMENG_ChannelId")
+
+// 个推appid
+#define KGTAppId                 KINFODic (@"KGTAppId")
+#define KGTAppKey                KINFODic (@"KGTAppKey")
+#define kGTAppSecret             KINFODic (@"KGTAppSecret")
+#define KPlatformType            KINFODic (@"KPlatformType")
+
 
 // 服务器地址
 //测试环境
@@ -56,10 +71,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 //#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
 
-// 百度地图key
-#define KBMK_Key @"cbtkHchgOfETh6dZdWi1rytI"
-// 友盟Appkey
-#define UMENG_APPKEY @"545c8c97fd98c59807006c67"
+
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
 

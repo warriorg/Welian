@@ -81,7 +81,7 @@
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
         [reqstDicM setObject:@"register" forKey:@"type"];
         [reqstDicM setObject:self.phoneTextField.text forKey:@"mobile"];
-        [reqstDicM setObject:@"ios" forKey:@"platform"];
+        [reqstDicM setObject:KPlatformType forKey:@"platform"];
         
         if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
             [reqstDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];

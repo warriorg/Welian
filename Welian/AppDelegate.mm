@@ -21,25 +21,6 @@
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
-#ifdef DEBUG
-// deve
-#define kAppId           @"L6zsShWHhs8xXG1gomsVa7"
-#define kAppKey          @"xGTIv3IgVO8AL2LmFQadP5"
-#define kAppSecret       @"ogs57h2IUyARfHzgAvW5X3"
-
-#else
-
-// production
-#define kAppId           @"CgF0UHbnv0827eFprsyYT9"
-#define kAppKey          @"eAJBPqawMhAi406E0FcSh3"
-#define kAppSecret       @"rOSsO1iPvj6H39gltxdDJ6"
-
-//#define kAppId           @"FJMYq8FQuT8tkyPCTKavD3"
-//#define kAppKey          @"CSC0bLaL7J6wIHC0a9EYJ9"
-//#define kAppSecret       @"tMBHhQ9iMJ6CAti03m4z93"
-
-#endif
-
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     MainViewController *mainVC;
@@ -117,7 +98,7 @@ BMKMapManager* _mapManager;
         NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
         [reqstDic setObject:mode.mobile forKey:@"mobile"];
         [reqstDic setObject:mode.checkcode forKey:@"password"];
-        [reqstDic setObject:@"ios" forKey:@"platform"];
+        [reqstDic setObject:KPlatformType forKey:@"platform"];
         if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
             
             [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
@@ -157,35 +138,13 @@ BMKMapManager* _mapManager;
     
     
     // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
-    [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
+    [self startSdkWith:KGTAppId appKey:KGTAppKey appSecret:kGTAppSecret];
     
     // [2]:注册APNS
     [self registerRemoteNotification];
     
     return YES;
 }
-
-
-#pragma mark - 设置全局键盘管理
-- (void)initKeyboardManager{
-    //Enabling keyboard manager
-//    [[IQKeyboardManager sharedManager] setEnable:NO];
-    
-//    [[IQKeyboardManager sharedManager] setKeyboardDistanceFromTextField:50];
-//    //Enabling autoToolbar behaviour. If It is set to NO. You have to manually create UIToolbar for keyboard.
-//    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
-//    
-//    //Setting toolbar behavious to IQAutoToolbarBySubviews. Set it to IQAutoToolbarByTag to manage previous/next according to UITextField's tag property in increasing order.
-//    [[IQKeyboardManager sharedManager] setToolbarManageBehaviour:IQAutoToolbarBySubviews];
-//    [[IQKeyboardManager sharedManager] setShouldPlayInputClicks:NO];
-    //Resign textField if touched outside of UITextField/UITextView.
-//    [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
-    
-    //Giving permission to modify TextView's frame
-//    [[IQKeyboardManager sharedManager] setCanAdjustTextView:YES];
-}
-
-
 
 #pragma mark - 检测版本更新
 - (void)detectionUpdataVersionDic
@@ -244,7 +203,7 @@ BMKMapManager* _mapManager;
         _gexinPusher = [GexinSdk createSdkWithAppId:_appID
                                              appKey:_appKey
                                           appSecret:_appSecret
-                                         appVersion:@"0.0.0"
+                                         appVersion:XcodeAppVersion
                                            delegate:self
                                               error:&err];
         if (!_gexinPusher) {
@@ -310,7 +269,7 @@ BMKMapManager* _mapManager;
     [MobClick setCrashReportEnabled:YES]; // 如果不需要捕捉异常，注释掉此行
 //    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:@"www.welian.com"];
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:UMENG_ChannelId];
 }
 
 #if __IPHONE_8_0

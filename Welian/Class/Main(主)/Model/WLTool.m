@@ -88,9 +88,7 @@
 
 + (void)updateVersions:(UpVersionBlock)versionBlock
 {
-    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-    
-    [WLHttpTool updateParameterDic:@{@"platform":@"ios",@"version":localVersion} success:^(id JSON) {
+    [WLHttpTool updateParameterDic:@{@"platform":KPlatformType,@"version":XcodeAppVersion} success:^(id JSON) {
         NSDictionary *dic = JSON;
         versionBlock(dic);
     } fail:^(NSError *error) {
