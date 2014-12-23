@@ -20,6 +20,7 @@ define(function(require, exports, module) {
         entryListPageNum = 1, //报名列表读取列表页码
         clientHeight = $(window).height(), //文档高度
         headHeight = $('.app-bar').height(),
+        entryScroll = null,
         statusHeight = $('.J_Status').height();
     $('body').height(clientHeight);
 
@@ -53,7 +54,11 @@ define(function(require, exports, module) {
                     }
                 }
             });
-            new IScroll('.J_EntryList');
+            if(entryScroll == null){
+                entryScroll = new IScroll('.J_EntryList');
+            }else{
+                entryScroll.refresh();
+            }
         });
     }
 
