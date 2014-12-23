@@ -278,7 +278,7 @@ define(function(require, exports, module) {
                 desc: content
             },
             friendCircle: {
-                title: '活动 · ' + detail.city_name + '| ' + detail.title,
+                title: '活动 · ' + detail.city_name + ' | ' + detail.title,
                 img: img,
                 link: link,
                 desc: content
