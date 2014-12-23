@@ -95,7 +95,7 @@ single_implementation(ShareEngine)
     }
     if (thumbImage) {
         
-        [message setThumbImage:thumbImage];
+        message.thumbData = UIImageJPEGRepresentation(thumbImage, 0.3);
     }
     
     WXWebpageObject *ext = [WXWebpageObject object];
