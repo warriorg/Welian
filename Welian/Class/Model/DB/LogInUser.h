@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
+#import "UserInfoModel.h"
 
 @class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel;
 
@@ -16,6 +17,7 @@
 
 @property (nonatomic, retain) NSString * checkcode;
 @property (nonatomic, retain) NSString * sessionid;
+
 @property (nonatomic, retain) NSSet *rsCompanys;
 @property (nonatomic, retain) NSSet *rsSchools;
 @property (nonatomic, retain) NSSet *rsMyFriends;
@@ -24,6 +26,12 @@
 @end
 
 @interface LogInUser (CoreDataGeneratedAccessors)
+
+//创建新收据
++ (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
+
+//通过ucid查询
++ (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;
 
 - (void)addRsCompanysObject:(CompanyModel *)value;
 - (void)removeRsCompanysObject:(CompanyModel *)value;
