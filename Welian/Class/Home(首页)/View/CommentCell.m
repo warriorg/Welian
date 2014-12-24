@@ -56,7 +56,7 @@
 {
     UIImage *image = [UIImage imageNamed:@"me_mywriten_comment_small"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    [imageView setFrame:CGRectMake(self.bounds.size.width-image.size.width-IWCellBorderWidth, IWCellBorderWidth, image.size.width, image.size.height)];
+    [imageView setFrame:CGRectMake(MainScreen.bounds.size.width-image.size.width-IWCellBorderWidth, IWCellBorderWidth, image.size.width, image.size.height)];
     [self.contentView addSubview:imageView];
     
     // 清除cell默认的背景色(才能只显示背景view、背景图片)

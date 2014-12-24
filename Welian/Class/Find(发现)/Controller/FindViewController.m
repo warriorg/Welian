@@ -134,22 +134,14 @@
         [investorListVC setTitle:@"投资人"];
         [self.navigationController pushViewController:investorListVC animated:YES];
     }else{
-        if (webDic==nil) {
-            [WLHUDView showErrorHUD:@"网络异常！"];
-            return;
-        }
         
         if (indexPath.row == 0) {
-            NSString *urlStr = webDic[@"url"];
-            //原来的活动页面
-//            if (indexPath.row==1) {
-//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-//                urlStr = [NSString stringWithFormat:@"%@/%@",@"http://my.welian.com/event/lists",mode.sessionid];
-//            }
-            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:urlStr];
+            // 观点  虎嗅网
+            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
             webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
             [self.navigationController pushViewController:webVC animated:YES];
         }else if (indexPath.row == 1){
+            
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
             activityVC.title = @"活动";
