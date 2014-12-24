@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "SchoolCompanyDate.h"
 @class ICompanyResult;
+@class LogInUser;
 
 @interface CompanyModel : SchoolCompanyDate
 
@@ -23,6 +24,8 @@
 @property (nonatomic, retain) NSString * jobname;
 /**  ucid   */
 @property (nonatomic, retain) NSNumber * ucid;
+
+@property (nonatomic, retain) LogInUser *rsLogInUser;
 
 // 查询所有数据并返回
 + (NSArray *)allCompanyModels;

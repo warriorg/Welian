@@ -2,22 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UMENG_ChannelId</key>
-	<string>www.welian.com</string>
-	<key>KGTAppId</key>
-	<string>CgF0UHbnv0827eFprsyYT9</string>
-	<key>KGTAppKey</key>
-	<string>eAJBPqawMhAi406E0FcSh3</string>
-	<key>KGTAppSecret</key>
-	<string>rOSsO1iPvj6H39gltxdDJ6</string>
-	<key>KPlatformType</key>
-	<string>ios</string>
-	<key>kWeChatAppId</key>
-	<string>wx4150b21797fa0a5e</string>
-	<key>UMENG_APPKEY</key>
-	<string>545c8c97fd98c59807006c67</string>
-	<key>KBMK_Key</key>
-	<string>cbtkHchgOfETh6dZdWi1rytI</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -33,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.6</string>
+	<string>1.0.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -50,7 +34,19 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.6</string>
+	<string>1.0.7</string>
+	<key>KBMK_Key</key>
+	<string>cbtkHchgOfETh6dZdWi1rytI</string>
+	<key>KGTAppId</key>
+	<string>CgF0UHbnv0827eFprsyYT9</string>
+	<key>KGTAppKey</key>
+	<string>eAJBPqawMhAi406E0FcSh3</string>
+	<key>KGTAppSecret</key>
+	<string>rOSsO1iPvj6H39gltxdDJ6</string>
+	<key>KPlatformType</key>
+	<string>ios</string>
+	<key>KWeChatAppId</key>
+	<string>wx4150b21797fa0a5e</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -65,5 +61,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UMENG_APPKEY</key>
+	<string>545c8c97fd98c59807006c67</string>
+	<key>UMENG_ChannelId</key>
+	<string>www.welian.com</string>
 </dict>
 </plist>

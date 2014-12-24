@@ -12,6 +12,7 @@
 #import "MJExtension.h"
 #import "WLTextField.h"
 #import "ForgetPhoneController.h"
+#import "LogInUser.h"
 
 @interface LoginPhoneVC ()<UITextFieldDelegate>
 
@@ -146,12 +147,13 @@
             [mode setKeyValues:dataDic];
             [mode setCheckcode:self.pwdTextField.text];
             
+//            LogInUser *loginuser = [[LogInUser alloc] initWithEntity:<#(NSEntityDescription *)#> insertIntoManagedObjectContext:<#(NSManagedObjectContext *)#>]
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
             
             //保存用户信息到本地 归档
             [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-            
+
             //进入主页面
             MainViewController *mainVC = [[MainViewController alloc] init];
             [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
