@@ -14,6 +14,7 @@
 #import "MyFriendsController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "ChatMessageController.h"
 
 @interface NavTitleView : UIView
 {
@@ -202,6 +203,15 @@ single_implementation(MainViewController)
     [friendsVC.navigationItem setTitle:@"好友"];
     [friendsNav setTabBarItem:circleItem];
     
+    
+    // 聊天消息
+    UITabBarItem *chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
+    ChatMessageController *chatMessageVC = [[ChatMessageController alloc] initWithStyle:UITableViewStylePlain];
+    NavViewController *chatMeeageNav = [[NavViewController alloc] initWithRootViewController:chatMessageVC];
+    [chatMessageVC.navigationItem setTitle:@"消息"];
+    [chatMeeageNav setDelegate:self];
+    [chatMeeageNav setTabBarItem:chatMessageItem];
+    
     // 发现
     UITabBarItem *findItem = [self itemWithTitle:@"发现" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
     FindViewController *findVC = [[FindViewController alloc] init];
@@ -218,7 +228,7 @@ single_implementation(MainViewController)
     [meVC.navigationItem setTitle:@"我"];
     [meNav setTabBarItem:meItem];
     
-    [self setViewControllers:@[homeNav,friendsNav,findNav,meNav]];
+    [self setViewControllers:@[homeNav,friendsNav, chatMeeageNav,findNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 
     selectItem = homeItem;
@@ -249,7 +259,7 @@ single_implementation(MainViewController)
     if (selectItem == homeItem && item == homeItem) {
         [homeVC.refreshControl beginRefreshing];
         [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];
-        // 延迟2秒执行：
+        // 延迟0.5秒执行：
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

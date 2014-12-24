@@ -69,6 +69,27 @@
 		F53356381A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F533563A1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
 		F533563B1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
+		F53D4DFC1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
+		F53D4DFD1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
+		F53D4DFE1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
+		F53D4E331A4AABE700CA06C8 /* MyFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E321A4AABE700CA06C8 /* MyFriendUser.m */; };
+		F53D4E341A4AABE700CA06C8 /* MyFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E321A4AABE700CA06C8 /* MyFriendUser.m */; };
+		F53D4E351A4AABE700CA06C8 /* MyFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E321A4AABE700CA06C8 /* MyFriendUser.m */; };
+		F53D4E381A4AABE800CA06C8 /* LogInUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E371A4AABE800CA06C8 /* LogInUser.m */; };
+		F53D4E391A4AABE800CA06C8 /* LogInUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E371A4AABE800CA06C8 /* LogInUser.m */; };
+		F53D4E3A1A4AABE800CA06C8 /* LogInUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E371A4AABE800CA06C8 /* LogInUser.m */; };
+		F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
+		F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
+		F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
+		F53D4E421A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
+		F53D4E431A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
+		F53D4E441A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
+		F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
+		F53D4E481A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
+		F53D4E491A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
+		F53D4E501A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
+		F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
+		F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
 		F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
 		F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; };
@@ -158,7 +179,6 @@
 		F53DC2F31A49192600F5F712 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CE86CE19C012A000A9D14C /* MainViewController.m */; };
 		F53DC2F41A49192600F5F712 /* WLHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED8919CFC1B000E753E4 /* WLHUDView.m */; };
 		F53DC2F51A49192600F5F712 /* ZBExpressionSectionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D319ECFF5500B1A356 /* ZBExpressionSectionBar.m */; };
-		F53DC2F61A49192600F5F712 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761A1A4071330028FBAF /* BaseUser.m */; };
 		F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9419F684BF00D9E696 /* SWLongPressGestureRecognizer.m */; };
 		F53DC2F81A49192600F5F712 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AA019CEA9F500FE9273 /* NSString+MD5.m */; };
 		F53DC2F91A49192600F5F712 /* NSManagedObject+ManagedObjectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75ED1A4059D00028FBAF /* NSManagedObject+ManagedObjectQuery.m */; };
@@ -2211,8 +2231,6 @@
 		F59E76141A4071330028FBAF /* CompanyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E76121A4071330028FBAF /* CompanyModel.m */; };
 		F59E76171A4071330028FBAF /* SchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E76161A4071330028FBAF /* SchoolModel.m */; };
 		F59E76181A4071330028FBAF /* SchoolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E76161A4071330028FBAF /* SchoolModel.m */; };
-		F59E761B1A4071330028FBAF /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761A1A4071330028FBAF /* BaseUser.m */; };
-		F59E761C1A4071330028FBAF /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761A1A4071330028FBAF /* BaseUser.m */; };
 		F59E761F1A411E4C0028FBAF /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
 		F59E76201A411E4C0028FBAF /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
 		F5A3F8F61A41855900F06DDD /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
@@ -2903,6 +2921,21 @@
 		F53CF49C1A20809B00AB19E8 /* repost_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repost_bg@2x.png"; sourceTree = "<group>"; };
 		F53CF49E1A20B2B700AB19E8 /* CommentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCellView.h; sourceTree = "<group>"; };
 		F53CF49F1A20B2B700AB19E8 /* CommentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCellView.m; sourceTree = "<group>"; };
+		F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.xcdatamodel; sourceTree = "<group>"; };
+		F53D4DFA1A4A771300CA06C8 /* BaseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUser.h; sourceTree = "<group>"; };
+		F53D4DFB1A4A771300CA06C8 /* BaseUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUser.m; sourceTree = "<group>"; };
+		F53D4E311A4AABE700CA06C8 /* MyFriendUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFriendUser.h; sourceTree = "<group>"; };
+		F53D4E321A4AABE700CA06C8 /* MyFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFriendUser.m; sourceTree = "<group>"; };
+		F53D4E361A4AABE800CA06C8 /* LogInUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInUser.h; sourceTree = "<group>"; };
+		F53D4E371A4AABE800CA06C8 /* LogInUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInUser.m; sourceTree = "<group>"; };
+		F53D4E3B1A4AABE800CA06C8 /* FriendsFriendUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendUser.h; sourceTree = "<group>"; };
+		F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsFriendUser.m; sourceTree = "<group>"; };
+		F53D4E401A4AABE800CA06C8 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		F53D4E411A4AABE800CA06C8 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
+		F53D4E451A4AABE800CA06C8 /* NewFriendUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendUser.h; sourceTree = "<group>"; };
+		F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendUser.m; sourceTree = "<group>"; };
+		F53D4E4E1A4AAEA100CA06C8 /* ChatMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageController.h; sourceTree = "<group>"; };
+		F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageController.m; sourceTree = "<group>"; };
 		F53DC5871A49192600F5F712 /* weLianAppDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianAppDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53DC5881A49192700F5F712 /* weLianAppDis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianAppDis-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianAppDis-Info.plist"; sourceTree = "<absolute>"; };
 		F545FA4E1A066B6F0057CFC6 /* DockItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockItem.h; sourceTree = "<group>"; };
@@ -3039,8 +3072,6 @@
 		F59E76121A4071330028FBAF /* CompanyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyModel.m; sourceTree = "<group>"; };
 		F59E76151A4071330028FBAF /* SchoolModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolModel.h; sourceTree = "<group>"; };
 		F59E76161A4071330028FBAF /* SchoolModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolModel.m; sourceTree = "<group>"; };
-		F59E76191A4071330028FBAF /* BaseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseUser.h; sourceTree = "<group>"; };
-		F59E761A1A4071330028FBAF /* BaseUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseUser.m; sourceTree = "<group>"; };
 		F59E761D1A411E4C0028FBAF /* ICompanyResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICompanyResult.h; sourceTree = "<group>"; };
 		F59E761E1A411E4C0028FBAF /* ICompanyResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICompanyResult.m; sourceTree = "<group>"; };
 		F5A1A70919E8FF62003773F1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -4201,6 +4232,39 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		F53D4E4A1A4AAE4700CA06C8 /* ChatMessage(消息) */ = {
+			isa = PBXGroup;
+			children = (
+				F53D4E4B1A4AAE4700CA06C8 /* Controller */,
+				F53D4E4C1A4AAE4700CA06C8 /* Model */,
+				F53D4E4D1A4AAE4700CA06C8 /* View */,
+			);
+			path = "ChatMessage(消息)";
+			sourceTree = "<group>";
+		};
+		F53D4E4B1A4AAE4700CA06C8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F53D4E4E1A4AAEA100CA06C8 /* ChatMessageController.h */,
+				F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F53D4E4C1A4AAE4700CA06C8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F53D4E4D1A4AAE4700CA06C8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F579097E19C2E3F2009DB1B2 /* 首页images */ = {
 			isa = PBXGroup;
 			children = (
@@ -4362,10 +4426,20 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				F53D4E451A4AABE800CA06C8 /* NewFriendUser.h */,
+				F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */,
+				F53D4E401A4AABE800CA06C8 /* ChatMessage.h */,
+				F53D4E411A4AABE800CA06C8 /* ChatMessage.m */,
+				F53D4E3B1A4AABE800CA06C8 /* FriendsFriendUser.h */,
+				F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */,
+				F53D4E361A4AABE800CA06C8 /* LogInUser.h */,
+				F53D4E371A4AABE800CA06C8 /* LogInUser.m */,
+				F53D4E311A4AABE700CA06C8 /* MyFriendUser.h */,
+				F53D4E321A4AABE700CA06C8 /* MyFriendUser.m */,
+				F53D4DFA1A4A771300CA06C8 /* BaseUser.h */,
+				F53D4DFB1A4A771300CA06C8 /* BaseUser.m */,
 				F5E69B351A42D263001B19E5 /* InvestorUser.h */,
 				F5E69B361A42D263001B19E5 /* InvestorUser.m */,
-				F59E76191A4071330028FBAF /* BaseUser.h */,
-				F59E761A1A4071330028FBAF /* BaseUser.m */,
 				F59E76151A4071330028FBAF /* SchoolModel.h */,
 				F59E76161A4071330028FBAF /* SchoolModel.m */,
 				F59E76111A4071330028FBAF /* CompanyModel.h */,
@@ -4681,6 +4755,7 @@
 		F5CE862C19BFF44100A9D14C /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				F53D4E4A1A4AAE4700CA06C8 /* ChatMessage(消息) */,
 				F59E76061A405CE70028FBAF /* Model */,
 				F5CE869419BFF67500A9D14C /* Login(登陆) */,
 				F5CE862D19BFF44100A9D14C /* Find(发现) */,
@@ -6839,6 +6914,7 @@
 				F53DC2A51A49192600F5F712 /* FMDatabasePool.m in Sources */,
 				F53DC2A61A49192600F5F712 /* BasicTableViewController.m in Sources */,
 				F53DC2A71A49192600F5F712 /* UIImage+WebP.m in Sources */,
+				F53D4E491A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
 				F53DC2A81A49192600F5F712 /* MeSttingCell.m in Sources */,
 				F53DC2A91A49192600F5F712 /* HBVLinkedTextView.m in Sources */,
 				F53DC2AA1A49192600F5F712 /* NSMutableAttributedString+M80.m in Sources */,
@@ -6886,6 +6962,7 @@
 				F53DC2D41A49192600F5F712 /* IconTableViewCell.m in Sources */,
 				F53DC2D51A49192600F5F712 /* CTAssetsPageViewController.m in Sources */,
 				F53DC2D61A49192600F5F712 /* UserInfoBasicVC.m in Sources */,
+				F53D4E351A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F53DC2D71A49192600F5F712 /* HomeView.m in Sources */,
 				F53DC2D81A49192600F5F712 /* LocationprovinceController.m in Sources */,
 				F53DC2D91A49192600F5F712 /* CommentHeadFrame.m in Sources */,
@@ -6917,7 +6994,6 @@
 				F53DC2F31A49192600F5F712 /* MainViewController.m in Sources */,
 				F53DC2F41A49192600F5F712 /* WLHUDView.m in Sources */,
 				F53DC2F51A49192600F5F712 /* ZBExpressionSectionBar.m in Sources */,
-				F53DC2F61A49192600F5F712 /* BaseUser.m in Sources */,
 				F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */,
 				F53DC2F81A49192600F5F712 /* NSString+MD5.m in Sources */,
 				F53DC2F91A49192600F5F712 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
@@ -6928,6 +7004,7 @@
 				F53DC2FE1A49192600F5F712 /* UIButton+Badge.m in Sources */,
 				F53DC2FF1A49192600F5F712 /* UIAlertView+AFNetworking.m in Sources */,
 				F53DC3001A49192600F5F712 /* NSManagedObjectContext+e0571.m in Sources */,
+				F53D4E3A1A4AABE800CA06C8 /* LogInUser.m in Sources */,
 				F53DC3011A49192600F5F712 /* UIImage+MultiFormat.m in Sources */,
 				F53DC3021A49192600F5F712 /* FMResultSet.m in Sources */,
 				F53DC3031A49192600F5F712 /* WLBasicTrends.m in Sources */,
@@ -6938,6 +7015,7 @@
 				F53DC3081A49192600F5F712 /* MeViewController.m in Sources */,
 				F53DC3091A49192600F5F712 /* ForgetCoderController.m in Sources */,
 				F53DC30A1A49192600F5F712 /* ForgetPhoneController.m in Sources */,
+				F53D4E441A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F53DC30B1A49192600F5F712 /* DKPredicateBuilder.m in Sources */,
 				F53DC30C1A49192600F5F712 /* CTAssetItemViewController.m in Sources */,
 				F53DC30D1A49192600F5F712 /* CTAssetsPickerConstants.m in Sources */,
@@ -6990,6 +7068,7 @@
 				F53DC33C1A49192600F5F712 /* CTAssetsGroupViewCell.m in Sources */,
 				F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */,
 				F53DC33E1A49192600F5F712 /* CDVWelianPlugin.m in Sources */,
+				F53D4DFE1A4A771300CA06C8 /* BaseUser.m in Sources */,
 				F53DC33F1A49192600F5F712 /* HaderInfoCell.m in Sources */,
 				F53DC3401A49192600F5F712 /* WLStatusDock.m in Sources */,
 				F53DC3411A49192600F5F712 /* FeedAndZanCell.m in Sources */,
@@ -7052,6 +7131,7 @@
 				F53DC37A1A49192600F5F712 /* AFURLRequestSerialization.m in Sources */,
 				F53DC37B1A49192600F5F712 /* DKManagedObjectQuery.m in Sources */,
 				F53DC37C1A49192600F5F712 /* CTAssetsViewControllerTransition.m in Sources */,
+				F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F53DC37D1A49192600F5F712 /* SWTableViewCell.m in Sources */,
 				F53DC37E1A49192600F5F712 /* AFSecurityPolicy.m in Sources */,
 				F53DC37F1A49192600F5F712 /* NSData+ImageContentType.m in Sources */,
@@ -7062,6 +7142,7 @@
 				F53DC3841A49192600F5F712 /* AddFriendsController.m in Sources */,
 				F53DC3851A49192600F5F712 /* MJMethod.m in Sources */,
 				F53DC3861A49192600F5F712 /* InvestReqstModel.m in Sources */,
+				F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F53DC3871A49192600F5F712 /* InfoUserHaderCell.m in Sources */,
 				F53DC3881A49192600F5F712 /* MessageHomeModel.m in Sources */,
 				F53DC3891A49192600F5F712 /* LoginPhoneVC.m in Sources */,
@@ -7144,6 +7225,7 @@
 				F56649A01A2AFD56008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				F56649A11A2AFD56008A5830 /* CTAssetsViewController.m in Sources */,
 				F56649A21A2AFD56008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
+				F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
 				F56649A31A2AFD56008A5830 /* WLPhoto.m in Sources */,
 				F56649A41A2AFD56008A5830 /* FeedAndZanView.m in Sources */,
 				F56649A51A2AFD56008A5830 /* AppDelegate.mm in Sources */,
@@ -7162,6 +7244,8 @@
 				F56649B01A2AFD56008A5830 /* UserInfoBasicVC.m in Sources */,
 				F56649B11A2AFD56008A5830 /* HomeView.m in Sources */,
 				F56649B21A2AFD56008A5830 /* LocationprovinceController.m in Sources */,
+				F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
+				F53D4E421A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F56649B31A2AFD56008A5830 /* CommentHeadFrame.m in Sources */,
 				F56649B41A2AFD56008A5830 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				F56649B51A2AFD56008A5830 /* NSData+MD5Digest.m in Sources */,
@@ -7172,6 +7256,7 @@
 				F59E76131A4071330028FBAF /* CompanyModel.m in Sources */,
 				F56649BA1A2AFD56008A5830 /* MJRefreshConst.m in Sources */,
 				F56649BB1A2AFD56008A5830 /* AddWorkOrEducationController.m in Sources */,
+				F53D4E501A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */,
 				F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */,
 				F56649BE1A2AFD56008A5830 /* AFURLSessionManager.m in Sources */,
@@ -7196,6 +7281,7 @@
 				F56649D21A2AFD56008A5830 /* MJType.m in Sources */,
 				F56649D31A2AFD56008A5830 /* CTAssetScrollView.m in Sources */,
 				F56649D41A2AFD56008A5830 /* UIWebView+AFNetworking.m in Sources */,
+				F53D4E381A4AABE800CA06C8 /* LogInUser.m in Sources */,
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
 				10389B571A3EC46D001A785C /* UIView+Size.m in Sources */,
 				F59E76041A4059D00028FBAF /* IFBase.m in Sources */,
@@ -7345,7 +7431,6 @@
 				F5664A561A2AFD56008A5830 /* AboutViewController.m in Sources */,
 				F5664A571A2AFD56008A5830 /* CommonFriendsController.m in Sources */,
 				F5664A581A2AFD56008A5830 /* WLTool.m in Sources */,
-				F59E761B1A4071330028FBAF /* BaseUser.m in Sources */,
 				F5664A591A2AFD56008A5830 /* WLPhotoListView.m in Sources */,
 				F5664A5A1A2AFD56008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664A5B1A2AFD56008A5830 /* IWTextView.m in Sources */,
@@ -7357,6 +7442,7 @@
 				F5664A601A2AFD56008A5830 /* StaurCell.m in Sources */,
 				F5664A611A2AFD56008A5830 /* MJTypeEncoding.m in Sources */,
 				F5664A621A2AFD56008A5830 /* WLTogetherUser.m in Sources */,
+				F53D4E331A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664A631A2AFD56008A5830 /* NoListView.m in Sources */,
 				F5664A641A2AFD56008A5830 /* CertificationController.m in Sources */,
 				F5664A651A2AFD56008A5830 /* CTAssetsPickerController.m in Sources */,
@@ -7370,6 +7456,7 @@
 				F5B88FE11A35793200290B4F /* UIColor+_6jinzhi.m in Sources */,
 				F5664A6E1A2AFD56008A5830 /* UIColor+HBVHarmonies.m in Sources */,
 				10389B681A3F0740001A785C /* NSString+Extend.m in Sources */,
+				F53D4DFC1A4A771300CA06C8 /* BaseUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7388,6 +7475,7 @@
 				F5664C3C1A2AFDD5008A5830 /* FMDatabasePool.m in Sources */,
 				F5664C3D1A2AFDD5008A5830 /* BasicTableViewController.m in Sources */,
 				F5664C3E1A2AFDD5008A5830 /* UIImage+WebP.m in Sources */,
+				F53D4E481A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
 				F5664C3F1A2AFDD5008A5830 /* MeSttingCell.m in Sources */,
 				F5664C401A2AFDD5008A5830 /* HBVLinkedTextView.m in Sources */,
 				F5664C411A2AFDD5008A5830 /* NSMutableAttributedString+M80.m in Sources */,
@@ -7435,6 +7523,7 @@
 				F5664C681A2AFDD5008A5830 /* IconTableViewCell.m in Sources */,
 				F5664C691A2AFDD5008A5830 /* CTAssetsPageViewController.m in Sources */,
 				F5664C6A1A2AFDD5008A5830 /* UserInfoBasicVC.m in Sources */,
+				F53D4E341A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664C6B1A2AFDD5008A5830 /* HomeView.m in Sources */,
 				F5664C6C1A2AFDD5008A5830 /* LocationprovinceController.m in Sources */,
 				F5664C6D1A2AFDD5008A5830 /* CommentHeadFrame.m in Sources */,
@@ -7466,7 +7555,6 @@
 				F5664C861A2AFDD5008A5830 /* MainViewController.m in Sources */,
 				F5664C871A2AFDD5008A5830 /* WLHUDView.m in Sources */,
 				F5664C881A2AFDD5008A5830 /* ZBExpressionSectionBar.m in Sources */,
-				F59E761C1A4071330028FBAF /* BaseUser.m in Sources */,
 				F5664C891A2AFDD5008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				F5664C8A1A2AFDD5008A5830 /* NSString+MD5.m in Sources */,
 				F59E76031A4059D00028FBAF /* NSManagedObject+ManagedObjectQuery.m in Sources */,
@@ -7477,6 +7565,7 @@
 				F5664C8F1A2AFDD5008A5830 /* UIButton+Badge.m in Sources */,
 				F5664C901A2AFDD5008A5830 /* UIAlertView+AFNetworking.m in Sources */,
 				F59E75F71A4059D00028FBAF /* NSManagedObjectContext+e0571.m in Sources */,
+				F53D4E391A4AABE800CA06C8 /* LogInUser.m in Sources */,
 				F5664C911A2AFDD5008A5830 /* UIImage+MultiFormat.m in Sources */,
 				F5664C921A2AFDD5008A5830 /* FMResultSet.m in Sources */,
 				F5664C931A2AFDD5008A5830 /* WLBasicTrends.m in Sources */,
@@ -7487,6 +7576,7 @@
 				F5664C981A2AFDD5008A5830 /* MeViewController.m in Sources */,
 				F5664C991A2AFDD5008A5830 /* ForgetCoderController.m in Sources */,
 				F5664C9A1A2AFDD5008A5830 /* ForgetPhoneController.m in Sources */,
+				F53D4E431A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F59E75FF1A4059D00028FBAF /* DKPredicateBuilder.m in Sources */,
 				F5664C9B1A2AFDD5008A5830 /* CTAssetItemViewController.m in Sources */,
 				F5664C9C1A2AFDD5008A5830 /* CTAssetsPickerConstants.m in Sources */,
@@ -7539,6 +7629,7 @@
 				F5664CC21A2AFDD5008A5830 /* CTAssetsGroupViewCell.m in Sources */,
 				F5664CC31A2AFDD5008A5830 /* WLContentCellView.m in Sources */,
 				A4F647A51A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
+				F53D4DFD1A4A771300CA06C8 /* BaseUser.m in Sources */,
 				F5664CC41A2AFDD5008A5830 /* HaderInfoCell.m in Sources */,
 				F5664CC51A2AFDD5008A5830 /* WLStatusDock.m in Sources */,
 				F5664CC61A2AFDD5008A5830 /* FeedAndZanCell.m in Sources */,
@@ -7601,6 +7692,7 @@
 				F5664CFF1A2AFDD5008A5830 /* AFURLRequestSerialization.m in Sources */,
 				F59E75FB1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				F5664D001A2AFDD5008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
+				F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F5664D011A2AFDD5008A5830 /* SWTableViewCell.m in Sources */,
 				F5664D021A2AFDD5008A5830 /* AFSecurityPolicy.m in Sources */,
 				F5664D031A2AFDD5008A5830 /* NSData+ImageContentType.m in Sources */,
@@ -7611,6 +7703,7 @@
 				F5664D071A2AFDD5008A5830 /* AddFriendsController.m in Sources */,
 				F5664D081A2AFDD5008A5830 /* MJMethod.m in Sources */,
 				F5664D091A2AFDD5008A5830 /* InvestReqstModel.m in Sources */,
+				F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F5664D0A1A2AFDD5008A5830 /* InfoUserHaderCell.m in Sources */,
 				F5664D0B1A2AFDD5008A5830 /* MessageHomeModel.m in Sources */,
 				F5664D0C1A2AFDD5008A5830 /* LoginPhoneVC.m in Sources */,
@@ -8109,9 +8202,10 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = F59E760A1A405D170028FBAF /* weLian.xcdatamodel */;
+			currentVersion = F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

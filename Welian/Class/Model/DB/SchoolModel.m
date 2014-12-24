@@ -8,6 +8,7 @@
 
 #import "SchoolModel.h"
 #import "ISchoolResult.h"
+#import "LogInUser.h"
 
 @implementation SchoolModel
 
@@ -16,6 +17,7 @@
 @dynamic usid;
 @dynamic schoolname;
 @dynamic schoolid;
+@dynamic rsLogInUser;
 
 // 查询所有数据并返回
 + (NSArray *)allSchoolModels
@@ -26,7 +28,7 @@
 //创建新收据
 + (void)createCompanyModel:(ISchoolResult *)iSchool
 {
-    SchoolModel *schoolM = [self getCompanyModelWithUcid:iSchool.usid];
+    SchoolModel *schoolM = [self getCompanyModelWithUcid:iSchool.usid]; 
     if (!schoolM) {
         schoolM = [SchoolModel create];
     }

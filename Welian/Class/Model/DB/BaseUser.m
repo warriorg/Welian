@@ -2,7 +2,7 @@
 //  BaseUser.m
 //  Welian
 //
-//  Created by dong on 14/12/16.
+//  Created by dong on 14/12/24.
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
@@ -14,5 +14,19 @@
 @dynamic avatar;
 @dynamic name;
 @dynamic uid;
+@dynamic address;
+@dynamic email;
+@dynamic friendship;
+@dynamic investorauth;
+@dynamic inviteurl;
+@dynamic mobile;
+@dynamic startupauth;
+@dynamic company;
+@dynamic position;
+@dynamic provinceid;
+@dynamic provincename;
+@dynamic cityid;
+@dynamic cityname;
+@dynamic shareurl;
 
 @end

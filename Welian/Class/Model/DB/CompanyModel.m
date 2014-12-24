@@ -8,6 +8,7 @@
 
 #import "CompanyModel.h"
 #import "ICompanyResult.h"
+#import "LogInUser.h"
 
 @implementation CompanyModel
 
@@ -16,7 +17,7 @@
 @dynamic jobid;
 @dynamic jobname;
 @dynamic ucid;
-
+@dynamic rsLogInUser;
 
 //创建新收据
 + (void)createCompanyModel:(ICompanyResult *)iCompany
