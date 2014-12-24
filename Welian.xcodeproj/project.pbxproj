@@ -90,6 +90,9 @@
 		F53D4E501A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
 		F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
 		F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
+		F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */; };
+		F53D4E561A4AB62600CA06C8 /* LoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */; };
+		F53D4E571A4AB62600CA06C8 /* LoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */; };
 		F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
 		F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; };
@@ -2936,6 +2939,8 @@
 		F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendUser.m; sourceTree = "<group>"; };
 		F53D4E4E1A4AAEA100CA06C8 /* ChatMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageController.h; sourceTree = "<group>"; };
 		F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageController.m; sourceTree = "<group>"; };
+		F53D4E531A4AB62600CA06C8 /* LoginUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginUserModel.h; sourceTree = "<group>"; };
+		F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginUserModel.m; sourceTree = "<group>"; };
 		F53DC5871A49192600F5F712 /* weLianAppDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianAppDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53DC5881A49192700F5F712 /* weLianAppDis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianAppDis-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianAppDis-Info.plist"; sourceTree = "<absolute>"; };
 		F545FA4E1A066B6F0057CFC6 /* DockItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockItem.h; sourceTree = "<group>"; };
@@ -4459,6 +4464,8 @@
 				F59E761E1A411E4C0028FBAF /* ICompanyResult.m */,
 				F5A3F8F41A41855900F06DDD /* ISchoolResult.h */,
 				F5A3F8F51A41855900F06DDD /* ISchoolResult.m */,
+				F53D4E531A4AB62600CA06C8 /* LoginUserModel.h */,
+				F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -6933,6 +6940,7 @@
 				F53DC2B71A49192600F5F712 /* UserInfoModel.m in Sources */,
 				F53DC2B81A49192600F5F712 /* MLEmojiLabel.m in Sources */,
 				F53DC2B91A49192600F5F712 /* NSUserDefaults+Standard.m in Sources */,
+				F53D4E571A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F53DC2BA1A49192600F5F712 /* FindViewController.m in Sources */,
 				F53DC2BB1A49192600F5F712 /* MBProgressHUD.m in Sources */,
 				F53DC2BC1A49192600F5F712 /* MJMember.m in Sources */,
@@ -7389,6 +7397,7 @@
 				F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */,
 				F59E76001A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
+				F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F5664A311A2AFD56008A5830 /* TOActivitySafari.m in Sources */,
 				F59E760F1A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
 				F5664A321A2AFD56008A5830 /* LXActivity.m in Sources */,
@@ -7494,6 +7503,7 @@
 				F5664C4D1A2AFDD5008A5830 /* UserInfoModel.m in Sources */,
 				F5664C4E1A2AFDD5008A5830 /* MLEmojiLabel.m in Sources */,
 				10389B5E1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */,
+				F53D4E561A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */,
 				F5664C501A2AFDD5008A5830 /* MBProgressHUD.m in Sources */,
 				F5664C511A2AFDD5008A5830 /* MJMember.m in Sources */,
