@@ -26,6 +26,12 @@
 		A4776ACA1A44285F0022E211 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B61A43C2B9002E66FC /* MediaPlayer.framework */; };
 		A4776ACB1A4428830022E211 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B81A43C2D5002E66FC /* AVFoundation.framework */; };
 		A4776ACC1A44288B0022E211 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */; };
+		A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
+		A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
+		A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
+		A4C8E94C1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
+		A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
+		A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A4F646AF1A43C287002E66FC /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4F646B11A43C290002E66FC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4F646B31A43C29F002E66FC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -2303,6 +2309,10 @@
 		10389B671A3F0740001A785C /* NSString+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extend.m"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		A4C8E9451A4ACA1A003A5A72 /* ChatMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageViewCell.h; sourceTree = "<group>"; };
+		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
+		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
+		A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
 		A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A4F646B01A43C290002E66FC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -3541,6 +3551,8 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */,
+				A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */,
 				10389B661A3F0740001A785C /* NSString+Extend.h */,
 				10389B671A3F0740001A785C /* NSString+Extend.m */,
 				10389B591A3EC789001A785C /* NSUserDefaults+Standard.h */,
@@ -4266,6 +4278,8 @@
 		F53D4E4D1A4AAE4700CA06C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4C8E9451A4ACA1A003A5A72 /* ChatMessageViewCell.h */,
+				A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7083,6 +7097,7 @@
 				F53DC3421A49192600F5F712 /* CommentInfoController.m in Sources */,
 				F53DC3431A49192600F5F712 /* UserInfoController.m in Sources */,
 				F53DC3441A49192600F5F712 /* UIImageView+AFNetworking.m in Sources */,
+				A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
 				F53DC3451A49192600F5F712 /* CommentCellFrame.m in Sources */,
 				F53DC3461A49192600F5F712 /* AFHTTPRequestOperation.m in Sources */,
 				F53DC3471A49192600F5F712 /* TQRichTextEmojiRun.m in Sources */,
@@ -7117,6 +7132,7 @@
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */,
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
+				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */,
 				F53DC3681A49192600F5F712 /* LXActivity.m in Sources */,
 				F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */,
@@ -7215,6 +7231,7 @@
 				F566498F1A2AFD56008A5830 /* PinyinHelper.m in Sources */,
 				F56649901A2AFD56008A5830 /* InvestListController.m in Sources */,
 				F56649911A2AFD56008A5830 /* MJRefreshHeaderView.m in Sources */,
+				A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
 				F56649921A2AFD56008A5830 /* MJPhotoProgressView.m in Sources */,
 				F56649931A2AFD56008A5830 /* UserInfoModel.m in Sources */,
 				F56649941A2AFD56008A5830 /* MLEmojiLabel.m in Sources */,
@@ -7342,6 +7359,7 @@
 				F5664A011A2AFD56008A5830 /* WLCellHead.m in Sources */,
 				F5664A021A2AFD56008A5830 /* TOWebViewController.m in Sources */,
 				F5664A031A2AFD56008A5830 /* InvestorUserCell.m in Sources */,
+				A4C8E94C1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F5664A041A2AFD56008A5830 /* SWCellScrollView.m in Sources */,
 				F5664A051A2AFD56008A5830 /* InvestViewController.m in Sources */,
 				F5664A061A2AFD56008A5830 /* AFURLResponseSerialization.m in Sources */,
@@ -7646,6 +7664,7 @@
 				F5664CC71A2AFDD5008A5830 /* CommentInfoController.m in Sources */,
 				F5664CC81A2AFDD5008A5830 /* UserInfoController.m in Sources */,
 				F5664CC91A2AFDD5008A5830 /* UIImageView+AFNetworking.m in Sources */,
+				A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
 				F5664CCA1A2AFDD5008A5830 /* CommentCellFrame.m in Sources */,
 				F5664CCB1A2AFDD5008A5830 /* AFHTTPRequestOperation.m in Sources */,
 				F5664CCC1A2AFDD5008A5830 /* TQRichTextEmojiRun.m in Sources */,
@@ -7680,6 +7699,7 @@
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */,
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
+				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */,
 				F5664CEC1A2AFDD5008A5830 /* LXActivity.m in Sources */,
 				F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */,
