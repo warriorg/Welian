@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserInfoModel : NSObject <NSCoding>
+@class LogInUser;
+
+@interface UserInfoModel : NSObject
+
++ (UserInfoModel *)userinfoWithLoginUser:(LogInUser *)userinf;
 
 /**  对外分享url   */
 @property (nonatomic, strong) NSString *shareurl;

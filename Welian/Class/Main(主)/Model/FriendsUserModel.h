@@ -11,6 +11,6 @@
 @interface FriendsUserModel : UserInfoModel
 
 //**  是否加星*//
-@property (nonatomic, assign) int status;
+@property (nonatomic, strong) NSNumber *status;
 
 @end

@@ -225,7 +225,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
     
     NSArray *buttons = @[@"举报"];
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
         buttons = @[@"删除该动态",@"举报"];
     }
@@ -482,7 +483,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         _selecCommFrame = _dataArrayM[indexPath.row];
     }
     
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:nil, nil];
         [sheet setTag:555+0];

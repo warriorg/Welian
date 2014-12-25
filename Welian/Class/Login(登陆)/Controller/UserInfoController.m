@@ -101,10 +101,10 @@
             [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
                 NSDictionary *dataDic = JSON;
                 if (dataDic) {
-                    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                    [mode setKeyValues:dataDic];
+                    UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                     [mode setCheckcode:self.pwdString];
-                    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                    [LogInUser createLogInUserModel:mode];
+//                    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                     MainViewController *mainVC = [[MainViewController alloc] init];
                     [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                 }

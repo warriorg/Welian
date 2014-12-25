@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SWTableViewCell.h"
+#import "FriendsUserModel.h"
 
 @interface FriendCell : UITableViewCell
 
@@ -17,6 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
-@property (nonatomic, strong) UserInfoModel *userMode;
+@property (nonatomic, strong) FriendsUserModel *userMode;
 
 @end

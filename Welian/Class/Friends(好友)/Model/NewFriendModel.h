@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSString *avatar;
 
 /**  投资认证   */
-//@property (nonatomic, strong) NSNumber *investorauth;
+@property (nonatomic, strong) NSNumber *investorauth;
 
 /**  创业认证   */
 //@property (nonatomic, strong) NSNumber *startupauth;

@@ -12,6 +12,8 @@
 #import "WLHUDView.h"
 #import "WLDataDBTool.h"
 #import "UIColor+_6jinzhi.h"
+#import "LogInUser.h"
+
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
@@ -65,9 +67,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-//#define WLHttpServer  @"http://test.welian.com:8080"
+#define WLHttpServer  @"http://test.welian.com:8080"
 //正式环境
-#define WLHttpServer  @"http://www.welian.com:8080"
+//#define WLHttpServer  @"http://www.welian.com:8080"
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"

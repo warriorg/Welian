@@ -15,6 +15,7 @@
 
 @interface LogInUser : BaseUser
 
+@property (nonatomic, retain) NSNumber * isNow;
 @property (nonatomic, retain) NSString * checkcode;
 @property (nonatomic, retain) NSString * sessionid;
 
@@ -23,15 +24,55 @@
 @property (nonatomic, retain) NSSet *rsMyFriends;
 @property (nonatomic, retain) NSSet *rsFriendsFriends;
 @property (nonatomic, retain) NSSet *rsNewFriends;
-@end
-
-@interface LogInUser (CoreDataGeneratedAccessors)
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
 
 //通过ucid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;
+
+// 当前登录账户信息
++ (LogInUser *)getNowLogInUser;
+
+
++ (void)setUserUid:(NSNumber *)uid;
++ (void)setUserPosition:(NSString*)position;
++ (void)setUserProvinceid:(NSNumber *)provinceid;
+
++ (void)setUserProvincename:(NSString *)provincename;
+
++ (void)setUserCityid:(NSNumber *)cityid;
+
++ (void)setUserCityname:(NSString *)cityname;
+
++ (void)setUserFriendship:(NSNumber *)friendship;
++ (void)setUserShareurl:(NSString *)shareurl;
+
++ (void)setUserAvatar:(NSString *)avatar;
+
++ (void)setUserName:(NSString *)name;
+
++ (void)setUserAddress:(NSString *)address;
+
++ (void)setUserEmail:(NSString *)email;
+
++ (void)setUserinvestorauth:(NSNumber *)investorauth;
+
++ (void)setUserstartupauth:(NSNumber *)startupauth;
+
++ (void)setUsercompany:(NSString *)company;
+
++ (void)setUsercheckcode:(NSString *)checkcode;
+
++ (void)setUserSessionid:(NSString *)sessionid;
+
++ (void)setUserisNow:(BOOL)isnow;
+
+
+
+@end
+
+@interface LogInUser (CoreDataGeneratedAccessors)
 
 - (void)addRsCompanysObject:(CompanyModel *)value;
 - (void)removeRsCompanysObject:(CompanyModel *)value;

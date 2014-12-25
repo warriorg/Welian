@@ -98,7 +98,8 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
         NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
         
@@ -169,8 +170,8 @@ single_implementation(MainViewController)
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
 
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     UIImageView *a = [[UIImageView alloc] init];
     [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
