@@ -8,19 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserInfoModel : NSObject <NSCoding>
+@class LogInUser;
+
+@interface UserInfoModel : NSObject
+
++ (UserInfoModel *)userinfoWithLoginUser:(LogInUser *)userinf;
 
 /**  对外分享url   */
 @property (nonatomic, strong) NSString *shareurl;
 
 /**  投资者认证   */
-@property (nonatomic, strong) NSString *investorauth;
+@property (nonatomic, strong) NSNumber *investorauth;
 
 /**  创业者认证   */
-@property (nonatomic, strong) NSString *startupauth;
+@property (nonatomic, strong) NSNumber *startupauth;
 
 /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-@property (nonatomic, strong) NSString *friendship;
+@property (nonatomic, strong) NSNumber *friendship;
 
 /**
  * 用户姓名
@@ -48,7 +52,7 @@
 @property (nonatomic, strong) NSString *email;
 
 /**省id*/
-@property (nonatomic, strong) NSString *provinceid;
+@property (nonatomic, strong) NSNumber *provinceid;
 
 /**  省份名称   */
 @property (nonatomic, strong) NSString *provincename;
@@ -57,7 +61,7 @@
 @property (nonatomic, strong) NSString *address;
 
 /**  城市id*/
-@property (nonatomic, strong) NSString *cityid;
+@property (nonatomic, strong) NSNumber *cityid;
 
 /**  城市名称   */
 @property (nonatomic, strong) NSString *cityname;

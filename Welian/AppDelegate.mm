@@ -92,32 +92,34 @@ BMKMapManager* _mapManager;
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    DLog(@"%@",mode.description);
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
         
-        NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-        [reqstDic setObject:mode.mobile forKey:@"mobile"];
-        [reqstDic setObject:mode.checkcode forKey:@"password"];
-        [reqstDic setObject:KPlatformType forKey:@"platform"];
-        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-            
-            [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-        }
-
-        [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-            NSDictionary *dataDic = JSON;
-            if (dataDic) {
-                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                [mode setKeyValues:dataDic];
-                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-                
-                // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
-//                [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
-            }
-            
-        } fail:^(NSError *error) {
-            
-        } isHUD:NO];
+//        NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+//        [reqstDic setObject:mode.mobile forKey:@"mobile"];
+//        [reqstDic setObject:mode.checkcode forKey:@"password"];
+//        [reqstDic setObject:KPlatformType forKey:@"platform"];
+//        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+//            
+//            [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+//        }
+//
+//        [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+//            NSDictionary *dataDic = JSON;
+//            if (dataDic) {
+//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//                [mode setKeyValues:dataDic];
+////                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//                [MOC save];
+//                // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
+////                [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
+//            }
+//            
+//        } fail:^(NSError *error) {
+//            
+//        } isHUD:NO];
 
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
@@ -359,8 +361,10 @@ BMKMapManager* _mapManager;
     } fail:^(NSError *error) {
         
     }];
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
-    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//    UserInfoModel *mode = [[UserInfoModel alloc] init];
+//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [[LogInUser getNowLogInUser] setIsNow:@(0)];
+    [MOC save];
     [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];

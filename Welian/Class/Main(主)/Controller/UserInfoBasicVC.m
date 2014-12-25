@@ -113,7 +113,8 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)requestFriend
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
@@ -175,7 +176,8 @@ static NSString *staurCellid = @"staurCellid";
     if (self) {
         [self.tableView setSectionHeaderHeight:0.0];
         
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        LogInUser *mode = [LogInUser getNowLogInUser];
         if (!([mode.uid integerValue]==[_userMode.uid integerValue])) {
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];

@@ -179,7 +179,8 @@ static NSString *frnewCellid = @"frnewCellid";
             [self jieshouFriend:indexPath];
         }else if ([newFM.type isEqualToString:@"friendCommand"]){
             
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            LogInUser *mode = [LogInUser getNowLogInUser];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFM.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             

@@ -20,7 +20,7 @@
 @dynamic rsLogInUser;
 
 //创建新收据
-+ (void)createCompanyModel:(ICompanyResult *)iCompany
++ (CompanyModel*)createCompanyModel:(ICompanyResult *)iCompany
 {
     CompanyModel *company = [self getCompanyModelWithUcid:iCompany.ucid];
     if (!company) {
@@ -36,8 +36,10 @@
     company.jobname = iCompany.jobname;
     company.jobid = iCompany.jobid;
     company.ucid = iCompany.ucid;
-    
+    company.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
+    return company;
+
 }
 
 //通过ucid查询

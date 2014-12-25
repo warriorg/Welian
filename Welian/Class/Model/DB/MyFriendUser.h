@@ -10,13 +10,20 @@
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
 
-@class ChatMessage, LogInUser;
+@class ChatMessage, LogInUser, FriendsUserModel;
 
 @interface MyFriendUser : BaseUser
 
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSSet *rsChatMessages;
 @property (nonatomic, retain) LogInUser *rsLogInUser;
+
+//创建新收据
++ (MyFriendUser *)createMyFriendUserModel:(FriendsUserModel *)userInfoM;
+
+// //通过uid查询
++ (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
+
 @end
 
 @interface MyFriendUser (CoreDataGeneratedAccessors)

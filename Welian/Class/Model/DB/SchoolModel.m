@@ -26,7 +26,7 @@
 }
 
 //创建新收据
-+ (void)createCompanyModel:(ISchoolResult *)iSchool
++ (SchoolModel *)createCompanyModel:(ISchoolResult *)iSchool
 {
     SchoolModel *schoolM = [self getCompanyModelWithUcid:iSchool.usid]; 
     if (!schoolM) {
@@ -41,9 +41,9 @@
     schoolM.specialtyname = iSchool.specialtyname;
     schoolM.specialtyid = iSchool.specialtyid;
     schoolM.usid = iSchool.usid;
-    
+    schoolM.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
-    
+    return schoolM;
 }
 
 //通过ucid查询

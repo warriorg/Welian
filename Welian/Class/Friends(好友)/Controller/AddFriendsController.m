@@ -271,7 +271,8 @@ static NSString *fridcellid = @"fridcellid";
             
             if ([[dic objectForKey:@"n"] isEqualToString:@"1"]) {
                 
-                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+                LogInUser *mode = [LogInUser getNowLogInUser];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_selecFriend.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 
@@ -294,8 +295,8 @@ static NSString *fridcellid = @"fridcellid";
 #pragma mark - 分享到微信
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     NSData *data = [[NSData alloc]initWithBase64EncodedString:[UserDefaults objectForKey:@"icon"] options:NSDataBase64Encoding64CharacterLineLength];
     
     UIImage *shareImage = [UIImage imageWithData:data];

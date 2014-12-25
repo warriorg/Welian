@@ -26,13 +26,13 @@
 - (UIImageView*)iconImage
 {
     if (nil == _iconImage) {
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        LogInUser *mode = [LogInUser getNowLogInUser];
         _iconImage = [[UIImageView alloc] init];
         
         [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         [_iconImage setUserInteractionEnabled:YES];
         [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-//        [_iconImage setContentMode:UIViewContentModeScaleAspectFit];
     }
     return _iconImage;
 }
@@ -41,9 +41,9 @@
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
     // 1.封装图片数据
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     // 替换为中等尺寸图片
-    NSString *url = mode.avatar;
+    NSString *url = [LogInUser getNowLogInUser].avatar;
     MJPhoto *photo = [[MJPhoto alloc] init];
     url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
     url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
@@ -77,7 +77,8 @@
 - (void)showUserCar
 {
     UserCardController *carVC = [[UserCardController alloc] init];
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
+    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getNowLogInUser]];
     [carVC setUserinfoM:mode];
     [self.navigationController pushViewController:carVC animated:YES];
 }
@@ -133,12 +134,13 @@
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *modeuser = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    
     if (indexPath.section==0) {
         [self.iconImage setFrame:CGRectMake(self.view.bounds.size.width-70, 10, 40, 40)];
         [cell.contentView addSubview:self.iconImage];
         
-//        [cell setAccessoryView:self.iconImage];
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
             
@@ -189,13 +191,15 @@
                 controller = [[WorksListController alloc] initWithType:WLCompany];
             }
         }else {
-
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+            LogInUser *mode = [LogInUser getNowLogInUser];
+//            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
             if (indexPath.row==0) {
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
-                        [mode setName:userInfo];
-                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//                        [mode setName:userInfo];
+                        [LogInUser setUserName:userInfo];
+                        
+//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -208,8 +212,8 @@
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     
                     [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
-                        [mode setCompany:userInfo];
-                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [LogInUser setUsercompany:userInfo];
+//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
@@ -222,8 +226,8 @@
             }else if (indexPath.row ==2){
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
-                        [mode setPosition:userInfo];
-                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [LogInUser setUserPosition:userInfo];
+//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
  
@@ -237,9 +241,8 @@
             }else if (indexPath.row ==3){
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
-                        [mode setEmail:userInfo];
-                        
-                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [LogInUser setUserEmail:userInfo];
+//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -258,9 +261,9 @@
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"address":userInfo} success:^(id JSON) {
                         
-                        [mode setAddress:userInfo];
-                        
-                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+                        [LogInUser setUserAddress:userInfo];
+
+//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -281,12 +284,14 @@
 
 - (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    [mode setProvincename:locationDic[@"provname"]];
-    [mode setCityname:locationDic[@"cityname"]];
-    [mode setCityid:locationDic[@"cityid"]];
-    [mode setProvinceid:locationDic[@"provid"]];
-    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    
+    [LogInUser setUserProvincename:locationDic[@"provname"]];
+    [LogInUser setUserCityname:locationDic[@"cityname"]];
+    [LogInUser setUserCityid:locationDic[@"cityid"]];
+    [LogInUser setUserProvinceid:locationDic[@"provid"]];
+    
+//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     
     [WLHttpTool saveProfileParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} success:^(id JSON) {
@@ -307,9 +312,9 @@
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
     [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        [mode setAvatar:[JSON objectForKey:@"url"]];
-        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];
+//        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         [self.iconImage setImage:image];
 
         [UserDefaults setObject:avatarStr forKey:@"icon"];

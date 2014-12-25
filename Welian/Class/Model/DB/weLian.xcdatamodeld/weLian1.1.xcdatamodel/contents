@@ -38,6 +38,7 @@
     </entity>
     <entity name="LogInUser" representedClassName="LogInUser" parentEntity="BaseUser" syncable="YES">
         <attribute name="checkcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isNow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sessionid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsCompanys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CompanyModel" inverseName="rsLogInUser" inverseEntity="CompanyModel" syncable="YES"/>
         <relationship name="rsFriendsFriends" optional="YES" toMany="YES" maxCount="15" deletionRule="Cascade" destinationEntity="FriendsFriendUser" inverseName="rsLogInUser" inverseEntity="FriendsFriendUser" syncable="YES"/>
@@ -74,14 +75,14 @@
     </entity>
     <elements>
         <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="58"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
+        <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="58"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
-        <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
-        <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
-        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="148"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="165"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="88"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="133"/>
-        <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="58"/>
-        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="58"/>
+        <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
+        <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
     </elements>
 </model>

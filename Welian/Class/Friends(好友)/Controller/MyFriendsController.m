@@ -19,7 +19,7 @@
 #import "NewFriendController.h"
 #import "FriendsFriendController.h"
 
-@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,SWTableViewCellDelegate,ABPeoplePickerNavigationControllerDelegate>
+@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate>
 
 {
     NSInteger _count;
@@ -253,7 +253,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
-        UserInfoModel *modeIM = self.filterArray[indexPath.row];
+        FriendsUserModel *modeIM = self.filterArray[indexPath.row];
         [fcell setUserMode:modeIM];
 //        [fcell setDelegate:self];
         return fcell;
@@ -284,12 +284,10 @@ static NSString *fridcellid = @"fridcellid";
             
             FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
 #warning  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++标星好友
-//            [fcell setRightUtilityButtons:[self rightButtons]];
-//            [fcell setDelegate:self];
             
             NSDictionary *usersDic = self.allArray[indexPath.section-1];
             NSArray *modear = usersDic[@"userF"];
-            UserInfoModel *modeIM = modear[indexPath.row];
+            FriendsUserModel *modeIM = modear[indexPath.row];
             
             [fcell setUserMode:modeIM];
             return fcell;
@@ -301,7 +299,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UserInfoModel *userMode;
+    FriendsUserModel *userMode;
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         userMode = self.filterArray[indexPath.row];
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
@@ -353,91 +351,6 @@ static NSString *fridcellid = @"fridcellid";
         [self.filterArray addObjectsFromArray:[aaa[@"userF"] filteredArrayUsingPredicate:pre]];
     }
 }
-
-
-
-- (NSArray *)rightButtons
-{
-    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor lightGrayColor] normalIcon:[UIImage imageNamed:@"me_myfriend_star"] selectedIcon:[UIImage imageNamed:@"me_myfriend_star_pre"]];
-    
-    return rightUtilityButtons;
-}
-
-
-#pragma mark - SWTableViewDelegate
-
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
-{
-    switch (state) {
-        case 0:
-            DLog(@"utility buttons closed");
-            break;
-        case 1:
-            DLog(@"left utility buttons open");
-            break;
-        case 2:
-            DLog(@"right utility buttons open");
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
-{
-    switch (index) {
-        case 0:
-            DLog(@"left button 0 was pressed");
-            break;
-        case 1:
-            DLog(@"left button 1 was pressed");
-            break;
-        case 2:
-            DLog(@"left button 2 was pressed");
-            break;
-        case 3:
-            DLog(@"left btton 3 was pressed");
-        default:
-            break;
-    }
-}
-
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
-{
-    switch (index) {
-        case 0:
-        {
-            NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
-            
-            [cell hideUtilityButtonsAnimated:YES];
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
-{
-    
-    return YES;
-}
-
-- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
-{
-    return YES;
-}
-
-
-
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return @"aa";
-//}
 
 
 - (void)didReceiveMemoryWarning {

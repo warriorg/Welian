@@ -84,7 +84,10 @@ static NSString *meinfocellid = @"MeinfoCell";
     if (indexPath.section==0) {
         MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
         
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        UserInfoModel *modeuser = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        
+        LogInUser *mode = [LogInUser getNowLogInUser];
+        
         [cell.MyNameLabel setText:mode.name];
         [cell.deleLabel setText:[NSString stringWithFormat:@"%@    %@",mode.position,mode.company]];
         [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
