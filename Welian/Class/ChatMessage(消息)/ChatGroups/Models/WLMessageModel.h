@@ -50,5 +50,7 @@
 
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;
+- (BOOL)sended;
+- (void)setSended:(BOOL)sended;
 
 @end

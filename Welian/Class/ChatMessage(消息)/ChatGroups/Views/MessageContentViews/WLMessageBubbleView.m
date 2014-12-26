@@ -155,6 +155,15 @@
     WLBubbleMessageMediaType currentType = message.messageMediaType;
     
     _voiceDurationLabel.hidden = YES;
+    //是否发送失败
+    _sendFailedBtn.hidden = message.sended;
+    //停止加载
+    if ((message.sended && message.bubbleMessageType == WLBubbleMessageTypeSending) || (message.bubbleMessageType == WLBubbleMessageTypeReceiving)){
+        [_activityIndicatorView stopAnimating];
+    }else{
+        [_activityIndicatorView startAnimating];
+    }
+    
     switch (currentType) {
         case WLBubbleMessageMediaTypeVoice: {
             _voiceDurationLabel.hidden = NO;
@@ -340,6 +349,28 @@
             [self addSubview:voiceUnreadDotImageView];
             _voiceUnreadDotImageView = voiceUnreadDotImageView;
         }
+        
+        //7.发送失败按钮
+        if(!_sendFailedBtn){
+            UIButton *sendFailedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            sendFailedBtn.backgroundColor = [UIColor clearColor];
+            [sendFailedBtn setImage:[UIImage imageNamed:@"circle_chat_sendfailed"] forState:UIControlStateNormal];
+            sendFailedBtn.hidden = YES;
+            [sendFailedBtn sizeToFit];
+            [self addSubview:sendFailedBtn];
+            _sendFailedBtn = sendFailedBtn;
+//            [sendFailedBtn setDebug:YES];
+        }
+        
+        //8.发送的时候的加载控件
+        if (!_activityIndicatorView) {
+            UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            activityIndicatorView.hidesWhenStopped = YES;
+//            activityIndicatorView.center = CGPointMake(CGRectGetWidth(self.bounds) / 2.0, CGRectGetHeight(self.bounds) / 2.0);
+            [self addSubview:activityIndicatorView];
+            _activityIndicatorView = activityIndicatorView;
+            [_activityIndicatorView startAnimating];
+        }
     }
     return self;
 }
@@ -351,6 +382,8 @@
     _bubblePhotoImageView = nil;
     _animationVoiceImageView = nil;
     _voiceUnreadDotImageView = nil;
+    _sendFailedBtn = nil;
+    _activityIndicatorView = nil;
     _voiceDurationLabel = nil;
     _emotionImageView = nil;
     _videoPlayImageView = nil;
@@ -363,6 +396,9 @@
     
     WLBubbleMessageMediaType currentType = self.message.messageMediaType;
     CGRect bubbleFrame = [self bubbleFrame];
+    //重新设置发送失败按钮的位置
+    [self resetSendFailedBtnFrameWithBubbleFrame:bubbleFrame];
+    [self resetActivityIndicatorViewWithBubbleFrame:bubbleFrame];
     
     switch (currentType) {
         case WLBubbleMessageMediaTypeText:
@@ -425,6 +461,22 @@
     voiceUnreadDotFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x + _voiceUnreadDotImageView.frame.size.width : bubbleFrame.origin.x + bubbleFrame.size.width - _voiceUnreadDotImageView.frame.size.width * 2);
     voiceUnreadDotFrame.origin.y = bubbleFrame.size.height/2 + _voiceUnreadDotImageView.frame.size.height/2 - 2;
     _voiceUnreadDotImageView.frame = voiceUnreadDotFrame;
+}
+
+//重新设置发送失败按钮的位置
+- (void)resetSendFailedBtnFrameWithBubbleFrame:(CGRect)bubbleFrame{
+    CGRect sendFailedFrame = _sendFailedBtn.frame;
+    sendFailedFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x - _sendFailedBtn.frame.size.width - 5 : bubbleFrame.origin.x + bubbleFrame.size.width + 5);
+    sendFailedFrame.origin.y = bubbleFrame.size.height/2 - 2;
+    _sendFailedBtn.frame = sendFailedFrame;
+}
+
+//重新设置加载网络控件位置
+- (void)resetActivityIndicatorViewWithBubbleFrame:(CGRect)bubbleFrame{
+    CGRect sendFailedFrame = _activityIndicatorView.frame;
+    sendFailedFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x - _activityIndicatorView.frame.size.width - 5 : bubbleFrame.origin.x + bubbleFrame.size.width + 5);
+    sendFailedFrame.origin.y = bubbleFrame.size.height/2 - 2;
+    _activityIndicatorView.frame = sendFailedFrame;
 }
 
 

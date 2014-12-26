@@ -17,6 +17,7 @@
 - (WLMessage *)getTextMessageWithBubbleMessageType:(WLBubbleMessageType)bubbleMessageType {
     WLMessage *textMessage = [[WLMessage alloc] initWithText:@"Call Me 15915895880. 这是华捷微信，为什么模仿这个页面效果呢？希望微信团队能看到我们在努力，请微信团队给个机会，让我好好的努力靠近大神，希望自己也能发亮，好像有点过分的希望了，如果大家喜欢这个开源库，请大家帮帮忙支持这个开源库吧！我是Jack，叫华仔也行，曾宪华就是我啦！" sender:[LogInUser getNowLogInUser].name timestamp:[NSDate distantPast]];
     textMessage.avator = [UIImage imageNamed:@"avator"];
+    textMessage.sended = YES;
     textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;// @"http://www.pailixiu.com/jack/meIcon@2x.png";
     textMessage.bubbleMessageType = bubbleMessageType;
     
@@ -113,6 +114,18 @@
     }];
 }
 
+//发送消息
+- (void)sendMessage:(WLMessage *)message
+{
+    NSDictionary *param = @{@"type":@(WLBubbleMessageMediaTypeText),@"msg":message.text,@"touser":@(10019)};
+    [WLHttpTool sendMessageParameterDic:param
+                                success:^(id JSON) {
+                                    
+                                } fail:^(NSError *error) {
+                                    
+                                }];
+}
+
 /**
  *  发送文本消息的回调方法
  *
@@ -125,7 +138,11 @@
     textMessage.avator = [UIImage imageNamed:@"avator"];
     textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
     textMessage.sender = [LogInUser getNowLogInUser].name;
+    //是否读取
+    textMessage.isRead = YES;
+    textMessage.sended = NO;
     [self addMessage:textMessage];
+    [self sendMessage:textMessage];
     [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypeText];
 }
 

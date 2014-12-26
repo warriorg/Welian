@@ -22,6 +22,7 @@ typedef void (^HttpFailureBlock)(NSError *error);
 #pragma mark - 带SessIDPOST请求
 - (void)reqestWithSessIDParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim;
 
+- (void)reqestWithSessIDParameters:(NSDictionary *)parameterDic path:(NSString *)path successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim;
 
 #pragma mark - Get请求
 - (void)reqestGetWithPath:(NSString *)path successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim;
