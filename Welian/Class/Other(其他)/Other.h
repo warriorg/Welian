@@ -25,5 +25,6 @@
 
 #pragma mark - Other
 #import "UIImageView+WebCache.h"
+#import "DateTools.h"
 
 #endif

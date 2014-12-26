@@ -11,8 +11,9 @@
 static const CGFloat kWLLabelPadding = 5.0f;
 static const CGFloat kWLTimeStampLabelHeight = 20.0f;
 
-static const CGFloat kWLAvatorPaddingX = 8.0;
+static const CGFloat kWLAvatorPaddingX = 9.0;
 static const CGFloat kWLAvatorPaddingY = 15;
+static const CGFloat kWLAvatorPaddingBubble = 6.0;
 
 static const CGFloat kWLBubbleMessageViewPadding = 8;
 
@@ -125,23 +126,25 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat layoutOriginY = kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
+//    CGFloat layoutOriginY = kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
+    CGFloat layoutOriginY = (self.displayTimestamp ? kWLTimeStampLabelHeight : 0) + kWLBubbleMessageViewPadding;
     CGRect avatorButtonFrame = self.avatorButton.frame;
     avatorButtonFrame.origin.y = layoutOriginY;
     avatorButtonFrame.origin.x = ([self bubbleMessageType] == WLBubbleMessageTypeReceiving) ? kWLAvatorPaddingX : ((CGRectGetWidth(self.bounds) - kWLAvatorPaddingX - kWLAvatarImageSize));
     
-    layoutOriginY = kWLBubbleMessageViewPadding + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
+//    layoutOriginY = kWLBubbleMessageViewPadding + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
+    layoutOriginY = self.displayTimestamp ? kWLTimeStampLabelHeight + kWLLabelPadding : 0;
     CGRect bubbleMessageViewFrame = self.messageBubbleView.frame;
     bubbleMessageViewFrame.origin.y = layoutOriginY;
     
     CGFloat bubbleX = 0.0f;
     if ([self bubbleMessageType] == WLBubbleMessageTypeReceiving)
-        bubbleX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingX;
+        bubbleX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingBubble;
     bubbleMessageViewFrame.origin.x = bubbleX;
     
     self.avatorButton.frame = avatorButtonFrame;
     
-    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
+//    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
     self.messageBubbleView.frame = bubbleMessageViewFrame;
 }
@@ -157,13 +160,14 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
         if (!_timestampLabel) {
             LKBadgeView *timestampLabel = [[LKBadgeView alloc] initWithFrame:CGRectMake(0, kWLLabelPadding, 160, kWLTimeStampLabelHeight)];
             timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-            timestampLabel.badgeColor = [UIColor colorWithWhite:0.000 alpha:0.380];
+            timestampLabel.badgeColor = RGB(212.f, 214.f, 216.f);//[UIColor colorWithWhite:0.000 alpha:0.380];
             timestampLabel.textColor = [UIColor whiteColor];
             timestampLabel.font = [UIFont systemFontOfSize:13.0f];
             timestampLabel.center = CGPointMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2.0, timestampLabel.center.y);
             [self.contentView addSubview:timestampLabel];
             [self.contentView bringSubviewToFront:timestampLabel];
             _timestampLabel = timestampLabel;
+//            [timestampLabel setDebug:YES];
         }
         
         // 2、配置头像
@@ -187,13 +191,14 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
         self.avatorButton = avatorButton;
         
         // 3、配置用户名
-        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
-        userNameLabel.textAlignment = NSTextAlignmentCenter;
-        userNameLabel.backgroundColor = [UIColor clearColor];
-        userNameLabel.font = [UIFont systemFontOfSize:12];
-        userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
-        [self.contentView addSubview:userNameLabel];
-        self.userNameLabel = userNameLabel;
+//        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
+//        userNameLabel.textAlignment = NSTextAlignmentCenter;
+//        userNameLabel.backgroundColor = [UIColor clearColor];
+//        userNameLabel.font = [UIFont systemFontOfSize:12];
+//        userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
+//        [self.contentView addSubview:userNameLabel];
+//        self.userNameLabel = userNameLabel;
+//        [userNameLabel setDebug:YES];
         
         // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
         if (!_messageBubbleView) {
@@ -202,9 +207,9 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
             CGFloat offsetX = 0.0f;
             
             if (message.bubbleMessageType == WLBubbleMessageTypeReceiving)
-                bubbleX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingX;
+                bubbleX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingBubble;
             else
-                offsetX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingX;
+                offsetX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingBubble;
             
             CGRect frame = CGRectMake(bubbleX,
                                       kWLBubbleMessageViewPadding + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding),
@@ -219,7 +224,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
-            [messageBubbleView setDebug:YES];
+//            [messageBubbleView setDebug:YES];
         }
     }
     return self;
@@ -240,6 +245,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 }
 
 - (void)setup {
+//    [self setDebug:YES];
     self.backgroundColor = [UIColor clearColor];
     //选中效果
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -282,9 +288,9 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     self.displayTimestamp = displayTimestamp;
     self.timestampLabel.hidden = !self.displayTimestamp;
     if (displayTimestamp) {
-        self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:message.timestamp
-                                                                  dateStyle:NSDateFormatterMediumStyle
-                                                                  timeStyle:NSDateFormatterShortStyle];
+        self.timestampLabel.text = [[message timestamp] timeAgoSinceNow];// [NSDateFormatter localizedStringFromDate:message.timestamp
+//                                                                  dateStyle:NSDateFormatterMediumStyle
+//                                                                  timeStyle:NSDateFormatterShortStyle];
     }
 }
 
@@ -292,11 +298,11 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     if (message.avator) {
         [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
         if (message.avatorUrl) {
-            self.avatorButton.messageAvatorType = WLMessageAvatorTypeSquare;
+            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
             [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
         }
     } else {
-        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeSquare] forState:UIControlStateNormal];
+        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }
 }
 
@@ -401,6 +407,40 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     }
 }
 
+#pragma mark - Copying Method
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL)becomeFirstResponder {
+    return [super becomeFirstResponder];
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    return (action == @selector(copyed:) || action == @selector(transpond:) || action == @selector(favorites:) || action == @selector(more:));
+}
+
+#pragma mark - Menu Actions
+
+- (void)copyed:(id)sender {
+    [[UIPasteboard generalPasteboard] setString:self.messageBubbleView.displayTextView.text];
+    [self resignFirstResponder];
+    DLog(@"Cell was copy");
+}
+
+- (void)transpond:(id)sender {
+    DLog(@"Cell was transpond");
+}
+
+- (void)favorites:(id)sender {
+    DLog(@"Cell was favorites");
+}
+
+- (void)more:(id)sender {
+    DLog(@"Cell was more");
+}
+
 #pragma mark - Notifications
 - (void)handleMenuWillHideNotification:(NSNotification *)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -427,12 +467,14 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 + (CGFloat)calculateCellHeightWithMessage:(id <WLMessageModel>)message
                         displaysTimestamp:(BOOL)displayTimestamp {
     
-    CGFloat timestampHeight = displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding * 2) : kWLLabelPadding;
+    CGFloat timestampHeight = displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding * 2) : 0;//kWLLabelPadding;
     CGFloat avatarHeight = kWLAvatarImageSize;
     
-    CGFloat userNameHeight = 20;
+    //隐藏用户名
+//    CGFloat userNameHeight = 20;
     
-    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 + userNameHeight;
+//    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 + userNameHeight;
+    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 ;//+ userNameHeight;
     
     CGFloat bubbleHeight = [WLMessageBubbleView calculateCellHeightWithMessage:message];
     

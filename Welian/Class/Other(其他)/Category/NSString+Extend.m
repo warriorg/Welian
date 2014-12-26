@@ -39,4 +39,34 @@
     return result;
 }
 
+//日期转换
+- (NSDate *)dateFromString
+{
+    NSString *string = self;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS";
+    NSDate *date = [formatter dateFromString:string];
+    return date;
+}
+
+- (NSDate *)dateFromShortString
+{
+    NSString *string = self;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *date = [formatter dateFromString:string];
+    return date;
+}
+
+//去除空格
+- (NSString *)deleteTopAndBottomKongge
+{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+- (NSString *)deleteTopAndBottomKonggeAndHuiche
+{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet ]];
+}
+
 @end
