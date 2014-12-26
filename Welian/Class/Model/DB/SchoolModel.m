@@ -49,7 +49,8 @@
 //通过ucid查询
 + (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid
 {
-    SchoolModel *schoolM = [[[[SchoolModel queryInManagedObjectContext:MOC] where:@"usid" equals:usid.stringValue] results] firstObject];
+    SchoolModel *schoolM = [[[[[SchoolModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"usid" equals:usid] results] firstObject];
+    
     return schoolM;
 }
 

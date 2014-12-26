@@ -78,7 +78,7 @@
     [self.contentView addSubview:_startupImage];
 }
 
-- (void)setUserM:(UserInfoModel *)userM
+- (void)setUserM:(IBaseUserM *)userM
 {
     _userM = userM;
     

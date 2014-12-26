@@ -33,6 +33,20 @@
     <entity name="FriendsFriendUser" representedClassName="FriendsFriendUser" parentEntity="BaseUser" syncable="YES">
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsFriendsFriends" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
+    <entity name="HomeMessage" representedClassName="HomeMessage" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commentid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedcontent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="feedpic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLook" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsHomeMessages" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
     <entity name="InvestorUser" representedClassName="InvestorUser" parentEntity="BaseUser" syncable="YES">
         <attribute name="items" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -42,6 +56,7 @@
         <attribute name="sessionid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsCompanys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CompanyModel" inverseName="rsLogInUser" inverseEntity="CompanyModel" syncable="YES"/>
         <relationship name="rsFriendsFriends" optional="YES" toMany="YES" maxCount="15" deletionRule="Cascade" destinationEntity="FriendsFriendUser" inverseName="rsLogInUser" inverseEntity="FriendsFriendUser" syncable="YES"/>
+        <relationship name="rsHomeMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HomeMessage" inverseName="rsLogInUser" inverseEntity="HomeMessage" syncable="YES"/>
         <relationship name="rsMyFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MyFriendUser" inverseName="rsLogInUser" inverseEntity="MyFriendUser" syncable="YES"/>
         <relationship name="rsNewFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NewFriendUser" inverseName="rsLogInUser" inverseEntity="NewFriendUser" syncable="YES"/>
         <relationship name="rsSchools" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SchoolModel" inverseName="rsLogInUser" inverseEntity="SchoolModel" syncable="YES"/>
@@ -52,7 +67,7 @@
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsMyFriends" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <entity name="NewFriendUser" representedClassName="NewFriendUser" parentEntity="BaseUser" syncable="YES">
-        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isAgree" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isLook" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
@@ -79,10 +94,11 @@
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="58"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
-        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="165"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="178"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="88"/>
-        <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="133"/>
+        <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="135"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
+        <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
     </elements>
 </model>

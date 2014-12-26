@@ -430,6 +430,7 @@
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             NSArray *json = [NSArray arrayWithArray:JSON];
             NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            [[LogInUser getNowLogInUser] removeRsMyFriends:[LogInUser getNowLogInUser].rsMyFriends];
             if (json.count) {
                 for (NSDictionary *modic in json) {
                     FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];

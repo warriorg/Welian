@@ -255,7 +255,6 @@ static NSString *fridcellid = @"fridcellid";
         FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
         FriendsUserModel *modeIM = self.filterArray[indexPath.row];
         [fcell setUserMode:modeIM];
-//        [fcell setDelegate:self];
         return fcell;
     }else{
         if (indexPath.section==0) {

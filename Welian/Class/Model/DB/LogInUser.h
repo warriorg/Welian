@@ -11,7 +11,7 @@
 #import "BaseUser.h"
 #import "UserInfoModel.h"
 
-@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel;
+@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage;
 
 @interface LogInUser : BaseUser
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSSet *rsMyFriends;
 @property (nonatomic, retain) NSSet *rsFriendsFriends;
 @property (nonatomic, retain) NSSet *rsNewFriends;
+@property (nonatomic, retain) NSSet *rsHomeMessages;
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
@@ -33,6 +34,7 @@
 
 // 当前登录账户信息
 + (LogInUser *)getNowLogInUser;
+
 
 
 + (void)setUserUid:(NSNumber *)uid;
@@ -98,5 +100,10 @@
 - (void)removeRsNewFriendsObject:(NewFriendUser *)value;
 - (void)addRsNewFriends:(NSSet *)values;
 - (void)removeRsNewFriends:(NSSet *)values;
+
+- (void)addRsHomeMessagesObject:(HomeMessage *)value;
+- (void)removeRsHomeMessagesObject:(HomeMessage *)value;
+- (void)addRsHomeMessages:(NSSet *)values;
+- (void)removeRsHomeMessages:(NSSet *)values;
 
 @end

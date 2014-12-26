@@ -20,7 +20,7 @@
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
-    UserInfoModel *_userMode;
+    IBaseUserM *_userMode;
     NSMutableDictionary *_dataDicM;
     NSMutableArray *_sameFriendArry;
 }
@@ -153,6 +153,7 @@ static NSString *staurCellid = @"staurCellid";
     }else if(buttonIndex==1){
         if ([_userMode.friendship integerValue]==1) {  // 删除好友
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
+                
                 [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
                 [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
@@ -168,7 +169,7 @@ static NSString *staurCellid = @"staurCellid";
 }
 
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode isAsk:(BOOL)isask
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask
 {
     _userMode = usermode;
     _dataDicM = [NSMutableDictionary dictionary];
