@@ -26,6 +26,27 @@
 		A4776ACA1A44285F0022E211 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B61A43C2B9002E66FC /* MediaPlayer.framework */; };
 		A4776ACB1A4428830022E211 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B81A43C2D5002E66FC /* AVFoundation.framework */; };
 		A4776ACC1A44288B0022E211 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */; };
+		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
+		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
+		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
+		A48CA6A11A4D044B009EBD04 /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6931A4D044B009EBD04 /* DTError.m */; };
+		A48CA6A21A4D044B009EBD04 /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6931A4D044B009EBD04 /* DTError.m */; };
+		A48CA6A31A4D044B009EBD04 /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6931A4D044B009EBD04 /* DTError.m */; };
+		A48CA6A41A4D044B009EBD04 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */; };
+		A48CA6A51A4D044B009EBD04 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */; };
+		A48CA6A61A4D044B009EBD04 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */; };
+		A48CA6A71A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6971A4D044B009EBD04 /* DTTimePeriodChain.m */; };
+		A48CA6A81A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6971A4D044B009EBD04 /* DTTimePeriodChain.m */; };
+		A48CA6A91A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6971A4D044B009EBD04 /* DTTimePeriodChain.m */; };
+		A48CA6AA1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */; };
+		A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */; };
+		A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */; };
+		A48CA6AD1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */; };
+		A48CA6AE1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */; };
+		A48CA6AF1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */; };
+		A48CA6B01A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
+		A48CA6B11A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
+		A48CA6B21A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
 		A4C13FFF1A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C13FFE1A4BC0AD00C9BAB5 /* ChatViewController.m */; };
 		A4C140001A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C13FFE1A4BC0AD00C9BAB5 /* ChatViewController.m */; };
 		A4C140011A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C13FFE1A4BC0AD00C9BAB5 /* ChatViewController.m */; };
@@ -2822,6 +2843,21 @@
 		10389B671A3F0740001A785C /* NSString+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extend.m"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
+		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
+		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
+		A48CA6921A4D044B009EBD04 /* DTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTError.h; sourceTree = "<group>"; };
+		A48CA6931A4D044B009EBD04 /* DTError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTError.m; sourceTree = "<group>"; };
+		A48CA6941A4D044B009EBD04 /* DTTimePeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriod.h; sourceTree = "<group>"; };
+		A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriod.m; sourceTree = "<group>"; };
+		A48CA6961A4D044B009EBD04 /* DTTimePeriodChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodChain.h; sourceTree = "<group>"; };
+		A48CA6971A4D044B009EBD04 /* DTTimePeriodChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodChain.m; sourceTree = "<group>"; };
+		A48CA6981A4D044B009EBD04 /* DTTimePeriodCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodCollection.h; sourceTree = "<group>"; };
+		A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodCollection.m; sourceTree = "<group>"; };
+		A48CA69A1A4D044B009EBD04 /* DTTimePeriodGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodGroup.h; sourceTree = "<group>"; };
+		A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodGroup.m; sourceTree = "<group>"; };
+		A48CA69C1A4D044B009EBD04 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
+		A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
 		A4C13FFD1A4BC0AD00C9BAB5 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		A4C13FFE1A4BC0AD00C9BAB5 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		A4C1402F1A4BEA8500C9BAB5 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
@@ -4317,6 +4353,28 @@
 				A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		A48CA68E1A4D044B009EBD04 /* DateTools */ = {
+			isa = PBXGroup;
+			children = (
+				A48CA68F1A4D044B009EBD04 /* DateTools.bundle */,
+				A48CA6901A4D044B009EBD04 /* DateTools.h */,
+				A48CA6911A4D044B009EBD04 /* DTConstants.h */,
+				A48CA6921A4D044B009EBD04 /* DTError.h */,
+				A48CA6931A4D044B009EBD04 /* DTError.m */,
+				A48CA6941A4D044B009EBD04 /* DTTimePeriod.h */,
+				A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */,
+				A48CA6961A4D044B009EBD04 /* DTTimePeriodChain.h */,
+				A48CA6971A4D044B009EBD04 /* DTTimePeriodChain.m */,
+				A48CA6981A4D044B009EBD04 /* DTTimePeriodCollection.h */,
+				A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */,
+				A48CA69A1A4D044B009EBD04 /* DTTimePeriodGroup.h */,
+				A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */,
+				A48CA69C1A4D044B009EBD04 /* NSDate+DateTools.h */,
+				A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */,
+			);
+			path = DateTools;
 			sourceTree = "<group>";
 		};
 		A4C1402C1A4BEA8500C9BAB5 /* ChatGroups */ = {
@@ -6479,6 +6537,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				A48CA68E1A4D044B009EBD04 /* DateTools */,
 				F59E75D61A4059D00028FBAF /* CoreDataComment */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				10389B541A3EC46C001A785C /* Category */,
@@ -7342,6 +7401,7 @@
 				F53DC5241A49192600F5F712 /* searchbar_delete@2x.png in Resources */,
 				F53DC5251A49192600F5F712 /* osusume_friend_add@2x.png in Resources */,
 				A4C143D21A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
+				A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				A4C144941A4C3EC600C9BAB5 /* circle_chat_bg_white_pre@2x.png in Resources */,
 				F53DC5261A49192600F5F712 /* Expression_30@2x.png in Resources */,
 				F53DC5271A49192600F5F712 /* sns_icon_26.png in Resources */,
@@ -7500,6 +7560,7 @@
 				A4C143821A4C0A6B00C9BAB5 /* section0_emotion1@2x.png in Resources */,
 				F5664A9F1A2AFD56008A5830 /* Expression_75@2x.png in Resources */,
 				F5664AA01A2AFD56008A5830 /* tabbar_friend_selected@2x.png in Resources */,
+				A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				F51BA4421A444DA2009E5CDF /* tabbar_discovery_prompt@2x.png in Resources */,
 				F569A8151A31B36D00B677B0 /* me_mywriten_repea_pre@2x.png in Resources */,
 				F5664AA11A2AFD56008A5830 /* navbar_search@2x.png in Resources */,
@@ -8461,6 +8522,7 @@
 				F5664E8F1A2AFDD5008A5830 /* searchbar_delete@2x.png in Resources */,
 				F569A80F1A31B33C00B677B0 /* osusume_friend_add@2x.png in Resources */,
 				A4C143D11A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
+				A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				A4C144931A4C3EC600C9BAB5 /* circle_chat_bg_white_pre@2x.png in Resources */,
 				F5664E901A2AFDD5008A5830 /* Expression_30@2x.png in Resources */,
 				F5664E911A2AFDD5008A5830 /* sns_icon_26.png in Resources */,
@@ -8592,6 +8654,7 @@
 				A4C141581A4BEF5700C9BAB5 /* SETextLayout.m in Sources */,
 				F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */,
 				F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */,
+				A48CA6A61A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F53DC2A01A49192600F5F712 /* FriendsNewCell.m in Sources */,
 				A4C1411C1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
@@ -8637,6 +8700,7 @@
 				F53DC2C11A49192600F5F712 /* UIButton+AFNetworking.m in Sources */,
 				A4C1411F1A4BEF5700C9BAB5 /* MultiSelectedPanel.m in Sources */,
 				F53DC2C21A49192600F5F712 /* NavViewController.m in Sources */,
+				A48CA6B21A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F53DC2C31A49192600F5F712 /* FriendsUserModel.m in Sources */,
 				F53DC2C41A49192600F5F712 /* FriendCell.m in Sources */,
 				F53DC2C51A49192600F5F712 /* SWUtilityButtonView.m in Sources */,
@@ -8773,8 +8837,10 @@
 				F53DC3281A49192600F5F712 /* FeedAndZanModel.m in Sources */,
 				F53DC3291A49192600F5F712 /* InvestorUser.m in Sources */,
 				A4C1413A1A4BEF5700C9BAB5 /* NSMutableAttributedString+Helper.m in Sources */,
+				A48CA6AF1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */,
 				F53DC32A1A49192600F5F712 /* ZBMessageManagerFaceView.m in Sources */,
 				F53DC32B1A49192600F5F712 /* InfoHeaderView.m in Sources */,
+				A48CA6A91A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */,
 				F53DC32C1A49192600F5F712 /* InvestorUserM.m in Sources */,
 				A4C1409D1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
 				F53DC32D1A49192600F5F712 /* UIView+Extend.m in Sources */,
@@ -8849,6 +8915,7 @@
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */,
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
+				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */,
 				F53DC3681A49192600F5F712 /* LXActivity.m in Sources */,
@@ -8926,6 +8993,7 @@
 				F53DC3A31A49192600F5F712 /* UIImage+ImageEffects.m in Sources */,
 				F53DC3A41A49192600F5F712 /* AuthTypeView.m in Sources */,
 				F53DC3A51A49192600F5F712 /* M80AttributedLabel.m in Sources */,
+				A48CA6A31A4D044B009EBD04 /* DTError.m in Sources */,
 				A4C140BC1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
 				F53DC3A61A49192600F5F712 /* TTTAttributedLabel.m in Sources */,
 				A4C1408E1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
@@ -9011,6 +9079,7 @@
 				A4C141111A4BEF5700C9BAB5 /* FLAnimatedImageView.m in Sources */,
 				F56649AE1A2AFD56008A5830 /* IconTableViewCell.m in Sources */,
 				F56649AF1A2AFD56008A5830 /* CTAssetsPageViewController.m in Sources */,
+				A48CA6A11A4D044B009EBD04 /* DTError.m in Sources */,
 				F56649B01A2AFD56008A5830 /* UserInfoBasicVC.m in Sources */,
 				F56649B11A2AFD56008A5830 /* HomeView.m in Sources */,
 				F56649B21A2AFD56008A5830 /* LocationprovinceController.m in Sources */,
@@ -9019,6 +9088,7 @@
 				F56649B31A2AFD56008A5830 /* CommentHeadFrame.m in Sources */,
 				A4C141741A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C144741A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
+				A48CA6B01A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F56649B41A2AFD56008A5830 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				F56649B51A2AFD56008A5830 /* NSData+MD5Digest.m in Sources */,
 				F56649B61A2AFD56008A5830 /* SignInPWDController.m in Sources */,
@@ -9085,6 +9155,7 @@
 				F56649E71A2AFD56008A5830 /* FriendsFriendController.m in Sources */,
 				F56649E81A2AFD56008A5830 /* WeixinActivity.m in Sources */,
 				F56649E91A2AFD56008A5830 /* NSObject+MJMember.m in Sources */,
+				A48CA6A71A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */,
 				A4C1407D1A4BEA8500C9BAB5 /* UIImage+XHAnimatedFaceGif.m in Sources */,
 				F56649EA1A2AFD56008A5830 /* YTKKeyValueStore.m in Sources */,
 				F56649EB1A2AFD56008A5830 /* WLPhotoView.m in Sources */,
@@ -9111,6 +9182,7 @@
 				F56649F81A2AFD56008A5830 /* WLTextField.m in Sources */,
 				F56649F91A2AFD56008A5830 /* ZBMessageManagerFaceView.m in Sources */,
 				A4C1415F1A4BEF5700C9BAB5 /* SETextSelection.m in Sources */,
+				A48CA6AA1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				F56649FA1A2AFD56008A5830 /* InfoHeaderView.m in Sources */,
 				F59E76021A4059D00028FBAF /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A4C1416B1A4BEF5700C9BAB5 /* XHViewState.m in Sources */,
@@ -9204,6 +9276,7 @@
 				A4C141681A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
 				F59E760F1A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
 				F5664A321A2AFD56008A5830 /* LXActivity.m in Sources */,
+				A48CA6A41A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A4C141321A4BEF5700C9BAB5 /* MultiSelectViewController.m in Sources */,
 				F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */,
 				F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */,
@@ -9277,6 +9350,7 @@
 				F5664A6A1A2AFD56008A5830 /* AuthTypeView.m in Sources */,
 				F5664A6B1A2AFD56008A5830 /* M80AttributedLabel.m in Sources */,
 				F5664A6D1A2AFD56008A5830 /* TTTAttributedLabel.m in Sources */,
+				A48CA6AD1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */,
 				F5B88FE11A35793200290B4F /* UIColor+_6jinzhi.m in Sources */,
 				F5664A6E1A2AFD56008A5830 /* UIColor+HBVHarmonies.m in Sources */,
 				10389B681A3F0740001A785C /* NSString+Extend.m in Sources */,
@@ -9291,6 +9365,7 @@
 				A4C141571A4BEF5700C9BAB5 /* SETextLayout.m in Sources */,
 				F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */,
 				F5664C361A2AFDD5008A5830 /* NewFriendController.m in Sources */,
+				A48CA6A51A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F5664C381A2AFDD5008A5830 /* FriendsNewCell.m in Sources */,
 				A4C1411B1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
@@ -9336,6 +9411,7 @@
 				F5664C551A2AFDD5008A5830 /* UIButton+AFNetworking.m in Sources */,
 				A4C1411E1A4BEF5700C9BAB5 /* MultiSelectedPanel.m in Sources */,
 				F5664C561A2AFDD5008A5830 /* NavViewController.m in Sources */,
+				A48CA6B11A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F5664C571A2AFDD5008A5830 /* FriendsUserModel.m in Sources */,
 				F5664C581A2AFDD5008A5830 /* FriendCell.m in Sources */,
 				F5664C591A2AFDD5008A5830 /* SWUtilityButtonView.m in Sources */,
@@ -9472,8 +9548,10 @@
 				F5B88FE61A35A4D600290B4F /* FeedAndZanModel.m in Sources */,
 				F5E69B381A42D263001B19E5 /* InvestorUser.m in Sources */,
 				A4C141391A4BEF5700C9BAB5 /* NSMutableAttributedString+Helper.m in Sources */,
+				A48CA6AE1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */,
 				F5664CB31A2AFDD5008A5830 /* ZBMessageManagerFaceView.m in Sources */,
 				F5664CB41A2AFDD5008A5830 /* InfoHeaderView.m in Sources */,
+				A48CA6A81A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */,
 				F5664CB51A2AFDD5008A5830 /* InvestorUserM.m in Sources */,
 				A4C1409C1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
 				10389B601A3EC789001A785C /* UIView+Extend.m in Sources */,
@@ -9548,6 +9626,7 @@
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */,
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
+				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */,
 				F5664CEC1A2AFDD5008A5830 /* LXActivity.m in Sources */,
@@ -9625,6 +9704,7 @@
 				F5664D231A2AFDD5008A5830 /* UIImage+ImageEffects.m in Sources */,
 				F5664D241A2AFDD5008A5830 /* AuthTypeView.m in Sources */,
 				F5664D251A2AFDD5008A5830 /* M80AttributedLabel.m in Sources */,
+				A48CA6A21A4D044B009EBD04 /* DTError.m in Sources */,
 				A4C140BB1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
 				F5664D271A2AFDD5008A5830 /* TTTAttributedLabel.m in Sources */,
 				A4C1408D1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,

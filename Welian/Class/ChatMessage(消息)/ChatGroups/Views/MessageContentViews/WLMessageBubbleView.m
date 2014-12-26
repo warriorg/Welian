@@ -16,7 +16,7 @@
 
 #define kVoiceMargin 20.0f
 
-#define kXHArrowMarginWidth 14
+#define kWLArrowMarginWidth 14
 
 @interface WLMessageBubbleView ()
 
@@ -58,8 +58,8 @@
     CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
     
     CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kWLTextLineSpacing font:[[WLMessageBubbleView appearance] font]].size;
-//    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kXHArrowMarginWidth, textSize.height + kMarginTop * 2);
-    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kXHArrowMarginWidth, textSize.height + kMarginTop);
+    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop * 2);
+//    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
 }
 
 + (CGSize)neededSizeForPhoto:(UIImage *)photo {
@@ -78,6 +78,7 @@
 + (CGFloat)calculateCellHeightWithMessage:(id <WLMessageModel>)message {
     CGSize size = [WLMessageBubbleView getBubbleFrameWithMessage:message];
     return size.height + kMarginTop + kMarginBottom;
+//    return size.height;
 }
 
 + (CGSize)getBubbleFrameWithMessage:(id <WLMessageModel>)message {
@@ -271,6 +272,7 @@
             bubbleImageView.userInteractionEnabled = YES;
             [self addSubview:bubbleImageView];
             _bubbleImageView = bubbleImageView;
+//            [bubbleImageView setDebug:YES];
         }
         
         // 2、初始化显示文本消息的TextView
@@ -284,6 +286,7 @@
             displayTextView.highlighted = NO;
             [self addSubview:displayTextView];
             _displayTextView = displayTextView;
+//            [displayTextView setDebug:YES];
         }
         
         // 3、初始化显示图片的控件
@@ -291,7 +294,7 @@
             WLBubblePhotoImageView *bubblePhotoImageView = [[WLBubblePhotoImageView alloc] initWithFrame:CGRectZero];
             [self addSubview:bubblePhotoImageView];
             _bubblePhotoImageView = bubblePhotoImageView;
-            
+            [bubblePhotoImageView setDebug:YES];
             if (!_videoPlayImageView) {
                 UIImageView *videoPlayImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessageVideoPlay"]];
                 [bubblePhotoImageView addSubview:videoPlayImageView];
@@ -370,7 +373,7 @@
             CGFloat textX = CGRectGetMinX(bubbleFrame) + kBubblePaddingRight;
             
             if (self.message.bubbleMessageType == WLBubbleMessageTypeReceiving) {
-                textX += kXHArrowMarginWidth / 2.0;
+                textX += kWLArrowMarginWidth / 2.0;
             }
             
             CGRect textFrame = CGRectMake(textX,

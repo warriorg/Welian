@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 // 头像大小以及头像与其他控件的距离
-static CGFloat const kWLAvatarImageSize = 40.0f;
-static CGFloat const kWLAlbumAvatorSpacing = 15.0f;
+static CGFloat const kWLAvatarImageSize = 35.0f;
+static CGFloat const kWLAlbumAvatorSpacing = 6.0f;
 
 typedef NS_ENUM(NSInteger, WLMessageAvatorType) {
     WLMessageAvatorTypeNormal = 0,
