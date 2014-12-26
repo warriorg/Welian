@@ -1347,6 +1347,9 @@
 		F53DC5821A49192600F5F712 /* Expression_26@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5324DFC19EC122100A1D066 /* Expression_26@2x.png */; };
 		F53DC5831A49192600F5F712 /* tabbar_c_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909A519C2E3F2009DB1B2 /* tabbar_c_selected@2x.png */; };
 		F55630EA1A2CA82C008C05F5 /* InvestItemM.m in Sources */ = {isa = PBXBuildFile; fileRef = F55630E91A2CA82C008C05F5 /* InvestItemM.m */; };
+		F562728B1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
+		F562728C1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
+		F562728D1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
 		F566497C1A2AFD56008A5830 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
@@ -3717,6 +3720,8 @@
 		F56254F119C01C1800809D0B /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
 		F56254F319C01C7E00809D0B /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
 		F56254F419C01C7E00809D0B /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
+		F56272891A4C4FE9002A9B88 /* IBaseUserM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBaseUserM.h; sourceTree = "<group>"; };
+		F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBaseUserM.m; sourceTree = "<group>"; };
 		F5664C321A2AFD56008A5830 /* weLianDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5664C331A2AFD56008A5830 /* weLianDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianDev-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianDev-Info.plist"; sourceTree = "<absolute>"; };
 		F5664EEC1A2AFDD5008A5830 /* weLianDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5815,6 +5820,8 @@
 				F5A3F8F51A41855900F06DDD /* ISchoolResult.m */,
 				F53D4E531A4AB62600CA06C8 /* LoginUserModel.h */,
 				F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */,
+				F56272891A4C4FE9002A9B88 /* IBaseUserM.h */,
+				F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -8648,6 +8655,7 @@
 				A4C1414C1A4BEF5700C9BAB5 /* SETextAttachment.m in Sources */,
 				F53D4E351A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F53DC2D71A49192600F5F712 /* HomeView.m in Sources */,
+				F562728D1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F53DC2D81A49192600F5F712 /* LocationprovinceController.m in Sources */,
 				A4C141371A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
 				F53DC2D91A49192600F5F712 /* CommentHeadFrame.m in Sources */,
@@ -9227,6 +9235,7 @@
 				F5664A501A2AFD56008A5830 /* InfoUserHaderCell.m in Sources */,
 				F5664A511A2AFD56008A5830 /* MessageHomeModel.m in Sources */,
 				F5664A521A2AFD56008A5830 /* LoginPhoneVC.m in Sources */,
+				F562728B1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F5664A531A2AFD56008A5830 /* TOActivityChrome.m in Sources */,
 				F5664A541A2AFD56008A5830 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F5664A551A2AFD56008A5830 /* WLHttpTool.m in Sources */,
@@ -9343,6 +9352,7 @@
 				A4C1414B1A4BEF5700C9BAB5 /* SETextAttachment.m in Sources */,
 				F53D4E341A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664C6B1A2AFDD5008A5830 /* HomeView.m in Sources */,
+				F562728C1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F5664C6C1A2AFDD5008A5830 /* LocationprovinceController.m in Sources */,
 				A4C141361A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
 				F5664C6D1A2AFDD5008A5830 /* CommentHeadFrame.m in Sources */,

@@ -221,19 +221,19 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
-        if (jsonarray.count) {
-            BOOL isok = NO;
-            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
-                isok = YES;
-                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
-            }
-            for (NSDictionary *dicJson in jsonarray) {
-                if (isok) {
-                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
-                }
-                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
-            }
-        }
+//        if (jsonarray.count) {
+//            BOOL isok = NO;
+//            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+//                isok = YES;
+//                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+//            }
+//            for (NSDictionary *dicJson in jsonarray) {
+//                if (isok) {
+//                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+//                }
+//                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+//            }
+//        }
         succeBlock (jsonarray);
     } failure:^(NSError *error) {
         

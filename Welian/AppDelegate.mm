@@ -84,9 +84,6 @@ BMKMapManager* _mapManager;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // 设置全局键盘管理
-    
-    
     /**
      *  设置状态栏颜色
      */
@@ -96,31 +93,7 @@ BMKMapManager* _mapManager;
     LogInUser *mode = [LogInUser getNowLogInUser];
     DLog(@"%@",mode.description);
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
-        
-//        NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-//        [reqstDic setObject:mode.mobile forKey:@"mobile"];
-//        [reqstDic setObject:mode.checkcode forKey:@"password"];
-//        [reqstDic setObject:KPlatformType forKey:@"platform"];
-//        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-//            
-//            [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-//        }
-//
-//        [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-//            NSDictionary *dataDic = JSON;
-//            if (dataDic) {
-//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-//                [mode setKeyValues:dataDic];
-////                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-//                [MOC save];
-//                // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
-////                [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
-//            }
-//            
-//        } fail:^(NSError *error) {
-//            
-//        } isHUD:NO];
-
+    
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
@@ -328,6 +301,7 @@ BMKMapManager* _mapManager;
     }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){   // 好友消息推送
         NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
         if ([type isEqualToString:@"friendAdd"]) {
+            // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
             [newfrendM setIsAgree:@"1"];
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         }else{
