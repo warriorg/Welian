@@ -11,10 +11,10 @@
 @interface MessageHomeModel : NSObject
 
 /**  该条消息的id   */
-@property (nonatomic, strong) NSString *commentid;
+@property (nonatomic, strong) NSNumber *commentid;
 
 /**  是否看过   */
-@property (nonatomic, strong) NSString *isLook;
+@property (nonatomic, strong) NSNumber *isLook;
 
 /**  评论人头像   */
 @property (nonatomic, strong) NSString *avatar;
@@ -23,13 +23,13 @@
 @property (nonatomic, strong) NSString *name;
 
 /**  评论人uid   */
-@property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSNumber *uid;
 
 /**  动态信息   */
 @property (nonatomic, strong) NSString *feedcontent;
 
 /**  动态id   */
-@property (nonatomic, strong) NSString *feedid;
+@property (nonatomic, strong) NSNumber *feedid;
 
 /**  动态图片   */
 @property (nonatomic, strong) NSString *feedpic;
@@ -39,7 +39,6 @@
 
 /**  类型   */
 @property (nonatomic, strong) NSString *type;
-
 
 /**  时间   */
 @property (nonatomic, strong) NSString *created;

@@ -1350,6 +1350,9 @@
 		F562728B1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
 		F562728C1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
 		F562728D1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */; };
+		F56272901A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
+		F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
+		F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
 		F566497C1A2AFD56008A5830 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
@@ -3455,8 +3458,8 @@
 		F5239B7B19F540D700D9E696 /* InfoUserHaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoUserHaderCell.xib; sourceTree = "<group>"; };
 		F5239B7E19F6207700D9E696 /* HaderInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaderInfoCell.h; sourceTree = "<group>"; };
 		F5239B7F19F6207700D9E696 /* HaderInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaderInfoCell.m; sourceTree = "<group>"; };
-		F5239B8119F6352900D9E696 /* FriendsUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsUserModel.h; sourceTree = "<group>"; };
-		F5239B8219F6352900D9E696 /* FriendsUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsUserModel.m; sourceTree = "<group>"; };
+		F5239B8119F6352900D9E696 /* FriendsUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsUserModel.h; path = "../../Main(主)/Model/FriendsUserModel.h"; sourceTree = "<group>"; };
+		F5239B8219F6352900D9E696 /* FriendsUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsUserModel.m; path = "../../Main(主)/Model/FriendsUserModel.m"; sourceTree = "<group>"; };
 		F5239B8419F63EE800D9E696 /* SameFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SameFriendsCell.h; sourceTree = "<group>"; };
 		F5239B8519F63EE800D9E696 /* SameFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SameFriendsCell.m; sourceTree = "<group>"; };
 		F5239B8619F63EE800D9E696 /* SameFriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SameFriendsCell.xib; sourceTree = "<group>"; };
@@ -3652,8 +3655,8 @@
 		F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add@2x.png"; sourceTree = "<group>"; };
 		F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add_already@2x.png"; sourceTree = "<group>"; };
 		F53356391A38291B000A15AC /* SigninPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SigninPlist.plist; sourceTree = "<group>"; };
-		F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendModel.h; sourceTree = "<group>"; };
-		F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendModel.m; sourceTree = "<group>"; };
+		F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewFriendModel.h; path = "../../Friends(好友)/Model/NewFriendModel.h"; sourceTree = "<group>"; };
+		F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFriendModel.m; path = "../../Friends(好友)/Model/NewFriendModel.m"; sourceTree = "<group>"; };
 		F5382B1619FD108200FAA5B6 /* NewFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendController.h; sourceTree = "<group>"; };
 		F5382B1719FD108200FAA5B6 /* NewFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendController.m; sourceTree = "<group>"; };
 		F5382B5319FD60AF00FAA5B6 /* WLUserStatusesResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLUserStatusesResult.h; sourceTree = "<group>"; };
@@ -3722,6 +3725,8 @@
 		F56254F419C01C7E00809D0B /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
 		F56272891A4C4FE9002A9B88 /* IBaseUserM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBaseUserM.h; sourceTree = "<group>"; };
 		F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBaseUserM.m; sourceTree = "<group>"; };
+		F562728E1A4D474E002A9B88 /* HomeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMessage.h; sourceTree = "<group>"; };
+		F562728F1A4D474E002A9B88 /* HomeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMessage.m; sourceTree = "<group>"; };
 		F5664C321A2AFD56008A5830 /* weLianDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5664C331A2AFD56008A5830 /* weLianDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "weLianDev-Info.plist"; path = "/Users/dong/Desktop/Welian/weLianDev-Info.plist"; sourceTree = "<absolute>"; };
 		F5664EEC1A2AFDD5008A5830 /* weLianDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5785,6 +5790,8 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				F562728E1A4D474E002A9B88 /* HomeMessage.h */,
+				F562728F1A4D474E002A9B88 /* HomeMessage.m */,
 				F53D4E451A4AABE800CA06C8 /* NewFriendUser.h */,
 				F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */,
 				F53D4E401A4AABE800CA06C8 /* ChatMessage.h */,
@@ -5822,6 +5829,10 @@
 				F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */,
 				F56272891A4C4FE9002A9B88 /* IBaseUserM.h */,
 				F562728A1A4C4FE9002A9B88 /* IBaseUserM.m */,
+				F5239B8119F6352900D9E696 /* FriendsUserModel.h */,
+				F5239B8219F6352900D9E696 /* FriendsUserModel.m */,
+				F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */,
+				F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -6197,8 +6208,6 @@
 		F5CE863319BFF44100A9D14C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */,
-				F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */,
 				F5E4BB8D1A020C17007BEBD2 /* FriendsFriendModel.h */,
 				F5E4BB8E1A020C17007BEBD2 /* FriendsFriendModel.m */,
 				F5E4BB901A020D96007BEBD2 /* FriendsinfoModel.h */,
@@ -6382,8 +6391,6 @@
 				F532FD5419C9694E005B887D /* PeopleAddressBook.m */,
 				F5C2D10219F9E841000610A1 /* FriendsAddressBook.h */,
 				F5C2D10319F9E841000610A1 /* FriendsAddressBook.m */,
-				F5239B8119F6352900D9E696 /* FriendsUserModel.h */,
-				F5239B8219F6352900D9E696 /* FriendsUserModel.m */,
 				F5C2D11A19F9FCCD000610A1 /* WLDataDBTool.h */,
 				F5C2D11B19F9FCCD000610A1 /* WLDataDBTool.m */,
 			);
@@ -8896,6 +8903,7 @@
 				F53DC3931A49192600F5F712 /* IWTextView.m in Sources */,
 				F53DC3941A49192600F5F712 /* NSString+val.m in Sources */,
 				F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */,
+				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141791A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				A4C1416A1A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
 				A4C141281A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
@@ -9237,6 +9245,7 @@
 				F5664A521A2AFD56008A5830 /* LoginPhoneVC.m in Sources */,
 				F562728B1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F5664A531A2AFD56008A5830 /* TOActivityChrome.m in Sources */,
+				F56272901A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				F5664A541A2AFD56008A5830 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F5664A551A2AFD56008A5830 /* WLHttpTool.m in Sources */,
 				F5664A561A2AFD56008A5830 /* AboutViewController.m in Sources */,
@@ -9593,6 +9602,7 @@
 				F5664D151A2AFDD5008A5830 /* IWTextView.m in Sources */,
 				F5664D161A2AFDD5008A5830 /* NSString+val.m in Sources */,
 				F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */,
+				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141781A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				A4C141691A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
 				A4C141271A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,

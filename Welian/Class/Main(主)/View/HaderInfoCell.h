@@ -10,7 +10,7 @@
 
 @interface HaderInfoCell : UITableViewCell
 
-@property (nonatomic, strong) UserInfoModel *userM;
+@property (nonatomic, strong) IBaseUserM *userM;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

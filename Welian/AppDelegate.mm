@@ -20,6 +20,9 @@
 #import "MobClick.h"
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "NewFriendUser.h"
+#import "HomeMessage.h"
+
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
@@ -292,7 +295,9 @@ BMKMapManager* _mapManager;
     
     if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
 
-        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
+        [HomeMessage createHomeMessageModel:[MessageHomeModel objectWithKeyValues:dataDic]];
+        
+//        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
         NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
         badge++;
         [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
@@ -302,7 +307,8 @@ BMKMapManager* _mapManager;
         NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
         if ([type isEqualToString:@"friendAdd"]) {
             // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
-            [newfrendM setIsAgree:@"1"];
+            [newfrendM setIsAgree:@(1)];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         }else{
             
@@ -318,9 +324,11 @@ BMKMapManager* _mapManager;
             fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
             fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
             newfrendM.created = [fmt stringFromDate:nowdate];
+//            newfrendM.created = nowdate;
         }
+        [NewFriendUser createNewFriendUserModel:newfrendM];
         
-        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
+//        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
     }else if ([type isEqualToString:@"logout"]){
         
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];

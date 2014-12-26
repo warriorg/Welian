@@ -12,7 +12,7 @@
 @implementation MessageFrameModel
 
 
-- (void)setMessageDataM:(MessageHomeModel *)messageDataM
+- (void)setMessageDataM:(HomeMessage *)messageDataM
 {
     _messageDataM = messageDataM;
     CGFloat cellW = [UIScreen mainScreen].bounds.size.width;

@@ -12,7 +12,7 @@
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
 #import "SchoolModel.h"
-
+#import "HomeMessage.h"
 
 @implementation LogInUser
 
@@ -24,6 +24,7 @@
 @dynamic rsMyFriends;
 @dynamic rsFriendsFriends;
 @dynamic rsNewFriends;
+@dynamic rsHomeMessages;
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM
@@ -172,8 +173,6 @@
 //通过uid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid
 {
-    DLog(@"%@",[[[LogInUser queryInManagedObjectContext:MOC] where:@"uid" equals:uid.stringValue] results]);
-    
     LogInUser *loginuser = [[[[LogInUser queryInManagedObjectContext:MOC] where:@"uid" equals:uid.stringValue] results] firstObject];
     return loginuser;
 }

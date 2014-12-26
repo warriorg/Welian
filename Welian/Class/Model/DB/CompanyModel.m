@@ -45,14 +45,16 @@
 //通过ucid查询
 + (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid
 {
-    CompanyModel *company = [[[[CompanyModel queryInManagedObjectContext:MOC] where:@"ucid" equals:ucid.stringValue] results] firstObject];
+    CompanyModel *company = [[[[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"ucid" equals:ucid] results] firstObject];
+    
     return company;
 }
 
 // 查询所有数据并返回
 + (NSArray *)allCompanyModels
 {
-    return [[CompanyModel queryInManagedObjectContext:MOC] results];
+    
+    return [[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results];
 }
 
 

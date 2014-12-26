@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *created;
 
 /**  是否已读   */
-@property (nonatomic, strong) NSString *isLook;
+@property (nonatomic, strong) NSNumber *isLook;
 
 /**  推送类型   */
 @property (nonatomic, strong) NSString *type;
@@ -23,6 +23,6 @@
 @property (nonatomic, strong) NSString *msg;
 
 //** 是否通过*/
-@property (nonatomic, strong) NSString *isAgree;
+@property (nonatomic, strong) NSNumber *isAgree;
 
 @end

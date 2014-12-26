@@ -50,7 +50,10 @@
 // //通过uid查询
 + (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid
 {
-    MyFriendUser *myFriend = [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"uid" equals:uid.stringValue] results] firstObject];
+//    [LogInUser getNowLogInUser].rsMyFriends.allObjects
+//    NSPredicate * filter = [NSPredicate predicateWithFormat:@"uid = %@",uid];
+    
+    MyFriendUser *myFriend = [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:uid] results] firstObject];
     return myFriend;
 }
 @end

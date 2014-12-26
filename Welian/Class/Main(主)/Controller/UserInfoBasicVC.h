@@ -12,7 +12,7 @@
 
 @property (nonatomic, copy) dispatch_block_t acceptFriendBlock;
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode isAsk:(BOOL)isask;
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask;
 
 - (void)addSucceed;
 
