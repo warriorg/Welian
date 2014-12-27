@@ -20,6 +20,25 @@
         <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
+        <attribute name="avatorUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bubbleMessageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="geolocations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="localPositionPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="originPhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sendStatus" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="videoConverPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voiceUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsMyFriendUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyFriendUser" inverseName="rsChatMessages" inverseEntity="MyFriendUser" syncable="YES"/>
     </entity>
     <entity name="CompanyModel" representedClassName="CompanyModel" parentEntity="SchoolCompanyDate" syncable="YES">
@@ -63,7 +82,7 @@
     </entity>
     <entity name="MyFriendUser" representedClassName="MyFriendUser" parentEntity="BaseUser" syncable="YES">
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="rsChatMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatMessage" inverseName="rsMyFriendUser" inverseEntity="ChatMessage" syncable="YES"/>
+        <relationship name="rsChatMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatMessage" inverseName="rsMyFriendUser" inverseEntity="ChatMessage" syncable="YES"/>
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsMyFriends" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <entity name="NewFriendUser" representedClassName="NewFriendUser" parentEntity="BaseUser" syncable="YES">
@@ -90,15 +109,15 @@
     </entity>
     <elements>
         <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
-        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="58"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="343"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="58"/>
+        <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="178"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="88"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="135"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
-        <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
     </elements>
 </model>

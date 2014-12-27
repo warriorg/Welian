@@ -19,6 +19,7 @@
 #import "CommonFriendsController.h"
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
+#import "ChatViewController.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -79,19 +80,27 @@ static NSString *staurCellid = @"staurCellid";
         _sendView = [[UIView alloc] init];
         [_sendView setBounds:CGRectMake(0, 0, 0, 40)];
         // 3.要在tableView底部添加一个按钮
-        UIButton *logout = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        [logout setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
-        [logout setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [logout setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-        logout.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
+        [chatBtn setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
+        [chatBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [chatBtn setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
+        chatBtn.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
         // 4.设置按钮文字
-        [logout setTitle:@"发送消息" forState:UIControlStateNormal];
-        [_sendView addSubview:logout];
+        [chatBtn setTitle:@"发送消息" forState:UIControlStateNormal];
+        [chatBtn addTarget:self action:@selector(chatBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_sendView addSubview:chatBtn];
     }
     return _sendView;
 }
 
+//进入聊天页面
+- (void)chatBtnClicked:(UIButton *)sender
+{
+    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    chatVC.isFromUserInfo = YES;
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
 
 - (UIView*)addFriendView
 {
@@ -205,7 +214,7 @@ static NSString *staurCellid = @"staurCellid";
                 if ([_userMode.friendship integerValue]==-1) {
                     
                 }else if ([_userMode.friendship integerValue]==1) {
-//                    [self.tableView setTableFooterView:self.sendView];
+                    [self.tableView setTableFooterView:self.sendView];
                 }else {
                     [self.tableView setTableFooterView:self.addFriendView];
                 }
