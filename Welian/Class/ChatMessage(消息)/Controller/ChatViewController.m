@@ -8,7 +8,9 @@
 
 #import "ChatViewController.h"
 
-@interface ChatViewController ()
+@interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) MyFriendUser *friendUser;
 
 @end
 
@@ -57,8 +59,7 @@
     });
 }
 
-
-- (id)init
+- (id)initWithUser:(MyFriendUser *)friendUser
 {
     self = [super init];
     if (self) {
@@ -66,19 +67,65 @@
         self.allowsSendVoice = NO;
         self.allowsSendFace = NO;
         self.allowsSendMultiMedia = NO;
+        
+        self.friendUser = friendUser;
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    //自定义返回按钮
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"消息" style:UIBarButtonItemStyleBordered target:self action:@selector(backItemClicked:)];
+    [self.navigationItem setLeftBarButtonItem:backItem];
+    
+    //开启iOS7的滑动返回效果
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        //只有在二级页面生效
+        if ([self.navigationController.viewControllers count] > 1) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    //代理置空，否则会闪退
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (void)backItemClicked:(UIBarButtonItem *)item
+{
+    DLog(@"backItemClicked ");
+    if(_isFromUserInfo){
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.title = _friendUser.name;
+    
     // 设置整体背景颜色
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
     
     //加载初始化数据
     [self loadDemoDataSource];
+    
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,6 +188,10 @@
     //是否读取
     textMessage.isRead = YES;
     textMessage.sended = NO;
+    
+    //更新聊天好友
+    [_friendUser updateIsChatStatus:YES];
+    
     [self addMessage:textMessage];
     [self sendMessage:textMessage];
     [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypeText];

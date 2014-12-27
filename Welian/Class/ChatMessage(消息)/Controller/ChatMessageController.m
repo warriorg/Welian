@@ -59,7 +59,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //进入聊天页面
+    //在切换界面的过程中禁止滑动手势，避免界面卡死
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+    
+        //进入聊天页面
     ChatViewController *chatVC = [[ChatViewController alloc] init];
     [self.navigationController pushViewController:chatVC animated:YES];
 }

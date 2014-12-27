@@ -35,6 +35,9 @@
 // 当前登录账户信息
 + (LogInUser *)getNowLogInUser;
 
+//获取正在聊天的消息列表
+//+ (NSArray *)chatUsers;
+
 
 
 + (void)setUserUid:(NSNumber *)uid;

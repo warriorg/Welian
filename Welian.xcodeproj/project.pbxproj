@@ -19,6 +19,9 @@
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		A414FE271A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
+		A4272FC71A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
+		A4272FC81A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
+		A4272FC91A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
 		A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -639,9 +642,6 @@
 		F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
 		F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
 		F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */; };
-		F53D4E421A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
-		F53D4E431A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
-		F53D4E441A4AABE800CA06C8 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E411A4AABE800CA06C8 /* ChatMessage.m */; };
 		F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
 		F53D4E481A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
 		F53D4E491A4AABE800CA06C8 /* NewFriendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */; };
@@ -2867,6 +2867,8 @@
 		10389B671A3F0740001A785C /* NSString+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extend.m"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		A4272FC51A4E8AAD0019E440 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		A4272FC61A4E8AAD0019E440 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -3763,8 +3765,6 @@
 		F53D4E371A4AABE800CA06C8 /* LogInUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInUser.m; sourceTree = "<group>"; };
 		F53D4E3B1A4AABE800CA06C8 /* FriendsFriendUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendUser.h; sourceTree = "<group>"; };
 		F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsFriendUser.m; sourceTree = "<group>"; };
-		F53D4E401A4AABE800CA06C8 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
-		F53D4E411A4AABE800CA06C8 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		F53D4E451A4AABE800CA06C8 /* NewFriendUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendUser.h; sourceTree = "<group>"; };
 		F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendUser.m; sourceTree = "<group>"; };
 		F53D4E4E1A4AAEA100CA06C8 /* ChatMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageController.h; sourceTree = "<group>"; };
@@ -5897,12 +5897,12 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				A4272FC51A4E8AAD0019E440 /* ChatMessage.h */,
+				A4272FC61A4E8AAD0019E440 /* ChatMessage.m */,
 				F562728E1A4D474E002A9B88 /* HomeMessage.h */,
 				F562728F1A4D474E002A9B88 /* HomeMessage.m */,
 				F53D4E451A4AABE800CA06C8 /* NewFriendUser.h */,
 				F53D4E461A4AABE800CA06C8 /* NewFriendUser.m */,
-				F53D4E401A4AABE800CA06C8 /* ChatMessage.h */,
-				F53D4E411A4AABE800CA06C8 /* ChatMessage.m */,
 				F53D4E3B1A4AABE800CA06C8 /* FriendsFriendUser.h */,
 				F53D4E3C1A4AABE800CA06C8 /* FriendsFriendUser.m */,
 				F53D4E361A4AABE800CA06C8 /* LogInUser.h */,
@@ -8866,7 +8866,6 @@
 				F53DC3091A49192600F5F712 /* ForgetCoderController.m in Sources */,
 				F53DC30A1A49192600F5F712 /* ForgetPhoneController.m in Sources */,
 				A4C1415E1A4BEF5700C9BAB5 /* SETextMagnifierRanged.m in Sources */,
-				F53D4E441A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F53DC30B1A49192600F5F712 /* DKPredicateBuilder.m in Sources */,
 				A4C141251A4BEF5700C9BAB5 /* MultiSelectItem.m in Sources */,
 				F53DC30C1A49192600F5F712 /* CTAssetItemViewController.m in Sources */,
@@ -8935,6 +8934,7 @@
 				F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */,
 				F53DC33E1A49192600F5F712 /* CDVWelianPlugin.m in Sources */,
 				F53D4DFE1A4A771300CA06C8 /* BaseUser.m in Sources */,
+				A4272FC91A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				F53DC33F1A49192600F5F712 /* HaderInfoCell.m in Sources */,
 				F53DC3401A49192600F5F712 /* WLStatusDock.m in Sources */,
 				F53DC3411A49192600F5F712 /* FeedAndZanCell.m in Sources */,
@@ -9156,7 +9156,6 @@
 				F56649B11A2AFD56008A5830 /* HomeView.m in Sources */,
 				F56649B21A2AFD56008A5830 /* LocationprovinceController.m in Sources */,
 				F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
-				F53D4E421A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F56649B31A2AFD56008A5830 /* CommentHeadFrame.m in Sources */,
 				A4C141741A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C144741A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
@@ -9210,6 +9209,7 @@
 				F56649D81A2AFD56008A5830 /* FMResultSet.m in Sources */,
 				F56649D91A2AFD56008A5830 /* WLBasicTrends.m in Sources */,
 				F56649DA1A2AFD56008A5830 /* TQRichTextURLRun.m in Sources */,
+				A4272FC71A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				A4C141621A4BEF5700C9BAB5 /* SETextSelectionView.m in Sources */,
 				F56649DB1A2AFD56008A5830 /* UIScrollView+MJRefresh.m in Sources */,
 				F56649DC1A2AFD56008A5830 /* MessageCell.m in Sources */,
@@ -9585,7 +9585,6 @@
 				F5664C991A2AFDD5008A5830 /* ForgetCoderController.m in Sources */,
 				F5664C9A1A2AFDD5008A5830 /* ForgetPhoneController.m in Sources */,
 				A4C1415D1A4BEF5700C9BAB5 /* SETextMagnifierRanged.m in Sources */,
-				F53D4E431A4AABE800CA06C8 /* ChatMessage.m in Sources */,
 				F59E75FF1A4059D00028FBAF /* DKPredicateBuilder.m in Sources */,
 				A4C141241A4BEF5700C9BAB5 /* MultiSelectItem.m in Sources */,
 				F5664C9B1A2AFDD5008A5830 /* CTAssetItemViewController.m in Sources */,
@@ -9654,6 +9653,7 @@
 				F5664CC31A2AFDD5008A5830 /* WLContentCellView.m in Sources */,
 				A4F647A51A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				F53D4DFD1A4A771300CA06C8 /* BaseUser.m in Sources */,
+				A4272FC81A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				F5664CC41A2AFDD5008A5830 /* HaderInfoCell.m in Sources */,
 				F5664CC51A2AFDD5008A5830 /* WLStatusDock.m in Sources */,
 				F5664CC61A2AFDD5008A5830 /* FeedAndZanCell.m in Sources */,

@@ -2,7 +2,7 @@
 //  ChatMessage.m
 //  Welian
 //
-//  Created by dong on 14/12/24.
+//  Created by weLian on 14/12/27.
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
@@ -12,6 +12,25 @@
 
 @implementation ChatMessage
 
+@dynamic message;
+@dynamic messageType;
+@dynamic timestamp;
+@dynamic avatorUrl;
+@dynamic isRead;
+@dynamic sendStatus;
+@dynamic bubbleMessageType;
+@dynamic thumbnailUrl;
+@dynamic originPhotoUrl;
+@dynamic videoPath;
+@dynamic videoUrl;
+@dynamic videoConverPhoto;
+@dynamic voicePath;
+@dynamic voiceUrl;
+@dynamic localPositionPhoto;
+@dynamic geolocations;
+@dynamic latitude;
+@dynamic longitude;
+@dynamic sender;
 @dynamic rsMyFriendUser;
 
 @end

@@ -14,6 +14,7 @@
 @implementation MyFriendUser
 
 @dynamic status;
+@dynamic isChatNow;
 @dynamic rsChatMessages;
 @dynamic rsLogInUser;
 
@@ -56,4 +57,12 @@
     MyFriendUser *myFriend = [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:uid] results] firstObject];
     return myFriend;
 }
+
+//更新聊天状态
+- (void)updateIsChatStatus:(BOOL)status
+{
+    self.isChatNow = @(status);
+    [MOC save];
+}
+
 @end
