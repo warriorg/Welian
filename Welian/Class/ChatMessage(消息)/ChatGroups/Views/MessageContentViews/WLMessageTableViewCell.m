@@ -282,6 +282,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     
     // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
     [self configureMessageBubbleViewWithMessage:message];
+    
 }
 
 - (void)configureTimestamp:(BOOL)displayTimestamp atMessage:(id <WLMessageModel>)message {
@@ -350,6 +351,9 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 
 #pragma mark - Gestures
 - (void)setupNormalMenuController {
+    //隐藏键盘
+    [[self.superview findFirstResponder] resignFirstResponder];
+    
     UIMenuController *menu = [UIMenuController sharedMenuController];
     if (menu.isMenuVisible) {
         [menu setMenuVisible:NO animated:YES];

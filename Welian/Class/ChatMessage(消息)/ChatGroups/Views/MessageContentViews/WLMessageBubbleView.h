@@ -34,59 +34,43 @@
 
 @interface WLMessageBubbleView : UIView
 
-/**
- *  目标消息Model对象
- */
+//目标消息Model对象
 @property (nonatomic, strong, readonly)  id <WLMessageModel> message;
 
-/**
- *  自定义显示文本消息控件，子类化的原因有两个，第一个是屏蔽Menu的显示。第二是传递手势到下一层，因为文本需要双击的手势
- */
+//自定义显示文本消息控件，子类化的原因有两个，第一个是屏蔽Menu的显示。第二是传递手势到下一层，因为文本需要双击的手势
 @property (nonatomic, weak, readonly) SETextView *displayTextView;
 
-/**
- *  用于显示气泡的ImageView控件
- */
+//用于显示气泡的ImageView控件
 @property (nonatomic, weak, readonly) UIImageView *bubbleImageView;
 
-/**
- *  专门用于gif表情显示控件
- */
+//专门用于gif表情显示控件
 @property (nonatomic, weak, readonly) FLAnimatedImageView *emotionImageView;
 
-/**
- *  用于显示语音的控件，并且支持播放动画
- */
+//用于显示消息未发送成功的按钮
+@property (nonatomic, weak, readonly) UIButton *sendFailedBtn;
+
+///发送的时候，需要用到转圈的控件
+@property (nonatomic, weak, readonly) UIActivityIndicatorView *activityIndicatorView;
+
+//用于显示语音的控件，并且支持播放动画
 @property (nonatomic, weak, readonly) UIImageView *animationVoiceImageView;
 
-/**
- *  用于显示语音未读的控件，小圆点
- */
+//用于显示语音未读的控件，小圆点
 @property (nonatomic, weak, readonly) UIImageView *voiceUnreadDotImageView;
 
-/**
- *  用于显示语音时长的label
- */
+//用于显示语音时长的label
 @property (nonatomic, weak) UILabel *voiceDurationLabel;
 
-/**
- *  用于显示仿微信发送图片的控件
- */
+// 用于显示仿微信发送图片的控件
 @property (nonatomic, weak, readonly) WLBubblePhotoImageView *bubblePhotoImageView;
 
-/**
- *  显示语音播放的图片控件
- */
+//显示语音播放的图片控件
 @property (nonatomic, weak, readonly) UIImageView *videoPlayImageView;
 
-/**
- *  显示地理位置的文本控件
- */
+//显示地理位置的文本控件
 @property (nonatomic, weak, readonly) UILabel *geolocationsLabel;
 
-/**
- *  设置文本消息的字体
- */
+//设置文本消息的字体
 @property (nonatomic, strong) UIFont *font UI_APPEARANCE_SELECTOR;
 
 

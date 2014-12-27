@@ -66,13 +66,17 @@ static HttpTool *engine;
 
 - (void)reqestWithSessIDParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {
-    
+    [self reqestWithSessIDParameters:parameterDic path:@"server/index" successBlock:success failure:failureBlock withHUD:isHUD andDim:isDim];
+}
+
+- (void)reqestWithSessIDParameters:(NSDictionary *)parameterDic path:(NSString *)path successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
+{
     if (isHUD) {
         [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
     }
     
     NSString *parameterStr = [self dicTostring:parameterDic];
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     NSString *sessid = mode.sessionid;
     if (!sessid) {
@@ -80,8 +84,9 @@ static HttpTool *engine;
     }
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
-    
-    [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    //添加头部字段
+    [engine.requestSerializer setValue:sessid forHTTPHeaderField:@"jsessionid"];
+    [engine POST:path parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         DLog(@"%@",[operation responseString]);
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
@@ -90,7 +95,7 @@ static HttpTool *engine;
             success([dic objectForKey:@"data"]);
             
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-          [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([[NSError alloc] init]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             _seleDic = parameterDic;
@@ -101,7 +106,7 @@ static HttpTool *engine;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
-//        [WLHUDView showErrorHUD:error.localizedDescription];
+        //        [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }
@@ -138,29 +143,6 @@ static HttpTool *engine;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
-    
-//    [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        DLog(@"%@",[operation responseString]);
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
-//        DLog(@"%@",dic);
-//        if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
-//            [WLHUDView hiddenHud];
-//            success([dic objectForKey:@"data"]);
-//            
-//        }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
-//        }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-//            _seleDic = parameterDic;
-//            
-//            
-//        }else{
-//            [WLHUDView hiddenHud];
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        DLog(@"%@",error);
-//        //        [WLHUDView showErrorHUD:error.localizedDescription];
-//        failureBlock(error);
-//    }];
 }
 
 
