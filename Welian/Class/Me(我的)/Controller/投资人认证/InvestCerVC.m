@@ -9,16 +9,23 @@
 #import "InvestCerVC.h"
 #import "InvestCardCell.h"
 #import "InvestCollectionVC.h"
+#import "AddCaseCell.h"
+#import "NameController.h"
 
 @interface InvestCerVC ()
 
 @end
 
+
+static NSString *invcellid = @"investCardcell";
+static NSString *addcasecellid = @"addcasecellid";
+
 @implementation InvestCerVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"InvestCardCell" bundle:nil] forCellReuseIdentifier:@"investCardcell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"InvestCardCell" bundle:nil] forCellReuseIdentifier:invcellid];
+    [self.tableView registerNib:[UINib nibWithNibName:@"AddCaseCell" bundle:nil] forCellReuseIdentifier:addcasecellid];
     // Do any additional setup after loading the view.
 }
 
@@ -72,13 +79,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"investCardcell"];
+        InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:invcellid];
         [cell.investCardBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
         return cell;
-    }else{
+    }else if(indexPath.section==1){
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"111"];
         return cell;
+    }else if (indexPath.section ==2){
+        if (indexPath.row==0) {
+            AddCaseCell *addcell = [tableView dequeueReusableCellWithIdentifier:addcasecellid];
+            return addcell;
+        }
     }
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -94,12 +107,16 @@
 //            [layout setMinimumLineSpacing:20.0];
 //            [layout setHeaderReferenceSize:CGSizeMake(self.view.bounds.size.width, 34)];
             
-            InvestCollectionVC *investVC = [[InvestCollectionVC alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+            InvestCollectionVC *investVC = [[InvestCollectionVC alloc] init];
+            
             [self.navigationController pushViewController:investVC animated:YES];
         }
     }else if (indexPath.section==2){
         
-        
+        NameController *caseVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+            DLog(@"%@",userInfo);
+        } withType:IWVerifiedTypeName];
+        [self.navigationController pushViewController:caseVC animated:YES];
     }
 }
 

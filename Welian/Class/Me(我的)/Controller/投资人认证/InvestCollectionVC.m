@@ -7,26 +7,52 @@
 //
 
 #import "InvestCollectionVC.h"
+#import "InvestCollectionCell.h"
 
-@interface InvestCollectionVC ()
-
+@interface InvestCollectionVC () <UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    NSMutableArray *_seledCell;
+}
+@property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
 @implementation InvestCollectionVC
 
 static NSString * const reuseIdentifier = @"Cell";
 
+- (UICollectionView *)collectionView
+{
+    if (_collectionView == nil) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
+        [flowLayout setMinimumLineSpacing:1];
+        [flowLayout setMinimumInteritemSpacing:0.5];
+        [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
+        [_collectionView setBackgroundColor:WLLineColor];
+        _collectionView.alwaysBounceVertical = YES;
+        [_collectionView setDelegate:self];
+        [_collectionView setDataSource:self];
+        [self.view addSubview:_collectionView];
+    }
+    return _collectionView;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    _seledCell = [NSMutableArray array];
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    
-    [self.collectionView setCollectionViewLayout:flowLayout];
+//    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+
+//    [self.collectionView setCollectionViewLayout:flowLayout];
+    // 注册cell
+    [self.collectionView registerNib:[UINib nibWithNibName:@"InvestCollectionCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
+//    [self.collectionView registerClass:[InvestCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+//    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
 }
@@ -36,38 +62,54 @@ static NSString * const reuseIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete method implementation -- Return the number of sections
-    return 0;
-}
 
+    return 1;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete method implementation -- Return the number of items in the section
-    return 0;
+
+    return 50;
 }
 
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return CGSizeMake([MainScreen bounds].size.width/2, 50);
+//}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell
-    
+    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+
     return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+
+//    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+//    [cell setSelected:YES];
+}
+
+//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+//    if (!cell.highlighted) {
+//        return YES;
+//    }
+//    return NO;
+//}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    if (cell.selected) {
+        return YES;
+    }
+    return NO;
+}
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking

@@ -9,5 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface InvestCollectionCell : UICollectionViewCell
+{
+     BOOL			m_checked;
+}
+@property (weak, nonatomic) IBOutlet UIImageView *checkImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titeLabel;
+
+- (void)setChecked:(BOOL)checked;
 
 @end

@@ -10,6 +10,19 @@
 
 @implementation InvestCollectionCell
 
+- (void)setChecked:(BOOL)checked
+{
+    if (checked)
+    {
+        _checkImageView.image = [UIImage imageNamed:@"Selected.png"];
+    }
+    else
+    {
+        _checkImageView.image = [UIImage imageNamed:@"Unselected.png"];
+    }
+    m_checked = checked;
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }

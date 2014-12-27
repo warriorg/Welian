@@ -76,7 +76,7 @@ static HttpTool *engine;
     }
     
     NSString *parameterStr = [self dicTostring:parameterDic];
-    //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
     LogInUser *mode = [LogInUser getNowLogInUser];
     NSString *sessid = mode.sessionid;
     if (!sessid) {
