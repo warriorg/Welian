@@ -99,13 +99,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KWLDataDBName @"wlDataDBName.db"
 
-#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 

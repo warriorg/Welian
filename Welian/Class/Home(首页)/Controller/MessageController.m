@@ -71,9 +71,9 @@
 }
 
 - (void)cleacMessage
-{
-//    [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
-    [[LogInUser getNowLogInUser] removeRsHomeMessages:[LogInUser getNowLogInUser].rsHomeMessages];
+{    
+    [LogInUser getNowLogInUser].rsHomeMessages = nil;
+    [MOC save];
     [_messageDataArray removeAllObjects];
     [self.tableView reloadData];
     [self.tableView addSubview:self.notView];
@@ -181,8 +181,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     MessageFrameModel *messageFrameModel = _messageDataArray[indexPath.row];
-    MessageHomeModel *messagedata = messageFrameModel.messageDataM;
-    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:messagedata.feedid fromTable:KWLStutarDataTableName];
+    HomeMessage *messagedata = messageFrameModel.messageDataM;
+    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",messagedata.feedid] fromTable:KWLStutarDataTableName];
+    
     WLStatusM *statusM = [WLStatusM objectWithKeyValues:item.itemObject];
     [statusM setFid:[messagedata.feedid intValue]];
     [statusM setTopid:[messagedata.feedid intValue]];

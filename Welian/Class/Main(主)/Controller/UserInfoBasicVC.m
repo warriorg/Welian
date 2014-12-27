@@ -17,6 +17,8 @@
 #import "HomeController.h"
 #import "ListdaController.h"
 #import "CommonFriendsController.h"
+#import "MyFriendUser.h"
+#import "NewFriendUser.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -154,8 +156,13 @@ static NSString *staurCellid = @"staurCellid";
         if ([_userMode.friendship integerValue]==1) {  // 删除好友
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
                 
-                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
-                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
+                
+                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
+                [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
+                
+                [MOC save];
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];
                 [WLHUDView showSuccessHUD:@"删除成功！"];

@@ -69,7 +69,7 @@ BMKMapManager* _mapManager;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
         [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
         [[WLDataDBTool sharedService] clearTable:KWLStutarDataTableName];
-        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
+//        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
      }
     // 友盟统计
     [self umengTrack];

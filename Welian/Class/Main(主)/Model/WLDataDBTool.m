@@ -23,9 +23,9 @@ static WLDataDBTool *wlDataDBTool;
         });
     }
     [wlDataDBTool createTableWithName:KHomeDataTableName];
-    [wlDataDBTool createTableWithName:KMyAllFriendsKey];
-    [wlDataDBTool createTableWithName:KNewFriendsTableName];
-    [wlDataDBTool createTableWithName:KMessageHomeTableName];
+//    [wlDataDBTool createTableWithName:KMyAllFriendsKey];
+//    [wlDataDBTool createTableWithName:KNewFriendsTableName];
+//    [wlDataDBTool createTableWithName:KMessageHomeTableName];
     [wlDataDBTool createTableWithName:KWLStutarDataTableName];
     return wlDataDBTool;
 }
