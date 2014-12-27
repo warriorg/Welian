@@ -11,9 +11,10 @@
 #import "MeSttingCell.h"
 #import "MeInfoController.h"
 #import "SettingController.h"
-#import "CertificationController.h"
 #import "MyLocationController.h"
 #import "HomeController.h"
+#import "InvestCerVC.h"
+
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -31,7 +32,7 @@ static NSString *meinfocellid = @"MeinfoCell";
     [super viewWillAppear:animated];
     if (self.tableView) {
         NSIndexSet *set = [NSIndexSet indexSetWithIndex:0];
-        [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationNone];
 //        NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
 //        [self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -84,8 +85,6 @@ static NSString *meinfocellid = @"MeinfoCell";
     if (indexPath.section==0) {
         MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
         
-//        UserInfoModel *modeuser = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        
         LogInUser *mode = [LogInUser getNowLogInUser];
         
         [cell.MyNameLabel setText:mode.name];
@@ -130,22 +129,21 @@ static NSString *meinfocellid = @"MeinfoCell";
         if (indexPath.row==0) {
             controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
             [controller setTitle:@"我的动态"];
-//            controller = [[MyLocationController alloc] init];
-//            [WLHUDView showCustomHUD:@"即将上线，敬请期待！" imageview:nil];
-//            return;
+
         }else if (indexPath.row ==1){
 //            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
 //            [controller setTitle:@"我的动态"];
 
         }
     }else if (indexPath.section==2){
-        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
+        controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
+        [controller setTitle:@"我是投资人"];
 //        controller = [[CertificationController alloc] init];
 //        [controller setTitle:@"认证"];
         
 
     }else if (indexPath.section == 3){
-//        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
+        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }
     
      [self.navigationController pushViewController:controller animated:YES];
