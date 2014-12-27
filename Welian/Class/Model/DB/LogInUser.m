@@ -184,4 +184,10 @@
     return loginuser;
 }
 
+//获取正在聊天的消息列表
+//+ (NSArray *)chatUsers
+//{
+////    return [[[LogInUser queryInManagedObjectContext:MOC] where:@"isNow" isTrue:YES] where:@"rsMyFriends" equals:<#(id)#>]
+//}
+
 @end

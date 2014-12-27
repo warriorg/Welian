@@ -15,6 +15,7 @@
 @interface MyFriendUser : BaseUser
 
 @property (nonatomic, retain) NSNumber * status;
+@property (nonatomic, retain) NSNumber * isChatNow;
 @property (nonatomic, retain) NSSet *rsChatMessages;
 @property (nonatomic, retain) LogInUser *rsLogInUser;
 
@@ -23,6 +24,9 @@
 
 // //通过uid查询
 + (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
+
+//更新聊天状态
+- (void)updateIsChatStatus:(BOOL)status;
 
 @end
 

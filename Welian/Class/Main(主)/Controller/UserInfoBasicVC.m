@@ -97,7 +97,8 @@ static NSString *staurCellid = @"staurCellid";
 //进入聊天页面
 - (void)chatBtnClicked:(UIButton *)sender
 {
-    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
     chatVC.isFromUserInfo = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }

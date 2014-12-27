@@ -81,6 +81,7 @@
         <relationship name="rsSchools" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SchoolModel" inverseName="rsLogInUser" inverseEntity="SchoolModel" syncable="YES"/>
     </entity>
     <entity name="MyFriendUser" representedClassName="MyFriendUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="isChatNow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="rsChatMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatMessage" inverseName="rsMyFriendUser" inverseEntity="ChatMessage" syncable="YES"/>
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsMyFriends" inverseEntity="LogInUser" syncable="YES"/>
@@ -115,7 +116,7 @@
         <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="178"/>
-        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="88"/>
+        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="135"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
