@@ -12,6 +12,8 @@
 
 @interface ChatMessageController ()
 
+@property (nonatomic, strong) NSArray *datasource;
+
 @end
 
 @implementation ChatMessageController
@@ -26,6 +28,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //隐藏分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.datasource = [LogInUser chatUsers];
+    
+    //添加聊天用户改变监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,7 +49,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 5;
+    return _datasource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,5 +120,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - private
+//聊天列表改变
+- (void)chatUsersChanged:(NSNotification *)notification
+{
+    self.datasource = [LogInUser chatUsers];
+    [self.tableView reloadData];
+}
 
 @end

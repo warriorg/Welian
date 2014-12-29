@@ -46,6 +46,17 @@
     // Configure the view for the selected state
 }
 
+- (void)setMyFriendUser:(MyFriendUser *)myFriendUser
+{
+    [super willChangeValueForKey:@"myFriendUser"];
+    _myFriendUser = myFriendUser;
+    [super didChangeValueForKey:@"myFriendUser"];
+    //设置头像
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_myFriendUser.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    _nickNameLabel.text = _myFriendUser.name;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
