@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="investCardcell" rowHeight="110" id="KGk-i7-Jjw" customClass="InvestCardCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rsN-Qe-Ahi">
+                        <rect key="frame" x="120" y="20" width="80" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="UnD-XE-7Oj"/>
+                            <constraint firstAttribute="width" constant="80" id="Zsy-ez-EG6"/>
+                        </constraints>
+                        <state key="normal" image="investor_attestation_add.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pJ-vb-L2a">
+                        <rect key="frame" x="0.0" y="78" width="320" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="NUE-5t-Nv9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="5pJ-vb-L2a" firstAttribute="top" secondItem="rsN-Qe-Ahi" secondAttribute="bottom" constant="10" id="1dF-18-Mpo"/>
+                    <constraint firstAttribute="trailing" secondItem="5pJ-vb-L2a" secondAttribute="trailing" id="Kas-Wa-ZAO"/>
+                    <constraint firstItem="rsN-Qe-Ahi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="oOk-M4-yXE"/>
+                    <constraint firstItem="5pJ-vb-L2a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="uxB-eA-rW1"/>
+                    <constraint firstAttribute="centerX" secondItem="rsN-Qe-Ahi" secondAttribute="centerX" id="vBG-0b-spS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="investCardBut" destination="rsN-Qe-Ahi" id="hNe-mf-o20"/>
+                <outlet property="stateLabel" destination="5pJ-vb-L2a" id="Y4X-g8-tcK"/>
+            </connections>
+            <point key="canvasLocation" x="246" y="147"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="investor_attestation_add.png" width="80" height="48"/>
+    </resources>
+</document>
