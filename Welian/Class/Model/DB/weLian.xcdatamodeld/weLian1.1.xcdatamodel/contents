@@ -29,6 +29,7 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="msgId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="originPhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sendStatus" optional="YES" attributeType="Integer 16" syncable="YES"/>
@@ -130,18 +131,18 @@
     </entity>
     <elements>
         <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
-        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="343"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="360"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
         <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
+        <element name="InvestIndustry" positionX="-1332" positionY="-369" width="128" height="88"/>
+        <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="88"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
+        <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
         <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="253"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="135"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
-        <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="88"/>
-        <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
-        <element name="InvestIndustry" positionX="-1332" positionY="-369" width="128" height="88"/>
     </elements>
 </model>

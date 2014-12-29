@@ -13,6 +13,7 @@
 
 @interface ChatMessage : NSManagedObject
 
+@property (nonatomic, retain) NSString * msgId;
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSNumber * messageType;
 @property (nonatomic, retain) NSDate * timestamp;
@@ -33,7 +34,6 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * sender;
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
-
 
 //创建新的聊天记录
 + (void)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
