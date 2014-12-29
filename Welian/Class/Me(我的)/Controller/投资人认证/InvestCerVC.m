@@ -24,6 +24,19 @@ static NSString *addcasecellid = @"addcasecellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 取自己创业者认证
+    [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    
+    // 修改认证信息
+//    [WLHttpTool investAuthParameterDic:@{} success:^(id JSON) {
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestCardCell" bundle:nil] forCellReuseIdentifier:invcellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"AddCaseCell" bundle:nil] forCellReuseIdentifier:addcasecellid];
     // Do any additional setup after loading the view.
