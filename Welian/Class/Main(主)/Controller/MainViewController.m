@@ -15,6 +15,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "ChatMessageController.h"
+#import "LogInUser.h"
 
 @interface NavTitleView : UIView
 {
@@ -75,6 +76,7 @@
     UITabBarItem *homeItem;
     UITabBarItem *selectItem;
     UITabBarItem *circleItem;
+    UITabBarItem *chatMessageItem;
     HomeController *homeVC;
 }
 
@@ -139,6 +141,12 @@ single_implementation(MainViewController)
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+//更新消息数量改变
+- (void)updateChatMessageBadge:(NSNotification *)notification
+{
+    int unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
+    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",unRead];
+}
 
 - (void)viewDidLoad
 {
@@ -152,6 +160,9 @@ single_implementation(MainViewController)
     
     // 首页动态消息通知
    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataItembadge) name:KMessageHomeNotif object:nil];
+    
+    //添加聊天用户改变监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -206,7 +217,7 @@ single_implementation(MainViewController)
     
     
     // 聊天消息
-    UITabBarItem *chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
+    chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
     ChatMessageController *chatMessageVC = [[ChatMessageController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *chatMeeageNav = [[NavViewController alloc] initWithRootViewController:chatMessageVC];
     [chatMessageVC.navigationItem setTitle:@"消息"];

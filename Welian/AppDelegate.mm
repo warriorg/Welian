@@ -22,6 +22,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "NewFriendUser.h"
 #import "HomeMessage.h"
+#import "ChatMessage.h"
 
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
@@ -329,7 +330,17 @@ BMKMapManager* _mapManager;
         [NewFriendUser createNewFriendUserModel:newfrendM];
         
 //        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
-    }else if ([type isEqualToString:@"logout"]){
+    }else if([type isEqualToString:@"IM"]){
+        //接收的聊天消息
+        NSDictionary *dataDic = userInfo[@"data"];
+        
+        //添加数据
+        [ChatMessage createReciveMessageWithDict:dataDic];
+        //通知刷新列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceiveNewChatMessage" object:nil];
+        //聊天状态发送改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    } else if ([type isEqualToString:@"logout"]){
         
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
         [self logout];

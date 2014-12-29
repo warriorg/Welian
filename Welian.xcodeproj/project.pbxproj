@@ -577,6 +577,12 @@
 		A4F647A51A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */; };
 		A4F647BA1A43FB0D002E66FC /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */; };
 		A4F647BB1A43FB0E002E66FC /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */; };
+		A4F6A5E81A514A47008DBC8C /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */; };
+		A4F6A5E91A514A47008DBC8C /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */; };
+		A4F6A5EA1A514A47008DBC8C /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */; };
+		A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
+		A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
+		A4F6A5EE1A514ADD008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
 		F51BA43E1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA43F1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA4401A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4351A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png */; };
@@ -3158,6 +3164,48 @@
 		A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVWelianPlugin.m; sourceTree = "<group>"; };
 		A4F647B81A43FB0D002E66FC /* NSObject+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extend.h"; sourceTree = "<group>"; };
 		A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
+		A4F6A5BF1A514A47008DBC8C /* A2BlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2BlockInvocation.h; sourceTree = "<group>"; };
+		A4F6A5C01A514A47008DBC8C /* A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2DynamicDelegate.h; sourceTree = "<group>"; };
+		A4F6A5C11A514A47008DBC8C /* BKMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMacros.h; sourceTree = "<group>"; };
+		A4F6A5C21A514A47008DBC8C /* BlocksKit+MessageUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BlocksKit+MessageUI.h"; sourceTree = "<group>"; };
+		A4F6A5C31A514A47008DBC8C /* BlocksKit+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BlocksKit+QuickLook.h"; sourceTree = "<group>"; };
+		A4F6A5C41A514A47008DBC8C /* BlocksKit+UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BlocksKit+UIKit.h"; sourceTree = "<group>"; };
+		A4F6A5C51A514A47008DBC8C /* BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocksKit.h; sourceTree = "<group>"; };
+		A4F6A5C61A514A47008DBC8C /* MFMailComposeViewController+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MFMailComposeViewController+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5C71A514A47008DBC8C /* MFMessageComposeViewController+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MFMessageComposeViewController+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5C81A514A47008DBC8C /* NSArray+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5C91A514A47008DBC8C /* NSCache+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCache+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CA1A514A47008DBC8C /* NSDictionary+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CB1A514A47008DBC8C /* NSIndexSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CC1A514A47008DBC8C /* NSInvocation+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CD1A514A47008DBC8C /* NSMapTable+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMapTable+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CE1A514A47008DBC8C /* NSMutableArray+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5CF1A514A47008DBC8C /* NSMutableDictionary+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5D01A514A47008DBC8C /* NSMutableIndexSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableIndexSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5D11A514A47008DBC8C /* NSMutableOrderedSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableOrderedSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5D21A514A47008DBC8C /* NSMutableSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5D31A514A47008DBC8C /* NSObject+A2BlockDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+A2BlockDelegate.h"; sourceTree = "<group>"; };
+		A4F6A5D41A514A47008DBC8C /* NSObject+A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+A2DynamicDelegate.h"; sourceTree = "<group>"; };
+		A4F6A5D51A514A47008DBC8C /* NSObject+BKAssociatedObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BKAssociatedObjects.h"; sourceTree = "<group>"; };
+		A4F6A5D61A514A47008DBC8C /* NSObject+BKBlockExecution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BKBlockExecution.h"; sourceTree = "<group>"; };
+		A4F6A5D71A514A47008DBC8C /* NSObject+BKBlockObservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BKBlockObservation.h"; sourceTree = "<group>"; };
+		A4F6A5D81A514A47008DBC8C /* NSOrderedSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOrderedSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5D91A514A47008DBC8C /* NSSet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DA1A514A47008DBC8C /* NSTimer+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DB1A514A47008DBC8C /* NSURLConnection+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DC1A514A47008DBC8C /* QLPreviewController+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QLPreviewController+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DD1A514A47008DBC8C /* UIActionSheet+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DE1A514A47008DBC8C /* UIAlertView+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5DF1A514A47008DBC8C /* UIBarButtonItem+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E01A514A47008DBC8C /* UIControl+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E11A514A47008DBC8C /* UIGestureRecognizer+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E21A514A47008DBC8C /* UIImagePickerController+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E31A514A47008DBC8C /* UIPopoverController+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIPopoverController+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E41A514A47008DBC8C /* UITextField+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E51A514A47008DBC8C /* UIView+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E61A514A47008DBC8C /* UIWebView+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+BlocksKit.h"; sourceTree = "<group>"; };
+		A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBlocksKit.a; sourceTree = "<group>"; };
+		A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		F5021ADF1A22F8EF008B1534 /* CommentHeadFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadFrame.h; sourceTree = "<group>"; };
 		F5021AE01A22F8EF008B1534 /* CommentHeadFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHeadFrame.m; sourceTree = "<group>"; };
 		F5021AE21A22FC39008B1534 /* CommentHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadView.h; sourceTree = "<group>"; };
@@ -4292,6 +4340,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F6A5EE1A514ADD008DBC8C /* MessageUI.framework in Frameworks */,
 				F53DC3A91A49192600F5F712 /* libCordova.a in Frameworks */,
 				F53DC3AA1A49192600F5F712 /* CoreMotion.framework in Frameworks */,
 				F53DC3AB1A49192600F5F712 /* AddressBook.framework in Frameworks */,
@@ -4306,6 +4355,7 @@
 				F53DC3B41A49192600F5F712 /* AssetsLibrary.framework in Frameworks */,
 				F53DC3B51A49192600F5F712 /* CoreTelephony.framework in Frameworks */,
 				F53DC3B61A49192600F5F712 /* libbaidumapapi.a in Frameworks */,
+				A4F6A5EA1A514A47008DBC8C /* libBlocksKit.a in Frameworks */,
 				F53DC3B71A49192600F5F712 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F53DC3B81A49192600F5F712 /* libz.dylib in Frameworks */,
 				F53DC3B91A49192600F5F712 /* libsqlite3.dylib in Frameworks */,
@@ -4326,6 +4376,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */,
 				F5D075481A45956C00D31157 /* libCordova.a in Frameworks */,
 				A4F646BD1A43C2FB002E66FC /* CoreMotion.framework in Frameworks */,
 				A4F646BB1A43C2E0002E66FC /* AudioToolbox.framework in Frameworks */,
@@ -4340,6 +4391,7 @@
 				F5664A721A2AFD56008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F5664A731A2AFD56008A5830 /* libz.dylib in Frameworks */,
 				F5664A741A2AFD56008A5830 /* libsqlite3.dylib in Frameworks */,
+				A4F6A5E81A514A47008DBC8C /* libBlocksKit.a in Frameworks */,
 				F5664A751A2AFD56008A5830 /* libc++abi.dylib in Frameworks */,
 				F5664A761A2AFD56008A5830 /* Foundation.framework in Frameworks */,
 				F5664A771A2AFD56008A5830 /* CoreGraphics.framework in Frameworks */,
@@ -4360,6 +4412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */,
 				F5D075451A45956200D31157 /* libCordova.a in Frameworks */,
 				F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */,
 				F5664D351A2AFDD5008A5830 /* AddressBook.framework in Frameworks */,
@@ -4374,6 +4427,7 @@
 				A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */,
 				F5664D2A1A2AFDD5008A5830 /* CoreTelephony.framework in Frameworks */,
 				F5664D2B1A2AFDD5008A5830 /* libbaidumapapi.a in Frameworks */,
+				A4F6A5E91A514A47008DBC8C /* libBlocksKit.a in Frameworks */,
 				F5664D2C1A2AFDD5008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F5664D2D1A2AFDD5008A5830 /* libz.dylib in Frameworks */,
 				F5664D2E1A2AFDD5008A5830 /* libsqlite3.dylib in Frameworks */,
@@ -6188,6 +6242,7 @@
 		F5CE85FC19BFF2AB00A9D14C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */,
 				F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */,
 				A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */,
 				A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */,
@@ -6626,6 +6681,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				A4F6A5BC1A514A47008DBC8C /* BlocksKit */,
 				A48CA68E1A4D044B009EBD04 /* DateTools */,
 				F59E75D61A4059D00028FBAF /* CoreDataComment */,
 				10389B611A3EC8E3001A785C /* Other.h */,
@@ -9945,6 +10001,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -9983,6 +10040,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -10009,6 +10067,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
+					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 				);
 				INFOPLIST_FILE = "weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -10020,6 +10079,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -10047,6 +10107,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
+					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 				);
 				INFOPLIST_FILE = "weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -10058,6 +10119,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -10095,6 +10157,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -10133,6 +10196,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BaiduMap_IOSSDK_v2.5.0_Lib",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/UMAnalytics_Sdk_3.1.8",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",

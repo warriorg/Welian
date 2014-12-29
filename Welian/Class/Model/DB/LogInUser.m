@@ -209,4 +209,14 @@
     return [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"isChatNow" isTrue:YES] where:@"rsLogInUser" equals:[self getNowLogInUser]] results];
 }
 
+//所有未读取的聊天消息数量
+- (NSInteger)allUnReadChatMessageNum
+{
+    NSInteger allCount = 0;
+    for (MyFriendUser *friendUser in self.rsMyFriends.allObjects) {
+        allCount += [friendUser unReadChatMessageNum];
+    }
+    return allCount;
+}
+
 @end

@@ -173,6 +173,7 @@
 }
 
 - (void)dealloc {
+    _msgId = nil;
     _text = nil;
     
     _photo = nil;
@@ -197,6 +198,7 @@
     _avatorUrl = nil;
     
     _sender = nil;
+    _uid = nil;
     
     _timestamp = nil;
 }
@@ -207,6 +209,7 @@
     self = [super init];
     if (self) {
         _text = [aDecoder decodeObjectForKey:@"text"];
+        _text = [aDecoder decodeObjectForKey:@"msgId"];
         
         _photo = [aDecoder decodeObjectForKey:@"photo"];
         _thumbnailUrl = [aDecoder decodeObjectForKey:@"thumbnailUrl"];
@@ -230,6 +233,7 @@
         _avatorUrl = [aDecoder decodeObjectForKey:@"avatorUrl"];
         
         _sender = [aDecoder decodeObjectForKey:@"sender"];
+        _uid = [aDecoder decodeObjectForKey:@"uid"];
         _timestamp = [aDecoder decodeObjectForKey:@"timestamp"];
     }
     return self;
@@ -237,6 +241,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.text forKey:@"text"];
+    [aCoder encodeObject:self.msgId forKey:@"msgId"];
     
     [aCoder encodeObject:self.photo forKey:@"photo"];
     [aCoder encodeObject:self.thumbnailUrl forKey:@"thumbnailUrl"];
@@ -257,6 +262,7 @@
     [aCoder encodeObject:self.location forKey:@"location"];
     
     [aCoder encodeObject:self.sender forKey:@"sender"];
+    [aCoder encodeObject:self.uid forKey:@"uid"];
     [aCoder encodeObject:self.timestamp forKey:@"timestamp"];
 }
 

@@ -221,6 +221,9 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
             messageBubbleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                                   | UIViewAutoresizingFlexibleHeight
                                                   | UIViewAutoresizingFlexibleBottomMargin);
+            
+            //发送失败点击按钮
+            [messageBubbleView.sendFailedBtn addTarget:self action:@selector(sendFailedBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
@@ -268,6 +271,14 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     }
 }
 
+//重新发送按钮点击
+- (void)sendFailedBtnClicked:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(didReSendFailedOnMessage:atIndexPath:)]) {
+        [self.delegate didReSendFailedOnMessage:self.messageBubbleView.message atIndexPath:self.indexPath];
+    }
+}
+
 #pragma mark - Setterss
 - (void)configureCellWithMessage:(id <WLMessageModel>)message
                displaysTimestamp:(BOOL)displayTimestamp {
@@ -295,16 +306,24 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     }
 }
 
+//配置头像
 - (void)configAvatorWithMessage:(id <WLMessageModel>)message {
-    if (message.avator) {
-        [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
-        if (message.avatorUrl) {
-            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
-            [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
-        }
-    } else {
+    if (message.avatorUrl) {
+        self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
+        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
+    }else{
         [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }
+
+//    if (message.avator) {
+//        [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
+//        if (message.avatorUrl) {
+//            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
+//            [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
+//        }
+//    } else {
+//        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+//    }
 }
 
 - (void)configUserNameWithMessage:(id <WLMessageModel>)message {

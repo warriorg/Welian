@@ -41,6 +41,13 @@
 - (void)didSelectedAvatorOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath;
 
 /**
+ *  点击重新发送  发送失败的消息
+ *
+ *  @param indexPath 该目标消息在哪个IndexPath里面
+ */
+- (void)didReSendFailedOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath;
+
+/**
  *  Menu Control Selected Item
  *
  *  @param bubbleMessageMenuSelecteType 点击item后，确定点击类型

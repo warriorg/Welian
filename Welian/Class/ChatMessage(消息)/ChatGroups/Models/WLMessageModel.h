@@ -15,6 +15,7 @@
 @protocol WLMessageModel <NSObject>
 
 @required
+- (NSString *)msgId;
 - (NSString *)text;
 
 - (UIImage *)photo;
@@ -45,8 +46,10 @@
 @optional
 
 - (NSString *)sender;
+- (NSString *)uid;
 
 - (NSDate *)timestamp;
+- (void)setTimestamp:(NSDate *)timestamp;
 
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;

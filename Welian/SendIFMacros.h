@@ -48,6 +48,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 //本地数据存储
 #define SaveLoginMobile(mobile) [NSUserDefaults setString:mobile forKey:@"kLastLoginMobile"]
 #define lastLoginMobile [NSUserDefaults stringForKey:@"kLastLoginMobile"]
+
+#define SaveLoginPassWD(pass) [NSUserDefaults setString:pass forKey:@"kLastLoginPassWord"]
+#define lastLoginPassWD [NSUserDefaults stringForKey:@"kLastLoginPassWord"]
+
 // 百度地图key
 #define KBMK_Key                 KINFODic(@"KBMK_Key")
 

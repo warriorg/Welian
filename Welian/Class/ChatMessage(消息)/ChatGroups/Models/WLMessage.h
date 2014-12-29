@@ -13,6 +13,7 @@
 @interface WLMessage : NSObject<WLMessageModel, NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString * msgId;
 
 @property (nonatomic, strong) UIImage *photo;
 @property (nonatomic, copy) NSString *thumbnailUrl;
@@ -35,7 +36,8 @@
 @property (nonatomic, strong) UIImage *avator;
 @property (nonatomic, copy) NSString *avatorUrl;
 
-@property (nonatomic, copy) NSString *sender;
+@property (nonatomic, copy) NSString *sender;//用户名
+@property (nonatomic, copy) NSString *uid;//接收用户uid
 
 @property (nonatomic, strong) NSDate *timestamp;
 

@@ -27,4 +27,7 @@
 #import "UIImageView+WebCache.h"
 #import "DateTools.h"
 
+#import <BlocksKit/BlocksKit.h>
+#import <BlocksKit/BlocksKit+UIKit.h>
+
 #endif
