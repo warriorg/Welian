@@ -44,6 +44,8 @@
 //获取正在聊天的好友列表
 + (NSArray *)chatUsers;
 
+//所有未读取的聊天消息数量
+- (NSInteger)allUnReadChatMessageNum;
 
 
 + (void)setUserUid:(NSNumber *)uid;

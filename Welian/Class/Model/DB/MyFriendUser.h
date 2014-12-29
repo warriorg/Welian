@@ -25,11 +25,18 @@
 // //通过uid查询
 + (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
 
+//创建接收消息的聊天对象
++ (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict;
+
 //更新聊天状态
 - (void)updateIsChatStatus:(BOOL)status;
+//更新所有未读消息为读取状态
+- (void)updateAllMessageReadStatus;
+//获取最新的一条消息
+- (ChatMessage *)getTheNewChatMessage;
 
 //获取未读取的聊天消息数量
-- (int)unReadChatMessageNum;
+- (NSInteger)unReadChatMessageNum;
 //获取当前最大的消息ID
 - (NSString *)getMaxChatMessageId;
 //获取对应msgId的消息

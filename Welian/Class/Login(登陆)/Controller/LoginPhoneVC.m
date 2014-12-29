@@ -148,6 +148,8 @@
             
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
+            SaveLoginPassWD(self.pwdTextField.text);
+            
             [LogInUser createLogInUserModel:mode];
             //保存用户信息到本地 归档
 //            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];

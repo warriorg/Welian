@@ -18,8 +18,17 @@
 
 @implementation ChatMessageController
 
+- (void)dealloc{
+    _datasource = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //取消滚动
+//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -59,6 +68,7 @@
         cell = [[ChatMessageViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_Identifier];
     }
     cell.myFriendUser = _datasource[indexPath.row];
+    [cell setDebug:YES];
     return cell;
 }
 
@@ -77,7 +87,7 @@
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
 }
@@ -92,7 +102,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        //修改聊天状态
+        MyFriendUser *friendUser = _datasource[indexPath.row];
+        [friendUser updateIsChatStatus:NO];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [(NSMutableArray *)_datasource removeObjectAtIndex:indexPath.row];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

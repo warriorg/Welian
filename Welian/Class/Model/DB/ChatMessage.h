@@ -36,6 +36,16 @@
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
 
 //创建新的聊天记录
-+ (void)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
++ (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
+
+//创建接受到的聊天消息
++ (void)createReciveMessageWithDict:(NSDictionary *)dict;
+
+//更新发送状态
+- (void)updateSendStatus:(NSInteger)status;
+//更新读取状态
+- (void)updateReadStatus:(BOOL)status;
+//更新重新发送状态
+- (void)updateReSendStatus;
 
 @end

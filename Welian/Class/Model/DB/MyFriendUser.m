@@ -58,6 +58,24 @@
     return myFriend;
 }
 
+//创建接收消息的聊天对象
++ (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict
+{
+    NSDictionary *fromuser = dict[@"fromuser"];
+    LogInUser *user = [LogInUser getLogInUserWithUid:dict[@"uid"]];
+    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:fromuser[@"uid"]];
+    if (!myFriend) {
+        myFriend = [MyFriendUser create];
+        myFriend.uid = fromuser[@"uid"];
+        myFriend.avatar = fromuser[@"avatar"];
+        myFriend.name = fromuser[@"name"];
+        myFriend.rsLogInUser = user;
+    }
+    myFriend.isChatNow = @(YES);
+    [MOC save];
+    return myFriend;
+}
+
 //更新聊天状态
 - (void)updateIsChatStatus:(BOOL)status
 {
@@ -68,8 +86,28 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
+//更新所有未读消息为读取状态
+- (void)updateAllMessageReadStatus
+{
+    NSArray *unReadMessages = [[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results];
+    for (ChatMessage *chatMsg in unReadMessages) {
+        [chatMsg updateReadStatus:YES];
+    }
+    
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    //更新总的聊天消息数量
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+}
+
+//获取最新的一条消息
+- (ChatMessage *)getTheNewChatMessage
+{
+    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
+}
+
 //获取未读取的聊天消息数量
-- (int)unReadChatMessageNum
+- (NSInteger)unReadChatMessageNum
 {
     return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results] count];
 }
@@ -94,7 +132,7 @@
 //获取所有的聊天消息列表
 - (NSArray *)allChatMessages
 {
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:NO];
+    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
     //返回的数量 限制
 //    [[query offset:5] limit:10];
     

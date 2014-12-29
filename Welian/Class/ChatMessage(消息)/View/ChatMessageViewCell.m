@@ -7,6 +7,7 @@
 //
 
 #import "ChatMessageViewCell.h"
+#import "ChatMessage.h"
 
 #define kLogoImageWidth 40.f
 #define kMarginLeft 15.f
@@ -56,7 +57,7 @@
     
     _nickNameLabel.text = _myFriendUser.name;
     
-    int unRead = [_myFriendUser unReadChatMessageNum];
+    NSInteger unRead = [_myFriendUser unReadChatMessageNum];
     //是否隐藏
     _numBtn.hidden = unRead <= 0 ? YES : NO;
     if (unRead < 100) {
@@ -64,9 +65,12 @@
     }else{
         [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2.png"] forState:UIControlStateNormal];
     }
-    [_numBtn setTitle:[NSString stringWithFormat:@"%d",unRead] forState:UIControlStateNormal];
+    [_numBtn setTitle:[NSString stringWithFormat:@"%d",(int)unRead] forState:UIControlStateNormal];
     
+    ChatMessage *chatMessage = [_myFriendUser getTheNewChatMessage];
+    _timeLabel.text = [chatMessage.timestamp timeAgoSinceNow];
     
+    _messageLabel.text = chatMessage.message;
 }
 
 - (void)layoutSubviews
