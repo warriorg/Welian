@@ -11,13 +11,15 @@
 #import "BaseUser.h"
 #import "UserInfoModel.h"
 
-@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage;
+@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems;
 
 @interface LogInUser : BaseUser
 
 @property (nonatomic, retain) NSNumber * isNow;
 @property (nonatomic, retain) NSString * checkcode;
 @property (nonatomic, retain) NSString * sessionid;
+@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSNumber * auth;
 
 @property (nonatomic, retain) NSSet *rsCompanys;
 @property (nonatomic, retain) NSSet *rsSchools;
@@ -25,6 +27,10 @@
 @property (nonatomic, retain) NSSet *rsFriendsFriends;
 @property (nonatomic, retain) NSSet *rsNewFriends;
 @property (nonatomic, retain) NSSet *rsHomeMessages;
+
+@property (nonatomic, retain) NSSet *rsInvestStages;
+@property (nonatomic, retain) NSSet *rsInvestItems;
+@property (nonatomic, retain) NSSet *rsInvestIndustrys;
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
@@ -73,7 +79,8 @@
 
 + (void)setUserisNow:(BOOL)isnow;
 
-
++ (void)setUserUrl:(NSString *)url;
++ (void)setuserAuth:(NSNumber *)auth;
 
 @end
 
@@ -108,5 +115,20 @@
 - (void)removeRsHomeMessagesObject:(HomeMessage *)value;
 - (void)addRsHomeMessages:(NSSet *)values;
 - (void)removeRsHomeMessages:(NSSet *)values;
+
+- (void)addRsInvestItemsObject:(InvestItems *)value;
+- (void)removeRsInvestItemsObject:(InvestItems *)value;
+- (void)addRsInvestItems:(NSSet *)values;
+- (void)removeRsInvestItems:(NSSet *)values;
+
+- (void)addRsInvestStagesObject:(InvestStages *)value;
+- (void)removeRsInvestStagesObject:(InvestStages *)value;
+- (void)addRsInvestStages:(NSSet *)values;
+- (void)removeRsInvestStages:(NSSet *)values;
+
+- (void)addRsInvestIndustryObject:(InvestIndustry *)value;
+- (void)removeRsInvestIndustryObject:(InvestIndustry *)value;
+- (void)addRsInvestIndustry:(NSSet *)values;
+- (void)removeRsInvestIndustry:(NSSet *)values;
 
 @end

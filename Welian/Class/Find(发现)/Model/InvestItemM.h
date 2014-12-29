@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "IFBase.h"
 
-@interface InvestItemM : NSObject
+@interface InvestItemM : IFBase
 
 /**  投资案例   */
 @property (nonatomic, strong) NSString *item;

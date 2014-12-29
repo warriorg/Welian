@@ -11,9 +11,15 @@
 #import "InvestCollectionVC.h"
 #import "AddCaseCell.h"
 #import "NameController.h"
+#import "InvestIndustry.h"
+#import "InvestStages.h"
+#import "InvestItems.h"
+#import "InvestItemM.h"
 
 @interface InvestCerVC ()
+{
 
+}
 @end
 
 
@@ -24,6 +30,7 @@ static NSString *addcasecellid = @"addcasecellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // 取自己创业者认证
     [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
         
@@ -93,6 +100,7 @@ static NSString *addcasecellid = @"addcasecellid";
 {
     if (indexPath.section==0) {
         InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:invcellid];
+        
         [cell.investCardBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }else if(indexPath.section==1){

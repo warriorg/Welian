@@ -642,6 +642,24 @@
 		F534DB031A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F534DB021A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png */; };
 		F534DB041A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F534DB021A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png */; };
 		F534DB051A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F534DB021A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png */; };
+		F534DB4F1A51082F00B6A725 /* IInvestStageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB4E1A51082F00B6A725 /* IInvestStageModel.m */; };
+		F534DB501A51082F00B6A725 /* IInvestStageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB4E1A51082F00B6A725 /* IInvestStageModel.m */; };
+		F534DB511A51082F00B6A725 /* IInvestStageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB4E1A51082F00B6A725 /* IInvestStageModel.m */; };
+		F534DB541A51086B00B6A725 /* IInvestIndustryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */; };
+		F534DB551A51086B00B6A725 /* IInvestIndustryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */; };
+		F534DB561A51086B00B6A725 /* IInvestIndustryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */; };
+		F534DB5A1A5119A000B6A725 /* InvestIndustry.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB591A5119A000B6A725 /* InvestIndustry.m */; };
+		F534DB5B1A5119A000B6A725 /* InvestIndustry.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB591A5119A000B6A725 /* InvestIndustry.m */; };
+		F534DB5C1A5119A000B6A725 /* InvestIndustry.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB591A5119A000B6A725 /* InvestIndustry.m */; };
+		F534DB5F1A5119A000B6A725 /* InvestStages.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB5E1A5119A000B6A725 /* InvestStages.m */; };
+		F534DB601A5119A000B6A725 /* InvestStages.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB5E1A5119A000B6A725 /* InvestStages.m */; };
+		F534DB611A5119A000B6A725 /* InvestStages.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB5E1A5119A000B6A725 /* InvestStages.m */; };
+		F534DB641A5119A000B6A725 /* InvestItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB631A5119A000B6A725 /* InvestItems.m */; };
+		F534DB651A5119A000B6A725 /* InvestItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB631A5119A000B6A725 /* InvestItems.m */; };
+		F534DB661A5119A000B6A725 /* InvestItems.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB631A5119A000B6A725 /* InvestItems.m */; };
+		F534DB691A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB681A5123DA00B6A725 /* IIMeInvestAuthModel.m */; };
+		F534DB6A1A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB681A5123DA00B6A725 /* IIMeInvestAuthModel.m */; };
+		F534DB6B1A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DB681A5123DA00B6A725 /* IIMeInvestAuthModel.m */; };
 		F53D4DFC1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
 		F53D4DFD1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
 		F53D4DFE1A4A771300CA06C8 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
@@ -3746,6 +3764,18 @@
 		F534DAFA1A4F1BB100B6A725 /* AddCaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCaseCell.m; sourceTree = "<group>"; };
 		F534DAFB1A4F1BB100B6A725 /* AddCaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCaseCell.xib; sourceTree = "<group>"; };
 		F534DB021A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "investor_attestation_eg_add@2x.png"; sourceTree = "<group>"; };
+		F534DB4D1A51082F00B6A725 /* IInvestStageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInvestStageModel.h; sourceTree = "<group>"; };
+		F534DB4E1A51082F00B6A725 /* IInvestStageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IInvestStageModel.m; sourceTree = "<group>"; };
+		F534DB521A51086B00B6A725 /* IInvestIndustryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInvestIndustryModel.h; sourceTree = "<group>"; };
+		F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IInvestIndustryModel.m; sourceTree = "<group>"; };
+		F534DB581A5119A000B6A725 /* InvestIndustry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestIndustry.h; sourceTree = "<group>"; };
+		F534DB591A5119A000B6A725 /* InvestIndustry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestIndustry.m; sourceTree = "<group>"; };
+		F534DB5D1A5119A000B6A725 /* InvestStages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestStages.h; sourceTree = "<group>"; };
+		F534DB5E1A5119A000B6A725 /* InvestStages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestStages.m; sourceTree = "<group>"; };
+		F534DB621A5119A000B6A725 /* InvestItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestItems.h; sourceTree = "<group>"; };
+		F534DB631A5119A000B6A725 /* InvestItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestItems.m; sourceTree = "<group>"; };
+		F534DB671A5123DA00B6A725 /* IIMeInvestAuthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIMeInvestAuthModel.h; sourceTree = "<group>"; };
+		F534DB681A5123DA00B6A725 /* IIMeInvestAuthModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIMeInvestAuthModel.m; sourceTree = "<group>"; };
 		F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewFriendModel.h; path = "../../Friends(好友)/Model/NewFriendModel.h"; sourceTree = "<group>"; };
 		F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFriendModel.m; path = "../../Friends(好友)/Model/NewFriendModel.m"; sourceTree = "<group>"; };
 		F5382B1619FD108200FAA5B6 /* NewFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendController.h; sourceTree = "<group>"; };
@@ -5916,6 +5946,12 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				F534DB621A5119A000B6A725 /* InvestItems.h */,
+				F534DB631A5119A000B6A725 /* InvestItems.m */,
+				F534DB5D1A5119A000B6A725 /* InvestStages.h */,
+				F534DB5E1A5119A000B6A725 /* InvestStages.m */,
+				F534DB581A5119A000B6A725 /* InvestIndustry.h */,
+				F534DB591A5119A000B6A725 /* InvestIndustry.m */,
 				A4272FC51A4E8AAD0019E440 /* ChatMessage.h */,
 				A4272FC61A4E8AAD0019E440 /* ChatMessage.m */,
 				F562728E1A4D474E002A9B88 /* HomeMessage.h */,
@@ -5959,6 +5995,14 @@
 				F5239B8219F6352900D9E696 /* FriendsUserModel.m */,
 				F5382B1019FD0B6400FAA5B6 /* NewFriendModel.h */,
 				F5382B1119FD0B6400FAA5B6 /* NewFriendModel.m */,
+				F534DB671A5123DA00B6A725 /* IIMeInvestAuthModel.h */,
+				F534DB681A5123DA00B6A725 /* IIMeInvestAuthModel.m */,
+				F534DB4D1A51082F00B6A725 /* IInvestStageModel.h */,
+				F534DB4E1A51082F00B6A725 /* IInvestStageModel.m */,
+				F534DB521A51086B00B6A725 /* IInvestIndustryModel.h */,
+				F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */,
+				F55630E81A2CA82C008C05F5 /* InvestItemM.h */,
+				F55630E91A2CA82C008C05F5 /* InvestItemM.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -6572,8 +6616,6 @@
 				F507F25819E6630B00661A90 /* InvestAuthModel.m */,
 				F507F25A19E672B400661A90 /* InvestReqstModel.h */,
 				F507F25B19E672B400661A90 /* InvestReqstModel.m */,
-				F55630E81A2CA82C008C05F5 /* InvestItemM.h */,
-				F55630E91A2CA82C008C05F5 /* InvestItemM.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -8860,6 +8902,7 @@
 				F53DC2EE1A49192600F5F712 /* PublishStatusController.m in Sources */,
 				A4C1412E1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				A4C141161A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
+				F534DB5C1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				F534DAD81A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F53DC2EF1A49192600F5F712 /* MyLocationController.m in Sources */,
 				A4C144701A4C2D3B00C9BAB5 /* WLMessageBubbleHelper.m in Sources */,
@@ -9038,6 +9081,7 @@
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F53DC3751A49192600F5F712 /* WLStatusM.m in Sources */,
+				F534DB6B1A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
 				F53DC3781A49192600F5F712 /* CommentHeadView.m in Sources */,
@@ -9055,19 +9099,23 @@
 				F53DC3831A49192600F5F712 /* NSString+Extend.m in Sources */,
 				F53DC3841A49192600F5F712 /* AddFriendsController.m in Sources */,
 				F53DC3851A49192600F5F712 /* MJMethod.m in Sources */,
+				F534DB561A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F53DC3861A49192600F5F712 /* InvestReqstModel.m in Sources */,
 				F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F53DC3871A49192600F5F712 /* InfoUserHaderCell.m in Sources */,
 				F53DC3881A49192600F5F712 /* MessageHomeModel.m in Sources */,
+				F534DB511A51082F00B6A725 /* IInvestStageModel.m in Sources */,
 				F53DC3891A49192600F5F712 /* LoginPhoneVC.m in Sources */,
 				F53DC38A1A49192600F5F712 /* TOActivityChrome.m in Sources */,
 				F53DC38B1A49192600F5F712 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F53DC38C1A49192600F5F712 /* WLHttpTool.m in Sources */,
 				F53DC38D1A49192600F5F712 /* CompanyModel.m in Sources */,
+				F534DB661A5119A000B6A725 /* InvestItems.m in Sources */,
 				F53DC38E1A49192600F5F712 /* AboutViewController.m in Sources */,
 				A4C144761A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
 				F53DC38F1A49192600F5F712 /* CommonFriendsController.m in Sources */,
 				F53DC3901A49192600F5F712 /* WLTool.m in Sources */,
+				F534DB611A5119A000B6A725 /* InvestStages.m in Sources */,
 				A4C1415B1A4BEF5700C9BAB5 /* SETextMagnifierCaret.m in Sources */,
 				F53DC3911A49192600F5F712 /* WLPhotoListView.m in Sources */,
 				F53DC3921A49192600F5F712 /* AFHTTPSessionManager.m in Sources */,
@@ -9123,6 +9171,7 @@
 				F56649821A2AFD56008A5830 /* FMDatabasePool.m in Sources */,
 				F56649831A2AFD56008A5830 /* BasicTableViewController.m in Sources */,
 				F56649841A2AFD56008A5830 /* UIImage+WebP.m in Sources */,
+				F534DB541A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F56649851A2AFD56008A5830 /* MeSttingCell.m in Sources */,
 				A4C1411A1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
 				F56649861A2AFD56008A5830 /* HBVLinkedTextView.m in Sources */,
@@ -9155,6 +9204,7 @@
 				F566499A1A2AFD56008A5830 /* SDWebImagePrefetcher.m in Sources */,
 				F566499B1A2AFD56008A5830 /* UIButton+AFNetworking.m in Sources */,
 				F566499C1A2AFD56008A5830 /* NavViewController.m in Sources */,
+				F534DB4F1A51082F00B6A725 /* IInvestStageModel.m in Sources */,
 				F59E75F01A4059D00028FBAF /* BaseModel.m in Sources */,
 				F566499D1A2AFD56008A5830 /* FriendsUserModel.m in Sources */,
 				A4C1408C1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
@@ -9195,6 +9245,7 @@
 				A48CA6B01A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F56649B41A2AFD56008A5830 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				F56649B51A2AFD56008A5830 /* NSData+MD5Digest.m in Sources */,
+				F534DB641A5119A000B6A725 /* InvestItems.m in Sources */,
 				F56649B61A2AFD56008A5830 /* SignInPWDController.m in Sources */,
 				F56649B71A2AFD56008A5830 /* FMDatabaseAdditions.m in Sources */,
 				F56649B81A2AFD56008A5830 /* ShareEngine.m in Sources */,
@@ -9275,6 +9326,7 @@
 				A4C140861A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				F56649F21A2AFD56008A5830 /* WLStatusCell.m in Sources */,
 				F56649F31A2AFD56008A5830 /* SameFriendsCell.m in Sources */,
+				F534DB691A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */,
 				A4C141501A4BEF5700C9BAB5 /* SETextGeometry.m in Sources */,
 				A4C141651A4BEF5700C9BAB5 /* SETextView.m in Sources */,
 				F56649F41A2AFD56008A5830 /* WeixinSessionActivity.m in Sources */,
@@ -9421,6 +9473,7 @@
 				F5664A4E1A2AFD56008A5830 /* MJMethod.m in Sources */,
 				F5664A4F1A2AFD56008A5830 /* InvestReqstModel.m in Sources */,
 				F5664A501A2AFD56008A5830 /* InfoUserHaderCell.m in Sources */,
+				F534DB5A1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				F5664A511A2AFD56008A5830 /* MessageHomeModel.m in Sources */,
 				F5664A521A2AFD56008A5830 /* LoginPhoneVC.m in Sources */,
 				F562728B1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
@@ -9442,6 +9495,7 @@
 				F5664A601A2AFD56008A5830 /* StaurCell.m in Sources */,
 				F5664A611A2AFD56008A5830 /* MJTypeEncoding.m in Sources */,
 				F5664A621A2AFD56008A5830 /* WLTogetherUser.m in Sources */,
+				F534DB5F1A5119A000B6A725 /* InvestStages.m in Sources */,
 				F53D4E331A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664A631A2AFD56008A5830 /* NoListView.m in Sources */,
 				F534DAE21A4EAA5800B6A725 /* InvestCollectionVC.m in Sources */,
@@ -9581,6 +9635,7 @@
 				F5664C811A2AFDD5008A5830 /* PublishStatusController.m in Sources */,
 				A4C1412D1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				A4C141151A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
+				F534DB5B1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				F534DAD71A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664C821A2AFDD5008A5830 /* MyLocationController.m in Sources */,
 				A4C1446F1A4C2D3B00C9BAB5 /* WLMessageBubbleHelper.m in Sources */,
@@ -9759,6 +9814,7 @@
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F5664CFA1A2AFDD5008A5830 /* WLStatusM.m in Sources */,
+				F534DB6A1A5123DA00B6A725 /* IIMeInvestAuthModel.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
 				F5664CFD1A2AFDD5008A5830 /* CommentHeadView.m in Sources */,
@@ -9776,19 +9832,23 @@
 				10389B691A3F0740001A785C /* NSString+Extend.m in Sources */,
 				F5664D071A2AFDD5008A5830 /* AddFriendsController.m in Sources */,
 				F5664D081A2AFDD5008A5830 /* MJMethod.m in Sources */,
+				F534DB551A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F5664D091A2AFDD5008A5830 /* InvestReqstModel.m in Sources */,
 				F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F5664D0A1A2AFDD5008A5830 /* InfoUserHaderCell.m in Sources */,
 				F5664D0B1A2AFDD5008A5830 /* MessageHomeModel.m in Sources */,
+				F534DB501A51082F00B6A725 /* IInvestStageModel.m in Sources */,
 				F5664D0C1A2AFDD5008A5830 /* LoginPhoneVC.m in Sources */,
 				F5664D0D1A2AFDD5008A5830 /* TOActivityChrome.m in Sources */,
 				F5664D0E1A2AFDD5008A5830 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F5664D0F1A2AFDD5008A5830 /* WLHttpTool.m in Sources */,
 				F59E76141A4071330028FBAF /* CompanyModel.m in Sources */,
+				F534DB651A5119A000B6A725 /* InvestItems.m in Sources */,
 				F5664D101A2AFDD5008A5830 /* AboutViewController.m in Sources */,
 				A4C144751A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
 				F5664D111A2AFDD5008A5830 /* CommonFriendsController.m in Sources */,
 				F5664D121A2AFDD5008A5830 /* WLTool.m in Sources */,
+				F534DB601A5119A000B6A725 /* InvestStages.m in Sources */,
 				A4C1415A1A4BEF5700C9BAB5 /* SETextMagnifierCaret.m in Sources */,
 				F5664D131A2AFDD5008A5830 /* WLPhotoListView.m in Sources */,
 				F5664D141A2AFDD5008A5830 /* AFHTTPSessionManager.m in Sources */,

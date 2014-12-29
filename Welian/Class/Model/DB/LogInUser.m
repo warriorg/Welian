@@ -14,17 +14,24 @@
 #import "SchoolModel.h"
 #import "HomeMessage.h"
 
+
 @implementation LogInUser
 
 @dynamic isNow;
 @dynamic checkcode;
 @dynamic sessionid;
+@dynamic url;
+@dynamic auth;
+
 @dynamic rsCompanys;
 @dynamic rsSchools;
 @dynamic rsMyFriends;
 @dynamic rsFriendsFriends;
 @dynamic rsNewFriends;
 @dynamic rsHomeMessages;
+@dynamic rsInvestIndustrys;
+@dynamic rsInvestItems;
+@dynamic rsInvestStages;
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM
@@ -167,6 +174,18 @@
 + (void)setUserisNow:(BOOL)isnow
 {
     [[LogInUser getNowLogInUser] setIsNow:@(isnow)];
+    [MOC save];
+}
+
++ (void)setUserUrl:(NSString *)url
+{
+    [[LogInUser getNowLogInUser] setUrl:url];
+    [MOC save];
+}
+
++ (void)setuserAuth:(NSNumber *)auth
+{
+    [[LogInUser getNowLogInUser] setAuth:auth];
     [MOC save];
 }
 
