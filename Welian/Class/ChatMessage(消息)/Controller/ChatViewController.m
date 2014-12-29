@@ -7,6 +7,7 @@
 //
 
 #import "ChatViewController.h"
+#import "ChatMessage.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -49,6 +50,25 @@
     WEAKSELF
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray *messages = [weakSelf getTestMessages];
+        
+        NSArray *localMessages = [_friendUser allChatMessages];
+        for (ChatMessage *chatMessage in localMessages) {
+            WLMessage *message = nil;
+            switch (chatMessage.messageType.integerValue) {
+                case WLBubbleMessageMediaTypeText:
+                    //普通文本
+                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.integerValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    break;
+                    
+                default:
+                    break;
+            }
+            //添加到数组中
+            [messages addObject:message];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.messages = messages;
@@ -164,12 +184,17 @@
 //发送消息
 - (void)sendMessage:(WLMessage *)message
 {
-    NSDictionary *param = @{@"type":@(WLBubbleMessageMediaTypeText),@"msg":message.text,@"touser":@(10019)};
+    //本地聊天数据库添加
+    [ChatMessage createChatMessageWithWLMessage:message FriendUser:_friendUser];
+    NSDictionary *param = @{@"type":@(WLBubbleMessageMediaTypeText),@"msg":message.text,@"touser":_friendUser.uid.stringValue};
     [WLHttpTool sendMessageParameterDic:param
                                 success:^(id JSON) {
+                                    //更新发送消息状态
+                                    message.sended = 1;
                                     
                                 } fail:^(NSError *error) {
-                                    
+                                    //发送失败
+                                    message.sended = 2;
                                 }];
 }
 
@@ -187,7 +212,7 @@
     textMessage.sender = [LogInUser getNowLogInUser].name;
     //是否读取
     textMessage.isRead = YES;
-    textMessage.sended = NO;
+    textMessage.sended = 0;
     
     //更新聊天好友
     [_friendUser updateIsChatStatus:YES];

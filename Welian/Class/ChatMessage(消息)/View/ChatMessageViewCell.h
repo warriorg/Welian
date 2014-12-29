@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyFriendUser.h"
 
 @interface ChatMessageViewCell : UITableViewCell
+
+@property (nonatomic, strong) MyFriendUser *myFriendUser;
 
 @end

@@ -46,6 +46,29 @@
     // Configure the view for the selected state
 }
 
+- (void)setMyFriendUser:(MyFriendUser *)myFriendUser
+{
+    [super willChangeValueForKey:@"myFriendUser"];
+    _myFriendUser = myFriendUser;
+    [super didChangeValueForKey:@"myFriendUser"];
+    //设置头像
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_myFriendUser.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    _nickNameLabel.text = _myFriendUser.name;
+    
+    int unRead = [_myFriendUser unReadChatMessageNum];
+    //是否隐藏
+    _numBtn.hidden = unRead <= 0 ? YES : NO;
+    if (unRead < 100) {
+        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1.png"] forState:UIControlStateNormal];
+    }else{
+        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2.png"] forState:UIControlStateNormal];
+    }
+    [_numBtn setTitle:[NSString stringWithFormat:@"%d",unRead] forState:UIControlStateNormal];
+    
+    
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -59,7 +82,7 @@
     _logoImageView.centerY = self.height / 2.f;
     
     //消息数量
-    _numBtn.size = CGSizeMake(kBadgeHeight, kBadgeHeight);
+    _numBtn.size = CGSizeMake([_myFriendUser unReadChatMessageNum] < 100 ? kBadgeHeight : kBadge2Width, kBadgeHeight);
     _numBtn.top = _logoImageView.top - 1;
     _numBtn.right = _logoImageView.right + 3;
     

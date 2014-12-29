@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MyFriendUser;
+@class MyFriendUser,WLMessage;
 
 @interface ChatMessage : NSManagedObject
 
@@ -33,5 +33,9 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * sender;
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
+
+
+//创建新的聊天记录
++ (void)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
 
 @end
