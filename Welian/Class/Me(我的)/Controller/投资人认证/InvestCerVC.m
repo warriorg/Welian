@@ -14,11 +14,14 @@
 #import "InvestIndustry.h"
 #import "InvestStages.h"
 #import "InvestItems.h"
+#import "IIMeInvestAuthModel.h"
 #import "InvestItemM.h"
+#import "IInvestIndustryModel.h"
+#import "IInvestStageModel.h"
 
 @interface InvestCerVC ()
 {
-
+    
 }
 @end
 
@@ -33,6 +36,18 @@ static NSString *addcasecellid = @"addcasecellid";
     
     // 取自己创业者认证
     [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
+        IIMeInvestAuthModel *meInvestAuth = [IIMeInvestAuthModel objectWithDict:JSON];
+        [LogInUser setUserUrl:meInvestAuth.url];
+        [LogInUser setuserAuth:meInvestAuth.auth];
+        for (IInvestIndustryModel *industryM in meInvestAuth.industry) {
+            [InvestIndustry createInvestIndustry:industryM];
+        }
+        for (IInvestStageModel *stageM in meInvestAuth.stages) {
+            [InvestStages createInvestStages:stageM];
+        }
+        for (InvestItemM *itemM in meInvestAuth.items) {
+            [InvestItems createInvestItems:itemM];
+        }
         
     } fail:^(NSError *error) {
         

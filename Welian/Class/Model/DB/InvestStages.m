@@ -25,6 +25,8 @@
     }
     investitem.stagename = investItemM.stagename;
     investitem.stage = investItemM.stage;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 

@@ -25,6 +25,8 @@
     }
     investitem.item = investItemM.item;
     investitem.itemid = investItemM.itemid;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 

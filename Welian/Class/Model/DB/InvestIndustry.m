@@ -25,6 +25,8 @@
     }
     investitem.industryid = investIndustry.industryid;
     investitem.industryname = investIndustry.industryname;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 
