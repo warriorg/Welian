@@ -156,9 +156,14 @@
     
     _voiceDurationLabel.hidden = YES;
     //是否发送失败
-    _sendFailedBtn.hidden = message.sended;
+    if (message.sended == 2) {
+        //发送失败，需要手动点击重发
+        [_sendFailedBtn setHidden:NO];
+    }else{
+        [_sendFailedBtn setHidden:YES];
+    }
     //停止加载
-    if ((message.sended && message.bubbleMessageType == WLBubbleMessageTypeSending) || (message.bubbleMessageType == WLBubbleMessageTypeReceiving)){
+    if ((message.sended != 0 && message.bubbleMessageType == WLBubbleMessageTypeSending) || (message.bubbleMessageType == WLBubbleMessageTypeReceiving)){
         [_activityIndicatorView stopAnimating];
     }else{
         [_activityIndicatorView startAnimating];

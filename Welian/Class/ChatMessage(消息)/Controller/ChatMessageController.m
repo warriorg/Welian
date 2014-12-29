@@ -58,7 +58,7 @@
     if (!cell) {
         cell = [[ChatMessageViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_Identifier];
     }
-    
+    cell.myFriendUser = _datasource[indexPath.row];
     return cell;
 }
 
@@ -71,8 +71,9 @@
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
     
-        //进入聊天页面
-    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    //进入聊天页面
+    MyFriendUser *friendUser = _datasource[indexPath.row];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:friendUser];
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 

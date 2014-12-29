@@ -39,7 +39,7 @@
 
 @property (nonatomic, strong) NSDate *timestamp;
 
-@property (nonatomic, assign) BOOL sended;
+@property (nonatomic, assign) NSInteger sended;
 
 @property (nonatomic, assign) WLBubbleMessageMediaType messageMediaType;
 

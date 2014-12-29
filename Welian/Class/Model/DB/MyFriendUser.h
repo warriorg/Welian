@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
 
-@class ChatMessage, LogInUser, FriendsUserModel;
+@class ChatMessage, LogInUser, FriendsUserModel, WLMessage;
 
 @interface MyFriendUser : BaseUser
 
@@ -27,6 +27,11 @@
 
 //更新聊天状态
 - (void)updateIsChatStatus:(BOOL)status;
+
+//获取未读取的聊天消息数量
+- (int)unReadChatMessageNum;
+//获取所有的聊天消息列表
+- (NSArray *)allChatMessages;
 
 @end
 
