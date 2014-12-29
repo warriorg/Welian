@@ -13,6 +13,7 @@
 
 @implementation ChatMessage
 
+@dynamic msgId;
 @dynamic message;
 @dynamic messageType;
 @dynamic timestamp;
@@ -38,6 +39,7 @@
 + (void)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser
 {
     ChatMessage *chatMsg = [ChatMessage create];
+    chatMsg.msgId = [NSString stringWithFormat:@"%d",[friedUser getMaxChatMessageId].integerValue + 1];
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(wlMessage.messageMediaType);
     chatMsg.timestamp = wlMessage.timestamp;

@@ -74,6 +74,23 @@
     return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results] count];
 }
 
+//获取当前最大的消息ID
+- (NSString *)getMaxChatMessageId
+{
+    ChatMessage *chatMessage = [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:NO] results] firstObject];
+    if (chatMessage) {
+        return chatMessage.msgId;
+    }else{
+        return @"0";
+    }
+}
+
+//获取对应msgId的消息
+- (ChatMessage *)getChatMessageWithMsgId:(NSString *)msgId
+{
+    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"msgId" equals:msgId] results] firstObject];
+}
+
 //获取所有的聊天消息列表
 - (NSArray *)allChatMessages
 {
@@ -83,5 +100,6 @@
     
     return query.results;
 }
+
 
 @end
