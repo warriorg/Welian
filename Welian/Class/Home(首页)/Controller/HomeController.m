@@ -63,14 +63,14 @@
         
         _dataArry = [NSMutableArray array];
         if (!_uid) {
-//            NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
-//            
-//            for (YTKKeyValueItem *aa in arrr) {
-//                WLStatusFrame *sf = [self dataFrameWith:aa.itemObject];
-//                [_dataArry addObject:sf];
-//            }
-//            
-//            [self loadFirstFID];    
+            NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
+            
+            for (YTKKeyValueItem *aa in arrr) {
+                WLStatusFrame *sf = [self dataFrameWith:aa.itemObject];
+                [_dataArry addObject:sf];
+            }
+            
+            [self loadFirstFID];    
         }
         
         [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];

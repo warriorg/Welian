@@ -11,7 +11,27 @@
 @implementation InvestCardCell
 
 - (void)awakeFromNib {
-    // Initialization code
+//    NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
+//    switch (auth) {
+//        case 0:
+//            
+//            break;
+//        case 0:
+//            
+//            break;
+//        case 0:
+//            
+//            break;
+//        case 0:
+//            
+//            break;
+//        default:
+//            break;
+//    }
+//    if ([]) {
+//        <#statements#>
+//    }
+//    _investCardBut setImage:<#(UIImage *)#> forState:<#(UIControlState)#>
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -221,19 +221,19 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
-//        if (jsonarray.count) {
-//            BOOL isok = NO;
-//            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
-//                isok = YES;
-//                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
-//            }
-//            for (NSDictionary *dicJson in jsonarray) {
-//                if (isok) {
-//                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
-//                }
-//                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
-//            }
-//        }
+        if (jsonarray.count) {
+            BOOL isok = NO;
+            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+                isok = YES;
+                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+            }
+            for (NSDictionary *dicJson in jsonarray) {
+                if (isok) {
+                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+                }
+                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+            }
+        }
         succeBlock (jsonarray);
     } failure:^(NSError *error) {
         
@@ -288,6 +288,17 @@
     } withHUD:YES andDim:YES];
 }
 
+#pragma mark - 取消认证
++ (void)deleteInvestorParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteInvestor",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock (JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
+}
+
 #pragma mark - 取投资者认证信息
 + (void)getInvestAuthParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
@@ -300,6 +311,21 @@
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
+
+#pragma mark - 取行业 投资领域
++ (void)getIndustryParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"getIndustry",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *dataArray = [NSArray arrayWithArray:JSON];
+        
+        succeBlock (dataArray);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+
 
 #pragma mark - 取动态评论
 + (void)loadFeedCommentParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock

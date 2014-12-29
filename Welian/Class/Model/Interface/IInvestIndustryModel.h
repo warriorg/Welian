@@ -11,4 +11,5 @@
 @interface IInvestIndustryModel : IFBase
 @property (nonatomic, retain) NSString * industryname;
 @property (nonatomic, retain) NSNumber * industryid;
+@property (nonatomic, assign) BOOL isSelect;
 @end

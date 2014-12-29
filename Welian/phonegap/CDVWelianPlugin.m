@@ -27,7 +27,7 @@
 - (void)getSessionId:(CDVInvokedUrlCommand *)command
 {
     DLog(@"getSessionId : %@",command.arguments);
-    NSString *sessionId = [[UserInfoTool sharedUserInfoTool] getUserInfoModel].sessionid;
+    NSString *sessionId = [LogInUser getNowLogInUser].sessionid;
     [self send:command backInfo:sessionId];
 }
 
@@ -57,7 +57,8 @@
 {
     DLog(@"getUserInfo : %@",command.arguments);
     
-    NSDictionary *userinfo = [[[UserInfoTool sharedUserInfoTool] getUserInfoModel] keyValues];
+    NSDictionary *userinfo = [[LogInUser getNowLogInUser] keyValues];
+#warning dflasdkflskadlfklskdf;lkas;dlkf  kebeg=+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     NSString *jsonString = userinfo.toJSONString;
     [self send:command backInfo:jsonString];
 

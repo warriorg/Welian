@@ -14,11 +14,11 @@
 {
     if (checked)
     {
-        _checkImageView.image = [UIImage imageNamed:@"Selected.png"];
+        _checkImageView.image = [UIImage imageNamed:@"investor_attestation_to_select.png"];
     }
     else
     {
-        _checkImageView.image = [UIImage imageNamed:@"Unselected.png"];
+        _checkImageView.image = [UIImage imageNamed:@"investor_attestation_selected.png"];
     }
     m_checked = checked;
 }

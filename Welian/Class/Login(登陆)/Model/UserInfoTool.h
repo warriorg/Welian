@@ -13,10 +13,10 @@
 @interface UserInfoTool : NSObject
 single_interface(UserInfoTool)
 
-- (void)saveUserInfo:(UserInfoModel*)userInfoM;
-- (UserInfoModel*)getUserInfoModel;
-
-@property (nonatomic, strong) UserInfoModel *userInfoM;
+//- (void)saveUserInfo:(UserInfoModel*)userInfoM;
+//- (UserInfoModel*)getUserInfoModel;
+//
+//@property (nonatomic, strong) UserInfoModel *userInfoM;
 
 
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^InvestBlock)(NSArray *InvestItems);
+
 @interface InvestCollectionVC : UIViewController
+
+- (instancetype)initWithType:(NSInteger)type;
 
 @end

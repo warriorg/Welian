@@ -58,6 +58,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [self clickSheet:buttonIndex];
+}
+
+- (void)clickSheet:(NSInteger)buttonIndex
+{
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     [imagePicker setAllowsEditing:YES];
@@ -88,8 +93,9 @@
         }];
         
     }
-    
+
 }
+
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
