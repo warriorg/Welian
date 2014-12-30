@@ -371,7 +371,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 #pragma mark - Gestures
 - (void)setupNormalMenuController {
     //隐藏键盘
-    [[self.superview findFirstResponder] resignFirstResponder];
+//    [[self.superview findFirstResponder] resignFirstResponder];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
     if (menu.isMenuVisible) {
@@ -392,12 +392,12 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
         return;
     
     UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"copy", @"MessageDisplayKitString", @"复制文本消息") action:@selector(copyed:)];
-    UIMenuItem *transpond = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
-    UIMenuItem *favorites = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"favorites", @"MessageDisplayKitString", @"收藏") action:@selector(favorites:)];
-    UIMenuItem *more = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"more", @"MessageDisplayKitString", @"更多") action:@selector(more:)];
+//    UIMenuItem *transpond = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
+//    UIMenuItem *favorites = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"favorites", @"MessageDisplayKitString", @"收藏") action:@selector(favorites:)];
+//    UIMenuItem *more = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"more", @"MessageDisplayKitString", @"更多") action:@selector(more:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
-    [menu setMenuItems:[NSArray arrayWithObjects:copy, transpond, favorites, more, nil]];
+    [menu setMenuItems:[NSArray arrayWithObjects:copy, nil]];
     
     
     CGRect targetRect = [self convertRect:[self.messageBubbleView bubbleFrame]

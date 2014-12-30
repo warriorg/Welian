@@ -68,7 +68,7 @@
         cell = [[ChatMessageViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_Identifier];
     }
     cell.myFriendUser = _datasource[indexPath.row];
-    [cell setDebug:YES];
+//    [cell setDebug:YES];
     return cell;
 }
 
@@ -105,8 +105,11 @@
         //修改聊天状态
         MyFriendUser *friendUser = _datasource[indexPath.row];
         [friendUser updateIsChatStatus:NO];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [(NSMutableArray *)_datasource removeObjectAtIndex:indexPath.row];
+        //刷新列表
+        self.datasource = [LogInUser chatUsers];
+        [self.tableView reloadData];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [(NSMutableArray *)_datasource removeObjectAtIndex:indexPath.row];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

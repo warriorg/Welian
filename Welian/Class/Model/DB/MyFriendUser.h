@@ -38,7 +38,7 @@
 //获取未读取的聊天消息数量
 - (NSInteger)unReadChatMessageNum;
 //获取当前最大的消息ID
-- (NSString *)getMaxChatMessageId;
+- (NSNumber *)getMaxChatMessageId;
 //获取对应msgId的消息
 - (ChatMessage *)getChatMessageWithMsgId:(NSString *)msgId;
 //获取所有的聊天消息列表

@@ -32,7 +32,7 @@
 
 #define kWLTextLineSpacing 3.0
 
-@interface WLMessageBubbleView : UIView
+@interface WLMessageBubbleView : UIView<SETextViewDelegate>
 
 //目标消息Model对象
 @property (nonatomic, strong, readonly)  id <WLMessageModel> message;

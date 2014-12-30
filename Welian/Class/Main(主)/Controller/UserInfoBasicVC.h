@@ -12,8 +12,9 @@
 
 @property (nonatomic, copy) dispatch_block_t acceptFriendBlock;
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask;
+@property (nonatomic, assign) BOOL isHideSendMsgBtn;//隐藏发送消息按钮
 
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask;
 - (void)addSucceed;
 
 @end

@@ -39,13 +39,13 @@
 + (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser
 {
     ChatMessage *chatMsg = [ChatMessage create];
-    chatMsg.msgId = [NSString stringWithFormat:@"%d",[friedUser getMaxChatMessageId].intValue + 1];
+    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(wlMessage.messageMediaType);
     chatMsg.timestamp = wlMessage.timestamp;
     chatMsg.avatorUrl = wlMessage.avatorUrl;
     chatMsg.isRead = @(wlMessage.isRead);
-    chatMsg.sendStatus = @(wlMessage.sended);
+    chatMsg.sendStatus = @(wlMessage.sended.intValue);
     chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
     chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
     chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
@@ -89,7 +89,8 @@
     NSInteger type = [dict[@"type"] integerValue];
     
     ChatMessage *chatMsg = [ChatMessage create];
-    chatMsg.msgId = [NSString stringWithFormat:@"%d",[friendUser getMaxChatMessageId].intValue + 1];
+    NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
+    chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
     switch (type) {
         case WLBubbleMessageMediaTypeText:
@@ -121,13 +122,19 @@
     
     //更新总的聊天消息数量
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    //调用获取收到新消息，刷新正在聊天的列表
+    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
 }
 
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status
 {
     self.sendStatus = @(status);
+    
     [MOC save];
+    
+    DLog(@"changed: ---- %d",self.sendStatus.intValue);
+    
 }
 
 //更新读取状态

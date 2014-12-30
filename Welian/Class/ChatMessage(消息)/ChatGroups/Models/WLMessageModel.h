@@ -53,7 +53,7 @@
 
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;
-- (NSInteger)sended;
-- (void)setSended:(NSInteger)sended;
+- (NSString *)sended;
+- (void)setSended:(NSString *)sended;
 
 @end

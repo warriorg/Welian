@@ -85,7 +85,7 @@ static HttpTool *engine;
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
     //添加头部字段
-    [engine.requestSerializer setValue:sessid forHTTPHeaderField:@"jsessionid"];
+//    [engine.requestSerializer setValue:sessid forHTTPHeaderField:@"jsessionid"];
     [engine POST:path parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         DLog(@"%@",[operation responseString]);
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];

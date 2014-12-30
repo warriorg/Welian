@@ -199,6 +199,7 @@
     
     _sender = nil;
     _uid = nil;
+    _sended = nil;
     
     _timestamp = nil;
 }
@@ -234,6 +235,7 @@
         
         _sender = [aDecoder decodeObjectForKey:@"sender"];
         _uid = [aDecoder decodeObjectForKey:@"uid"];
+        _sended = [aDecoder decodeObjectForKey:@"sended"];
         _timestamp = [aDecoder decodeObjectForKey:@"timestamp"];
     }
     return self;
@@ -263,6 +265,7 @@
     
     [aCoder encodeObject:self.sender forKey:@"sender"];
     [aCoder encodeObject:self.uid forKey:@"uid"];
+    [aCoder encodeObject:self.sended forKey:@"sended"];
     [aCoder encodeObject:self.timestamp forKey:@"timestamp"];
 }
 

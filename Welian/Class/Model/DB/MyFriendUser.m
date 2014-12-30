@@ -113,13 +113,13 @@
 }
 
 //获取当前最大的消息ID
-- (NSString *)getMaxChatMessageId
+- (NSNumber *)getMaxChatMessageId
 {
     ChatMessage *chatMessage = [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:NO] results] firstObject];
     if (chatMessage) {
         return chatMessage.msgId;
     }else{
-        return @"0";
+        return @(0);
     }
 }
 

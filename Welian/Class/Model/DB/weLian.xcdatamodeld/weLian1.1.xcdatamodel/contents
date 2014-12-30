@@ -29,7 +29,7 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="msgId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="msgId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="originPhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sendStatus" optional="YES" attributeType="Integer 16" syncable="YES"/>
@@ -132,7 +132,7 @@
     </entity>
     <elements>
         <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
-        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="360"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="358"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
         <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
