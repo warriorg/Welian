@@ -8,7 +8,8 @@
 
 #import "ChatViewController.h"
 #import "ChatMessage.h"
-
+#import "UserInfoBasicVC.h"
+#import "FriendsUserModel.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -463,6 +464,24 @@
  */
 - (void)configureCell:(WLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+/**
+ *  点击消息发送者的头像回调方法
+ *
+ *  @param indexPath 该目标消息在哪个IndexPath里面
+ */
+- (void)didSelectedAvatorOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath
+{
+//    DLog(@"点击头像---------");
+    MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:@(message.uid.integerValue)];
+    FriendsUserModel *userMode = [[FriendsUserModel alloc] init];
+    userMode.uid = friendUser.uid;
+    userMode.name = friendUser.name;
+    
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
+    userInfoVC.isHideSendMsgBtn = YES;
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 /**
