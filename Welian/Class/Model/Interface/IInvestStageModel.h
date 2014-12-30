@@ -11,4 +11,5 @@
 @interface IInvestStageModel : IFBase
 @property (nonatomic, retain) NSNumber * stage;
 @property (nonatomic, retain) NSString * stagename;
+@property (nonatomic, assign) BOOL isSelect;
 @end

@@ -25,13 +25,15 @@
     }
     investitem.stagename = investItemM.stagename;
     investitem.stage = investItemM.stage;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 
 // //通过item查询
 + (InvestStages *)getInvestStagesWithStage:(NSString *)item
 {
-    InvestStages *investStage = [[[[[InvestStages queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:item] results] firstObject];
+    InvestStages *investStage = [[[[[InvestStages queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"stagename" equals:item] results] firstObject];
     return investStage;
 }
 

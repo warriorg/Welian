@@ -58,8 +58,6 @@
     [browser.toolbar setHidden:YES];
 }
 
-
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
@@ -192,14 +190,13 @@
             }
         }else {
             LogInUser *mode = [LogInUser getNowLogInUser];
-//            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
             if (indexPath.row==0) {
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
-//                        [mode setName:userInfo];
+
                         [LogInUser setUserName:userInfo];
                         
-//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -213,7 +210,6 @@
                     
                     [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
                         [LogInUser setUsercompany:userInfo];
-//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
@@ -227,7 +223,6 @@
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
                         [LogInUser setUserPosition:userInfo];
-//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
  
@@ -242,7 +237,6 @@
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                     [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
                         [LogInUser setUserEmail:userInfo];
-//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -263,7 +257,6 @@
                         
                         [LogInUser setUserAddress:userInfo];
 
-//                        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     } fail:^(NSError *error) {
                         
@@ -284,14 +277,11 @@
 
 - (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
 {
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    
     [LogInUser setUserProvincename:locationDic[@"provname"]];
     [LogInUser setUserCityname:locationDic[@"cityname"]];
     [LogInUser setUserCityid:locationDic[@"cityid"]];
     [LogInUser setUserProvinceid:locationDic[@"provid"]];
     
-//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     
     [WLHttpTool saveProfileParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} success:^(id JSON) {
@@ -312,9 +302,8 @@
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
     [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
         [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];
-//        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         [self.iconImage setImage:image];
 
         [UserDefaults setObject:avatarStr forKey:@"icon"];

@@ -10,7 +10,7 @@
 
 @interface InvestCardCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *investCardBut;
+@property (weak, nonatomic) IBOutlet UIImageView *investCardBut;
 
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 

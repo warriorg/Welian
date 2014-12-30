@@ -25,13 +25,15 @@
     }
     investitem.industryid = investIndustry.industryid;
     investitem.industryname = investIndustry.industryname;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 
 // //通过item查询
 + (InvestIndustry *)getInvestIndustryWithName:(NSString *)name
 {
-    InvestIndustry *investIndustry = [[[[[InvestIndustry queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:name] results] firstObject];
+    InvestIndustry *investIndustry = [[[[[InvestIndustry queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"industryname" equals:name] results] firstObject];
     return investIndustry;
 }
 

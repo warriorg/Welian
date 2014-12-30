@@ -25,13 +25,15 @@
     }
     investitem.item = investItemM.item;
     investitem.itemid = investItemM.itemid;
+    investitem.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
     return investitem;
 }
 
 // //通过item查询
 + (InvestItems *)getInvestItemsWithItem:(NSString *)item
 {
-    InvestItems *investItem = [[[[[InvestItems queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:item] results] firstObject];
+    InvestItems *investItem = [[[[[InvestItems queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"item" equals:item] results] firstObject];
     return investItem;
 }
 

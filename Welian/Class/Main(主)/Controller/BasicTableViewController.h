@@ -13,6 +13,8 @@
 #pragma mark - 选取头像照片
 - (void)choosePicture;
 
+- (void)clickSheet:(NSInteger)buttonIndex;
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 
 @end

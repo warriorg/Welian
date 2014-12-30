@@ -71,11 +71,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+//#define WLHttpServer  @"http://test.welian.com:8080"
 //本地调试
 //#define WLHttpServer  @"http://192.168.1.122:80"
 //正式环境
-//#define WLHttpServer  @"http://www.welian.com:8080"
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
@@ -109,11 +109,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 //#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+#define KHomeDataTableName [NSString stringWithFormat:@"home%@",[LogInUser getNowLogInUser].uid]
 
 //#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+#define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[LogInUser getNowLogInUser].uid]
 
 
 // 文件路径
