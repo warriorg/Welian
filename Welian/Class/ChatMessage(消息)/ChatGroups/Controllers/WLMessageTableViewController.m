@@ -7,8 +7,8 @@
 //
 
 #import "WLMessageTableViewController.h"
-#import "MyFriendUser.h"
-#import "ChatMessage.h"
+//#import "MyFriendUser.h"
+//#import "ChatMessage.h"
 
 @interface WLMessageTableViewController ()
 
@@ -401,6 +401,7 @@ static CGPoint  delayOffset = {0.0};
 
 - (void)dealloc{
     _messages = nil;
+//    _friendUser = nil;
     _delegate = nil;
     _dataSource = nil;
     _messageTableView.delegate = nil;
@@ -528,39 +529,7 @@ static CGPoint  delayOffset = {0.0};
         [self.delegate configureCell:messageTableViewCell atIndexPath:indexPath];
     }
     
-    //需要重新发送
-    if (message.sended == 0) {
-        [self sendMessage:message rowIndexPath:indexPath];
-    }
-    
     return messageTableViewCell;
-}
-
-//发送消息
-- (void)sendMessage:(id<WLMessageModel>)message rowIndexPath:(NSIndexPath *)indexPath
-{
-    
-    NSDictionary *param = @{@"type":@(message.messageMediaType),@"msg":message.text,@"touser":message.uid};
-    ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:message.msgId];
-    WEAKSELF;
-    [WLHttpTool sendMessageParameterDic:param
-                                success:^(id JSON) {
-                                    //更新发送消息状态
-                                    message.sended = 1;
-                                    
-                                    //更新数据库字段
-                                    [chatMessage updateSendStatus:1];
-                                    
-                                    //刷新行
-                                    [weakSelf.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                                } fail:^(NSError *error) {
-                                    //发送失败
-                                    message.sended = 2;
-                                    //更新数据库字段
-                                    [chatMessage updateSendStatus:2];
-                                    //刷新行
-                                    [weakSelf.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                                }];
 }
 
 #pragma mark - Table View Delegates

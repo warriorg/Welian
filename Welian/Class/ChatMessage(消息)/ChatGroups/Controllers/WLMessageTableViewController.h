@@ -135,9 +135,6 @@
 @property (nonatomic, weak) id <WLMessageTableViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <WLMessageTableViewControllerDataSource> dataSource;
 
-//聊天的好友
-@property (nonatomic, strong) MyFriendUser *friendUser;
-
 //数据源，显示多少消息
 @property (nonatomic, strong) NSMutableArray *messages;
 

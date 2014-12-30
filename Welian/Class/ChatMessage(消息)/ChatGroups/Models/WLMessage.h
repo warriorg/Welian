@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) NSDate *timestamp;
 
-@property (nonatomic, assign) NSInteger sended;
+@property (nonatomic, copy) NSString *sended;
 
 @property (nonatomic, assign) WLBubbleMessageMediaType messageMediaType;
 

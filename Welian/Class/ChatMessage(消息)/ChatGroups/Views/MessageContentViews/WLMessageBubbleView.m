@@ -156,14 +156,15 @@
     
     _voiceDurationLabel.hidden = YES;
     //是否发送失败
-    if (message.sended == 2) {
+    if (message.sended.intValue == 2 && message.bubbleMessageType == WLBubbleMessageTypeSending) {
         //发送失败，需要手动点击重发
         [_sendFailedBtn setHidden:NO];
     }else{
         [_sendFailedBtn setHidden:YES];
     }
+    
     //停止加载
-    if ((message.sended != 0 && message.bubbleMessageType == WLBubbleMessageTypeSending) || (message.bubbleMessageType == WLBubbleMessageTypeReceiving)){
+    if ((message.bubbleMessageType == WLBubbleMessageTypeSending && message.sended.intValue != 0) || (message.bubbleMessageType == WLBubbleMessageTypeReceiving)){
         [_activityIndicatorView stopAnimating];
     }else{
         [_activityIndicatorView startAnimating];
@@ -374,7 +375,7 @@
 //            activityIndicatorView.center = CGPointMake(CGRectGetWidth(self.bounds) / 2.0, CGRectGetHeight(self.bounds) / 2.0);
             [self addSubview:activityIndicatorView];
             _activityIndicatorView = activityIndicatorView;
-            [_activityIndicatorView startAnimating];
+//            [_activityIndicatorView startAnimating];
         }
     }
     return self;

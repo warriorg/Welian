@@ -430,9 +430,11 @@
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             NSArray *json = [NSArray arrayWithArray:JSON];
             NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
-            [LogInUser getNowLogInUser].rsMyFriends = nil;
-            [MOC save];
+//            [LogInUser getNowLogInUser].rsMyFriends = nil;
+//            [MOC save];
             if (json.count) {
+                //循环添加数据库数据
+//                NSArray *localAllFriends = [LogInUser getNowLogInUser].rsMyFriends.allObjects;
                 for (NSDictionary *modic in json) {
                     FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
                     [MyFriendUser createMyFriendUserModel:friendM];

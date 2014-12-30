@@ -336,8 +336,7 @@ BMKMapManager* _mapManager;
         
         //添加数据
         [ChatMessage createReciveMessageWithDict:dataDic];
-        //通知刷新列表
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ReceiveNewChatMessage" object:nil];
+        
         //聊天状态发送改变
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
     } else if ([type isEqualToString:@"logout"]){
@@ -406,6 +405,8 @@ BMKMapManager* _mapManager;
         [_updataalert show];
     }
 
+    //角标设置为0
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
