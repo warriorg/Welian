@@ -319,6 +319,7 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataArray = [NSArray arrayWithArray:JSON];
         
+        [[WLDataDBTool sharedService] putObject:dataArray  withId:KInvestIndustryTableName intoTable:KInvestIndustryTableName];
         succeBlock (dataArray);
     } failure:^(NSError *error) {
         failurBlock(error);

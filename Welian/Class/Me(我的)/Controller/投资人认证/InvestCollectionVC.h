@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^InvestBlock)(NSArray *InvestItems);
+
+typedef void (^InvestBlock)(void);
+
 
 @interface InvestCollectionVC : UIViewController
+
+@property (nonatomic, copy) InvestBlock investBlock;
 
 - (instancetype)initWithType:(NSInteger)type;
 

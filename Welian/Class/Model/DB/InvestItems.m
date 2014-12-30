@@ -14,6 +14,7 @@
 
 @dynamic item;
 @dynamic itemid;
+@dynamic time;
 @dynamic rsLogInUser;
 
 //创建新收据
@@ -25,10 +26,22 @@
     }
     investitem.item = investItemM.item;
     investitem.itemid = investItemM.itemid;
+    if (investItemM.time) {
+        investitem.time = investItemM.time;
+    }
     investitem.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
     return investitem;
 }
+
+// 获取全部消息
++ (NSArray *)getAllInvestItems
+{
+    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"time" ascending:NO];
+    
+    return [[[[InvestItems queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results]  sortedArrayUsingDescriptors:@[bookNameDes]];
+}
+
 
 // //通过item查询
 + (InvestItems *)getInvestItemsWithItem:(NSString *)item

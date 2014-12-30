@@ -217,7 +217,7 @@ single_implementation(MainViewController)
     
     
     // 聊天消息
-    chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
+    chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_chat" selectedImageStr:@"tabbar_chat_selected"];
     ChatMessageController *chatMessageVC = [[ChatMessageController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *chatMeeageNav = [[NavViewController alloc] initWithRootViewController:chatMessageVC];
     [chatMessageVC.navigationItem setTitle:@"消息"];
