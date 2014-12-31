@@ -167,7 +167,11 @@ static NSString *staurCellid = @"staurCellid";
         if ([_userMode.friendship integerValue]==1) {  // 删除好友
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
                 
-                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
+                
+                MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+                //数据库删除当前好友
+                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:friendUser];
                 
                 //删除新的好友本地数据库
                 NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
@@ -176,6 +180,10 @@ static NSString *staurCellid = @"staurCellid";
 //                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
                 }
                 
+                //聊天状态发送改变
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+                
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [MOC save];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];
