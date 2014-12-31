@@ -125,7 +125,12 @@
     [_messageLabel sizeToFit];
     _messageLabel.width = self.width - kMarginLeft * 2.f - _messageSendTypeImageView.right;
     _messageLabel.left = _messageSendTypeImageView.hidden == NO ? _messageSendTypeImageView.right + 3 : _messageSendTypeImageView.right;
-    _messageLabel.centerY = _messageSendTypeImageView.centerY;
+    if(_messageSendTypeImageView.hidden == NO){
+        _messageLabel.centerY = _messageSendTypeImageView.centerY;
+    }else{
+        _messageLabel.top = _nickNameLabel.bottom + 5.f;
+    }
+    
 }
 
 #pragma mark - Private
