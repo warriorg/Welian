@@ -278,8 +278,8 @@ static NSString * const reuseIdentifier = @"Cell";
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 
         }else{
-           InvestCollectionCell *cell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [cell.checkImageView setSelected:NO];
+           InvestCollectionCell *onecell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [onecell.checkImageView setSelected:NO];
             IInvestIndustryModel *oneindusM = _alldataArray[0];
             [oneindusM setIsSelect:NO];
             [_alldataArray replaceObjectAtIndex:0 withObject:oneindusM];

@@ -110,6 +110,14 @@
     
 }
 
+- (void)dealloc
+{
+    if (!self.needlessCancel) {
+        [WLHUDView hiddenHud];
+        [WLHttpTool cancelAllRequestHttpTool];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -312,7 +312,7 @@ BMKMapManager* _mapManager;
             
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         }else{
-            
+            [newfrendM setIsAgree:@(0)];
             NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
             badge++;
             [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
@@ -325,11 +325,9 @@ BMKMapManager* _mapManager;
             fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
             fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
             newfrendM.created = [fmt stringFromDate:nowdate];
-//            newfrendM.created = nowdate;
         }
         [NewFriendUser createNewFriendUserModel:newfrendM];
         
-//        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
     }else if([type isEqualToString:@"IM"]){
         //接收的聊天消息
         NSDictionary *dataDic = userInfo[@"data"];

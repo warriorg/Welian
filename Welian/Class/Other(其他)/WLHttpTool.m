@@ -26,6 +26,7 @@
 #import "ISchoolResult.h"
 #import "MyFriendUser.h"
 #import "FriendsinfoModel.h"
+#import "IIMeInvestAuthModel.h"
 
 @implementation WLHttpTool
 
@@ -449,7 +450,7 @@
 {
     
     if (isSQL) {
-        NSArray *myFriends = [LogInUser getNowLogInUser].rsMyFriends.allObjects;
+        NSArray *myFriends = [MyFriendUser getAllMyFriendUsers];
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
         
     }else{
@@ -467,6 +468,7 @@
                     [MyFriendUser createMyFriendUserModel:friendM];
                     [mutabArray addObject:friendM];
                 }
+                
             }
             succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
             
@@ -495,6 +497,7 @@
     NSMutableArray *_sectionHeadsKeys = [NSMutableArray array];
     NSMutableArray *chineseStringsArray = [NSMutableArray array];
     for (FriendsUserModel *mode in arrToSort) {
+        if (!mode.name) continue;
         ChineseString *chineseString=[[ChineseString alloc]init];
         chineseString.string=[NSString stringWithString:mode.name];
         chineseString.modeUser = mode;
@@ -695,24 +698,27 @@
         
         // 投资案例
         NSDictionary *investor = [dataDic objectForKey:@"investor"];
+        IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
+        
 //        InvestAuthModel *investorM = [InvestAuthModel objectWithKeyValues:investor];
 //        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
-        InvestAuthModel *investorM = [[InvestAuthModel alloc] init];
-        [investorM setUrl:[investor objectForKey:@"url"]];
-        [investorM setAuth:[[investor objectForKey:@"auth"] integerValue]];
-        NSArray *items = [investor objectForKey:@"items"];
-        NSMutableArray *itemsArray = [NSMutableArray arrayWithCapacity:items.count];
-        NSMutableString *itemStr = [NSMutableString string];
-        for (NSDictionary *item in items) {
-            [itemsArray addObject:[item objectForKey:@"item"]];
-            if (item==items.lastObject) {
-                [itemStr appendString:[item objectForKey:@"item"]];
-            }else{
-                [itemStr appendFormat:@"%@,",[item objectForKey:@"item"]];
-            }
-        }
-        [investorM setItemsArray:itemsArray];
-        [investorM setItems:itemStr];
+    
+//        InvestAuthModel *investorM = [[InvestAuthModel alloc] init];
+//        [investorM setUrl:[investor objectForKey:@"url"]];
+//        [investorM setAuth:[[investor objectForKey:@"auth"] integerValue]];
+//        NSArray *items = [investor objectForKey:@"items"];
+//        NSMutableArray *itemsArray = [NSMutableArray arrayWithCapacity:items.count];
+//        NSMutableString *itemStr = [NSMutableString string];
+//        for (NSDictionary *item in items) {
+//            [itemsArray addObject:[item objectForKey:@"item"]];
+//            if (item==items.lastObject) {
+//                [itemStr appendString:[item objectForKey:@"item"]];
+//            }else{
+//                [itemStr appendFormat:@"%@,",[item objectForKey:@"item"]];
+//            }
+//        }
+//        [investorM setItemsArray:itemsArray];
+//        [investorM setItems:itemStr];
 //        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
         
         // 详细信息

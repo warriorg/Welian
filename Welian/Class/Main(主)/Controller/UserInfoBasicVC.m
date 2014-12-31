@@ -7,7 +7,7 @@
 //
 
 #import "UserInfoBasicVC.h"
-#import "InvestAuthModel.h"
+//#import "InvestAuthModel.h"
 #import "HaderInfoCell.h"
 #import "SameFriendsCell.h"
 #import "StaurCell.h"
@@ -20,6 +20,7 @@
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
 #import "ChatViewController.h"
+#import "IIMeInvestAuthModel.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -166,8 +167,6 @@ static NSString *staurCellid = @"staurCellid";
         if ([_userMode.friendship integerValue]==1) {  // 删除好友
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
                 
-//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
-                
                 [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
                 
                 NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
@@ -176,7 +175,6 @@ static NSString *staurCellid = @"staurCellid";
                 }
                 
                 [MOC save];
-//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];
                 [WLHUDView showSuccessHUD:@"删除成功！"];
@@ -198,7 +196,6 @@ static NSString *staurCellid = @"staurCellid";
     if (self) {
         [self.tableView setSectionHeaderHeight:0.0];
         
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         LogInUser *mode = [LogInUser getNowLogInUser];
         if (!([mode.uid integerValue]==[_userMode.uid integerValue])) {
             
@@ -213,7 +210,7 @@ static NSString *staurCellid = @"staurCellid";
                 
             }];
 
-            _dataDicM = JSON;
+            _dataDicM = [NSMutableDictionary dictionaryWithDictionary:JSON];
             _userMode = [_dataDicM objectForKey:@"profile"];
             if (!isask) {
                 if ([_userMode.friendship integerValue]==-1) {
@@ -248,8 +245,8 @@ static NSString *staurCellid = @"staurCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     NSInteger i = 2;
-    InvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-    if (inve.auth==InvestAuthTypeInvestor) {
+    IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
+    if (inve.items.count||inve.stages.count||inve.industry.count) {
         i+=1;
     }
     if (section == i) {
@@ -268,8 +265,8 @@ static NSString *staurCellid = @"staurCellid";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger n = 3;
-    InvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-    if (inve.auth==InvestAuthTypeInvestor) {
+    IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
+    if (inve.items.count||inve.industry.count||inve.stages.count) {
         n+=1;
     }
     return n;
@@ -371,10 +368,10 @@ static NSString *staurCellid = @"staurCellid";
             }
         }
     }else if (indexPath.section ==3){
-        InvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-        if (inve.auth==InvestAuthTypeInvestor) {
-            [cell.textLabel setText:@"投资案例"];
-            [cell.detailTextLabel setText:inve.items];
+        IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
+        if (inve.items.count||inve.industry.count||inve.stages.count) {
+            [cell.textLabel setText:@"我是投资人"];
+//            [cell.detailTextLabel setText:inve.items];
         }
     }
     
@@ -418,10 +415,10 @@ static NSString *staurCellid = @"staurCellid";
 
         ListdaController *workVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:usercompany andType:@"2"];
         [self.navigationController pushViewController:workVC animated:YES];
-    }else if([celltext isEqualToString:@"投资案例"]){
-        InvestAuthModel *inves = [_dataDicM objectForKey:@"investor"];
+    }else if([celltext isEqualToString:@"我是投资人"]){
+        IIMeInvestAuthModel *inves = [_dataDicM objectForKey:@"investor"];
 
-        ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.itemsArray andType:@"3"];
+        ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.items andType:@"3"];
         [self.navigationController pushViewController:investVC animated:YES];
     }else{
         if (indexPath.section==1) {

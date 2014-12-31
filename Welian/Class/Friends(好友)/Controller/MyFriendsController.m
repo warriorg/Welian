@@ -31,7 +31,6 @@
 @property (nonatomic,strong) NSMutableArray *filterArray;//搜索出来的数据数组
 
 @property (nonatomic, retain) NSOperationQueue *searchQueue;
-//@property (nonatomic, strong) NSArray *friendsNewArrayM;
 
 @end
 
@@ -103,7 +102,6 @@ static NSString *fridcellid = @"fridcellid";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"NewFriendsCell" bundle:nil] forCellReuseIdentifier:newFriendcellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
-//    self.friendsNewArrayM = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
 }
 
 - (void)loadNewFriendsList

@@ -10,6 +10,9 @@
 #import "UIImageView+WebCache.h"
 
 @interface BasicTableViewController : UITableViewController
+
+@property (nonatomic, assign) BOOL needlessCancel;
+
 #pragma mark - 选取头像照片
 - (void)choosePicture;
 

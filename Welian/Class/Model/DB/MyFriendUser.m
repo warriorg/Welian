@@ -59,6 +59,13 @@
     return myFriend;
 }
 
+// 所有好友
++ (NSArray *)getAllMyFriendUsers
+{
+     return  [[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results];
+}
+
+
 //创建接收消息的聊天对象
 + (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict
 {
