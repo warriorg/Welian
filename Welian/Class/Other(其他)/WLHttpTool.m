@@ -448,9 +448,8 @@
 #pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
+    NSArray *myFriends = [MyFriendUser getAllMyFriendUsers];
     if (isSQL) {
-        NSArray *myFriends = [MyFriendUser getAllMyFriendUsers];
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
         
     }else{
@@ -462,7 +461,6 @@
 //            [MOC save];
             if (json.count) {
                 //循环添加数据库数据
-//                NSArray *localAllFriends = [LogInUser getNowLogInUser].rsMyFriends.allObjects;
                 for (NSDictionary *modic in json) {
                     FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
                     [MyFriendUser createMyFriendUserModel:friendM];

@@ -21,6 +21,7 @@
 #import "NewFriendUser.h"
 #import "ChatViewController.h"
 #import "IIMeInvestAuthModel.h"
+#import "InvestItemM.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -381,7 +382,12 @@ static NSString *staurCellid = @"staurCellid";
         IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
         if (inve.items.count||inve.industry.count||inve.stages.count) {
             [cell.textLabel setText:@"我是投资人"];
-//            [cell.detailTextLabel setText:inve.items];
+            NSMutableString *stagesStr = [NSMutableString string];
+            NSArray *investIndustryarray = inve.items;
+            for (InvestItemM *item in investIndustryarray) {
+                [stagesStr appendFormat:@"%@  ",item.item];
+            }
+            [cell.detailTextLabel setText:stagesStr];
         }
     }
     

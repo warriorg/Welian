@@ -54,12 +54,12 @@ static NSString *frnewCellid = @"frnewCellid";
     
     for (NewFriendUser *newfriend in newFarray) {
         newfriend.isLook = @(1);
-       MyFriendUser *myF = [MyFriendUser getMyfriendUserWithUid:newfriend.uid];
-        if (myF) {
-            newfriend.isAgree = @(1);
-        }else{
-            newfriend.isAgree = @(0);
-        }
+//       MyFriendUser *myF = [MyFriendUser getMyfriendUserWithUid:newfriend.uid];
+//        if (myF) {
+//            newfriend.isAgree = @(1);
+//        }else{
+//            newfriend.isAgree = @(0);
+//        }
     }
     [MOC save];
     
