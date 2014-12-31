@@ -41,6 +41,9 @@
 //创建接受到的聊天消息
 + (void)createReciveMessageWithDict:(NSDictionary *)dict;
 
+//创建特殊自定义聊天类型
++ (void)createSpecialMessageWithMessage:(NSString *)msg FriendUser:(MyFriendUser *)friedUser;
+
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status;
 //更新读取状态

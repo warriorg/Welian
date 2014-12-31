@@ -26,6 +26,31 @@
 }
 
 /**
+ *  特殊消息消息
+ *
+ *  @param text   发送的目标文本
+ *  @param sender 发送者的名称
+ *  @param date   发送的时间
+ *
+ *  @return 返回Message model 对象
+ */
+- (instancetype)initWithSpecialText:(NSString *)text
+                             sender:(NSString *)sender
+                          timestamp:(NSDate *)timestamp
+{
+    self = [super init];
+    if (self) {
+        self.text = text;
+        
+        self.sender = sender;
+        self.timestamp = timestamp;
+        
+        self.messageMediaType = WLBubbleMessageSpecialTypeText;
+    }
+    return self;
+}
+
+/**
  *  初始化图片类型的消息
  *
  *  @param photo          目标图片

@@ -100,7 +100,8 @@ static HttpTool *engine;
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             _seleDic = parameterDic;
             
-            
+        }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
+            success(@{@"state":@"-1"});
         }else{
             [WLHUDView hiddenHud];
         }

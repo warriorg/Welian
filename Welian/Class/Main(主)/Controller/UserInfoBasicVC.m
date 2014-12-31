@@ -169,9 +169,11 @@ static NSString *staurCellid = @"staurCellid";
                 
                 [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
                 
+                //删除新的好友本地数据库
                 NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
                 if (newFuser) {
-                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
+                    [newFuser delete];
+//                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
                 }
                 
                 [MOC save];

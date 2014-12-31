@@ -20,10 +20,12 @@ typedef NS_ENUM(NSUInteger, WLBubbleImageViewStyle) {
 typedef NS_ENUM(NSInteger, WLBubbleMessageMediaType) {
     WLBubbleMessageMediaTypeText = 0,
     WLBubbleMessageMediaTypePhoto = 1,
-    WLBubbleMessageMediaTypeVideo = 2,
-    WLBubbleMessageMediaTypeVoice = 3,
+    WLBubbleMessageMediaTypeVoice = 2,
+    WLBubbleMessageMediaTypeVideo = 3,
     WLBubbleMessageMediaTypeEmotion = 4,
     WLBubbleMessageMediaTypeLocalPosition = 5,
+    
+    WLBubbleMessageSpecialTypeText = 100,   //特殊消息提醒类型
 };
 
 typedef NS_ENUM(NSInteger, WLBubbleMessageMenuSelecteType) {

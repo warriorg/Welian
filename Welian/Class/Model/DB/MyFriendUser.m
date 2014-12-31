@@ -10,6 +10,7 @@
 #import "ChatMessage.h"
 #import "LogInUser.h"
 #import "FriendsUserModel.h"
+#import "NewFriendModel.h"
 
 @implementation MyFriendUser
 
@@ -43,6 +44,35 @@
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.status = userInfoM.status;
+    myFriend.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
+    return myFriend;
+}
+
+//创建新的同意好意请求数据
++ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM
+{
+    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:userInfoM.uid];
+    if (!myFriend) {
+        myFriend = [MyFriendUser create];
+    }
+    myFriend.uid = userInfoM.uid;
+    myFriend.mobile = userInfoM.mobile;
+    myFriend.position = userInfoM.position;
+    myFriend.provinceid = userInfoM.provinceid;
+    myFriend.provincename = userInfoM.provincename;
+    myFriend.cityid = userInfoM.cityid;
+    myFriend.cityname = userInfoM.cityname;
+    myFriend.friendship = userInfoM.friendship;
+    myFriend.shareurl = userInfoM.shareurl;
+    myFriend.avatar = userInfoM.avatar;
+    myFriend.name = userInfoM.name;
+    myFriend.address = userInfoM.address;
+    myFriend.email = userInfoM.email;
+    myFriend.investorauth = userInfoM.investorauth;
+    myFriend.startupauth = userInfoM.startupauth;
+    myFriend.company = userInfoM.company;
+//    myFriend.status = userInfoM.status;
     myFriend.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
     return myFriend;
@@ -149,8 +179,17 @@
 {
     DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
     //返回的数量 限制
-//    [[query offset:5] limit:10];
+//    [[query offset:1] limit:2];
     
+    return query.results;
+}
+
+- (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count
+{
+    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+    //返回的数量 限制
+    [[query offset:offset] limit:count];
+//    DLog(@"message--- %d",[[query results] count]);
     return query.results;
 }
 

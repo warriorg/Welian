@@ -132,6 +132,38 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
 }
 
+//创建特殊自定义聊天类型
+//+ (void)createSpecialMessageWithMessage:(NSString *)msg FriendUser:(MyFriendUser *)friedUser
+//{
+//    ChatMessage *chatMsg = [ChatMessage create];
+//    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
+//    chatMsg.message = msg;
+//    chatMsg.messageType = @(wl);
+//    chatMsg.timestamp = wlMessage.timestamp;
+//    chatMsg.avatorUrl = wlMessage.avatorUrl;
+//    chatMsg.isRead = @(wlMessage.isRead);
+//    chatMsg.sendStatus = @(wlMessage.sended.intValue);
+//    chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
+//    chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
+//    chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
+//    chatMsg.videoPath = wlMessage.videoPath;
+//    chatMsg.videoUrl = wlMessage.videoUrl;
+//    //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;
+//    chatMsg.voicePath = wlMessage.voicePath;
+//    chatMsg.voiceUrl = wlMessage.voiceUrl;
+//    chatMsg.geolocations = wlMessage.geolocations;
+//    chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
+//    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
+//    chatMsg.sender = wlMessage.sender;
+//    chatMsg.rsMyFriendUser = friedUser;
+//    [MOC save];
+//    
+//    //更新好友的聊天时间
+//    [friedUser updateLastChatTime:chatMsg.timestamp];
+//    
+//    return chatMsg;
+//}
+
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status
 {
@@ -141,6 +173,8 @@
     
     DLog(@"changed: ---- %d",self.sendStatus.intValue);
     
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
 //更新读取状态

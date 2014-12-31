@@ -7,6 +7,7 @@
 //
 
 #import "WLMessageTableViewCell.h"
+#import "WLMessageSpecialView.h"
 
 static const CGFloat kWLLabelPadding = 5.0f;
 static const CGFloat kWLTimeStampLabelHeight = 20.0f;
@@ -17,6 +18,8 @@ static const CGFloat kWLAvatorPaddingBubble = 6.0;
 
 static const CGFloat kWLBubbleMessageViewPadding = 8;
 
+static const CGFloat kWLMessageSpecialViewPaddingX = 19;
+
 @interface WLMessageTableViewCell ()
 
 @property (nonatomic, weak, readwrite) WLMessageBubbleView *messageBubbleView;
@@ -26,6 +29,8 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 @property (nonatomic, weak, readwrite) UILabel *userNameLabel;
 
 @property (nonatomic, weak, readwrite) LKBadgeView *timestampLabel;
+
+@property (nonatomic, weak, readwrite) WLMessageSpecialView *messageSpecialView;//特殊消息
 
 /**
  *  是否显示时间轴Label
@@ -103,6 +108,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     _timestampLabel = nil;
     _messageBubbleView = nil;
     _indexPath = nil;
+    _messageSpecialView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -143,6 +149,8 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     bubbleMessageViewFrame.origin.x = bubbleX;
     
     self.avatorButton.frame = avatorButtonFrame;
+    
+//    self.messageSpecialView.frame = self.bounds;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
@@ -229,6 +237,15 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
             self.messageBubbleView = messageBubbleView;
 //            [messageBubbleView setDebug:YES];
         }
+        
+        //5.特殊提醒消息
+        if (!_messageSpecialView) {
+            WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f, self.contentView.width - kWLMessageSpecialViewPaddingX * 2.f, self.contentView.height - (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
+            [self.contentView addSubview:messageSpecialView];
+            [self.contentView sendSubviewToBack:messageSpecialView];
+            self.messageSpecialView = messageSpecialView;
+//            [specialTextView setDebug:YES];
+        }
     }
     return self;
 }
@@ -296,6 +313,7 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     
 }
 
+//配置时间戳
 - (void)configureTimestamp:(BOOL)displayTimestamp atMessage:(id <WLMessageModel>)message {
     self.displayTimestamp = displayTimestamp;
     self.timestampLabel.hidden = !self.displayTimestamp;
@@ -308,12 +326,17 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 
 //配置头像
 - (void)configAvatorWithMessage:(id <WLMessageModel>)message {
-    if (message.avatorUrl) {
-        self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
-        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
+    if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
+        self.avatorButton.hidden = YES;
     }else{
-        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+        if (message.avatorUrl) {
+            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
+            [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
+        }else{
+            [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+        }
     }
+    
 
 //    if (message.avator) {
 //        [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
@@ -326,10 +349,12 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
 //    }
 }
 
+//配置用户名
 - (void)configUserNameWithMessage:(id <WLMessageModel>)message {
     self.userNameLabel.text = [message sender];
 }
 
+//配置聊天消息页面
 - (void)configureMessageBubbleViewWithMessage:(id <WLMessageModel>)message {
     WLBubbleMessageMediaType currentMediaType = message.messageMediaType;
     for (UIGestureRecognizer *gesTureRecognizer in self.messageBubbleView.bubbleImageView.gestureRecognizers) {
@@ -338,34 +363,44 @@ static const CGFloat kWLBubbleMessageViewPadding = 8;
     for (UIGestureRecognizer *gesTureRecognizer in self.messageBubbleView.bubblePhotoImageView.gestureRecognizers) {
         [self.messageBubbleView.bubblePhotoImageView removeGestureRecognizer:gesTureRecognizer];
     }
-    switch (currentMediaType) {
-        case WLBubbleMessageMediaTypePhoto:
-        case WLBubbleMessageMediaTypeVideo:
-        case WLBubbleMessageMediaTypeLocalPosition: {
-            UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
-            [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:tapGestureRecognizer];
-            break;
-        }
-        case WLBubbleMessageMediaTypeText:
-        case WLBubbleMessageMediaTypeVoice: {
-            self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
-            //            break;
-        }
-        case WLBubbleMessageMediaTypeEmotion: {
-            UITapGestureRecognizer *tapGestureRecognizer;
-            if (currentMediaType == WLBubbleMessageMediaTypeText) {
-                tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureRecognizerHandle:)];
-            } else {
-                tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
+    //特殊消息
+    if (currentMediaType == WLBubbleMessageSpecialTypeText) {
+//        _specialTextView.hidden = NO;
+//        _specialTextView.text = message.text;
+//        //设置字体颜色
+//        _specialTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+//        _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text]];
+    }else{
+//        _specialTextView.hidden = YES;
+        switch (currentMediaType) {
+            case WLBubbleMessageMediaTypePhoto:
+            case WLBubbleMessageMediaTypeVideo:
+            case WLBubbleMessageMediaTypeLocalPosition: {
+                UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
+                [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:tapGestureRecognizer];
+                break;
             }
-            tapGestureRecognizer.numberOfTapsRequired = (currentMediaType == WLBubbleMessageMediaTypeText ? 2 : 1);
-            [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
-            break;
+            case WLBubbleMessageMediaTypeText:
+            case WLBubbleMessageMediaTypeVoice: {
+                self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
+                //            break;
+            }
+            case WLBubbleMessageMediaTypeEmotion: {
+                UITapGestureRecognizer *tapGestureRecognizer;
+                if (currentMediaType == WLBubbleMessageMediaTypeText) {
+                    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureRecognizerHandle:)];
+                } else {
+                    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
+                }
+                tapGestureRecognizer.numberOfTapsRequired = (currentMediaType == WLBubbleMessageMediaTypeText ? 2 : 1);
+                [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
+                break;
+            }
+            default:
+                break;
         }
-        default:
-            break;
+        [self.messageBubbleView configureCellWithMessage:message];
     }
-    [self.messageBubbleView configureCellWithMessage:message];
 }
 
 #pragma mark - Gestures
