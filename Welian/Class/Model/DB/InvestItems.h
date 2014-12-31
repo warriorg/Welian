@@ -15,10 +15,14 @@
 
 @property (nonatomic, retain) NSString * item;
 @property (nonatomic, retain) NSNumber * itemid;
+@property (nonatomic, retain) NSDate * time;
 @property (nonatomic, retain) LogInUser *rsLogInUser;
 
-//创建新收据
+//创建新数据
 + (InvestItems *)createInvestItems:(InvestItemM *)investItemM;
+
+// 获取全部消息
++ (NSArray *)getAllInvestItems;
 
 // //通过item查询
 + (InvestItems *)getInvestItemsWithItem:(NSString *)item;

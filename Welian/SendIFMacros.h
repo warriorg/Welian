@@ -105,16 +105,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KWLDataDBName @"wlDataDBName.db"
 
-//#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
-
-//#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
-
+// 首页数据
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[LogInUser getNowLogInUser].uid]
-
-//#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
-
+// 所有动态数据
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[LogInUser getNowLogInUser].uid]
 
+// 投资领域数据 行业
+#define KInvestIndustryTableName @"InvestIndustry"
 
 // 文件路径
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]

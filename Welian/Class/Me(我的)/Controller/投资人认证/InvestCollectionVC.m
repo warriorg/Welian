@@ -13,11 +13,12 @@
 #import "InvestStages.h"
 #import "InvestIndustry.h"
 
-@interface InvestCollectionVC () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface InvestCollectionVC () <UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
     NSInteger _type;
     NSMutableArray *_alldataArray;
-    NSArray *_selectCells;
+    NSMutableArray *_selectCells;
+    NSMutableArray *_reuqstDataArray;
 }
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
@@ -45,28 +46,65 @@ static NSString * const reuseIdentifier = @"Cell";
     return _collectionView;
 }
 
+- (void)jiexidata:(NSArray *)dataarray
+{
+    [_alldataArray removeAllObjects];
+    [_selectCells removeAllObjects];
+    InvestIndustry *firstIndustry = [InvestIndustry getInvestIndustryWithName:@"不限"];
+    if (firstIndustry) {
+        for (NSDictionary *indDic in dataarray) {
+            IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
+            [indust setIndustryid:[indDic objectForKey:@"id"]];
+            [indust setIndustryname:[indDic objectForKey:@"name"]];
+            [indust setIsSelect:YES];
+            [_selectCells addObject:indust];
+            [_alldataArray addObject:indust];
+        }
+        IInvestIndustryModel *industA = [[IInvestIndustryModel alloc] init];
+        [industA setIndustryid:@(-1)];
+        [industA setIndustryname:@"不限"];
+        [industA setIsSelect:YES];
+        [_alldataArray insertObject:industA atIndex:0];
+        
+    }else{
+        for (NSDictionary *indDic in dataarray) {
+            IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
+            [indust setIndustryid:[indDic objectForKey:@"id"]];
+            [indust setIndustryname:[indDic objectForKey:@"name"]];
+            if ([InvestIndustry getInvestIndustryWithName:indust.industryname]) {
+                
+                [indust setIsSelect:YES];
+                [_selectCells addObject:indust];
+            }
+            [_alldataArray addObject:indust];
+        }
+        IInvestIndustryModel *industA = [[IInvestIndustryModel alloc] init];
+        [industA setIndustryid:@(-1)];
+        [industA setIndustryname:@"不限"];
+        [_alldataArray insertObject:industA atIndex:0];
+    }
+    
+
+}
+
 - (instancetype)initWithType:(NSInteger)type
 {
     self = [super init];
     if (self) {
         _type = type;
-
         _alldataArray = [NSMutableArray array];
+        _selectCells = [NSMutableArray array];
+        _reuqstDataArray = [NSMutableArray array];
         // 注册cell
         [self.collectionView registerNib:[UINib nibWithNibName:@"InvestCollectionCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
         if (type==1) { // 投资领域
+            YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:KInvestIndustryTableName fromTable:KInvestIndustryTableName];
+            NSArray *itemArray = item.itemObject;
+            [self jiexidata:itemArray];
+            
             [self setTitle:@"投资领域"];
-            _selectCells = [LogInUser getNowLogInUser].rsInvestIndustrys.allObjects;
             [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
-                for (NSDictionary *indDic in JSON) {
-                    IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
-                    [indust setIndustryid:[indDic objectForKey:@"id"]];
-                    [indust setIndustryname:[indDic objectForKey:@"name"]];
-                    if ([InvestIndustry getInvestIndustryWithName:indust.industryname]) {
-                        [indust setIsSelect:YES];
-                    }
-                    [_alldataArray addObject:indust];
-                }
+                [self jiexidata:JSON];
                 [self.collectionView reloadData];
             } fail:^(NSError *error) {
 
@@ -74,18 +112,19 @@ static NSString * const reuseIdentifier = @"Cell";
             
         }else if (type ==2){ // 投资阶段
             [self setTitle:@"投资阶段"];
-            _selectCells = [LogInUser getNowLogInUser].rsInvestStages.allObjects;
             // 1.获得路径
             NSURL *url = [[NSBundle mainBundle] URLForResource:@"InvestStagePlist" withExtension:@"plist"];
             
             // 2.读取数据
             NSArray *stageData = [NSArray arrayWithContentsOfURL:url];
+            [_selectCells removeAllObjects];
             for (NSDictionary *stageDic in stageData) {
                 IInvestStageModel *stageM = [[IInvestStageModel alloc] init];
                 [stageM setStage:[stageDic objectForKey:@"stage"]];
                 [stageM setStagename:[stageDic objectForKey:@"stagename"]];
                 if ([InvestStages getInvestStagesWithStage:stageM.stagename]) {
                     [stageM setIsSelect:YES];
+                    [_selectCells addObject:stageM];
                 }
                 [_alldataArray addObject:stageM];
             }
@@ -103,7 +142,53 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)saveData
 {
-    
+    NSMutableDictionary *ruqstDic = [NSMutableDictionary dictionary];
+    [_reuqstDataArray removeAllObjects];
+    if (_type ==1) {
+        InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        if (cell.checkImageView.selected) {
+            [_reuqstDataArray addObject:@{@"industryid":@(-1),@"industryname":@"不限"}];
+        }else{
+            for (IInvestIndustryModel *indust in _selectCells) {
+                [_reuqstDataArray addObject:@{@"industryid":indust.industryid,@"industryname":indust.industryname}];
+            }
+        }
+        [ruqstDic setObject:_reuqstDataArray forKey:@"industry"];
+    }else if (_type ==2){
+        for (IInvestStageModel *stageM in _selectCells) {
+            [_reuqstDataArray addObject:@{@"stage":stageM.stage}];
+        }
+        [ruqstDic setObject:_reuqstDataArray forKey:@"stages"];
+    }
+    [WLHttpTool investAuthParameterDic:ruqstDic success:^(id JSON) {
+        if (_type ==1) {
+            [LogInUser getNowLogInUser].rsInvestIndustrys = nil;
+             InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            
+            if (cell.checkImageView.selected) {
+                IInvestIndustryModel *industrM = [[IInvestIndustryModel alloc]init];
+                [industrM setIndustryid:@(-1)];
+                [industrM setIndustryname:@"不限"];
+                [InvestIndustry createInvestIndustry:industrM];
+            }else{
+                for (IInvestIndustryModel *industryM in _selectCells) {
+                    [InvestIndustry createInvestIndustry:industryM];
+                }
+            }
+            
+        }else if (_type ==2){
+            [LogInUser getNowLogInUser].rsInvestStages = nil;
+            for (IInvestStageModel *stageM in _selectCells) {
+                [InvestStages createInvestStages:stageM];
+            }
+        }
+        self.investBlock();
+        [self.navigationController popViewControllerAnimated:YES];
+    } fail:^(NSError *error) {
+        
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,97 +206,109 @@ static NSString * const reuseIdentifier = @"Cell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
     if (_type ==1) {
-        return _alldataArray.count+1;
+        return _alldataArray.count;
     }else if (_type ==2){
         return _alldataArray.count;
     }
     return 0;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
 
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     if (_type==1) {
-        if (indexPath.row ==0) {
-            [cell.titeLabel setText:@"全部"];
-        }else{
-            if (_alldataArray.count) {
-                
-                IInvestIndustryModel *indusM = _alldataArray[indexPath.row-1];
-                [cell.titeLabel setText:indusM.industryname];
-                [cell setSelected:indusM.isSelect];
-            }
+
+        if (_alldataArray.count) {
+            
+            IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
+            [cell.titeLabel setText:indusM.industryname];
+            [cell.checkImageView setSelected:indusM.isSelect];
         }
         
     }else if (_type ==2){
         IInvestStageModel *stageM = _alldataArray[indexPath.row];
         [cell.titeLabel setText:stageM.stagename];
-        [cell setSelected:stageM.isSelect];
+        [cell.checkImageView setSelected:stageM.isSelect];
     }
     
     return cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"%@",indexPath);
-    if (indexPath.row==0) {
-        
-    }
+    return NO;
 }
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"%@",indexPath);
+    return NO;
 }
 
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-//    if (!cell.highlighted) {
-//        return YES;
-//    }
-//    return NO;
-//}
-
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-//    if (cell.selected) {
-//        return YES;
-//    }
-//    return NO;
-//}
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
     return YES;
 }
-*/
 
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    InvestCollectionCell *cell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    if (_type ==1) {
+        [cell.checkImageView setSelected:!cell.checkImageView.selected];
+        if (indexPath.row ==0) {
+            [_selectCells removeAllObjects];
+            
+            if (cell.checkImageView.selected) {
+                for (NSInteger i = 0; i<_alldataArray.count; i++) {
+                    IInvestIndustryModel *indusM = _alldataArray[i];
+                    [indusM setIsSelect:cell.checkImageView.selected];
+                    [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+                    [_selectCells addObject:indusM];
+                }
+                
+            }else{
+                
+                for (NSInteger i = 0; i<_alldataArray.count; i++) {
+                    IInvestIndustryModel *indusM = _alldataArray[i];
+                    [indusM setIsSelect:cell.checkImageView.selected];
+                    [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+                }
+            }
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
+        }else{
+           InvestCollectionCell *cell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [cell.checkImageView setSelected:NO];
+            IInvestIndustryModel *oneindusM = _alldataArray[0];
+            [oneindusM setIsSelect:NO];
+            [_alldataArray replaceObjectAtIndex:0 withObject:oneindusM];
+            
+            IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
+            if (cell.checkImageView.selected) {
+                [indusM setIsSelect:YES];
+                [_selectCells addObject:indusM];
+                
+            }else{
+                [indusM setIsSelect:NO];
+                [_selectCells removeObject:indusM];
+            }
+            [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+        }
+        
+    }else if (_type ==2){
+        [cell.checkImageView setSelected:!cell.checkImageView.selected];
+        IInvestStageModel *StageM = _alldataArray[indexPath.row];
+        if (cell.checkImageView.selected) {
+            [StageM setIsSelect:YES];
+            [_selectCells addObject:StageM];
+            
+        }else{
+            [StageM setIsSelect:NO];
+            [_selectCells removeObject:StageM];
+        }
+        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:StageM];
+    }
 }
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

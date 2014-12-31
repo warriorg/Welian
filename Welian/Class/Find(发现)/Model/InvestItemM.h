@@ -16,4 +16,5 @@
 /** 投资案例id*/
 @property (nonatomic, strong) NSNumber *itemid;
 
+@property (nonatomic, strong) NSDate *time;
 @end

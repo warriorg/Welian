@@ -353,10 +353,7 @@ BMKMapManager* _mapManager;
     } fail:^(NSError *error) {
         
     }];
-//    UserInfoModel *mode = [[UserInfoModel alloc] init];
-//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-    [[LogInUser getNowLogInUser] setIsNow:@(0)];
-    [MOC save];
+    [LogInUser setUserisNow:NO];
     [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];

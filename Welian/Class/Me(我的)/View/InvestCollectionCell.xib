@@ -13,13 +13,6 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="investor_attestation_to_select.png" highlightedImage="investor_attestation_selected.png" translatesAutoresizingMaskIntoConstraints="NO" id="m5P-GU-Rzh">
-                        <rect key="frame" x="15" y="18" width="15" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="b5L-LB-TJD"/>
-                            <constraint firstAttribute="width" constant="15" id="xGb-da-cct"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移动互联网" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avh-LF-a8y">
                         <rect key="frame" x="38" y="10" width="113" height="29"/>
                         <constraints>
@@ -29,21 +22,33 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1W6-Af-KZe">
+                        <rect key="frame" x="15" y="18" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="K7i-d7-bsD"/>
+                            <constraint firstAttribute="height" constant="15" id="RWJ-qG-5Tw"/>
+                        </constraints>
+                        <state key="normal" image="investor_attestation_to_select.png" backgroundImage="investor_attestation_to_select.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" image="investor_attestation_selected.png" backgroundImage="investor_attestation_selected.png"/>
+                        <state key="highlighted" image="investor_attestation_selected.png" backgroundImage="investor_attestation_selected.png"/>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="m5P-GU-Rzh" secondAttribute="centerY" id="0a6-gK-MkY"/>
+                <constraint firstAttribute="centerY" secondItem="1W6-Af-KZe" secondAttribute="centerY" id="4B3-XL-77d"/>
                 <constraint firstAttribute="centerY" secondItem="avh-LF-a8y" secondAttribute="centerY" id="UbN-Y5-W2T"/>
-                <constraint firstItem="avh-LF-a8y" firstAttribute="leading" secondItem="m5P-GU-Rzh" secondAttribute="trailing" constant="8" id="X44-qq-hNK"/>
-                <constraint firstItem="m5P-GU-Rzh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="ZrG-fH-mVH"/>
+                <constraint firstItem="avh-LF-a8y" firstAttribute="leading" secondItem="1W6-Af-KZe" secondAttribute="trailing" constant="8" id="Z2f-pV-hQN"/>
+                <constraint firstItem="1W6-Af-KZe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="pac-eg-Cf0"/>
                 <constraint firstAttribute="trailing" secondItem="avh-LF-a8y" secondAttribute="trailing" constant="9" id="sA5-dY-iNQ"/>
             </constraints>
             <size key="customSize" width="120" height="119"/>
             <connections>
-                <outlet property="checkImageView" destination="m5P-GU-Rzh" id="N9g-vw-89V"/>
+                <outlet property="checkImageView" destination="1W6-Af-KZe" id="ZUf-LV-mYL"/>
                 <outlet property="titeLabel" destination="avh-LF-a8y" id="9LA-tG-ewI"/>
             </connections>
             <point key="canvasLocation" x="173" y="226"/>
