@@ -148,7 +148,7 @@ static NSString *itemscellid = @"itemscellid";
             NSMutableString *industryStr = [NSMutableString string];
             NSArray *investIndustryarray = [LogInUser getNowLogInUser].rsInvestIndustrys.allObjects;
             for (InvestIndustry *induM in investIndustryarray) {
-                [industryStr appendString:induM.industryname];
+                [industryStr appendFormat:@"%@  ",induM.industryname];
             }
             [cell.detailTextLabel setText:industryStr];
         }else if (indexPath.row ==1){  // 投资阶段
@@ -156,7 +156,7 @@ static NSString *itemscellid = @"itemscellid";
             NSMutableString *stagesStr = [NSMutableString string];
             NSArray *investIndustryarray = [LogInUser getNowLogInUser].rsInvestStages.allObjects;
             for (InvestStages *stage in investIndustryarray) {
-                [stagesStr appendString:stage.stagename];
+                [stagesStr appendFormat:@"%@  ",stage.stagename];
             }
             [cell.detailTextLabel setText:stagesStr];
         }
