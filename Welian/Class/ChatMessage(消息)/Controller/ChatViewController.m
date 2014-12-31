@@ -430,6 +430,9 @@
     //更新聊天好友
     [_friendUser updateIsChatStatus:YES];
     
+    //更新好友的聊天时间
+    [_friendUser updateLastChatTime:chatMessage.timestamp];
+    
 //    [self.messages removeObjectAtIndex:indexPath.row];
     [self removeMessageAtIndexPath:indexPath];
 //    [self.messages addObject:message];
@@ -440,6 +443,9 @@
     
     //在底部添加消息
     [self addMessage:message needSend:YES];
+    
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
 /**

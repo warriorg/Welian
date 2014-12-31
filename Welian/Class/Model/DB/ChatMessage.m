@@ -61,6 +61,9 @@
     chatMsg.rsMyFriendUser = friedUser;
     [MOC save];
     
+    //更新好友的聊天时间
+    [friedUser updateLastChatTime:chatMsg.timestamp];
+    
     return chatMsg;
 }
 
@@ -119,6 +122,9 @@
     chatMsg.sender = friendUser.name;
     chatMsg.rsMyFriendUser = friendUser;
     [MOC save];
+    
+    //更新好友的聊天时间
+    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     //更新总的聊天消息数量
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];

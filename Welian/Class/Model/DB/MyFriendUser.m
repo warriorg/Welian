@@ -15,6 +15,7 @@
 
 @dynamic status;
 @dynamic isChatNow;
+@dynamic lastChatTime;
 @dynamic rsChatMessages;
 @dynamic rsLogInUser;
 
@@ -104,6 +105,13 @@
 - (ChatMessage *)getTheNewChatMessage
 {
     return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
+}
+
+//更新最新一条聊天时间
+- (void)updateLastChatTime:(NSDate *)chatTime
+{
+    self.lastChatTime = chatTime;
+    [MOC save];
 }
 
 //获取未读取的聊天消息数量
