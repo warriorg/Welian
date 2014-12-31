@@ -389,6 +389,7 @@
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
+        
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_addButtonWithTitle:@"重新发送" handler:^{
             [self reSendMsgWithMsgId:message.msgId atIndexPath:indexPath];
