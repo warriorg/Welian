@@ -100,7 +100,6 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
         NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
