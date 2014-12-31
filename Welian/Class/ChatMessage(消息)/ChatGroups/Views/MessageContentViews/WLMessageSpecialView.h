@@ -34,4 +34,28 @@
 - (instancetype)initWithFrame:(CGRect)frame
                       message:(id <WLMessageModel>)message;
 
+/**
+ *  获取气泡相对于父试图的位置
+ *
+ *  @return 返回气泡的位置
+ */
+- (CGRect)bubbleFrame;
+
+/**
+ *  根据消息Model对象配置消息显示内容
+ *
+ *  @param message 目标消息Model对象
+ */
+- (void)configureCellWithMessage:(id <WLMessageModel>)message;
+
+/**
+ *  根据消息Model对象计算消息内容的高度
+ *
+ *  @param message 目标消息Model对象
+ *
+ *  @return 返回所需高度
+ */
++ (CGFloat)calculateCellHeightWithMessage:(id <WLMessageModel>)message;
+
+
 @end

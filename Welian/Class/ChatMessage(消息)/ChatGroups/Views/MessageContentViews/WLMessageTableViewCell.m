@@ -18,7 +18,7 @@ static const CGFloat kWLAvatorPaddingBubble = 6.0;
 
 static const CGFloat kWLBubbleMessageViewPadding = 8;
 
-static const CGFloat kWLMessageSpecialViewPaddingX = 19;
+static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 
 @interface WLMessageTableViewCell ()
 
@@ -150,7 +150,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 19;
     
     self.avatorButton.frame = avatorButtonFrame;
     
-//    self.messageSpecialView.frame = self.bounds;
+    CGRect specialViewFrame = self.messageSpecialView.frame;
+    specialViewFrame.origin.y = layoutOriginY;
+    _messageSpecialView.frame = specialViewFrame;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
@@ -240,7 +242,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 19;
         
         //5.特殊提醒消息
         if (!_messageSpecialView) {
-            WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f, self.contentView.width - kWLMessageSpecialViewPaddingX * 2.f, self.contentView.height - (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
+            WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f, self.contentView.width - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
+            messageSpecialView.hidden = YES;
             [self.contentView addSubview:messageSpecialView];
             [self.contentView sendSubviewToBack:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
@@ -365,13 +368,13 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 19;
     }
     //特殊消息
     if (currentMediaType == WLBubbleMessageSpecialTypeText) {
-//        _specialTextView.hidden = NO;
-//        _specialTextView.text = message.text;
-//        //设置字体颜色
-//        _specialTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
-//        _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text]];
+        _messageSpecialView.hidden = NO;
+        _messageBubbleView.hidden = YES;
+        //配置消息
+        [_messageSpecialView configureCellWithMessage:message];
     }else{
-//        _specialTextView.hidden = YES;
+        _messageSpecialView.hidden = YES;
+        _messageBubbleView.hidden = NO;
         switch (currentMediaType) {
             case WLBubbleMessageMediaTypePhoto:
             case WLBubbleMessageMediaTypeVideo:
@@ -526,17 +529,23 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 19;
                         displaysTimestamp:(BOOL)displayTimestamp {
     
     CGFloat timestampHeight = displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding * 2) : 0;//kWLLabelPadding;
-    CGFloat avatarHeight = kWLAvatarImageSize;
     
-    //隐藏用户名
-//    CGFloat userNameHeight = 20;
-    
-//    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 + userNameHeight;
-    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 ;//+ userNameHeight;
-    
-    CGFloat bubbleHeight = [WLMessageBubbleView calculateCellHeightWithMessage:message];
-    
-    return subviewHeights + MAX(avatarHeight, bubbleHeight);
+    //特殊消息
+    if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
+        return timestampHeight + [WLMessageSpecialView calculateCellHeightWithMessage:message];
+    }else{
+        CGFloat avatarHeight = kWLAvatarImageSize;
+        
+        //隐藏用户名
+        //    CGFloat userNameHeight = 20;
+        
+        //    CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 + userNameHeight;
+        CGFloat subviewHeights = timestampHeight + kWLBubbleMessageViewPadding * 2 ;//+ userNameHeight;
+        
+        CGFloat bubbleHeight = [WLMessageBubbleView calculateCellHeightWithMessage:message];
+        
+        return subviewHeights + MAX(avatarHeight, bubbleHeight);
+    }
 }
 
 @end
