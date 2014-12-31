@@ -450,7 +450,7 @@
  *  @return 根据indexPath获取消息的Model的对象，从而判断返回YES or NO来控制是否显示时间轴Label
  */
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row % 5 == 0)
+    if (indexPath.row % 10 == 0)
         return YES;
     else
         return NO;
@@ -475,10 +475,19 @@
 - (void)didSelectedAvatorOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath
 {
 //    DLog(@"点击头像---------");
-    MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:@(message.uid.integerValue)];
-    FriendsUserModel *userMode = [[FriendsUserModel alloc] init];
-    userMode.uid = friendUser.uid;
-    userMode.name = friendUser.name;
+    
+    IBaseUserM *userMode = [[IBaseUserM alloc] init];
+    if (message.bubbleMessageType == WLBubbleMessageTypeSending) {
+        //自己发送
+        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        userMode.uid = loginUser.uid;
+        userMode.name = loginUser.name;
+    }else{
+        //好友头像
+        MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:@(message.uid.integerValue)];
+        userMode.uid = friendUser.uid;
+        userMode.name = friendUser.name;
+    }
     
     UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
     userInfoVC.isHideSendMsgBtn = YES;
