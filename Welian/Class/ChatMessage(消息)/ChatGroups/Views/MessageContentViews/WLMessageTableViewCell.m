@@ -151,7 +151,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.avatorButton.frame = avatorButtonFrame;
     
     CGRect specialViewFrame = self.messageSpecialView.frame;
-    specialViewFrame.origin.y = layoutOriginY;
+    specialViewFrame.origin.y += layoutOriginY;
     _messageSpecialView.frame = specialViewFrame;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
@@ -532,7 +532,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
     //特殊消息
     if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
-        return timestampHeight + [WLMessageSpecialView calculateCellHeightWithMessage:message];
+        return timestampHeight + [WLMessageSpecialView calculateCellHeightWithMessage:message] + kWLBubbleMessageViewPadding;
     }else{
         CGFloat avatarHeight = kWLAvatarImageSize;
         

@@ -115,7 +115,7 @@
 - (CGRect)bubbleFrame {
     CGSize bubbleSize = [WLMessageSpecialView neededSizeForText:self.message.text];
     
-    return CGRectMake(kMarginLeft, 5, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop * 2);
+    return CGRectMake(kMarginLeft, kMarginTop, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop * 2);
 //    return CGRectIntegral(CGRectMake((self.message.bubbleMessageType == WLBubbleMessageTypeSending ? CGRectGetWidth(self.bounds) - bubbleSize.width : 0.0f),
 //                                     kMarginTop,
 //                                     bubbleSize.width,
