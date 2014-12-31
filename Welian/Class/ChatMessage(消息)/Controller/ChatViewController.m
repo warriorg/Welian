@@ -297,6 +297,13 @@
 //                                            [self.messages removeObjectAtIndex:indexPath.row];
 //                                            [self.messages insertObject:msg atIndex:indexPath.row];
                                             
+                                            WEAKSELF
+                                            [weakSelf exMainQueue:^{
+                                                //刷新列表
+                                                [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                                                [weakSelf scrollToBottomAnimated:YES];
+                                            }];
+                                            
                                             //已经不是好友关系
                                             WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。",_friendUser.name] sender:@"" timestamp:[NSDate date]];
                                             textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";

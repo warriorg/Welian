@@ -694,7 +694,7 @@ static CGPoint  delayOffset = {0.0};
     if ([self.delegate respondsToSelector:@selector(configureCell:atIndexPath:)]) {
         [self.delegate configureCell:messageTableViewCell atIndexPath:indexPath];
     }
-    [messageTableViewCell setDebug:YES];
+//    [messageTableViewCell setDebug:YES];
     return messageTableViewCell;
 }
 
