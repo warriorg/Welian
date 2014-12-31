@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
 
-@class ChatMessage, LogInUser, FriendsUserModel, WLMessage;
+@class ChatMessage, LogInUser, FriendsUserModel, WLMessage, NewFriendModel;
 
 @interface MyFriendUser : BaseUser
 
@@ -22,6 +22,9 @@
 
 //创建新收据
 + (MyFriendUser *)createMyFriendUserModel:(FriendsUserModel *)userInfoM;
+
+//创建新的同意好意请求数据
++ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM;
 
 // //通过uid查询
 + (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
@@ -46,6 +49,7 @@
 - (ChatMessage *)getChatMessageWithMsgId:(NSString *)msgId;
 //获取所有的聊天消息列表
 - (NSArray *)allChatMessages;
+- (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count;
 
 @end
 

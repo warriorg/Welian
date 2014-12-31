@@ -23,6 +23,8 @@
 #import "NewFriendUser.h"
 #import "HomeMessage.h"
 #import "ChatMessage.h"
+#import "WLMessage.h"
+#import "MyFriendUser.h"
 
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
@@ -310,7 +312,29 @@ BMKMapManager* _mapManager;
             // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
             [newfrendM setIsAgree:@(1)];
             
+            //创建本地数据库好友
+            MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
+            
+            //接受后，本地创建一条消息
+            WLMessage *textMessage = [[WLMessage alloc] initWithText:[NSString stringWithFormat:@"我已经通过你的好友请求，现在我们可以开始聊聊创业那些事了"] sender:newfrendM.name timestamp:[NSDate date]];
+            textMessage.avatorUrl = newfrendM.avatar;
+            //是否读取
+            textMessage.isRead = NO;
+            textMessage.sended = @"1";
+            textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+
+            //更新聊天好友
+            [friendUser updateIsChatStatus:YES];
+            
+            //本地聊天数据库添加
+            ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+            textMessage.msgId = chatMessage.msgId.stringValue;
+            
+            //更新好友列表
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+            //聊天状态发送改变
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+            
         }else{
             
             NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];

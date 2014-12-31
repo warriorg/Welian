@@ -168,14 +168,20 @@ static NSString *staurCellid = @"staurCellid";
                 
 //                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
                 
-                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
+                MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+                //数据库删除当前好友
+                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:friendUser];
                 
+                //删除新的好友本地数据库
                 NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
                 if (newFuser) {
-                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
+                    [newFuser delete];
+//                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
                 }
                 
-                [MOC save];
+                //聊天状态发送改变
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+                
 //                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];

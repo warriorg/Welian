@@ -17,6 +17,8 @@
 #import "NewFriendUser.h"
 #import "MyFriendUser.h"
 #import "FriendsUserModel.h"
+#import "WLMessage.h"
+#import "ChatMessage.h"
 
 static NSString *frnewCellid = @"frnewCellid";
 @interface NewFriendController ()<UIAlertViewDelegate>
@@ -199,13 +201,31 @@ static NSString *frnewCellid = @"frnewCellid";
     [WLHttpTool addFriendParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
         [friendM setIsAgree:@(1)];
         FriendsUserModel *friend = [FriendsUserModel objectWithDict:[friendM keyValues]];
-        [MyFriendUser createMyFriendUserModel:friend];
-        [MOC save];
+        MyFriendUser *friendUser = [MyFriendUser createMyFriendUserModel:friend];
 
         [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        
+        //接受后，本地创建一条消息
+//        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
+//        textMessage.avatorUrl = nil;
+//        textMessage.sender = nil;
+//        //是否读取
+//        textMessage.isRead = NO;
+//        textMessage.sended = @"1";
+//        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+//        
+//        //更新聊天好友
+//        [friendUser updateIsChatStatus:YES];
+//        
+//        //    //本地聊天数据库添加
+//        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+//        textMessage.msgId = chatMessage.msgId.stringValue;
+//        
+//        //聊天状态发送改变
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
         
         [WLHUDView showSuccessHUD:@"添加成功！"];
     } fail:^(NSError *error) {

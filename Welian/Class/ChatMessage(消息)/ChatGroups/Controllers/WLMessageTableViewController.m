@@ -114,7 +114,7 @@ static CGPoint  delayOffset = {0.0};
             [weakSelf.messageTableView beginUpdates];
             weakSelf.messages = messages;
             [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-            
+//            delayOffset.y += 30;
             [weakSelf.messageTableView setContentOffset:delayOffset animated:NO];
             [weakSelf.messageTableView endUpdates];
             [UIView setAnimationsEnabled:YES];
@@ -205,6 +205,110 @@ static CGPoint  delayOffset = {0.0};
 }
 
 #pragma mark - Propertys
+- (NSMutableArray *)messages {
+    if (!_messages) {
+        _messages = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return _messages;
+}
+
+- (UIView *)headerContainerView {
+    if (!_headerContainerView) {
+        _headerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
+        _headerContainerView.backgroundColor = self.messageTableView.backgroundColor;
+        [_headerContainerView addSubview:self.loadMoreActivityIndicatorView];
+    }
+    return _headerContainerView;
+}
+- (UIActivityIndicatorView *)loadMoreActivityIndicatorView {
+    if (!_loadMoreActivityIndicatorView) {
+        _loadMoreActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _loadMoreActivityIndicatorView.center = CGPointMake(CGRectGetWidth(_headerContainerView.bounds) / 2.0, CGRectGetHeight(_headerContainerView.bounds) / 2.0);
+    }
+    return _loadMoreActivityIndicatorView;
+}
+- (void)setLoadingMoreMessage:(BOOL)loadingMoreMessage {
+    _loadingMoreMessage = loadingMoreMessage;
+    if (loadingMoreMessage) {
+        [self.loadMoreActivityIndicatorView startAnimating];
+    } else {
+        [self.loadMoreActivityIndicatorView stopAnimating];
+    }
+}
+
+//- (XHShareMenuView *)shareMenuView {
+//    if (!_shareMenuView) {
+//        XHShareMenuView *shareMenuView = [[XHShareMenuView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds), self.keyboardViewHeight)];
+//        shareMenuView.delegate = self;
+//        shareMenuView.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
+//        shareMenuView.alpha = 0.0;
+//        shareMenuView.shareMenuItems = self.shareMenuItems;
+//        [self.view addSubview:shareMenuView];
+//        _shareMenuView = shareMenuView;
+//    }
+//    [self.view bringSubviewToFront:_shareMenuView];
+//    return _shareMenuView;
+//}
+//
+//- (XHEmotionManagerView *)emotionManagerView {
+//    if (!_emotionManagerView) {
+//        XHEmotionManagerView *emotionManagerView = [[XHEmotionManagerView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds), self.keyboardViewHeight)];
+//        emotionManagerView.delegate = self;
+//        emotionManagerView.dataSource = self;
+//        emotionManagerView.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
+//        emotionManagerView.alpha = 0.0;
+//        [self.view addSubview:emotionManagerView];
+//        _emotionManagerView = emotionManagerView;
+//    }
+//    [self.view bringSubviewToFront:_emotionManagerView];
+//    return _emotionManagerView;
+//}
+//
+//- (XHVoiceRecordHUD *)voiceRecordHUD {
+//    if (!_voiceRecordHUD) {
+//        _voiceRecordHUD = [[XHVoiceRecordHUD alloc] initWithFrame:CGRectMake(0, 0, 140, 140)];
+//    }
+//    return _voiceRecordHUD;
+//}
+//
+//- (XHPhotographyHelper *)photographyHelper {
+//    if (!_photographyHelper) {
+//        _photographyHelper = [[XHPhotographyHelper alloc] init];
+//    }
+//    return _photographyHelper;
+//}
+//
+//- (XHLocationHelper *)locationHelper {
+//    if (!_locationHelper) {
+//        _locationHelper = [[XHLocationHelper alloc] init];
+//    }
+//    return _locationHelper;
+//}
+//
+//- (XHVoiceRecordHelper *)voiceRecordHelper {
+//    if (!_voiceRecordHelper) {
+//        _isMaxTimeStop = NO;
+//        
+//        WEAKSELF
+//        _voiceRecordHelper = [[XHVoiceRecordHelper alloc] init];
+//        _voiceRecordHelper.maxTimeStopRecorderCompletion = ^{
+//            DLog(@"已经达到最大限制时间了，进入下一步的提示");
+//            
+//            // Unselect and unhilight the hold down button, and set isMaxTimeStop to YES.
+//            UIButton *holdDown = weakSelf.messageInputView.holdDownButton;
+//            holdDown.selected = NO;
+//            holdDown.highlighted = NO;
+//            weakSelf.isMaxTimeStop = YES;
+//            
+//            [weakSelf finishRecorded];
+//        };
+//        _voiceRecordHelper.peakPowerForChannel = ^(float peakPowerForChannel) {
+//            weakSelf.voiceRecordHUD.peakPower = peakPowerForChannel;
+//        };
+//        _voiceRecordHelper.maxRecordTime = kVoiceRecorderTotalTime;
+//    }
+//    return _voiceRecordHelper;
+//}
 
 #pragma mark - Init
 //初始化设置
@@ -217,11 +321,11 @@ static CGPoint  delayOffset = {0.0};
     _allowsSendFace = YES;
     _inputViewStyle = WLMessageInputViewStyleFlat;
     
-    // 默认设置用户滚动为NO
-    _isUserScrolling = NO;
-    
     self.delegate = self;
     self.dataSource = self;
+    
+    // 默认设置用户滚动为NO
+    _isUserScrolling = NO;
 }
 
 - (id)init{
@@ -274,10 +378,11 @@ static CGPoint  delayOffset = {0.0};
 
 //初始化消息页面布局
 - (void)initUI{
-    //取消滚动
+    //tableview头部距离问题
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
     //初始化TableView
     WLMessageTableView *messageTableView = [[WLMessageTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     //设置宽高自适应
@@ -288,6 +393,15 @@ static CGPoint  delayOffset = {0.0};
     //隐藏每个cell间的分割线
     messageTableView.separatorColor = [UIColor clearColor];
     messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    BOOL shouldLoadMoreMessagesScrollToTop = YES;
+    if ([self.delegate respondsToSelector:@selector(shouldLoadMoreMessagesScrollToTop)]) {
+        shouldLoadMoreMessagesScrollToTop = [self.delegate shouldLoadMoreMessagesScrollToTop];
+    }
+    if (shouldLoadMoreMessagesScrollToTop) {
+        messageTableView.tableHeaderView = self.headerContainerView;
+    }
+    
     [self.view addSubview:messageTableView];
     [self.view sendSubviewToBack:messageTableView];
     _messageTableView = messageTableView;
@@ -413,8 +527,60 @@ static CGPoint  delayOffset = {0.0};
 //    _locationHelper = nil;
 }
 
-#pragma mark - XHMessageInputView Delegate
+#pragma mark - RecorderPath Helper Method
 
+//- (NSString *)getRecorderPath {
+//    NSString *recorderPath = nil;
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.dateFormat = @"yy-MMMM-dd";
+//    recorderPath = [[NSString alloc] initWithFormat:@"%@/Documents/", NSHomeDirectory()];
+//    //    dateFormatter.dateFormat = @"hh-mm-ss";
+//    dateFormatter.dateFormat = @"yyyy-MM-dd-hh-mm-ss";
+//    recorderPath = [recorderPath stringByAppendingFormat:@"%@-MySound.caf", [dateFormatter stringFromDate:now]];
+//    return recorderPath;
+//}
+
+#pragma mark - Voice Recording Helper Method
+//- (void)prepareRecordWithCompletion:(XHPrepareRecorderCompletion)completion {
+//    [self.voiceRecordHelper prepareRecordingWithPath:[self getRecorderPath] prepareRecorderCompletion:completion];
+//}
+//
+//- (void)startRecord {
+//    [self.voiceRecordHUD startRecordingHUDAtView:self.view];
+//    [self.voiceRecordHelper startRecordingWithStartRecorderCompletion:^{
+//    }];
+//}
+//
+//- (void)finishRecorded {
+//    WEAKSELF
+//    [self.voiceRecordHUD stopRecordCompled:^(BOOL fnished) {
+//        weakSelf.voiceRecordHUD = nil;
+//    }];
+//    [self.voiceRecordHelper stopRecordingWithStopRecorderCompletion:^{
+//        [weakSelf didSendMessageWithVoice:weakSelf.voiceRecordHelper.recordPath voiceDuration:weakSelf.voiceRecordHelper.recordDuration];
+//    }];
+//}
+//
+//- (void)pauseRecord {
+//    [self.voiceRecordHUD pauseRecord];
+//}
+//
+//- (void)resumeRecord {
+//    [self.voiceRecordHUD resaueRecord];
+//}
+//
+//- (void)cancelRecord {
+//    WEAKSELF
+//    [self.voiceRecordHUD cancelRecordCompled:^(BOOL fnished) {
+//        weakSelf.voiceRecordHUD = nil;
+//    }];
+//    [self.voiceRecordHelper cancelledDeleteWithCompletion:^{
+//        
+//    }];
+//}
+
+#pragma mark - XHMessageInputView Delegate
 - (void)inputTextViewWillBeginEditing:(WLMessageTextView *)messageInputTextView {
     self.textViewInputViewType = WLInputViewTypeText;
 }
@@ -528,7 +694,7 @@ static CGPoint  delayOffset = {0.0};
     if ([self.delegate respondsToSelector:@selector(configureCell:atIndexPath:)]) {
         [self.delegate configureCell:messageTableViewCell atIndexPath:indexPath];
     }
-    
+    [messageTableViewCell setDebug:YES];
     return messageTableViewCell;
 }
 
@@ -575,7 +741,8 @@ static CGPoint  delayOffset = {0.0};
     UIEdgeInsets insets = UIEdgeInsetsZero;
     
     if ([self respondsToSelector:@selector(topLayoutGuide)]) {
-        insets.top = 64;
+//        insets.top = 64;
+        insets.top = 20;
     }
     
     insets.bottom = bottom;
@@ -657,17 +824,138 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
+#pragma mark - Message Send helper Method
+
+- (void)didSendMessageWithText:(NSString *)text {
+    DLog(@"send text : %@", text);
+    if ([self.delegate respondsToSelector:@selector(didSendText:fromSender:onDate:)]) {
+        [self.delegate didSendText:text fromSender:self.messageSender onDate:[NSDate date]];
+    }
+}
+
+//- (void)didSendMessageWithPhoto:(UIImage *)photo {
+//    DLog(@"send photo : %@", photo);
+//    if ([self.delegate respondsToSelector:@selector(didSendPhoto:fromSender:onDate:)]) {
+//        [self.delegate didSendPhoto:photo fromSender:self.messageSender onDate:[NSDate date]];
+//    }
+//}
+//
+//- (void)didSendMessageWithVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath  {
+//    DLog(@"send videoPath : %@  videoConverPhoto : %@", videoPath, videoConverPhoto);
+//    if ([self.delegate respondsToSelector:@selector(didSendVideoConverPhoto:videoPath:fromSender:onDate:)]) {
+//        [self.delegate didSendVideoConverPhoto:videoConverPhoto videoPath:videoPath fromSender:self.messageSender onDate:[NSDate date]];
+//    }
+//}
+//
+//- (void)didSendMessageWithVoice:(NSString *)voicePath voiceDuration:(NSString*)voiceDuration {
+//    DLog(@"send voicePath : %@", voicePath);
+//    if ([self.delegate respondsToSelector:@selector(didSendVoice:voiceDuration:fromSender:onDate:)]) {
+//        [self.delegate didSendVoice:voicePath voiceDuration:voiceDuration fromSender:self.messageSender onDate:[NSDate date]];
+//    }
+//}
+//
+//- (void)didSendEmotionMessageWithEmotionPath:(NSString *)emotionPath {
+//    DLog(@"send emotionPath : %@", emotionPath);
+//    if ([self.delegate respondsToSelector:@selector(didSendEmotion:fromSender:onDate:)]) {
+//        [self.delegate didSendEmotion:emotionPath fromSender:self.messageSender onDate:[NSDate date]];
+//    }
+//}
+//
+//- (void)didSendGeolocationsMessageWithGeolocaltions:(NSString *)geolcations location:(CLLocation *)location {
+//    DLog(@"send geolcations : %@", geolcations);
+//    if ([self.delegate respondsToSelector:@selector(didSendGeoLocationsPhoto:geolocations:location:fromSender:onDate:)]) {
+//        [self.delegate didSendGeoLocationsPhoto:[UIImage imageNamed:@"Fav_Cell_Loc"] geolocations:geolcations location:location fromSender:self.messageSender onDate:[NSDate date]];
+//    }
+//}
+
+#pragma mark - XHShareMenuView Delegate
+//
+//- (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
+//    DLog(@"title : %@   index:%ld", shareMenuItem.title, (long)index);
+//    
+//    WEAKSELF
+//    void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
+//        if (image) {
+//            [weakSelf didSendMessageWithPhoto:image];
+//        } else {
+//            if (!editingInfo)
+//                return ;
+//            NSString *mediaType = [editingInfo objectForKey: UIImagePickerControllerMediaType];
+//            NSString *videoPath;
+//            NSURL *videoUrl;
+//            if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+//                videoUrl = (NSURL*)[editingInfo objectForKey:UIImagePickerControllerMediaURL];
+//                videoPath = [videoUrl path];
+//                
+//                UIImage *thumbnailImage = [XHMessageVideoConverPhotoFactory videoConverPhotoWithVideoPath:videoPath];
+//                
+//                [weakSelf didSendMessageWithVideoConverPhoto:thumbnailImage videoPath:videoPath];
+//            } else {
+//                [weakSelf didSendMessageWithPhoto:[editingInfo valueForKey:UIImagePickerControllerOriginalImage]];
+//            }
+//        }
+//    };
+//    switch (index) {
+//        case 0: {
+//            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypePhotoLibrary onViewController:self compled:PickerMediaBlock];
+//            break;
+//        }
+//        case 1: {
+//            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
+//            break;
+//        }
+//        case 2: {
+//            WEAKSELF
+//            [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+//                CLPlacemark *placemark = [placemarks lastObject];
+//                if (placemark) {
+//                    NSDictionary *addressDictionary = placemark.addressDictionary;
+//                    NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+//                    NSString *geoLocations = [formattedAddressLines lastObject];
+//                    if (geoLocations) {
+//                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+//                    }
+//                }
+//            }];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//}
+
+#pragma mark - XHEmotionManagerView Delegate
+//- (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
+//    if (emotion.emotionPath) {
+//        [self didSendEmotionMessageWithEmotionPath:emotion.emotionPath];
+//    }
+//}
+//
+//#pragma mark - XHEmotionManagerView DataSource
+//
+//- (NSInteger)numberOfEmotionManagers {
+//    return 0;
+//}
+//
+//- (XHEmotionManager *)emotionManagerForColumn:(NSInteger)column {
+//    return nil;
+//}
+//
+//- (NSArray *)emotionManagersAtManager {
+//    return nil;
+//}
+
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([self.delegate respondsToSelector:@selector(shouldLoadMoreMessagesScrollToTop)]) {
         BOOL shouldLoadMoreMessages = [self.delegate shouldLoadMoreMessagesScrollToTop];
         if (shouldLoadMoreMessages) {
             if (scrollView.contentOffset.y >=0 && scrollView.contentOffset.y <= 44) {
-//                if (!self.loadingMoreMessage) {
-//                    if ([self.delegate respondsToSelector:@selector(loadMoreMessagesScrollTotop)]) {
-//                        [self.delegate loadMoreMessagesScrollTotop];
-//                    }
-//                }
+                if (!self.loadingMoreMessage) {
+                    if ([self.delegate respondsToSelector:@selector(loadMoreMessagesScrollTotop)]) {
+                        [self.delegate loadMoreMessagesScrollTotop];
+                    }
+                }
             }
         }
     }

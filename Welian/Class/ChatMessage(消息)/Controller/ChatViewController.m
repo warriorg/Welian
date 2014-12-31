@@ -16,6 +16,9 @@
 //聊天的好友
 @property (nonatomic, strong) MyFriendUser *friendUser;
 @property (nonatomic, strong) NSMutableArray *localMessages;//本地数据库数据
+//@property (nonatomic, assign) NSInteger totalOffset;
+@property (nonatomic, assign) NSInteger offset;
+@property (nonatomic, assign) NSInteger count;
 
 @end
 
@@ -59,7 +62,7 @@
 - (void)loadDemoDataSource {
     //更新当前未查看消息数量
     [_friendUser updateAllMessageReadStatus];
-    NSArray *localMessages = [_friendUser allChatMessages];
+    NSArray *localMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];//[_friendUser allChatMessages];
     self.localMessages = [NSMutableArray arrayWithArray:localMessages];
     
     WEAKSELF
@@ -84,7 +87,9 @@
                     break;
             }
             //添加到数组中
-            [messages addObject:message];
+            if (message) {
+                [messages addObject:message];
+            }
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,6 +169,22 @@
     
     // 设置整体背景颜色
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
+    
+    //tableview头部距离问题
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+    //初始化数据查询
+    self.count = 10;
+    if (_friendUser.rsChatMessages.count > _count) {
+        self.offset = _friendUser.rsChatMessages.count - _count;
+    }else{
+        self.offset = 0;
+        self.count = _friendUser.rsChatMessages.count;
+    }
+//    self.offset = _friendUser.rsChatMessages.count < _count ? 0 : _friendUser.rsChatMessages.count - _count;
+//    self.totalOffset = ceilf(_friendUser.rsChatMessages.count / _count);
     
     //加载初始化数据
     [self loadDemoDataSource];
@@ -261,23 +282,57 @@
     
     [WLHttpTool sendMessageParameterDic:param
                                 success:^(id JSON) {
-                                    
-                                    //更新数据库
-                                    [chatMessage updateSendStatus:1];
-                                    
-                                    WLMessage *msg = self.messages[indexPath.row];
-                                    //更新发送消息状态
-                                    msg.sended = @"1";
-                                    
-                                    [self.messages removeObjectAtIndex:indexPath.row];
-                                    [self.messages insertObject:msg atIndex:indexPath.row];
-                                    
-                                    WEAKSELF
-                                    [weakSelf exMainQueue:^{
-                                        //刷新列表
-                                        [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-                                        [weakSelf scrollToBottomAnimated:YES];
-                                    }];
+                                    //返回的是字典
+                                    if ([JSON isKindOfClass:[NSDictionary class]]) {
+                                        NSString *state = JSON[@"state"];
+                                        if (state.intValue == -1) {
+                                            //更新数据库
+                                            [chatMessage updateSendStatus:2];
+                                            WLMessage *msg = self.messages[indexPath.row];
+                                            //更新发送消息状态
+                                            msg.sended = @"2";
+                                            
+                                            //替换原有数据
+                                            [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+//                                            [self.messages removeObjectAtIndex:indexPath.row];
+//                                            [self.messages insertObject:msg atIndex:indexPath.row];
+                                            
+                                            //已经不是好友关系
+                                            WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。",_friendUser.name] sender:@"" timestamp:[NSDate date]];
+                                            textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+                                            textMessage.sender = [LogInUser getNowLogInUser].name;
+                                            textMessage.uid = _friendUser.uid.stringValue;
+                                            //是否读取
+                                            textMessage.isRead = YES;
+                                            textMessage.sended = @"1";
+                                            
+                                            //    //本地聊天数据库添加
+                                            ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:_friendUser];
+                                            textMessage.msgId = chatMessage.msgId.stringValue;
+                                            
+                                            //添加数据
+                                            [_localMessages addObject:chatMessage];
+                                            //添加这条数据，不需要发送
+                                            [self addMessage:textMessage needSend:NO];
+                                        }
+                                    }else{
+                                        //更新数据库
+                                        [chatMessage updateSendStatus:1];
+                                        
+                                        WLMessage *msg = self.messages[indexPath.row];
+                                        //更新发送消息状态
+                                        msg.sended = @"1";
+                                        
+                                        [self.messages removeObjectAtIndex:indexPath.row];
+                                        [self.messages insertObject:msg atIndex:indexPath.row];
+                                        
+                                        WEAKSELF
+                                        [weakSelf exMainQueue:^{
+                                            //刷新列表
+                                            [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                                            [weakSelf scrollToBottomAnimated:YES];
+                                        }];
+                                    }
                                 } fail:^(NSError *error) {
                                     //发送失败
                                     //更新数据库
@@ -335,6 +390,73 @@
 //                                    [weakSelf.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 //                                }];
 //}
+
+
+#pragma mark - XHMessageTableViewController Delegate
+//- (BOOL)shouldLoadMoreMessagesScrollToTop {
+//    return YES;
+//}
+
+- (void)loadMoreMessagesScrollTotop {
+    if (!self.loadingMoreMessage) {
+        self.loadingMoreMessage = YES;
+        
+        NSArray *getLocalMessages = nil;
+        //获取新的聊天记录
+        if(_offset - _count >= 0){
+            _offset = _offset - _count;
+            getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+        }else if(_offset > 0 && _offset < _count){
+            _count = _offset - 0;
+            _offset = 0;
+            getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+        }else{
+            self.loadingMoreMessage = NO;
+            return;
+        }
+        if (getLocalMessages) {
+            NSMutableArray *messages = [NSMutableArray arrayWithArray:getLocalMessages];
+            [messages addObjectsFromArray:_localMessages];
+            self.localMessages = messages;
+            
+            WEAKSELF
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSMutableArray *messages = [NSMutableArray array];
+                
+                for (ChatMessage *chatMessage in getLocalMessages) {
+                    WLMessage *message = nil;
+                    switch (chatMessage.messageType.integerValue) {
+                        case WLBubbleMessageMediaTypeText:
+                            //普通文本
+                            message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+                            message.msgId = chatMessage.msgId.stringValue;
+                            message.avatorUrl = chatMessage.avatorUrl;
+                            message.sended = chatMessage.sendStatus.stringValue;
+                            message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                            message.uid = _friendUser.uid.stringValue;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    //添加到数组中
+                    if (message) {
+                        [messages addObject:message];
+                    }
+                }
+                
+                //            NSMutableArray *messages = [weakSelf getTestMessages];
+                sleep(2);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf insertOldMessages:messages];
+                    weakSelf.loadingMoreMessage = NO;
+                });
+            });
+        }
+    }
+}
+
 
 /**
  *  发送文本消息的回调方法
@@ -456,7 +578,7 @@
  *  @return 根据indexPath获取消息的Model的对象，从而判断返回YES or NO来控制是否显示时间轴Label
  */
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row % 10 == 0)
+    if (indexPath.row % 9 == 0)
         return YES;
     else
         return NO;
