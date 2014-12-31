@@ -206,7 +206,7 @@
 //获取正在聊天的好友列表
 + (NSArray *)chatUsers
 {
-    return [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"isChatNow" isTrue:YES] where:@"rsLogInUser" equals:[self getNowLogInUser]] results];
+    return [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"isChatNow" isTrue:YES] where:@"rsLogInUser" equals:[self getNowLogInUser]] orderBy:@"lastChatTime" ascending:NO] results];
 }
 
 //所有未读取的聊天消息数量

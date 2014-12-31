@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * isChatNow;
+@property (nonatomic, retain) NSDate * lastChatTime;
 @property (nonatomic, retain) NSSet *rsChatMessages;
 @property (nonatomic, retain) LogInUser *rsLogInUser;
 
@@ -34,6 +35,8 @@
 - (void)updateAllMessageReadStatus;
 //获取最新的一条消息
 - (ChatMessage *)getTheNewChatMessage;
+//更新最新一条聊天时间
+- (void)updateLastChatTime:(NSDate *)chatTime;
 
 //获取未读取的聊天消息数量
 - (NSInteger)unReadChatMessageNum;
