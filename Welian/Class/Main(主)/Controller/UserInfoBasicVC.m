@@ -22,6 +22,7 @@
 #import "ChatViewController.h"
 #import "IIMeInvestAuthModel.h"
 #import "InvestItemM.h"
+#import "InvestInfoListVC.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -432,10 +433,13 @@ static NSString *staurCellid = @"staurCellid";
         ListdaController *workVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:usercompany andType:@"2"];
         [self.navigationController pushViewController:workVC animated:YES];
     }else if([celltext isEqualToString:@"我是投资人"]){
+        
+        InvestInfoListVC *investListVC = [[InvestInfoListVC alloc] initWithStyle:UITableViewStyleGrouped];
+        [investListVC setUserName:_userMode.name];
         IIMeInvestAuthModel *inves = [_dataDicM objectForKey:@"investor"];
-
-        ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.items andType:@"3"];
-        [self.navigationController pushViewController:investVC animated:YES];
+        [investListVC setIimeInvestM:inves];
+//        ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.items andType:@"3"];
+        [self.navigationController pushViewController:investListVC animated:YES];
     }else{
         if (indexPath.section==1) {
             if (indexPath.row==0) {
