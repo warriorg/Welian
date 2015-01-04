@@ -98,7 +98,7 @@
         return [[NSAttributedString alloc] init];
     }
     if ([_attributedStringCache objectForKey:text]) {
-        return [_attributedStringCache objectForKey:text];
+//        return [_attributedStringCache objectForKey:text];
     }
     
     NSFont *font = [NSFont systemFontOfSize:13.0f];

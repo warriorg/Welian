@@ -72,17 +72,24 @@
         for (ChatMessage *chatMessage in localMessages) {
             WLMessage *message = nil;
             switch (chatMessage.messageType.integerValue) {
-                case WLBubbleMessageMediaTypeText:
-                    //普通文本
-                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-//                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+                case WLBubbleMessageSpecialTypeText:
+                    //特殊文本
+                    message = [[WLMessage alloc] initWithSpecialText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
                     message.msgId = chatMessage.msgId.stringValue;
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
                     break;
-                    
+                case WLBubbleMessageMediaTypeText:
+                    //普通文本
+                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                    message.msgId = chatMessage.msgId.stringValue;
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    break;
                 default:
                     break;
             }
@@ -129,6 +136,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    //取消接口调用
+    [WLHttpTool cancelAllRequestHttpTool];
     
 //    //自定义返回按钮
 //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItemClicked:)];
@@ -251,18 +260,19 @@
 
 
 - (void)addMessage:(WLMessage *)addedMessage needSend:(BOOL)needSend{
+    NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+    [messages addObject:addedMessage];
+    
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
+    [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+    
+    if (needSend) {
+        //发送消息
+        [self sendMessage:addedMessage withIndexPath:indexPaths];
+    }
+    
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
-        NSMutableArray *messages = [NSMutableArray arrayWithArray:weakSelf.messages];
-        [messages addObject:addedMessage];
-        
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
-        
-        if (needSend) {
-            //发送消息
-            [weakSelf sendMessage:addedMessage withIndexPath:indexPaths];
-        }
         
         [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
@@ -322,8 +332,7 @@
 ////                                            NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
 //                                            [indexPaths addObject:[NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0]];
                                             
-                                            //添加特殊消息
-                                            [self addSpecelMessage];
+                                            
                                             
                                             //刷新列表
                                             WEAKSELF
@@ -346,6 +355,8 @@
                                         [self.messages removeObjectAtIndex:indexPath.row];
                                         [self.messages insertObject:msg atIndex:indexPath.row];
                                         
+                                        //添加特殊消息
+                                        [self addSpecelMessage];
                                         WEAKSELF
                                         [weakSelf exMainQueue:^{
                                             //刷新列表
@@ -377,35 +388,40 @@
 //添加特殊类型
 - (void)addSpecelMessage
 {
-    //已经不是好友关系
-    WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",_friendUser.name] sender:@"" timestamp:[NSDate date]];
-    textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
-    textMessage.sender = [LogInUser getNowLogInUser].name;
-    textMessage.uid = _friendUser.uid.stringValue;
-    //是否读取
-    textMessage.isRead = YES;
-    textMessage.sended = @"1";
-    textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
+    [self exMainQueue:^{
+        //已经不是好友关系
+        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",_friendUser.name] sender:@"" timestamp:[NSDate date]];
+        textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+        textMessage.sender = [LogInUser getNowLogInUser].name;
+        textMessage.uid = _friendUser.uid.stringValue;
+        //是否读取
+        textMessage.isRead = YES;
+        textMessage.sended = @"1";
+        textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
+        
+        //    //本地聊天数据库添加
+        ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
+        textMessage.msgId = chatMessage.msgId.stringValue;
+        
+        //添加数据
+//        [self addMessage:textMessage];
+        
+        [_localMessages addObject:chatMessage];
+        
+//        NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+//        [messages addObject:textMessage];
+//    
+//        NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
+//        [newindexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+//    
+//        //刷新列表
+//        [self.messageTableView reloadRowsAtIndexPaths:newindexPaths withRowAnimation:UITableViewRowAnimationNone];
+//        [self scrollToBottomAnimated:YES];
+        
+        //添加这条数据，不需要发送
+        [self addMessage:textMessage needSend:NO];
+    }];
     
-    //    //本地聊天数据库添加
-    ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
-    textMessage.msgId = chatMessage.msgId.stringValue;
-    
-    //添加数据
-    [_localMessages addObject:chatMessage];
-    
-    NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
-    [messages addObject:textMessage];
-    
-    NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
-    [newindexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
-//
-//    //刷新列表
-//    [self.messageTableView reloadRowsAtIndexPaths:newindexPaths withRowAnimation:UITableViewRowAnimationNone];
-//    [self scrollToBottomAnimated:YES];
-    
-    //添加这条数据，不需要发送
-    [self addMessage:textMessage needSend:NO];
 }
 
 //发送消息
@@ -643,7 +659,7 @@
  *
  *  @param indexPath 该目标消息在哪个IndexPath里面
  */
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
 {
     switch (textType) {
         case NSTextCheckingTypeLink:
@@ -680,6 +696,21 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([linkText isEqualToString:@"发送好友请求"]) {
+        //发送好友请求
+        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
+        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
+        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+            
+        } fail:^(NSError *error) {
+            
+        }];
     }
 }
 

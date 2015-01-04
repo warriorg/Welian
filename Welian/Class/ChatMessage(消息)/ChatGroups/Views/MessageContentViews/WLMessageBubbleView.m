@@ -306,7 +306,7 @@
             displayTextView.showsEditingMenuAutomatically = NO;
             displayTextView.highlighted = NO;
             //设置字体颜色
-            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+//            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
             //设置字体颜色
 //            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? displayTextView.textColor : [SEConstants sendTextColor];
             //链接颜色

@@ -21,6 +21,10 @@
 
 @implementation WLMessageSpecialView
 
+- (void)dealloc {
+    _message = nil;
+    _specialTextView = nil;
+}
 
 /**
  *  初始化消息内容显示控件的方法

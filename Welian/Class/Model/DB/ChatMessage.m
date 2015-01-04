@@ -100,7 +100,27 @@
             //文本
             chatMsg.message = dict[@"msg"];
             break;
-            
+        case WLBubbleMessageMediaTypePhoto://照片
+            chatMsg.message = @"[图片]";
+            chatMsg.messageType = @(type);
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            break;
+        case WLBubbleMessageMediaTypeVoice:
+            chatMsg.message = @"[语音]";
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            break;
+        case WLBubbleMessageMediaTypeVideo:
+            chatMsg.message = @"[视频]";
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            break;
+        case WLBubbleMessageMediaTypeEmotion:
+            chatMsg.message = @"[动态表情]";
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            break;
+        case WLBubbleMessageMediaTypeLocalPosition:
+            chatMsg.message = @"[视频]";
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            break;
         default:
             break;
     }

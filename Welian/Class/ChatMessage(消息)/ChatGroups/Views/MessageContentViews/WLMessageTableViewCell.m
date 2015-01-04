@@ -121,6 +121,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.messageBubbleView.bubblePhotoImageView.messagePhoto = nil;
     self.messageBubbleView.emotionImageView.animatedImage = nil;
     self.timestampLabel.text = nil;
+//    self.messageSpecialView = nil;
+    self.messageSpecialView.specialTextView.text = nil;
+    self.messageSpecialView.specialTextView.attributedText = nil;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -150,9 +153,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
     self.avatorButton.frame = avatorButtonFrame;
     
-    CGRect specialViewFrame = self.messageSpecialView.frame;
-    specialViewFrame.origin.y += layoutOriginY;
-    _messageSpecialView.frame = specialViewFrame;
+//    CGRect specialViewFrame = self.messageSpecialView.frame;
+//    specialViewFrame.origin.y += layoutOriginY;
+    _messageSpecialView.frame = CGRectMake(self.messageSpecialView.origin.x, layoutOriginY + 5, self.messageSpecialView.width, [WLMessageSpecialView calculateCellHeightWithMessage:self.messageSpecialView.message]);//specialViewFrame;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
@@ -247,7 +250,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             messageSpecialView.hidden = YES;
             messageSpecialView.specialTextView.delegate = self;
             [self.contentView addSubview:messageSpecialView];
-            [self.contentView sendSubviewToBack:messageSpecialView];
+//            [self.contentView sendSubviewToBack:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
 //            [specialTextView setDebug:YES];
         }
@@ -335,6 +338,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
         self.avatorButton.hidden = YES;
     }else{
+        self.avatorButton.hidden = NO;
         if (message.avatorUrl) {
             self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
             [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
@@ -416,7 +420,11 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
     NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
     if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
-        [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
+        if (firstMatch) {
+            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
+        }else{
+            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
+        }
     }
     return YES;
 }
@@ -558,7 +566,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
     //特殊消息
     if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
-        return timestampHeight + [WLMessageSpecialView calculateCellHeightWithMessage:message] + kWLBubbleMessageViewPadding;
+        return timestampHeight + [WLMessageSpecialView calculateCellHeightWithMessage:message] + kWLBubbleMessageViewPadding * 2;
     }else{
         CGFloat avatarHeight = kWLAvatarImageSize;
         
