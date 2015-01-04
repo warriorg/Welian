@@ -299,7 +299,7 @@
             displayTextView.font = [[WLMessageBubbleView appearance] font];
             displayTextView.showsEditingMenuAutomatically = NO;
             displayTextView.highlighted = NO;
-            displayTextView.delegate = self;
+//            displayTextView.delegate = self;
             [self addSubview:displayTextView];
             _displayTextView = displayTextView;
 //            [displayTextView setDebug:YES];
@@ -380,17 +380,6 @@
         }
     }
     return self;
-}
-
-- (BOOL)textView:(SETextView *)textView clickedOnLink:(SELinkText *)link atIndex:(NSUInteger)charIndex
-{
-    DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
-    return YES;
-}
-
-- (void)textViewDidEndSelecting:(SETextView *)textView
-{
-    DLog(@"setextview seclect: %@",textView.selectedAttributedText);
 }
 
 - (void)dealloc {

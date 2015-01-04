@@ -698,6 +698,11 @@ static CGPoint  delayOffset = {0.0};
     return messageTableViewCell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DLog(@"-------didSelectRowAtIndexPath >>>>>>");
+}
+
 #pragma mark - Table View Delegates
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     id <WLMessageModel> message = [self.dataSource messageForRowAtIndexPath:indexPath];

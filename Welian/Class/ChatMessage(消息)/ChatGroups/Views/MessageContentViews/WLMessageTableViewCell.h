@@ -56,7 +56,7 @@
 
 @end
 
-@interface WLMessageTableViewCell : WLBaseTableViewCell
+@interface WLMessageTableViewCell : WLBaseTableViewCell<SETextViewDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewCellDelegate> delegate;
 

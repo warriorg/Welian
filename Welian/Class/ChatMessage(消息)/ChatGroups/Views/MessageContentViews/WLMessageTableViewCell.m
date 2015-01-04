@@ -234,6 +234,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             
             //发送失败点击按钮
             [messageBubbleView.sendFailedBtn addTarget:self action:@selector(sendFailedBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            messageBubbleView.displayTextView.delegate = self;
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
@@ -281,6 +282,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerHandle:)];
+    tapGestureRecognizer.delegate = self;
     [self addGestureRecognizer:tapGestureRecognizer];
 }
 
@@ -404,6 +406,38 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         }
         [self.messageBubbleView configureCellWithMessage:message];
     }
+}
+
+#pragma mark - SETextView Delegate
+- (BOOL)textView:(SETextView *)textView clickedOnLink:(SELinkText *)link atIndex:(NSUInteger)charIndex
+{
+    DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
+    NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
+    NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
+    switch (firstMatch.resultType) {
+        case NSTextCheckingTypeLink:
+            //链接地址
+            DLog(@"点击 链接地址 >>>");
+            break;
+        case NSTextCheckingTypePhoneNumber:
+            //电话号码
+            DLog(@"点击 电话号码 >>>");
+            break;
+        default:
+            break;
+    }
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    
+    DLog(@"touch.view：%@",[touch.view class]);
+    ///SETextSelectionView     SETextView 特殊文本点击
+    if ([[NSString stringWithFormat:@"%@",[touch.view class]] isEqualToString:@"SETextView"]) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Gestures
