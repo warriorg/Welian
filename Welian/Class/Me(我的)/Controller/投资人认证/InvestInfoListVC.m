@@ -78,6 +78,8 @@
             }else if (stages){
                 headerStr = @"   投资阶段";
             }
+        }else{
+            headerStr = @"   投资阶段";
         }
     }else if (section ==2){
         headerStr = @"   投资阶段";
@@ -119,6 +121,8 @@
             }else if (stages){
                 return stages;
             }
+        }else{
+            return stages;
         }
     }else if (section ==2){
         return stages;
@@ -159,6 +163,9 @@
                 IInvestStageModel *stageM = self.iimeInvestM.stages[indexPath.row];
                 [cell.textLabel setText:stageM.stagename];
             }
+        }else{
+            IInvestStageModel *stageM = self.iimeInvestM.stages[indexPath.row];
+            [cell.textLabel setText:stageM.stagename];
         }
     }else if (indexPath.section ==2){
         IInvestStageModel *stageM = self.iimeInvestM.stages[indexPath.row];

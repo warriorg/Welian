@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface ForgetPWDController : UIViewController
+@interface ForgetPWDController : BasicViewController
 
 @property (nonatomic, strong) NSString *phoneString;
 @property (nonatomic, strong) NSString *coderString;

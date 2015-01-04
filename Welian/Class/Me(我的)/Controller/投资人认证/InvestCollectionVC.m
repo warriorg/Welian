@@ -84,7 +84,6 @@ static NSString * const reuseIdentifier = @"Cell";
         [_alldataArray insertObject:industA atIndex:0];
     }
     
-
 }
 
 - (instancetype)initWithType:(NSInteger)type
@@ -217,6 +216,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     InvestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    [cell.ClickBut addTarget:self action:@selector(didSelectItemAtIndexPath:event:) forControlEvents:UIControlEventTouchUpInside];
     
     if (_type==1) {
 
@@ -225,16 +225,89 @@ static NSString * const reuseIdentifier = @"Cell";
             IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
             [cell.titeLabel setText:indusM.industryname];
             [cell.checkImageView setSelected:indusM.isSelect];
+            [cell.ClickBut setSelected:indusM.isSelect];
         }
         
     }else if (_type ==2){
         IInvestStageModel *stageM = _alldataArray[indexPath.row];
         [cell.titeLabel setText:stageM.stagename];
         [cell.checkImageView setSelected:stageM.isSelect];
+        [cell.ClickBut setSelected:stageM.isSelect];
     }
     
     return cell;
 }
+
+- (void)didSelectItemAtIndexPath:(UIButton *)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:currentTouchPosition];
+    if (indexPath) {
+        [but setSelected:!but.selected];
+        
+        InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        
+        if (_type ==1) {
+            [cell.checkImageView setSelected:but.selected];
+            if (indexPath.row ==0) {
+                [_selectCells removeAllObjects];
+                
+                if (cell.checkImageView.selected) {
+                    for (NSInteger i = 0; i<_alldataArray.count; i++) {
+                        IInvestIndustryModel *indusM = _alldataArray[i];
+                        [indusM setIsSelect:cell.checkImageView.selected];
+                        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+                        [_selectCells addObject:indusM];
+                    }
+                    
+                }else{
+                    
+                    for (NSInteger i = 0; i<_alldataArray.count; i++) {
+                        IInvestIndustryModel *indusM = _alldataArray[i];
+                        [indusM setIsSelect:cell.checkImageView.selected];
+                        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+                    }
+                }
+                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+                
+            }else{
+                InvestCollectionCell *onecell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                [onecell.checkImageView setSelected:NO];
+                IInvestIndustryModel *oneindusM = _alldataArray[0];
+                [oneindusM setIsSelect:NO];
+                [_alldataArray replaceObjectAtIndex:0 withObject:oneindusM];
+                
+                IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
+                if (cell.checkImageView.selected) {
+                    [indusM setIsSelect:YES];
+                    [_selectCells addObject:indusM];
+                    
+                }else{
+                    [indusM setIsSelect:NO];
+                    [_selectCells removeObject:indusM];
+                }
+                [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
+            }
+            
+        }else if (_type ==2){
+            [cell.checkImageView setSelected:but.selected];
+            IInvestStageModel *StageM = _alldataArray[indexPath.row];
+            if (cell.checkImageView.selected) {
+                [StageM setIsSelect:YES];
+                [_selectCells addObject:StageM];
+                
+            }else{
+                [StageM setIsSelect:NO];
+                [_selectCells removeObject:StageM];
+            }
+            [_alldataArray replaceObjectAtIndex:indexPath.row withObject:StageM];
+        }
+
+    }
+}
+
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
 
 typedef void (^InvestBlock)(void);
 
 
-@interface InvestCollectionVC : UIViewController
+@interface InvestCollectionVC : BasicViewController
 
 @property (nonatomic, copy) InvestBlock investBlock;
 

@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 @class UserInfoModel;
 
-@interface UserCardController : UIViewController
+@interface UserCardController : BasicViewController
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageV;

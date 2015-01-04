@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicPlainTableViewController.h"
 
-@interface NewFriendController : UITableViewController
+@interface NewFriendController : BasicPlainTableViewController
 
 
 

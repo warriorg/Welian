@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : BasicViewController
 
 @end
