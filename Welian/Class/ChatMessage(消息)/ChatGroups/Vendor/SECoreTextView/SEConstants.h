@@ -16,4 +16,9 @@
 + (NSColor *)selectionCaretColor;
 + (NSColor *)caretColor;
 
+//接收的textColor
++ (NSColor *)receiveTextColor;
+//发送的textColor
++ (NSColor *)sendTextColor;
+
 @end

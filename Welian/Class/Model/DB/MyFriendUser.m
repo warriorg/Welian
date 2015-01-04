@@ -177,7 +177,7 @@
 //获取所有的聊天消息列表
 - (NSArray *)allChatMessages
 {
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:YES];
     //返回的数量 限制
 //    [[query offset:1] limit:2];
     
@@ -186,7 +186,7 @@
 
 - (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count
 {
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:YES];
     //返回的数量 限制
     [[query offset:offset] limit:count];
 //    DLog(@"message--- %d",[[query results] count]);

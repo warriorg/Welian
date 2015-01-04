@@ -46,4 +46,24 @@
 #endif
 }
 
+//接收的textColor
++ (NSColor *)receiveTextColor
+{
+#if TARGET_OS_IPHONE
+    return RGB(51.f, 51.f, 51.f);
+#else
+    return [NSColor colorWithCalibratedRed:51/255 green:51/255 blue:51/255 alpha:1.000];
+#endif
+}
+
+//发送的textColor
++ (NSColor *)sendTextColor
+{
+#if TARGET_OS_IPHONE
+    return [UIColor whiteColor];
+#else
+    return [NSColor colorWithCalibratedRed:255/255 green:255/255 blue:255/255 alpha:1.000];
+#endif
+}
+
 @end

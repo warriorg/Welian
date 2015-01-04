@@ -10,6 +10,7 @@
 #import "ChatMessage.h"
 #import "UserInfoBasicVC.h"
 #import "FriendsUserModel.h"
+#import "TOWebViewController.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -68,21 +69,27 @@
     WEAKSELF
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray *messages = [NSMutableArray array];
-        
         for (ChatMessage *chatMessage in localMessages) {
             WLMessage *message = nil;
             switch (chatMessage.messageType.integerValue) {
-                case WLBubbleMessageMediaTypeText:
-                    //普通文本
-                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-//                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+                case WLBubbleMessageSpecialTypeText:
+                    //特殊文本
+                    message = [[WLMessage alloc] initWithSpecialText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
                     message.msgId = chatMessage.msgId.stringValue;
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
                     break;
-                    
+                case WLBubbleMessageMediaTypeText:
+                    //普通文本
+                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                    message.msgId = chatMessage.msgId.stringValue;
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    break;
                 default:
                     break;
             }
@@ -129,26 +136,28 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    //取消接口调用
+    [WLHttpTool cancelAllRequestHttpTool];
     
-    //自定义返回按钮
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItemClicked:)];
-    [self.navigationItem setLeftBarButtonItem:backItem];
-    
-    //开启iOS7的滑动返回效果
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        //只有在二级页面生效
-        if ([self.navigationController.viewControllers count] > 1) {
-            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-        }
-    }
+//    //自定义返回按钮
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItemClicked:)];
+//    [self.navigationItem setLeftBarButtonItem:backItem];
+//    
+//    //开启iOS7的滑动返回效果
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        //只有在二级页面生效
+//        if ([self.navigationController.viewControllers count] > 1) {
+//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//        }
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     //代理置空，否则会闪退
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+//    }
 }
 
 - (void)backItemClicked:(UIBarButtonItem *)item
@@ -171,9 +180,9 @@
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
     
     //tableview头部距离问题
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     
     //初始化数据查询
     self.count = 10;
@@ -227,12 +236,12 @@
     [self addMessage:message needSend:NO];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    //开启滑动手势
-    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
-}
+//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    //开启滑动手势
+//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -251,18 +260,19 @@
 
 
 - (void)addMessage:(WLMessage *)addedMessage needSend:(BOOL)needSend{
+    NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+    [messages addObject:addedMessage];
+    
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
+    [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+    
+    if (needSend) {
+        //发送消息
+        [self sendMessage:addedMessage withIndexPath:indexPaths];
+    }
+    
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
-        NSMutableArray *messages = [NSMutableArray arrayWithArray:weakSelf.messages];
-        [messages addObject:addedMessage];
-        
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
-        
-        if (needSend) {
-            //发送消息
-            [weakSelf sendMessage:addedMessage withIndexPath:indexPaths];
-        }
         
         [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
@@ -288,6 +298,7 @@
                                         if (state.intValue == -1) {
                                             //更新数据库
                                             [chatMessage updateSendStatus:2];
+                                            
                                             WLMessage *msg = self.messages[indexPath.row];
                                             //更新发送消息状态
                                             msg.sended = @"2";
@@ -297,30 +308,41 @@
 //                                            [self.messages removeObjectAtIndex:indexPath.row];
 //                                            [self.messages insertObject:msg atIndex:indexPath.row];
                                             
+                                            
+                                            //已经不是好友关系
+//                                            WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。",_friendUser.name] sender:@"" timestamp:[NSDate date]];
+//                                            textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+//                                            textMessage.sender = [LogInUser getNowLogInUser].name;
+//                                            textMessage.uid = _friendUser.uid.stringValue;
+//                                            //是否读取
+//                                            textMessage.isRead = YES;
+//                                            textMessage.sended = @"1";
+//                                            textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
+//                                            
+//                                            //    //本地聊天数据库添加
+//                                            ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
+//                                            textMessage.msgId = chatMessage.msgId.stringValue;
+//                                            
+//                                            //添加数据
+//                                            [_localMessages addObject:chatMessage];
+//                                            
+//                                            NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+//                                            [self.messages addObject:textMessage];
+//                                            
+////                                            NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
+//                                            [indexPaths addObject:[NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0]];
+                                            
+                                            
+                                            
+                                            //刷新列表
                                             WEAKSELF
                                             [weakSelf exMainQueue:^{
+//                                                weakSelf.messages = messages;
                                                 //刷新列表
                                                 [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
                                                 [weakSelf scrollToBottomAnimated:YES];
+                                                
                                             }];
-                                            
-                                            //已经不是好友关系
-                                            WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。",_friendUser.name] sender:@"" timestamp:[NSDate date]];
-                                            textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
-                                            textMessage.sender = [LogInUser getNowLogInUser].name;
-                                            textMessage.uid = _friendUser.uid.stringValue;
-                                            //是否读取
-                                            textMessage.isRead = YES;
-                                            textMessage.sended = @"1";
-                                            
-                                            //    //本地聊天数据库添加
-                                            ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:_friendUser];
-                                            textMessage.msgId = chatMessage.msgId.stringValue;
-                                            
-                                            //添加数据
-                                            [_localMessages addObject:chatMessage];
-                                            //添加这条数据，不需要发送
-                                            [self addMessage:textMessage needSend:NO];
                                         }
                                     }else{
                                         //更新数据库
@@ -333,6 +355,8 @@
                                         [self.messages removeObjectAtIndex:indexPath.row];
                                         [self.messages insertObject:msg atIndex:indexPath.row];
                                         
+                                        //添加特殊消息
+                                        [self addSpecelMessage];
                                         WEAKSELF
                                         [weakSelf exMainQueue:^{
                                             //刷新列表
@@ -361,10 +385,49 @@
                                 }];
 }
 
+//添加特殊类型
+- (void)addSpecelMessage
+{
+    [self exMainQueue:^{
+        //已经不是好友关系
+        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",_friendUser.name] sender:@"" timestamp:[NSDate date]];
+        textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+        textMessage.sender = [LogInUser getNowLogInUser].name;
+        textMessage.uid = _friendUser.uid.stringValue;
+        //是否读取
+        textMessage.isRead = YES;
+        textMessage.sended = @"1";
+        textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
+        
+        //    //本地聊天数据库添加
+        ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
+        textMessage.msgId = chatMessage.msgId.stringValue;
+        
+        //添加数据
+//        [self addMessage:textMessage];
+        
+        [_localMessages addObject:chatMessage];
+        
+//        NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+//        [messages addObject:textMessage];
+//    
+//        NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
+//        [newindexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+//    
+//        //刷新列表
+//        [self.messageTableView reloadRowsAtIndexPaths:newindexPaths withRowAnimation:UITableViewRowAnimationNone];
+//        [self scrollToBottomAnimated:YES];
+        
+        //添加这条数据，不需要发送
+        [self addMessage:textMessage needSend:NO];
+    }];
+    
+}
+
 //发送消息
 //- (void)sendMessage:(id<WLMessageModel>)message rowIndexPath:(NSIndexPath *)indexPath
 //{
-//    
+//
 //    NSDictionary *param = @{@"type":@(message.messageMediaType),@"msg":message.text,@"touser":message.uid};
 //    ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:message.msgId];
 //    WEAKSELF;
@@ -373,13 +436,13 @@
 //                                    WLMessage *msg = self.messages[indexPath.row];
 //                                    //更新发送消息状态
 //                                    msg.sended = 1;
-//                                    
+//
 //                                    [self.messages removeObjectAtIndex:indexPath.row];
 //                                    [self.messages insertObject:msg atIndex:indexPath.row];
-//                                    
+//
 //                                    //更新数据库字段
 //                                    [chatMessage updateSendStatus:1];
-//                                    
+//
 //                                    //刷新行
 //                                    [weakSelf.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 //                                } fail:^(NSError *error) {
@@ -400,9 +463,9 @@
 
 
 #pragma mark - XHMessageTableViewController Delegate
-//- (BOOL)shouldLoadMoreMessagesScrollToTop {
-//    return YES;
-//}
+- (BOOL)shouldLoadMoreMessagesScrollToTop {
+    return YES;
+}
 
 - (void)loadMoreMessagesScrollTotop {
     if (!self.loadingMoreMessage) {
@@ -589,6 +652,66 @@
         return YES;
     else
         return NO;
+}
+
+/**
+ *  点击文字内部  特殊类型回掉方法
+ *
+ *  @param indexPath 该目标消息在哪个IndexPath里面
+ */
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
+{
+    switch (textType) {
+        case NSTextCheckingTypeLink:
+        {
+            //链接地址
+            DLog(@"点击 链接地址 >>>");
+            // 观点  虎嗅网
+            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
+            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+            [self.navigationController pushViewController:webVC animated:YES];
+        }
+            break;
+        case NSTextCheckingTypePhoneNumber:
+        {
+            //电话号码
+            DLog(@"点击 电话号码 >>>");
+            UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:[NSString stringWithFormat:@"%@可能是一个电话号码,你可以",linkText]];
+            [sheet bk_addButtonWithTitle:@"呼叫" handler:^{
+                //拨打电话
+                [ACETelPrompt callPhoneNumber:linkText
+                                         call:^(NSTimeInterval duration) {
+                                             DLog(@"User made a call of \(%f) seconds",duration);
+                                         } cancel:^{
+                                             DLog(@"User cancelled the call");
+                                         }];
+            }];
+            [sheet bk_addButtonWithTitle:@"复制" handler:^{
+                //放入粘贴板
+                [[UIPasteboard generalPasteboard] setString:linkText];
+            }];
+            [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+            [sheet showInView:self.view];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([linkText isEqualToString:@"发送好友请求"]) {
+        //发送好友请求
+        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
+        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
+        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }
 }
 
 

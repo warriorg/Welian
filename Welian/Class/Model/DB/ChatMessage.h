@@ -42,7 +42,7 @@
 + (void)createReciveMessageWithDict:(NSDictionary *)dict;
 
 //创建特殊自定义聊天类型
-+ (void)createSpecialMessageWithMessage:(NSString *)msg FriendUser:(MyFriendUser *)friedUser;
++ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
 
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status;

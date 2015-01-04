@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
 
 @interface WLMessageBubbleHelper : NSObject
 
 + (instancetype)sharedMessageBubbleHelper;
 
 - (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text;
+
+- (NSAttributedString *)attributedStringWithSpecial:(NSString *)text;
 
 @end

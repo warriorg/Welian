@@ -21,6 +21,10 @@
 
 @implementation WLMessageSpecialView
 
+- (void)dealloc {
+    _message = nil;
+    _specialTextView = nil;
+}
 
 /**
  *  初始化消息内容显示控件的方法
@@ -50,7 +54,7 @@
             specialTextView.font = [UIFont systemFontOfSize:16.f];
             specialTextView.showsEditingMenuAutomatically = NO;
             //设置字体颜色
-            specialTextView.textColor = [UIColor whiteColor];
+//            specialTextView.textColor = [UIColor whiteColor];
             specialTextView.highlighted = NO;
 //            specialTextView.delegate = self;
             [self addSubview:specialTextView];
@@ -77,7 +81,8 @@
  */
 - (void)configureCellWithMessage:(id <WLMessageModel>)message
 {
-    _specialTextView.text = message.text;
+//    _specialTextView.text = message.text;
+    _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
     
     [self setNeedsLayout];
 }
@@ -115,7 +120,7 @@
 - (CGRect)bubbleFrame {
     CGSize bubbleSize = [WLMessageSpecialView neededSizeForText:self.message.text];
     
-    return CGRectMake(kMarginLeft, 5, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop * 2);
+    return CGRectMake(kMarginLeft, kMarginTop, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop * 2);
 //    return CGRectIntegral(CGRectMake((self.message.bubbleMessageType == WLBubbleMessageTypeSending ? CGRectGetWidth(self.bounds) - bubbleSize.width : 0.0f),
 //                                     kMarginTop,
 //                                     bubbleSize.width,
