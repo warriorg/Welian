@@ -130,7 +130,7 @@
 
 @end
 
-@interface WLMessageTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate,SETextViewDelegate>
+@interface WLMessageTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <WLMessageTableViewControllerDataSource> dataSource;

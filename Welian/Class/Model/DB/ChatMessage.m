@@ -133,36 +133,36 @@
 }
 
 //创建特殊自定义聊天类型
-//+ (void)createSpecialMessageWithMessage:(NSString *)msg FriendUser:(MyFriendUser *)friedUser
-//{
-//    ChatMessage *chatMsg = [ChatMessage create];
-//    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
-//    chatMsg.message = msg;
-//    chatMsg.messageType = @(wl);
-//    chatMsg.timestamp = wlMessage.timestamp;
-//    chatMsg.avatorUrl = wlMessage.avatorUrl;
-//    chatMsg.isRead = @(wlMessage.isRead);
-//    chatMsg.sendStatus = @(wlMessage.sended.intValue);
-//    chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
-//    chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
-//    chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
-//    chatMsg.videoPath = wlMessage.videoPath;
-//    chatMsg.videoUrl = wlMessage.videoUrl;
-//    //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;
-//    chatMsg.voicePath = wlMessage.voicePath;
-//    chatMsg.voiceUrl = wlMessage.voiceUrl;
-//    chatMsg.geolocations = wlMessage.geolocations;
-//    chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
-//    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
-//    chatMsg.sender = wlMessage.sender;
-//    chatMsg.rsMyFriendUser = friedUser;
-//    [MOC save];
-//    
-//    //更新好友的聊天时间
-//    [friedUser updateLastChatTime:chatMsg.timestamp];
-//    
-//    return chatMsg;
-//}
++ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser
+{
+    ChatMessage *chatMsg = [ChatMessage create];
+    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
+    chatMsg.message = wlMessage.text;
+    chatMsg.messageType = @(WLBubbleMessageSpecialTypeText);
+    chatMsg.timestamp = [NSDate date];
+    chatMsg.avatorUrl = nil;
+    chatMsg.isRead = @(1);
+    chatMsg.sendStatus = @(1);
+    chatMsg.bubbleMessageType = @(WLBubbleMessageTypeSpecial);
+    chatMsg.thumbnailUrl = nil;
+    chatMsg.originPhotoUrl = nil;
+    chatMsg.videoPath = nil;
+    chatMsg.videoUrl = nil;
+    //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;
+    chatMsg.voicePath = nil;
+    chatMsg.voiceUrl = nil;
+    chatMsg.geolocations = @"";
+    chatMsg.latitude = 0;
+    chatMsg.longitude = 0;
+    chatMsg.sender = nil;
+    chatMsg.rsMyFriendUser = friedUser;
+    [MOC save];
+    
+    //更新好友的聊天时间
+    [friedUser updateLastChatTime:chatMsg.timestamp];
+    
+    return chatMsg;
+}
 
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status

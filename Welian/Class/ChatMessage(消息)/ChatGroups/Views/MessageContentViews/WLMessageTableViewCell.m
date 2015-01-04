@@ -245,6 +245,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         if (!_messageSpecialView) {
             WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f, self.contentView.width - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
             messageSpecialView.hidden = YES;
+            messageSpecialView.specialTextView.delegate = self;
             [self.contentView addSubview:messageSpecialView];
             [self.contentView sendSubviewToBack:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
@@ -414,17 +415,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
     NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
     NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
-    switch (firstMatch.resultType) {
-        case NSTextCheckingTypeLink:
-            //链接地址
-            DLog(@"点击 链接地址 >>>");
-            break;
-        case NSTextCheckingTypePhoneNumber:
-            //电话号码
-            DLog(@"点击 电话号码 >>>");
-            break;
-        default:
-            break;
+    if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
+        [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
     }
     return YES;
 }

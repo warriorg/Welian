@@ -24,6 +24,8 @@
 
 
 #pragma mark - Other
+#import "ACETelPrompt.h"
+
 #import "UIImageView+WebCache.h"
 #import "DateTools.h"
 

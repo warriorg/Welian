@@ -50,7 +50,7 @@
             specialTextView.font = [UIFont systemFontOfSize:16.f];
             specialTextView.showsEditingMenuAutomatically = NO;
             //设置字体颜色
-            specialTextView.textColor = [UIColor whiteColor];
+//            specialTextView.textColor = [UIColor whiteColor];
             specialTextView.highlighted = NO;
 //            specialTextView.delegate = self;
             [self addSubview:specialTextView];
@@ -77,7 +77,8 @@
  */
 - (void)configureCellWithMessage:(id <WLMessageModel>)message
 {
-    _specialTextView.text = message.text;
+//    _specialTextView.text = message.text;
+    _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
     
     [self setNeedsLayout];
 }

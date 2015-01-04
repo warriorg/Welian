@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, WLBubbleMessageType) {
     WLBubbleMessageTypeSending = 0,
-    WLBubbleMessageTypeReceiving
+    WLBubbleMessageTypeReceiving,
+    WLBubbleMessageTypeSpecial
 };
 
 typedef NS_ENUM(NSUInteger, WLBubbleImageViewStyle) {

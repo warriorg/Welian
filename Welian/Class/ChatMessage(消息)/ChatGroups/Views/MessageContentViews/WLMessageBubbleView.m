@@ -8,6 +8,7 @@
 
 #import "WLMessageBubbleView.h"
 #import "WLMessageBubbleHelper.h"
+#import "SEConstants.h"
 
 #define kMarginTop 8.0f
 #define kMarginBottom 2.0f
@@ -240,9 +241,14 @@
 - (void)configureMessageDisplayMediaWithMessage:(id <WLMessageModel>)message {
     switch (message.messageMediaType) {
         case WLBubbleMessageMediaTypeText:
-            //设置字体颜色
-            _displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
             _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text]];
+//            _displayTextView.attributedText = [[NSAttributedString alloc] initWithString:@"发送好友请求"];
+            //链接颜色
+//            _displayTextView.linkHighlightColor = [UIColor blueColor];
+//            _displayTextView.linkRolloverEffectColor = [UIColor blueColor];
+//            _displayTextView.selectedTextBackgroundColor = [UIColor blueColor];
+//            _displayTextView.highlightedTextColor = [UIColor redColor];
+//            _displayTextView.textColor = [UIColor redColor];
             break;
         case WLBubbleMessageMediaTypePhoto:
             [_bubblePhotoImageView configureMessagePhoto:message.photo thumbnailUrl:message.thumbnailUrl originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
@@ -299,6 +305,13 @@
             displayTextView.font = [[WLMessageBubbleView appearance] font];
             displayTextView.showsEditingMenuAutomatically = NO;
             displayTextView.highlighted = NO;
+            //设置字体颜色
+            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+            //设置字体颜色
+//            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? displayTextView.textColor : [SEConstants sendTextColor];
+            //链接颜色
+//            displayTextView.linkHighlightColor = [UIColor blueColor];
+//            displayTextView.linkRolloverEffectColor = [UIColor blueColor];
 //            displayTextView.delegate = self;
             [self addSubview:displayTextView];
             _displayTextView = displayTextView;

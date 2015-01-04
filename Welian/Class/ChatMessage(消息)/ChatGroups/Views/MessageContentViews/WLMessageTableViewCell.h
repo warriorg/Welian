@@ -48,6 +48,13 @@
 - (void)didReSendFailedOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath;
 
 /**
+ *  点击文字内部  特殊类型回掉方法
+ *
+ *  @param indexPath 该目标消息在哪个IndexPath里面
+ */
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
+
+/**
  *  Menu Control Selected Item
  *
  *  @param bubbleMessageMenuSelecteType 点击item后，确定点击类型

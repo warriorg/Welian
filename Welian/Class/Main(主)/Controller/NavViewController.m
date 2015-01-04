@@ -50,9 +50,9 @@
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item
 {
     
-    DLog(@"--------------------------------------取消请求-------取消请求");
-    [WLHUDView hiddenHud];
-    [WLHttpTool cancelAllRequestHttpTool];
+//    DLog(@"--------------------------------------取消请求-------取消请求");
+//    [WLHUDView hiddenHud];
+//    [WLHttpTool cancelAllRequestHttpTool];
 }
 
 

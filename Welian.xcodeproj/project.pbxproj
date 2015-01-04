@@ -569,6 +569,12 @@
 		A4C144A91A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C144A51A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png */; };
 		A4C144AA1A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C144A51A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png */; };
 		A4C144AB1A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C144A51A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png */; };
+		A4C60B3C1A590F9100F1F965 /* ACETelPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C60B3B1A590F9100F1F965 /* ACETelPrompt.m */; };
+		A4C60B3D1A590F9100F1F965 /* ACETelPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C60B3B1A590F9100F1F965 /* ACETelPrompt.m */; };
+		A4C60B3E1A590F9100F1F965 /* ACETelPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C60B3B1A590F9100F1F965 /* ACETelPrompt.m */; };
+		A4C60B401A5936A700F1F965 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C60B3F1A5936A600F1F965 /* CoreText.framework */; };
+		A4C60B411A59483A00F1F965 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C60B3F1A5936A600F1F965 /* CoreText.framework */; };
+		A4C60B421A59484100F1F965 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C60B3F1A5936A600F1F965 /* CoreText.framework */; };
 		A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
@@ -3228,6 +3234,9 @@
 		A4C144821A4C3EC600C9BAB5 /* notification_badge1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification_badge1@2x.png"; sourceTree = "<group>"; };
 		A4C144A41A4C3F5500C9BAB5 /* weChatBubble_Receiving_Solid2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Receiving_Solid2@2x.png"; sourceTree = "<group>"; };
 		A4C144A51A4C3F5500C9BAB5 /* weChatBubble_Sending_Solid2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid2@2x.png"; sourceTree = "<group>"; };
+		A4C60B3A1A590F9100F1F965 /* ACETelPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACETelPrompt.h; sourceTree = "<group>"; };
+		A4C60B3B1A590F9100F1F965 /* ACETelPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACETelPrompt.m; sourceTree = "<group>"; };
+		A4C60B3F1A5936A600F1F965 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		A4C8E9451A4ACA1A003A5A72 /* ChatMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageViewCell.h; sourceTree = "<group>"; };
 		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
 		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
@@ -4394,6 +4403,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4C60B421A59484100F1F965 /* CoreText.framework in Frameworks */,
 				A4F6A5EE1A514ADD008DBC8C /* MessageUI.framework in Frameworks */,
 				F53DC3A91A49192600F5F712 /* libCordova.a in Frameworks */,
 				A437CEE41A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
@@ -4432,6 +4442,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4C60B401A5936A700F1F965 /* CoreText.framework in Frameworks */,
 				A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */,
 				F5D075481A45956C00D31157 /* libCordova.a in Frameworks */,
 				A437CEE21A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
@@ -4469,6 +4480,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4C60B411A59483A00F1F965 /* CoreText.framework in Frameworks */,
 				A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */,
 				F5D075451A45956200D31157 /* libCordova.a in Frameworks */,
 				A437CEE31A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
@@ -5226,6 +5238,15 @@
 				A4C144821A4C3EC600C9BAB5 /* notification_badge1@2x.png */,
 			);
 			path = Chat_images;
+			sourceTree = "<group>";
+		};
+		A4C60B391A590F9100F1F965 /* ACETelPrompt */ = {
+			isa = PBXGroup;
+			children = (
+				A4C60B3A1A590F9100F1F965 /* ACETelPrompt.h */,
+				A4C60B3B1A590F9100F1F965 /* ACETelPrompt.m */,
+			);
+			path = ACETelPrompt;
 			sourceTree = "<group>";
 		};
 		A4F6479F1A43DA4B002E66FC /* phonegap */ = {
@@ -6388,6 +6409,7 @@
 		F5CE85FC19BFF2AB00A9D14C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A4C60B3F1A5936A600F1F965 /* CoreText.framework */,
 				A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */,
 				F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */,
 				A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */,
@@ -6832,6 +6854,7 @@
 			isa = PBXGroup;
 			children = (
 				10389B611A3EC8E3001A785C /* Other.h */,
+				A4C60B391A590F9100F1F965 /* ACETelPrompt */,
 				A437CEE81A53A32000B54E68 /* Project */,
 				A437CEB61A52ED4A00B54E68 /* BlocksKit */,
 				A48CA68E1A4D044B009EBD04 /* DateTools */,
@@ -9191,6 +9214,7 @@
 				F53DC3311A49192600F5F712 /* MeInfoController.m in Sources */,
 				F53DC3321A49192600F5F712 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				F53DC3331A49192600F5F712 /* WLCellHead.m in Sources */,
+				A4C60B3E1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F53DC3341A49192600F5F712 /* TOWebViewController.m in Sources */,
 				F53DC3351A49192600F5F712 /* NSArray+ArrayQuery.m in Sources */,
 				F53DC3361A49192600F5F712 /* NSManagedObject+e0571.m in Sources */,
@@ -9558,6 +9582,7 @@
 				F5664A041A2AFD56008A5830 /* SWCellScrollView.m in Sources */,
 				A4C1410E1A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
 				A4C1411D1A4BEF5700C9BAB5 /* MultiSelectedPanel.m in Sources */,
+				A4C60B3C1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664A061A2AFD56008A5830 /* AFURLResponseSerialization.m in Sources */,
 				F5664A071A2AFD56008A5830 /* WLStatusFrame.m in Sources */,
@@ -9925,6 +9950,7 @@
 				F5664CB91A2AFDD5008A5830 /* MeInfoController.m in Sources */,
 				F5664CBA1A2AFDD5008A5830 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				F5664CBB1A2AFDD5008A5830 /* WLCellHead.m in Sources */,
+				A4C60B3D1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F5664CBC1A2AFDD5008A5830 /* TOWebViewController.m in Sources */,
 				F59E76011A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
 				F59E75F51A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
