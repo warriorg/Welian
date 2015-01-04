@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 #import "WLStatusM.h"
 
 // 点赞
@@ -24,7 +24,7 @@ typedef void(^WLDeleteStustBlock) (WLStatusM *statusM);
 @class CommentInfoController;
 
 
-@interface CommentInfoController : UIViewController
+@interface CommentInfoController : BasicViewController
 
 @property (nonatomic, assign) BOOL beginEdit;
 

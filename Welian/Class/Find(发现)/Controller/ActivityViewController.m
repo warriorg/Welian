@@ -76,7 +76,7 @@
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sharDic[@"img"]]]];
         NSString *link = sharDic[@"link"];
         NSString *title = sharDic[@"title"];
-
+        
         [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
     }
     
@@ -109,11 +109,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc
-{
-    DLog(@"fdsa");
 }
 /*
 #pragma mark - Navigation

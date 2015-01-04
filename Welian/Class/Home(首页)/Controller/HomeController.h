@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicPlainTableViewController.h"
 
-@interface HomeController : UITableViewController
+@interface HomeController : BasicPlainTableViewController
 
 //* 有uid时按uid查 （0）为自己   不传uid 首页所有  *//
 - (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid;

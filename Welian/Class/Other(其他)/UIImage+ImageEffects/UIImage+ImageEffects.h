@@ -113,4 +113,7 @@
 
 - (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
 
+
+// 压缩图片裁剪
+- (UIImage*)scaleFromImage:(UIImage*)image scaledToSize:(CGSize)newSize;
 @end
