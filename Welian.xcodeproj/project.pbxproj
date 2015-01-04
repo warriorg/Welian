@@ -617,6 +617,9 @@
 		F51DB63D1A3018DE0005EA6C /* login_bg_big568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63A1A3018DE0005EA6C /* login_bg_big568h@2x.png */; };
 		F51DB63E1A3018DE0005EA6C /* login_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63B1A3018DE0005EA6C /* login_bg@2x.png */; };
 		F51DB63F1A3018DE0005EA6C /* login_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51DB63B1A3018DE0005EA6C /* login_bg@2x.png */; };
+		F52F966E1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */; };
+		F52F966F1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */; };
+		F52F96701A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */; };
 		F53356341A370EEC000A15AC /* osusume_friend_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */; };
 		F53356371A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F53356381A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
@@ -3638,6 +3641,8 @@
 		F5239B9819F684BF00D9E696 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		F5239B9919F684BF00D9E696 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		F5239B9A19F684BF00D9E696 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
+		F52F966C1A56EA0A00BAA77B /* InvestInfoListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestInfoListVC.h; sourceTree = "<group>"; };
+		F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestInfoListVC.m; sourceTree = "<group>"; };
 		F530793F19D56FC2000A6FE3 /* picture_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picture_loading@2x.png"; sourceTree = "<group>"; };
 		F532448219EA762600A1D066 /* CommentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentInfoController.h; sourceTree = "<group>"; };
 		F532448319EA762600A1D066 /* CommentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentInfoController.m; sourceTree = "<group>"; };
@@ -5895,6 +5900,8 @@
 				F5C7796E1A5392E10098BC29 /* InvestCerVC.m */,
 				F534DAE01A4EAA5800B6A725 /* InvestCollectionVC.h */,
 				F534DAE11A4EAA5800B6A725 /* InvestCollectionVC.m */,
+				F52F966C1A56EA0A00BAA77B /* InvestInfoListVC.h */,
+				F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */,
 			);
 			path = "投资人认证";
 			sourceTree = "<group>";
@@ -9058,6 +9065,7 @@
 				F53DC2E31A49192600F5F712 /* CommentHomeViewFrame.m in Sources */,
 				A4C1446A1A4C271900C9BAB5 /* WLBubblePhotoImageView.m in Sources */,
 				F53DC2E41A49192600F5F712 /* UIImageView+WebCache.m in Sources */,
+				F52F96701A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				F53DC2E51A49192600F5F712 /* AFURLSessionManager.m in Sources */,
 				A4C140881A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				F53DC2E61A49192600F5F712 /* SchoolCompanyDate.m in Sources */,
@@ -9422,6 +9430,7 @@
 				F59E76131A4071330028FBAF /* CompanyModel.m in Sources */,
 				F56649BA1A2AFD56008A5830 /* MJRefreshConst.m in Sources */,
 				F56649BB1A2AFD56008A5830 /* AddWorkOrEducationController.m in Sources */,
+				F52F966E1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				F53D4E501A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */,
 				F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */,
@@ -9786,6 +9795,7 @@
 				F5664C761A2AFDD5008A5830 /* CommentHomeViewFrame.m in Sources */,
 				A4C144691A4C271900C9BAB5 /* WLBubblePhotoImageView.m in Sources */,
 				F5664C771A2AFDD5008A5830 /* UIImageView+WebCache.m in Sources */,
+				F52F966F1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				F5664C781A2AFDD5008A5830 /* AFURLSessionManager.m in Sources */,
 				A4C140871A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				F59E76101A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
