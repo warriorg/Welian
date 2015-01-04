@@ -76,11 +76,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+//#define WLHttpServer  @"http://test.welian.com:8080"
 //本地调试
 //#define WLHttpServer  @"http://192.168.1.122:80"
 //正式环境
-//#define WLHttpServer  @"http://www.welian.com:8080"
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"

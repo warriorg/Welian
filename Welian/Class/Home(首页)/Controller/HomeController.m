@@ -323,7 +323,6 @@
 //                           }];
 
     
-    
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
     
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
