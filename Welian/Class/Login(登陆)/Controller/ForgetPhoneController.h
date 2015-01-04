@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 #import "WLTextField.h"
 
-@interface ForgetPhoneController : UIViewController
+@interface ForgetPhoneController : BasicViewController
 
 
 @end

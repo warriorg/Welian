@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicPlainTableViewController.h"
 
 @class IIMeInvestAuthModel;
 
-@interface InvestInfoListVC : UITableViewController
+@interface InvestInfoListVC : BasicPlainTableViewController
 
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) IIMeInvestAuthModel *iimeInvestM;

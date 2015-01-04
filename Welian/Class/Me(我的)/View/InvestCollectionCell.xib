@@ -34,6 +34,12 @@
                         <state key="selected" image="investor_attestation_selected.png" backgroundImage="investor_attestation_selected.png"/>
                         <state key="highlighted" image="investor_attestation_selected.png" backgroundImage="investor_attestation_selected.png"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGg-o9-Ofs">
+                        <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -41,17 +47,22 @@
             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="1W6-Af-KZe" secondAttribute="centerY" id="4B3-XL-77d"/>
+                <constraint firstAttribute="trailing" secondItem="eGg-o9-Ofs" secondAttribute="trailing" id="BH0-0J-0df"/>
+                <constraint firstItem="eGg-o9-Ofs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FRK-mB-93f"/>
+                <constraint firstItem="eGg-o9-Ofs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Gp4-Ax-KIJ"/>
                 <constraint firstAttribute="centerY" secondItem="avh-LF-a8y" secondAttribute="centerY" id="UbN-Y5-W2T"/>
                 <constraint firstItem="avh-LF-a8y" firstAttribute="leading" secondItem="1W6-Af-KZe" secondAttribute="trailing" constant="8" id="Z2f-pV-hQN"/>
+                <constraint firstAttribute="bottom" secondItem="eGg-o9-Ofs" secondAttribute="bottom" id="ovL-Iw-qag"/>
                 <constraint firstItem="1W6-Af-KZe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="pac-eg-Cf0"/>
                 <constraint firstAttribute="trailing" secondItem="avh-LF-a8y" secondAttribute="trailing" constant="9" id="sA5-dY-iNQ"/>
             </constraints>
             <size key="customSize" width="120" height="119"/>
             <connections>
+                <outlet property="ClickBut" destination="eGg-o9-Ofs" id="lzN-o2-12q"/>
                 <outlet property="checkImageView" destination="1W6-Af-KZe" id="ZUf-LV-mYL"/>
                 <outlet property="titeLabel" destination="avh-LF-a8y" id="9LA-tG-ewI"/>
             </connections>
-            <point key="canvasLocation" x="173" y="226"/>
+            <point key="canvasLocation" x="70" y="166"/>
         </collectionViewCell>
     </objects>
     <resources>

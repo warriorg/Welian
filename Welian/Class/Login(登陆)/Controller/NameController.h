@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
 typedef void (^UserInfoBlock)(NSString *userInfo);
 
@@ -19,7 +19,7 @@ typedef enum {
     IWVerifiedTypeAddress = 6 //  地址
 } IWVerifiedType;
 
-@interface NameController : UIViewController
+@interface NameController : BasicViewController
 @property (nonatomic, strong) NSString *userInfoStr;
 //@property (nonatomic, strong) UITextField *infoTextF;
 @property (nonatomic, strong) NSArray *dataArray;

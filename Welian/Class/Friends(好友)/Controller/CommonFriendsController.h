@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BasicPlainTableViewController.h"
 
-@interface CommonFriendsController : UITableViewController
+@interface CommonFriendsController : BasicPlainTableViewController
 
 - (instancetype)initWithStyle:(UITableViewStyle)style withFriends:(NSArray *)friendsArray;
 
