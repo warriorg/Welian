@@ -25,6 +25,7 @@
 #import "UIBarButtonItem+Badge.h"
 #import "CommentMode.h"
 #import "MainViewController.h"
+#import <ShareSDK/ShareSDK.h>
 
 @interface HomeController () <UIActionSheetDelegate>
 {
@@ -223,7 +224,6 @@
 }
 
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -303,6 +303,25 @@
 #pragma mark - 发表状态
 - (void)publishStatus
 {
+    
+    //用户用户信息
+//    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//                                                         allowCallback:YES
+//                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+//                                                          viewDelegate:nil
+//                                               authManagerViewDelegate:nil];
+//    
+//    
+//    [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
+//                      authOptions:authOptions
+//                           result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+//                               if (result)
+//                               {
+//                                   
+//                               }
+//                               NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+//                           }];
+
     
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
     
@@ -436,8 +455,6 @@
         [statusF setStatus:statusM];
         [_dataArry removeObject:statusF];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        DLog(@"sanchu");
-        
     };
     _seletIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];

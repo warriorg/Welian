@@ -550,10 +550,4 @@ static NSString *noCommentCell = @"NoCommentCell";
     
 }
 
-
-- (void)dealloc
-{
-    DLog(@"das");
-}
-
 @end

@@ -101,6 +101,7 @@
 
 @implementation UIImage (ImageEffects)
 
+
 + (UIImage *)resizedImage:(NSString *)name
 {
     return [self resizedImage:name leftScale:0.5 topScale:0.5];
@@ -304,6 +305,37 @@
 
     return outputImage;
 }
+
+
+- (UIImage*)scaleFromImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    CGSize imageSize = image.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    
+    if (width <= newSize.width && height <= newSize.height){
+        return image;
+    }
+    
+    if (width == 0 || height == 0){
+        return image;
+    }
+    
+    CGFloat widthFactor = newSize.width / width;
+    CGFloat heightFactor = newSize.height / height;
+    CGFloat scaleFactor = (widthFactor<heightFactor?widthFactor:heightFactor);
+    
+    CGFloat scaledWidth = width * scaleFactor;
+    CGFloat scaledHeight = height * scaleFactor;
+    CGSize targetSize = CGSizeMake(scaledWidth,scaledHeight);
+    
+    UIGraphicsBeginImageContext(targetSize);
+    [image drawInRect:CGRectMake(0,0,scaledWidth,scaledHeight)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 
 
 @end

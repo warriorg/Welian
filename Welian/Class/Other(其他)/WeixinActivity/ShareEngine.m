@@ -7,6 +7,7 @@
 //
 
 #import "ShareEngine.h"
+#import "UIImage+ImageEffects.h"
 
 @implementation ShareEngine
 single_implementation(ShareEngine)
@@ -36,26 +37,26 @@ single_implementation(ShareEngine)
 
 - (void)sendWeChatMessage:(NSString*)message andDescription:(NSString *)descriptStr WithUrl:(NSString*)appUrl andImage:(UIImage *)thumbImage WithScene:(WeiboType)weiboType;
 {
-    NSData * imageData = UIImageJPEGRepresentation(thumbImage,1);
+    UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(40, 40)];
+    
+    NSData * imageData = UIImageJPEGRepresentation(scaledImage,1);
     NSInteger length = [imageData length]/1024;
     if (length>32) {
-        NSData *thum = UIImageJPEGRepresentation(thumbImage, 32/length);
-        thumbImage = [UIImage imageWithData:thum];
+        NSData *thum = UIImageJPEGRepresentation(scaledImage, 32/length);
+        scaledImage = [UIImage imageWithData:thum];
     }
     
 //    NSUInteger titlength =[self getBytesLengthWithSring:message];
 //    NSUInteger desclength = [self getBytesLengthWithSring:descriptStr];
 //    NSUInteger appUrllength = [self getBytesLengthWithSring:appUrl];
     
-    
     if(weChat == weiboType)
     {
-        [self sendAppContentWithMessage:message andDescription:descriptStr WithUrl:appUrl andImage:thumbImage WithScene:WXSceneSession];
+        [self sendAppContentWithMessage:message andDescription:descriptStr WithUrl:appUrl andImage:scaledImage WithScene:WXSceneSession];
         return;
-    }
-    else if(weChatFriend == weiboType)
+    } else if(weChatFriend == weiboType)
     {
-        [self sendAppContentWithMessage:message andDescription:descriptStr WithUrl:appUrl andImage:thumbImage WithScene:WXSceneTimeline];
+        [self sendAppContentWithMessage:message andDescription:descriptStr WithUrl:appUrl andImage:scaledImage WithScene:WXSceneTimeline];
         return;
     }
 }
@@ -86,16 +87,14 @@ single_implementation(ShareEngine)
     // 发送内容给微信
     
     WXMediaMessage *message = [WXMediaMessage message];
-//    if (WXSceneTimeline == scene)
     message.title = appMessage;
     
     if (descriptStr) {
-        
         message.description = descriptStr;
     }
     if (thumbImage) {
         
-        message.thumbData = UIImageJPEGRepresentation(thumbImage, 0.1);
+        message.thumbData = UIImageJPEGRepresentation(thumbImage, 1);
     }
     
     WXWebpageObject *ext = [WXWebpageObject object];

@@ -25,6 +25,7 @@
 #import "ChatMessage.h"
 #import "WLMessage.h"
 #import "MyFriendUser.h"
+#import <ShareSDK/ShareSDK.h>
 
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
@@ -70,10 +71,8 @@ BMKMapManager* _mapManager;
     // 清除1.0.5数据
 //    if ([XcodeAppVersion isEqualToString:@"1.0.7"] && (![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])) {
 ////        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-////        [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
-////        [[WLDataDBTool sharedService] clearTable:KWLStutarDataTableName];
-////        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
 //     }
+    
     // 友盟统计
     [self umengTrack];
     
@@ -87,6 +86,10 @@ BMKMapManager* _mapManager;
     
     // 添加微信分享
     [[ShareEngine sharedShareEngine] registerApp];
+    [ShareSDK registerApp:KShareSDKAppKey];
+    [ShareSDK connectWeChatWithAppId:kWeChatAppId
+                           appSecret:KWeChatAppSecret
+                           wechatCls:[WXApi class]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -439,12 +442,18 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
+//    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
+    return [ShareSDK handleOpenURL:url
+                        wxDelegate:self];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
+//    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
 }
 
 #pragma mark - GexinSdkDelegate
