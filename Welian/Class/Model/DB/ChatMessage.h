@@ -33,16 +33,17 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * sender;
+@property (nonatomic, retain) NSNumber * showTimeStamp;//是否显示时间戳
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
 
 //创建新的聊天记录
-+ (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
++ (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser;
 
 //创建接受到的聊天消息
 + (void)createReciveMessageWithDict:(NSDictionary *)dict;
 
 //创建特殊自定义聊天类型
-+ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser;
++ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser;
 
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status;
@@ -50,5 +51,7 @@
 - (void)updateReadStatus:(BOOL)status;
 //更新重新发送状态
 - (void)updateReSendStatus;
+//更新发送的消息的服务器时间
+- (void)updateTimeStampFromServer:(NSString *)time;
 
 @end

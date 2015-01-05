@@ -3006,6 +3006,7 @@
 		A437CEEA1A53D53100B54E68 /* circle_chatlist_sending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_chatlist_sending@2x.png"; sourceTree = "<group>"; };
 		A437CEF31A541BF300B54E68 /* WLMessageSpecialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMessageSpecialView.h; sourceTree = "<group>"; };
 		A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMessageSpecialView.m; sourceTree = "<group>"; };
+		A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.2.xcdatamodel; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -10819,11 +10820,12 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */,
 				F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */,
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */;
+			currentVersion = A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
