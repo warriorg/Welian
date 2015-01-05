@@ -147,6 +147,12 @@ single_implementation(MainViewController)
     chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",unRead];
 }
 
+//设置选择的为消息列表页面
+- (void)changeTapToChatList:(NSNotification *)notification
+{
+    self.selectedIndex = 2;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -162,6 +168,9 @@ single_implementation(MainViewController)
     
     //添加聊天用户改变监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
+    
+    //如果是从好友列表进入聊天，首页变换
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);

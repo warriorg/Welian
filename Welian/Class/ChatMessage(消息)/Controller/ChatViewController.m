@@ -163,11 +163,12 @@
 - (void)backItemClicked:(UIBarButtonItem *)item
 {
     DLog(@"backItemClicked ");
-    if(_isFromUserInfo){
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+//    if(_isFromUserInfo){
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }else{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
@@ -187,11 +188,6 @@
         self.offset = 0;
         self.count = _friendUser.rsChatMessages.count;
     }
-
-    //如果是从好友列表进入聊天，首页变换
-//    if(_isFromUserInfo){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapTo" object:nil];
-//    }
     
     //加载初始化数据
     [self loadDemoDataSource];
@@ -537,6 +533,12 @@
     
     //聊天状态发送改变
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    
+    //如果是从好友列表进入聊天，首页变换
+//    if(_isFromUserInfo){
+//        _isFromUserInfo = NO;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+//    }
 }
 
 /**
