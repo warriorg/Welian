@@ -68,12 +68,11 @@
     [_infoLabel setNumberOfLines:2];
     [_infoLabel setTextColor:[UIColor grayColor]];
     [self.contentView addSubview:_infoLabel];
-    
-    _investorImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_tou_big.png"]];
+    _investorImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou"]];
     [_investorImage setHidden:YES];
     [self.contentView addSubview:_investorImage];
     
-    _startupImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_chuang_big.png"]];
+    _startupImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_chuang_big"]];
     [_startupImage setHidden:YES];
     [self.contentView addSubview:_startupImage];
 }
