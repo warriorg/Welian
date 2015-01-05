@@ -52,7 +52,9 @@
  *
  *  @param indexPath 该目标消息在哪个IndexPath里面
  */
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(MLEmojiLabelLinkType)textType atIndexPath:(NSIndexPath *)indexPath;
+
+//- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath;
 
@@ -65,7 +67,7 @@
 
 @end
 
-@interface WLMessageTableViewCell : WLBaseTableViewCell<SETextViewDelegate>
+@interface WLMessageTableViewCell : WLBaseTableViewCell<MLEmojiLabelDelegate,SETextViewDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewCellDelegate> delegate;
 
@@ -74,10 +76,17 @@
 //头像按钮
 @property (nonatomic, weak, readonly) UIButton *avatorButton;
 //用户名标签
-@property (nonatomic, weak, readonly) UILabel *userNameLabel;
+//@property (nonatomic, weak, readonly) UILabel *userNameLabel;
 @property (nonatomic, assign) BOOL showUserName;
 //时间轴Label
 @property (nonatomic, weak, readonly) LKBadgeView *timestampLabel;
+
+/**
+ *  是否显示时间轴Label
+ */
+@property (nonatomic, assign) BOOL displayTimestamp;
+
+@property (nonatomic, strong) id<WLMessageModel> message;
 
 /**
  *  Cell所在的位置，用于Cell delegate回调

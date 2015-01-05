@@ -288,35 +288,42 @@
                                 success:^(id JSON) {
                                     //返回的是字典
                                     NSString *state = JSON[@"state"];
+                                    NSString *time = JSON[@"created"];
                                     if ([state intValue] == -1) {
-                                            //更新数据库
-                                            [chatMessage updateSendStatus:2];
-                                            
-                                            WLMessage *msg = self.messages[indexPath.row];
-                                            //更新发送消息状态
-                                            msg.sended = @"2";
-                                            
-                                            //替换原有数据
-                                            [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
-                                            
-                                            //已经不是好友关系
-                                            //添加特殊消息
-                                            [self addSpecelMessage];
-                                            
-                                            //刷新列表
-                                            WEAKSELF
-                                            [weakSelf exMainQueue:^{
+                                        //更新数据库
+                                        [chatMessage updateSendStatus:2];
+                                        //更新发送时间
+                                        if (time) {
+                                            [chatMessage updateTimeStampFromServer:time];
+                                        }
+                                        
+                                        WLMessage *msg = self.messages[indexPath.row];
+                                        //更新发送消息状态
+                                        msg.sended = @"2";
+                                        
+                                        //替换原有数据
+                                        [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+                                        
+                                        //已经不是好友关系
+                                        //添加特殊消息
+                                        [self addSpecelMessage];
+                                        
+                                        //刷新列表
+                                        WEAKSELF
+                                        [weakSelf exMainQueue:^{
 //                                                weakSelf.messages = messages;
-                                                //刷新列表
-                                                [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-                                                [weakSelf scrollToBottomAnimated:YES];
-                                                
-                                            }];
+                                            //刷新列表
+                                            [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                                            [weakSelf scrollToBottomAnimated:YES];
+                                            
+                                        }];
                                     }else{
                                         //更新发送状态
                                         [chatMessage updateSendStatus:1];
                                         //更新发送时间
-                                        [chatMessage updateTimeStampFromServer:[JSON objectForKey:@"created"]];
+                                        if (time) {
+                                            [chatMessage updateTimeStampFromServer:time];
+                                        }
                                         
                                         WLMessage *msg = self.messages[indexPath.row];
                                         //更新发送消息状态
@@ -636,20 +643,50 @@
  *
  *  @param indexPath 该目标消息在哪个IndexPath里面
  */
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
+//- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
+//{
+//    switch (textType) {
+//        case NSTextCheckingTypeLink:
+//        {
+//            //链接地址
+//            DLog(@"点击 链接地址 >>>");
+//            // 观点  虎嗅网
+//            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
+//            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+//            [self.navigationController pushViewController:webVC animated:YES];
+//        }
+//            break;
+//        case NSTextCheckingTypePhoneNumber:
+//        {
+//            //电话号码
+//            DLog(@"点击 电话号码 >>>");
+//            UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:[NSString stringWithFormat:@"%@可能是一个电话号码,你可以",linkText]];
+//            [sheet bk_addButtonWithTitle:@"呼叫" handler:^{
+//                //拨打电话
+//                [ACETelPrompt callPhoneNumber:linkText
+//                                         call:^(NSTimeInterval duration) {
+//                                             DLog(@"User made a call of \(%f) seconds",duration);
+//                                         } cancel:^{
+//                                             DLog(@"User cancelled the call");
+//                                         }];
+//            }];
+//            [sheet bk_addButtonWithTitle:@"复制" handler:^{
+//                //放入粘贴板
+//                [[UIPasteboard generalPasteboard] setString:linkText];
+//            }];
+//            [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+//            [sheet showInView:self.view];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//}
+
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(MLEmojiLabelLinkType)textType atIndexPath:(NSIndexPath *)indexPath
 {
     switch (textType) {
-        case NSTextCheckingTypeLink:
-        {
-            //链接地址
-            DLog(@"点击 链接地址 >>>");
-            // 观点  虎嗅网
-            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
-            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
-            [self.navigationController pushViewController:webVC animated:YES];
-        }
-            break;
-        case NSTextCheckingTypePhoneNumber:
+        case MLEmojiLabelLinkTypePhoneNumber:
         {
             //电话号码
             DLog(@"点击 电话号码 >>>");
@@ -669,6 +706,16 @@
             }];
             [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
             [sheet showInView:self.view];
+        }
+            break;
+        case MLEmojiLabelLinkTypeURL:
+        {
+            //链接地址
+            DLog(@"点击 链接地址 >>>");
+            // 观点  虎嗅网
+            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
+            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+            [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
         default:
@@ -699,7 +746,7 @@
  *  @param indexPath 目标Cell所在位置IndexPath
  */
 - (void)configureCell:(WLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
+
 }
 
 /**

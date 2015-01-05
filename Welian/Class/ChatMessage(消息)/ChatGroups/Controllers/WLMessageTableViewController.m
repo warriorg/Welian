@@ -688,7 +688,9 @@ static CGPoint  delayOffset = {0.0};
     }
     
     messageTableViewCell.indexPath = indexPath;
-    [messageTableViewCell configureCellWithMessage:message displaysTimestamp:displayTimestamp];
+    messageTableViewCell.displayTimestamp = displayTimestamp;
+    messageTableViewCell.message = message;
+//    [messageTableViewCell configureCellWithMessage:message displaysTimestamp:displayTimestamp];
     [messageTableViewCell setBackgroundColor:tableView.backgroundColor];
     
     if ([self.delegate respondsToSelector:@selector(configureCell:atIndexPath:)]) {

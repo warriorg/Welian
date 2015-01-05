@@ -14,6 +14,7 @@
 + (instancetype)sharedMessageBubbleHelper;
 
 - (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text;
+- (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text withTextColor:(UIColor *)textColor;
 
 - (NSAttributedString *)attributedStringWithSpecial:(NSString *)text;
 
