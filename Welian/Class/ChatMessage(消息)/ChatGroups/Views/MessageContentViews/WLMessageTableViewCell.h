@@ -80,6 +80,13 @@
 @property (nonatomic, weak, readonly) LKBadgeView *timestampLabel;
 
 /**
+ *  是否显示时间轴Label
+ */
+@property (nonatomic, assign) BOOL displayTimestamp;
+
+@property (nonatomic, strong) id<WLMessageModel> message;
+
+/**
  *  Cell所在的位置，用于Cell delegate回调
  */
 @property (nonatomic, strong) NSIndexPath *indexPath;

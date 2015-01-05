@@ -706,7 +706,7 @@
  *  @param indexPath 目标Cell所在位置IndexPath
  */
 - (void)configureCell:(WLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
+
 }
 
 /**

@@ -35,7 +35,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 /**
  *  是否显示时间轴Label
  */
-@property (nonatomic, assign) BOOL displayTimestamp;
+//@property (nonatomic, assign) BOOL displayTimestamp;
 
 /**
  *  1、是否显示Time Line的label
@@ -109,6 +109,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     _messageBubbleView = nil;
     _indexPath = nil;
     _messageSpecialView = nil;
+    _message = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -122,6 +123,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.messageBubbleView.emotionImageView.animatedImage = nil;
     self.timestampLabel.text = nil;
     
+    _message = nil;
     self.messageSpecialView.specialTextView.text = nil;
     self.messageSpecialView.specialTextView.attributedText = nil;
 }
@@ -134,15 +136,31 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    //头像的位置
+    CGRect avatorButtonFrame;
+    switch (_message.bubbleMessageType) {
+        case WLBubbleMessageTypeReceiving:
+            avatorButtonFrame = CGRectMake(kWLAvatorPaddingX, kWLAvatorPaddingY + (_displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
+            break;
+        case WLBubbleMessageTypeSending:
+            avatorButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kWLAvatarImageSize - kWLAvatorPaddingX, kWLAvatorPaddingY + (_displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
+            break;
+        default:
+            break;
+    }
     
 //    CGFloat layoutOriginY = kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
-    CGFloat layoutOriginY = (self.displayTimestamp ? kWLTimeStampLabelHeight : 0) + kWLBubbleMessageViewPadding;
-    CGRect avatorButtonFrame = self.avatorButton.frame;
+    
+    CGFloat layoutOriginY = (_displayTimestamp ? kWLTimeStampLabelHeight : 0) + kWLBubbleMessageViewPadding;
+//    CGRect avatorButtonFrame = self.avatorButton.frame;
     avatorButtonFrame.origin.y = layoutOriginY;
     avatorButtonFrame.origin.x = ([self bubbleMessageType] == WLBubbleMessageTypeReceiving) ? kWLAvatorPaddingX : ((CGRectGetWidth(self.bounds) - kWLAvatorPaddingX - kWLAvatarImageSize));
     
-//    layoutOriginY = kWLBubbleMessageViewPadding + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0);
-    layoutOriginY = self.displayTimestamp ? kWLTimeStampLabelHeight + kWLLabelPadding : 0;
+    //头像大小
+    self.avatorButton.frame = avatorButtonFrame;
+    
+    //普通消息大小
+    layoutOriginY = _displayTimestamp ? kWLTimeStampLabelHeight + kWLLabelPadding : 0;
     CGRect bubbleMessageViewFrame = self.messageBubbleView.frame;
     bubbleMessageViewFrame.origin.y = layoutOriginY;
     
@@ -150,16 +168,14 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     if ([self bubbleMessageType] == WLBubbleMessageTypeReceiving)
         bubbleX = kWLAvatarImageSize + kWLAvatorPaddingX + kWLAvatorPaddingBubble;
     bubbleMessageViewFrame.origin.x = bubbleX;
-    
-    self.avatorButton.frame = avatorButtonFrame;
+    self.messageBubbleView.frame = bubbleMessageViewFrame;
     
 //    CGRect specialViewFrame = self.messageSpecialView.frame;
 //    specialViewFrame.origin.y += layoutOriginY;
+    //特殊消息大小
     self.messageSpecialView.frame = CGRectMake(self.messageSpecialView.origin.x, layoutOriginY + 5, CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:self.messageSpecialView.message]);//specialViewFrame;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
-    
-    self.messageBubbleView.frame = bubbleMessageViewFrame;
 }
 
 - (instancetype)initWithMessage:(id <WLMessageModel>)message
@@ -185,24 +201,27 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         
         // 2、配置头像
         // avator
-        CGRect avatorButtonFrame;
-        switch (message.bubbleMessageType) {
-            case WLBubbleMessageTypeReceiving:
-                avatorButtonFrame = CGRectMake(kWLAvatorPaddingX, kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
-                break;
-            case WLBubbleMessageTypeSending:
-                avatorButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kWLAvatarImageSize - kWLAvatorPaddingX, kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
-                break;
-            default:
-                break;
+        if(!_avatorButton){
+            CGRect avatorButtonFrame;
+            switch (message.bubbleMessageType) {
+                case WLBubbleMessageTypeReceiving:
+                    avatorButtonFrame = CGRectMake(kWLAvatorPaddingX, kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
+                    break;
+                case WLBubbleMessageTypeSending:
+                    avatorButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kWLAvatarImageSize - kWLAvatorPaddingX, kWLAvatorPaddingY + (self.displayTimestamp ? kWLTimeStampLabelHeight : 0), kWLAvatarImageSize, kWLAvatarImageSize);
+                    break;
+                default:
+                    break;
+            }
+            
+            UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
+            [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+            [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            //        avatorButton.hidden = message.messageMediaType == WLBubbleMessageSpecialTypeText ? YES : NO;
+            [self.contentView addSubview:avatorButton];
+            self.avatorButton = avatorButton;
         }
         
-        UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
-        [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
-        [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        avatorButton.hidden = message.messageMediaType == WLBubbleMessageSpecialTypeText ? YES : NO;
-        [self.contentView addSubview:avatorButton];
-        self.avatorButton = avatorButton;
         
         // 3、配置用户名
 //        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
@@ -251,8 +270,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             messageSpecialView.hidden = YES;
             messageSpecialView.specialTextView.delegate = self;
             [self.contentView addSubview:messageSpecialView];
-//            [self.contentView sendSubviewToBack:messageSpecialView];
-            [self.contentView bringSubviewToFront:messageSpecialView];
+            [self.contentView sendSubviewToBack:messageSpecialView];
+//            [self.contentView bringSubviewToFront:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
 //            [specialTextView setDebug:YES];
         }
@@ -308,6 +327,29 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 }
 
 #pragma mark - Setterss
+- (void)setDisplayTimestamp:(BOOL)displayTimestamp
+{
+    [super willChangeValueForKey:@"displayTimestamp"];
+    _displayTimestamp = displayTimestamp;
+    [super didChangeValueForKey:@"displayTimestamp"];
+}
+
+- (void)setMessage:(id<WLMessageModel>)message
+{
+    [super willChangeValueForKey:@"message"];
+    _message = message;
+    [super didChangeValueForKey:@"message"];
+    
+    // 1、是否显示Time Line的label
+    [self configureTimestamp:_displayTimestamp atMessage:_message];
+    
+    // 2、配置头像
+    [self configAvatorWithMessage:_message];
+    
+    // 3、配置需要显示什么消息内容，比如语音、文字、视频、图片
+    [self configureMessageBubbleViewWithMessage:_message];
+}
+
 - (void)configureCellWithMessage:(id <WLMessageModel>)message
                displaysTimestamp:(BOOL)displayTimestamp {
     // 1、是否显示Time Line的label
@@ -334,20 +376,18 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 
 //配置头像
 - (void)configAvatorWithMessage:(id <WLMessageModel>)message {
-    DLog(@"----%@   >>> type :%d >>>> url:%@ ",message.text,(int)message.messageMediaType,message.avatorUrl);
+//    DLog(@"----%@   >>> type :%d >>>> url:%@ ",message.text,(int)message.messageMediaType,message.avatorUrl);
+    //配置头像是否显示
+    if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
+        _avatorButton.hidden = YES;
+    }else{
+        _avatorButton.hidden = NO;
+    }
     if (message.avatorUrl) {
+        //设置圆角
         self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
-//        [self.avatorButton setDebug:YES];
         //设置头像
-//        [self.avatorButton.imageView sd_setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholderImage:[UIImage imageNamed:@"avator"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-//        
-        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl]
-                            placeholer:[UIImage imageNamed:@"avator"]
-             showActivityIndicatorView:YES
-                       completionBlock:^(UIImage *image, NSURL *url, NSError *error) {
-                           [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:image messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
-                       }];
-//        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
+        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"] showActivityIndicatorView:YES];
     }else{
         [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }
@@ -371,13 +411,11 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     if (currentMediaType == WLBubbleMessageSpecialTypeText) {
         _messageSpecialView.hidden = NO;
         _messageBubbleView.hidden = YES;
-        _avatorButton.hidden = YES;//配置头像是否显示
         //配置消息
         [_messageSpecialView configureCellWithMessage:message];
     }else{
         _messageSpecialView.hidden = YES;
         _messageBubbleView.hidden = NO;
-        _avatorButton.hidden = NO;//配置头像是否显示
         switch (currentMediaType) {
             case WLBubbleMessageMediaTypePhoto:
             case WLBubbleMessageMediaTypeVideo:
