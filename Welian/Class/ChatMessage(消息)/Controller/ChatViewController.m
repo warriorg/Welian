@@ -163,11 +163,12 @@
 - (void)backItemClicked:(UIBarButtonItem *)item
 {
     DLog(@"backItemClicked ");
-    if(_isFromUserInfo){
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+//    if(_isFromUserInfo){
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }else{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
@@ -179,11 +180,6 @@
     // 设置整体背景颜色
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
     
-    //tableview头部距离问题
-//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
-    
     //初始化数据查询
     self.count = 10;
     if (_friendUser.rsChatMessages.count > _count) {
@@ -192,8 +188,6 @@
         self.offset = 0;
         self.count = _friendUser.rsChatMessages.count;
     }
-//    self.offset = _friendUser.rsChatMessages.count < _count ? 0 : _friendUser.rsChatMessages.count - _count;
-//    self.totalOffset = ceilf(_friendUser.rsChatMessages.count / _count);
     
     //加载初始化数据
     [self loadDemoDataSource];
@@ -310,29 +304,8 @@
                                             
                                             
                                             //已经不是好友关系
-//                                            WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。",_friendUser.name] sender:@"" timestamp:[NSDate date]];
-//                                            textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
-//                                            textMessage.sender = [LogInUser getNowLogInUser].name;
-//                                            textMessage.uid = _friendUser.uid.stringValue;
-//                                            //是否读取
-//                                            textMessage.isRead = YES;
-//                                            textMessage.sended = @"1";
-//                                            textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
-//                                            
-//                                            //    //本地聊天数据库添加
-//                                            ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
-//                                            textMessage.msgId = chatMessage.msgId.stringValue;
-//                                            
-//                                            //添加数据
-//                                            [_localMessages addObject:chatMessage];
-//                                            
-//                                            NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
-//                                            [self.messages addObject:textMessage];
-//                                            
-////                                            NSMutableArray *newindexPaths = [NSMutableArray arrayWithCapacity:1];
-//                                            [indexPaths addObject:[NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0]];
-                                            
-                                            
+                                            //添加特殊消息
+                                            [self addSpecelMessage];
                                             
                                             //刷新列表
                                             WEAKSELF
@@ -355,8 +328,6 @@
                                         [self.messages removeObjectAtIndex:indexPath.row];
                                         [self.messages insertObject:msg atIndex:indexPath.row];
                                         
-                                        //添加特殊消息
-                                        [self addSpecelMessage];
                                         WEAKSELF
                                         [weakSelf exMainQueue:^{
                                             //刷新列表
@@ -562,6 +533,12 @@
     
     //聊天状态发送改变
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    
+    //如果是从好友列表进入聊天，首页变换
+//    if(_isFromUserInfo){
+//        _isFromUserInfo = NO;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+//    }
 }
 
 /**

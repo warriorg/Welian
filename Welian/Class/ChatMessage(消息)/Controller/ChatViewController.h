@@ -11,7 +11,7 @@
 
 @interface ChatViewController : WLMessageTableViewController
 
-@property (nonatomic, assign) BOOL isFromUserInfo;//是否从用户信息进入聊天
+//@property (nonatomic, assign) BOOL isFromUserInfo;//是否从用户信息进入聊天
 
 - (id)initWithUser:(MyFriendUser *)friendUser;
 

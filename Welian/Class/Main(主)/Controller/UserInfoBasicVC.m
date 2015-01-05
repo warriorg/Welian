@@ -100,10 +100,14 @@ static NSString *staurCellid = @"staurCellid";
 //进入聊天页面
 - (void)chatBtnClicked:(UIButton *)sender
 {
-    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
-    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
-    chatVC.isFromUserInfo = YES;
-    [self.navigationController pushViewController:chatVC animated:YES];
+    //进入聊天页面
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_userMode.uid.stringValue}];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+//    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+//    chatVC.isFromUserInfo = YES;
+//    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (UIView*)addFriendView

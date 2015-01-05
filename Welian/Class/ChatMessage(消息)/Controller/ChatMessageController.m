@@ -42,6 +42,9 @@
     
     //添加聊天用户改变监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+    
+    //如果是从好友列表进入聊天，首页变换
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,6 +148,19 @@
 {
     self.datasource = [LogInUser chatUsers];
     [self.tableView reloadData];
+}
+
+//从用户信息中发送消息
+- (void)chatFromUserInfo:(NSNotification *)notification
+{
+    //切换首页Tap
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+    
+    NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
+    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:uid];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+//    chatVC.isFromUserInfo = YES;
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 @end

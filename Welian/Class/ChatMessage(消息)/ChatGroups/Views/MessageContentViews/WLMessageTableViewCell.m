@@ -250,7 +250,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             messageSpecialView.hidden = YES;
             messageSpecialView.specialTextView.delegate = self;
             [self.contentView addSubview:messageSpecialView];
-//            [self.contentView sendSubviewToBack:messageSpecialView];
+            [self.contentView sendSubviewToBack:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
 //            [specialTextView setDebug:YES];
         }
