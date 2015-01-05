@@ -355,8 +355,6 @@
                                         [self.messages removeObjectAtIndex:indexPath.row];
                                         [self.messages insertObject:msg atIndex:indexPath.row];
                                         
-                                        //添加特殊消息
-                                        [self addSpecelMessage];
                                         WEAKSELF
                                         [weakSelf exMainQueue:^{
                                             //刷新列表

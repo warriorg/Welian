@@ -395,6 +395,8 @@ static NSString * const PARAGRAPH_SEPARATOR = @"\u2029";
 #if TARGET_OS_IPHONE
     CGColorRef color = self.textColor.CGColor;
     [self setAttributes:@{(id)kCTForegroundColorAttributeName: (__bridge id)color}];
+//    CGColorRef color = self.textColor.CGColor;
+//    [self.attributedText setAttributes:@{(id)kCTForegroundColorAttributeName: (__bridge id)color}];
 #else
     NSDictionary *attributes = nil;
     
