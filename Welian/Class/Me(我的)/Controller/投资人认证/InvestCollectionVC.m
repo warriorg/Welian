@@ -253,32 +253,26 @@ static NSString * const reuseIdentifier = @"Cell";
             [cell.checkImageView setSelected:but.selected];
             if (indexPath.row ==0) {
                 [_selectCells removeAllObjects];
-                
-                if (cell.checkImageView.selected) {
                     for (NSInteger i = 0; i<_alldataArray.count; i++) {
                         IInvestIndustryModel *indusM = _alldataArray[i];
                         [indusM setIsSelect:cell.checkImageView.selected];
-                        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
-                        [_selectCells addObject:indusM];
-                    }
-                    
-                }else{
-                    
-                    for (NSInteger i = 0; i<_alldataArray.count; i++) {
-                        IInvestIndustryModel *indusM = _alldataArray[i];
-                        [indusM setIsSelect:cell.checkImageView.selected];
-                        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
-                    }
+                        if (cell.checkImageView.selected) {
+                            [_selectCells addObject:indusM];
+                        }
+                        [_alldataArray replaceObjectAtIndex:i withObject:indusM];
                 }
-                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+                [self.collectionView reloadData];
                 
             }else{
                 InvestCollectionCell *onecell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                if (onecell.checkImageView.selected) {
+                    [_selectCells removeObjectAtIndex:0];
+                }
                 [onecell.checkImageView setSelected:NO];
                 IInvestIndustryModel *oneindusM = _alldataArray[0];
                 [oneindusM setIsSelect:NO];
                 [_alldataArray replaceObjectAtIndex:0 withObject:oneindusM];
-                
+
                 IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
                 if (cell.checkImageView.selected) {
                     [indusM setIsSelect:YES];
@@ -321,67 +315,6 @@ static NSString * const reuseIdentifier = @"Cell";
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    InvestCollectionCell *cell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    if (_type ==1) {
-        [cell.checkImageView setSelected:!cell.checkImageView.selected];
-        if (indexPath.row ==0) {
-            [_selectCells removeAllObjects];
-            
-            if (cell.checkImageView.selected) {
-                for (NSInteger i = 0; i<_alldataArray.count; i++) {
-                    IInvestIndustryModel *indusM = _alldataArray[i];
-                    [indusM setIsSelect:cell.checkImageView.selected];
-                    [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
-                    [_selectCells addObject:indusM];
-                }
-                
-            }else{
-                
-                for (NSInteger i = 0; i<_alldataArray.count; i++) {
-                    IInvestIndustryModel *indusM = _alldataArray[i];
-                    [indusM setIsSelect:cell.checkImageView.selected];
-                    [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
-                }
-            }
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-
-        }else{
-           InvestCollectionCell *onecell = (InvestCollectionCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [onecell.checkImageView setSelected:NO];
-            IInvestIndustryModel *oneindusM = _alldataArray[0];
-            [oneindusM setIsSelect:NO];
-            [_alldataArray replaceObjectAtIndex:0 withObject:oneindusM];
-            
-            IInvestIndustryModel *indusM = _alldataArray[indexPath.row];
-            if (cell.checkImageView.selected) {
-                [indusM setIsSelect:YES];
-                [_selectCells addObject:indusM];
-                
-            }else{
-                [indusM setIsSelect:NO];
-                [_selectCells removeObject:indusM];
-            }
-            [_alldataArray replaceObjectAtIndex:indexPath.row withObject:indusM];
-        }
-        
-    }else if (_type ==2){
-        [cell.checkImageView setSelected:!cell.checkImageView.selected];
-        IInvestStageModel *StageM = _alldataArray[indexPath.row];
-        if (cell.checkImageView.selected) {
-            [StageM setIsSelect:YES];
-            [_selectCells addObject:StageM];
-            
-        }else{
-            [StageM setIsSelect:NO];
-            [_selectCells removeObject:StageM];
-        }
-        [_alldataArray replaceObjectAtIndex:indexPath.row withObject:StageM];
-    }
 }
 
 @end
