@@ -303,44 +303,44 @@
 #pragma mark - 发表状态
 - (void)publishStatus
 {
-    if ([ShareSDK hasAuthorizedWithType:ShareTypeWeixiSession]) {
-        //取消授权
-        [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-    }else{
-        //用户用户信息
-        id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                             allowCallback:YES
-                                                             authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                              viewDelegate:nil
-                                                   authManagerViewDelegate:nil];
-        
-        
-        [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
-                          authOptions:authOptions
-                               result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-                                   
-                                   if (result)
-                                   {
-                                       NSLog(@"uid = %@",[userInfo uid]);
-                                       NSLog(@"name = %@",[userInfo nickname]);
-                                       NSLog(@"icon = %@",[userInfo profileImage]);
-                                       NSLog(@"性别 = %@",[userInfo gender] == 0 ? @"男" : @"女");
-                                       NSLog(@"sourceData = %@",[userInfo sourceData]);
-                                       NSLog(@"verifyReason = %@",[userInfo verifyReason]);
-                                       NSLog(@"birthday = %@",[userInfo birthday]);
-                                       NSLog(@"aboutMe = %@",[userInfo aboutMe]);
-                                   }
-                                   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
-                               }];
-
-    }
-    
-    
-//    PublishStatusController *publishVC = [[PublishStatusController alloc] init];
-//    
-//    [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+//    if ([ShareSDK hasAuthorizedWithType:ShareTypeWeixiSession]) {
+//        //取消授权
+//        [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
+//    }else{
+//        //用户用户信息
+//        id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//                                                             allowCallback:YES
+//                                                             authViewStyle:SSAuthViewStyleFullScreenPopup
+//                                                              viewDelegate:nil
+//                                                   authManagerViewDelegate:nil];
 //        
-//    }];
+//        
+//        [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
+//                          authOptions:authOptions
+//                               result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+//                                   
+//                                   if (result)
+//                                   {
+//                                       NSLog(@"uid = %@",[userInfo uid]);
+//                                       NSLog(@"name = %@",[userInfo nickname]);
+//                                       NSLog(@"icon = %@",[userInfo profileImage]);
+//                                       NSLog(@"性别 = %@",[userInfo gender] == 0 ? @"男" : @"女");
+//                                       NSLog(@"sourceData = %@",[userInfo sourceData]);
+//                                       NSLog(@"verifyReason = %@",[userInfo verifyReason]);
+//                                       NSLog(@"birthday = %@",[userInfo birthday]);
+//                                       NSLog(@"aboutMe = %@",[userInfo aboutMe]);
+//                                   }
+//                                   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+//                               }];
+//
+//    }
+    
+    
+    PublishStatusController *publishVC = [[PublishStatusController alloc] init];
+    
+    [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

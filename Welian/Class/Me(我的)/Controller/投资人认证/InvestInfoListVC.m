@@ -25,9 +25,12 @@
     if (_headerView ==nil) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, -KTableRowH, SuperSize.width, KTableRowH)];
         [_headerView setBackgroundColor:[UIColor whiteColor]];
-        UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, SuperSize.width-50, KTableRowH)];
+        UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, SuperSize.width-50, KTableRowH)];
         [headerLabel setFont:WLFONT(15)];
         [headerLabel setText:[NSString stringWithFormat:@"%@ 已经是认证投资人",_userName]];
+        UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou_big"]];
+        [icon setFrame:CGRectMake(20, 16, 15, 15)];
+        [_headerView addSubview:icon];
         [_headerView addSubview:headerLabel];
     }
     return _headerView;
