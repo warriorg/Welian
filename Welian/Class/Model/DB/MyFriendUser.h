@@ -41,6 +41,8 @@
 - (void)updateAllMessageReadStatus;
 //获取最新的一条消息
 - (ChatMessage *)getTheNewChatMessage;
+//获取最后一条消息
+- (ChatMessage *)getTheLastChatMessage;
 //更新最新一条聊天时间
 - (void)updateLastChatTime:(NSDate *)chatTime;
 

@@ -33,13 +33,17 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic sender;
+@dynamic showTimeStamp;
 @dynamic rsMyFriendUser;
 
 //创建新的聊天记录
-+ (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser
++ (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser
 {
+    //是否显示时间戳
+    ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
+    
     ChatMessage *chatMsg = [ChatMessage create];
-    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
+    chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(wlMessage.messageMediaType);
     chatMsg.timestamp = wlMessage.timestamp;
@@ -58,11 +62,24 @@
     chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
     chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
     chatMsg.sender = wlMessage.sender;
-    chatMsg.rsMyFriendUser = friedUser;
+    chatMsg.rsMyFriendUser = friendUser;
+    
+    //是否显示时间戳
+    if (lastChatMsg) {
+        double min = [chatMsg.timestamp minutesLaterThan:lastChatMsg.timestamp];
+        if (min > 1) {
+            chatMsg.showTimeStamp = @(YES);
+        }else{
+            chatMsg.showTimeStamp = @(NO);
+        }
+    }else{
+        chatMsg.showTimeStamp = @(YES);
+    }
+    
     [MOC save];
     
     //更新好友的聊天时间
-    [friedUser updateLastChatTime:chatMsg.timestamp];
+    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     return chatMsg;
 }
@@ -90,6 +107,9 @@
     MyFriendUser *friendUser = [MyFriendUser createMyFriendFromReceive:dict];
     NSString *created = dict[@"created"];
     NSInteger type = [dict[@"type"] integerValue];
+    
+    //是否显示时间戳
+    ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
     ChatMessage *chatMsg = [ChatMessage create];
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
@@ -141,6 +161,19 @@
 //    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
     chatMsg.sender = friendUser.name;
     chatMsg.rsMyFriendUser = friendUser;
+    
+    //是否显示时间戳
+    if (lastChatMsg) {
+        double min = [chatMsg.timestamp minutesLaterThan:lastChatMsg.timestamp];
+        if (min > 1) {
+            chatMsg.showTimeStamp = @(YES);
+        }else{
+            chatMsg.showTimeStamp = @(NO);
+        }
+    }else{
+        chatMsg.showTimeStamp = @(YES);
+    }
+    
     [MOC save];
     
     //更新好友的聊天时间
@@ -153,10 +186,13 @@
 }
 
 //创建特殊自定义聊天类型
-+ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friedUser
++ (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser
 {
+    //是否显示时间戳
+    ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
+    
     ChatMessage *chatMsg = [ChatMessage create];
-    chatMsg.msgId = @([friedUser getMaxChatMessageId].integerValue + 1);
+    chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(WLBubbleMessageSpecialTypeText);
     chatMsg.timestamp = [NSDate date];
@@ -175,11 +211,24 @@
     chatMsg.latitude = 0;
     chatMsg.longitude = 0;
     chatMsg.sender = nil;
-    chatMsg.rsMyFriendUser = friedUser;
+    chatMsg.rsMyFriendUser = friendUser;
+    
+    //是否显示时间戳
+    if (lastChatMsg) {
+        double min = [chatMsg.timestamp minutesLaterThan:lastChatMsg.timestamp];
+        if (min > 1) {
+            chatMsg.showTimeStamp = @(YES);
+        }else{
+            chatMsg.showTimeStamp = @(NO);
+        }
+    }else{
+        chatMsg.showTimeStamp = @(YES);
+    }
+    
     [MOC save];
     
     //更新好友的聊天时间
-    [friedUser updateLastChatTime:chatMsg.timestamp];
+    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     return chatMsg;
 }
@@ -209,6 +258,14 @@
 {
     self.sendStatus = @(0);
     self.timestamp = [NSDate date];
+    [MOC save];
+}
+
+//更新发送的消息的服务器时间
+- (void)updateTimeStampFromServer:(NSString *)time
+{
+    self.timestamp = [time dateFromShortString];
+    
     [MOC save];
 }
 

@@ -287,9 +287,8 @@
     [WLHttpTool sendMessageParameterDic:param
                                 success:^(id JSON) {
                                     //返回的是字典
-                                    if ([JSON isKindOfClass:[NSDictionary class]]) {
-                                        NSString *state = JSON[@"state"];
-                                        if (state.intValue == -1) {
+                                    NSString *state = JSON[@"state"];
+                                    if ([state intValue] == -1) {
                                             //更新数据库
                                             [chatMessage updateSendStatus:2];
                                             
@@ -299,9 +298,6 @@
                                             
                                             //替换原有数据
                                             [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
-//                                            [self.messages removeObjectAtIndex:indexPath.row];
-//                                            [self.messages insertObject:msg atIndex:indexPath.row];
-                                            
                                             
                                             //已经不是好友关系
                                             //添加特殊消息
@@ -316,17 +312,20 @@
                                                 [weakSelf scrollToBottomAnimated:YES];
                                                 
                                             }];
-                                        }
                                     }else{
-                                        //更新数据库
+                                        //更新发送状态
                                         [chatMessage updateSendStatus:1];
+                                        //更新发送时间
+                                        [chatMessage updateTimeStampFromServer:[JSON objectForKey:@"created"]];
                                         
                                         WLMessage *msg = self.messages[indexPath.row];
                                         //更新发送消息状态
                                         msg.sended = @"1";
                                         
-                                        [self.messages removeObjectAtIndex:indexPath.row];
-                                        [self.messages insertObject:msg atIndex:indexPath.row];
+                                        //替换原有数据
+                                        [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+//                                        [self.messages removeObjectAtIndex:indexPath.row];
+//                                        [self.messages insertObject:msg atIndex:indexPath.row];
                                         
                                         WEAKSELF
                                         [weakSelf exMainQueue:^{
@@ -344,8 +343,11 @@
                                     //更新发送消息状态
                                     msg.sended = @"2";
                                     
-                                    [self.messages removeObjectAtIndex:indexPath.row];
-                                    [self.messages insertObject:msg atIndex:indexPath.row];
+                                    //替换原有数据
+                                    [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+                                    
+//                                    [self.messages removeObjectAtIndex:indexPath.row];
+//                                    [self.messages insertObject:msg atIndex:indexPath.row];
                                     
                                     [self exMainQueue:^{
 //                                        weakSelf.messages = weakSelf.messages;
@@ -625,10 +627,8 @@
  *  @return 根据indexPath获取消息的Model的对象，从而判断返回YES or NO来控制是否显示时间轴Label
  */
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row % 9 == 0)
-        return YES;
-    else
-        return NO;
+    ChatMessage *chatMsg = [_localMessages objectAtIndex:indexPath.row];
+    return chatMsg.showTimeStamp.boolValue;
 }
 
 /**
