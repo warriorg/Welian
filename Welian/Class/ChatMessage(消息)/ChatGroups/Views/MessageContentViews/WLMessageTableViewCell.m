@@ -26,7 +26,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 
 @property (nonatomic, weak, readwrite) UIButton *avatorButton;
 
-@property (nonatomic, weak, readwrite) UILabel *userNameLabel;
+//@property (nonatomic, weak, readwrite) UILabel *userNameLabel;
 
 @property (nonatomic, weak, readwrite) LKBadgeView *timestampLabel;
 
@@ -121,7 +121,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.messageBubbleView.bubblePhotoImageView.messagePhoto = nil;
     self.messageBubbleView.emotionImageView.animatedImage = nil;
     self.timestampLabel.text = nil;
-//    self.messageSpecialView = nil;
+    
     self.messageSpecialView.specialTextView.text = nil;
     self.messageSpecialView.specialTextView.attributedText = nil;
 }
@@ -155,7 +155,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
 //    CGRect specialViewFrame = self.messageSpecialView.frame;
 //    specialViewFrame.origin.y += layoutOriginY;
-    _messageSpecialView.frame = CGRectMake(self.messageSpecialView.origin.x, layoutOriginY + 5, self.messageSpecialView.width, [WLMessageSpecialView calculateCellHeightWithMessage:self.messageSpecialView.message]);//specialViewFrame;
+    self.messageSpecialView.frame = CGRectMake(self.messageSpecialView.origin.x, layoutOriginY + 5, CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:self.messageSpecialView.message]);//specialViewFrame;
     
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
     
@@ -168,7 +168,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     if (self) {
         // 如果初始化成功，那就根据Message类型进行初始化控件，比如配置头像，配置发送和接收的样式
-        
+//        self.message = message;
         // 1、是否显示Time Line的label
         if (!_timestampLabel) {
             LKBadgeView *timestampLabel = [[LKBadgeView alloc] initWithFrame:CGRectMake(0, kWLLabelPadding, 160, kWLTimeStampLabelHeight)];
@@ -200,6 +200,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
         [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
         [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//        avatorButton.hidden = message.messageMediaType == WLBubbleMessageSpecialTypeText ? YES : NO;
         [self.contentView addSubview:avatorButton];
         self.avatorButton = avatorButton;
         
@@ -246,11 +247,12 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         
         //5.特殊提醒消息
         if (!_messageSpecialView) {
-            WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f, self.contentView.width - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
+            WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f,  CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
             messageSpecialView.hidden = YES;
             messageSpecialView.specialTextView.delegate = self;
             [self.contentView addSubview:messageSpecialView];
-            [self.contentView sendSubviewToBack:messageSpecialView];
+//            [self.contentView sendSubviewToBack:messageSpecialView];
+            [self.contentView bringSubviewToFront:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
 //            [specialTextView setDebug:YES];
         }
@@ -319,7 +321,6 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     
     // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
     [self configureMessageBubbleViewWithMessage:message];
-    
 }
 
 //配置时间戳
@@ -327,41 +328,34 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.displayTimestamp = displayTimestamp;
     self.timestampLabel.hidden = !self.displayTimestamp;
     if (displayTimestamp) {
-        self.timestampLabel.text = [[message timestamp] timeAgoSinceNow];// [NSDateFormatter localizedStringFromDate:message.timestamp
-//                                                                  dateStyle:NSDateFormatterMediumStyle
-//                                                                  timeStyle:NSDateFormatterShortStyle];
+        self.timestampLabel.text = [[message timestamp] timeAgoSinceNow];
     }
 }
 
 //配置头像
 - (void)configAvatorWithMessage:(id <WLMessageModel>)message {
-    if (message.messageMediaType == WLBubbleMessageSpecialTypeText) {
-        self.avatorButton.hidden = YES;
+    DLog(@"----%@   >>> type :%d >>>> url:%@ ",message.text,(int)message.messageMediaType,message.avatorUrl);
+    if (message.avatorUrl) {
+        self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
+//        [self.avatorButton setDebug:YES];
+        //设置头像
+//        [self.avatorButton.imageView sd_setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholderImage:[UIImage imageNamed:@"avator"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+//        
+        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl]
+                            placeholer:[UIImage imageNamed:@"avator"]
+             showActivityIndicatorView:YES
+                       completionBlock:^(UIImage *image, NSURL *url, NSError *error) {
+                           [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:image messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+                       }];
+//        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
     }else{
-        self.avatorButton.hidden = NO;
-        if (message.avatorUrl) {
-            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
-            [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
-        }else{
-            [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
-        }
+        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }
-    
-
-//    if (message.avator) {
-//        [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
-//        if (message.avatorUrl) {
-//            self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
-//            [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"]];
-//        }
-//    } else {
-//        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
-//    }
 }
 
 //配置用户名
 - (void)configUserNameWithMessage:(id <WLMessageModel>)message {
-    self.userNameLabel.text = [message sender];
+//    self.userNameLabel.text = [message sender];
 }
 
 //配置聊天消息页面
@@ -377,11 +371,13 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     if (currentMediaType == WLBubbleMessageSpecialTypeText) {
         _messageSpecialView.hidden = NO;
         _messageBubbleView.hidden = YES;
+        _avatorButton.hidden = YES;//配置头像是否显示
         //配置消息
         [_messageSpecialView configureCellWithMessage:message];
     }else{
         _messageSpecialView.hidden = YES;
         _messageBubbleView.hidden = NO;
+        _avatorButton.hidden = NO;//配置头像是否显示
         switch (currentMediaType) {
             case WLBubbleMessageMediaTypePhoto:
             case WLBubbleMessageMediaTypeVideo:

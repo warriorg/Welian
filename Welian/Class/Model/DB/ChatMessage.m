@@ -196,7 +196,7 @@
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(WLBubbleMessageSpecialTypeText);
     chatMsg.timestamp = [NSDate date];
-    chatMsg.avatorUrl = nil;
+    chatMsg.avatorUrl = wlMessage.avatorUrl;
     chatMsg.isRead = @(1);
     chatMsg.sendStatus = @(1);
     chatMsg.bubbleMessageType = @(WLBubbleMessageTypeSpecial);
@@ -210,7 +210,7 @@
     chatMsg.geolocations = @"";
     chatMsg.latitude = 0;
     chatMsg.longitude = 0;
-    chatMsg.sender = nil;
+    chatMsg.sender = wlMessage.sender;
     chatMsg.rsMyFriendUser = friendUser;
     
     //是否显示时间戳

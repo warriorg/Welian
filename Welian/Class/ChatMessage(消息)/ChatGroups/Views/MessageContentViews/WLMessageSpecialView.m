@@ -17,6 +17,8 @@
 
 @interface WLMessageSpecialView ()
 
+@property (nonatomic, strong, readwrite) id <WLMessageModel> message;
+
 @end
 
 @implementation WLMessageSpecialView
@@ -82,17 +84,18 @@
  */
 - (void)configureCellWithMessage:(id <WLMessageModel>)message
 {
+    _message = message;
 //    _specialTextView.text = message.text;
     _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
-    NSColor *linkColor = [NSColor blueColor];
-    NSFont *font = [NSFont systemFontOfSize:13.0f];
-    CTFontRef tweetfont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
-    NSDictionary *attributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor, (id)kCTFontAttributeName: (__bridge id)tweetfont};
+//    NSColor *linkColor = [NSColor blueColor];
+//    NSFont *font = [NSFont systemFontOfSize:13.0f];
+//    CTFontRef tweetfont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
+//    NSDictionary *attributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor, (id)kCTFontAttributeName: (__bridge id)tweetfont};
     
 //    [_specialTextView.attributedText ]
 //    [_specialTextView.attributedText addAttributes:@{NSLinkAttributeName: @{@"&sendAddFriend":@"发送好友请求"}, (id)kCTForegroundColorAttributeName: (id)linkColor.CGColor}];
 //    _specialTextView.linkRolloverEffectColor = [UIColor redColor];
-    [_specialTextView setLinkRolloverEffectColor:[UIColor redColor]];
+//    [_specialTextView setLinkRolloverEffectColor:[UIColor redColor]];
     [self setNeedsLayout];
 }
 

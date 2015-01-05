@@ -74,7 +74,7 @@
 //头像按钮
 @property (nonatomic, weak, readonly) UIButton *avatorButton;
 //用户名标签
-@property (nonatomic, weak, readonly) UILabel *userNameLabel;
+//@property (nonatomic, weak, readonly) UILabel *userNameLabel;
 @property (nonatomic, assign) BOOL showUserName;
 //时间轴Label
 @property (nonatomic, weak, readonly) LKBadgeView *timestampLabel;

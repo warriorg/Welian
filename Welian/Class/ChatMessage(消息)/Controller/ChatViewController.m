@@ -288,35 +288,42 @@
                                 success:^(id JSON) {
                                     //返回的是字典
                                     NSString *state = JSON[@"state"];
+                                    NSString *time = JSON[@"created"];
                                     if ([state intValue] == -1) {
-                                            //更新数据库
-                                            [chatMessage updateSendStatus:2];
-                                            
-                                            WLMessage *msg = self.messages[indexPath.row];
-                                            //更新发送消息状态
-                                            msg.sended = @"2";
-                                            
-                                            //替换原有数据
-                                            [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
-                                            
-                                            //已经不是好友关系
-                                            //添加特殊消息
-                                            [self addSpecelMessage];
-                                            
-                                            //刷新列表
-                                            WEAKSELF
-                                            [weakSelf exMainQueue:^{
+                                        //更新数据库
+                                        [chatMessage updateSendStatus:2];
+                                        //更新发送时间
+                                        if (time) {
+                                            [chatMessage updateTimeStampFromServer:time];
+                                        }
+                                        
+                                        WLMessage *msg = self.messages[indexPath.row];
+                                        //更新发送消息状态
+                                        msg.sended = @"2";
+                                        
+                                        //替换原有数据
+                                        [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+                                        
+                                        //已经不是好友关系
+                                        //添加特殊消息
+                                        [self addSpecelMessage];
+                                        
+                                        //刷新列表
+                                        WEAKSELF
+                                        [weakSelf exMainQueue:^{
 //                                                weakSelf.messages = messages;
-                                                //刷新列表
-                                                [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-                                                [weakSelf scrollToBottomAnimated:YES];
-                                                
-                                            }];
+                                            //刷新列表
+                                            [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                                            [weakSelf scrollToBottomAnimated:YES];
+                                            
+                                        }];
                                     }else{
                                         //更新发送状态
                                         [chatMessage updateSendStatus:1];
                                         //更新发送时间
-                                        [chatMessage updateTimeStampFromServer:[JSON objectForKey:@"created"]];
+                                        if (time) {
+                                            [chatMessage updateTimeStampFromServer:time];
+                                        }
                                         
                                         WLMessage *msg = self.messages[indexPath.row];
                                         //更新发送消息状态
