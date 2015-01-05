@@ -26,6 +26,7 @@
 #import "WLMessage.h"
 #import "MyFriendUser.h"
 #import <ShareSDK/ShareSDK.h>
+#import "LoginGuideController.h"
 
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
@@ -106,6 +107,8 @@ BMKMapManager* _mapManager;
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
+        
+        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
         [self.window setRootViewController:mainVC];
         
     }else{

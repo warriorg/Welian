@@ -260,7 +260,7 @@ static NSString *itemscellid = @"itemscellid";
         if (indexPath.row == [LogInUser getNowLogInUser].rsInvestItems.count) {
             
             NameController *caseVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-
+                
                 NSArray *itemArray = [LogInUser getNowLogInUser].rsInvestItems.allObjects;
                 NSMutableArray *arryM = [NSMutableArray array];
                 for (InvestItems *item in itemArray) {
