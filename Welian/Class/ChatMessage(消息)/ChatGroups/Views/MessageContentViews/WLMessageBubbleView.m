@@ -12,7 +12,7 @@
 
 #define kMarginTop 8.0f
 #define kMarginBottom 2.0f
-#define kPaddingTop 12.0f
+#define kPaddingTop 8.0f
 #define kBubblePaddingRight 14.0f
 
 #define kVoiceMargin 20.0f
@@ -21,7 +21,9 @@
 
 @interface WLMessageBubbleView ()
 
-@property (nonatomic, weak, readwrite) SETextView *displayTextView;
+//@property (nonatomic, weak, readwrite) SETextView *displayTextView;
+@property (nonatomic, weak, readwrite) MLEmojiLabel *displayLabel;
+
 
 @property (nonatomic, weak, readwrite) UIImageView *bubbleImageView;
 
@@ -58,7 +60,20 @@
     
     CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
     
-    CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kWLTextLineSpacing font:[[WLMessageBubbleView appearance] font]].size;
+//    CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kWLTextLineSpacing font:[[WLMessageBubbleView appearance] font]].size;
+    
+    MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
+    displayLabel.numberOfLines = 0;
+//    displayLabel.emojiDelegate = self;
+    displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    displayLabel.font = [[WLMessageBubbleView appearance] font];
+    displayLabel.text = text;
+//    displayLabel.textColor = WLRGB(51, 51, 51);
+//    displayLabel.backgroundColor = [UIColor clearColor];
+//    [self addSubview:displayLabel];
+    
+    CGSize textSize = [displayLabel preferredSizeWithMaxWidth:maxWidth];
+    
     return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop * 2);
 //    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
 }
@@ -190,13 +205,15 @@
             
             if (currentType == WLBubbleMessageMediaTypeText) {
                 // 如果是文本消息，那文本消息的控件需要显示
-                _displayTextView.hidden = NO;
+//                _displayTextView.hidden = NO;
+                _displayLabel.hidden = NO;
                 // 那语言的gif动画imageView就需要隐藏了
                 _animationVoiceImageView.hidden = YES;
                 _emotionImageView.hidden = YES;
             } else {
                 // 那如果不文本消息，必须把文本消息的控件隐藏了啊
-                _displayTextView.hidden = YES;
+//                _displayTextView.hidden = YES;
+                _displayLabel.hidden = YES;
                 
                 // 对语音消息的进行特殊处理，第三方表情可以直接利用背景气泡的ImageView控件
                 if (currentType == WLBubbleMessageMediaTypeVoice) {
@@ -227,7 +244,8 @@
             _geolocationsLabel.hidden = (currentType != WLBubbleMessageMediaTypeLocalPosition);
             
             // 那其他的控件都必须隐藏
-            _displayTextView.hidden = YES;
+//            _displayTextView.hidden = YES;
+            _displayLabel.hidden = YES;
             _bubbleImageView.hidden = YES;
             _animationVoiceImageView.hidden = YES;
             _emotionImageView.hidden = YES;
@@ -241,7 +259,18 @@
 - (void)configureMessageDisplayMediaWithMessage:(id <WLMessageModel>)message {
     switch (message.messageMediaType) {
         case WLBubbleMessageMediaTypeText:
-            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text]];
+            // 设置表情
+//            _displayLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+//            _displayLabel.customEmojiPlistName = @"expressionImage_custom";
+//            _displayLabel.frame = textFrame;
+            //设置文字
+            _displayLabel.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+            _displayLabel.text = message.text;
+            
+            
+//            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text] withTextColor:[UIColor blackColor]];
+//            //设置字体颜色
+//            _displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
 //            _displayTextView.attributedText = [[NSAttributedString alloc] initWithString:@"发送好友请求"];
             //链接颜色
 //            _displayTextView.linkHighlightColor = [UIColor blueColor];
@@ -297,25 +326,38 @@
         }
         
         // 2、初始化显示文本消息的TextView
-        if (!_displayTextView) {
-            SETextView *displayTextView = [[SETextView alloc] initWithFrame:CGRectZero];
-            displayTextView.backgroundColor = [UIColor clearColor];
-            displayTextView.selectable = NO;
-            displayTextView.lineSpacing = kWLTextLineSpacing;
-            displayTextView.font = [[WLMessageBubbleView appearance] font];
-            displayTextView.showsEditingMenuAutomatically = NO;
-            displayTextView.highlighted = NO;
-            //设置字体颜色
-//            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
-            //设置字体颜色
-//            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? displayTextView.textColor : [SEConstants sendTextColor];
-            //链接颜色
-//            displayTextView.linkHighlightColor = [UIColor blueColor];
-//            displayTextView.linkRolloverEffectColor = [UIColor blueColor];
-//            displayTextView.delegate = self;
-            [self addSubview:displayTextView];
-            _displayTextView = displayTextView;
-//            [displayTextView setDebug:YES];
+//        if (!_displayTextView) {
+//            SETextView *displayTextView = [[SETextView alloc] initWithFrame:CGRectZero];
+//            displayTextView.backgroundColor = [UIColor clearColor];
+//            displayTextView.selectable = NO;
+//            displayTextView.lineSpacing = kWLTextLineSpacing;
+//            displayTextView.font = [[WLMessageBubbleView appearance] font];
+//            displayTextView.showsEditingMenuAutomatically = NO;
+//            displayTextView.highlighted = NO;
+//            //设置字体颜色
+////            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+//            //设置字体颜色
+////            displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? displayTextView.textColor : [SEConstants sendTextColor];
+//            //链接颜色
+////            displayTextView.linkHighlightColor = [UIColor blueColor];
+////            displayTextView.linkRolloverEffectColor = [UIColor blueColor];
+////            displayTextView.delegate = self;
+//            [self addSubview:displayTextView];
+//            _displayTextView = displayTextView;
+////            [displayTextView setDebug:YES];
+//        }
+        
+        if (!_displayLabel) {
+            // 5.内容
+            MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
+            displayLabel.numberOfLines = 0;
+//            displayLabel.emojiDelegate = self;
+            displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            displayLabel.font = [[WLMessageBubbleView appearance] font];
+            displayLabel.backgroundColor = [UIColor clearColor];
+            [self addSubview:displayLabel];
+            self.displayLabel = displayLabel;
+//            [displayLabel setDebug:YES];
         }
         
         // 3、初始化显示图片的控件
@@ -397,7 +439,8 @@
 
 - (void)dealloc {
     _message = nil;
-    _displayTextView = nil;
+//    _displayTextView = nil;
+    _displayLabel = nil;
     _bubbleImageView = nil;
     _bubblePhotoImageView = nil;
     _animationVoiceImageView = nil;
@@ -437,7 +480,8 @@
                                           CGRectGetWidth(bubbleFrame) - kBubblePaddingRight * 2,
                                           bubbleFrame.size.height - kMarginTop - kMarginBottom);
             
-            self.displayTextView.frame = CGRectIntegral(textFrame);
+//            self.displayTextView.frame = CGRectIntegral(textFrame);
+            self.displayLabel.frame = CGRectIntegral(textFrame);
             
             CGRect animationVoiceImageViewFrame = self.animationVoiceImageView.frame;
             animationVoiceImageViewFrame.origin = CGPointMake((self.message.bubbleMessageType == WLBubbleMessageTypeReceiving ? (bubbleFrame.origin.x + kVoiceMargin) : (bubbleFrame.origin.x + CGRectGetWidth(bubbleFrame) - kVoiceMargin - CGRectGetWidth(animationVoiceImageViewFrame))), 17);

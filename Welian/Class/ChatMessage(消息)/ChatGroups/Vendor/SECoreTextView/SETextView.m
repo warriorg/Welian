@@ -504,7 +504,7 @@ static NSString * const PARAGRAPH_SEPARATOR = @"\u2029";
     NSMutableAttributedString *attributedString = self.attributedText.mutableCopy;
     
     if (attributes) {
-        [attributedString addAttributes:attributes range:NSMakeRange(0, length)];
+//        [attributedString addAttributes:attributes range:NSMakeRange(0, length)];
     }
     
     self.attributedText = attributedString;

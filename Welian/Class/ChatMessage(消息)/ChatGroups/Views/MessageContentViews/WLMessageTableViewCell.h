@@ -52,7 +52,9 @@
  *
  *  @param indexPath 该目标消息在哪个IndexPath里面
  */
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(MLEmojiLabelLinkType)textType atIndexPath:(NSIndexPath *)indexPath;
+
+//- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath;
 
@@ -65,7 +67,7 @@
 
 @end
 
-@interface WLMessageTableViewCell : WLBaseTableViewCell<SETextViewDelegate>
+@interface WLMessageTableViewCell : WLBaseTableViewCell<MLEmojiLabelDelegate,SETextViewDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewCellDelegate> delegate;
 

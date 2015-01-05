@@ -117,8 +117,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     // 这里做清除工作
     [super prepareForReuse];
     self.messageBubbleView.animationVoiceImageView.image = nil;
-    self.messageBubbleView.displayTextView.text = nil;
-    self.messageBubbleView.displayTextView.attributedText = nil;
+    self.messageBubbleView.displayLabel.text = nil;
+//    self.messageBubbleView.displayTextView.text = nil;
+//    self.messageBubbleView.displayTextView.attributedText = nil;
     self.messageBubbleView.bubblePhotoImageView.messagePhoto = nil;
     self.messageBubbleView.emotionImageView.animatedImage = nil;
     self.timestampLabel.text = nil;
@@ -257,7 +258,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             
             //发送失败点击按钮
             [messageBubbleView.sendFailedBtn addTarget:self action:@selector(sendFailedBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-            messageBubbleView.displayTextView.delegate = self;
+//            messageBubbleView.displayTextView.delegate = self;
+            messageBubbleView.displayLabel.emojiDelegate = self;
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
@@ -453,14 +455,26 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
     NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
     NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
-    if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
-        if (firstMatch) {
-            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
-        }else{
+    if (firstMatch) {
+        if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:atIndexPath:)]) {
             [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
         }
     }
+//    if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
+//        if (firstMatch) {
+////            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
+//        }else{
+//            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
+//        }
+//    }
     return YES;
+}
+
+- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
+{
+    if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
+        [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link type:type atIndexPath:self.indexPath];
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
@@ -468,6 +482,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     DLog(@"touch.view：%@",[touch.view class]);
     ///SETextSelectionView     SETextView 特殊文本点击
     if ([[NSString stringWithFormat:@"%@",[touch.view class]] isEqualToString:@"SETextView"]) {
+        return NO;
+    }
+    if ([[NSString stringWithFormat:@"%@",[touch.view class]] isEqualToString:@"MLEmojiLabel"]) {
         return NO;
     }
     
@@ -553,7 +570,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 #pragma mark - Menu Actions
 
 - (void)copyed:(id)sender {
-    [[UIPasteboard generalPasteboard] setString:self.messageBubbleView.displayTextView.text];
+//    [[UIPasteboard generalPasteboard] setString:self.messageBubbleView.displayTextView.text];
+    [[UIPasteboard generalPasteboard] setString:self.messageBubbleView.displayLabel.text];
     [self resignFirstResponder];
     DLog(@"Cell was copy");
 }

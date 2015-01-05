@@ -56,9 +56,9 @@
             specialTextView.font = [UIFont systemFontOfSize:16.f];
             specialTextView.showsEditingMenuAutomatically = NO;
             //设置字体颜色
-//            specialTextView.textColor = [UIColor whiteColor];
-//            specialTextView.highlighted = YES;
-//            specialTextView.highlightedTextColor = [UIColor greenColor];
+            specialTextView.textColor = [UIColor whiteColor];
+            specialTextView.highlighted = YES;
+            specialTextView.highlightedTextColor = [UIColor greenColor];
 //            specialTextView.delegate = self;
             [self addSubview:specialTextView];
             _specialTextView = specialTextView;
@@ -86,7 +86,9 @@
 {
     _message = message;
 //    _specialTextView.text = message.text;
+    _specialTextView.text = _message.text;
     _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
+//    [_specialTextView addObject:@"发送好友请求" size:CGSizeMake(20,20) replaceRange:[_message.text rangeOfString:@"&sendAddFriend" options:NSCaseInsensitiveSearch]];
 //    NSColor *linkColor = [NSColor blueColor];
 //    NSFont *font = [NSFont systemFontOfSize:13.0f];
 //    CTFontRef tweetfont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);

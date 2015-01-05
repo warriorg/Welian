@@ -643,20 +643,50 @@
  *
  *  @param indexPath 该目标消息在哪个IndexPath里面
  */
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
+//- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(NSTextCheckingType)textType atIndexPath:(NSIndexPath *)indexPath
+//{
+//    switch (textType) {
+//        case NSTextCheckingTypeLink:
+//        {
+//            //链接地址
+//            DLog(@"点击 链接地址 >>>");
+//            // 观点  虎嗅网
+//            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
+//            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+//            [self.navigationController pushViewController:webVC animated:YES];
+//        }
+//            break;
+//        case NSTextCheckingTypePhoneNumber:
+//        {
+//            //电话号码
+//            DLog(@"点击 电话号码 >>>");
+//            UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:[NSString stringWithFormat:@"%@可能是一个电话号码,你可以",linkText]];
+//            [sheet bk_addButtonWithTitle:@"呼叫" handler:^{
+//                //拨打电话
+//                [ACETelPrompt callPhoneNumber:linkText
+//                                         call:^(NSTimeInterval duration) {
+//                                             DLog(@"User made a call of \(%f) seconds",duration);
+//                                         } cancel:^{
+//                                             DLog(@"User cancelled the call");
+//                                         }];
+//            }];
+//            [sheet bk_addButtonWithTitle:@"复制" handler:^{
+//                //放入粘贴板
+//                [[UIPasteboard generalPasteboard] setString:linkText];
+//            }];
+//            [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+//            [sheet showInView:self.view];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//}
+
+- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(MLEmojiLabelLinkType)textType atIndexPath:(NSIndexPath *)indexPath
 {
     switch (textType) {
-        case NSTextCheckingTypeLink:
-        {
-            //链接地址
-            DLog(@"点击 链接地址 >>>");
-            // 观点  虎嗅网
-            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
-            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
-            [self.navigationController pushViewController:webVC animated:YES];
-        }
-            break;
-        case NSTextCheckingTypePhoneNumber:
+        case MLEmojiLabelLinkTypePhoneNumber:
         {
             //电话号码
             DLog(@"点击 电话号码 >>>");
@@ -676,6 +706,16 @@
             }];
             [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
             [sheet showInView:self.view];
+        }
+            break;
+        case MLEmojiLabelLinkTypeURL:
+        {
+            //链接地址
+            DLog(@"点击 链接地址 >>>");
+            // 观点  虎嗅网
+            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
+            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+            [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
         default:

@@ -61,7 +61,7 @@
                               }];
 }
 
-- (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text {
+- (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text{
     if (!text) {
         return [[NSAttributedString alloc] init];
     }
@@ -70,16 +70,51 @@
     }
     
 //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithRed:0.185 green:0.583 blue:1.000 alpha:1.000]};
-    NSColor *linkColor = [NSColor blueColor];
-//    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
-    NSDictionary *textAttributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor};
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     
     NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink | NSTextCheckingTypePhoneNumber | NSTextCheckingTypeDate
                                                                error:nil];
+    NSColor *textColor = [NSColor whiteColor];
+    NSDictionary *textAttributes = @{(id)kCTForegroundColorAttributeName: (id)textColor.CGColor};
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:textAttributes];
     
-    [self setDataDetectorsAttributedAttributedString:attributedString atText:text withRegularExpression:detector attributes:textAttributes];
+    NSColor *linkColor = [NSColor blueColor];
+    //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
+    NSDictionary *linkAttributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor};
+    
+    [self setDataDetectorsAttributedAttributedString:attributedString atText:text withRegularExpression:detector attributes:linkAttributes];
+    
+    
+    //    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"/s(13[0-9]|15[0-35-9]|18[0-9]|14[57])[0-9]{8}"
+    //                                                                           options:0
+    //                                                                             error:nil];
+    //    [self setDataDetectorsAttributedAttributedString:attributedString atText:text withRegularExpression:regex attributes:textAttributes];
+    
+    [_attributedStringCache setObject:attributedString forKey:text];
+    
+    return attributedString;
+}
+
+- (NSAttributedString *)bubbleAttributtedStringWithText:(NSString *)text withTextColor:(UIColor *)textColor {
+    if (!text) {
+        return [[NSAttributedString alloc] init];
+    }
+    if ([_attributedStringCache objectForKey:text]) {
+        return [_attributedStringCache objectForKey:text];
+    }
+    
+    //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithRed:0.185 green:0.583 blue:1.000 alpha:1.000]};
+    
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink | NSTextCheckingTypePhoneNumber | NSTextCheckingTypeDate
+                                                               error:nil];
+    //    NSColor *textColor = [NSColor whiteColor];
+    NSDictionary *textAttributes = @{(id)kCTForegroundColorAttributeName: (id)textColor.CGColor};
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:textAttributes];
+    
+    NSColor *linkColor = [NSColor blueColor];
+    //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
+    NSDictionary *linkAttributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor};
+    
+    [self setDataDetectorsAttributedAttributedString:attributedString atText:text withRegularExpression:detector attributes:linkAttributes];
     
     
     //    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"/s(13[0-9]|15[0-35-9]|18[0-9]|14[57])[0-9]{8}"
@@ -101,10 +136,10 @@
 //        return [_attributedStringCache objectForKey:text];
     }
     
-    NSFont *font = [NSFont systemFontOfSize:13.0f];
+    NSFont *font = [NSFont systemFontOfSize:16.0f];
     CTFontRef tweetfont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
     
-    NSColor *tweetColor = [NSColor blackColor];
+    NSColor *tweetColor = [NSColor whiteColor];
 //    NSColor *hashtagColor = [NSColor grayColor];
 //    UIColor *cashtagColor = [UIColor grayColor];
     NSColor *linkColor = [NSColor blueColor];
