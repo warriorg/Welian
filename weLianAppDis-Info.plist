@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ShareSDKAppKey</key>
-	<string>507798c0a08e</string>
-	<key>KWeChatAppSecret</key>
-	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -21,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.6</string>
+	<string>1.0.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -38,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.6</string>
+	<string>1.0.7</string>
 	<key>KBMK_Key</key>
 	<string>cbtkHchgOfETh6dZdWi1rytI</string>
 	<key>KGTAppId</key>
@@ -49,10 +45,16 @@
 	<string>tMBHhQ9iMJ6CAti03m4z93</string>
 	<key>KPlatformType</key>
 	<string>ios-app</string>
+	<key>KWeChatAppId</key>
+	<string>wx5e4e9a58776baed3</string>
+	<key>KWeChatAppSecret</key>
+	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
+	<key>ShareSDKAppKey</key>
+	<string>507798c0a08e</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -67,7 +69,5 @@
 	<string>545c8c97fd98c59807006c67</string>
 	<key>UMENG_ChannelId</key>
 	<string></string>
-	<key>KWeChatAppId</key>
-	<string>wx5e4e9a58776baed3</string>
 </dict>
 </plist>
