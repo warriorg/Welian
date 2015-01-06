@@ -50,6 +50,19 @@
     } withHUD:NO andDim:NO];
 }
 
+#pragma mark - 微信注册:  请求
++ (void)weixinRegisterParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"weixinRegister",@"data":parameterDic};
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
+}
+
+
 
 #pragma mark - 忘记密码
 + (void)forgetPasswordParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
@@ -695,27 +708,6 @@
         // 投资案例
         NSDictionary *investor = [dataDic objectForKey:@"investor"];
         IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
-        
-//        InvestAuthModel *investorM = [InvestAuthModel objectWithKeyValues:investor];
-//        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
-    
-//        InvestAuthModel *investorM = [[InvestAuthModel alloc] init];
-//        [investorM setUrl:[investor objectForKey:@"url"]];
-//        [investorM setAuth:[[investor objectForKey:@"auth"] integerValue]];
-//        NSArray *items = [investor objectForKey:@"items"];
-//        NSMutableArray *itemsArray = [NSMutableArray arrayWithCapacity:items.count];
-//        NSMutableString *itemStr = [NSMutableString string];
-//        for (NSDictionary *item in items) {
-//            [itemsArray addObject:[item objectForKey:@"item"]];
-//            if (item==items.lastObject) {
-//                [itemStr appendString:[item objectForKey:@"item"]];
-//            }else{
-//                [itemStr appendFormat:@"%@,",[item objectForKey:@"item"]];
-//            }
-//        }
-//        [investorM setItemsArray:itemsArray];
-//        [investorM setItems:itemStr];
-//        [investorM setItemsArray:[[investor objectForKey:@"items"] componentsSeparatedByString:@","]];
         
         // 详细信息
         NSDictionary *profile = [dataDic objectForKey:@"profile"];

@@ -109,7 +109,7 @@ BMKMapManager* _mapManager;
         [mainVC setDelegate:self];
         
         LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
-        [self.window setRootViewController:mainVC];
+        [self.window setRootViewController:loginGuideVC];
         
     }else{
         /** 未登陆 */
