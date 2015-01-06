@@ -154,7 +154,8 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
         if (statM.iszan==1) {
             
             for (UserInfoModel *zanM in statM.zansArray) {
@@ -202,7 +203,8 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *forwards = [NSMutableArray arrayWithArray:statM.forwardsArray];
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     if (statM.isforward==1) {
         
         for (UserInfoModel *forwardM in statM.forwardsArray) {

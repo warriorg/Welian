@@ -15,6 +15,7 @@
 #import "WLStatusM.h"
 #import "NotstringView.h"
 #import "UIImage+ImageEffects.h"
+#import "HomeMessage.h"
 
 @interface MessageController ()
 {
@@ -49,11 +50,13 @@
 - (void)loadAllMessgeData:(UIButton*)but
 {
     [self.tableView setTableFooterView:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空列表" style:UIBarButtonItemStyleBordered target:self action:@selector(cleacMessage)];
     [_messageDataArray removeAllObjects];
-    for (NSDictionary *mesitme in _allMessgeArray) {
-        MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesitme];
+    _allMessgeArray = nil;
+    _allMessgeArray = [HomeMessage getAllMessages];
+    for (HomeMessage *mesitme in _allMessgeArray) {
         MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
-        [messageFrameM setMessageDataM:messageM];
+        [messageFrameM setMessageDataM:mesitme];
         [_messageDataArray addObject:messageFrameM];
     }
     [self.tableView reloadData];
@@ -68,10 +71,12 @@
 }
 
 - (void)cleacMessage
-{
-    [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
+{    
+    [LogInUser getNowLogInUser].rsHomeMessages = nil;
+    [MOC save];
     [_messageDataArray removeAllObjects];
     [self.tableView reloadData];
+    [self.tableView addSubview:self.notView];
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style isAllMessage:(BOOL)isAllMessage
@@ -84,60 +89,38 @@
         [self.tableView setBackgroundColor:[UIColor whiteColor]];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         [self.tableView setSectionFooterHeight:0];
+        
+        _allMessgeArray = [HomeMessage getAllMessages];
+        
         if (isAllMessage) {
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空列表" style:UIBarButtonItemStyleBordered target:self action:@selector(cleacMessage)];
-        }
-        
-       NSArray *dataA = [[WLDataDBTool sharedService] getAllItemsFromTable:KMessageHomeTableName];
-
-        if (dataA.count) {
-            [self.notView removeFromSuperview];
             
-            NSMutableArray *itmeArrayM = [NSMutableArray arrayWithCapacity:dataA.count];
-            
-            for (YTKKeyValueItem *itemob in dataA) {
-                [itmeArrayM addObject:itemob.itemObject];
+            for (HomeMessage *hoemM in _allMessgeArray) {
+                MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
+                [messageFrameM setMessageDataM:hoemM];
+                [_messageDataArray addObject:messageFrameM];
+                
             }
-            NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
-            
-            [itmeArrayM sortUsingDescriptors:@[bookNameDes]];
-            
-            _allMessgeArray = [NSArray arrayWithArray:itmeArrayM];
-            
-            if (isAllMessage) {
-                for (NSDictionary *mesitme in itmeArrayM) {
-                    MessageHomeModel *messageM = [MessageHomeModel objectWithKeyValues:mesitme];
+
+        }else{
+            for (HomeMessage *homeM  in _allMessgeArray) {
+                if (!homeM.isLook) {
+                    homeM.isLook = @(1);
                     MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
-                    [messageFrameM setMessageDataM:messageM];
+                    [messageFrameM setMessageDataM:homeM];
                     [_messageDataArray addObject:messageFrameM];
                 }
-                
-                [self.tableView reloadData];
-                
-            }else{
-                for (NSDictionary *mesitme in itmeArrayM) {
-
-                    if (![[mesitme objectForKey:@"isLook"] isEqualToString:@"1"]) {
-                        MessageHomeModel *messageM = [[MessageHomeModel alloc] init];
-                        [messageM setKeyValues:mesitme];
-                        
-                        [messageM setIsLook:@"1"];
-                        MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
-                        [messageFrameM setMessageDataM:messageM];
-                        
-                        [_messageDataArray addObject:messageFrameM];
-                        
-                        [[WLDataDBTool sharedService] putObject:[messageM keyValues] withId:messageM.commentid intoTable:KMessageHomeTableName];
-                    }
-                }
-                [self.tableView setTableFooterView:self.footButton];
-                [self.tableView reloadData];
             }
+            [MOC save];
+            [self.tableView setTableFooterView:self.footButton];
+        }
+    
         
-        }else{
-
+        if (!_messageDataArray.count) {
+            
             [self.tableView addSubview:self.notView];
+            
         }
     }
     return self;
@@ -198,8 +181,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     MessageFrameModel *messageFrameModel = _messageDataArray[indexPath.row];
-    MessageHomeModel *messagedata = messageFrameModel.messageDataM;
-    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:messagedata.feedid fromTable:KWLStutarDataTableName];
+    HomeMessage *messagedata = messageFrameModel.messageDataM;
+    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",messagedata.feedid] fromTable:KWLStutarDataTableName];
+    
     WLStatusM *statusM = [WLStatusM objectWithKeyValues:item.itemObject];
     [statusM setFid:[messagedata.feedid intValue]];
     [statusM setTopid:[messagedata.feedid intValue]];

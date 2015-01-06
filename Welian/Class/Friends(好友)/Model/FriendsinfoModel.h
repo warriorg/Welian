@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "UserInfoModel.h"
+#import "IBaseUserM.h"
 
-@interface FriendsinfoModel : UserInfoModel
+@interface FriendsinfoModel : IBaseUserM
 
 /**  好友状态，0普通，1加星   */
 @property (nonatomic, strong) NSNumber *status;

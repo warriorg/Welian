@@ -136,7 +136,7 @@
                 for (NSDictionary *cityDic in citya) {
                     NSRange cityfoundObj=[cityStr rangeOfString:[cityDic objectForKey:@"name"] options:NSCaseInsensitiveSearch];
                     if (cityfoundObj.length>0) {
-                        locWithDic = @{@"provname":[dic objectForKey:@"name"],@"cityname":[cityDic objectForKey:@"name"],@"cityid":[cityDic objectForKey:@"cid"],@"provid":[dic objectForKey:@"pid"]};
+                        locWithDic = @{@"provname":[dic objectForKey:@"name"],@"cityname":[cityDic objectForKey:@"name"],@"cityid":@([[cityDic objectForKey:@"cid"] integerValue]),@"provid":@([[dic objectForKey:@"pid"] integerValue])};
                         break;
                     }else{
                     
@@ -207,9 +207,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dic = _provinArray[indexPath.row];
+    NSArray *citya = [_cityArrayDic objectForKey:[dic objectForKey:@"pid"]];
     if (indexPath.section==1) {
-        NSDictionary *dic = _provinArray[indexPath.row];
-        NSArray *citya = [_cityArrayDic objectForKey:[dic objectForKey:@"pid"]];
+        
         CityLocationController *cityVC = [[CityLocationController alloc] init];
         [cityVC setCityArray:citya];
         [cityVC setMeInfoVC:self.meinfoVC];

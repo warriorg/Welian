@@ -17,7 +17,7 @@ typedef enum
     weChatFriend = 3
 }WeiboType;
 
-#define kWeChatAppId        @"wx4150b21797fa0a5e"
+//#define kWeChatAppId        @"wx4150b21797fa0a5e"
 
 @protocol ShareEngineDelegate;
 

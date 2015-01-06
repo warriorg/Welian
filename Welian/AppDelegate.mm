@@ -20,6 +20,9 @@
 #import "MobClick.h"
 #import "MessageHomeModel.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "NewFriendUser.h"
+#import "HomeMessage.h"
+
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
@@ -66,7 +69,7 @@ BMKMapManager* _mapManager;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
         [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
         [[WLDataDBTool sharedService] clearTable:KWLStutarDataTableName];
-        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
+//        [[WLDataDBTool sharedService] clearTable:KMessageHomeTableName];
      }
     // 友盟统计
     [self umengTrack];
@@ -84,41 +87,16 @@ BMKMapManager* _mapManager;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // 设置全局键盘管理
-    
-    
     /**
      *  设置状态栏颜色
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    DLog(@"%@",mode.description);
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
-        
-        NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-        [reqstDic setObject:mode.mobile forKey:@"mobile"];
-        [reqstDic setObject:mode.checkcode forKey:@"password"];
-        [reqstDic setObject:KPlatformType forKey:@"platform"];
-        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-            
-            [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-        }
-
-        [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-            NSDictionary *dataDic = JSON;
-            if (dataDic) {
-                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                [mode setKeyValues:dataDic];
-                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-                
-                // [1]:使用APPID/APPKEY/APPSECRENT创建个推实例
-//                [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
-            }
-            
-        } fail:^(NSError *error) {
-            
-        } isHUD:NO];
-
+    
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
@@ -317,7 +295,9 @@ BMKMapManager* _mapManager;
     
     if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
 
-        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
+        [HomeMessage createHomeMessageModel:[MessageHomeModel objectWithKeyValues:dataDic]];
+        
+//        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
         NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
         badge++;
         [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
@@ -326,7 +306,9 @@ BMKMapManager* _mapManager;
     }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){   // 好友消息推送
         NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
         if ([type isEqualToString:@"friendAdd"]) {
-            [newfrendM setIsAgree:@"1"];
+            // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
+            [newfrendM setIsAgree:@(1)];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         }else{
             
@@ -342,9 +324,11 @@ BMKMapManager* _mapManager;
             fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
             fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
             newfrendM.created = [fmt stringFromDate:nowdate];
+//            newfrendM.created = nowdate;
         }
+        [NewFriendUser createNewFriendUserModel:newfrendM];
         
-        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
+//        [[WLDataDBTool sharedService] putObject:[newfrendM keyValues] withId:[NSString stringWithFormat:@"%@",newfrendM.uid] intoTable:KNewFriendsTableName];
     }else if ([type isEqualToString:@"logout"]){
         
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
@@ -359,8 +343,10 @@ BMKMapManager* _mapManager;
     } fail:^(NSError *error) {
         
     }];
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
-    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//    UserInfoModel *mode = [[UserInfoModel alloc] init];
+//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [[LogInUser getNowLogInUser] setIsNow:@(0)];
+    [MOC save];
     [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];

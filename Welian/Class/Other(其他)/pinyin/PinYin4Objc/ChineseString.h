@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "FriendsUserModel.h"
 
 @interface ChineseString : NSObject
 
-@property (nonatomic, strong) UserInfoModel *modeUser;
+@property (nonatomic, strong) FriendsUserModel *modeUser;
 @property(nonatomic, copy)NSString *string;
 @property(nonatomic, copy)NSString *pinYin;
 

@@ -12,6 +12,8 @@
 #import "WLHUDView.h"
 #import "WLDataDBTool.h"
 #import "UIColor+_6jinzhi.h"
+#import "LogInUser.h"
+
 
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
@@ -21,9 +23,6 @@
 #define iPhone5 ([UIScreen mainScreen].bounds.size.height == 568)
 
 #define iPhone4 ([UIScreen mainScreen].bounds.size.height == 480)
-
-
-//#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 //输出详细log,显示方法及所在的行数
 // 2.日志输出宏定义
@@ -50,7 +49,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define SaveLoginMobile(mobile) [NSUserDefaults setString:mobile forKey:@"kLastLoginMobile"]
 #define lastLoginMobile [NSUserDefaults stringForKey:@"kLastLoginMobile"]
 // 百度地图key
-#define KBMK_Key  KINFODic(@"KBMK_Key")
+#define KBMK_Key                 KINFODic(@"KBMK_Key")
+
+// 微信appid
+#define kWeChatAppId             KINFODic(@"KWeChatAppId")
 
 // 友盟Appkey
 #define UMENG_APPKEY             KINFODic(@"UMENG_APPKEY")
@@ -66,11 +68,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 服务器地址
 //测试环境
 #define WLHttpServer  @"http://test.welian.com:8080"
+//本地调试
+//#define WLHttpServer  @"http://192.168.1.122:80"
 //正式环境
 //#define WLHttpServer  @"http://www.welian.com:8080"
-
-//#define ww @"http://122.226.44.105:8080  http://test.welian.com:8080   http://www.welian.com:8080"
-
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
@@ -100,13 +101,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KWLDataDBName @"wlDataDBName.db"
 
-#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KMyAllFriendsKey [NSString stringWithFormat:@"allfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KNewFriendsTableName [NSString stringWithFormat:@"newfriend%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
-#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
+//#define KMessageHomeTableName [NSString stringWithFormat:@"messageHome%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[[UserInfoTool sharedUserInfoTool] getUserInfoModel].uid]
 
@@ -124,7 +125,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 #define KAddressBook @"AddressBok"
 
-#define UserIconImage @"UserIconImage"
 
 // 第一条微博fid
 #define KFirstFID @"firstFid"
@@ -234,7 +234,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define kFirstMarginTop 20
 
 
-
 // 返回结果的键
 #define BPushRequestChannelIdKey   @"channel_id"
 
@@ -306,5 +305,13 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define WEAKSELF typeof(self) __weak weakSelf = self;
 #define STRONGSELF typeof(weakSelf) __strong strongSelf = weakSelf;
 
+// device verson float value
+#define CURRENT_SYS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+
+// iPad
+#define kIsiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+// image STRETCH
+#define WL_STRETCH_IMAGE(image, edgeInsets) (CURRENT_SYS_VERSION < 6.0 ? [image stretchableImageWithLeftCapWidth:edgeInsets.left topCapHeight:edgeInsets.top] : [image resizableImageWithCapInsets:edgeInsets resizingMode:UIImageResizingModeStretch])
 
 #endif

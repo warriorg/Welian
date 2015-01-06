@@ -11,7 +11,7 @@
 
 @implementation FriendCell
 
-- (void)setUserMode:(UserInfoModel *)userMode
+- (void)setUserMode:(FriendsUserModel *)userMode
 {
     _userMode = userMode;
     

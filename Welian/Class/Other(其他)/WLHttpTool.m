@@ -24,6 +24,8 @@
 #import "UIImageView+WebCache.h"
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
+#import "MyFriendUser.h"
+#import "FriendsinfoModel.h"
 
 @implementation WLHttpTool
 
@@ -65,13 +67,15 @@
 #pragma mark - 获取验证码
 + (void)getCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
- NSDictionary *dic = @{@"type":@"getCheckCode",@"data":parameterDic};
+     NSDictionary *dic = @{@"type":@"getCheckCode",@"data":parameterDic};
     
+#warning flkajsdfjakjs;ldfkjal;sjkdf;ad
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
         
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        [mode setSessionid:[JSON objectForKey:@"sessionid"]];
-        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        [LogInUser setUserSessionid:[JSON objectForKey:@"sessionid"]];
+        [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:@"SID"];
+//        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
@@ -217,19 +221,19 @@
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
-        if (jsonarray.count) {
-            BOOL isok = NO;
-            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
-                isok = YES;
-                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
-            }
-            for (NSDictionary *dicJson in jsonarray) {
-                if (isok) {
-                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
-                }
-                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
-            }
-        }
+//        if (jsonarray.count) {
+//            BOOL isok = NO;
+//            if (!uid&&[[parameterDic objectForKey:@"start"] integerValue]==0) {
+//                isok = YES;
+//                [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+//            }
+//            for (NSDictionary *dicJson in jsonarray) {
+//                if (isok) {
+//                    [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+//                }
+//                [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+//            }
+//        }
         succeBlock (jsonarray);
     } failure:^(NSError *error) {
         
@@ -416,34 +420,26 @@
 #pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    NSArray *myFriends = [[WLDataDBTool sharedService] getAllItemsFromTable:KMyAllFriendsKey];
+    
     if (isSQL) {
-        
-        NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:myFriends.count];
-        for (YTKKeyValueItem *modic in myFriends) {
-            UserInfoModel *mode = [[UserInfoModel alloc] init];
-            [mode setKeyValues:modic.itemObject];
-            [mutabArray addObject:mode];
-        }
-        
-        succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:mutabArray]});
+        NSArray *myFriends = [LogInUser getNowLogInUser].rsMyFriends.allObjects;
+        succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
         
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             NSArray *json = [NSArray arrayWithArray:JSON];
+            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            [LogInUser getNowLogInUser].rsMyFriends = nil;
+            [MOC save];
             if (json.count) {
-                NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
-                [[WLDataDBTool sharedService] clearTable:KMyAllFriendsKey];
                 for (NSDictionary *modic in json) {
-                    [[WLDataDBTool sharedService] putObject:modic withId:[modic objectForKey:@"uid"] intoTable:KMyAllFriendsKey];
-                    UserInfoModel *mode = [[UserInfoModel alloc] init];
-                    [mode setKeyValues:modic];
-                    [mutabArray addObject:mode];
+                    FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                    [MyFriendUser createMyFriendUserModel:friendM];
+                    [mutabArray addObject:friendM];
                 }
-                
-                succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
             }
+            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
             
         } failure:^(NSError *error) {
             failurBlock(error);
@@ -469,7 +465,7 @@
     
     NSMutableArray *_sectionHeadsKeys = [NSMutableArray array];
     NSMutableArray *chineseStringsArray = [NSMutableArray array];
-    for (UserInfoModel *mode in arrToSort) {
+    for (FriendsUserModel *mode in arrToSort) {
         ChineseString *chineseString=[[ChineseString alloc]init];
         chineseString.string=[NSString stringWithString:mode.name];
         chineseString.modeUser = mode;
@@ -869,7 +865,8 @@
         [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
     }
     NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     if (mode.sessionid) {
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             
@@ -956,6 +953,19 @@
 {
     NSDictionary *dic = @{@"type":@"deleteFeedForward",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        
+        failurBlock(error);
+    } withHUD:NO andDim:NO];
+}
+
+#pragma mark - 发送聊天消息
++ (void)sendMessageParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"IM",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic path:@"server/im" successBlock:^(id JSON) {
         
         succeBlock(JSON);
     } failure:^(NSError *error) {

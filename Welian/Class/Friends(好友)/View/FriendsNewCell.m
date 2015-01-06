@@ -12,7 +12,7 @@
 
 @implementation FriendsNewCell
 
-- (void)setFriendM:(NewFriendModel *)friendM
+- (void)setFriendM:(NewFriendUser *)friendM
 {
     _friendM = friendM;
     [_iconImage sd_setImageWithURL:[NSURL URLWithString:friendM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
@@ -22,14 +22,14 @@
     [_nameLabel setText:friendM.name];
     [_massgeLabel setText:friendM.msg];
     
-    if ([friendM.isAgree isEqualToString:@"1"]||[friendM.type isEqualToString:@"friendAdd"]) {
+    if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendAdd"]) {
         [_accBut setHidden:YES];
         [_accLabel setHidden:NO];
     }else {
-        if ([friendM.type isEqualToString:@"friendRequest"]) {
+        if ([friendM.pushType isEqualToString:@"friendRequest"]) {
             [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
             [_accBut setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-        }else if([friendM.type isEqualToString:@"friendCommand"]){
+        }else if([friendM.pushType isEqualToString:@"friendCommand"]){
             
             [_accBut setBackgroundImage:[UIImage resizedImage:@"yellowbutton"] forState:UIControlStateNormal];
             [_accBut setBackgroundImage:[UIImage resizedImage:@"yellowbutton_pressed"] forState:UIControlStateHighlighted];

@@ -17,10 +17,13 @@
 #import "HomeController.h"
 #import "ListdaController.h"
 #import "CommonFriendsController.h"
+#import "MyFriendUser.h"
+#import "NewFriendUser.h"
+#import "ChatViewController.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
-    UserInfoModel *_userMode;
+    IBaseUserM *_userMode;
     NSMutableDictionary *_dataDicM;
     NSMutableArray *_sameFriendArry;
 }
@@ -77,19 +80,28 @@ static NSString *staurCellid = @"staurCellid";
         _sendView = [[UIView alloc] init];
         [_sendView setBounds:CGRectMake(0, 0, 0, 40)];
         // 3.要在tableView底部添加一个按钮
-        UIButton *logout = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        [logout setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
-        [logout setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [logout setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-        logout.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
+        [chatBtn setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
+        [chatBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [chatBtn setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
+        chatBtn.frame = CGRectMake(20, 0, self.view.bounds.size.width-20*2, 40);
         // 4.设置按钮文字
-        [logout setTitle:@"发送消息" forState:UIControlStateNormal];
-        [_sendView addSubview:logout];
+        [chatBtn setTitle:@"发送消息" forState:UIControlStateNormal];
+        [chatBtn addTarget:self action:@selector(chatBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_sendView addSubview:chatBtn];
     }
     return _sendView;
 }
 
+//进入聊天页面
+- (void)chatBtnClicked:(UIButton *)sender
+{
+    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+    chatVC.isFromUserInfo = YES;
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
 
 - (UIView*)addFriendView
 {
@@ -113,7 +125,8 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)requestFriend
 {
-    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    LogInUser *mode = [LogInUser getNowLogInUser];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
@@ -152,8 +165,14 @@ static NSString *staurCellid = @"staurCellid";
     }else if(buttonIndex==1){
         if ([_userMode.friendship integerValue]==1) {  // 删除好友
             [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
-                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
-                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
+                
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
+                
+                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:[MyFriendUser getMyfriendUserWithUid:_userMode.uid]];
+                [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
+                
+                [MOC save];
+//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
                 [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
                 [self.navigationController popViewControllerAnimated:YES];
                 [WLHUDView showSuccessHUD:@"删除成功！"];
@@ -167,7 +186,7 @@ static NSString *staurCellid = @"staurCellid";
 }
 
 
-- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(UserInfoModel *)usermode isAsk:(BOOL)isask
+- (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask
 {
     _userMode = usermode;
     _dataDicM = [NSMutableDictionary dictionary];
@@ -175,7 +194,8 @@ static NSString *staurCellid = @"staurCellid";
     if (self) {
         [self.tableView setSectionHeaderHeight:0.0];
         
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        LogInUser *mode = [LogInUser getNowLogInUser];
         if (!([mode.uid integerValue]==[_userMode.uid integerValue])) {
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
@@ -195,7 +215,7 @@ static NSString *staurCellid = @"staurCellid";
                 if ([_userMode.friendship integerValue]==-1) {
                     
                 }else if ([_userMode.friendship integerValue]==1) {
-//                    [self.tableView setTableFooterView:self.sendView];
+                    [self.tableView setTableFooterView:self.sendView];
                 }else {
                     [self.tableView setTableFooterView:self.addFriendView];
                 }

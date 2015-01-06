@@ -15,5 +15,13 @@
 //将NSString转化为NSArray或者NSDictionary
 - (id)JSONValue;
 
+//日期转换
+- (NSDate *)dateFromString;
+- (NSDate *)dateFromShortString;
+
+//去除两端空格
+- (NSString *)deleteTopAndBottomKongge;
+- (NSString *)deleteTopAndBottomKonggeAndHuiche;
+
 
 @end

@@ -1,0 +1,137 @@
+//
+//  ChatMessageViewCell.m
+//  Welian
+//
+//  Created by weLian on 14/12/24.
+//  Copyright (c) 2014年 chuansongmen. All rights reserved.
+//
+
+#import "ChatMessageViewCell.h"
+
+#define kLogoImageWidth 40.f
+#define kMarginLeft 15.f
+#define kBadgeHeight 17.f
+#define kBadge2Width 24.f
+
+@interface ChatMessageViewCell ()
+
+@property (assign,nonatomic) UIImageView *logoImageView;
+@property (assign,nonatomic) UIButton *numBtn;
+@property (assign,nonatomic) UILabel *nickNameLabel;
+@property (assign,nonatomic) UILabel *timeLabel;
+@property (assign,nonatomic) UILabel *messageLabel;
+
+- (void)setup;
+
+@end
+
+@implementation ChatMessageViewCell
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    //设置下边边线
+    self.layer.borderColor = RGB(230, 230, 230).CGColor;
+    self.layer.borderWidths = @"{0,0,0.5,0}";
+    
+    //设置头像
+    _logoImageView.size = CGSizeMake(kLogoImageWidth, kLogoImageWidth);
+    _logoImageView.left = kMarginLeft;
+    _logoImageView.centerY = self.height / 2.f;
+    
+    //消息数量
+    _numBtn.size = CGSizeMake(kBadgeHeight, kBadgeHeight);
+    _numBtn.top = _logoImageView.top - 1;
+    _numBtn.right = _logoImageView.right + 3;
+    
+    //时间
+    [_timeLabel sizeToFit];
+    _timeLabel.top = _logoImageView.top;
+    _timeLabel.right = self.width - kMarginLeft;
+    
+    //昵称
+    [_nickNameLabel sizeToFit];
+    _nickNameLabel.width = _timeLabel.left - _logoImageView.right - kMarginLeft * 2;
+    _nickNameLabel.left = _logoImageView.right + kMarginLeft;
+    _nickNameLabel.top = _logoImageView.top;
+    
+    //消息
+    [_messageLabel sizeToFit];
+    _messageLabel.width = self.width - kMarginLeft * 2.f - _logoImageView.right;
+    _messageLabel.left = _nickNameLabel.left;
+    _messageLabel.top = _nickNameLabel.bottom + 5.f;
+}
+
+#pragma mark - Private
+- (void)setup
+{
+    //头像
+    UIImageView *logoImageView = [[UIImageView alloc] init];
+    logoImageView.backgroundColor = [UIColor clearColor];
+    logoImageView.layer.cornerRadius = 20;
+    logoImageView.layer.masksToBounds = YES;
+    [self addSubview:logoImageView];
+    self.logoImageView = logoImageView;
+//    [logoImageView setDebug:YES];
+    
+    [_logoImageView sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    //消息数量
+    UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    numBtn.backgroundColor = [UIColor clearColor];
+    numBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
+    [numBtn setTitle:@"99" forState:UIControlStateNormal];
+    [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1.png"] forState:UIControlStateNormal];
+    [self addSubview:numBtn];
+    self.numBtn = numBtn;
+    
+    //昵称
+    UILabel *nickNameLabel = [[UILabel alloc] init];
+    nickNameLabel.backgroundColor = [UIColor clearColor];
+    nickNameLabel.textColor = RGB(51.f, 51.f, 51.f);
+    nickNameLabel.font = [UIFont systemFontOfSize:16.f];
+    nickNameLabel.text = @"陈日莎";
+    [self addSubview:nickNameLabel];
+    self.nickNameLabel = nickNameLabel;
+    
+    //时间
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.backgroundColor = [UIColor clearColor];
+    timeLabel.textColor = RGB(173.f, 173.f, 173.f);
+    timeLabel.font = [UIFont systemFontOfSize:12.f];
+    timeLabel.text = @"11:30";
+    [self addSubview:timeLabel];
+    self.timeLabel = timeLabel;
+    
+    //消息
+    UILabel *messageLabel = [[UILabel alloc] init];
+    messageLabel.backgroundColor = [UIColor clearColor];
+    messageLabel.textColor = RGB(173.f, 173.f, 173.f);
+    messageLabel.font = [UIFont systemFontOfSize:14.f];
+    messageLabel.text = @"下午一起出去玩，晚上一起吃饭 ktv和逛西湖了。。。。";
+    [self addSubview:messageLabel];
+    self.messageLabel = messageLabel;
+}
+
+@end

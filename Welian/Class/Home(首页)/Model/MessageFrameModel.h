@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MessageHomeModel.h"
+#import "HomeMessage.h"
 
 @interface MessageFrameModel : NSObject
 
@@ -21,6 +21,6 @@
 
 @property (nonatomic, assign) CGFloat cellHigh;
 
-@property (nonatomic, strong) MessageHomeModel *messageDataM;
+@property (nonatomic, strong) HomeMessage *messageDataM;
 
 @end

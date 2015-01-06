@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewFriendModel.h"
+//#import "NewFriendModel.h"
+#import "NewFriendUser.h"
 
 @interface FriendsNewCell : UITableViewCell
 
@@ -21,6 +22,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *accBut;
 
-@property (nonatomic, strong) NewFriendModel *friendM;
+@property (nonatomic, strong) NewFriendUser *friendM;
 
 @end

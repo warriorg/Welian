@@ -8,12 +8,15 @@
 
 #import "NewFriendController.h"
 #import "FriendsNewCell.h"
-#import "NewFriendModel.h"
+//#import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
 #import "NotstringView.h"
+#import "NewFriendUser.h"
+#import "MyFriendUser.h"
+#import "FriendsUserModel.h"
 
 static NSString *frnewCellid = @"frnewCellid";
 @interface NewFriendController ()<UIAlertViewDelegate>
@@ -45,26 +48,22 @@ static NSString *frnewCellid = @"frnewCellid";
     [self.tableView setBackgroundColor:IWGlobalBg];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     
-    NSArray *arrr = [[WLDataDBTool sharedService] getAllItemsFromTable:KNewFriendsTableName];
-    NSMutableArray *aaaYT = [NSMutableArray array];
-    for (YTKKeyValueItem *aa in arrr) {
-        NSMutableDictionary *itaaDic = [NSMutableDictionary dictionaryWithDictionary:aa.itemObject];
-        [itaaDic setObject:@"1" forKey:@"isLook"];
-        [[WLDataDBTool sharedService] putObject:itaaDic withId:aa.itemId intoTable:KNewFriendsTableName];
-        
-        NewFriendModel *statusM = [NewFriendModel objectWithKeyValues:aa.itemObject];
-        YTKKeyValueItem *item =[[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",statusM.uid] fromTable:KMyAllFriendsKey];
-        if (item) {
-            statusM.isAgree = @"1";
+    NSArray *newFarray = [LogInUser getNowLogInUser].rsNewFriends.allObjects;
+    
+    for (NewFriendUser *newfriend in newFarray) {
+        newfriend.isLook = @(1);
+       MyFriendUser *myF = [MyFriendUser getMyfriendUserWithUid:newfriend.uid];
+        if (myF) {
+            newfriend.isAgree = @(1);
         }else{
-            statusM.isAgree = nil;
+            newfriend.isAgree = @(0);
         }
-        [aaaYT addObject:statusM];
     }
+    [MOC save];
     
     NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
     
-    _dataArray =  [NSMutableArray arrayWithArray:[aaaYT sortedArrayUsingDescriptors:@[bookNameDes]]];
+    _dataArray =  [NSMutableArray arrayWithArray:[newFarray sortedArrayUsingDescriptors:@[bookNameDes]]];
     if (_dataArray.count) {
         
         [self.tableView reloadData];
@@ -99,7 +98,7 @@ static NSString *frnewCellid = @"frnewCellid";
 {
     FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:frnewCellid];
     
-    NewFriendModel *newFM = _dataArray[indexPath.row];
+    NewFriendUser *newFM = _dataArray[indexPath.row];
 //    cell.friendM = newFM;
     float width = [[UIScreen mainScreen] bounds].size.width - 40 - 50 - 60;
     //计算第一个label的高度
@@ -118,7 +117,7 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:frnewCellid];
-    NewFriendModel *newFM = _dataArray[indexPath.row];
+    NewFriendUser *newFM = _dataArray[indexPath.row];
     [cell setFriendM:newFM];
     [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -127,14 +126,12 @@ static NSString *frnewCellid = @"frnewCellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NewFriendModel *friendM = _dataArray[indexPath.row];
-    UserInfoModel *basMode = [[UserInfoModel alloc]init];
-    [basMode setKeyValues:[friendM keyValues]];
+    NewFriendUser *friendM = _dataArray[indexPath.row];
     BOOL isask = YES;
-    if ([friendM.isAgree isEqualToString:@"1"]||[friendM.type isEqualToString:@"friendCommand"]) {
+    if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendCommand"]) {
         isask = NO;
     }
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:basMode isAsk:isask];
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendM isAsk:isask];
     __weak NewFriendController *newFVC = self;
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     userInfoVC.acceptFriendBlock = ^(){
@@ -149,19 +146,11 @@ static NSString *frnewCellid = @"frnewCellid";
 #pragma mark - 删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NewFriendModel *friendM = _dataArray[indexPath.row];
-    [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",friendM.uid] fromTable:KNewFriendsTableName];
+    NewFriendUser *friendM = _dataArray[indexPath.row];
+    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:_dataArray[indexPath.row]];
     [_dataArray removeObject:friendM];
     //移除tableView中的数据
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-    
-    if (![friendM.isAgree isEqualToString:@"1"]) {
-        [WLHttpTool deleteFriendRequestParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
-            
-        } fail:^(NSError *error) {
-            
-        }];
-    }
     
 }
 
@@ -174,12 +163,12 @@ static NSString *frnewCellid = @"frnewCellid";
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
     if (indexPath) {
         _selectIndexPath = indexPath;
-        NewFriendModel *newFM = _dataArray[indexPath.row];
-        if ([newFM.type isEqualToString:@"friendRequest"]) {
+        NewFriendUser *newFM = _dataArray[indexPath.row];
+        if ([newFM.pushType isEqualToString:@"friendRequest"]) {
             [self jieshouFriend:indexPath];
-        }else if ([newFM.type isEqualToString:@"friendCommand"]){
-            
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        }else if ([newFM.pushType isEqualToString:@"friendCommand"]){
+
+            LogInUser *mode = [LogInUser getNowLogInUser];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFM.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             
@@ -193,7 +182,7 @@ static NSString *frnewCellid = @"frnewCellid";
 {
     if (buttonIndex==1) {
         
-        NewFriendModel *newFM = _dataArray[_selectIndexPath.row];
+        NewFriendUser *newFM = _dataArray[_selectIndexPath.row];
         [WLHttpTool requestFriendParameterDic:@{@"fid":newFM.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
             
         } fail:^(NSError *error) {
@@ -206,18 +195,15 @@ static NSString *frnewCellid = @"frnewCellid";
 
 - (void)jieshouFriend:(NSIndexPath*)indexPath
 {
-    NewFriendModel *friendM = _dataArray[indexPath.row];
+    NewFriendUser *friendM = _dataArray[indexPath.row];
     [WLHttpTool addFriendParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
-        [friendM setIsAgree:@"1"];
-        
-        [[WLDataDBTool sharedService] putObject:[friendM keyValues] withId:[NSString stringWithFormat:@"%@",friendM.uid] intoTable:KNewFriendsTableName];
+        [friendM setIsAgree:@(1)];
+        FriendsUserModel *friend = [FriendsUserModel objectWithDict:[friendM keyValues]];
+        [MyFriendUser createMyFriendUserModel:friend];
+        [MOC save];
+
         [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        
-        UserInfoModel *basMode = [[UserInfoModel alloc]init];
-        [basMode setKeyValues:[friendM keyValues]];
-        [basMode setUid:friendM.uid];
-        [[WLDataDBTool sharedService] putObject:[basMode keyValues] withId:[NSString stringWithFormat:@"%@",basMode.uid] intoTable:KMyAllFriendsKey];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         

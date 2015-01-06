@@ -8,6 +8,7 @@
 
 #import "CompanyModel.h"
 #import "ICompanyResult.h"
+#import "LogInUser.h"
 
 @implementation CompanyModel
 
@@ -16,10 +17,10 @@
 @dynamic jobid;
 @dynamic jobname;
 @dynamic ucid;
-
+@dynamic rsLogInUser;
 
 //创建新收据
-+ (void)createCompanyModel:(ICompanyResult *)iCompany
++ (CompanyModel*)createCompanyModel:(ICompanyResult *)iCompany
 {
     CompanyModel *company = [self getCompanyModelWithUcid:iCompany.ucid];
     if (!company) {
@@ -35,21 +36,25 @@
     company.jobname = iCompany.jobname;
     company.jobid = iCompany.jobid;
     company.ucid = iCompany.ucid;
-    
+    company.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
+    return company;
+
 }
 
 //通过ucid查询
 + (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid
 {
-    CompanyModel *company = [[[[CompanyModel queryInManagedObjectContext:MOC] where:@"ucid" equals:ucid.stringValue] results] firstObject];
+    CompanyModel *company = [[[[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"ucid" equals:ucid] results] firstObject];
+    
     return company;
 }
 
 // 查询所有数据并返回
 + (NSArray *)allCompanyModels
 {
-    return [[CompanyModel queryInManagedObjectContext:MOC] results];
+    
+    return [[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results];
 }
 
 

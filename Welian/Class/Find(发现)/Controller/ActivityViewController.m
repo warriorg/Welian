@@ -63,7 +63,7 @@
 {
     if (_shareData) {
         NSDictionary *sharDic = nil;
-        WeiboType type = 0;
+        WeiboType type = weChat;
         if ([imageIndex isEqualToString:@"微信好友"]){
             sharDic = _shareData[@"friend"];
             type = weChat;

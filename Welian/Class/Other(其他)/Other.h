@@ -20,5 +20,11 @@
 #import "UIView+Extend.h"
 #import "NSUserDefaults+Standard.h"
 #import "NSString+Extend.h"
+#import "CALayer+XibConfiguration.h"
+
+
+#pragma mark - Other
+#import "UIImageView+WebCache.h"
+#import "DateTools.h"
 
 #endif

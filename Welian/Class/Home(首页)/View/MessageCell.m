@@ -125,7 +125,7 @@
 - (void)setMessageFrameModel:(MessageFrameModel *)messageFrameModel
 {
     _messageFrameModel = messageFrameModel;
-    MessageHomeModel *messageDataM = messageFrameModel.messageDataM;
+    HomeMessage *messageDataM = messageFrameModel.messageDataM;
     
     [_iconImage setFrame:messageFrameModel.iconImageF];
     [_iconImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];

@@ -11,20 +11,6 @@
 
 @implementation InvestorUser
 
-@dynamic address;
-@dynamic cityid;
-@dynamic cityname;
-@dynamic company;
-@dynamic email;
-@dynamic friendship;
-@dynamic investorauth;
-@dynamic inviteurl;
-@dynamic mobile;
-@dynamic provincename;
-@dynamic shareurl;
-@dynamic position;
-@dynamic provinceid;
-@dynamic startupauth;
 @dynamic items;
 
 

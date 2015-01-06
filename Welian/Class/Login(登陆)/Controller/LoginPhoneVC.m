@@ -12,6 +12,7 @@
 #import "MJExtension.h"
 #import "WLTextField.h"
 #import "ForgetPhoneController.h"
+#import "LogInUser.h"
 
 @interface LoginPhoneVC ()<UITextFieldDelegate>
 
@@ -142,16 +143,15 @@
     [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
         NSDictionary *dataDic = JSON;
         if (dataDic) {
-            UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-            [mode setKeyValues:dataDic];
+            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
             [mode setCheckcode:self.pwdTextField.text];
             
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
-            
+            [LogInUser createLogInUserModel:mode];
             //保存用户信息到本地 归档
-            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-            
+//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+
             //进入主页面
             MainViewController *mainVC = [[MainViewController alloc] init];
             [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];

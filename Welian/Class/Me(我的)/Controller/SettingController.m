@@ -91,8 +91,9 @@
     } fail:^(NSError *error) {
         
     }];
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
-    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+//    UserInfoModel *mode = [[UserInfoModel alloc] init];
+//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
+    [LogInUser setUserisNow:NO];
     [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
@@ -147,8 +148,9 @@
     [cell.textLabel setText:dict[@"title"]];
     
     if (indexPath.section==0&&indexPath.row==0) {
-        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        [cell.detailTextLabel setText:mode.mobile];
+//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+        
+        [cell.detailTextLabel setText:[LogInUser getNowLogInUser].mobile];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
 //        [cell setAccessoryView:self.remindSwitch];

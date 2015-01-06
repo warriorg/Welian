@@ -63,7 +63,7 @@
 	<string>545c8c97fd98c59807006c67</string>
 	<key>UMENG_ChannelId</key>
 	<string></string>
-	<key>kWeChatAppId</key>
+	<key>KWeChatAppId</key>
 	<string>wx5e4e9a58776baed3</string>
 </dict>
 </plist>

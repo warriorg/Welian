@@ -41,7 +41,7 @@
 {
     NSDictionary *dic = self.cityArray[indexPath.row];
     
-    [self.meInfoVC locationProvinController:self withLocationDic:@{@"provname":self.provinDic[@"name"],@"provid":self.provinDic[@"pid"],@"cityname":dic[@"name"],@"cityid":dic[@"cid"]}];
+    [self.meInfoVC locationProvinController:self withLocationDic:@{@"provname":self.provinDic[@"name"],@"provid":@([self.provinDic[@"pid"] integerValue]),@"cityname":dic[@"name"],@"cityid":@([dic[@"cid"] integerValue])}];
     
     [self.navigationController popToViewController:self.meInfoVC animated:YES];
 }
