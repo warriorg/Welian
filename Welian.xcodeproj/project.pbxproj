@@ -34,6 +34,18 @@
 		A437CEF51A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
 		A437CEF61A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
 		A437CEF71A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
+		A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
+		A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
+		A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
+		A45065451A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
+		A45065461A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
+		A45065471A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
+		A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
+		A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
+		A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
+		A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
+		A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
+		A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
 		A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -3094,6 +3106,14 @@
 		A437CEF31A541BF300B54E68 /* WLMessageSpecialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMessageSpecialView.h; sourceTree = "<group>"; };
 		A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMessageSpecialView.m; sourceTree = "<group>"; };
 		A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.2.xcdatamodel; sourceTree = "<group>"; };
+		A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
+		A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
+		A45065431A5BB4D70057F8AA /* ActivityEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEntryViewController.h; sourceTree = "<group>"; };
+		A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEntryViewController.m; sourceTree = "<group>"; };
+		A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderViewController.h; sourceTree = "<group>"; };
+		A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderViewController.m; sourceTree = "<group>"; };
+		A450654D1A5BCE990057F8AA /* SEImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEImageCache.h; sourceTree = "<group>"; };
+		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6755,6 +6775,12 @@
 				F51FBA2C19EF973600D85D7F /* InvestorUsersListController.m */,
 				A4F646D61A43CE46002E66FC /* ActivityViewController.h */,
 				A4F646D71A43CE46002E66FC /* ActivityViewController.m */,
+				A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */,
+				A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */,
+				A45065431A5BB4D70057F8AA /* ActivityEntryViewController.h */,
+				A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */,
+				A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */,
+				A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -7139,6 +7165,8 @@
 		F5CE869019BFF53500A9D14C /* UIImage+ImageEffects */ = {
 			isa = PBXGroup;
 			children = (
+				A450654D1A5BCE990057F8AA /* SEImageCache.h */,
+				A450654E1A5BCE990057F8AA /* SEImageCache.m */,
 				F5CE869119BFF53500A9D14C /* UIImage+ImageEffects.h */,
 				F5CE869219BFF53500A9D14C /* UIImage+ImageEffects.m */,
 			);
@@ -9382,6 +9410,7 @@
 				F53DC2C31A49192600F5F712 /* FriendsUserModel.m in Sources */,
 				F53DC2C41A49192600F5F712 /* FriendCell.m in Sources */,
 				F53DC2C51A49192600F5F712 /* SWUtilityButtonView.m in Sources */,
+				A45065471A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F53DC2C61A49192600F5F712 /* ALAsset+accessibilityLabel.m in Sources */,
 				F53DC2C71A49192600F5F712 /* CTAssetsViewController.m in Sources */,
 				F53DC2C81A49192600F5F712 /* ALAssetsGroup+isEqual.m in Sources */,
@@ -9600,6 +9629,7 @@
 				F53DC3631A49192600F5F712 /* DockItem.m in Sources */,
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
+				A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */,
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
 				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
@@ -9624,6 +9654,7 @@
 				F53DC3751A49192600F5F712 /* WLStatusM.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
+				A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F53DC3781A49192600F5F712 /* CommentHeadView.m in Sources */,
 				F53DC3791A49192600F5F712 /* main.m in Sources */,
 				F53DC37A1A49192600F5F712 /* AFURLRequestSerialization.m in Sources */,
@@ -9662,6 +9693,7 @@
 				F53DC3921A49192600F5F712 /* AFHTTPSessionManager.m in Sources */,
 				F53DC3931A49192600F5F712 /* IWTextView.m in Sources */,
 				F53DC3941A49192600F5F712 /* NSString+val.m in Sources */,
+				A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */,
 				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141791A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
@@ -9752,6 +9784,7 @@
 				F566499F1A2AFD56008A5830 /* SWUtilityButtonView.m in Sources */,
 				F56649A01A2AFD56008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				F56649A11A2AFD56008A5830 /* CTAssetsViewController.m in Sources */,
+				A45065451A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F56649A21A2AFD56008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
 				A4C13FFF1A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
@@ -9970,6 +10003,7 @@
 				F5664A2D1A2AFD56008A5830 /* DockItem.m in Sources */,
 				A4C141531A4BEF5700C9BAB5 /* SETextInput.m in Sources */,
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
+				A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */,
 				F59E76001A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
@@ -9994,6 +10028,7 @@
 				F5664A3D1A2AFD56008A5830 /* MyFriendsController.m in Sources */,
 				F5664A3E1A2AFD56008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
+				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664A401A2AFD56008A5830 /* WLStatusM.m in Sources */,
 				F5664A411A2AFD56008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664A421A2AFD56008A5830 /* MeinfoCell.m in Sources */,
@@ -10032,6 +10067,7 @@
 				F5664A5A1A2AFD56008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664A5B1A2AFD56008A5830 /* IWTextView.m in Sources */,
 				F5664A5C1A2AFD56008A5830 /* NSString+val.m in Sources */,
+				A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664A5D1A2AFD56008A5830 /* MJRefreshBaseView.m in Sources */,
 				F59E75F41A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
 				F5664A5E1A2AFD56008A5830 /* UIImage+GIF.m in Sources */,
@@ -10122,6 +10158,7 @@
 				F5664C571A2AFDD5008A5830 /* FriendsUserModel.m in Sources */,
 				F5664C581A2AFDD5008A5830 /* FriendCell.m in Sources */,
 				F5664C591A2AFDD5008A5830 /* SWUtilityButtonView.m in Sources */,
+				A45065461A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F5664C5A1A2AFDD5008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				F5664C5B1A2AFDD5008A5830 /* CTAssetsViewController.m in Sources */,
 				F5664C5C1A2AFDD5008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
@@ -10340,6 +10377,7 @@
 				F5664CE71A2AFDD5008A5830 /* DockItem.m in Sources */,
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
+				A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */,
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
 				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
@@ -10364,6 +10402,7 @@
 				F5664CFA1A2AFDD5008A5830 /* WLStatusM.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
+				A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664CFD1A2AFDD5008A5830 /* CommentHeadView.m in Sources */,
 				F5664CFE1A2AFDD5008A5830 /* main.m in Sources */,
 				F5664CFF1A2AFDD5008A5830 /* AFURLRequestSerialization.m in Sources */,
@@ -10402,6 +10441,7 @@
 				F5664D141A2AFDD5008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664D151A2AFDD5008A5830 /* IWTextView.m in Sources */,
 				F5664D161A2AFDD5008A5830 /* NSString+val.m in Sources */,
+				A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */,
 				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141781A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,

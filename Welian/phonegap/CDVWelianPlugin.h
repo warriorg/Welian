@@ -13,25 +13,64 @@
 
 @property (nonatomic, copy) NSString *callbackID;
 
-//2.91版本调用
-//- (void)print:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-//- (void)pageOnComplete:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)getSessionId:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)getHeadHeight:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)share:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)getUserInfo:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)backToDiscover:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-//- (void)wechatPay:(NSMutableArray *)arguments withDict:(NSMutableDictionary*)options;
-
-
 //最新版本调用
-- (void)pageOnComplete:(CDVInvokedUrlCommand *)command;
+//- (void)pageOnComplete:(CDVInvokedUrlCommand *)command;
+//- (void)getHeadHeight:(CDVInvokedUrlCommand *)command;
+//- (void)share:(CDVInvokedUrlCommand *)command;
+//- (void)backToDiscover:(CDVInvokedUrlCommand *)command;
+
+
+/**
+ * 获取sessionid
+ *
+ * @param callbackContext
+ */
 - (void)getSessionId:(CDVInvokedUrlCommand *)command;
-- (void)getHeadHeight:(CDVInvokedUrlCommand *)command;
-- (void)share:(CDVInvokedUrlCommand *)command;
+/**
+ * 获取当前登录用户信息
+ * @param callbackContext
+ */
 - (void)getUserInfo:(CDVInvokedUrlCommand *)command;
-- (void)backToDiscover:(CDVInvokedUrlCommand *)command;
+/**
+ * 调用原生弹窗
+ * @param msg 显示信息
+ * @param callbackContext
+ */
+- (void)showDialog:(CDVInvokedUrlCommand *)command;
+/**
+ * 侧面滑入报名人员列表
+ * @param aid 活动id
+ * @param count 报名总人数
+ */
+- (void)showEntry:(CDVInvokedUrlCommand *)command;
+/**
+ * 跳转详情页
+ * @param aid 活动id
+ * @param msg 分享内容
+ */
+- (void)goToDetail:(CDVInvokedUrlCommand *)command;
+/**
+ * 跳转订单页
+ * @param aid 活动id
+ */
+- (void)goToOrder:(CDVInvokedUrlCommand *)command;
+/**
+ * 微信支付
+ * @param money
+ * @param callbackContext
+ */
 - (void)wechatPay:(CDVInvokedUrlCommand *)command;
+/**
+ * 跳转地图
+ * @param city 城市
+ * @param address 地址
+ */
+- (void)goToMap:(CDVInvokedUrlCommand *)command;
+/**
+ * 获取当前订单信息
+ * @param callbackContext
+ */
+- (void)getOrderInfo:(CDVInvokedUrlCommand *)command;
 
 
 @end
