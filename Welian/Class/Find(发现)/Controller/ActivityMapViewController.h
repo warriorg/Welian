@@ -10,6 +10,6 @@
 
 @interface ActivityMapViewController : BasicViewController
 
-- (instancetype)initWithAddress:(NSString *)address;
+- (instancetype)initWithAddress:(NSString *)address city:(NSString *)city;
 
 @end

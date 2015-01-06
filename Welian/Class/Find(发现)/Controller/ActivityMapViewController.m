@@ -7,12 +7,15 @@
 //
 
 #import "ActivityMapViewController.h"
+#import "BMapKit.h"
 
-@interface ActivityMapViewController ()//<MKMapViewDelegate>
+@interface ActivityMapViewController ()<BMKGeoCodeSearchDelegate>
 
+@property (strong,nonatomic) NSString *city;
 @property (strong,nonatomic) NSString *address;
-@property (assign,nonatomic) MKMapView *mapview;
-@property (strong,nonatomic) CLGeocoder *geocoder;
+@property (assign,nonatomic) BMKMapView *mapView;
+@property (strong,nonatomic) BMKGeoCodeSearch *searcher;
+//@property (strong,nonatomic) BMKLocationService *locService;//定位功能
 
 @end
 
@@ -21,13 +24,16 @@
 - (void)dealloc
 {
     _address = nil;
-    _geocoder = nil;
+    _city = nil;
+    _searcher = nil;
+//    _locService = nil;
 }
 
-- (instancetype)initWithAddress:(NSString *)address
+- (instancetype)initWithAddress:(NSString *)address city:(NSString *)city
 {
     self = [super init];
     if (self) {
+        self.city = city;
         self.address = address;
         self.needlessCancel = YES;
     }
@@ -39,17 +45,16 @@
 {
     [super loadView];
     
-    MKMapView *mapview = [[MKMapView alloc] initWithFrame:Rect(0, 0, self.view.width, self.view.height)];
-    // 旋转屏幕时自动设置设置大小
-    [mapview setAutoresizingMask: UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    // 设置代理
-//    [mapview setDelegate:self];
-    
-    //    [_mapview setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
-    mapview.showsUserLocation = YES;
-    // 添加到视图
-    [self.view addSubview:mapview];
-    self.mapview = mapview;
+    BMKMapView *mapView = [[BMKMapView alloc] initWithFrame:Rect(0, 0, self.view.width, self.view.height)];
+    mapView.showsUserLocation = YES;
+//    mapView.userTrackingMode = BMKUserTrackingModeNone;
+    [self.view addSubview:mapView];
+    self.mapView = mapView;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    _searcher.delegate = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -57,58 +62,84 @@
     [super viewDidAppear:animated];
     self.title = _address;
     
-    // 地理编辑器
-    self.geocoder = [[CLGeocoder alloc] init];
+//    //初始化BMKLocationService
+//    BMKLocationService *locService = [[BMKLocationService alloc] init];
+//    locService.delegate = self;
+//    //启动LocationService
+//    [locService startUserLocationService];
+//    self.locService = locService;
     
-    [self showLocation];
-}
-
-//解析并显示坐标
-- (void)showLocation
-{
+    //初始化检索对象
+    BMKGeoCodeSearch *searcher =[[BMKGeoCodeSearch alloc]init];
+    searcher.delegate = self;
+    self.searcher = searcher;
+    
+    BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
+    geoCodeSearchOption.city= @"杭州";
+    geoCodeSearchOption.address = @"紫金港国际饭店";
+    BOOL flag = [_searcher geoCode:geoCodeSearchOption];
     [WLHUDView showHUDWithStr:@"获取位置中..." dim:NO];
-    // 根据城市名称 利用地理编辑器取出经纬度，设置大头针的位置
-    [_geocoder geocodeAddressString:_address completionHandler:^(NSArray *placemarks, NSError *error) {
-        //隐藏
-        [WLHUDView hiddenHud];
-        // 地理编辑器
-        CLPlacemark *placemark = placemarks[0];
-        CLLocationCoordinate2D location = placemark.location.coordinate;
-        
-        // 在此插大头针
-        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-        annotation.coordinate = location;
-        annotation.title = _address;
-        //        annotation.subtitle = order.address
-        
-        [_mapview addAnnotation:annotation];
-        
-        //控制显示区域
-        MKCoordinateSpan span = MKCoordinateSpanMake(0.02, 0.02);
-        MKCoordinateRegion region = MKCoordinateRegionMake(location, span);
-        [_mapview setRegion:region];
-        
-        //选中标记
-        [_mapview selectAnnotation:annotation animated:YES];
-    }];
+    if(flag)
+    {
+        NSLog(@"geo检索发送成功");
+    }
+    else
+    {
+        NSLog(@"geo检索发送失败");
+    }
 }
 
-// 实现大头针可重用  代理方法
-//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(MKPointAnnotation *)annotation
+//实现相关delegate 处理位置信息更新
+//处理方向变更信息
+//- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 //{
-//    static NSString *ID = @"ID";
-//    MKAnnotationView *view = [_mapview dequeueReusableAnnotationViewWithIdentifier:ID];
-//    if (nil == view) {
-//        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ID];
-//        // 显示图片
-//        view.canShowCallout = YES;
-//    }
-//    // 设置视图信息
-//    view.annotation = annotation;
-//    // 设置视图图像
-////    view.image = [UIImage imageNamed:annotation.imageName];
-//    
-//    return view;
+//    //NSLog(@"heading is %@",userLocation.heading);
 //}
+////处理位置坐标更新
+//- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+//{
+//    _mapView.showsUserLocation = YES;//显示定位图层
+//    [_mapView updateLocationData:userLocation];
+//    //启动LocationService
+//    [_locService stopUserLocationService];
+//    //NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+//}
+
+//实现Deleage处理回调结果
+//接收正向编码结果
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
+    [WLHUDView hiddenHud];
+    if (error == BMK_SEARCH_NO_ERROR) {
+        //在此处理正常结果
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        annotation.coordinate = result.location;
+        annotation.title = _address;
+        [_mapView addAnnotation:annotation];
+        
+        //设定当前地图的显示范围
+        BMKCoordinateSpan span = BMKCoordinateSpanMake(0.001, 0.001);
+        BMKCoordinateRegion region = BMKCoordinateRegionMake(result.location, span);
+        [_mapView setRegion:region animated:YES];
+        
+        //设定地图中心点坐标
+        [_mapView setCenterCoordinate:result.location animated:YES];
+        //设置选中标记
+        [_mapView selectAnnotation:annotation animated:YES];
+    }
+    else {
+        NSLog(@"抱歉，未找到结果");
+    }
+}
+
+- (BMKAnnotationView *)_mapView:(BMKMapView *)_mapView viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
+        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
+        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
+        newAnnotationView.animatesDrop = YES;// 设置该标注点动画显示
+        return newAnnotationView;
+    }
+    return nil;
+}
 
 @end
