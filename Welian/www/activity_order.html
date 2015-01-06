@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="activityOrder">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>活动</title>
+    <link href="http://t.welian.com/app/common/css/common.css" rel="stylesheet" />
+    <link href="http://t.welian.com/app/activity/order/order.css" rel="stylesheet" />
+</head>
+
+<body ng-controller="OrderController">
+    <div class="loading">
+        <img src="http://welianfed.oss-cn-hangzhou.aliyuncs.com/app/loading.png">
+    </div>
+    <div class="order">
+        <div class="activity-info">
+            <h3>{{detail.title}}</h3>
+            <p><span class="date">{{detail.startTime.date}}({{detail.startTime.week}})</span><span class="time">{{detail.startTime.hour}}~{{detail.endTime.hour}}</span>
+            </p>
+        </div>
+        <div class="tickets-info">
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="item in order.list">
+                        <td>{{item.name}}</td>
+                        <td>×{{item.num}}</td>
+                        <td>
+                            <label>{{item.price}}</label>元 </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>共<span>{{order.total.count}}</span>张</td>
+                        <td>总计<span class="total-money">{{order.total.money}}</span>元</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="split"></div>
+        <div class="user-info">
+            <div>确认信息</div>
+            <ul>
+                <li>
+                    <label class="label-control">姓名</label>
+                    <div class="input-control">
+                        <input id="J_UserName" readonly value="{{user.name}}">
+                    </div>
+                </li>
+                <li>
+                    <label class="label-control">手机</label>
+                    <div class="input-control">
+                        <input id="J_UserMobile" readonly value="{{user.mobile}}">
+                    </div>
+                </li>
+                <li>
+                    <label class="label-control">单位</label>
+                    <div class="input-control">
+                        <input id="J_UserCompany" readonly value="{{user.company}}">
+                    </div>
+                </li>
+                <li>
+                    <label class="label-control">职务</label>
+                    <div class="input-control">
+                        <input id="J_UserPosition" readonly value="{{user.position}}">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ordre-info">
+            <div class="information">
+                <span>总金额：<label class="total-money J_TotalMoney">{{order.total.money}}</label>元</span>
+                <a>付款说明</a>
+            </div>
+            <div class="btn-pay J_BtnPay" ng-click="pay()">微信支付</div>
+        </div>
+    </div>
+</body>
+<script src="./cordova.js"></script>
+<script src="./js/angular.min.js"></script>
+<script src="./js/angular-touch.min.js"></script>
+<script src="./js/jquery.min.js"></script>
+<script src="http://t.welian.com/app/common/js/common.js"></script>
+<script src="./js/native.js"></script>
+<script src="http://t.welian.com/app/activity/order/order.js"></script>
+
+</html>
