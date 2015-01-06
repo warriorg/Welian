@@ -10,9 +10,12 @@
 
 @interface ActivityViewController : CDVViewController
 
-- (void)hideHeader;
-- (void)backToFindVC;
+//- (void)hideHeader;
+//- (void)backToFindVC;
 //分享
 - (void)shareWithInfo:(NSDictionary *)commandDic;
+
+//进入活动详情页面
+- (void)toActivityDetailVC:(NSArray *)infos;
 
 @end

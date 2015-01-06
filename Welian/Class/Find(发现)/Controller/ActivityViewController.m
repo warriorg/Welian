@@ -9,6 +9,7 @@
 #import "ActivityViewController.h"
 #import "LXActivity.h"
 #import "ShareEngine.h"
+#import "ActivityDetailViewController.h"
 
 @interface ActivityViewController () <LXActivityDelegate>
 {
@@ -20,28 +21,28 @@
 @implementation ActivityViewController
 
 //隐藏头部
-- (void)hideHeader
-{
-//    self.webView.frame = self.view.frame;
-    
-    //延迟1秒
-    [self performSelector:@selector(test) withObject:self afterDelay:.5];
-    
-    //隐藏旋转
-    [WLHUDView hiddenHud];
-}
-
-- (void)test {
-    self.webView.top = 0;
-    self.navigationController.navigationBarHidden = YES;
-}
-
-//返回发现
-- (void)backToFindVC
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    self.navigationController.navigationBarHidden = NO;
-}
+//- (void)hideHeader
+//{
+////    self.webView.frame = self.view.frame;
+//    
+//    //延迟1秒
+//    [self performSelector:@selector(test) withObject:self afterDelay:.5];
+//    
+//    //隐藏旋转
+//    [WLHUDView hiddenHud];
+//}
+//
+//- (void)test {
+//    self.webView.top = 0;
+//    self.navigationController.navigationBarHidden = YES;
+//}
+//
+////返回发现
+//- (void)backToFindVC
+//{
+//    [self.navigationController popViewControllerAnimated:YES];
+//    self.navigationController.navigationBarHidden = NO;
+//}
 
 //分享
 - (void)shareWithInfo:(NSDictionary *)commandDic
@@ -55,6 +56,17 @@
     }
     lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:nil ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
     [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+//进入活动详情页面
+- (void)toActivityDetailVC:(NSArray *)infos
+{
+    DLog(@"infos--->:\n1:%@\n2:%@ ",infos[0],[infos[1] JSONValue]);
+    //活动页面，进行phoneGap页面加载
+    ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] initWithShareDic:[infos[1] JSONValue]];
+    activityDetailVC.wwwFolderName = @"www";
+    activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",@"909"];//infos[0]
+    [self.navigationController pushViewController:activityDetailVC animated:YES];
 }
 
 
@@ -93,17 +105,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"活动";
     //铺到状态栏底下而是从状态栏下面
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //    self.extendedLayoutIncludesOpaqueBars = YES;
 //    self.modalPresentationCapturesStatusBarAppearance = YES;
     
     //预加载高度控制
-    self.webView.top = -ViewCtrlTopBarHeight;
-    self.webView.height = self.view.height + ViewCtrlTopBarHeight;
+//    self.webView.top = -ViewCtrlTopBarHeight;
+//    self.webView.height = self.view.height + ViewCtrlTopBarHeight;
     
     //预加载
-    [WLHUDView showHUDWithStr:nil dim:NO];
+//    [WLHUDView showHUDWithStr:nil dim:NO];
 }
 
 - (void)didReceiveMemoryWarning {
