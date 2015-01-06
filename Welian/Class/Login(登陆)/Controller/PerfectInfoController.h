@@ -10,4 +10,6 @@
 
 @interface PerfectInfoController : BasicViewController
 
+@property (nonatomic, strong) NSDictionary *userInfoDic;
+
 @end

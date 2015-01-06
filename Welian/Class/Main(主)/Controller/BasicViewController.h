@@ -12,4 +12,10 @@
 
 @property (nonatomic, assign) BOOL needlessCancel;
 
+
+#pragma mark - 选取头像照片
+- (void)choosePicture;
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
+
 @end
