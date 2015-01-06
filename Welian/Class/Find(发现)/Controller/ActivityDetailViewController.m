@@ -9,6 +9,7 @@
 #import "ActivityDetailViewController.h"
 #import "ActivityEntryViewController.h"
 #import "ActivityOrderViewController.h"
+#import "ActivityMapViewController.h"
 #import "LXActivity.h"
 #import "ShareEngine.h"
 #import "SEImageCache.h"
@@ -24,6 +25,12 @@
 @end
 
 @implementation ActivityDetailViewController
+
+- (void)dealloc
+{
+    _shareFriend = nil;
+    _shareFriendCircle = nil;
+}
 
 - (instancetype)initWithShareDic:(NSDictionary *)dict{
     self = [super init];
@@ -102,6 +109,8 @@
 {
     NSString *address = [NSString stringWithFormat:@"%@%@",infos[0],infos[1]];
     DLog(@"toMapVC ----->%@",address);
+    ActivityMapViewController *mapVC = [[ActivityMapViewController alloc] initWithAddress:address];
+    [self.navigationController pushViewController:mapVC animated:YES];
 }
 
 //显示已报名人数

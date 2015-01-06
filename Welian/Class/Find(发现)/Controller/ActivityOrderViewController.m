@@ -14,6 +14,11 @@
 
 @implementation ActivityOrderViewController
 
+- (void)dealloc
+{
+    _orderInfo = nil;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

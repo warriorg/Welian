@@ -46,6 +46,12 @@
 		A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
 		A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
 		A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
+		A45065521A5BD4450057F8AA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70B19E908C9003773F1 /* MapKit.framework */; };
+		A45065531A5BD45B0057F8AA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70B19E908C9003773F1 /* MapKit.framework */; };
+		A45065541A5BD4620057F8AA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70B19E908C9003773F1 /* MapKit.framework */; };
+		A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
+		A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
+		A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -3114,6 +3120,8 @@
 		A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderViewController.m; sourceTree = "<group>"; };
 		A450654D1A5BCE990057F8AA /* SEImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEImageCache.h; sourceTree = "<group>"; };
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
+		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
+		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -4573,6 +4581,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45065541A5BD4620057F8AA /* MapKit.framework in Frameworks */,
 				A4C60B421A59484100F1F965 /* CoreText.framework in Frameworks */,
 				F53DC3BF1A49192600F5F712 /* Security.framework in Frameworks */,
 				F5B5FE561A594CAB007FE11B /* libz.1.2.5.dylib in Frameworks */,
@@ -4618,6 +4627,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45065521A5BD4450057F8AA /* MapKit.framework in Frameworks */,
 				F5664A7C1A2AFD56008A5830 /* Security.framework in Frameworks */,
 				F5B5FE2D1A59491C007FE11B /* libz.1.2.5.dylib in Frameworks */,
 				F5B5FE2B1A59490C007FE11B /* libicucore.dylib in Frameworks */,
@@ -4661,6 +4671,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45065531A5BD45B0057F8AA /* MapKit.framework in Frameworks */,
 				F5664D371A2AFDD5008A5830 /* SystemConfiguration.framework in Frameworks */,
 				A4776AC91A44284D0022E211 /* QuartzCore.framework in Frameworks */,
 				F5B5FE541A5949E8007FE11B /* libz.1.2.5.dylib in Frameworks */,
@@ -6781,6 +6792,8 @@
 				A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */,
 				A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */,
 				A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */,
+				A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */,
+				A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -9676,6 +9689,7 @@
 				F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F53DC3871A49192600F5F712 /* InfoUserHaderCell.m in Sources */,
 				F53DC3881A49192600F5F712 /* MessageHomeModel.m in Sources */,
+				A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F534DB511A51082F00B6A725 /* IInvestStageModel.m in Sources */,
 				F53DC3891A49192600F5F712 /* LoginPhoneVC.m in Sources */,
 				F53DC38A1A49192600F5F712 /* TOActivityChrome.m in Sources */,
@@ -10050,6 +10064,7 @@
 				F5664A4C1A2AFD56008A5830 /* CTAssetsSupplementaryView.m in Sources */,
 				F5664A4D1A2AFD56008A5830 /* AddFriendsController.m in Sources */,
 				F5664A4E1A2AFD56008A5830 /* MJMethod.m in Sources */,
+				A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F5664A4F1A2AFD56008A5830 /* InvestReqstModel.m in Sources */,
 				F5664A501A2AFD56008A5830 /* InfoUserHaderCell.m in Sources */,
 				F534DB5A1A5119A000B6A725 /* InvestIndustry.m in Sources */,
@@ -10424,6 +10439,7 @@
 				F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F5664D0A1A2AFDD5008A5830 /* InfoUserHaderCell.m in Sources */,
 				F5664D0B1A2AFDD5008A5830 /* MessageHomeModel.m in Sources */,
+				A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F534DB501A51082F00B6A725 /* IInvestStageModel.m in Sources */,
 				F5664D0C1A2AFDD5008A5830 /* LoginPhoneVC.m in Sources */,
 				F5664D0D1A2AFDD5008A5830 /* TOActivityChrome.m in Sources */,
