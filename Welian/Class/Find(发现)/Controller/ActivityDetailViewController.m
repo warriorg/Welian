@@ -9,6 +9,7 @@
 #import "ActivityDetailViewController.h"
 #import "ActivityEntryViewController.h"
 #import "ActivityOrderViewController.h"
+#import "ActivityMapViewController.h"
 #import "LXActivity.h"
 #import "ShareEngine.h"
 #import "SEImageCache.h"
@@ -25,6 +26,12 @@
 
 @implementation ActivityDetailViewController
 
+- (void)dealloc
+{
+    _shareFriend = nil;
+    _shareFriendCircle = nil;
+}
+
 - (instancetype)initWithShareDic:(NSDictionary *)dict{
     self = [super init];
     if (self) {
@@ -40,16 +47,19 @@
     
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [WLHUDView hiddenHud];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"活动详情";
-    //铺到状态栏底下而是从状态栏下面
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     //添加分享按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(shareActivity)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStyleDone target:self action:@selector(shareActivity)];//[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(shareActivity)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,26 +83,28 @@
 #pragma mark - LXActivityDelegate
 - (void)didClickOnImageIndex:(NSString *)imageIndex
 {
-        NSDictionary *sharDic = nil;
-        WeiboType type = weChat;
-        if ([imageIndex isEqualToString:@"微信好友"]){
-            sharDic = _shareFriend;
-            type = weChat;
-        }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
-            sharDic = _shareFriendCircle;
-            type = weChatFriend;
-        }
-    
-        NSString *desc = sharDic[@"desc"];
+    NSDictionary *sharDic = nil;
+    WeiboType type = weChat;
+    if ([imageIndex isEqualToString:@"微信好友"]){
+        sharDic = _shareFriend;
+        type = weChat;
+    }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
+        sharDic = _shareFriendCircle;
+        type = weChatFriend;
+    }
+
+    NSString *desc = sharDic[@"desc"];
 //        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sharDic[@"img"]]]];
-        NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
-        NSString *link = sharDic[@"link"];
-        NSString *title = sharDic[@"title"];
-        
-        [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
-            DLog(@"shareFriendImage---->>>%@",image);
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
-        }];
+    NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
+    NSString *link = sharDic[@"link"];
+    NSString *title = sharDic[@"title"];
+    
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        DLog(@"shareFriendImage---->>>%@",image);
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+    }];
     
 }
 
@@ -102,6 +114,8 @@
 {
     NSString *address = [NSString stringWithFormat:@"%@%@",infos[0],infos[1]];
     DLog(@"toMapVC ----->%@",address);
+    ActivityMapViewController *mapVC = [[ActivityMapViewController alloc] initWithAddress:infos[1] city:infos[0]];
+    [self.navigationController pushViewController:mapVC animated:YES];
 }
 
 //显示已报名人数

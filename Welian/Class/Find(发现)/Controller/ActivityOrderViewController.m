@@ -14,6 +14,11 @@
 
 @implementation ActivityOrderViewController
 
+- (void)dealloc
+{
+    _orderInfo = nil;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -23,10 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"订单详情";
-    //铺到状态栏底下而是从状态栏下面
-    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)didReceiveMemoryWarning {

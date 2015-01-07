@@ -8,8 +8,9 @@
 
 #import "CDVWelianPlugin.h"
 #import "MJExtension.h"
-#import "ActivityViewController.h"
-#import "ActivityDetailViewController.h"
+#import "BaseCDVViewController.h"
+//#import "ActivityViewController.h"
+//#import "ActivityDetailViewController.h"
 #import "ActivityOrderViewController.h"
 
 @interface CDVWelianPlugin ()
@@ -118,7 +119,7 @@
 - (void)showEntry:(CDVInvokedUrlCommand *)command
 {
     DLog(@"showEntry : %@",command.arguments);
-    ActivityDetailViewController *activityVC = (ActivityDetailViewController *)self.viewController;
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
     [activityVC showEntry:command.arguments];
 }
 
@@ -130,7 +131,7 @@
 - (void)goToDetail:(CDVInvokedUrlCommand *)command
 {
     DLog(@"goToDetail : %@",command.arguments);
-    ActivityViewController *activityVC = (ActivityViewController *)self.viewController;
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
     [activityVC toActivityDetailVC:command.arguments];
 }
 
@@ -141,7 +142,7 @@
 - (void)goToOrder:(CDVInvokedUrlCommand *)command
 {
     DLog(@"goToOrder : %@",command.arguments);
-    ActivityDetailViewController *activityVC = (ActivityDetailViewController *)self.viewController;
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
     [activityVC toOrderVC:command.arguments];
 }
 
@@ -164,7 +165,7 @@
 - (void)goToMap:(CDVInvokedUrlCommand *)command
 {
     DLog(@"goToMap : %@  -- %@",command.arguments[0],command.arguments[1]);
-    ActivityDetailViewController *activityVC = (ActivityDetailViewController *)self.viewController;
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
     [activityVC toMapVC:command.arguments];
 //    if ([self.viewController isKindOfClass:[ActivityDetailViewController class]]) {
 //        [(ActivityDetailViewController *)self.viewController toMapVC:command.arguments];

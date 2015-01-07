@@ -597,6 +597,32 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     [self addLinkWithTextCheckingResult:[NSTextCheckingResult transitInformationCheckingResultWithRange:range components:components]];
 }
 
+//添加自定义类型匹配
+- (void)addLinkToCorrectionChecking:(CustomLinkType)type
+                          withRange:(NSRange)range
+{
+    //匹配修改新的内容
+    NSMutableAttributedString *mutableAttributedString = [self.attributedText mutableCopy];
+    //修改自定义类型
+    NSString *rangString = @"";
+    switch (type) {
+        case CustomLinkTypeSendAddFriend:
+            rangString = @"发送好友请求";
+            break;
+        default:
+            break;
+    }
+    
+    //重置文本内容
+    [mutableAttributedString replaceCharactersInRange:range withString:rangString];
+    //获取匹配后的内容的占位
+    range = NSMakeRange(range.location, rangString.length);
+    //重置修改后内容
+    self.attributedText = mutableAttributedString;
+    
+    //添加链接点击内容
+    [self addLinkWithTextCheckingResult:[NSTextCheckingResult correctionCheckingResultWithRange:range replacementString:[NSString stringWithFormat:@"%d",type]]];
+}
 
 #pragma mark -
 
@@ -1465,8 +1491,22 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
                     [self.delegate attributedLabel:self didSelectLinkWithTransitInformation:result.components];
                     return;
                 }
+                break;
+            case NSTextCheckingTypeCorrection:
+//                NSLog(@"NSTextCheckingTypeCorrection");
+                //添加自定义类型点击
+                if ([self.delegate respondsToSelector:@selector(attributedLabel:didSelectLinkWithCorrectionCheckingResult:)]) {
+                    [self.delegate attributedLabel:self didSelectLinkWithCorrectionCheckingResult:result.replacementString];
+//                    return;
+                }
+                break;
             default:
                 break;
+        }
+        
+        //MARK:molon 修改,需要继承
+        if ([self didSelectLinkWithTextCheckingResult:result]){
+            return;
         }
 
         // Fallback to `attributedLabel:didSelectLinkWithTextCheckingResult:` if no other delegate method matched.
@@ -1476,6 +1516,12 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
     } else {
         [super touchesEnded:touches withEvent:event];
     }
+}
+
+//MARK:molon 修改,需要继承
+- (BOOL)didSelectLinkWithTextCheckingResult:(NSTextCheckingResult*)result
+{
+    return NO;
 }
 
 - (void)touchesCancelled:(NSSet *)touches

@@ -6,16 +6,11 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <Cordova/CDVViewController.h>
+#import "BaseCDVViewController.h"
 
-@interface ActivityViewController : CDVViewController
+@interface ActivityViewController : BaseCDVViewController
 
 //- (void)hideHeader;
 //- (void)backToFindVC;
-//分享
-- (void)shareWithInfo:(NSDictionary *)commandDic;
-
-//进入活动详情页面
-- (void)toActivityDetailVC:(NSArray *)infos;
 
 @end

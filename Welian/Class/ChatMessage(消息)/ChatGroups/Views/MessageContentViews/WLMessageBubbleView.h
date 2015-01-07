@@ -13,7 +13,7 @@
 #import "WLMessageInputView.h"
 //#import "WLMessageDisplayTextView.h"
 #import "WLBubblePhotoImageView.h"
-#import "SETextView.h"
+//#import "SETextView.h"
 #import "MLEmojiLabel.h"
 
 #import "FLAnimatedImageView.h"
