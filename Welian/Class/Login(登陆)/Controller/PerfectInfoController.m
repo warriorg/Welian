@@ -10,6 +10,9 @@
 #import "WLTextField.h"
 #import "UIImage+ImageEffects.h"
 #import "LoginGuideController.h"
+#import "BSearchFriendsController.h"
+#import "BindingPhoneController.h"
+#import "CompotAndPostController.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 
@@ -46,20 +49,21 @@
     [iconBut setImage:iconimage forState:UIControlStateNormal];
     _iconBut = iconBut;
     [scrollView addSubview:iconBut];
-//    [iconBut.layer setBorderWidth:4];
-//    [iconBut.layer setBorderColor:[WLRGB(194, 211, 217) CGColor]];
     [iconBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
     if ([self.userInfoDic objectForKey:@"headimgurl"]) {
         [iconBut.layer setCornerRadius:iconimage.size.width*0.5];
         [iconBut.layer setMasksToBounds:YES];
-        [iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [iconBut setImage:image forState:UIControlStateNormal];
+            
+        }];
     }
     
     UITextField *nameTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(iconBut.frame)+25 Placeholder:@"姓名" leftImageName:@"login_name"];
     _nameTF = nameTF;
     [scrollView addSubview:nameTF];
     
-    UITextField *companyTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(nameTF.frame)+15 Placeholder:@"公司" leftImageName:@"login_gongsi"];
+    UITextField *companyTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(nameTF.frame)+15 Placeholder:@"单位" leftImageName:@"login_gongsi"];
     UIButton *companyRightV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 16)];
     [companyRightV setUserInteractionEnabled:NO];
     [companyRightV setImage:[UIImage imageNamed:@"me_right"] forState:UIControlStateNormal];
@@ -95,6 +99,7 @@
     [bindingBut.titleLabel setFont:WLFONT(14)];
     [bindingBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bindingBut setTitle:@"已有手机注册账号，立即绑定>>" forState:UIControlStateNormal];
+    [bindingBut addTarget:self action:@selector(bindingPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
     _bindingBut = bindingBut;
     [scrollView addSubview:bindingBut];
 }
@@ -103,6 +108,7 @@
 // 微信验证
 - (void)weixinRegister
 {
+    
     if (![self.userInfoDic objectForKey:@"openid"]) {
         return;
     }
@@ -136,11 +142,10 @@
     [requstDic setObject:_companyTF.text forKey:@"company"];
     [requstDic setObject:_postTF.text forKey:@"position"];
     
-    if ([self.userInfoDic objectForKey:@"headimgurl"]) {
-        
-        [requstDic setObject:self.userInfoDic forKey:@"headimgurl"];
-    }else{
+    if (_imagebase64Str) {
         [requstDic setObject:_imagebase64Str forKey:@"photo"];
+    }else{
+        [requstDic setObject:self.userInfoDic forKey:@"headimgurl"];
     }
     if ([self.userInfoDic objectForKey:@"nickname"]) {
         
@@ -150,6 +155,11 @@
     
     [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
         
+        BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+        [self presentViewController:BSearchFVC animated:YES completion:^{
+            
+        }];
+
     } fail:^(NSError *error) {
         
     }];
@@ -172,32 +182,48 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-        if (textField==_nameTF) {
-            return YES;
-        }else if (textField == _companyTF){
-            
-            [UIView animateWithDuration:0.25 animations:^{
-//                [self.view setAlpha:0];
-//                [self.navigationController setNavigationBarHidden:YES];
-//                
-//                [self.navigationController pushViewController:[[LoginGuideController alloc] init] animated:NO];
-            } completion:^(BOOL finished) {
+    if (textField==_nameTF) {
+        return YES;
+    }else if (textField == _phoneTF){
+        
+        
+        return YES;
+    }else {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setAlpha:0.2];
+            [self.navigationController.navigationBar setAlpha:0];
+        } completion:^(BOOL finished) {
+            NSInteger type = 1;
+            if (textField == _companyTF) {
+
+            }else if (textField ==_postTF){
+                type = 2;
+            }
+            CompotAndPostController *compAPostVC = [[CompotAndPostController alloc] initWithType:type];
+            compAPostVC.comPostBlock = ^(NSString *compotAndPostStr){
+                if (type==1) {
+                    [_companyTF setText:compotAndPostStr];
+                }else if (type==2){
+                    [_postTF setText:compotAndPostStr];
+                }
+            };
+            [self presentViewController:compAPostVC animated:NO completion:^{
+                [self.view setAlpha:1.0];
+                [self.navigationController.navigationBar setAlpha:1];
                 
             }];
+        }];
 
-            return NO;
-        }else if (textField == _postTF){
-            
-            return NO;
-        }else if (textField == _phoneTF){
-            
-        }
+        return NO;
+    }
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
 
+- (void)bindingPhoneClick:(UIButton *)but
+{
+    BindingPhoneController *bindingPVC = [[BindingPhoneController alloc] init];
+    [self.navigationController pushViewController:bindingPVC animated:YES];
 }
 
 

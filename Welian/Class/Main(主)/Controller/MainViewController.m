@@ -172,19 +172,19 @@ single_implementation(MainViewController)
     //如果是从好友列表进入聊天，首页变换
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];
     
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-    //这个只会在第一次访问时调用
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-        dispatch_semaphore_signal(sema);
-        if (greanted) {
-            [UserDefaults setObject:@"1" forKey:KAddressBook];
-
-        }else {
-            [UserDefaults setObject:@"0" forKey:KAddressBook];
-            
-        }
-    });
+//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+//    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+//    //这个只会在第一次访问时调用
+//    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+//        dispatch_semaphore_signal(sema);
+//        if (greanted) {
+//            [UserDefaults setObject:@"1" forKey:KAddressBook];
+//
+//        }else {
+//            [UserDefaults setObject:@"0" forKey:KAddressBook];
+//            
+//        }
+//    });
     
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];

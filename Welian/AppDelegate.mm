@@ -28,7 +28,6 @@
 #import <ShareSDK/ShareSDK.h>
 #import "LoginGuideController.h"
 
-
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     MainViewController *mainVC;
@@ -62,7 +61,6 @@ BMKMapManager* _mapManager;
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:apn_type];
 #endif
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -105,8 +103,8 @@ BMKMapManager* _mapManager;
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
     
         /** 已登陆 */
-        mainVC = [[MainViewController alloc] init];
-        [mainVC setDelegate:self];
+//        mainVC = [[MainViewController alloc] init];
+//        [mainVC setDelegate:self];
         
         LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
         [self.window setRootViewController:loginGuideVC];
