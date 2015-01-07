@@ -39,6 +39,15 @@
 
 @implementation WLSegmentedControl
 
+- (void)dealloc
+{
+    _scrollView = nil;
+    _array4Btn = nil;
+    _titles = nil;
+    _images = nil;
+    _bridges = nil;
+}
+
 - (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges
 {
     self = [super initWithFrame:frame];

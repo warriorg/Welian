@@ -19,6 +19,7 @@
 #import "NewFriendController.h"
 #import "FriendsFriendController.h"
 #import "MyFriendsOperateViewCell.h"
+#import "NewFriendViewController.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
@@ -269,8 +270,9 @@ static NSString *fridcellid = @"fridcellid";
         case 0:
         {
             //新的好友
-            NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
-            [self.navigationController pushViewController:friendNewVC animated:YES];
+//            NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+            NewFriendViewController *newFriendVC = [[NewFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            [self.navigationController pushViewController:newFriendVC animated:YES];
             [self.navigationController.tabBarItem setBadgeValue:nil];
             [UserDefaults removeObjectForKey:KFriendbadge];
         }

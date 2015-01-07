@@ -36,6 +36,15 @@
 		A403560F1A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
 		A40356101A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
 		A40356111A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
+		A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356141A5D4F61006AE52C /* NewFriendViewController.m */; };
+		A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356141A5D4F61006AE52C /* NewFriendViewController.m */; };
+		A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356141A5D4F61006AE52C /* NewFriendViewController.m */; };
+		A403561A1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */; };
+		A403561B1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */; };
+		A403561C1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */; };
+		A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
+		A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
+		A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
 		A414FE1D1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
@@ -3125,6 +3134,12 @@
 		A40356001A5D1D05006AE52C /* me_myfriend_wechat_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myfriend_wechat_logo@2x.png"; sourceTree = "<group>"; };
 		A403560D1A5D2259006AE52C /* MyFriendsOperateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFriendsOperateViewCell.h; sourceTree = "<group>"; };
 		A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFriendsOperateViewCell.m; sourceTree = "<group>"; };
+		A40356131A5D4F61006AE52C /* NewFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendViewController.h; sourceTree = "<group>"; };
+		A40356141A5D4F61006AE52C /* NewFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewController.m; sourceTree = "<group>"; };
+		A40356181A5D5B7E006AE52C /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
+		A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		A403561D1A5D5C85006AE52C /* NewFriendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendViewCell.h; sourceTree = "<group>"; };
+		A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewCell.m; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		A4272FC51A4E8AAD0019E440 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
@@ -5995,6 +6010,8 @@
 				F5239B8919F6409C00D9E696 /* StaurCell.h */,
 				F5239B8A19F6409C00D9E696 /* StaurCell.m */,
 				F5239B8B19F6409C00D9E696 /* StaurCell.xib */,
+				A40356181A5D5B7E006AE52C /* BaseTableViewCell.h */,
+				A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6915,6 +6932,8 @@
 				F5239B4B19F4AD2A00D9E696 /* MyFriendsController.m */,
 				F5382B1619FD108200FAA5B6 /* NewFriendController.h */,
 				F5382B1719FD108200FAA5B6 /* NewFriendController.m */,
+				A40356131A5D4F61006AE52C /* NewFriendViewController.h */,
+				A40356141A5D4F61006AE52C /* NewFriendViewController.m */,
 				F5C2D0FF19F909EF000610A1 /* AddFriendsController.h */,
 				F5C2D10019F909EF000610A1 /* AddFriendsController.m */,
 				F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */,
@@ -6958,6 +6977,8 @@
 				A40355F91A5D1142006AE52C /* WLSegmentedControl.m */,
 				A403560D1A5D2259006AE52C /* MyFriendsOperateViewCell.h */,
 				A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */,
+				A403561D1A5D5C85006AE52C /* NewFriendViewCell.h */,
+				A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9811,11 +9832,13 @@
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
 				A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F53DC3781A49192600F5F712 /* CommentHeadView.m in Sources */,
+				A403561C1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F53DC3791A49192600F5F712 /* main.m in Sources */,
 				F53DC37A1A49192600F5F712 /* AFURLRequestSerialization.m in Sources */,
 				F53DC37B1A49192600F5F712 /* DKManagedObjectQuery.m in Sources */,
 				F53DC37C1A49192600F5F712 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F53DC37D1A49192600F5F712 /* SWTableViewCell.m in Sources */,
 				F53DC37E1A49192600F5F712 /* AFSecurityPolicy.m in Sources */,
 				F53DC37F1A49192600F5F712 /* NSData+ImageContentType.m in Sources */,
@@ -9825,6 +9848,7 @@
 				F53DC3831A49192600F5F712 /* NSString+Extend.m in Sources */,
 				F53DC3841A49192600F5F712 /* AddFriendsController.m in Sources */,
 				F53DC3851A49192600F5F712 /* MJMethod.m in Sources */,
+				A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F5C7796C1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
 				F534DB561A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F53DC3861A49192600F5F712 /* InvestReqstModel.m in Sources */,
@@ -10194,11 +10218,13 @@
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
 				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664A401A2AFD56008A5830 /* WLStatusM.m in Sources */,
+				A403561A1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F5664A411A2AFD56008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664A421A2AFD56008A5830 /* MeinfoCell.m in Sources */,
 				A4C141171A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
 				A4C141711A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
 				F5664A431A2AFD56008A5830 /* CommentHeadView.m in Sources */,
+				A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664A441A2AFD56008A5830 /* main.m in Sources */,
 				F5664A451A2AFD56008A5830 /* AFURLRequestSerialization.m in Sources */,
 				F5664A461A2AFD56008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
@@ -10208,6 +10234,7 @@
 				F5664A491A2AFD56008A5830 /* NSData+ImageContentType.m in Sources */,
 				F5664A4A1A2AFD56008A5830 /* NoCommentCell.m in Sources */,
 				F5664A4B1A2AFD56008A5830 /* WeixinTimelineActivity.m in Sources */,
+				A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F59E75FA1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				A4C140A11A4BEA8500C9BAB5 /* WLMessageTextView.m in Sources */,
 				A4C140BD1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
@@ -10577,11 +10604,13 @@
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
 				A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664CFD1A2AFDD5008A5830 /* CommentHeadView.m in Sources */,
+				A403561B1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F5664CFE1A2AFDD5008A5830 /* main.m in Sources */,
 				F5664CFF1A2AFDD5008A5830 /* AFURLRequestSerialization.m in Sources */,
 				F59E75FB1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				F5664D001A2AFDD5008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664D011A2AFDD5008A5830 /* SWTableViewCell.m in Sources */,
 				F5664D021A2AFDD5008A5830 /* AFSecurityPolicy.m in Sources */,
 				F5664D031A2AFDD5008A5830 /* NSData+ImageContentType.m in Sources */,
@@ -10591,6 +10620,7 @@
 				10389B691A3F0740001A785C /* NSString+Extend.m in Sources */,
 				F5664D071A2AFDD5008A5830 /* AddFriendsController.m in Sources */,
 				F5664D081A2AFDD5008A5830 /* MJMethod.m in Sources */,
+				A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F5C7796B1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
 				F534DB551A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F5664D091A2AFDD5008A5830 /* InvestReqstModel.m in Sources */,
