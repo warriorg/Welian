@@ -6,13 +6,10 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <Cordova/CDVViewController.h>
+#import "BaseCDVViewController.h"
 
-@interface ActivityOrderViewController : CDVViewController
+@interface ActivityOrderViewController : BaseCDVViewController
 
 @property (nonatomic, strong) NSString *orderInfo;
-
-//微信支付
-- (void)wechatPay;
 
 @end

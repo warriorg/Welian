@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <Cordova/CDVViewController.h>
+#import "BaseCDVViewController.h"
 
-@interface ActivityEntryViewController : CDVViewController
+@interface ActivityEntryViewController : BaseCDVViewController
 
 @end
