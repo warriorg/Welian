@@ -91,7 +91,14 @@
 
 - (void)authButClickWexing
 {
+//    PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+////    [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+//    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+//    [self presentViewController:nav animated:YES completion:^{
+//        
+//    }];
     
+
     if ([ShareSDK hasAuthorizedWithType:ShareTypeWeixiSession]) {
         //取消授权
         [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
@@ -150,7 +157,6 @@
         
 
     }
-
     
 }
 

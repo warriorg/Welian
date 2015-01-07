@@ -11,13 +11,41 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "WLTool.h"
 
-@interface BSearchFriendsController ()
+@interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UIImageView *_leidaImage;
 }
+
+@property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) UIView *addressBookRefView;
+
 @end
 
 @implementation BSearchFriendsController
+
+- (UIView *)addressBookRefView
+{
+    if (_addressBookRefView == nil) {
+        NSString *tisStr = @"请到“设置->隐私->通讯录”中打开微链访问通讯录的权限，将为你找到更多好友";
+        
+//        _addressBookRefView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, SuperSize.width, <#CGFloat height#>)]
+    }
+    return _addressBookRefView;
+}
+
+- (UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, SuperSize.height) style:UITableViewStylePlain];
+        [_tableView setDataSource:self];
+        [_tableView setDelegate:self];
+    }
+    return _tableView;
+}
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

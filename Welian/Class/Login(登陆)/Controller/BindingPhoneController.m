@@ -45,7 +45,6 @@
 {
     [_phoneTF resignFirstResponder];
     [_pwdTF resignFirstResponder];
-//    [self.view resignFirstResponder];
 }
 
 

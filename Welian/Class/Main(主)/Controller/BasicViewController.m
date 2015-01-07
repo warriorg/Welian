@@ -89,6 +89,7 @@
 
 - (void)dealloc
 {
+    [DaiDodgeKeyboard removeRegisterTheViewNeedDodgeKeyboard];
     DLog(@"%@ ------  dealloc",[self class]);
     if (!self.needlessCancel) {
         [WLHUDView hiddenHud];
