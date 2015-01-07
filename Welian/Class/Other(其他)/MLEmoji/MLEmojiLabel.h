@@ -19,11 +19,13 @@ typedef NS_OPTIONS(NSUInteger, MLEmojiLabelLinkType) {
 
 
 @class MLEmojiLabel;
-@protocol MLEmojiLabelDelegate <NSObject>
+@protocol MLEmojiLabelDelegate <TTTAttributedLabelDelegate>
 
 @optional
 - (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type;
 
+//点击自定义消息
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithCorrectionCheckingResult:(NSString *)components;
 
 @end
 

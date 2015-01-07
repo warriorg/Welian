@@ -9,15 +9,16 @@
 #import "WLMessageSpecialView.h"
 #import "WLMessageBubbleHelper.h"
 
-#define kMarginLeft 10
+#define kMarginLeft 8
 #define kOutMarginLeft 19
 #define kTextLineSpacing 3
 
-#define kMarginTop 10
+#define kMarginTop 5
 
 @interface WLMessageSpecialView ()
 
 @property (nonatomic, strong, readwrite) id <WLMessageModel> message;
+@property (nonatomic, weak, readwrite) MLEmojiLabel *displayLabel;
 
 @end
 
@@ -25,7 +26,8 @@
 
 - (void)dealloc {
     _message = nil;
-    _specialTextView = nil;
+//    _specialTextView = nil;
+    _displayLabel = nil;
 }
 
 /**
@@ -48,24 +50,38 @@
         self.layer.masksToBounds = YES;
         
         // 2、初始化显示文本消息的TextView
-        if (!_specialTextView) {
-            SETextView *specialTextView = [[SETextView alloc] initWithFrame:CGRectZero];
-            specialTextView.backgroundColor = [UIColor clearColor];
-            specialTextView.selectable = NO;
-            specialTextView.lineSpacing = kTextLineSpacing;
-            specialTextView.font = [UIFont systemFontOfSize:16.f];
-            specialTextView.showsEditingMenuAutomatically = NO;
-            //设置字体颜色
-            specialTextView.textColor = [UIColor whiteColor];
-            specialTextView.highlighted = YES;
-            specialTextView.highlightedTextColor = [UIColor greenColor];
-//            specialTextView.delegate = self;
-            [self addSubview:specialTextView];
-            _specialTextView = specialTextView;
-            //            [displayTextView setDebug:YES];
-        }
+//        if (!_specialTextView) {
+//            SETextView *specialTextView = [[SETextView alloc] initWithFrame:CGRectZero];
+//            specialTextView.backgroundColor = [UIColor clearColor];
+//            specialTextView.selectable = NO;
+//            specialTextView.lineSpacing = kTextLineSpacing;
+//            specialTextView.font = [UIFont systemFontOfSize:16.f];
+//            specialTextView.showsEditingMenuAutomatically = NO;
+//            //设置字体颜色
+//            specialTextView.textColor = [UIColor whiteColor];
+//            specialTextView.highlighted = YES;
+//            specialTextView.highlightedTextColor = [UIColor greenColor];
+////            specialTextView.delegate = self;
+//            [self addSubview:specialTextView];
+//            _specialTextView = specialTextView;
+//            //            [displayTextView setDebug:YES];
+//        }
         //        _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text]];
         
+        if (!_displayLabel) {
+            // 5.内容
+            MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
+            displayLabel.numberOfLines = 0;
+            //            displayLabel.emojiDelegate = self;
+            displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            displayLabel.font = [[WLMessageSpecialView appearance] font];
+            //设置字体颜色
+            displayLabel.textColor = [UIColor whiteColor];
+            displayLabel.backgroundColor = [UIColor clearColor];
+            [self addSubview:displayLabel];
+            self.displayLabel = displayLabel;
+//            [displayLabel setDebug:YES];
+        }
     }
     return self;
 }
@@ -74,7 +90,8 @@
 {
     [super layoutSubviews];
     
-    _specialTextView.frame = [self bubbleFrame];
+//    _specialTextView.frame = [self bubbleFrame];
+    _displayLabel.frame = [self bubbleFrame];
 }
 
 /**
@@ -86,8 +103,12 @@
 {
     _message = message;
 //    _specialTextView.text = message.text;
-    _specialTextView.text = _message.text;
-    _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
+    _displayLabel.text = _message.text;
+    //添加自定义类型
+    [_displayLabel addLinkToCorrectionChecking:CustomLinkTypeSendAddFriend withRange:[_message.text rangeOfString:@"&sendAddFriend"]];
+    
+//    _specialTextView.text = _message.text;
+//    _specialTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] attributedStringWithSpecial:[message text]];
 //    [_specialTextView addObject:@"发送好友请求" size:CGSizeMake(20,20) replaceRange:[_message.text rangeOfString:@"&sendAddFriend" options:NSCaseInsensitiveSearch]];
 //    NSColor *linkColor = [NSColor blueColor];
 //    NSFont *font = [NSFont systemFontOfSize:13.0f];
@@ -116,7 +137,7 @@
 
 + (CGFloat)neededWidthForText:(NSString *)text {
     CGSize stringSize;
-    stringSize = [text sizeWithFont:[UIFont systemFontOfSize:16]
+    stringSize = [text sizeWithFont:[[WLMessageSpecialView appearance] font]
                   constrainedToSize:CGSizeMake(MAXFLOAT, 19)];
     return roundf(stringSize.width);
 }
@@ -126,15 +147,30 @@
     
 //    CGFloat dyWidth = [WLMessageSpecialView neededWidthForText:text];
     
-    CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kTextLineSpacing font:[UIFont systemFontOfSize:16]].size;
-    return CGSizeMake(maxWidth, textSize.height);
-    //    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
+//    CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kTextLineSpacing font:[UIFont systemFontOfSize:16]].size;
+    
+//    return CGSizeMake(maxWidth, textSize.height);
+    
+    MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
+    displayLabel.numberOfLines = 0;
+    //    displayLabel.emojiDelegate = self;
+    displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    displayLabel.font = [[WLMessageSpecialView appearance] font];
+    displayLabel.text = text;
+    //    displayLabel.textColor = WLRGB(51, 51, 51);
+    //    displayLabel.backgroundColor = [UIColor clearColor];
+    //    [self addSubview:displayLabel];
+    
+    CGSize textSize = [displayLabel preferredSizeWithMaxWidth:maxWidth];
+    
+    return textSize;
+//    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
 }
 
 - (CGRect)bubbleFrame {
     CGSize bubbleSize = [WLMessageSpecialView neededSizeForText:self.message.text];
     
-    return CGRectMake(kMarginLeft, kMarginTop, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop * 2);
+    return CGRectMake(kMarginLeft, kMarginTop, self.width - kMarginLeft * 2.f, bubbleSize.height + kMarginTop);
 //    return CGRectIntegral(CGRectMake((self.message.bubbleMessageType == WLBubbleMessageTypeSending ? CGRectGetWidth(self.bounds) - bubbleSize.width : 0.0f),
 //                                     kMarginTop,
 //                                     bubbleSize.width,

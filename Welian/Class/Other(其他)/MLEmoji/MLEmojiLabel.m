@@ -621,6 +621,40 @@ didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
     }
 }
 
+#pragma mark - select link override
+//PS:此处是在TTT代码里添加一个供继承的行为
+- (BOOL)didSelectLinkWithTextCheckingResult:(NSTextCheckingResult*)result
+{
+    if (result.resultType == NSTextCheckingTypeCorrection) {
+        //判断消息类型
+        for (NSUInteger i=0; i<kURLActionCount; i++) {
+            if ([result.replacementString hasPrefix:kURLActions[i]]) {
+                NSString *content = [result.replacementString substringFromIndex:kURLActions[i].length];
+                if(self.emojiDelegate&&[self.emojiDelegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
+                    //type的数组和i刚好对应
+                    [self.emojiDelegate mlEmojiLabel:self didSelectLink:content withType:i];
+                    return YES;
+                }
+                return NO;
+            }
+        }
+    }
+    return NO;
+}
+
+//自定义特殊类型选中
+- (void)attributedLabel:(TTTAttributedLabel *)label
+didSelectLinkWithCorrectionCheckingResult:(NSString *)components
+{
+    if([self.emojiDelegate respondsToSelector:@selector(attributedLabel:didSelectLinkWithCorrectionCheckingResult:)]){
+        [self.emojiDelegate attributedLabel:label didSelectLinkWithCorrectionCheckingResult:components];
+    }
+//    CustomLinkType linkType = components.integerValue;
+//    if ([self.delegate respondsToSelector:@selector(didSelectedCustomLinkTextOnMessage:type:atIndexPath:)]) {
+//        [self.delegate didSelectedCustomLinkTextOnMessage:self.messageSpecialView.message type:linkType atIndexPath:self.indexPath];
+//    }
+}
+
 #pragma mark - UIResponderStandardEditActions
 - (void)copy:(__unused id)sender {
     if (!self.emojiText) {

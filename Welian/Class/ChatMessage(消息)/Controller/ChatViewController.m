@@ -723,20 +723,44 @@
     }
 }
 
-- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath
+//自定义链接类型点击
+- (void)didSelectedCustomLinkTextOnMessage:(id <WLMessageModel>)message type:(CustomLinkType)type atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([linkText isEqualToString:@"发送好友请求"]) {
-        //发送好友请求
-        LogInUser *loginUser = [LogInUser getNowLogInUser];
-        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
-        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
-        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+    switch (type) {
+        case CustomLinkTypeSendAddFriend:
+        {
+            DLog(@"聊天 发送好友请求 >>>");
+            //发送好友请求
+            LogInUser *loginUser = [LogInUser getNowLogInUser];
+            NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
+            //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
+            [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+                
+            } fail:^(NSError *error) {
+                
+            }];
+        }
+            break;
             
-        } fail:^(NSError *error) {
-            
-        }];
+        default:
+            break;
     }
 }
+
+//- (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText atIndexPath:(NSIndexPath *)indexPath
+//{
+//    if ([linkText isEqualToString:@"发送好友请求"]) {
+//        //发送好友请求
+//        LogInUser *loginUser = [LogInUser getNowLogInUser];
+//        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
+//        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
+//        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
+//    }
+//}
 
 
 /**

@@ -7,7 +7,6 @@
 //
 
 #import "WLMessageTableViewCell.h"
-#import "WLMessageSpecialView.h"
 
 static const CGFloat kWLLabelPadding = 5.0f;
 static const CGFloat kWLTimeStampLabelHeight = 20.0f;
@@ -125,8 +124,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     self.timestampLabel.text = nil;
     
     _message = nil;
-    self.messageSpecialView.specialTextView.text = nil;
-    self.messageSpecialView.specialTextView.attributedText = nil;
+    self.messageSpecialView.displayLabel.text = nil;
+//    self.messageSpecialView.specialTextView.text = nil;
+//    self.messageSpecialView.specialTextView.attributedText = nil;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -270,7 +270,8 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         if (!_messageSpecialView) {
             WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f,  CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
             messageSpecialView.hidden = YES;
-            messageSpecialView.specialTextView.delegate = self;
+//            messageSpecialView.specialTextView.delegate = self;
+            messageSpecialView.displayLabel.emojiDelegate = self;
             [self.contentView addSubview:messageSpecialView];
             [self.contentView sendSubviewToBack:messageSpecialView];
 //            [self.contentView bringSubviewToFront:messageSpecialView];
@@ -450,16 +451,16 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 }
 
 #pragma mark - SETextView Delegate
-- (BOOL)textView:(SETextView *)textView clickedOnLink:(SELinkText *)link atIndex:(NSUInteger)charIndex
-{
-    DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
-    NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
-    NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
-    if (firstMatch) {
-        if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:atIndexPath:)]) {
-            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
-        }
-    }
+//- (BOOL)textView:(SETextView *)textView clickedOnLink:(SELinkText *)link atIndex:(NSUInteger)charIndex
+//{
+//    DLog(@"setextview seclect: %@  link:%@",textView.selectedAttributedText,link.text);
+//    NSDataDetector * dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:nil];
+//    NSTextCheckingResult * firstMatch = [dataDetector firstMatchInString:link.text options:0 range:NSMakeRange(0, [link.text length])];
+//    if (firstMatch) {
+//        if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:atIndexPath:)]) {
+//            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
+//        }
+//    }
 //    if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
 //        if (firstMatch) {
 ////            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text type:firstMatch.resultType atIndexPath:self.indexPath];
@@ -467,13 +468,23 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 //            [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link.text atIndexPath:self.indexPath];
 //        }
 //    }
-    return YES;
-}
+//    return YES;
+//}
 
 - (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
 {
     if ([self.delegate respondsToSelector:@selector(didSelectedSELinkTextOnMessage:LinkText:type:atIndexPath:)]) {
         [self.delegate didSelectedSELinkTextOnMessage:self.messageBubbleView.message LinkText:link type:type atIndexPath:self.indexPath];
+    }
+}
+
+//自定义特殊类型选中
+- (void)attributedLabel:(TTTAttributedLabel *)label
+didSelectLinkWithCorrectionCheckingResult:(NSString *)components
+{
+    CustomLinkType linkType = components.integerValue;
+    if ([self.delegate respondsToSelector:@selector(didSelectedCustomLinkTextOnMessage:type:atIndexPath:)]) {
+        [self.delegate didSelectedCustomLinkTextOnMessage:self.messageSpecialView.message type:linkType atIndexPath:self.indexPath];
     }
 }
 

@@ -32,6 +32,13 @@ typedef NS_ENUM(NSInteger, TTTAttributedLabelVerticalAlignment) {
     TTTAttributedLabelVerticalAlignmentBottom   = 2,
 };
 
+
+//自定义类型
+typedef NS_ENUM(NSUInteger, CustomLinkType){
+    CustomLinkTypeSendAddFriend = 100,
+};
+
+
 /**
  Determines whether the text to which this attribute applies has a strikeout drawn through itself.
  */
@@ -369,6 +376,11 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
 - (void)addLinkToTransitInformation:(NSDictionary *)components
                           withRange:(NSRange)range;
 
+
+//添加自定义类型链接
+- (void)addLinkToCorrectionChecking:(CustomLinkType)type
+                          withRange:(NSRange)range;
+
 @end
 
 /**
@@ -449,6 +461,11 @@ didSelectLinkWithTransitInformation:(NSDictionary *)components;
  */
 - (void)attributedLabel:(TTTAttributedLabel *)label
 didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
+
+
+//选择自定义类型 点击进行操作
+- (void)attributedLabel:(TTTAttributedLabel *)label
+didSelectLinkWithCorrectionCheckingResult:(NSString *)components;
 
 
 //Molon添加

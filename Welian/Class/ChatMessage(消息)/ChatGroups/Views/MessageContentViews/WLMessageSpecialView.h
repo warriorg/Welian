@@ -11,7 +11,8 @@
 // Model
 #import "WLMessage.h"
 
-#import "SETextView.h"
+//#import "SETextView.h"
+#import "MLEmojiLabel.h"
 
 @interface WLMessageSpecialView : UIView
 
@@ -19,8 +20,11 @@
 @property (nonatomic, strong, readonly)  id <WLMessageModel> message;
 
 //自定义显示文本消息控件，子类化的原因有两个，第一个是屏蔽Menu的显示。第二是传递手势到下一层，因为文本需要双击的手势
-@property (nonatomic, weak, readonly) SETextView *specialTextView;
+//@property (nonatomic, weak, readonly) SETextView *specialTextView;
+@property (nonatomic, weak, readonly) MLEmojiLabel *displayLabel;
 
+//设置文本消息的字体
+@property (nonatomic, strong) UIFont *font UI_APPEARANCE_SELECTOR;
 
 
 /**

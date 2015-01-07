@@ -349,6 +349,7 @@ static CGPoint  delayOffset = {0.0};
     [self initUI];
     //设置字体大小
     [[WLMessageBubbleView appearance] setFont:[UIFont systemFontOfSize:16.0f]];
+    [[WLMessageSpecialView appearance] setFont:[UIFont systemFontOfSize:16.0f]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
