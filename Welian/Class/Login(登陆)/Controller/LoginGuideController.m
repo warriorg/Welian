@@ -85,20 +85,13 @@
     [authBut setTitle:@"微信登录" forState:UIControlStateNormal];
     [authBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [authBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-//    [authBut setBackgroundColor:[UIColor redColor]];
     [authBut addTarget:self action:@selector(authButClickWexing) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:authBut];
 }
 
 - (void)authButClickWexing
 {
-//    PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-//    //        [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-//    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-//    [self presentViewController:nav animated:YES completion:^{
-//        
-//    }];
-
+    
     if ([ShareSDK hasAuthorizedWithType:ShareTypeWeixiSession]) {
         //取消授权
         [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
@@ -117,25 +110,41 @@
                                    
                                    if (result)
                                    {
-                                       NSLog(@"uid = %@",[userInfo uid]);
-                                       NSLog(@"name = %@",[userInfo nickname]);
-                                       NSLog(@"icon = %@",[userInfo profileImage]);
-                                       NSLog(@"性别 = %@",[userInfo gender] == 0 ? @"男" : @"女");
                                        NSLog(@"sourceData = %@",[userInfo sourceData]);
-                                       NSLog(@"verifyReason = %@",[userInfo verifyReason]);
-                                       NSLog(@"birthday = %@",[userInfo birthday]);
-                                       NSLog(@"aboutMe = %@",[userInfo aboutMe]);
-                                       PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-                                       [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-                                       NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-                                       [self presentViewController:nav animated:YES completion:^{
+                                       NSDictionary *sourceDic = [userInfo sourceData];
+                                       
+                                       NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+                                       [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
+                                       [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];
+                                       [reqstDic setObject:KPlatformType forKey:@"platform"];
+                                       if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+                                           [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+                                       }
+                                       
+                                       [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
                                            
-                                       }];
+                                           if (JSON) {
+                                               
+                                           }else{
+                                               PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+                                               [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+                                               NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+                                               [self presentViewController:nav animated:YES completion:^{
+                                                   
+                                               }];
+                                           }
+                                           
+                                       } fail:^(NSError *error) {
+                                           
+                                       } isHUD:YES];
+                                       
+                                       
+                                       
 
                                    }else{
                                        [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
                                    }
-                                   [WLHUDView hiddenHud];
+//                                   [WLHUDView hiddenHud];
                                    NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
                                }];
         
