@@ -18,8 +18,9 @@
 #import "MJExtension.h"
 #import "NewFriendController.h"
 #import "FriendsFriendController.h"
+#import "MyFriendsOperateViewCell.h"
 
-@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate>
+@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
 {
     NSInteger _count;
@@ -34,20 +35,21 @@
 
 @end
 
-static NSString *newFriendcellid = @"newFriendcellid";
+static NSString *myFriendsOperatecellid = @"MyFriendsOperatecellid";
+//static NSString *newFriendcellid = @"newFriendcellid";
 static NSString *fridcellid = @"fridcellid";
 @implementation MyFriendsController
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadNewFriendsList];
+//    [self loadNewFriendsList];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadMyAllFriends];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         self.allArray = [JSON objectForKey:@"array"];
@@ -69,8 +71,16 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)addUI
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     self.filterArray = [NSMutableArray array];
+    
+    //右侧添加按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加好友"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(addFriendClick)];
+    //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
+    
+    //搜索栏
     self.searchBar = [[UISearchBar alloc] init];
     [self.searchBar setDelegate:self];
     self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
@@ -100,7 +110,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"NewFriendsCell" bundle:nil] forCellReuseIdentifier:newFriendcellid];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"NewFriendsCell" bundle:nil] forCellReuseIdentifier:newFriendcellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 }
 
@@ -182,7 +192,11 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.0;
+    if(indexPath.section == 0){
+        return 82.f;
+    }else{
+        return 60.0;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -202,7 +216,7 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         
         if (section==0) {
-            return 2;
+            return 1;
         }else{
             NSDictionary *userF = self.allArray[section-1];
             
@@ -247,6 +261,44 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
+//代理函数 获取当前下标
+- (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
+{
+    DLog(@"选中的类型--》 %d",(int)index);
+    switch (index) {
+        case 0:
+        {
+            //新的好友
+            NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+            [self.navigationController pushViewController:friendNewVC animated:YES];
+            [self.navigationController.tabBarItem setBadgeValue:nil];
+            [UserDefaults removeObjectForKey:KFriendbadge];
+        }
+            break;
+        case 1:
+        {
+            //手机联系人
+            
+        }
+            break;
+        case 2:
+        {
+            //微信好友
+            
+        }
+            break;
+        case 3:
+        {
+            //好友的好友
+            FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:friendsfVC animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
@@ -256,27 +308,34 @@ static NSString *fridcellid = @"fridcellid";
         return fcell;
     }else{
         if (indexPath.section==0) {
-            NewFriendsCell *ncell = [tableView dequeueReusableCellWithIdentifier:newFriendcellid];
-            if (indexPath.row==0) {
-                [ncell.titLabel setText:@"新的好友"];
-                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_add"]];
-                
-                [ncell.tipLabel setEnabled:NO];
-                [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",self.navigationController.tabBarItem.badgeValue] forState:UIControlStateDisabled];
-                
-                if ([self.navigationController.tabBarItem.badgeValue integerValue]) {
-                    
-                    [ncell.tipLabel setHidden:NO];
-                }else{
-                    [ncell.tipLabel setHidden:YES];
-                }
-            }else{
-                [ncell.titLabel setText:@"好友的好友"];
-                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_more"]];
-                [ncell.tipLabel setHidden:YES];
-                [ncell.titLabel sizeToFit];
+            MyFriendsOperateViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myFriendsOperatecellid];
+            if(!cell){
+                cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
             }
-            return ncell;
+            cell.segementedControl.delegate = self;
+            return cell;
+//            NewFriendsCell *ncell = [tableView dequeueReusableCellWithIdentifier:newFriendcellid];
+//            if (indexPath.row==0) {
+//                [ncell.titLabel setText:@"新的好友"];
+//                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_add"]];
+//                
+//                [ncell.tipLabel setEnabled:NO];
+//                [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",self.navigationController.tabBarItem.badgeValue] forState:UIControlStateDisabled];
+//                
+//                if ([self.navigationController.tabBarItem.badgeValue integerValue]) {
+//                    
+//                    [ncell.tipLabel setHidden:NO];
+//                }else{
+//                    [ncell.tipLabel setHidden:YES];
+//                }
+//            }else{
+//                [ncell.titLabel setText:@"好友的好友"];
+//                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_more"]];
+//                [ncell.tipLabel setHidden:YES];
+//                [ncell.titLabel sizeToFit];
+//            }
+//            return ncell;
+            
         }else{
             
             FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
@@ -304,20 +363,20 @@ static NSString *fridcellid = @"fridcellid";
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
         if (indexPath.section==0) {
-            if (indexPath.row==0) {
-                NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
-                
-                [self.navigationController pushViewController:friendNewVC animated:YES];
-                
-                [self.navigationController.tabBarItem setBadgeValue:nil];
-                [UserDefaults removeObjectForKey:KFriendbadge];
-                
-            }else if (indexPath.row==1){
-                FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
-                [self.navigationController pushViewController:friendsfVC animated:YES];
-                
-            }
-            
+//            if (indexPath.row==0) {
+//                NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+//                
+//                [self.navigationController pushViewController:friendNewVC animated:YES];
+//                
+//                [self.navigationController.tabBarItem setBadgeValue:nil];
+//                [UserDefaults removeObjectForKey:KFriendbadge];
+//                
+//            }else if (indexPath.row==1){
+//                FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
+//                [self.navigationController pushViewController:friendsfVC animated:YES];
+//                
+//            }
+            return;
         }else{
             NSDictionary *usersDic = self.allArray[indexPath.section-1];
             NSArray *modear = usersDic[@"userF"];
