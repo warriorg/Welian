@@ -749,8 +749,8 @@ static CGPoint  delayOffset = {0.0};
     UIEdgeInsets insets = UIEdgeInsetsZero;
     
     if ([self respondsToSelector:@selector(topLayoutGuide)]) {
-//        insets.top = 64;
-        insets.top = 20;
+        insets.top = 44;
+//        insets.top = 20;
     }
     
     insets.bottom = bottom;

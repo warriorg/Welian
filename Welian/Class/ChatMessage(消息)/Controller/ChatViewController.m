@@ -181,7 +181,7 @@
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
     
     //初始化数据查询
-    self.count = 10;
+    self.count = 15;
     if (_friendUser.rsChatMessages.count > _count) {
         self.offset = _friendUser.rsChatMessages.count - _count;
     }else{

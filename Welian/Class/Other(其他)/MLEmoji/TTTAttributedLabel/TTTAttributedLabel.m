@@ -1491,11 +1491,13 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
                     [self.delegate attributedLabel:self didSelectLinkWithTransitInformation:result.components];
                     return;
                 }
+                break;
             case NSTextCheckingTypeCorrection:
 //                NSLog(@"NSTextCheckingTypeCorrection");
                 //添加自定义类型点击
                 if ([self.delegate respondsToSelector:@selector(attributedLabel:didSelectLinkWithCorrectionCheckingResult:)]) {
                     [self.delegate attributedLabel:self didSelectLinkWithCorrectionCheckingResult:result.replacementString];
+//                    return;
                 }
                 break;
             default:

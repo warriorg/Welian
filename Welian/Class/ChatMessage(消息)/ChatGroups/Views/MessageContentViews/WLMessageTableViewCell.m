@@ -195,7 +195,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             timestampLabel.font = [UIFont systemFontOfSize:13.0f];
             timestampLabel.center = CGPointMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2.0, timestampLabel.center.y);
             [self.contentView addSubview:timestampLabel];
-            [self.contentView bringSubviewToFront:timestampLabel];
+//            [self.contentView bringSubviewToFront:timestampLabel];
             _timestampLabel = timestampLabel;
 //            [timestampLabel setDebug:YES];
         }
@@ -261,7 +261,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 //            messageBubbleView.displayTextView.delegate = self;
             messageBubbleView.displayLabel.emojiDelegate = self;
             [self.contentView addSubview:messageBubbleView];
-            [self.contentView sendSubviewToBack:messageBubbleView];
+//            [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
 //            [messageBubbleView setDebug:YES];
         }
@@ -273,7 +273,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 //            messageSpecialView.specialTextView.delegate = self;
             messageSpecialView.displayLabel.emojiDelegate = self;
             [self.contentView addSubview:messageSpecialView];
-            [self.contentView sendSubviewToBack:messageSpecialView];
+//            [self.contentView sendSubviewToBack:messageSpecialView];
 //            [self.contentView bringSubviewToFront:messageSpecialView];
             self.messageSpecialView = messageSpecialView;
 //            [specialTextView setDebug:YES];
