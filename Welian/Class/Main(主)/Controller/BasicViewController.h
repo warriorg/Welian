@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DaiDodgeKeyboard.h"
 
 @interface BasicViewController : UIViewController
 

@@ -33,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.view setBackgroundColor:WLRGB(231, 234, 238)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelVC)];
     [self setTitle:@"完善信息"];
@@ -60,6 +61,7 @@
     }
     
     UITextField *nameTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(iconBut.frame)+25 Placeholder:@"姓名" leftImageName:@"login_name"];
+    [nameTF setReturnKeyType:UIReturnKeyDone];
     _nameTF = nameTF;
     [scrollView addSubview:nameTF];
     
@@ -83,6 +85,7 @@
     
     UITextField *phoneTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(postTF.frame)+15 Placeholder:@"手机号" leftImageName:@"login_phone"];
     _phoneTF = phoneTF;
+    [phoneTF setReturnKeyType:UIReturnKeyDone];
     [scrollView addSubview:phoneTF];
     
     
@@ -102,12 +105,24 @@
     [bindingBut addTarget:self action:@selector(bindingPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
     _bindingBut = bindingBut;
     [scrollView addSubview:bindingBut];
+    
+    // 键盘管理
+    [DaiDodgeKeyboard addRegisterTheViewNeedDodgeKeyboard:scrollView];
+    UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        [[self.view findFirstResponder] resignFirstResponder];
+    }];
+    [self.view addGestureRecognizer:tap];
 }
+
 
 
 // 微信验证
 - (void)weixinRegister
 {
+//    BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+//    [self presentViewController:BSearchFVC animated:YES completion:^{
+//        
+//    }];
     
     if (![self.userInfoDic objectForKey:@"openid"]) {
         return;
@@ -218,6 +233,13 @@
     }
     return YES;
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[self.view findFirstResponder] resignFirstResponder];
+    return YES;
+}
+
 
 
 - (void)bindingPhoneClick:(UIButton *)but

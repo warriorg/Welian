@@ -2977,6 +2977,21 @@
 		F58CA9881A5D0BD900988A61 /* BiaoqainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9871A5D0BD900988A61 /* BiaoqainCell.m */; };
 		F58CA9891A5D0BD900988A61 /* BiaoqainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9871A5D0BD900988A61 /* BiaoqainCell.m */; };
 		F58CA98A1A5D0BD900988A61 /* BiaoqainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9871A5D0BD900988A61 /* BiaoqainCell.m */; };
+		F58CA9971A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA98E1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m */; };
+		F58CA9981A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA98E1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m */; };
+		F58CA9991A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA98E1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m */; };
+		F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9901A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m */; };
+		F58CA99B1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9901A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m */; };
+		F58CA99C1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9901A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m */; };
+		F58CA99D1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9921A5D4F9100988A61 /* DaiDodgeKeyboard.m */; };
+		F58CA99E1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9921A5D4F9100988A61 /* DaiDodgeKeyboard.m */; };
+		F58CA99F1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9921A5D4F9100988A61 /* DaiDodgeKeyboard.m */; };
+		F58CA9A01A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */; };
+		F58CA9A11A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */; };
+		F58CA9A21A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */; };
+		F58CA9A31A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
+		F58CA9A41A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
+		F58CA9A51A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
 		F58F85A91A3A9ED700C55F4E /* navbar_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F58F85A81A3A9ED700C55F4E /* navbar_more@2x.png */; };
 		F58F85AA1A3A9ED700C55F4E /* navbar_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F58F85A81A3A9ED700C55F4E /* navbar_more@2x.png */; };
 		F59E75F01A4059D00028FBAF /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
@@ -4272,6 +4287,16 @@
 		F58CA9821A5D0A4500988A61 /* BiaoQianView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BiaoQianView.m; sourceTree = "<group>"; };
 		F58CA9861A5D0BD900988A61 /* BiaoqainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiaoqainCell.h; sourceTree = "<group>"; };
 		F58CA9871A5D0BD900988A61 /* BiaoqainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BiaoqainCell.m; sourceTree = "<group>"; };
+		F58CA98D1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DaiDodgeKeyboard+AccessObject.h"; sourceTree = "<group>"; };
+		F58CA98E1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DaiDodgeKeyboard+AccessObject.m"; sourceTree = "<group>"; };
+		F58CA98F1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DaiDodgeKeyboard+Animation.h"; sourceTree = "<group>"; };
+		F58CA9901A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DaiDodgeKeyboard+Animation.m"; sourceTree = "<group>"; };
+		F58CA9911A5D4F9100988A61 /* DaiDodgeKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaiDodgeKeyboard.h; sourceTree = "<group>"; };
+		F58CA9921A5D4F9100988A61 /* DaiDodgeKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaiDodgeKeyboard.m; sourceTree = "<group>"; };
+		F58CA9931A5D4F9100988A61 /* DaiDodgeKeyboardObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaiDodgeKeyboardObjects.h; sourceTree = "<group>"; };
+		F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaiDodgeKeyboardObjects.m; sourceTree = "<group>"; };
+		F58CA9951A5D4F9100988A61 /* UIView+FirstResponderNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FirstResponderNotify.h"; sourceTree = "<group>"; };
+		F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FirstResponderNotify.m"; sourceTree = "<group>"; };
 		F58F85A81A3A9ED700C55F4E /* navbar_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_more@2x.png"; sourceTree = "<group>"; };
 		F59C157E1A0B849700093BD8 /* greenbutton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenbutton_pressed@2x.png"; sourceTree = "<group>"; };
 		F59C157F1A0B849700093BD8 /* greenbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenbutton@2x.png"; sourceTree = "<group>"; };
@@ -6415,6 +6440,23 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		F58CA98C1A5D4F9100988A61 /* DaiDodgeKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				F58CA98D1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.h */,
+				F58CA98E1A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m */,
+				F58CA98F1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.h */,
+				F58CA9901A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m */,
+				F58CA9911A5D4F9100988A61 /* DaiDodgeKeyboard.h */,
+				F58CA9921A5D4F9100988A61 /* DaiDodgeKeyboard.m */,
+				F58CA9931A5D4F9100988A61 /* DaiDodgeKeyboardObjects.h */,
+				F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */,
+				F58CA9951A5D4F9100988A61 /* UIView+FirstResponderNotify.h */,
+				F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */,
+			);
+			path = DaiDodgeKeyboard;
+			sourceTree = "<group>";
+		};
 		F59E75D61A4059D00028FBAF /* CoreDataComment */ = {
 			isa = PBXGroup;
 			children = (
@@ -7239,6 +7281,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				F58CA98C1A5D4F9100988A61 /* DaiDodgeKeyboard */,
 				F5B5FE581A596D4A007FE11B /* ShareSDK */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				A4C60B391A590F9100F1F965 /* ACETelPrompt */,
@@ -9664,6 +9707,8 @@
 				A4C141701A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F53DC2FC1A49192600F5F712 /* CTAssetScrollView.m in Sources */,
 				F53DC2FD1A49192600F5F712 /* UIWebView+AFNetworking.m in Sources */,
+				F58CA9991A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				F58CA99F1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				A4C140011A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				A4C1414F1A4BEF5700C9BAB5 /* SETextEditingCaret.m in Sources */,
 				F53DC2FE1A49192600F5F712 /* UIButton+Badge.m in Sources */,
@@ -9793,6 +9838,7 @@
 				F557728C1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F53DC35C1A49192600F5F712 /* SDWebImageManager.m in Sources */,
 				F53DC35D1A49192600F5F712 /* AFURLConnectionOperation.m in Sources */,
+				F58CA9A21A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				F53DC35E1A49192600F5F712 /* WithOb.m in Sources */,
 				F53DC35F1A49192600F5F712 /* NSObject+MJCoding.m in Sources */,
 				F53DC3601A49192600F5F712 /* HanyuPinyinOutputFormat.m in Sources */,
@@ -9827,6 +9873,7 @@
 				F53DC3731A49192600F5F712 /* UIButton+WebCache.m in Sources */,
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
+				F58CA99C1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
 				F53DC3751A49192600F5F712 /* WLStatusM.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
@@ -9866,6 +9913,7 @@
 				F534DB661A5119A000B6A725 /* InvestItems.m in Sources */,
 				F53DC38E1A49192600F5F712 /* AboutViewController.m in Sources */,
 				A4C144761A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
+				F58CA9A51A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */,
 				F53DC38F1A49192600F5F712 /* CommonFriendsController.m in Sources */,
 				F53DC3901A49192600F5F712 /* WLTool.m in Sources */,
 				F534DB611A5119A000B6A725 /* InvestStages.m in Sources */,
@@ -10050,6 +10098,8 @@
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
 				10389B571A3EC46D001A785C /* UIView+Size.m in Sources */,
 				F59E76041A4059D00028FBAF /* IFBase.m in Sources */,
+				F58CA9971A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				F58CA99D1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				F56649D61A2AFD56008A5830 /* UIAlertView+AFNetworking.m in Sources */,
 				F56649D71A2AFD56008A5830 /* UIImage+MultiFormat.m in Sources */,
 				F56649D81A2AFD56008A5830 /* FMResultSet.m in Sources */,
@@ -10179,6 +10229,7 @@
 				F557728A1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F5C7796F1A5392E10098BC29 /* InvestCerVC.m in Sources */,
 				F5664A261A2AFD56008A5830 /* SDWebImageManager.m in Sources */,
+				F58CA9A01A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				F5A3F8F61A41855900F06DDD /* ISchoolResult.m in Sources */,
 				F5664A271A2AFD56008A5830 /* AFURLConnectionOperation.m in Sources */,
 				F5664A281A2AFD56008A5830 /* WithOb.m in Sources */,
@@ -10213,6 +10264,7 @@
 				F5664A3B1A2AFD56008A5830 /* FriendsFriendModel.m in Sources */,
 				F5664A3C1A2AFD56008A5830 /* SignInPhoneController.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
+				F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
 				F5664A3D1A2AFD56008A5830 /* MyFriendsController.m in Sources */,
 				F5664A3E1A2AFD56008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
@@ -10252,6 +10304,7 @@
 				F5664A531A2AFD56008A5830 /* TOActivityChrome.m in Sources */,
 				F56272901A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				F5664A541A2AFD56008A5830 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				F58CA9A31A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */,
 				F5664A551A2AFD56008A5830 /* WLHttpTool.m in Sources */,
 				F5664A561A2AFD56008A5830 /* AboutViewController.m in Sources */,
 				F5664A571A2AFD56008A5830 /* CommonFriendsController.m in Sources */,
@@ -10436,6 +10489,8 @@
 				A4C1416F1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F5664C8D1A2AFDD5008A5830 /* CTAssetScrollView.m in Sources */,
 				F5664C8E1A2AFDD5008A5830 /* UIWebView+AFNetworking.m in Sources */,
+				F58CA9981A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				F58CA99E1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				A4C140001A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				A4C1414E1A4BEF5700C9BAB5 /* SETextEditingCaret.m in Sources */,
 				F5664C8F1A2AFDD5008A5830 /* UIButton+Badge.m in Sources */,
@@ -10565,6 +10620,7 @@
 				F557728B1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F5664CE01A2AFDD5008A5830 /* SDWebImageManager.m in Sources */,
 				F5664CE11A2AFDD5008A5830 /* AFURLConnectionOperation.m in Sources */,
+				F58CA9A11A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				F5664CE21A2AFDD5008A5830 /* WithOb.m in Sources */,
 				F5664CE31A2AFDD5008A5830 /* NSObject+MJCoding.m in Sources */,
 				F5664CE41A2AFDD5008A5830 /* HanyuPinyinOutputFormat.m in Sources */,
@@ -10599,6 +10655,7 @@
 				F5664CF81A2AFDD5008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
+				F58CA99B1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
 				F5664CFA1A2AFDD5008A5830 /* WLStatusM.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
@@ -10638,6 +10695,7 @@
 				F534DB651A5119A000B6A725 /* InvestItems.m in Sources */,
 				F5664D101A2AFDD5008A5830 /* AboutViewController.m in Sources */,
 				A4C144751A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
+				F58CA9A41A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */,
 				F5664D111A2AFDD5008A5830 /* CommonFriendsController.m in Sources */,
 				F5664D121A2AFDD5008A5830 /* WLTool.m in Sources */,
 				F534DB601A5119A000B6A725 /* InvestStages.m in Sources */,
