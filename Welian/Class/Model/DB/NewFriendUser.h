@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * pushType;
 @property (nonatomic, retain) NSString * msg;
 @property (nonatomic, retain) NSNumber * isAgree;
+@property (nonatomic, retain) NSNumber * operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
 @property (nonatomic, retain) LogInUser *rsLogInUser;
 
 //创建新收据
@@ -26,6 +27,9 @@
 
 // //通过uid查询
 + (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
+
+//更新操作按钮状态
+- (void)updateOperateType:(NSInteger)type;
 
 
 @end

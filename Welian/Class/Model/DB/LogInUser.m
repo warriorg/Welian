@@ -22,6 +22,8 @@
 @dynamic sessionid;
 @dynamic url;
 @dynamic auth;
+@dynamic openid;
+@dynamic unionid;
 
 @dynamic rsCompanys;
 @dynamic rsSchools;
@@ -204,9 +206,15 @@
 }
 
 //获取正在聊天的好友列表
-+ (NSArray *)chatUsers
+- (NSArray *)chatUsers
 {
-    return [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"isChatNow" isTrue:YES] where:@"rsLogInUser" equals:[self getNowLogInUser]] orderBy:@"lastChatTime" ascending:NO] results];
+    return [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:self] where:@"isChatNow" isTrue:YES] orderBy:@"lastChatTime" ascending:NO] results];
+}
+
+//获取新的好友列表
+- (NSArray *)allMyNewFriends
+{
+    return [[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:self] orderBy:@"created" ascending:NO] results];
 }
 
 //所有未读取的聊天消息数量

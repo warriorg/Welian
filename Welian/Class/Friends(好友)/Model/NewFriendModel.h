@@ -25,4 +25,7 @@
 //** 是否通过*/
 @property (nonatomic, strong) NSNumber *isAgree;
 
+//操作类型
+@property (nonatomic, retain) NSNumber * operateType;
+
 @end

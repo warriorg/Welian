@@ -17,6 +17,7 @@
 @dynamic pushType;
 @dynamic msg;
 @dynamic isAgree;
+@dynamic operateType;
 @dynamic rsLogInUser;
 
 //创建新收据
@@ -48,19 +49,25 @@
     newFriend.pushType = userInfoM.type;
     newFriend.msg = userInfoM.msg;
     newFriend.isAgree = userInfoM.isAgree;
+    newFriend.operateType = userInfoM.operateType;
     newFriend.rsLogInUser = [LogInUser getNowLogInUser];
     
     [MOC save];
     return newFriend;
 }
 
-
-
 // //通过uid查询
 + (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid
 {
     NewFriendUser *newFriend = [[[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:uid] results] firstObject];
     return newFriend;
+}
+
+//更新操作按钮状态
+- (void)updateOperateType:(NSInteger)type
+{
+    self.operateType = @(type);
+    [MOC save];
 }
 
 @end

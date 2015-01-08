@@ -20,11 +20,20 @@
 
 @interface NewFriendViewCell ()
 
+@property (assign, nonatomic) UIImageView *iconImageView;
+
 - (void)setup;
 
 @end
 
 @implementation NewFriendViewCell
+
+- (void)dealloc
+{
+    _dicData = nil;
+    _nFriendUser = nil;
+    _newFriendBlock = nil;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,12 +44,82 @@
     return self;
 }
 
+- (void)setDicData:(NSDictionary *)dicData
+{
+    [super willChangeValueForKey:@"dicData"];
+    _dicData = dicData;
+    [super didChangeValueForKey:@"dicData"];
+    _operateBtn.hidden = YES;
+    _logoImageView.image = [UIImage imageNamed:_dicData[@"logo"]];
+    _nameLabel.text = _dicData[@"name"];
+    _messageLabel.text = @"";
+}
+
+- (void)setNFriendUser:(NewFriendUser *)nFriendUser
+{
+    [super willChangeValueForKey:@"nFriendUser"];
+    _nFriendUser = nFriendUser;
+    [super didChangeValueForKey:@"nFriendUser"];
+    _operateBtn.hidden = YES;
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_nFriendUser.avatar]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
+                               options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    _nameLabel.text = _nFriendUser.name;
+    _messageLabel.text = _nFriendUser.msg;
+    //是否是认证投资人
+    _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
+    
+    //控制按钮显示内容，和样式
+    switch (_nFriendUser.operateType.integerValue) {
+        case FriendOperateTypeAdd:
+            //添加
+            [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            //圆角
+            _operateBtn.layer.cornerRadius = 5.f;
+            _operateBtn.layer.masksToBounds = YES;
+            _operateBtn.layer.borderWidth = 0.5;
+            _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
+            _operateBtn.backgroundColor = BtnTianJiaColor;
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case FriendOperateTypeAccept:
+            //接受
+            [_operateBtn setTitle:@"接受" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            //圆角
+            _operateBtn.layer.cornerRadius = 5.f;
+            _operateBtn.layer.masksToBounds = YES;
+            _operateBtn.backgroundColor = BtnJieShouColor;
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case FriendOperateTypeAdded:
+            //已添加
+            [_operateBtn setTitle:@"已添加" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+            break;
+        case FriendOperateTypeWait:
+            //待验证
+            [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     _logoImageView.size = CGSizeMake(kLogoWidth, kLogoWidth);
     _logoImageView.top = kMarginTop;
     _logoImageView.left = kMarginLeft;
+    
+    [_iconImageView sizeToFit];
+    _iconImageView.bottom = _logoImageView.bottom;
+    _iconImageView.right = _logoImageView.right;
     
     _operateBtn.size = CGSizeMake(kButtonWidth, kButtonHeight);
     _operateBtn.right = self.width - kMarginLeft;
@@ -71,6 +150,13 @@
     [self addSubview:logoImageView];
     self.logoImageView = logoImageView;
     
+    //认证透过投资人标志
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou_big"]];
+    iconImageView.backgroundColor = [UIColor clearColor];
+    iconImageView.hidden = YES;
+    [self addSubview:iconImageView];
+    self.iconImageView = iconImageView;
+    
     //名称
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
@@ -90,27 +176,28 @@
     
     //操作按钮
     UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [operateBtn setTitle:@"添加" forState:UIControlStateNormal];
-    [operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
-    //圆角
-    operateBtn.layer.cornerRadius = 5.f;
-    operateBtn.layer.masksToBounds = YES;
-    operateBtn.layer.borderWidth = 0.5;
-    operateBtn.layer.borderColor = LayerBorderColor.CGColor;
-    operateBtn.backgroundColor = BtnTianJiaColor;
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;
 }
 
+//好友关系操作
+- (void)operateBtnClicked:(UIButton *)sender
+{
+    //新的好友操作
+    if (_newFriendBlock) {
+        _newFriendBlock(_nFriendUser.operateType.integerValue,_nFriendUser);
+    }
+}
+
 //返回cell的高度
-+ (CGFloat)configureWith
++ (CGFloat)configureWithName:(NSString *)name message:(NSString *)msg
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - kLogoWidth - kButtonWidth - kMarginLeft * 4.f;
     //计算第一个label的高度
-    CGSize size1 = [@"陈日莎" calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
     //计算第二个label的高度
-    CGSize size2 = [@"我的传送门网络技术有限公司的项目经理" calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     
     float height = size1.height + size2.height + kMarginTop * 2.f;
     if (height > 60) {
