@@ -62,6 +62,19 @@
     } withHUD:YES andDim:YES];
 }
 
+#pragma mark - 获取好友  上传通讯录，返回通讯录好友和微信好友
++ (void)uploadPhonebook2ParameterDic:(NSMutableArray *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"uploadPhonebook2",@"data":parameterDic};
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+        
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:YES];
+}
+
+
 
 
 #pragma mark - 忘记密码

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FriendsAddressBook.h"
 
-typedef void(^WLToolBlock)(NSArray *friendsAddress);
+typedef void(^WLToolBlock)(NSMutableArray *friendsAddress);
 typedef void (^UpVersionBlock)(NSDictionary *versionDic);
 
 @interface WLTool : NSObject

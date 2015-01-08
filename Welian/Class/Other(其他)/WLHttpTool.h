@@ -22,6 +22,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 微信注册:  请求
 + (void)weixinRegisterParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 获取好友  上传通讯录，返回通讯录好友和微信好友
++ (void)uploadPhonebook2ParameterDic:(NSMutableArray *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 #pragma mark - 忘记密码
 + (void)forgetPasswordParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 

@@ -120,10 +120,10 @@
 // 微信验证
 - (void)weixinRegister
 {
-//    BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
-//    [self presentViewController:BSearchFVC animated:YES completion:^{
-//        
-//    }];
+    BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+    [self presentViewController:BSearchFVC animated:YES completion:^{
+        
+    }];
     
     if (![self.userInfoDic objectForKey:@"openid"]) {
         return;
@@ -255,6 +255,7 @@
 {
     BindingPhoneController *bindingPVC = [[BindingPhoneController alloc] init];
     [bindingPVC setPhoneStr:_phoneTF.text];
+    [bindingPVC setUserInfoDic:self.userInfoDic];
     [self.navigationController pushViewController:bindingPVC animated:YES];
 }
 
