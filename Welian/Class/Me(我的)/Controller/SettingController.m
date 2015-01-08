@@ -12,6 +12,7 @@
 #import "NavViewController.h"
 #import "AboutViewController.h"
 #import "LoginViewController.h"
+#import "LoginGuideController.h"
 
 @interface SettingController () <UIActionSheetDelegate>
 {
@@ -91,14 +92,13 @@
     } fail:^(NSError *error) {
         
     }];
-//    UserInfoModel *mode = [[UserInfoModel alloc] init];
-//    [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
     [LogInUser setUserisNow:NO];
     [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
-    [self.view.window setRootViewController:detailViewController];
+    
+    [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 
 #pragma mark 读取plist文件的内容
@@ -153,7 +153,6 @@
         [cell.detailTextLabel setText:[LogInUser getNowLogInUser].mobile];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
-//        [cell setAccessoryView:self.remindSwitch];
 
     }else if (indexPath.section==0&&indexPath.row==1){
         

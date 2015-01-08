@@ -14,6 +14,7 @@
 #import "FriendsAddressBook.h"
 #import "MJExtension.h"
 #import "NotstringView.h"
+#import "FriendCell.h"
 
 @interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -23,13 +24,24 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *addressBookRefView;
-
 @property (nonatomic, strong) NSMutableArray *friendsBook;
 @property (nonatomic, strong) NSMutableArray *friendsWeixing;
+@property (nonatomic, strong) NotstringView *notFriendsView;
 
 @end
 
+static NSString *fridcellid = @"fridcellid";
+
 @implementation BSearchFriendsController
+
+- (NotstringView *)notFriendsView
+{
+    if (_notFriendsView == nil) {
+        _notFriendsView = [[NotstringView alloc] initWithFrame:CGRectMake(0, 120, SuperSize.width, SuperSize.height-120) withTitleStr:@"很遗憾，未能搜索到好友"];
+    }
+    return _notFriendsView;
+}
+
 
 - (UIView *)addressBookRefView
 {
@@ -51,6 +63,7 @@
         [but setBackgroundImage:[UIImage resizedImage:@"research_bg_pre"] forState:UIControlStateHighlighted];
         [but.titleLabel setFont:WLFONT(17)];
         [but setTitle:@"重新搜索" forState:UIControlStateNormal];
+        [but addTarget:self action:@selector(getaddressBook) forControlEvents:UIControlEventTouchUpInside];
         [but setTitleColor:WLRGB(52, 116, 186) forState:UIControlStateNormal];
         [but setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
         [_addressBookRefView addSubview:but];
@@ -60,12 +73,16 @@
     return _addressBookRefView;
 }
 
+
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] init];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_tableView setDataSource:self];
         [_tableView setDelegate:self];
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+        [_tableView setBackgroundColor:[UIColor clearColor]];
+        [_tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     }
     return _tableView;
 }
@@ -100,7 +117,7 @@
     UIImageView *leidaImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-42, CGRectGetMaxY(asdLabel.frame)+30, 85, 85)];
     [leidaImage setUserInteractionEnabled:YES];
     _leidaImage = leidaImage;
-    [leidaImage setImage:[UIImage imageNamed:@"leida1"]];
+    [leidaImage setImage:[UIImage imageNamed:@"leida6"]];
     [leidaImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapiconImage:)]];
     NSMutableArray *imageArray = [NSMutableArray array];
     
@@ -126,19 +143,6 @@
     self.friendsWeixing = [NSMutableArray array];
     
     [self getaddressBook];
-    
-//    [UIView animateWithDuration:0.25 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-//        [_searchView setAlpha:0.0];
-//    } completion:^(BOOL finished) {
-//        [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-//        [_leidaImage stopAnimating];
-//        [_searchView removeFromSuperview];
-//    }];
-//    [UIView animateWithDuration:0.25 animations:^{
-//       
-//    } completion:^(BOOL finished) {
-//
-//    }];
 
 }
 
@@ -166,19 +170,21 @@
                         }
                     }
                     
-                    
-                    
+                    if (self.friendsBook.count||self.friendsWeixing.count) {
+                        [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
+                        [self.view addSubview:self.tableView];
+                    }else{
+                        [self.view addSubview:self.notFriendsView];
+                    }
+                    [UIView animateWithDuration:0.25 animations:^{
+                        [_searchView setAlpha:0.0];
+                    } completion:^(BOOL finished) {
+                        [_leidaImage stopAnimating];
+                        [_searchView removeFromSuperview];
+                    }];
                 } fail:^(NSError *error) {
                     
                 }];
-//                [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-//                [UIView animateWithDuration:0.25 animations:^{
-//                    [_searchView setAlpha:0.0];
-//                } completion:^(BOOL finished) {
-//                    [_leidaImage stopAnimating];
-//                    [_searchView removeFromSuperview];
-//                }];
-                
             }];
 
             
@@ -192,7 +198,23 @@
                     [friendBook setKeyValues:dic];
                     [self.friendsWeixing addObject:friendBook];
                 }
-                
+                if (self.friendsWeixing.count) {
+                    [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
+                    [self.view insertSubview:self.tableView belowSubview:_searchView];
+                    
+                    
+                }else{
+                    [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
+                    
+                }
+                [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
+                [UIView animateWithDuration:0.25 animations:^{
+                    [_searchView setAlpha:0.0];
+                } completion:^(BOOL finished) {
+                    [_leidaImage stopAnimating];
+                    [_searchView removeFromSuperview];
+                }];
+
             } fail:^(NSError *error) {
                 
             }];
@@ -200,7 +222,6 @@
         }
         
     });
-
 }
 
 
@@ -232,11 +253,64 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@""];
-    
+    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
+    FriendsAddressBook *friends;
+    if (indexPath.section==0) {
+        if (self.friendsBook.count) {
+            friends = self.friendsBook[indexPath.row];
+        }else if(self.friendsWeixing.count){
+            friends = self.friendsWeixing[indexPath.row];
+        }
+    }else if (indexPath.section==1){
+            friends = self.friendsWeixing[indexPath.row];
+    }
+    [cell setUserMode:friends];
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 20)];
+    [headerLabel setTextAlignment:NSTextAlignmentCenter];
+    [headerLabel setTextColor:WLRGB(153, 153, 153)];
+    [headerLabel setFont:WLFONT(14)];
+    NSString *headStr = @"";
+    NSInteger  length = 0;
+    if (section==0) {
+        if (self.friendsBook.count) {
+           headStr =  [NSString stringWithFormat:@"为你搜索到%d个通讯录好友",self.friendsBook.count];
+            length = [[NSString stringWithFormat:@"%d",self.friendsBook.count] length];
+            
+        }else if (self.friendsWeixing.count){
+           headStr =  [NSString stringWithFormat:@"为你搜索到%d个微信好友",self.friendsWeixing.count];
+            length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
+        }
+        
+    }else if (section==1){
+        headStr =  [NSString stringWithFormat:@"为你搜索到%d个微信好友",self.friendsWeixing.count];
+        length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
+    }
+    
+    NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONT(15)
+                               };
+    
+    NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
+    [attrstr addAttributes:attrsDic range:NSMakeRange(5, length)];
+    
+    [headerLabel setAttributedText:attrstr];
+    
+    return headerLabel;
+}
 
 
 - (void)cancelClick

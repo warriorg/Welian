@@ -11,6 +11,8 @@
 #import "NavViewController.h"
 #import <ShareSDK/ShareSDK.h>
 #import "UIImage+ImageEffects.h"
+#import "MainViewController.h"
+#import "MJExtension.h"
 
 @interface LoginGuideController () <UIScrollViewDelegate>
 {
@@ -91,80 +93,91 @@
 
 - (void)authButClickWexing
 {
-    PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-//    [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-    [self presentViewController:nav animated:YES completion:^{
-        
-    }];
+//    PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+////    [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+//    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+//    [self presentViewController:nav animated:YES completion:^{
+//        
+//    }];
     
 
-//    if ([ShareSDK hasAuthorizedWithType:ShareTypeWeixiSession]) {
-//        //取消授权
-//        [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-//    }else{
-//        //用户用户信息
-//        id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-//                                                             allowCallback:YES
-//                                                             authViewStyle:SSAuthViewStyleFullScreenPopup
-//                                                              viewDelegate:nil
-//                                                   authManagerViewDelegate:nil];
-//        [WLHUDView showHUDWithStr:@"授权中..." dim:NO];
-//
-//        [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
-//                          authOptions:authOptions
-//                               result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-//                                   
-//                                   if (result)
-//                                   {
-//                                       NSLog(@"sourceData = %@",[userInfo sourceData]);
-//                                       NSDictionary *sourceDic = [userInfo sourceData];
-//                                       
-//                                       NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-//                                       [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
-//                                       [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];
-//                                       [reqstDic setObject:KPlatformType forKey:@"platform"];
-//                                       if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-//                                           [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-//                                       }
-//                                       
-//                                       [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-//                                           
-//                                           if (JSON) {
-//                                               
-//                                           }else{
-//                                               
-//                                           }
-//                                          [WLHUDView hiddenHud];
-//                                       } fail:^(NSError *error) {
-//                                           if (error.code==-2) { // -2微信没有登录过
-//                                               PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-//                                               [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-//                                               NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-//                                               [self presentViewController:nav animated:YES completion:^{
-//                                                   
-//                                               }];
-//                                           }else if (error.code==-1){ //-1系统错误
-//                                           
-//                                           
-//                                           }
-//                                           [WLHUDView hiddenHud];
-//                                       } isHUD:YES];
-//                                       
-//                                       
-//                                       
-//
-//                                   }else{
-//                                         [WLHUDView hiddenHud];
-//                                       [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
-//
-//                                   }
-////                                   [WLHUDView hiddenHud];
-//                                   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
-//                               }];
-//        
-//
-//    }
+    //取消授权
+    [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
+    
+    //用户用户信息
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:YES
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:nil
+                                               authManagerViewDelegate:nil];
+    [WLHUDView showHUDWithStr:@"授权中..." dim:NO];
+
+    [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
+                      authOptions:authOptions
+                           result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+                               
+                               if (result)
+                               {
+                                   NSLog(@"sourceData = %@",[userInfo sourceData]);
+                                   NSDictionary *sourceDic = [userInfo sourceData];
+                                   
+                                   NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+                                   [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
+                                   [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];
+                                   [reqstDic setObject:KPlatformType forKey:@"platform"];
+                                   if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+                                       [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+                                   }
+                                   
+                                   [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+                                       NSDictionary *dataDic = JSON;
+                                       if (dataDic) {
+                                           UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+                                           
+                                           //记录最后一次登陆的手机号
+                                           SaveLoginMobile(mode.mobile);
+//                                               SaveLoginPassWD(_pwdTF.text);
+                                           
+                                           [LogInUser createLogInUserModel:mode];
+                                           PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+                                           NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+                                           [self presentViewController:nav animated:YES completion:^{
+                                               
+                                           }];
+                                           
+                                           //进入主页面
+//                                           MainViewController *mainVC = [[MainViewController alloc] init];
+//                                           [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+                                       }
+
+                                      [WLHUDView hiddenHud];
+                                   } fail:^(NSError *error) {
+                                       if (error.code==-2) { // -2微信没有登录过
+                                           PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+                                           NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+                                           [self presentViewController:nav animated:YES completion:^{
+                                               
+                                           }];
+                                       }else if (error.code==-1){ //-1系统错误
+                                       
+                                       
+                                       }
+                                       [WLHUDView hiddenHud];
+                                   } isHUD:YES];
+                                   
+                                   
+                                   
+
+                               }else{
+                                     [WLHUDView hiddenHud];
+                                   [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
+
+                               }
+//                                   [WLHUDView hiddenHud];
+                               NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+                           }];
     
 }
 

@@ -59,6 +59,11 @@
     [_iconImage.layer setMasksToBounds:YES];
     [_iconImage.layer setCornerRadius:25.0];
     [self.contentView addSubview:_iconImage];
+    _investorImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou"]];
+    [_investorImage setFrame:CGRectMake(CGRectGetMaxX(_iconImage.frame)-15, CGRectGetMaxY(_iconImage.frame)-15, 15, 15)];
+    [_investorImage setHidden:YES];
+    [self.contentView addSubview:_investorImage];
+    
     
     _nameLabel = [[UILabel alloc] init];
     [self.contentView addSubview:_nameLabel];
@@ -68,9 +73,7 @@
     [_infoLabel setNumberOfLines:2];
     [_infoLabel setTextColor:[UIColor grayColor]];
     [self.contentView addSubview:_infoLabel];
-    _investorImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou"]];
-    [_investorImage setHidden:YES];
-    [self.contentView addSubview:_investorImage];
+    
     
     _startupImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"badge_chuang_big"]];
     [_startupImage setHidden:YES];
@@ -91,7 +94,6 @@
     [_nameLabel setText:userM.name];
     
     if ([userM.investorauth integerValue]==1) {
-        [_investorImage setFrame:CGRectMake(CGRectGetMaxX(_nameLabel.frame)+5, 20.0, 20, 20)];
         [_investorImage setHidden:NO];
     }
     

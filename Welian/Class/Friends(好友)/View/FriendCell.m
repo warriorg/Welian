@@ -21,6 +21,11 @@
     
     [_nameLabel setText:userMode.name];
     [_infoLabel setText:[NSString stringWithFormat:@"%@   %@",userMode.position,userMode.company]];
+    if (userMode.investorauth.integerValue==1) {
+        [_VCImageView setHidden:NO];
+    }else{
+        [_VCImageView setHidden:YES];
+    }
     
 }
 

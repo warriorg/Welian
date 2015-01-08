@@ -273,7 +273,7 @@
 + (void)getCompanyParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"getCompany",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -286,7 +286,7 @@
 + (void)getSchoolParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"getSchool",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -297,7 +297,7 @@
 + (void)getJobParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"getJob",@"data":parameterDic};
-    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
