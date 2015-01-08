@@ -16,7 +16,8 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     //铺到状态栏底下而是从状态栏下面
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    [self.webView setDebug:YES];
 }
 
 /**
