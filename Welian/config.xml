@@ -53,7 +53,8 @@
     <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="TopActivityIndicator" value="gray" />
     <preference name="BackupWebStorage" value="local" />
-
+    <preference name="PaginationMode" value="topToBottom"/>
+    <preference name="PageLength" value="0"/>
 
     <feature name="Geolocation">
       <param name="ios-package" value="CDVLocation"/>
