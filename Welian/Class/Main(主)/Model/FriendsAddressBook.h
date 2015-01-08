@@ -6,12 +6,11 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "PeopleAddressBook.h"
+#import "IBaseUserM.h"
 
-@interface FriendsAddressBook : PeopleAddressBook
+@interface FriendsAddressBook : IBaseUserM
 
-@property (nonatomic, strong) NSNumber *friendship;
-
-@property (nonatomic, strong) NSNumber *uid;
+// 0通讯录好友，1微信好友
+@property (nonatomic, strong) NSNumber *type;
 
 @end

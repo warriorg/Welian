@@ -11,6 +11,9 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "WLTool.h"
 #import "UIImage+ImageEffects.h"
+#import "FriendsAddressBook.h"
+#import "MJExtension.h"
+#import "NotstringView.h"
 
 @interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -19,8 +22,10 @@
 }
 
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) UIView *addressBookRefView;
+
+@property (nonatomic, strong) NSMutableArray *friendsBook;
+@property (nonatomic, strong) NSMutableArray *friendsWeixing;
 
 @end
 
@@ -117,21 +122,24 @@
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
     [_leidaImage startAnimating];
+    self.friendsBook = [NSMutableArray array];
+    self.friendsWeixing = [NSMutableArray array];
     
+    [self getaddressBook];
+    
+//    [UIView animateWithDuration:0.25 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+//        [_searchView setAlpha:0.0];
+//    } completion:^(BOOL finished) {
+//        [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
+//        [_leidaImage stopAnimating];
+//        [_searchView removeFromSuperview];
+//    }];
+//    [UIView animateWithDuration:0.25 animations:^{
+//       
+//    } completion:^(BOOL finished) {
+//
+//    }];
 
-    [UIView animateWithDuration:0.25 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [_searchView setAlpha:0.0];
-    } completion:^(BOOL finished) {
-        [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-        [_leidaImage stopAnimating];
-        [_searchView removeFromSuperview];
-    }];
-    [UIView animateWithDuration:0.25 animations:^{
-       
-    } completion:^(BOOL finished) {
-
-    }];
-//    [self getaddressBook];
 }
 
 - (void)getaddressBook
@@ -145,26 +153,90 @@
         if (greanted) {
             [UserDefaults setObject:@"1" forKey:KAddressBook];
             
-        }else {
-            [UserDefaults setObject:@"0" forKey:KAddressBook];
-            
-        }
-        
-        [WLTool getAddressBookArray:^(NSArray *friendsAddress) {
-            [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-            [UIView animateWithDuration:0.25 animations:^{
-                [_searchView setAlpha:0.0];
-            } completion:^(BOOL finished) {
-                [_leidaImage stopAnimating];
-                [_searchView removeFromSuperview];
+            [WLTool getAddressBookArray:^(NSMutableArray *friendsAddress) {
+                [WLHttpTool uploadPhonebook2ParameterDic:friendsAddress success:^(id JSON) {
+                    NSArray *array = JSON;
+                    for (NSDictionary *dic  in array) {
+                        FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+                        [friendBook setKeyValues:dic];
+                        if (friendBook.type.integerValue == 0) {
+                            [self.friendsBook addObject:friendBook];
+                        }else if (friendBook.type.integerValue==1){
+                            [self.friendsWeixing addObject:friendBook];
+                        }
+                    }
+                    
+                    
+                    
+                } fail:^(NSError *error) {
+                    
+                }];
+//                [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
+//                [UIView animateWithDuration:0.25 animations:^{
+//                    [_searchView setAlpha:0.0];
+//                } completion:^(BOOL finished) {
+//                    [_leidaImage stopAnimating];
+//                    [_searchView removeFromSuperview];
+//                }];
+                
             }];
 
             
+        }else {
             
-        }];
+            [UserDefaults setObject:@"0" forKey:KAddressBook];
+            [WLHttpTool uploadPhonebook2ParameterDic:[NSMutableArray array] success:^(id JSON) {
+                NSArray *array = JSON;
+                for (NSDictionary *dic  in array) {
+                    FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+                    [friendBook setKeyValues:dic];
+                    [self.friendsWeixing addObject:friendBook];
+                }
+                
+            } fail:^(NSError *error) {
+                
+            }];
+
+        }
+        
     });
 
 }
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSInteger i = 0;
+    if (self.friendsBook.count) {
+        i++;
+    }
+    if (self.friendsWeixing.count) {
+        i++;
+    }
+    return i;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section==0) {
+        if (self.friendsBook.count) {
+            return self.friendsBook.count;
+        }else if (self.friendsWeixing.count){
+            return self.friendsWeixing.count;
+        }
+    }else if (section==1){
+        return self.friendsWeixing.count;
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@""];
+    
+    return cell;
+}
+
 
 
 - (void)cancelClick

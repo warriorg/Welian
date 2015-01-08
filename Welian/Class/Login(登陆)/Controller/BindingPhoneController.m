@@ -42,6 +42,37 @@
     
 }
 
+- (void)bindingButClick
+{
+    if (!_phoneTF.text.length) {
+        return;
+    }
+    if (!_pwdTF.text.length) {
+        return;
+    }
+    if (![self.userInfoDic objectForKey:@"openid"]) {
+        return;
+    }
+    if (![self.userInfoDic objectForKey:@"unionid"]) {
+        return;
+    }
+    NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
+    [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
+    [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
+    [requstDic setObject:_phoneTF.text forKey:@"mobile"];
+    [requstDic setObject:_pwdTF.text forKey:@"password"];
+    [requstDic setObject:KPlatformType forKey:@"platform"];
+    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+        [requstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+    }
+    
+    [WLHttpTool loginParameterDic:requstDic success:^(id JSON) {
+        
+    } fail:^(NSError *error) {
+        
+    } isHUD:YES];
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_phoneTF resignFirstResponder];

@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *phoneStr;
 
+@property (nonatomic, strong) NSDictionary *userInfoDic;
+
 @end

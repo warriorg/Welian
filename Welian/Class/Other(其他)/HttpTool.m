@@ -43,8 +43,8 @@ static HttpTool *engine;
     [self formatUrlAndParameters:parameterDic];
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        DLog(@"%@",[operation responseString]);
-        if (![operation responseString]) {
+        DLog(@"%@",[[operation responseData] class]);
+        if (![operation responseData]) {
             [WLHUDView showErrorHUD:@"网络连接失败！"];
             failureBlock ([NSError errorWithDomain:@"网络连接失败！" code:-1 userInfo:nil]);
             return;
