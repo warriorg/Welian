@@ -55,6 +55,7 @@
         [iconBut.layer setCornerRadius:iconimage.size.width*0.5];
         [iconBut.layer setMasksToBounds:YES];
         [iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             [iconBut setImage:image forState:UIControlStateNormal];
             
         }];
@@ -143,28 +144,28 @@
     if (!_postTF.text.length) {
         return;
     }
-    if (![self.userInfoDic objectForKey:@"headimgurl"] && !_imagebase64Str.length) {
+    if (!_imagebase64Str.length) {
         return;
     }
     
     NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
     [requstDic setObject:@"jpg" forKey:@"title"];
-
+    [requstDic setObject:KPlatformType forKey:@"platform"];
+    
     [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
     [requstDic setObject:_nameTF.text  forKey:@"name"];
     [requstDic setObject:_phoneTF.text forKey:@"mobile"];
     [requstDic setObject:_companyTF.text forKey:@"company"];
     [requstDic setObject:_postTF.text forKey:@"position"];
+    [requstDic setObject:_imagebase64Str forKey:@"photo"];
+
     
-    if (_imagebase64Str) {
-        [requstDic setObject:_imagebase64Str forKey:@"photo"];
-    }else{
-        [requstDic setObject:self.userInfoDic forKey:@"headimgurl"];
+    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+        [requstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
     }
     if ([self.userInfoDic objectForKey:@"nickname"]) {
-        
-        [requstDic setObject:self.userInfoDic forKey:@"nickname"];
+        [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
     }
 
     
@@ -176,7 +177,15 @@
         }];
 
     } fail:^(NSError *error) {
-        
+        if (error.code==1) {
+            [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                DLog(@"%d",buttonIndex);
+                if (buttonIndex==1) {
+                    [self bindingPhoneClick:nil];
+                }
+            }];
+
+        }
     }];
 }
 
@@ -245,6 +254,7 @@
 - (void)bindingPhoneClick:(UIButton *)but
 {
     BindingPhoneController *bindingPVC = [[BindingPhoneController alloc] init];
+    [bindingPVC setPhoneStr:_phoneTF.text];
     [self.navigationController pushViewController:bindingPVC animated:YES];
 }
 

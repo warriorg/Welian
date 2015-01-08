@@ -133,23 +133,31 @@
                                            if (JSON) {
                                                
                                            }else{
+                                               
+                                           }
+                                          [WLHUDView hiddenHud];
+                                       } fail:^(NSError *error) {
+                                           if (error.code==-2) { // -2微信没有登录过
                                                PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
                                                [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
                                                NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
                                                [self presentViewController:nav animated:YES completion:^{
                                                    
                                                }];
+                                           }else if (error.code==-1){ //-1系统错误
+                                           
+                                           
                                            }
-                                           
-                                       } fail:^(NSError *error) {
-                                           
+                                           [WLHUDView hiddenHud];
                                        } isHUD:YES];
                                        
                                        
                                        
 
                                    }else{
+                                         [WLHUDView hiddenHud];
                                        [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
+
                                    }
 //                                   [WLHUDView hiddenHud];
                                    NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);

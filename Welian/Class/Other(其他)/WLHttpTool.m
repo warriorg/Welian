@@ -881,16 +881,16 @@
 #pragma mark - 更新BaiduId请求
 + (void)updateClientSuccess:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
-    [parameterDic setObject:KPlatformType forKey:@"platform"];
-    
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-    }
-    NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     if (mode.sessionid) {
+        NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
+        [parameterDic setObject:KPlatformType forKey:@"platform"];
+        
+        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+            [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        }
+        NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
+        
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
             
             succeBlock(JSON);

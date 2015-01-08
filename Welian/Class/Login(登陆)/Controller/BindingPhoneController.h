@@ -10,4 +10,6 @@
 
 @interface BindingPhoneController : BasicViewController
 
+@property (nonatomic, strong) NSString *phoneStr;
+
 @end

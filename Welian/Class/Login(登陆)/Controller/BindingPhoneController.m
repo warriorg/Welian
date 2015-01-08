@@ -23,6 +23,7 @@
     [self.view setBackgroundColor:WLRGB(231, 234, 238)];
     [self setTitle:@"绑定"];
     UITextField *phoneTF = [self addPerfectInfoTextfWithFrameY:30+64 Placeholder:@"手机号" leftImageName:@"login_phone"];
+    [phoneTF setText:self.phoneStr];
     [phoneTF setReturnKeyType:UIReturnKeyNext];
     _phoneTF = phoneTF;
     [self.view addSubview:phoneTF];
