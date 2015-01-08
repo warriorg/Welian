@@ -33,7 +33,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _bottomLineView.frame = CGRectMake(.0f, self.height - .6f, self.width, .6f);
+    _bottomLineView.frame = CGRectMake(.0f, self.height - .8f, self.width, .8f);
 }
 
 @end

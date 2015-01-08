@@ -6981,6 +6981,8 @@
 				F5382B1719FD108200FAA5B6 /* NewFriendController.m */,
 				A40356131A5D4F61006AE52C /* NewFriendViewController.h */,
 				A40356141A5D4F61006AE52C /* NewFriendViewController.m */,
+				A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */,
+				A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */,
 				F5C2D0FF19F909EF000610A1 /* AddFriendsController.h */,
 				F5C2D10019F909EF000610A1 /* AddFriendsController.m */,
 				F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */,
@@ -6990,8 +6992,6 @@
 				F532FD4919C93F0D005B887D /* UserCardController.xib */,
 				F5E4BB931A023E78007BEBD2 /* CommonFriendsController.h */,
 				F5E4BB941A023E78007BEBD2 /* CommonFriendsController.m */,
-				A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */,
-				A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

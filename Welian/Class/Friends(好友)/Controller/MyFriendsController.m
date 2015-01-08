@@ -283,7 +283,7 @@ static NSString *fridcellid = @"fridcellid";
         {
             //1.手机联系人
             //2.微信好友
-            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped WithSelectType:(index == 1 ? 0 : 1)];
             [self.navigationController pushViewController:addFriendVC animated:YES];
         }
             break;

@@ -20,11 +20,6 @@
 
 @interface NewFriendViewCell ()
 
-@property (assign, nonatomic) UIImageView *logoImageView;
-@property (assign, nonatomic) UILabel *nameLabel;
-@property (assign, nonatomic) UILabel *messageLabel;
-@property (assign, nonatomic) UIButton *operateBtn;
-
 - (void)setup;
 
 @end
@@ -52,8 +47,12 @@
     _operateBtn.top = kMarginLeft;
     
     [_nameLabel sizeToFit];
-    _nameLabel.top = kMarginTop;
     _nameLabel.left = _logoImageView.right + kMarginLeft;
+    if (_messageLabel.text.length == 0) {
+        _nameLabel.centerY = self.height / 2.f;
+    }else{
+       _nameLabel.top = kMarginTop;
+    }
     
     _messageLabel.width = _operateBtn.left - _nameLabel.left - kMarginLeft;
     [_messageLabel sizeToFit];
@@ -66,7 +65,7 @@
 {
     //头像
     UIImageView *logoImageView = [[UIImageView alloc] init];
-    logoImageView.backgroundColor = [UIColor redColor];
+    logoImageView.backgroundColor = [UIColor clearColor];
     logoImageView.layer.cornerRadius = 20.f;
     logoImageView.layer.masksToBounds = YES;
     [self addSubview:logoImageView];
@@ -77,7 +76,6 @@
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font = [UIFont systemFontOfSize:16.f];
-    nameLabel.text = @"陈日莎";
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -86,7 +84,6 @@
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = [UIColor lightGrayColor];
     messageLabel.font = [UIFont systemFontOfSize:14.f];
-    messageLabel.text = @"我的传送门网络技术有限公司的项目经理";
     messageLabel.numberOfLines = 0.f;
     [self addSubview:messageLabel];
     self.messageLabel = messageLabel;
