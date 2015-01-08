@@ -10,4 +10,6 @@
 
 @interface AddFriendViewController : BasicPlainTableViewController
 
+- (id)initWithStyle:(UITableViewStyle)style WithSelectType:(NSInteger)selectIndex;
+
 @end

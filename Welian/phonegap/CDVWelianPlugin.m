@@ -108,7 +108,11 @@
 - (void)showDialog:(CDVInvokedUrlCommand *)command
 {
     DLog(@"showDialog : %@",command.arguments);
-    [UIAlertView bk_alertViewWithTitle:@"系统提示" message:command.arguments[0]];
+    [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                                   message:command.arguments[0]
+                         cancelButtonTitle:@"确定"
+                         otherButtonTitles:nil
+                                   handler:nil];
 }
 
 /**

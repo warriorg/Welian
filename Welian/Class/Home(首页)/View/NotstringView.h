@@ -8,7 +8,43 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^NotstringViewBtnClickedBlock)();
+
 @interface NotstringView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame withTitStr:(NSString *)titStr andImageName:(NSString *)imageName;
+@property (copy,nonatomic) NotstringViewBtnClickedBlock block;
+
+//1个标题和图片
+- (instancetype)initWithFrame:(CGRect)frame
+                   withTitStr:(NSString *)titStr
+                 andImageName:(NSString *)imageName;
+
+//单个标题
+- (instancetype)initWithFrame:(CGRect)frame
+                 withTitleStr:(NSString *)titleStr;
+
+///2个标题
+- (instancetype)initWithFrame:(CGRect)frame
+                 withTitleStr:(NSString *)titleStr
+                     SubTitle:(NSString *)subTitle;
+
+//单个图片
+- (instancetype)initWithFrame:(CGRect)frame
+                    ImageName:(NSString *)imageName;
+
+///2个标题
+- (instancetype)initWithFrame:(CGRect)frame
+                 withTitleStr:(NSString *)titleStr
+                     SubTitle:(NSString *)subTitle
+                     BtnTitle:(NSString *)btnTitle
+                 BtnImageName:(NSString *)btnImageName;
+
+///2个标题 1个操作按钮
+- (instancetype)initWithFrame:(CGRect)frame
+                    ImageName:(NSString *)imageName
+                 withTitleStr:(NSString *)titleStr
+                     SubTitle:(NSString *)subTitle
+                     BtnTitle:(NSString *)btnTitle
+                 BtnImageName:(NSString *)btnImageName;
+
 @end

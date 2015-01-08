@@ -10,6 +10,10 @@
 
 @interface NewFriendViewCell : BaseTableViewCell
 
+@property (assign, nonatomic) UIImageView *logoImageView;
+@property (assign, nonatomic) UILabel *nameLabel;
+@property (assign, nonatomic) UILabel *messageLabel;
+@property (assign, nonatomic) UIButton *operateBtn;
 
 //返回cell的高度
 + (CGFloat)configureWith;

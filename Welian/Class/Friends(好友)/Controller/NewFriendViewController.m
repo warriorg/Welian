@@ -14,6 +14,7 @@
 #import "UserInfoBasicVC.h"
 #import "NotstringView.h"
 #import "NewFriendViewCell.h"
+#import "AddFriendTypeListViewController.h"
 
 static NSString *cellIdentifier = @"frnewCellid";
 
@@ -30,7 +31,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 - (NotstringView *)notView
 {
     if (!_notView) {
-        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"暂无新的好友" andImageName:nil];
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitleStr:@"暂无新的好友"];
     }
     return _notView;
 }
@@ -81,6 +82,9 @@ static NSString *cellIdentifier = @"frnewCellid";
 //    NewFriendUser *newFM = _datasource[indexPath.row];
 //    [cell setFriendM:newFM];
 //    [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
+    cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
+    cell.nameLabel.text = @"陈日莎";
+    cell.messageLabel.text = @"我的传送门网络技术有限公司的项目经理";
     return cell;
 }
 
@@ -157,9 +161,8 @@ static NSString *cellIdentifier = @"frnewCellid";
 //右上角，添加好友按钮
 - (void)addFriendClick
 {
-    [self presentViewController:[[NavViewController alloc] initWithRootViewController:[[AddFriendsController alloc] initWithStyle:UITableViewStylePlain]] animated:YES completion:^{
-        
-    }];
+    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 
 @end

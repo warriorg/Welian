@@ -21,6 +21,7 @@
 #import "MyFriendsOperateViewCell.h"
 #import "NewFriendViewController.h"
 #import "AddFriendViewController.h"
+#import "AddFriendTypeListViewController.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
@@ -151,9 +152,8 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)addFriendClick
 {
-    [self presentViewController:[[NavViewController alloc] initWithRootViewController:[[AddFriendsController alloc] initWithStyle:UITableViewStylePlain]] animated:YES completion:^{
-        
-    }];
+    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
@@ -283,7 +283,7 @@ static NSString *fridcellid = @"fridcellid";
         {
             //1.手机联系人
             //2.微信好友
-            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped WithSelectType:(index == 1 ? 0 : 1)];
             [self.navigationController pushViewController:addFriendVC animated:YES];
         }
             break;
