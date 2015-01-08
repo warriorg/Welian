@@ -14,6 +14,7 @@
 #import "UserInfoBasicVC.h"
 #import "NotstringView.h"
 #import "NewFriendViewCell.h"
+#import "AddFriendTypeListViewController.h"
 
 static NSString *cellIdentifier = @"frnewCellid";
 
@@ -160,9 +161,8 @@ static NSString *cellIdentifier = @"frnewCellid";
 //右上角，添加好友按钮
 - (void)addFriendClick
 {
-    [self presentViewController:[[NavViewController alloc] initWithRootViewController:[[AddFriendsController alloc] initWithStyle:UITableViewStylePlain]] animated:YES completion:^{
-        
-    }];
+    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 
 @end

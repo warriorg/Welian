@@ -32,7 +32,7 @@
                                                 withTitleStr:@"您未授权同意微链访问通讯录"
                                                     SubTitle:@"请到“设置->隐私->通讯录”中打开微链访问通讯录的权限"
                                                     BtnTitle:@"点击刷新"
-                                                BtnImageName:nil];
+                                                BtnImageName:@"login_research"];
     }
     WEAKSELF
     [_phoneNotView setBlock:^{
@@ -183,12 +183,11 @@
 //加载数据
 - (void)changeDataWithIndex:(NSInteger)index
 {
-    self.datasource = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
+//    self.datasource = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
     if(!_datasource){
         if (index == 0) {
             [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
-            [self.view sendSubviewToBack:_phoneNotView];
         }else{
             [_phoneNotView removeFromSuperview];
             [self.view addSubview:self.weChatNotView];

@@ -162,9 +162,10 @@
             if (btnImageName) {
                 [opeateBtn setImage:[UIImage imageNamed:btnImageName] forState:UIControlStateNormal];
             }
+            opeateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
             opeateBtn.frame = CGRectMake(30.f, top, frame.size.width - 40.f, 40.f);
             opeateBtn.layer.borderWidth = 0.5;
-            opeateBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            opeateBtn.layer.borderColor = RGB(208.f, 209.f, 209.f).CGColor;
             opeateBtn.layer.cornerRadius = 3.f;
             opeateBtn.layer.masksToBounds = YES;
             [opeateBtn addTarget:self action:@selector(opeateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

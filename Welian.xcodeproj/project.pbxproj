@@ -92,6 +92,9 @@
 		A47C5F4E1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
 		A47C5F4F1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
 		A47C5F501A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
+		A47C5F541A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
+		A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
+		A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -3227,6 +3230,8 @@
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
 		A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
+		A47C5F521A5E663100E63737 /* AddFriendTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTypeListViewController.h; sourceTree = "<group>"; };
+		A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendTypeListViewController.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6993,6 +6998,8 @@
 				A40356141A5D4F61006AE52C /* NewFriendViewController.m */,
 				A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */,
 				A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */,
+				A47C5F521A5E663100E63737 /* AddFriendTypeListViewController.h */,
+				A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */,
 				F5C2D0FF19F909EF000610A1 /* AddFriendsController.h */,
 				F5C2D10019F909EF000610A1 /* AddFriendsController.m */,
 				F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */,
@@ -9894,6 +9901,7 @@
 				A4C140671A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F53DC3721A49192600F5F712 /* MyFriendsController.m in Sources */,
 				F53DC3731A49192600F5F712 /* UIButton+WebCache.m in Sources */,
+				A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F58CA99C1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
@@ -10286,6 +10294,7 @@
 				F5664A391A2AFD56008A5830 /* ForwardPublishView.m in Sources */,
 				F5664A3A1A2AFD56008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
 				F5664A3B1A2AFD56008A5830 /* FriendsFriendModel.m in Sources */,
+				A47C5F541A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664A3C1A2AFD56008A5830 /* SignInPhoneController.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
 				F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
@@ -10678,6 +10687,7 @@
 				A4C140661A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F5664CF71A2AFDD5008A5830 /* MyFriendsController.m in Sources */,
 				F5664CF81A2AFDD5008A5830 /* UIButton+WebCache.m in Sources */,
+				A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F58CA99B1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
