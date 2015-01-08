@@ -20,6 +20,7 @@
 #import "FriendsFriendController.h"
 #import "MyFriendsOperateViewCell.h"
 #import "NewFriendViewController.h"
+#import "AddFriendViewController.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
@@ -278,15 +279,12 @@ static NSString *fridcellid = @"fridcellid";
         }
             break;
         case 1:
-        {
-            //手机联系人
-            
-        }
-            break;
         case 2:
         {
-            //微信好友
-            
+            //1.手机联系人
+            //2.微信好友
+            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            [self.navigationController pushViewController:addFriendVC animated:YES];
         }
             break;
         case 3:

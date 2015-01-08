@@ -10,4 +10,8 @@
 
 @interface NewFriendViewCell : BaseTableViewCell
 
+
+//返回cell的高度
++ (CGFloat)configureWith;
+
 @end

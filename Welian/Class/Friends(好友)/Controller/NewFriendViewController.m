@@ -110,6 +110,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return [NewFriendViewCell configureWith];
 //    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 //    
 //    NewFriendUser *newFM = _datasource[indexPath.row];
@@ -126,7 +127,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 //    }else{
 //        return 60;
 //    }
-    return 60;
+//    return 60;
 }
 
 #pragma mark - 删除

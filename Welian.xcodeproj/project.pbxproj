@@ -89,6 +89,9 @@
 		A4776ACA1A44285F0022E211 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B61A43C2B9002E66FC /* MediaPlayer.framework */; };
 		A4776ACB1A4428830022E211 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B81A43C2D5002E66FC /* AVFoundation.framework */; };
 		A4776ACC1A44288B0022E211 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */; };
+		A47C5F4E1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
+		A47C5F4F1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
+		A47C5F501A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -3216,6 +3219,8 @@
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
+		A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
+		A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6985,6 +6990,8 @@
 				F532FD4919C93F0D005B887D /* UserCardController.xib */,
 				F5E4BB931A023E78007BEBD2 /* CommonFriendsController.h */,
 				F5E4BB941A023E78007BEBD2 /* CommonFriendsController.m */,
+				A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */,
+				A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -9893,6 +9900,7 @@
 				F53DC3811A49192600F5F712 /* WeixinTimelineActivity.m in Sources */,
 				F53DC3821A49192600F5F712 /* CTAssetsSupplementaryView.m in Sources */,
 				F53DC3831A49192600F5F712 /* NSString+Extend.m in Sources */,
+				A47C5F501A5E1E9400E63737 /* AddFriendViewController.m in Sources */,
 				F53DC3841A49192600F5F712 /* AddFriendsController.m in Sources */,
 				F53DC3851A49192600F5F712 /* MJMethod.m in Sources */,
 				A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
@@ -10284,6 +10292,7 @@
 				F5664A471A2AFD56008A5830 /* SWTableViewCell.m in Sources */,
 				F5664A481A2AFD56008A5830 /* AFSecurityPolicy.m in Sources */,
 				F5664A491A2AFD56008A5830 /* NSData+ImageContentType.m in Sources */,
+				A47C5F4E1A5E1E9400E63737 /* AddFriendViewController.m in Sources */,
 				F5664A4A1A2AFD56008A5830 /* NoCommentCell.m in Sources */,
 				F5664A4B1A2AFD56008A5830 /* WeixinTimelineActivity.m in Sources */,
 				A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
@@ -10675,6 +10684,7 @@
 				F5664D051A2AFDD5008A5830 /* WeixinTimelineActivity.m in Sources */,
 				F5664D061A2AFDD5008A5830 /* CTAssetsSupplementaryView.m in Sources */,
 				10389B691A3F0740001A785C /* NSString+Extend.m in Sources */,
+				A47C5F4F1A5E1E9400E63737 /* AddFriendViewController.m in Sources */,
 				F5664D071A2AFDD5008A5830 /* AddFriendsController.m in Sources */,
 				F5664D081A2AFDD5008A5830 /* MJMethod.m in Sources */,
 				A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,

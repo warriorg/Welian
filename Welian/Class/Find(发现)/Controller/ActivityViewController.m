@@ -107,7 +107,7 @@
 //    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"活动";
     //铺到状态栏底下而是从状态栏下面
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     //    self.extendedLayoutIncludesOpaqueBars = YES;
 //    self.modalPresentationCapturesStatusBarAppearance = YES;
     
