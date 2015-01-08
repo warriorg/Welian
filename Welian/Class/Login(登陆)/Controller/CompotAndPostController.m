@@ -241,6 +241,10 @@
     
 }
 
+- (void)dealloc
+{
+    [self.searchQueue cancelAllOperations];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

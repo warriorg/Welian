@@ -44,6 +44,11 @@ static HttpTool *engine;
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         DLog(@"%@",[operation responseString]);
+        if (![operation responseString]) {
+            [WLHUDView showErrorHUD:@"网络连接失败！"];
+            failureBlock ([NSError errorWithDomain:@"网络连接失败！" code:-1 userInfo:nil]);
+            return;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
@@ -51,9 +56,15 @@ static HttpTool *engine;
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
-            failureBlock ([[NSError alloc] init]);
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:1 userInfo:nil]);
+            
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-            [WLHUDView showErrorHUD:@"senddidddd超时"];
+//            [WLHUDView showErrorHUD:@"senddidddd超时"];
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
+        }else if ([[dic objectForKey:@"state"] integerValue]==-1){
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-1 userInfo:nil]);
+        }else if ([[dic objectForKey:@"state"] integerValue]==-2){
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-2 userInfo:nil]);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -84,8 +95,7 @@ static HttpTool *engine;
     }
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
-    //添加头部字段
-//    [engine.requestSerializer setValue:sessid forHTTPHeaderField:@"jsessionid"];
+
     [engine POST:path parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         DLog(@"%@",[operation responseString]);
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
@@ -145,61 +155,6 @@ static HttpTool *engine;
         failureBlock(error);
     }];
 }
-
-
-- (void)againConnectParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
-{
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    LogInUser *mode = [LogInUser getNowLogInUser];
-    NSMutableDictionary *loginDicM = [NSMutableDictionary dictionary];
-    [loginDicM setObject:mode.mobile forKey:@"mobile"];
-    [loginDicM setObject:mode.checkcode forKey:@"password"];
-    [loginDicM setObject:KPlatformType forKey:@"platform"];
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        
-        [loginDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
-    }
-
-    NSDictionary *loginDic = @{@"type":@"login",@"data":loginDicM};
-    NSString *parameterStr = [self dicTostring:loginDic];
-    NSDictionary *parmetDic = @{@"json":parameterStr};
-    
-    [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
-        DLog(@"%@",dic);
-        if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
-            [WLHUDView hiddenHud];
-            NSDictionary *dataDic = [dic objectForKey:@"data"];
-            if (dataDic) {
-//                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                [LogInUser setUserSessionid:[dataDic objectForKey:@"sessionid"]];
-//                [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-                
-                [self reqestWithSessIDParameters:_seleDic successBlock:^(id JSON) {
-                    if (JSON) { // 成功
-                        [WLHUDView hiddenHud];
-                        success(JSON);
-                        
-                    }else{ // 失败
-                        [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
-                    }
-                    
-                    
-                } failure:^(NSError *error) {
-                    failureBlock(error);
-                } withHUD:isHUD andDim:isDim];
-                
-            }
-            
-        }else { // 失败
-            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
-
 
 - (void)formatUrlAndParameters:(NSDictionary*)parameters{
     //格式化url和参数
