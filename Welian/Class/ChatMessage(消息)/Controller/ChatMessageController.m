@@ -38,7 +38,7 @@
     //隐藏分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.datasource = [LogInUser chatUsers];
+    self.datasource = [[LogInUser getNowLogInUser] chatUsers];
     
     //添加聊天用户改变监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
@@ -109,7 +109,7 @@
         MyFriendUser *friendUser = _datasource[indexPath.row];
         [friendUser updateIsChatStatus:NO];
         //刷新列表
-        self.datasource = [LogInUser chatUsers];
+        self.datasource = [[LogInUser getNowLogInUser] chatUsers];
         [self.tableView reloadData];
 //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 //        [(NSMutableArray *)_datasource removeObjectAtIndex:indexPath.row];
@@ -146,7 +146,7 @@
 //聊天列表改变
 - (void)chatUsersChanged:(NSNotification *)notification
 {
-    self.datasource = [LogInUser chatUsers];
+    self.datasource = [[LogInUser getNowLogInUser] chatUsers];
     [self.tableView reloadData];
 }
 

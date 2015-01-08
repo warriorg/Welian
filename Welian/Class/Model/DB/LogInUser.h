@@ -20,6 +20,8 @@
 @property (nonatomic, retain) NSString * sessionid;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * auth;
+@property (nonatomic, retain) NSString * openid;
+@property (nonatomic, retain) NSString * unionid;
 
 @property (nonatomic, retain) NSSet *rsCompanys;
 @property (nonatomic, retain) NSSet *rsSchools;
@@ -42,7 +44,9 @@
 + (LogInUser *)getNowLogInUser;
 
 //获取正在聊天的好友列表
-+ (NSArray *)chatUsers;
+- (NSArray *)chatUsers;
+//获取新的好友列表
+- (NSArray *)allMyNewFriends;
 
 //所有未读取的聊天消息数量
 - (NSInteger)allUnReadChatMessageNum;

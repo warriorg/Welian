@@ -468,18 +468,35 @@
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
-            NSArray *json = [NSArray arrayWithArray:JSON];
-            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            NSArray  *json = [NSArray arrayWithArray:JSON];
+//            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            
+            //循环，删除本地数据库多余的缓存数据
+            for (int i = 0; i < [myFriends count]; i++){
+                MyFriendUser *myFriendUser = myFriends[i];
+                //判断返回的数组是否包含
+                BOOL isHave = [json bk_any:^BOOL(id obj) {
+                    //判断是否包含对应的
+                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
+                }];
+                if(!isHave){
+                    //不包含，删除当前数据
+                    [myFriendUser delete];
+                }
+            }
+            
+            NSArray *myFriends = [NSArray array];
             if (json.count) {
                 //循环添加数据库数据
                 for (NSDictionary *modic in json) {
                     FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
                     [MyFriendUser createMyFriendUserModel:friendM];
-                    [mutabArray addObject:friendM];
+//                    [mutabArray addObject:friendM];
                 }
-                
+                myFriends = [MyFriendUser getAllMyFriendUsers];
             }
-            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
+            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:myFriends]});
+//            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
             
         } failure:^(NSError *error) {
             failurBlock(error);

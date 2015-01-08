@@ -95,6 +95,12 @@
 		A47C5F541A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
 		A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
 		A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */; };
+		A47C5F591A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */; };
+		A47C5F5A1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */; };
+		A47C5F5B1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */; };
+		A47C5F5C1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
+		A47C5F5D1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
+		A47C5F5E1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -3232,6 +3238,9 @@
 		A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		A47C5F521A5E663100E63737 /* AddFriendTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTypeListViewController.h; sourceTree = "<group>"; };
 		A47C5F531A5E663100E63737 /* AddFriendTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendTypeListViewController.m; sourceTree = "<group>"; };
+		A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myfriend_add_phone_logo@2x.png"; sourceTree = "<group>"; };
+		A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myfriend_add_renda_logo@2x.png"; sourceTree = "<group>"; };
+		A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.3.xcdatamodel; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -5830,6 +5839,8 @@
 		F51FBAF119EFEE6C00D85D7F /* 我的images */ = {
 			isa = PBXGroup;
 			children = (
+				A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */,
+				A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */,
 				A40355FD1A5D1D05006AE52C /* me_myfriend_friendsfriend_logo@2x.png */,
 				A40355FE1A5D1D05006AE52C /* me_myfriend_new_logo@2x.png */,
 				A40355FF1A5D1D05006AE52C /* me_myfriend_phone_logo@2x.png */,
@@ -7984,6 +7995,7 @@
 				F53DC46F1A49192600F5F712 /* discovery_tou@2x.png in Resources */,
 				F53DC4701A49192600F5F712 /* Expression_55@2x.png in Resources */,
 				F53DC4711A49192600F5F712 /* Expression_80@2x.png in Resources */,
+				A47C5F5E1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */,
 				F53DC4721A49192600F5F712 /* home_picture_add_selected@2x.png in Resources */,
 				A4C144141A4C0A6B00C9BAB5 /* VoiceBtn_Black@2x.png in Resources */,
 				F53DC4731A49192600F5F712 /* icon_timeline-8@2x.png in Resources */,
@@ -8280,6 +8292,7 @@
 				F53DC5481A49192600F5F712 /* me_mycard_lacation@2x.png in Resources */,
 				F53DC5491A49192600F5F712 /* home_picture_enlarge_download@2x.png in Resources */,
 				F53DC54A1A49192600F5F712 /* sns_icon_38@2x.png in Resources */,
+				A47C5F5B1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */,
 				F53DC54B1A49192600F5F712 /* sns_icon_18.png in Resources */,
 				F534DADF1A4E9D0B00B6A725 /* investor_attestation_add@2x.png in Resources */,
 				F53DC54C1A49192600F5F712 /* tabbar_me@2x.png in Resources */,
@@ -8486,6 +8499,7 @@
 				F5664ADD1A2AFD56008A5830 /* Expression_53@2x.png in Resources */,
 				F5664ADE1A2AFD56008A5830 /* unicode_to_hanyu_pinyin.txt in Resources */,
 				F5664ADF1A2AFD56008A5830 /* Expression_48@2x.png in Resources */,
+				A47C5F5C1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */,
 				F5664AE01A2AFD56008A5830 /* sns_icon_11.png in Resources */,
 				A4C143C11A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				F5664AE11A2AFD56008A5830 /* searchbar_bg@2x.png in Resources */,
@@ -8835,6 +8849,7 @@
 				A4C143D01A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				A4C143881A4C0A6B00C9BAB5 /* section0_emotion3@2x.png in Resources */,
 				F5E380B71A41B1680084F7F3 /* WorkListCell.xib in Resources */,
+				A47C5F591A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */,
 				F55772BE1A5AA3E200693279 /* login_button_bg_pre@2x.png in Resources */,
 				A4C144571A4C0A6B00C9BAB5 /* RecordingSignal004@2x.png in Resources */,
 				F5664BD41A2AFD56008A5830 /* readme.txt in Resources */,
@@ -9215,6 +9230,7 @@
 				F5664DE41A2AFDD5008A5830 /* discovery_tou@2x.png in Resources */,
 				F5664DE51A2AFDD5008A5830 /* Expression_55@2x.png in Resources */,
 				F5664DE61A2AFDD5008A5830 /* Expression_80@2x.png in Resources */,
+				A47C5F5D1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */,
 				F5664DE71A2AFDD5008A5830 /* home_picture_add_selected@2x.png in Resources */,
 				A4C144131A4C0A6B00C9BAB5 /* VoiceBtn_Black@2x.png in Resources */,
 				F5664DE81A2AFDD5008A5830 /* icon_timeline-8@2x.png in Resources */,
@@ -9511,6 +9527,7 @@
 				F5664EAE1A2AFDD5008A5830 /* me_mycard_lacation@2x.png in Resources */,
 				F5664EAF1A2AFDD5008A5830 /* home_picture_enlarge_download@2x.png in Resources */,
 				F5664EB11A2AFDD5008A5830 /* sns_icon_38@2x.png in Resources */,
+				A47C5F5A1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */,
 				F5664EB21A2AFDD5008A5830 /* sns_icon_18.png in Resources */,
 				F534DADE1A4E9D0B00B6A725 /* investor_attestation_add@2x.png in Resources */,
 				F5664EB31A2AFDD5008A5830 /* tabbar_me@2x.png in Resources */,
@@ -11404,12 +11421,13 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */,
 				A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */,
 				F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */,
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */;
+			currentVersion = A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

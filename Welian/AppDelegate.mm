@@ -316,6 +316,8 @@ BMKMapManager* _mapManager;
         if ([type isEqualToString:@"friendAdd"]) {
             // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
             [newfrendM setIsAgree:@(1)];
+            //操作类型0：添加 1：接受  2:已添加 3：待验证
+            [newfrendM setOperateType:@(2)];
             
             //创建本地数据库好友
             MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
@@ -342,18 +344,30 @@ BMKMapManager* _mapManager;
             
         }else{
             [newfrendM setIsAgree:@(0)];
-            NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
-            badge++;
-            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+            //别人请求加我为好友
+            if ([type isEqualToString:@"friendRequest"]) {
+                //操作类型0：添加 1：接受  2:已添加 3：待验证
+                [newfrendM setOperateType:@(1)];
+            }
+            //推荐的
+            if([type isEqualToString:@"friendCommand"]){
+                [newfrendM setOperateType:@(0)];
+            }
+            //判断当前是否已经是好友
+            NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
+            if (!newFriendUser) {
+                //不是好友，添加角标
+                NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
+                badge++;
+                [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
+                //刷新好友页面角标
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+            }
         }
         
         if (!newfrendM.created) {
-            NSDate *nowdate = [NSDate date];
-            NSDateFormatter* fmt = [[NSDateFormatter alloc] init];
-            fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-            fmt.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-            newfrendM.created = [fmt stringFromDate:nowdate];
+            //创建的时间
+            newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         }
         [NewFriendUser createNewFriendUserModel:newfrendM];
         

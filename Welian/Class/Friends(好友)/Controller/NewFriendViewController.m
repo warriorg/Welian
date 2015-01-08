@@ -15,6 +15,7 @@
 #import "NotstringView.h"
 #import "NewFriendViewCell.h"
 #import "AddFriendTypeListViewController.h"
+#import "AddFriendViewController.h"
 
 static NSString *cellIdentifier = @"frnewCellid";
 
@@ -22,7 +23,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 
 @property (strong, nonatomic) NotstringView *notView;
 
-@property (strong, nonatomic)  NSArray *datasource;
+@property (strong, nonatomic) NSArray *datasource;
 
 @end
 
@@ -60,16 +61,20 @@ static NSString *cellIdentifier = @"frnewCellid";
     
 //    [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
 //    [self.tableView setBackgroundColor:IWGlobalBg];
-    
-    //默认选择手机联系人
-    [self wlSegmentedControlSelectAtIndex:0];
+
+    //加载数据
+    self.datasource = [[LogInUser getNowLogInUser] allMyNewFriends];
+    if (_datasource.count > 0) {
+        [self.tableView reloadData];
+    }else{
+        [self.tableView addSubview:self.notView];
+    }
 }
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _datasource.count;
-//    return _datasource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,9 +87,11 @@ static NSString *cellIdentifier = @"frnewCellid";
 //    NewFriendUser *newFM = _datasource[indexPath.row];
 //    [cell setFriendM:newFM];
 //    [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
-    cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
-    cell.nameLabel.text = @"陈日莎";
-    cell.messageLabel.text = @"我的传送门网络技术有限公司的项目经理";
+    cell.nFriendUser = _datasource[indexPath.row];
+    WEAKSELF
+    [cell setNewFriendBlock:^(FriendOperateType type,NewFriendUser *newFriendUser){
+        [weakSelf newFriendOperate:type newFriendUser:newFriendUser];
+    }];
     return cell;
 }
 
@@ -114,7 +121,8 @@ static NSString *cellIdentifier = @"frnewCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [NewFriendViewCell configureWith];
+    NewFriendUser *friendUser = _datasource[indexPath.row];
+    return [NewFriendViewCell configureWithName:friendUser.name message:friendUser.msg];
 //    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 //    
 //    NewFriendUser *newFM = _datasource[indexPath.row];
@@ -149,12 +157,9 @@ static NSString *cellIdentifier = @"frnewCellid";
 //切换
 - (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
 {
-    self.datasource = [[[LogInUser getNowLogInUser] rsMyFriends] allObjects];
-    if (_datasource) {
-        [self.tableView reloadData];
-    }else{
-        [self.tableView addSubview:self.notView];
-    }
+    //手机和微信添加好友
+    AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped WithSelectType:index];
+    [self.navigationController pushViewController:addFriendVC animated:YES];
 }
 
 #pragma mark - Private
@@ -163,6 +168,12 @@ static NSString *cellIdentifier = @"frnewCellid";
 {
     AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:addTypeListVC animated:YES];
+}
+
+//好友关系操作
+- (void)newFriendOperate:(FriendOperateType)type newFriendUser:(NewFriendUser *)newFriendUser
+{
+    
 }
 
 @end
