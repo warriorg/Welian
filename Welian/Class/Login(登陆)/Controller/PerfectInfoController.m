@@ -110,6 +110,14 @@
     _bindingBut = bindingBut;
     [scrollView addSubview:bindingBut];
     
+    NSDictionary *weixingDic = [self.userInfoDic objectForKey:@"weixingdata"];
+    if (weixingDic) {
+        [_phoneTF setText:[weixingDic objectForKey:@"mobile"]];
+        [_nameTF setText:[weixingDic objectForKey:@"name"]];
+        [_companyTF setText:[weixingDic objectForKey:@"company"]];
+        [_postTF setText:[weixingDic objectForKey:@"position"]];
+    }
+    
     // 键盘管理
     [DaiDodgeKeyboard addRegisterTheViewNeedDodgeKeyboard:scrollView];
     UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
@@ -132,18 +140,39 @@
     }
     
     if (!_nameTF.text.length) {
+        [WLHUDView showErrorHUD:@"请填写你的姓名"];
         return;
     }
+    if (_nameTF.text.length<2||_nameTF.text.length>20) {
+        [WLHUDView showErrorHUD:@"姓名长度为2-20个字"];
+        return;
+    }
+    
     if (!_phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请填写手机号码"];
         return;
     }
+    
     if (!_companyTF.text.length) {
+        [WLHUDView showErrorHUD:@"请填写你所在的公司"];
         return;
     }
+    if (_companyTF.text.length<2||_companyTF.text.length>30) {
+        [WLHUDView showErrorHUD:@"公司长度为2-30个字"];
+        return;
+    }
+    
     if (!_postTF.text.length) {
+        [WLHUDView showErrorHUD:@"请填写你的职位"];
         return;
     }
+    if (_postTF.text.length<2 ||_postTF.text.length>30) {
+        [WLHUDView showErrorHUD:@"职位长度为2-30个字"];
+        return;
+    }
+    
     if (!_imagebase64Str.length) {
+        [WLHUDView showErrorHUD:@"请选择头像"];
         return;
     }
     
@@ -177,16 +206,14 @@
             SaveLoginMobile(mode.mobile);
             
             [LogInUser createLogInUserModel:mode];
-            BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
-            [self presentViewController:BSearchFVC animated:YES completion:^{
-
-            }];
-            
-            
+//            BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+//            [self presentViewController:BSearchFVC animated:YES completion:^{
+//
+//            }];
             
             //进入主页面
-//            MainViewController *mainVC = [[MainViewController alloc] init];
-//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+            MainViewController *mainVC = [[MainViewController alloc] init];
+            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         }
 
     } fail:^(NSError *error) {
@@ -223,7 +250,7 @@
     if (textField == _phoneTF) {
         if (range.location>=11) return NO;
     }else if (textField == _nameTF){
-        if (range.location>=18) return NO;
+        if (range.location>=20) return NO;
     }
     return YES;
 }
