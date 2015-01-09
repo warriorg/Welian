@@ -27,6 +27,7 @@
 #import "MyFriendUser.h"
 #import "FriendsinfoModel.h"
 #import "IIMeInvestAuthModel.h"
+#import "NewFriendUser.h"
 
 @implementation WLHttpTool
 
@@ -493,6 +494,13 @@
                     return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
                 }];
                 if(!isHave){
+                    //删除新的好友本地数据库
+                    NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:myFriendUser.uid];
+                    if (newFuser) {
+                        //更新好友请求列表数据为 添加
+                        [newFuser updateOperateType:0];
+                    }
+                    
                     //不包含，删除当前数据
                     [myFriendUser delete];
                 }
