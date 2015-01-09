@@ -15,6 +15,7 @@
 #import "MJExtension.h"
 #import "NotstringView.h"
 #import "FriendCell.h"
+#import "MainViewController.h"
 
 @interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -301,15 +302,21 @@ static NSString *fridcellid = @"fridcellid";
         length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
     }
     
-    NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONT(15)
-                               };
-    
+    NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
     NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
     [attrstr addAttributes:attrsDic range:NSMakeRange(5, length)];
     
     [headerLabel setAttributedText:attrstr];
     
     return headerLabel;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    MainViewController *mainVC = [[MainViewController alloc] init];
+
+    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
 }
 
 
