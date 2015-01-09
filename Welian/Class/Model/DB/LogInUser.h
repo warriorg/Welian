@@ -45,15 +45,6 @@
 + (LogInUser *)getNowLogInUser;
 
 
-//创建需要添加的好友对象
-- (void)createNeedAddUserWithDict:(NSDictionary *)dict withType:(NSInteger)type;
-//获取已经存在的好友对象
-- (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
-//获取已经存在的好友对象
-- (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
-//获取排序后的通讯录联系人
-- (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
-
 //获取正在聊天的好友列表
 - (NSArray *)chatUsers;
 //获取新的好友列表

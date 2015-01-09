@@ -20,6 +20,10 @@
 
 @interface NewFriendViewCell ()
 
+@property (assign, nonatomic) UIImageView *logoImageView;
+@property (assign, nonatomic) UILabel *nameLabel;
+@property (assign, nonatomic) UILabel *messageLabel;
+@property (assign, nonatomic) UIButton *operateBtn;
 @property (assign, nonatomic) UIImageView *iconImageView;
 
 - (void)setup;
@@ -27,6 +31,14 @@
 @end
 
 @implementation NewFriendViewCell
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    _nameLabel.text = nil;
+    _messageLabel.text = nil;
+    _logoImageView.image = nil;
+}
 
 - (void)dealloc
 {

@@ -22,11 +22,6 @@ typedef void(^newFriendOperateBlock)(FriendOperateType type,NewFriendUser *newFr
 
 @interface NewFriendViewCell : BaseTableViewCell
 
-@property (assign, nonatomic) UIImageView *logoImageView;
-@property (assign, nonatomic) UILabel *nameLabel;
-@property (assign, nonatomic) UILabel *messageLabel;
-@property (assign, nonatomic) UIButton *operateBtn;
-
 @property (strong, nonatomic) newFriendOperateBlock newFriendBlock;
 
 @property (strong,nonatomic) NSIndexPath *indexPath;

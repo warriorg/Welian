@@ -18,6 +18,15 @@
 @property (nonatomic, retain) NSString * pinyin;
 @property (nonatomic, retain) NSString * wlname;
 @property (nonatomic, retain) NSNumber * userType;//1：手机好友  2：微信好友
-@property (nonatomic, retain) LogInUser *rsLoginUser;
+@property (nonatomic, retain) LogInUser * rsLoginUser;
+
+//创建需要添加的好友对象
++ (void)createNeedAddUserWithDict:(NSDictionary *)dict withType:(NSInteger)type;
+//获取已经存在的好友对象
++ (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
+//获取已经存在的好友对象
++ (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
+//获取排序后的通讯录联系人
++ (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
 
 @end
