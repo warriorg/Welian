@@ -9,6 +9,7 @@
 #import "BaseTableViewCell.h"
 #import "NewFriendUser.h"
 #import "UserInfoModel.h"
+#import "NeedAddUser.h"
 
 typedef enum : NSUInteger {
     FriendOperateTypeAdd = 0,//添加
@@ -36,6 +37,9 @@ typedef void(^newFriendOperateBlock)(FriendOperateType type,NewFriendUser *newFr
 
 //搜索出来的用户
 @property (strong, nonatomic) UserInfoModel *userInfoModel;
+
+//需要添加的好友
+@property (strong, nonatomic) NeedAddUser *needAddUser;
 
 //返回cell的高度
 + (CGFloat)configureWithName:(NSString *)name message:(NSString *)msg;

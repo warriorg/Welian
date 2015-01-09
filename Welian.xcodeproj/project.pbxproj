@@ -107,6 +107,9 @@
 		A47C5F5C1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
 		A47C5F5D1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
 		A47C5F5E1A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */; };
+		A482A2471A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
+		A482A2481A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
+		A482A2491A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -3254,6 +3257,9 @@
 		A47C5F571A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myfriend_add_phone_logo@2x.png"; sourceTree = "<group>"; };
 		A47C5F581A5E87FB00E63737 /* me_myfriend_add_renda_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myfriend_add_renda_logo@2x.png"; sourceTree = "<group>"; };
 		A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.3.xcdatamodel; sourceTree = "<group>"; };
+		A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.4.xcdatamodel; sourceTree = "<group>"; };
+		A482A2451A5FD16F004AABE5 /* NeedAddUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedAddUser.h; sourceTree = "<group>"; };
+		A482A2461A5FD16F004AABE5 /* NeedAddUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedAddUser.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6566,6 +6572,8 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				A482A2451A5FD16F004AABE5 /* NeedAddUser.h */,
+				A482A2461A5FD16F004AABE5 /* NeedAddUser.m */,
 				F534DB621A5119A000B6A725 /* InvestItems.h */,
 				F534DB631A5119A000B6A725 /* InvestItems.m */,
 				F534DB5D1A5119A000B6A725 /* InvestStages.h */,
@@ -9671,6 +9679,7 @@
 				F53DC2B21A49192600F5F712 /* PinyinHelper.m in Sources */,
 				F53DC2B41A49192600F5F712 /* ICompanyResult.m in Sources */,
 				F53DC2B51A49192600F5F712 /* MJRefreshHeaderView.m in Sources */,
+				A482A2491A5FD16F004AABE5 /* NeedAddUser.m in Sources */,
 				F53DC2B61A49192600F5F712 /* MJPhotoProgressView.m in Sources */,
 				F53DC2B71A49192600F5F712 /* UserInfoModel.m in Sources */,
 				F53DC2B81A49192600F5F712 /* MLEmojiLabel.m in Sources */,
@@ -10067,6 +10076,7 @@
 				F56649911A2AFD56008A5830 /* MJRefreshHeaderView.m in Sources */,
 				A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
 				A4C1446E1A4C2D3B00C9BAB5 /* WLMessageBubbleHelper.m in Sources */,
+				A482A2471A5FD16F004AABE5 /* NeedAddUser.m in Sources */,
 				F56649921A2AFD56008A5830 /* MJPhotoProgressView.m in Sources */,
 				A4C1409E1A4BEA8500C9BAB5 /* WLMessageInputView.m in Sources */,
 				A4C140891A4BEA8500C9BAB5 /* UIView+XHRemoteImage.m in Sources */,
@@ -10463,6 +10473,7 @@
 				F5664C491A2AFDD5008A5830 /* PinyinHelper.m in Sources */,
 				F59E76201A411E4C0028FBAF /* ICompanyResult.m in Sources */,
 				F5664C4B1A2AFDD5008A5830 /* MJRefreshHeaderView.m in Sources */,
+				A482A2481A5FD16F004AABE5 /* NeedAddUser.m in Sources */,
 				F5664C4C1A2AFDD5008A5830 /* MJPhotoProgressView.m in Sources */,
 				F5664C4D1A2AFDD5008A5830 /* UserInfoModel.m in Sources */,
 				F5664C4E1A2AFDD5008A5830 /* MLEmojiLabel.m in Sources */,
@@ -11451,13 +11462,14 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */,
 				A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */,
 				A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */,
 				F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */,
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */;
+			currentVersion = A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

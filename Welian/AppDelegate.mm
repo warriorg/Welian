@@ -342,14 +342,25 @@ BMKMapManager* _mapManager;
         }else{
             [newfrendM setIsAgree:@(0)];
             //别人请求加我为好友
+            //操作类型0：添加 1：接受  2:已添加 3：待验证
+            MyFriendUser *myFriendUser = [MyFriendUser getMyfriendUserWithUid:newfrendM.uid];
             if ([type isEqualToString:@"friendRequest"]) {
-                //操作类型0：添加 1：接受  2:已添加 3：待验证
-                [newfrendM setOperateType:@(1)];
+                //如果是好友，设置为已添加
+                if (myFriendUser) {
+                    [newfrendM setOperateType:@(2)];
+                }else{
+                    [newfrendM setOperateType:@(1)];
+                }
             }
             //推荐的
             if([type isEqualToString:@"friendCommand"]){
-                [newfrendM setOperateType:@(0)];
+                if (myFriendUser) {
+                    [newfrendM setOperateType:@(2)];
+                }else{
+                    [newfrendM setOperateType:@(0)];
+                }
             }
+            
             //判断当前是否已经是好友
             NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
             if (!newFriendUser) {
