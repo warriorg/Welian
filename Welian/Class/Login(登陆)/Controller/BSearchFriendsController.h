@@ -10,4 +10,6 @@
 
 @interface BSearchFriendsController : BasicViewController
 
+@property (nonatomic, assign) BOOL isStart;
+
 @end

@@ -307,7 +307,7 @@ static NSString *fridcellid = @"fridcellid";
     
     NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
     NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
-    [attrstr addAttributes:attrsDic range:NSMakeRange(5, length)];
+    [attrstr addAttributes:attrsDic range:NSMakeRange(6, length)];
     
     [headerLabel setAttributedText:attrstr];
     
@@ -321,9 +321,14 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)cancelClick
 {
-    MainViewController *mainVC = [[MainViewController alloc] init];
-    [mainVC setSelectedIndex:1];
-    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+    if (_isStart) {
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [mainVC setSelectedIndex:1];
+        [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+    }
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

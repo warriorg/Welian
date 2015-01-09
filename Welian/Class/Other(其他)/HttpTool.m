@@ -35,7 +35,7 @@ static HttpTool *engine;
 - (void)reqestParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {
     if (isHUD) {
-        [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
+        [WLHUDView showHUDWithStr:@"加载中..." dim:isDim];
     }
     NSString *parameterStr = [self dicTostring:parameterDic];
     NSDictionary *parmetDic = @{@"json":parameterStr};
@@ -43,6 +43,7 @@ static HttpTool *engine;
     [self formatUrlAndParameters:parameterDic];
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [WLHUDView hiddenHud];
         DLog(@"%@",[[operation responseData] class]);
         if (![operation responseData]) {
             [WLHUDView showErrorHUD:@"网络连接失败！"];
@@ -52,10 +53,10 @@ static HttpTool *engine;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
-            [WLHUDView hiddenHud];
+
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:1 userInfo:nil]);
             
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
@@ -108,16 +109,19 @@ static HttpTool *engine;
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([[NSError alloc] init]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             _seleDic = parameterDic;
             
         }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
+            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             success(@{@"state":@"-1"});
         }else{
             [WLHUDView hiddenHud];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
-        //        [WLHUDView showErrorHUD:error.localizedDescription];
+        [WLHUDView showErrorHUD:@"请求失败"];
+//            [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }
