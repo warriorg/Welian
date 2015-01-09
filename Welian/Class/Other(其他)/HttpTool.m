@@ -64,7 +64,7 @@ static HttpTool *engine;
         }else if ([[dic objectForKey:@"state"] integerValue]==-1){
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-1 userInfo:nil]);
         }else if ([[dic objectForKey:@"state"] integerValue]==-2){
-            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-2 userInfo:nil]);
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-2 userInfo:[dic objectForKey:@"data"]]);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -171,15 +171,16 @@ static NSString *fridcellid = @"fridcellid";
                         }
                     }
                     
-                    if (self.friendsBook.count||self.friendsWeixing.count) {
-                        [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
-                        [self.view addSubview:self.tableView];
-                    }else{
-                        [self.view addSubview:self.notFriendsView];
-                    }
-                    [UIView animateWithDuration:0.25 animations:^{
+                    
+                    [UIView animateWithDuration:2 animations:^{
                         [_searchView setAlpha:0.0];
                     } completion:^(BOOL finished) {
+                        if (self.friendsBook.count||self.friendsWeixing.count) {
+                            [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
+                            [self.view addSubview:self.tableView];
+                        }else{
+                            [self.view addSubview:self.notFriendsView];
+                        }
                         [_leidaImage stopAnimating];
                         [_searchView removeFromSuperview];
                     }];
@@ -199,19 +200,20 @@ static NSString *fridcellid = @"fridcellid";
                     [friendBook setKeyValues:dic];
                     [self.friendsWeixing addObject:friendBook];
                 }
-                if (self.friendsWeixing.count) {
-                    [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
-                    [self.view insertSubview:self.tableView belowSubview:_searchView];
-                    
-                    
-                }else{
-                    [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
-                    
-                }
-                [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-                [UIView animateWithDuration:0.25 animations:^{
+                
+                [UIView animateWithDuration:2 animations:^{
                     [_searchView setAlpha:0.0];
                 } completion:^(BOOL finished) {
+                    if (self.friendsWeixing.count) {
+                        [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
+                        [self.view insertSubview:self.tableView belowSubview:_searchView];
+                        
+                        
+                    }else{
+                        [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
+                        
+                    }
+                    [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
                     [_leidaImage stopAnimating];
                     [_searchView removeFromSuperview];
                 }];
@@ -255,6 +257,7 @@ static NSString *fridcellid = @"fridcellid";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     FriendsAddressBook *friends;
     if (indexPath.section==0) {
         if (self.friendsBook.count) {
@@ -289,16 +292,16 @@ static NSString *fridcellid = @"fridcellid";
     NSInteger  length = 0;
     if (section==0) {
         if (self.friendsBook.count) {
-           headStr =  [NSString stringWithFormat:@"为你搜索到%d个通讯录好友",self.friendsBook.count];
+           headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个通讯录好友",self.friendsBook.count];
             length = [[NSString stringWithFormat:@"%d",self.friendsBook.count] length];
             
         }else if (self.friendsWeixing.count){
-           headStr =  [NSString stringWithFormat:@"为你搜索到%d个微信好友",self.friendsWeixing.count];
+           headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个微信好友",self.friendsWeixing.count];
             length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
         }
         
     }else if (section==1){
-        headStr =  [NSString stringWithFormat:@"为你搜索到%d个微信好友",self.friendsWeixing.count];
+        headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个微信好友",self.friendsWeixing.count];
         length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
     }
     
@@ -313,18 +316,14 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    MainViewController *mainVC = [[MainViewController alloc] init];
-
-    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+    [self cancelClick];
 }
-
 
 - (void)cancelClick
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    [mainVC setSelectedIndex:1];
+    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -139,23 +139,31 @@
 //                                               SaveLoginPassWD(_pwdTF.text);
                                            
                                            [LogInUser createLogInUserModel:mode];
-                                           PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-                                           NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-                                           [self presentViewController:nav animated:YES completion:^{
-                                               
-                                           }];
                                            
-                                           //进入主页面
-//                                           MainViewController *mainVC = [[MainViewController alloc] init];
-//                                           [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+//                                           PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+//                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+//                                           NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+//                                           [self presentViewController:nav animated:YES completion:^{
+//                                               
+//                                           }];
+                                           
+                                          // 进入主页面
+                                           MainViewController *mainVC = [[MainViewController alloc] init];
+                                           [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                                        }
 
                                       [WLHUDView hiddenHud];
                                    } fail:^(NSError *error) {
                                        if (error.code==-2) { // -2微信没有登录过
                                            PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
+
+                                           NSMutableDictionary *userinfodic = [NSMutableDictionary dictionaryWithDictionary:[userInfo sourceData]];
+                                          NSDictionary *dataDic = error.userInfo;
+                                           if (dataDic) {
+                                               [userinfodic setObject:dataDic forKey:@"weixingdata"];
+                                           }
+                                           
+                                           [perfcetInfoVC setUserInfoDic:userinfodic];
                                            NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
                                            [self presentViewController:nav animated:YES completion:^{
                                                

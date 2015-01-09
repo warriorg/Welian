@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ShareSDKAppKey</key>
-	<string>507798c0a08e</string>
-	<key>KWeChatAppSecret</key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -33,7 +29,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx4150b21797fa0a5e</string>
+				<string>wx5e4e9a58776baed3</string>
 			</array>
 		</dict>
 	</array>
@@ -50,11 +46,15 @@
 	<key>KPlatformType</key>
 	<string>ios</string>
 	<key>KWeChatAppId</key>
-	<string>wx4150b21797fa0a5e</string>
+	<string>wx5e4e9a58776baed3</string>
+	<key>KWeChatAppSecret</key>
+	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
+	<key>ShareSDKAppKey</key>
+	<string>507798c0a08e</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
