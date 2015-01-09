@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -33,21 +33,31 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_mycard_tou.png" translatesAutoresizingMaskIntoConstraints="NO" id="p5D-Yd-yvE">
+                        <rect key="frame" x="44" y="39" width="11" height="11"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="gMl-yW-BPB"/>
+                            <constraint firstAttribute="width" constant="11" id="yAP-JI-35Y"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="2sd-N8-wZi" secondAttribute="bottom" constant="8.5" id="45O-Xw-HIX"/>
                     <constraint firstAttribute="centerY" secondItem="6lu-UY-miU" secondAttribute="centerY" id="7DT-gQ-Y2N"/>
                     <constraint firstItem="Usb-Dt-qQH" firstAttribute="leading" secondItem="6lu-UY-miU" secondAttribute="trailing" constant="8" id="9hp-rS-zxp"/>
                     <constraint firstItem="6lu-UY-miU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="D8b-Io-PCb"/>
+                    <constraint firstItem="p5D-Yd-yvE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="GWq-re-bf3"/>
                     <constraint firstAttribute="trailing" secondItem="Usb-Dt-qQH" secondAttribute="trailing" constant="8" id="JLY-AC-hq4"/>
                     <constraint firstItem="Usb-Dt-qQH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="de5-1r-C1K"/>
                     <constraint firstItem="2sd-N8-wZi" firstAttribute="top" secondItem="Usb-Dt-qQH" secondAttribute="bottom" constant="1" id="iZM-9q-8Gb"/>
                     <constraint firstAttribute="trailing" secondItem="2sd-N8-wZi" secondAttribute="trailing" constant="8" id="ibr-qA-yZd"/>
                     <constraint firstItem="2sd-N8-wZi" firstAttribute="leading" secondItem="6lu-UY-miU" secondAttribute="trailing" constant="8" id="ntY-yE-WGi"/>
+                    <constraint firstItem="p5D-Yd-yvE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="39" id="qAv-UZ-n6z"/>
                     <constraint firstItem="2sd-N8-wZi" firstAttribute="top" secondItem="Usb-Dt-qQH" secondAttribute="bottom" constant="1" id="vm1-PT-WJp"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="VCImageView" destination="p5D-Yd-yvE" id="HP7-qo-NvJ"/>
                 <outlet property="iconImagg" destination="6lu-UY-miU" id="eLu-k9-xXE"/>
                 <outlet property="infoLabel" destination="2sd-N8-wZi" id="cSn-5I-Vsv"/>
                 <outlet property="nameLabel" destination="Usb-Dt-qQH" id="D7W-nW-9gp"/>
@@ -55,4 +65,7 @@
             <point key="canvasLocation" x="178" y="247"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="me_mycard_tou.png" width="11" height="11"/>
+    </resources>
 </document>

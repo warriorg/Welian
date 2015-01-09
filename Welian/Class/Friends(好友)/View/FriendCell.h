@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *VCImageView;
+
 @property (nonatomic, strong) FriendsUserModel *userMode;
 
 @end

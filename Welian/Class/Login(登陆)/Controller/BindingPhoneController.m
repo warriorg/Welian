@@ -8,6 +8,9 @@
 
 #import "BindingPhoneController.h"
 #import "UIImage+ImageEffects.h"
+#import "MJExtension.h"
+#import "MainViewController.h"
+#import "BSearchFriendsController.h"
 
 @interface BindingPhoneController () <UITextFieldDelegate>
 {
@@ -36,6 +39,7 @@
     UIButton *bindingBut = [[UIButton alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(pwdTF.frame)+30, SuperSize.width-50, 44)];
     [bindingBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
     [bindingBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [bindingBut addTarget:self action:@selector(bindingButClick) forControlEvents:UIControlEventTouchUpInside];
     [bindingBut.titleLabel setFont:WLFONTBLOD(18)];
     [bindingBut setTitle:@"绑定" forState:UIControlStateNormal];
     [self.view addSubview:bindingBut];
@@ -67,9 +71,36 @@
     }
     
     [WLHttpTool loginParameterDic:requstDic success:^(id JSON) {
-        
+        NSDictionary *dataDic = JSON;
+        if (dataDic) {
+            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+            [mode setCheckcode:_phoneTF.text];
+            
+            //记录最后一次登陆的手机号
+            SaveLoginMobile(_phoneTF.text);
+            SaveLoginPassWD(_pwdTF.text);
+            
+            [LogInUser createLogInUserModel:mode];
+            
+            
+            BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+            [self presentViewController:BSearchFVC animated:YES completion:^{
+                
+            }];
+
+            
+//            //进入主页面
+//            MainViewController *mainVC = [[MainViewController alloc] init];
+//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+        }
     } fail:^(NSError *error) {
+        if (error.code==1) {
+            
+        }else if (error.code==-1){
         
+        }else if (error.code==-2){
+            
+        }
     } isHUD:YES];
 }
 

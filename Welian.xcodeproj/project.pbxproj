@@ -690,6 +690,9 @@
 		F53328ED1A5E3015001F48FA /* research_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53328E91A5E3015001F48FA /* research_bg@2x.png */; };
 		F53328EE1A5E3015001F48FA /* research_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53328E91A5E3015001F48FA /* research_bg@2x.png */; };
 		F53328EF1A5E3015001F48FA /* research_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53328E91A5E3015001F48FA /* research_bg@2x.png */; };
+		F53328FA1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53328F91A5EBC0C001F48FA /* UILabel+AttributedLabel.m */; };
+		F53328FB1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53328F91A5EBC0C001F48FA /* UILabel+AttributedLabel.m */; };
+		F53328FC1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F53328F91A5EBC0C001F48FA /* UILabel+AttributedLabel.m */; };
 		F53356341A370EEC000A15AC /* osusume_friend_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */; };
 		F53356371A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F53356381A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
@@ -4085,6 +4088,8 @@
 		F532FD7619C9BCB9005B887D /* PioneerPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PioneerPlist.plist; sourceTree = "<group>"; };
 		F53328E81A5E3015001F48FA /* research_bg_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "research_bg_pre@2x.png"; sourceTree = "<group>"; };
 		F53328E91A5E3015001F48FA /* research_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "research_bg@2x.png"; sourceTree = "<group>"; };
+		F53328F81A5EBC0C001F48FA /* UILabel+AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+AttributedLabel.h"; sourceTree = "<group>"; };
+		F53328F91A5EBC0C001F48FA /* UILabel+AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+AttributedLabel.m"; sourceTree = "<group>"; };
 		F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add@2x.png"; sourceTree = "<group>"; };
 		F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add_already@2x.png"; sourceTree = "<group>"; };
 		F53356391A38291B000A15AC /* SigninPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SigninPlist.plist; sourceTree = "<group>"; };
@@ -7449,6 +7454,8 @@
 				F5BA193A19C17394005F91BE /* InfoHeaderView.h */,
 				F5BA193B19C17394005F91BE /* InfoHeaderView.m */,
 				F5BA193D19C173A8005F91BE /* InfoHeaderView.xib */,
+				F53328F81A5EBC0C001F48FA /* UILabel+AttributedLabel.h */,
+				F53328F91A5EBC0C001F48FA /* UILabel+AttributedLabel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9733,6 +9740,7 @@
 				A4C1412E1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				A4C141161A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
 				F534DB5C1A5119A000B6A725 /* InvestIndustry.m in Sources */,
+				F53328FC1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				F55ED9EE1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F534DAD81A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F53DC2EF1A49192600F5F712 /* MyLocationController.m in Sources */,
@@ -10126,6 +10134,7 @@
 				F56649C61A2AFD56008A5830 /* NotstringView.m in Sources */,
 				A4C1407A1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				F56649C71A2AFD56008A5830 /* PublishStatusController.m in Sources */,
+				F53328FA1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				F55ED9EC1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F56649C81A2AFD56008A5830 /* MyLocationController.m in Sources */,
 				F56649C91A2AFD56008A5830 /* FMDatabaseQueue.m in Sources */,
@@ -10519,6 +10528,7 @@
 				A4C1412D1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				A4C141151A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
 				F534DB5B1A5119A000B6A725 /* InvestIndustry.m in Sources */,
+				F53328FB1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				F55ED9ED1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F534DAD71A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664C821A2AFDD5008A5830 /* MyLocationController.m in Sources */,

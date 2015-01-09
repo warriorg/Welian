@@ -125,7 +125,7 @@
             UILabel *titLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, top, frame.size.width - 60, 40)];
             
             [titLabel setText:titleStr];
-            titLabel.font = [UIFont systemFontOfSize:14.f];
+            titLabel.font = [UIFont systemFontOfSize:15.f];
             [titLabel setTextAlignment:NSTextAlignmentCenter];
             [titLabel setTextColor:WLRGB(170, 178, 182)];
             [titLabel setNumberOfLines:0];

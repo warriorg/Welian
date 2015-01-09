@@ -13,6 +13,8 @@
 #import "BSearchFriendsController.h"
 #import "BindingPhoneController.h"
 #import "CompotAndPostController.h"
+#import "MainViewController.h"
+#import "MJExtension.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 
@@ -120,10 +122,6 @@
 // 微信验证
 - (void)weixinRegister
 {
-    BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
-    [self presentViewController:BSearchFVC animated:YES completion:^{
-        
-    }];
     
     if (![self.userInfoDic objectForKey:@"openid"]) {
         return;
@@ -170,11 +168,25 @@
 
     
     [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
-        
-        BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
-        [self presentViewController:BSearchFVC animated:YES completion:^{
+        NSDictionary *dataDic = JSON;
+        if (dataDic) {
+            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
             
-        }];
+            //记录最后一次登陆的手机号
+            SaveLoginMobile(mode.mobile);
+            
+            [LogInUser createLogInUserModel:mode];
+            BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+            [self presentViewController:BSearchFVC animated:YES completion:^{
+
+            }];
+            
+            
+            
+            //进入主页面
+//            MainViewController *mainVC = [[MainViewController alloc] init];
+//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+        }
 
     } fail:^(NSError *error) {
         if (error.code==1) {

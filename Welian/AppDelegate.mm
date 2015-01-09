@@ -100,7 +100,7 @@ BMKMapManager* _mapManager;
 //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     DLog(@"%@",mode.description);
-    if (mode.sessionid&&mode.mobile&&mode.checkcode) {
+    if (mode.sessionid&&mode.mobile) {
     
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
@@ -112,9 +112,12 @@ BMKMapManager* _mapManager;
         
     }else{
         /** 未登陆 */
-        LoginViewController *loginVC = [[LoginViewController alloc] init];
-        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
-        [self.window setRootViewController:nav];
+        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
+        [self.window setRootViewController:loginGuideVC];
+        
+//        LoginViewController *loginVC = [[LoginViewController alloc] init];
+//        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
+//        [self.window setRootViewController:nav];
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"====沙盒路径=======%@",paths);
@@ -399,7 +402,7 @@ BMKMapManager* _mapManager;
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
-    [self.window setRootViewController:detailViewController];
+    [self.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 
 
