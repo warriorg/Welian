@@ -321,14 +321,14 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)cancelClick
 {
-    MainViewController *mainVC = [[MainViewController alloc] init];
-    [mainVC setSelectedIndex:1];
-    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
-    
+    if (_isStart) {
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [mainVC setSelectedIndex:1];
+        [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+    }
     [self dismissViewControllerAnimated:NO completion:^{
         
     }];
-
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

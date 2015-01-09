@@ -53,6 +53,10 @@
 {
     [[self.view findFirstResponder] resignFirstResponder];
     
+    if (!_phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请填写手机号码"];
+        return;
+    }
     if (_phoneTF.text.length != 11) {
         [WLHUDView showErrorHUD:@"手机号码有误！"];
         return;
@@ -91,6 +95,7 @@
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
             
             BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
+            [BSearchFVC setIsStart:YES];
             [self presentViewController:BSearchFVC animated:YES completion:^{
                 [self.navigationController popToRootViewControllerAnimated:NO];
             }];

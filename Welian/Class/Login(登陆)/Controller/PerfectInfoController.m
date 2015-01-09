@@ -16,6 +16,7 @@
 #import "MainViewController.h"
 #import "MJExtension.h"
 #import "NSString+val.h"
+#import "BSearchFriendsController.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 
@@ -28,6 +29,7 @@
     UIButton *_loginBut;
     UIButton *_bindingBut;
     NSString *_imagebase64Str;
+    UIScrollView *_scrollView;
 }
 
 @end
@@ -45,6 +47,8 @@
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+    [scrollView setBackgroundColor:WLRGB(231, 234, 238)];
+    _scrollView = scrollView;
     [self.view addSubview:scrollView];
     
     
@@ -152,6 +156,10 @@
         [WLHUDView showErrorHUD:@"请填写手机号码"];
         return;
     }
+    if (_phoneTF.text.length != 11) {
+        [WLHUDView showErrorHUD:@"手机号码有误！"];
+        return;
+    }
     
     if (!_companyTF.text.length) {
         [WLHUDView showErrorHUD:@"请填写你所在的公司"];
@@ -209,9 +217,15 @@
             [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
             
+            BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
+            [bsearchVC setIsStart:YES];
+            [self presentViewController:bsearchVC animated:YES completion:^{
+                
+            }];
+            
             //进入主页面
-            MainViewController *mainVC = [[MainViewController alloc] init];
-            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+//            MainViewController *mainVC = [[MainViewController alloc] init];
+//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         }
 
     } fail:^(NSError *error) {
@@ -264,7 +278,7 @@
         return YES;
     }else {
         [UIView animateWithDuration:0.25 animations:^{
-            [self.view setAlpha:0.2];
+            [_scrollView setAlpha:0.2];
             [self.navigationController.navigationBar setAlpha:0];
         } completion:^(BOOL finished) {
             NSInteger type = 1;
@@ -282,7 +296,7 @@
                 }
             };
             [self presentViewController:compAPostVC animated:NO completion:^{
-                [self.view setAlpha:1.0];
+                [_scrollView setAlpha:1.0];
                 [self.navigationController.navigationBar setAlpha:1];
                 
             }];
