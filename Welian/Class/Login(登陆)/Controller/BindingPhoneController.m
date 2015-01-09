@@ -79,7 +79,6 @@
         NSDictionary *dataDic = JSON;
         if (dataDic) {
             UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-            [mode setCheckcode:_phoneTF.text];
             
             //记录最后一次登陆的手机号
             SaveLoginMobile(_phoneTF.text);

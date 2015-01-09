@@ -66,7 +66,7 @@
 + (void)uploadPhonebook2ParameterDic:(NSMutableArray *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"uploadPhonebook2",@"data":parameterDic};
-    [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
