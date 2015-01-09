@@ -96,19 +96,14 @@ BMKMapManager* _mapManager;
      *  设置状态栏颜色
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+
     LogInUser *mode = [LogInUser getNowLogInUser];
     DLog(@"%@",mode.description);
     if (mode.sessionid&&mode.mobile) {
-    
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
         [self.window setRootViewController:mainVC];
-        
-//        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
-//        [self.window setRootViewController:loginGuideVC];
     }else{
         /** 未登陆 */
         LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
