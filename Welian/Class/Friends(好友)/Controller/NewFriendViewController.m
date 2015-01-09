@@ -163,6 +163,7 @@ static NSString *cellIdentifier = @"frnewCellid";
         //添加好友，发送添加成功，状态变成待验证
         LogInUser *loginUser = [LogInUser getNowLogInUser];
         UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFriendUser.name]];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
@@ -172,7 +173,6 @@ static NSString *cellIdentifier = @"frnewCellid";
                 NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
                 //改变数组，刷新列表
                 [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
-                
                 //刷新列表
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             } fail:^(NSError *error) {
@@ -181,6 +181,7 @@ static NSString *cellIdentifier = @"frnewCellid";
         }];
         [alert show];
     }
+    
     if (type == FriendOperateTypeAccept) {
         //接受好友请求
         [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
