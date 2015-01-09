@@ -11,6 +11,7 @@
 #import "MJExtension.h"
 #import "MainViewController.h"
 #import "BSearchFriendsController.h"
+#import "NSString+val.h"
 
 @interface BindingPhoneController () <UITextFieldDelegate>
 {
@@ -28,12 +29,14 @@
     UITextField *phoneTF = [self addPerfectInfoTextfWithFrameY:30+64 Placeholder:@"手机号" leftImageName:@"login_phone"];
     [phoneTF setText:self.phoneStr];
     [phoneTF setReturnKeyType:UIReturnKeyNext];
+    phoneTF.keyboardType = UIKeyboardTypeNumberPad;
     _phoneTF = phoneTF;
     [self.view addSubview:phoneTF];
     
     UITextField *pwdTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(phoneTF.frame)+15 Placeholder:@"密码" leftImageName:@"login_password"];
     [pwdTF setReturnKeyType:UIReturnKeyDone];
     _pwdTF = pwdTF;
+    [pwdTF setSecureTextEntry:YES];
     [self.view addSubview:pwdTF];
     
     UIButton *bindingBut = [[UIButton alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(pwdTF.frame)+30, SuperSize.width-50, 44)];
@@ -48,10 +51,12 @@
 
 - (void)bindingButClick
 {
-    if (!_phoneTF.text.length) {
+    if (_phoneTF.text.length != 11) {
+        [WLHUDView showErrorHUD:@"手机号码有误！"];
         return;
     }
-    if (!_pwdTF.text.length) {
+    if (![NSString passwordValidate:_pwdTF.text]) {
+        [WLHUDView showErrorHUD:@"密码有误！"];
         return;
     }
     if (![self.userInfoDic objectForKey:@"openid"]) {
@@ -82,7 +87,6 @@
             
             [LogInUser createLogInUserModel:mode];
             
-            
             BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
             [self presentViewController:BSearchFVC animated:YES completion:^{
                 
@@ -109,6 +113,17 @@
     [_phoneTF resignFirstResponder];
     [_pwdTF resignFirstResponder];
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneTF) {
+        if (range.location>=11) return NO;
+    }else if (textField == _pwdTF){
+        if (range.location>=18) return NO;
+    }
+    return YES;
+}
+
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

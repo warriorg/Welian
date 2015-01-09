@@ -15,6 +15,7 @@
 #import "CompotAndPostController.h"
 #import "MainViewController.h"
 #import "MJExtension.h"
+#import "NSString+val.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 
@@ -88,9 +89,9 @@
     
     UITextField *phoneTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(postTF.frame)+15 Placeholder:@"手机号" leftImageName:@"login_phone"];
     _phoneTF = phoneTF;
+    [phoneTF setKeyboardType:UIKeyboardTypeNumberPad];
     [phoneTF setReturnKeyType:UIReturnKeyDone];
     [scrollView addSubview:phoneTF];
-    
     
     UIButton *loginBut = [[UIButton alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(phoneTF.frame)+25, SuperSize.width-50, 44)];
     [loginBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
@@ -215,6 +216,18 @@
     }];
     
 }
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _phoneTF) {
+        if (range.location>=11) return NO;
+    }else if (textField == _nameTF){
+        if (range.location>=18) return NO;
+    }
+    return YES;
+}
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
