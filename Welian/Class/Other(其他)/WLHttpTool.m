@@ -851,7 +851,7 @@
     } failure:^(NSError *error) {
         
         failurBlock(error);
-    } withHUD:NO andDim:NO];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 删除好友

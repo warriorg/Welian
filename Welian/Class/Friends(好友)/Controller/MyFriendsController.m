@@ -47,6 +47,8 @@ static NSString *fridcellid = @"fridcellid";
 {
     [super viewWillAppear:animated];
 //    [self loadNewFriendsList];
+    //刷新角标
+    [self loadNewFriendsList];
 }
 
 - (void)viewDidLoad {
@@ -275,13 +277,10 @@ static NSString *fridcellid = @"fridcellid";
         case 0:
         {
             //新的好友
-//            NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
             NewFriendViewController *newFriendVC = [[NewFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:newFriendVC animated:YES];
             [self.navigationController.tabBarItem setBadgeValue:nil];
             [UserDefaults removeObjectForKey:KFriendbadge];
-            //刷新角标
-            [self loadNewFriendsList];
         }
             break;
         case 1:
@@ -319,29 +318,9 @@ static NSString *fridcellid = @"fridcellid";
                 cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
             }
             cell.segementedControl.delegate = self;
+            NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]];
+            cell.segementedControl.bridges = @[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"];
             return cell;
-//            NewFriendsCell *ncell = [tableView dequeueReusableCellWithIdentifier:newFriendcellid];
-//            if (indexPath.row==0) {
-//                [ncell.titLabel setText:@"新的好友"];
-//                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_add"]];
-//                
-//                [ncell.tipLabel setEnabled:NO];
-//                [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",self.navigationController.tabBarItem.badgeValue] forState:UIControlStateDisabled];
-//                
-//                if ([self.navigationController.tabBarItem.badgeValue integerValue]) {
-//                    
-//                    [ncell.tipLabel setHidden:NO];
-//                }else{
-//                    [ncell.tipLabel setHidden:YES];
-//                }
-//            }else{
-//                [ncell.titLabel setText:@"好友的好友"];
-//                [ncell.iconImage setImage:[UIImage imageNamed:@"me_myfriend_more"]];
-//                [ncell.tipLabel setHidden:YES];
-//                [ncell.titLabel sizeToFit];
-//            }
-//            return ncell;
-            
         }else{
             
             FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
