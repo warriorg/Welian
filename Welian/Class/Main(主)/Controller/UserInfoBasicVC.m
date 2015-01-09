@@ -182,7 +182,10 @@ static NSString *staurCellid = @"staurCellid";
                 //删除新的好友本地数据库
                 NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
                 if (newFuser) {
-                    [newFuser delete];
+                    //删除好友请求数据
+//                    [newFuser delete];
+                    //更新好友请求列表数据为 添加
+                    [newFuser updateOperateType:0];
 //                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
                 }
                 
