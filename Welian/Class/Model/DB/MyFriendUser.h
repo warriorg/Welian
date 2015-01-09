@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
 
-@class ChatMessage, LogInUser, FriendsUserModel, WLMessage, NewFriendModel;
+@class ChatMessage, LogInUser, FriendsUserModel, WLMessage, NewFriendModel,NewFriendUser;
 
 @interface MyFriendUser : BaseUser
 
@@ -25,6 +25,7 @@
 
 //创建新的同意好意请求数据
 + (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM;
++ (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser;
 
 // //通过uid查询
 + (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;

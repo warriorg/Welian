@@ -52,7 +52,9 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadMyAllFriends];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
+    //新的好友改变通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
+    //刷新所有好友通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         self.allArray = [JSON objectForKey:@"array"];
@@ -117,18 +119,20 @@ static NSString *fridcellid = @"fridcellid";
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 }
 
+//重新刷新好友信息数量
 - (void)loadNewFriendsList
 {
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-    NewFriendsCell *ncell = (NewFriendsCell*)[self.tableView cellForRowAtIndexPath:path];
-    
-    [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]] forState:UIControlStateDisabled];
-        
-    if ([[UserDefaults objectForKey:KFriendbadge] integerValue]) {
-        [ncell.tipLabel setHidden:NO];
-    }else{
-        [ncell.tipLabel setHidden:YES];
-    }
+    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+//    NewFriendsCell *ncell = (NewFriendsCell*)[self.tableView cellForRowAtIndexPath:path];
+//    
+//    [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]] forState:UIControlStateDisabled];
+//        
+//    if ([[UserDefaults objectForKey:KFriendbadge] integerValue]) {
+//        [ncell.tipLabel setHidden:NO];
+//    }else{
+//        [ncell.tipLabel setHidden:YES];
+//    }
 }
 
 -(void)loadMyAllFriends

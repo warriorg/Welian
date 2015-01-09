@@ -11,6 +11,7 @@
 #import "LogInUser.h"
 #import "FriendsUserModel.h"
 #import "NewFriendModel.h"
+#import "NewFriendUser.h"
 
 @implementation MyFriendUser
 
@@ -76,6 +77,33 @@
     myFriend.rsLogInUser = [LogInUser getNowLogInUser];
     [MOC save];
     return myFriend;
+}
+
++ (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser
+{
+    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:newFriendUser.uid];
+    if (!myFriend) {
+        myFriend = [MyFriendUser create];
+    }
+    myFriend.uid = newFriendUser.uid;
+    myFriend.mobile = newFriendUser.mobile;
+    myFriend.position = newFriendUser.position;
+    myFriend.provinceid = newFriendUser.provinceid;
+    myFriend.provincename = newFriendUser.provincename;
+    myFriend.cityid = newFriendUser.cityid;
+    myFriend.cityname = newFriendUser.cityname;
+    myFriend.friendship = newFriendUser.friendship;
+    myFriend.shareurl = newFriendUser.shareurl;
+    myFriend.avatar = newFriendUser.avatar;
+    myFriend.name = newFriendUser.name;
+    myFriend.address = newFriendUser.address;
+    myFriend.email = newFriendUser.email;
+    myFriend.investorauth = newFriendUser.investorauth;
+    myFriend.startupauth = newFriendUser.startupauth;
+    myFriend.company = newFriendUser.company;
+    //    myFriend.status = userInfoM.status;
+    myFriend.rsLogInUser = [LogInUser getNowLogInUser];
+    [MOC save];
 }
 
 

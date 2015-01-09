@@ -64,10 +64,11 @@
 }
 
 //更新操作按钮状态
-- (void)updateOperateType:(NSInteger)type
+- (NewFriendUser *)updateOperateType:(NSInteger)type
 {
     self.operateType = @(type);
     [MOC save];
+    return self;
 }
 
 @end

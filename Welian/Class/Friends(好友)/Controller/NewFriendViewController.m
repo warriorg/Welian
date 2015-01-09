@@ -16,6 +16,7 @@
 #import "NewFriendViewCell.h"
 #import "AddFriendTypeListViewController.h"
 #import "AddFriendViewController.h"
+#import "MyFriendUser.h"
 
 static NSString *cellIdentifier = @"frnewCellid";
 
@@ -23,7 +24,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 
 @property (strong, nonatomic) NotstringView *notView;
 
-@property (strong, nonatomic) NSArray *datasource;
+@property (strong, nonatomic) NSMutableArray *datasource;
 
 @end
 
@@ -61,9 +62,12 @@ static NSString *cellIdentifier = @"frnewCellid";
     
 //    [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
 //    [self.tableView setBackgroundColor:IWGlobalBg];
+    
+    //重新设置新的好友中待验证的状态
+    [[LogInUser getNowLogInUser] updateAllNewFriendsOperateStatus];
 
     //加载数据
-    self.datasource = [[LogInUser getNowLogInUser] allMyNewFriends];
+    self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getNowLogInUser] allMyNewFriends]];
     if (_datasource.count > 0) {
         [self.tableView reloadData];
     }else{
@@ -89,8 +93,8 @@ static NSString *cellIdentifier = @"frnewCellid";
 //    [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.nFriendUser = _datasource[indexPath.row];
     WEAKSELF
-    [cell setNewFriendBlock:^(FriendOperateType type,NewFriendUser *newFriendUser){
-        [weakSelf newFriendOperate:type newFriendUser:newFriendUser];
+    [cell setNewFriendBlock:^(FriendOperateType type,NewFriendUser *newFriendUser,NSIndexPath *indexPath){
+        [weakSelf newFriendOperate:type newFriendUser:newFriendUser indexPath:indexPath];
     }];
     return cell;
 }
@@ -171,9 +175,70 @@ static NSString *cellIdentifier = @"frnewCellid";
 }
 
 //好友关系操作
-- (void)newFriendOperate:(FriendOperateType)type newFriendUser:(NewFriendUser *)newFriendUser
+- (void)newFriendOperate:(FriendOperateType)type newFriendUser:(NewFriendUser *)newFriendUser indexPath:(NSIndexPath *)indexPath
 {
-    
+    if (type == FriendOperateTypeAdd) {
+        //添加好友，发送添加成功，状态变成待验证
+        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFriendUser.name]];
+        [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
+        [alert bk_addButtonWithTitle:@"取消" handler:nil];
+        [alert bk_addButtonWithTitle:@"发送" handler:^{
+            //发送好友请求
+            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+                //发送邀请成功，修改状态，刷新列表
+                NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+                //改变数组，刷新列表
+                [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+                
+                //刷新列表
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+        }];
+        [alert show];
+    }
+    if (type == FriendOperateTypeAccept) {
+        //接受好友请求
+        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
+            [newFriendUser setIsAgree:@(1)];
+            //更新好友列表数据库
+            [MyFriendUser createWithNewFriendUser:newFriendUser];
+            
+            //发送邀请成功，修改状态，刷新列表
+            NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+            //改变数组，刷新列表
+            [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            
+            //刷新好友列表
+            [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+            
+            //接受后，本地创建一条消息
+            //        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
+            //        textMessage.avatorUrl = nil;
+            //        textMessage.sender = nil;
+            //        //是否读取
+            //        textMessage.isRead = NO;
+            //        textMessage.sended = @"1";
+            //        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+            //
+            //        //更新聊天好友
+            //        [friendUser updateIsChatStatus:YES];
+            //
+            //        //    //本地聊天数据库添加
+            //        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+            //        textMessage.msgId = chatMessage.msgId.stringValue;
+            //
+            //        //聊天状态发送改变
+            //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+            
+            [WLHUDView showSuccessHUD:@"添加成功！"];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
 }
 
 @end

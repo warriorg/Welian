@@ -29,7 +29,7 @@
 + (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
 
 //更新操作按钮状态
-- (void)updateOperateType:(NSInteger)type;
+- (NewFriendUser *)updateOperateType:(NSInteger)type;
 
 
 @end
