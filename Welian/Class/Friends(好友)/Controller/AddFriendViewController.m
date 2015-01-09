@@ -39,7 +39,7 @@
     }
     WEAKSELF
     [_phoneNotView setBlock:^{
-        [weakSelf refreshPhone];
+        [weakSelf changeDataWithIndex:0];
     }];
     return _phoneNotView;
 }
@@ -78,17 +78,15 @@
     self.navigationItem.titleView = segmentedControl;
     self.segmentedControl = segmentedControl;
     
-    //默认加载的数据
-    [self changeDataWithIndex:segmentedControl.selectedSegmentIndex];
-//    [self getaddressBook];
-    
     //下拉刷新
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(getPhoneAllFriends) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
-    //开始刷新
-    [self.refreshControl beginRefreshing];
-    [self getPhoneAllFriends];
+    
+    //默认加载的数据
+    [self changeDataWithIndex:segmentedControl.selectedSegmentIndex];
+//    [self getaddressBook];
+    
 }
 
 #pragma mark - Table view data source
@@ -125,18 +123,9 @@
     
     if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
         //邀请好友
-//        cell.operateBtn.hidden = YES;
-//        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
-//        cell.nameLabel.text = @"邀请微信好友";
-//        cell.messageLabel.text = @"";
         cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
     }else{
         cell.needAddUser = _datasource[indexPath.row];
-        
-//        cell.operateBtn.hidden = NO;
-//        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
-//        cell.nameLabel.text = @"陈日莎";
-//        cell.messageLabel.text = @"手机联系人:吴雪昭";
     }
     
     return cell;
@@ -198,8 +187,14 @@
 //加载数据
 - (void)changeDataWithIndex:(NSInteger)index
 {
-//    self.datasource = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""];
-    if(!_datasource){
+    //刷新动画
+//    [self refreshAnimation];
+    //获取数据
+    [self getPhoneAllFriends];
+    
+    //获取通讯录好友
+    self.datasource = index == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
+    if(_datasource.count == 0){
         if (index == 0) {
             [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
@@ -208,14 +203,30 @@
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
         }
+    }else{
+        [_phoneNotView removeFromSuperview];
+        [_weChatNotView removeFromSuperview];
     }
     [self.tableView reloadData];
 }
 
-//刷新通讯录
-- (void)refreshPhone
+//刷新动画
+- (void)refreshAnimation
 {
-    DLog(@"刷新通讯录");
+    //开始刷新
+    //    [self.refreshControl beginRefreshing];
+    [self.refreshControl beginRefreshing];
+    
+    [self.tableView setContentOffset:CGPointMake(0,-self.refreshControl.frame.size.height-40) animated:YES];
+    
+    // 延迟0.5秒执行：
+    double delayInSeconds = 0.2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // code to be executed on the main queue after delay
+        //刷新
+        [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
+    });
 }
 
 //获取通讯录联系人
@@ -231,60 +242,24 @@
             //获取通讯录
             address = [WLTool getAddressBookArray];
         }
-        [self.refreshControl endRefreshing];
+        
         //通讯录联系人
-//        [WLHttpTool uploadPhonebookParameterDic:address success:^(id JSON) {
-//            LogInUser *loginUser = [LogInUser getNowLogInUser];
-//            for (NSDictionary *dic in JSON) {
-//                //保存到数据库
-//                [loginUser createNeedAddUserWithDict:dic withType:1];
-//            }
-//            
-//            //获取通讯录好友
-//            self.datasource = [loginUser allNeedAddUserWithType:1];
-//            
-//            [self.refreshControl endRefreshing];
-//            //切换到第一个
+        [WLHttpTool uploadPhonebookParameterDic:address success:^(id JSON) {
+            for (NSDictionary *dic in JSON) {
+                //保存到数据库
+                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
+            }
+            
+            [self.refreshControl endRefreshing];
+            //切换到第一个
 //            [self changeDataWithIndex:0];
-//        } fail:^(NSError *error) {
-//            [self.refreshControl endRefreshing];
-//            [UIAlertView showWithError:error];
-//        }];
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+            [UIAlertView showWithError:error];
+        }];
         
     });
     
 }
-
-//- (void)getaddressBook
-//{
-//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-//    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-//    //这个只会在第一次访问时调用
-//    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-//        dispatch_semaphore_signal(sema);
-//        NSMutableArray *address = [NSMutableArray array];
-//        if (greanted) {
-//            //获取通讯录
-//            address = [WLTool getAddressBookArray];
-//        }
-//        //只有微信
-//        [WLHttpTool uploadPhonebook2ParameterDic:address success:^(id JSON) {
-//            NSArray *array = JSON;
-//            DLog(@"getaddressBook--->:%@",array);
-//            //                for (NSDictionary *dic  in array) {
-//            //                    FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
-//            //                    [friendBook setKeyValues:dic];
-//            //                    if (friendBook.type.integerValue == 0) {
-//            //                        [self.friendsBook addObject:friendBook];
-//            //                    }else if (friendBook.type.integerValue==1){
-//            //                        [self.friendsWeixing addObject:friendBook];
-//            //                    }
-//            //                }
-//        } fail:^(NSError *error) {
-//            [UIAlertView showWithError:error];
-//        }];
-//        
-//    });
-//}
 
 @end
