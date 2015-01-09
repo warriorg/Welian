@@ -103,12 +103,12 @@ BMKMapManager* _mapManager;
     if (mode.sessionid&&mode.mobile&&mode.checkcode) {
     
         /** 已登陆 */
-//        mainVC = [[MainViewController alloc] init];
-//        [mainVC setDelegate:self];
-//        [self.window setRootViewController:mainVC];
+        mainVC = [[MainViewController alloc] init];
+        [mainVC setDelegate:self];
+        [self.window setRootViewController:mainVC];
         
-        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
-        [self.window setRootViewController:loginGuideVC];
+//        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
+//        [self.window setRootViewController:loginGuideVC];
         
     }else{
         /** 未登陆 */

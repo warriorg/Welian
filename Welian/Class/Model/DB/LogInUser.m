@@ -227,4 +227,13 @@
     return allCount;
 }
 
+//更新所有新的好友中，待验证的状态为添加状态
+- (void)updateAllNewFriendsOperateStatus
+{
+    NSArray *waitNewFriends = [[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:self] where:@"operateType" equals:@"3"] results];
+    for (NewFriendUser *newFriendUser in waitNewFriends) {
+        [newFriendUser updateOperateType:0];
+    }
+}
+
 @end

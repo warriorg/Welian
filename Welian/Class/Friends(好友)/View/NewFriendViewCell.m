@@ -33,6 +33,7 @@
     _dicData = nil;
     _nFriendUser = nil;
     _newFriendBlock = nil;
+    _userInfoModel = nil;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -42,6 +43,21 @@
         [self setup];
     }
     return self;
+}
+
+- (void)setUserInfoModel:(UserInfoModel *)userInfoModel
+{
+    [super willChangeValueForKey:@"userInfoModel"];
+    _userInfoModel = userInfoModel;
+    [super didChangeValueForKey:@"userInfoModel"];
+    _operateBtn.hidden = YES;
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_userInfoModel.avatar]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
+                               options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    _nameLabel.text = _userInfoModel.name;
+    _messageLabel.text = [NSString stringWithFormat:@"%@　%@",_userInfoModel.company,_userInfoModel.position];
+    //是否是认证投资人
+    _iconImageView.hidden = _userInfoModel.investorauth.integerValue == 1 ? NO : YES;
 }
 
 - (void)setDicData:(NSDictionary *)dicData
@@ -186,7 +202,7 @@
 {
     //新的好友操作
     if (_newFriendBlock) {
-        _newFriendBlock(_nFriendUser.operateType.integerValue,_nFriendUser);
+        _newFriendBlock(_nFriendUser.operateType.integerValue,_nFriendUser,_indexPath);
     }
 }
 

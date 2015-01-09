@@ -9,12 +9,13 @@
 #import "AddFriendTypeListViewController.h"
 #import "AddFriendViewController.h"
 #import "NewFriendViewCell.h"
+#import "UserInfoBasicVC.h"
 
 @interface AddFriendTypeListViewController ()<UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (strong, nonatomic) UISearchDisplayController *searchDisplayVC;
 @property (strong, nonatomic) NSArray *datasource;
-@property (strong, nonatomic) NSArray *filterArray;//搜索出来的数据数组
+@property (strong, nonatomic) NSMutableArray *filterArray;//搜索出来的数据数组
 
 @end
 
@@ -90,7 +91,8 @@
     }
     
     if (tableView == _searchDisplayVC.searchResultsTableView) {
-//        cell.dicData = _datasource[indexPath.row];
+        //搜索的好友
+        cell.userInfoModel = _filterArray[indexPath.row];
     }else{
         cell.dicData = _datasource[indexPath.row];
     }
@@ -102,7 +104,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _searchDisplayVC.searchResultsTableView) {
-        
+        UserInfoModel *mode = _filterArray[indexPath.row];
+        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+        [self.navigationController pushViewController:userBasic animated:YES];
     }else{
         switch (indexPath.row) {
             case 0:
@@ -164,6 +168,29 @@
 //    for (NSDictionary *aaa in self.allArray) {
 //        [self.filterArray addObjectsFromArray:[aaa[@"userF"] filteredArrayUsingPredicate:pre]];
 //    }
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.filterArray removeAllObjects];
+    [WLHttpTool searchUserParameterDic:@{@"keyword":searchBar.text,@"page":@(1),@"size":@(100)} success:^(id JSON) {
+        
+        self.filterArray = JSON;
+        if (!self.filterArray.count) {
+            [WLHUDView showCustomHUD:@"暂无该好友" imageview:nil];
+            
+        }else{
+            
+            [self.searchDisplayVC.searchResultsTableView reloadData];
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    [self.filterArray removeAllObjects];
 }
 
 @end

@@ -51,6 +51,9 @@
 //所有未读取的聊天消息数量
 - (NSInteger)allUnReadChatMessageNum;
 
+//更新所有新的好友中，待验证的状态为添加状态
+- (void)updateAllNewFriendsOperateStatus;
+
 
 + (void)setUserUid:(NSNumber *)uid;
 + (void)setUserPosition:(NSString*)position;
