@@ -204,7 +204,6 @@
         [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
     }
 
-    
     [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
         NSDictionary *dataDic = JSON;
         if (dataDic) {
