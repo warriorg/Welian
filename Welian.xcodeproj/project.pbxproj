@@ -49,6 +49,12 @@
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		A414FE271A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
+		A4210C891A5FB07D003AA6A3 /* NSError+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */; };
+		A4210C8A1A5FB07D003AA6A3 /* NSError+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */; };
+		A4210C8B1A5FB07D003AA6A3 /* NSError+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */; };
+		A4210C8C1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C881A5FB07D003AA6A3 /* UIAlertView+Extend.m */; };
+		A4210C8D1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C881A5FB07D003AA6A3 /* UIAlertView+Extend.m */; };
+		A4210C8E1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = A4210C881A5FB07D003AA6A3 /* UIAlertView+Extend.m */; };
 		A4272FC71A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
 		A4272FC81A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
 		A4272FC91A4E8AAD0019E440 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
@@ -3178,6 +3184,10 @@
 		A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewCell.m; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		A4210C851A5FB07D003AA6A3 /* NSError+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Extend.h"; sourceTree = "<group>"; };
+		A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extend.m"; sourceTree = "<group>"; };
+		A4210C871A5FB07D003AA6A3 /* UIAlertView+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Extend.h"; sourceTree = "<group>"; };
+		A4210C881A5FB07D003AA6A3 /* UIAlertView+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Extend.m"; sourceTree = "<group>"; };
 		A4272FC51A4E8AAD0019E440 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
 		A4272FC61A4E8AAD0019E440 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		A437CEB91A52ED4A00B54E68 /* A2BlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2BlockInvocation.h; sourceTree = "<group>"; };
@@ -4879,6 +4889,10 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A4210C851A5FB07D003AA6A3 /* NSError+Extend.h */,
+				A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */,
+				A4210C871A5FB07D003AA6A3 /* UIAlertView+Extend.h */,
+				A4210C881A5FB07D003AA6A3 /* UIAlertView+Extend.m */,
 				A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */,
 				A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */,
 				10389B661A3F0740001A785C /* NSString+Extend.h */,
@@ -9661,6 +9675,7 @@
 				F53DC2B71A49192600F5F712 /* UserInfoModel.m in Sources */,
 				F53DC2B81A49192600F5F712 /* MLEmojiLabel.m in Sources */,
 				A40356111A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */,
+				A4210C8E1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */,
 				F53DC2B91A49192600F5F712 /* NSUserDefaults+Standard.m in Sources */,
 				F53D4E571A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F53DC2BA1A49192600F5F712 /* FindViewController.m in Sources */,
@@ -9868,6 +9883,7 @@
 				F53DC3481A49192600F5F712 /* UIView+WebCacheOperation.m in Sources */,
 				F53DC3491A49192600F5F712 /* UIProgressView+AFNetworking.m in Sources */,
 				F53DC34B1A49192600F5F712 /* ListdaController.m in Sources */,
+				A4210C8B1A5FB07D003AA6A3 /* NSError+Extend.m in Sources */,
 				F53DC34C1A49192600F5F712 /* SchoolModel.m in Sources */,
 				A4C1407F1A4BEA8500C9BAB5 /* UIImage+XHAnimatedFaceGif.m in Sources */,
 				F53DC34D1A49192600F5F712 /* PeopleAddressBook.m in Sources */,
@@ -10055,6 +10071,7 @@
 				A4C1409E1A4BEA8500C9BAB5 /* WLMessageInputView.m in Sources */,
 				A4C140891A4BEA8500C9BAB5 /* UIView+XHRemoteImage.m in Sources */,
 				A403560F1A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */,
+				A4210C8C1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */,
 				F56649931A2AFD56008A5830 /* UserInfoModel.m in Sources */,
 				F56649941A2AFD56008A5830 /* MLEmojiLabel.m in Sources */,
 				F56649951A2AFD56008A5830 /* FindViewController.m in Sources */,
@@ -10262,6 +10279,7 @@
 				F59E75F21A4059D00028FBAF /* e0571CoreDataManager.m in Sources */,
 				F5664A161A2AFD56008A5830 /* ListdaController.m in Sources */,
 				F5664A171A2AFD56008A5830 /* PeopleAddressBook.m in Sources */,
+				A4210C891A5FB07D003AA6A3 /* NSError+Extend.m in Sources */,
 				F5664A181A2AFD56008A5830 /* FriendsinfoModel.m in Sources */,
 				F5664A191A2AFD56008A5830 /* ForgetPWDController.m in Sources */,
 				F5664A1A1A2AFD56008A5830 /* M80AttributedLabelAttachment.m in Sources */,
@@ -10449,6 +10467,7 @@
 				F5664C4D1A2AFDD5008A5830 /* UserInfoModel.m in Sources */,
 				F5664C4E1A2AFDD5008A5830 /* MLEmojiLabel.m in Sources */,
 				A40356101A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */,
+				A4210C8D1A5FB07D003AA6A3 /* UIAlertView+Extend.m in Sources */,
 				10389B5E1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */,
 				F53D4E561A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */,
@@ -10656,6 +10675,7 @@
 				F5664CCD1A2AFDD5008A5830 /* UIView+WebCacheOperation.m in Sources */,
 				F5664CCE1A2AFDD5008A5830 /* UIProgressView+AFNetworking.m in Sources */,
 				F5664CD01A2AFDD5008A5830 /* ListdaController.m in Sources */,
+				A4210C8A1A5FB07D003AA6A3 /* NSError+Extend.m in Sources */,
 				F59E76181A4071330028FBAF /* SchoolModel.m in Sources */,
 				A4C1407E1A4BEA8500C9BAB5 /* UIImage+XHAnimatedFaceGif.m in Sources */,
 				F5664CD11A2AFDD5008A5830 /* PeopleAddressBook.m in Sources */,

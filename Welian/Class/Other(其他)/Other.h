@@ -21,6 +21,8 @@
 #import "NSUserDefaults+Standard.h"
 #import "NSString+Extend.h"
 #import "CALayer+XibConfiguration.h"
+#import "UIAlertView+Extend.h"
+#import "NSError+Extend.h"
 
 
 #pragma mark - Other

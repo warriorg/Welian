@@ -21,7 +21,8 @@
 #import "TOWebViewController.h"
 #import "MJExtension.h"
 #import "M80AttributedLabel.h"
-#import "ActivityViewController.h"
+//#import "ActivityViewController.h"
+#import "ActivityDetailViewController.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
@@ -261,11 +262,17 @@
                 NSArray *info = [link componentsSeparatedByString:@"#"];
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载
-                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-                activityVC.title = @"活动详情";
-                activityVC.wwwFolderName = @"www";
-                activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
-                [self.homeVC.navigationController pushViewController:activityVC animated:YES];
+//                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+//                activityVC.title = @"活动详情";
+//                activityVC.wwwFolderName = @"www";
+//                activityVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
+//                [self.homeVC.navigationController pushViewController:activityVC animated:YES];
+                
+                //活动页面，进行phoneGap页面加载
+                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] initWithShareDic:@{@"key":@"value"}];
+                activityDetailVC.wwwFolderName = @"www";
+                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",@"909"];//sessionId
+                [self.homeVC.navigationController pushViewController:activityDetailVC animated:YES];
             }else{
                 //普通链接
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];

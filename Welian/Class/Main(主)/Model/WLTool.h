@@ -16,6 +16,8 @@ typedef void (^UpVersionBlock)(NSDictionary *versionDic);
 
 + (void)getAddressBookArray:(WLToolBlock)friendsAddressBlock;
 
++ (NSMutableArray *)getAddressBookArray;
+
 + (void)updateVersions:(UpVersionBlock)versionBlock;
 
 @end
