@@ -55,7 +55,7 @@ static HttpTool *engine;
             [WLHUDView hiddenHud];
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:1 userInfo:nil]);
             
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时

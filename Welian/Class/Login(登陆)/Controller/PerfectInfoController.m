@@ -206,10 +206,8 @@
             SaveLoginMobile(mode.mobile);
             
             [LogInUser createLogInUserModel:mode];
-//            BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
-//            [self presentViewController:BSearchFVC animated:YES completion:^{
-//
-//            }];
+            [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
+            [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
             
             //进入主页面
             MainViewController *mainVC = [[MainViewController alloc] init];

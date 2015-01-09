@@ -99,7 +99,7 @@ BMKMapManager* _mapManager;
 
     LogInUser *mode = [LogInUser getNowLogInUser];
     DLog(@"%@",mode.description);
-    if (mode.sessionid&&mode.mobile) {
+    if (mode.sessionid&&mode.mobile&&mode.unionid) {
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];

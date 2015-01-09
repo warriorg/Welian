@@ -193,6 +193,17 @@
     [MOC save];
 }
 
++ (void)setUseropenid:(NSString *)openid
+{
+    [[LogInUser getNowLogInUser] setOpenid:openid];
+    [MOC save];
+}
++ (void)setUserunionid:(NSString *)unionid
+{
+    [[LogInUser getNowLogInUser] setUnionid:unionid];
+    [MOC save];
+}
+
 //通过uid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid
 {
