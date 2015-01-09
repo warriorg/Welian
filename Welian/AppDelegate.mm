@@ -110,11 +110,6 @@ BMKMapManager* _mapManager;
 //        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
 //        [self.window setRootViewController:loginGuideVC];
         
-    }else{
-        /** 未登陆 */
-        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
-        [self.window setRootViewController:loginGuideVC];
-        
 //        LoginViewController *loginVC = [[LoginViewController alloc] init];
 //        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
 //        [self.window setRootViewController:nav];
