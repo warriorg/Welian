@@ -72,7 +72,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:YES];
+    } withHUD:YES andDim:NO];
 }
 
 
@@ -162,7 +162,7 @@
         succeBlock (datajson);
     } failure:^(NSError *error) {
         failurBlock (error);
-    } withHUD:YES andDim:YES];
+    } withHUD:YES andDim:NO];
 }
 
 

@@ -23,5 +23,8 @@
 - (NSString *)deleteTopAndBottomKongge;
 - (NSString *)deleteTopAndBottomKonggeAndHuiche;
 
+//汉字首字母转换
+- (NSString *)getHanziFirstString;
+
 
 @end

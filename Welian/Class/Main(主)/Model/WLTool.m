@@ -29,21 +29,39 @@
 //        friendsAddressBlock(nil);
 //        return;
 //    }
+    NSMutableArray* contactArray = [self getAddressBookArray];
+    friendsAddressBlock(contactArray);
+//    [WLHttpTool uploadPhonebookParameterDic:contactArray success:^(id JSON) {
+//        NSArray *array = JSON;
+//        NSMutableArray *friends = [NSMutableArray arrayWithCapacity:array.count];
+//        for (NSDictionary *dic  in array) {
+//            FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+//            [friendBook setKeyValues:dic];
+//            [friends addObject:friendBook];
+//        }
+//        friendsAddressBlock(friends);
+//    } fail:^(NSError *error) {
+//        
+//    }];
+}
+
++ (NSMutableArray *)getAddressBookArray
+{
     CFErrorRef error = nil;
     //新建一个通讯录类
     ABAddressBookRef addressBooks = ABAddressBookCreateWithOptions(nil, &error);
     
     CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBooks);
-    NSMutableArray* contactArray = [[NSMutableArray alloc]init];
+    NSMutableArray* contactArray = [NSMutableArray array];
     for(int i = 0; i < CFArrayGetCount(results); i++)
     {
         ABRecordRef person = CFArrayGetValueAtIndex(results, i);
         //读取firstname
         NSString *personName = (NSString *)CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-
+        
         //读取lastname
         NSString *lastname = (NSString*)CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-
+        
         
         //读取电话多值
         ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
@@ -70,19 +88,7 @@
     }
     CFRelease(results);
     CFRelease(addressBooks);
-    friendsAddressBlock(contactArray);
-//    [WLHttpTool uploadPhonebookParameterDic:contactArray success:^(id JSON) {
-//        NSArray *array = JSON;
-//        NSMutableArray *friends = [NSMutableArray arrayWithCapacity:array.count];
-//        for (NSDictionary *dic  in array) {
-//            FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
-//            [friendBook setKeyValues:dic];
-//            [friends addObject:friendBook];
-//        }
-//        friendsAddressBlock(friends);
-//    } fail:^(NSError *error) {
-//        
-//    }];
+    return contactArray;
 }
 
 

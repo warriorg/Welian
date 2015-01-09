@@ -34,6 +34,7 @@
     _nFriendUser = nil;
     _newFriendBlock = nil;
     _userInfoModel = nil;
+    _needAddUser = nil;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -120,6 +121,56 @@
             [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
             [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             _operateBtn.backgroundColor = [UIColor clearColor];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)setNeedAddUser:(NeedAddUser *)needAddUser
+{
+    [super willChangeValueForKey:@"needAddUser"];
+    _needAddUser = needAddUser;
+    [super didChangeValueForKey:@"needAddUser"];
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_needAddUser.avatar]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
+                               options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    _nameLabel.text = _needAddUser.name;
+    _messageLabel.text = _needAddUser.wlname;
+    //是否是认证投资人
+    _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
+    
+    _operateBtn.hidden = NO;
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    switch (_needAddUser.friendship.integerValue) {
+        case 0:
+        {
+            [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+            break;
+        case 1:
+        {
+            [_operateBtn setTitle:@"已添加" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+        }
+            break;
+        case 2:
+        {
+            //添加
+            [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            //圆角
+            _operateBtn.layer.cornerRadius = 5.f;
+            _operateBtn.layer.masksToBounds = YES;
+            _operateBtn.layer.borderWidth = 0.5;
+            _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
+            _operateBtn.backgroundColor = BtnTianJiaColor;
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
             break;
         default:
             break;

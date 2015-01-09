@@ -7,6 +7,7 @@
 //
 
 #import "NSString+Extend.h"
+#import "PinYin4Objc.h"
 
 @implementation NSString (Extend)
 
@@ -67,6 +68,19 @@
 - (NSString *)deleteTopAndBottomKonggeAndHuiche
 {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet ]];
+}
+
+//汉字首字母转换
+- (NSString *)getHanziFirstString
+{
+    //格式类型
+    HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];
+    [outputFormat setToneType:ToneTypeWithoutTone];
+    [outputFormat setVCharType:VCharTypeWithV];
+    [outputFormat setCaseType:CaseTypeLowercase];
+
+    NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:self withHanyuPinyinOutputFormat:outputFormat withNSString:@" "];
+    return [[NSString stringWithFormat:@"%c",[outputPinyin characterAtIndex:0]] uppercaseString];
 }
 
 @end

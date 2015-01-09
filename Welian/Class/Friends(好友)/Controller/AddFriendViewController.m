@@ -10,6 +10,9 @@
 #import "NewFriendViewCell.h"
 #import "NotstringView.h"
 #import "ShareEngine.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "WLTool.h"
 
 @interface AddFriendViewController ()
 
@@ -77,6 +80,15 @@
     
     //默认加载的数据
     [self changeDataWithIndex:segmentedControl.selectedSegmentIndex];
+//    [self getaddressBook];
+    
+    //下拉刷新
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(getPhoneAllFriends) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    //开始刷新
+    [self.refreshControl beginRefreshing];
+    [self getPhoneAllFriends];
 }
 
 #pragma mark - Table view data source
@@ -113,15 +125,18 @@
     
     if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
         //邀请好友
-        cell.operateBtn.hidden = YES;
-        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
-        cell.nameLabel.text = @"邀请微信好友";
-        cell.messageLabel.text = @"";
+//        cell.operateBtn.hidden = YES;
+//        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
+//        cell.nameLabel.text = @"邀请微信好友";
+//        cell.messageLabel.text = @"";
+        cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
     }else{
-        cell.operateBtn.hidden = NO;
-        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
-        cell.nameLabel.text = @"陈日莎";
-        cell.messageLabel.text = @"手机联系人:吴雪昭";
+        cell.needAddUser = _datasource[indexPath.row];
+        
+//        cell.operateBtn.hidden = NO;
+//        cell.logoImageView.image = [UIImage imageNamed:@"me_myfriend_add_wechat_logo"];
+//        cell.nameLabel.text = @"陈日莎";
+//        cell.messageLabel.text = @"手机联系人:吴雪昭";
     }
     
     return cell;
@@ -202,5 +217,74 @@
 {
     DLog(@"刷新通讯录");
 }
+
+//获取通讯录联系人
+- (void)getPhoneAllFriends
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+    //这个只会在第一次访问时调用
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+        dispatch_semaphore_signal(sema);
+        NSMutableArray *address = [NSMutableArray array];
+        if (greanted) {
+            //获取通讯录
+            address = [WLTool getAddressBookArray];
+        }
+        [self.refreshControl endRefreshing];
+        //通讯录联系人
+//        [WLHttpTool uploadPhonebookParameterDic:address success:^(id JSON) {
+//            LogInUser *loginUser = [LogInUser getNowLogInUser];
+//            for (NSDictionary *dic in JSON) {
+//                //保存到数据库
+//                [loginUser createNeedAddUserWithDict:dic withType:1];
+//            }
+//            
+//            //获取通讯录好友
+//            self.datasource = [loginUser allNeedAddUserWithType:1];
+//            
+//            [self.refreshControl endRefreshing];
+//            //切换到第一个
+//            [self changeDataWithIndex:0];
+//        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+//            [UIAlertView showWithError:error];
+//        }];
+        
+    });
+    
+}
+
+//- (void)getaddressBook
+//{
+//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+//    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+//    //这个只会在第一次访问时调用
+//    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+//        dispatch_semaphore_signal(sema);
+//        NSMutableArray *address = [NSMutableArray array];
+//        if (greanted) {
+//            //获取通讯录
+//            address = [WLTool getAddressBookArray];
+//        }
+//        //只有微信
+//        [WLHttpTool uploadPhonebook2ParameterDic:address success:^(id JSON) {
+//            NSArray *array = JSON;
+//            DLog(@"getaddressBook--->:%@",array);
+//            //                for (NSDictionary *dic  in array) {
+//            //                    FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+//            //                    [friendBook setKeyValues:dic];
+//            //                    if (friendBook.type.integerValue == 0) {
+//            //                        [self.friendsBook addObject:friendBook];
+//            //                    }else if (friendBook.type.integerValue==1){
+//            //                        [self.friendsWeixing addObject:friendBook];
+//            //                    }
+//            //                }
+//        } fail:^(NSError *error) {
+//            [UIAlertView showWithError:error];
+//        }];
+//        
+//    });
+//}
 
 @end

@@ -8,6 +8,7 @@
 
 #import "AddFriendTypeListViewController.h"
 #import "AddFriendViewController.h"
+#import "BSearchFriendsController.h"
 #import "NewFriendViewCell.h"
 #import "UserInfoBasicVC.h"
 
@@ -119,7 +120,9 @@
                 break;
             case 2:
             {
-                
+                //雷达搜索
+                BSearchFriendsController *bSearchVC = [[BSearchFriendsController alloc] init];
+                [self presentViewController:bSearchVC animated:YES completion:nil];
             }
                 break;
             default:
@@ -131,7 +134,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (tableView == _searchDisplayVC.searchResultsTableView) {
-        return 25.0;
+        if(_filterArray.count > 0){
+            return 0.01f;
+        }else{
+            return 25.0;
+        }
     }else{
         return 10.f;
     }
@@ -172,17 +179,13 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self.filterArray removeAllObjects];
+    [_filterArray removeAllObjects];
     [WLHttpTool searchUserParameterDic:@{@"keyword":searchBar.text,@"page":@(1),@"size":@(100)} success:^(id JSON) {
-        
         self.filterArray = JSON;
-        if (!self.filterArray.count) {
+        if (!_filterArray.count) {
             [WLHUDView showCustomHUD:@"暂无该好友" imageview:nil];
-            
-        }else{
-            
-            [self.searchDisplayVC.searchResultsTableView reloadData];
         }
+        [_searchDisplayVC.searchResultsTableView reloadData];
     } fail:^(NSError *error) {
         
     }];
@@ -190,7 +193,7 @@
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
-    [self.filterArray removeAllObjects];
+    [_filterArray removeAllObjects];
 }
 
 @end

@@ -11,7 +11,7 @@
 #import "BaseUser.h"
 #import "UserInfoModel.h"
 
-@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems;
+@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems, NeedAddUser;
 
 @interface LogInUser : BaseUser
 
@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSSet *rsInvestStages;
 @property (nonatomic, retain) NSSet *rsInvestItems;
 @property (nonatomic, retain) NSSet *rsInvestIndustrys;
+@property (nonatomic, retain) NSSet *rsNeedAddUsers;
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
@@ -42,6 +43,16 @@
 
 // 当前登录账户信息
 + (LogInUser *)getNowLogInUser;
+
+
+//创建需要添加的好友对象
+- (void)createNeedAddUserWithDict:(NSDictionary *)dict withType:(NSInteger)type;
+//获取已经存在的好友对象
+- (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
+//获取已经存在的好友对象
+- (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
+//获取排序后的通讯录联系人
+- (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
 
 //获取正在聊天的好友列表
 - (NSArray *)chatUsers;
@@ -139,5 +150,10 @@
 - (void)removeRsInvestIndustryObject:(InvestIndustry *)value;
 - (void)addRsInvestIndustry:(NSSet *)values;
 - (void)removeRsInvestIndustry:(NSSet *)values;
+
+- (void)addRsNeedAddUsersObject:(NeedAddUser *)value;
+- (void)removeRsNeedAddUsersObject:(NeedAddUser *)value;
+- (void)addRsNeedAddUsers:(NSSet *)values;
+- (void)removeRsNeedAddUsers:(NSSet *)values;
 
 @end
