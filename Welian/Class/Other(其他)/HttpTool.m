@@ -35,7 +35,7 @@ static HttpTool *engine;
 - (void)reqestParameters:(NSDictionary *)parameterDic successBlock:(HttpSuccessBlock)success failure:(HttpFailureBlock)failureBlock withHUD:(BOOL)isHUD andDim:(BOOL)isDim
 {
     if (isHUD) {
-        [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
+        [WLHUDView showHUDWithStr:@"加载中..." dim:isDim];
     }
     NSString *parameterStr = [self dicTostring:parameterDic];
     NSDictionary *parmetDic = @{@"json":parameterStr};
@@ -43,6 +43,7 @@ static HttpTool *engine;
     [self formatUrlAndParameters:parameterDic];
     
     [engine POST:@"server/index" parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [WLHUDView hiddenHud];
         DLog(@"%@",[[operation responseData] class]);
         if (![operation responseData]) {
             [WLHUDView showErrorHUD:@"网络连接失败！"];
@@ -66,7 +67,7 @@ static HttpTool *engine;
         }else if ([[dic objectForKey:@"state"] integerValue]==-2){
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-2 userInfo:[dic objectForKey:@"data"]]);
         }
-        [WLHUDView hiddenHud];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
         [WLHUDView showErrorHUD:error.localizedDescription];

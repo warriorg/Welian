@@ -60,7 +60,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:YES];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 获取好友  上传通讯录，返回通讯录好友和微信好友
