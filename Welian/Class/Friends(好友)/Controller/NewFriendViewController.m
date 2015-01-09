@@ -99,19 +99,20 @@ static NSString *cellIdentifier = @"frnewCellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NewFriendUser *friendM = _dataArray[indexPath.row];
-//    BOOL isask = YES;
-//    if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendCommand"]) {
-//        isask = NO;
-//    }
-//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendM isAsk:isask];
+    NewFriendUser *friendM = _datasource[indexPath.row];
+    BOOL isask = YES;
+    if ([friendM.operateType integerValue] == 2 ||[friendM.pushType isEqualToString:@"friendCommand"]) {
+        isask = NO;
+    }
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
 //    __weak NewFriendController *newFVC = self;
-//    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
-//    userInfoVC.acceptFriendBlock = ^(){
-//        [newFVC jieshouFriend:indexPath];
-//        [weakUserInfoVC addSucceed];
-//    };
-//    [self.navigationController pushViewController:userInfoVC animated:YES];
+    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
+    WEAKSELF
+    userInfoVC.acceptFriendBlock = ^(){
+        [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];
+        [weakUserInfoVC addSucceed];
+    };
+    [self.navigationController pushViewController:userInfoVC animated:YES];
     
 }
 
@@ -124,31 +125,15 @@ static NSString *cellIdentifier = @"frnewCellid";
 {
     NewFriendUser *friendUser = _datasource[indexPath.row];
     return [NewFriendViewCell configureWithName:friendUser.name message:friendUser.msg];
-//    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//    
-//    NewFriendUser *newFM = _datasource[indexPath.row];
-//    //    cell.friendM = newFM;
-//    float width = [[UIScreen mainScreen] bounds].size.width - 40 - 50 - 60;
-//    //计算第一个label的高度
-//    CGSize size1 = [newFM.name calculateSize:CGSizeMake(width, FLT_MAX) font:cell.nameLabel.font];
-//    //计算第二个label的高度
-//    CGSize size2 = [newFM.msg calculateSize:CGSizeMake(width, FLT_MAX) font:cell.massgeLabel.font];
-//    
-//    float height = size1.height + size2.height + 18;
-//    if (height > 60) {
-//        return height;
-//    }else{
-//        return 60;
-//    }
-//    return 60;
 }
 
 #pragma mark - 删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NewFriendUser *friendM = _dataArray[indexPath.row];
-//    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:_dataArray[indexPath.row]];
-//    [_dataArray removeObject:friendM];
+    NewFriendUser *friendM = _datasource[indexPath.row];
+    //删除本地数据库数据
+    [friendM delete];
+    [_datasource removeObjectAtIndex:indexPath.row];
     //移除tableView中的数据
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
     
