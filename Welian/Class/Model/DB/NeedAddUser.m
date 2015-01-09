@@ -115,4 +115,13 @@
     return arrayForArrays;
 }
 
+//更新好友关系状态
+- (NeedAddUser *)updateFriendShip:(NSInteger)type
+{
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4.等待验证 */
+    self.friendship = @(type);
+    [MOC save];
+    return self;
+}
+
 @end

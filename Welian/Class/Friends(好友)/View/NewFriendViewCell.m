@@ -47,6 +47,7 @@
     _newFriendBlock = nil;
     _userInfoModel = nil;
     _needAddUser = nil;
+    _needAddBlock = nil;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -147,8 +148,15 @@
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_needAddUser.avatar]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    _nameLabel.text = _needAddUser.name;
-    _messageLabel.text = _needAddUser.wlname;
+    if (_needAddUser.userType.integerValue == 1) {
+        _nameLabel.text = _needAddUser.friendship.integerValue == 0 ? _needAddUser.name : _needAddUser.wlname;
+        //手机联系人
+        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",_needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",_needAddUser.name];
+    }else{
+        //微信联系人
+        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",_needAddUser.wlname] : [NSString stringWithFormat:@"微信好友：%@",_needAddUser.name];
+    }
+    
     //是否是认证投资人
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
@@ -182,6 +190,13 @@
             _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
             _operateBtn.backgroundColor = BtnTianJiaColor;
             [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+            break;
+        case 4:
+        {
+            [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
         }
             break;
         default:
@@ -266,6 +281,10 @@
     //新的好友操作
     if (_newFriendBlock) {
         _newFriendBlock(_nFriendUser.operateType.integerValue,_nFriendUser,_indexPath);
+    }
+    
+    if (_needAddBlock) {
+        _needAddBlock(_needAddUser.friendship.integerValue,_needAddUser,_indexPath);
     }
 }
 

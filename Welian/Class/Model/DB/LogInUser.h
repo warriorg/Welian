@@ -55,6 +55,8 @@
 
 //更新所有新的好友中，待验证的状态为添加状态
 - (void)updateAllNewFriendsOperateStatus;
+//更新所有添加好友中，待验证的状态为添加状态
+- (void)updateAllNeedAddFriendOperateStatus;
 
 
 + (void)setUserUid:(NSNumber *)uid;

@@ -14,7 +14,7 @@
 
 @interface NeedAddUser : BaseUser
 
-//friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */   
+//friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4.等待验证 */
 @property (nonatomic, retain) NSString * pinyin;
 @property (nonatomic, retain) NSString * wlname;
 @property (nonatomic, retain) NSNumber * userType;//1：手机好友  2：微信好友
@@ -28,5 +28,8 @@
 + (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
 //获取排序后的通讯录联系人
 + (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
+
+//更新好友关系状态
+- (NeedAddUser *)updateFriendShip:(NSInteger)type;
 
 @end

@@ -238,4 +238,13 @@
     }
 }
 
+//更新所有添加好友中，待验证的状态为添加状态
+- (void)updateAllNeedAddFriendOperateStatus
+{
+    NSArray *waitAddFriends = [[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:self] where:@"friendship" equals:@"4"] results];
+    for (NeedAddUser *needAdd in waitAddFriends) {
+        [needAdd updateFriendShip:2];
+    }
+}
+
 @end

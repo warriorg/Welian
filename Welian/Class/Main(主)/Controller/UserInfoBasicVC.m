@@ -23,6 +23,7 @@
 #import "IIMeInvestAuthModel.h"
 #import "InvestItemM.h"
 #import "InvestInfoListVC.h"
+#import "NeedAddUser.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -187,6 +188,12 @@ static NSString *staurCellid = @"staurCellid";
                     //更新好友请求列表数据为 添加
                     [newFuser updateOperateType:0];
 //                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
+                }
+                //更新本地添加好友数据库
+                NeedAddUser *needAddUser = [NeedAddUser getNeedAddUserWithUid:_userMode.uid];
+                if (needAddUser) {
+                    //更新未好友的好友
+                    [needAddUser updateFriendShip:2];
                 }
                 
                 //聊天状态发送改变
