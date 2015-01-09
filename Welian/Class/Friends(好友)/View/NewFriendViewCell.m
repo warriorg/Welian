@@ -76,7 +76,6 @@
     [super willChangeValueForKey:@"nFriendUser"];
     _nFriendUser = nFriendUser;
     [super didChangeValueForKey:@"nFriendUser"];
-    _operateBtn.hidden = YES;
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_nFriendUser.avatar]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
@@ -85,6 +84,7 @@
     //是否是认证投资人
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
+    _operateBtn.hidden = NO;
     //控制按钮显示内容，和样式
     switch (_nFriendUser.operateType.integerValue) {
         case FriendOperateTypeAdd:
@@ -149,7 +149,7 @@
        _nameLabel.top = kMarginTop;
     }
     
-    _messageLabel.width = _operateBtn.left - _nameLabel.left - kMarginLeft;
+    _messageLabel.width = self.width - (_operateBtn.hidden ? 0 : _operateBtn.width) - _nameLabel.left - kMarginLeft * 2.f;
     [_messageLabel sizeToFit];
     _messageLabel.top = _nameLabel.bottom + 5.f;
     _messageLabel.left = _nameLabel.left;

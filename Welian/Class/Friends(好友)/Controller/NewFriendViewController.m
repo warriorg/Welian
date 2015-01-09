@@ -87,10 +87,7 @@ static NSString *cellIdentifier = @"frnewCellid";
     if (!cell) {
         cell = [[NewFriendViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-//    FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//    NewFriendUser *newFM = _datasource[indexPath.row];
-//    [cell setFriendM:newFM];
-//    [cell.accBut addTarget:self action:@selector(sureAddFriend:event:) forControlEvents:UIControlEventTouchUpInside];
+    cell.indexPath = indexPath;
     cell.nFriendUser = _datasource[indexPath.row];
     WEAKSELF
     [cell setNewFriendBlock:^(FriendOperateType type,NewFriendUser *newFriendUser,NSIndexPath *indexPath){

@@ -280,6 +280,8 @@ static NSString *fridcellid = @"fridcellid";
             [self.navigationController pushViewController:newFriendVC animated:YES];
             [self.navigationController.tabBarItem setBadgeValue:nil];
             [UserDefaults removeObjectForKey:KFriendbadge];
+            //刷新角标
+            [self loadNewFriendsList];
         }
             break;
         case 1:
