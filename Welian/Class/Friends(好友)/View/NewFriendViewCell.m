@@ -162,7 +162,7 @@
     }
     
     //是否是认证投资人
-    _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
+    _iconImageView.hidden = _needAddUser.investorauth.integerValue == 1 ? NO : YES;
     
     _operateBtn.hidden = NO;
     //重置边框颜色
