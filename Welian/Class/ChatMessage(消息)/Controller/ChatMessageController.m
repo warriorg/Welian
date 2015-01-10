@@ -9,10 +9,12 @@
 #import "ChatMessageController.h"
 #import "ChatMessageViewCell.h"
 #import "ChatViewController.h"
+#import "NotstringView.h"
 
 @interface ChatMessageController ()
 
 @property (nonatomic, strong) NSArray *datasource;
+@property (strong, nonatomic) NotstringView *notHasDataView;//无消息提醒
 
 @end
 
@@ -22,13 +24,17 @@
     _datasource = nil;
 }
 
+//没有聊天记录提醒
+- (NotstringView *)notHasDataView
+{
+    if (!_notHasDataView) {
+        _notHasDataView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitStr:@"没有消息记录" andImageName:@"remind_big_nostring"];
+    }
+    return _notHasDataView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //取消滚动
-//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -39,6 +45,13 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.datasource = [[LogInUser getNowLogInUser] chatUsers];
+    
+    if (_datasource.count > 0) {
+        [_notHasDataView removeFromSuperview];
+    }else{
+        [self.tableView addSubview:self.notHasDataView];
+        [self.tableView sendSubviewToBack:_notHasDataView];
+    }
     
     //添加聊天用户改变监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
@@ -147,6 +160,13 @@
 - (void)chatUsersChanged:(NSNotification *)notification
 {
     self.datasource = [[LogInUser getNowLogInUser] chatUsers];
+    
+    if (_datasource.count > 0) {
+        [_notHasDataView removeFromSuperview];
+    }else{
+        [self.tableView addSubview:self.notHasDataView];
+        [self.tableView sendSubviewToBack:_notHasDataView];
+    }
     [self.tableView reloadData];
 }
 
@@ -159,7 +179,6 @@
     NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
     MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:uid];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
-//    chatVC.isFromUserInfo = YES;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 

@@ -99,6 +99,9 @@ single_implementation(ShareEngine)
     
     WXWebpageObject *ext = [WXWebpageObject object];
     ext.webpageUrl = appUrl;
+    if (!appUrl) {
+        DLog(@"分享的链接地址为空，无法分享！");
+    }
     
     message.mediaObject = ext;
     

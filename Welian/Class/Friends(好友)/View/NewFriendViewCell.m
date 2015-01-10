@@ -156,8 +156,9 @@
         //手机联系人
         _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",_needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",_needAddUser.name];
     }else{
+        _nameLabel.text = _needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname;
         //微信联系人
-        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",_needAddUser.wlname] : [NSString stringWithFormat:@"微信好友：%@",_needAddUser.name];
+        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",_needAddUser.wlname.length > 0 ? _needAddUser.wlname : _needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",_needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname];
     }
     
     //是否是认证投资人
@@ -221,7 +222,11 @@
     _iconImageView.bottom = _logoImageView.bottom;
     _iconImageView.right = _logoImageView.right;
     
-    _operateBtn.size = CGSizeMake(kButtonWidth, kButtonHeight);
+    [_operateBtn sizeToFit];
+    if (_operateBtn.width < kButtonWidth) {
+        _operateBtn.width = kButtonWidth;
+    }
+    _operateBtn.height = kButtonHeight;
     _operateBtn.right = self.width - kMarginLeft;
     _operateBtn.top = kMarginLeft;
     

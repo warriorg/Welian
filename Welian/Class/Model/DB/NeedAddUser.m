@@ -20,18 +20,45 @@
 //创建需要添加的好友对象
 + (void)createNeedAddUserWithDict:(NSDictionary *)dict  withType:(NSInteger)type
 {
-    //    avatar = "http://img.welian.com/1418279171961-200-194_x.png";
+    //通讯录返回    avatar = "http://img.welian.com/1418279171961-200-194_x.png";
     //    friendship = 1;
     //    mobile = 15068114669;
     //    name = "\U590f\U663e\U6797\Uff0c\U4f20\U9001\U95e8";
     //    uid = 10071;
     //    wlname = "\U590f\U663e\U6797";
-    NSNumber *uid = [dict[@"uid"] integerValue] == 0 ? nil : @([dict[@"uid"] integerValue]);
+    
+    /*微信返回
+     "name": "田英",
+     "uid":1,//用户id，大于0位微链用户的id
+     "avatar":"http://img.welian.com/1334345345.jpg",
+     “mobile":"13878887878",
+     "company":"杭州科技有限公司"
+     "position":"总经理"
+     
+     avatar = "http://my.welian.com/uploads/join_avatar/13a199b1c9ca9ec37ccd3a34c6b91b15.png";
+     company = "\U91d1\U5ba2\U79d1\U6280";
+     investorauth = 0;
+     name = "\U5b59\U6960";
+     position = "\U4ea7\U54c1\U7ecf\U7406";
+     type = 1;
+     uid = 0;
+     */
+    NSNumber *uid = dict[@"uid"] == nil ? nil : @([dict[@"uid"] integerValue]);
     NSString *name = dict[@"name"];
     NSString *wlName = dict[@"wlname"];
     NSString *mobile = dict[@"mobile"];
     NSString *avatar = dict[@"avatar"];
+    NSString *company = dict[@"company"];
+    NSString *position = dict[@"position"];
+    //是否投资认证人
+    NSNumber *investorauth = @([dict[@"investorauth"] integerValue]);
     NSNumber *friendship = dict[@"friendship"] == nil ? @(0) : @([dict[@"friendship"] integerValue]);
+    //如果未返回uid的微信好友，不展示
+    if (!uid && type == 2) {
+        //设置为好友
+        friendship = @(1);
+        return;
+    }
     if (friendship.integerValue == -1) {
         //自己
         return;
@@ -49,6 +76,9 @@
     needAddUser.wlname = wlName;
     needAddUser.pinyin = [name getHanziFirstString];
     needAddUser.userType = @(type);
+    needAddUser.company = company;
+    needAddUser.position = position;
+    needAddUser.investorauth = investorauth;
     needAddUser.rsLoginUser = [LogInUser getNowLogInUser];
     [MOC save];
 }

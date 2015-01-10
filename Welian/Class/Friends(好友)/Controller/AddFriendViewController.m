@@ -15,6 +15,7 @@
 #import "WLTool.h"
 #import "UserInfoBasicVC.h"
 #import <MessageUI/MessageUI.h>
+#import "SEImageCache.h"
 
 @interface AddFriendViewController ()<MFMessageComposeViewControllerDelegate>
 
@@ -71,6 +72,9 @@
     [super viewDidLoad];
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    //返回不取消接口调用
+    self.needlessCancel = YES;
     
     //更新所有待验证的消息为需要发送好友请求状态
     if(_selectIndex == 0){
@@ -147,32 +151,24 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
-        LogInUser *mode = [LogInUser getNowLogInUser];
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:[UserDefaults objectForKey:@"icon"] options:NSDataBase64Encoding64CharacterLineLength];
-        
-        UIImage *shareImage = [UIImage imageWithData:data];
-        
-        NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
-        NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
-        
         //微信邀请
-        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:@""];
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_addButtonWithTitle:@"微信好友" handler:^{
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:nil WithScene:weChat];
+            [self shareWithType:0];
         }];
         [sheet bk_addButtonWithTitle:@"微信朋友圈" handler:^{
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:shareImage WithScene:weChatFriend];
+            [self shareWithType:1];
         }];
         [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet showInView:self.view];
     }else{
         NeedAddUser *needAddUser = _datasource[indexPath.row];
-        if(needAddUser.friendship.integerValue != 0){
+        if(needAddUser.friendship.integerValue != 0 || needAddUser.uid != nil){
             //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-            if (needAddUser.userType.integerValue == 1) {
+//            if (needAddUser.userType.integerValue == 1) {
                 //手机联系人
                 BOOL isask = YES;
-                if(needAddUser.friendship.integerValue == 1){
+                if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
                     isask = NO;
                 }
                 UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
@@ -184,7 +180,10 @@
                     [weakUserInfoVC addSucceed];
                 };
                 [self.navigationController pushViewController:userInfoVC animated:YES];
-            }
+//            }else{
+//                //微信好友
+//                
+//            }
         }else{
             //邀请手机通讯录
             if (needAddUser.userType.integerValue == 1) {
@@ -193,6 +192,19 @@
             }
         }
     }
+}
+
+//分享到微信
+- (void)shareWithType:(NSInteger)type
+{
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
+    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:[NSURL URLWithString:mode.avatar] completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:image WithScene:type == 0 ? weChat : weChatFriend];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -209,6 +221,11 @@
     return 0.01f;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.f;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_datasource.count > 0) {
@@ -221,8 +238,8 @@
             msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",needAddUser.name];
         }else{
             //微信联系人
-            name = needAddUser.friendship.integerValue == 0 ? needAddUser.name : needAddUser.wlname;
-            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name];
+            name = needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname;
+            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname];
         }
         return [NewFriendViewCell configureWithName:name message:msg];
     }else{
@@ -242,11 +259,23 @@
 {
     //刷新动画
 //    [self refreshAnimation];
-    //获取数据
-    [self getPhoneAllFriends];
-    
+    //先刷新页面
+    [self reloadUIData];
+    //调用接口
+    if (index == 0) {
+        //获取通讯录好友
+        [self getPhoneAllFriends];
+    }else{
+        //获取微信好友
+        [self getWxFriends];
+    }
+}
+
+//刷新页面数据
+- (void)reloadUIData
+{
     //获取通讯录好友
-    self.datasource = index == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
+    self.datasource = _segmentedControl.selectedSegmentIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
     if(_datasource.count == 0){
         if (index == 0) {
             [_weChatNotView removeFromSuperview];
@@ -304,14 +333,31 @@
             }
             
             [self.refreshControl endRefreshing];
+            [self reloadUIData];
             //切换到第一个
 //            [self changeDataWithIndex:0];
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [UIAlertView showWithError:error];
+//            [UIAlertView showWithError:error];
         }];
         
     });
+}
+
+//获取微信好友数据
+- (void)getWxFriends
+{
+    [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
+                                 success:^(id JSON) {
+                                     for (NSDictionary *dic in JSON) {
+                                         //保存到数据库
+                                         [NeedAddUser createNeedAddUserWithDict:dic withType:2];
+                                     }
+                                     [self.refreshControl endRefreshing];
+                                     [self reloadUIData];
+                                 } fail:^(NSError *error) {
+                                     [self.refreshControl endRefreshing];
+                                 }];
 }
 
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath

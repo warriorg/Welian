@@ -113,7 +113,7 @@
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
             [imageView setCenter:self.center];
             CGRect imageframe = imageView.frame;
-            imageframe.origin.y -= 100;
+            imageframe.origin.y -= 150;
             [imageView setFrame:imageframe];
             [self addSubview:imageView];
             

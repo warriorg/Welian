@@ -165,6 +165,18 @@
     } withHUD:YES andDim:NO];
 }
 
+#pragma mark - 获取微信好友列表
++ (void)loadWxFriendParameterDic:(NSMutableArray *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"loadWxFriend",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        NSArray *datajson = JSON;
+        succeBlock (datajson);
+    } failure:^(NSError *error) {
+        failurBlock (error);
+    } withHUD:YES andDim:NO];
+}
 
 #pragma mark - 修改用户信息
 + (void)saveProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock

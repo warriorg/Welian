@@ -69,14 +69,16 @@
 //    [locService startUserLocationService];
 //    self.locService = locService;
     
+    [_mapView setZoomLevel:5];
+    
     //初始化检索对象
     BMKGeoCodeSearch *searcher =[[BMKGeoCodeSearch alloc]init];
     searcher.delegate = self;
     self.searcher = searcher;
     
     BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
-    geoCodeSearchOption.city= @"杭州";
-    geoCodeSearchOption.address = @"紫金港国际饭店";
+    geoCodeSearchOption.city = _city;
+    geoCodeSearchOption.address = _address;
     BOOL flag = [_searcher geoCode:geoCodeSearchOption];
     [WLHUDView showHUDWithStr:@"获取位置中..." dim:NO];
     if(flag)
@@ -116,13 +118,14 @@
         annotation.title = _address;
         [_mapView addAnnotation:annotation];
         
-        //设定当前地图的显示范围
-        BMKCoordinateSpan span = BMKCoordinateSpanMake(0.001, 0.001);
-        BMKCoordinateRegion region = BMKCoordinateRegionMake(result.location, span);
-        [_mapView setRegion:region animated:YES];
         
         //设定地图中心点坐标
         [_mapView setCenterCoordinate:result.location animated:YES];
+        
+        //设定当前地图的显示范围
+        [_mapView setRegion:BMKCoordinateRegionMake(result.location,BMKCoordinateSpanMake(0.02,0.02))];
+        //设置地图缩放级别
+        [_mapView setZoomLevel:17];
         //设置选中标记
         [_mapView selectAnnotation:annotation animated:YES];
     }
