@@ -91,7 +91,7 @@
 + (void)setUserisNow:(BOOL)isnow;
 
 + (void)setUserUrl:(NSString *)url;
-+ (void)setuserAuth:(NSNumber *)auth;
+//+ (void)setuserAuth:(NSNumber *)auth;
 
 + (void)setUseropenid:(NSString *)openid;
 + (void)setUserunionid:(NSString *)unionid;

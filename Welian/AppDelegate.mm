@@ -301,102 +301,127 @@ BMKMapManager* _mapManager;
     if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
 
         [HomeMessage createHomeMessageModel:[MessageHomeModel objectWithKeyValues:dataDic]];
-        
-//        [[WLDataDBTool sharedService] putObject:dataDic withId:[NSString stringWithFormat:@"%@",[dataDic objectForKey:@"commentid"]] intoTable:KMessageHomeTableName];
         NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
         badge++;
         [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
         [[NSNotificationCenter defaultCenter] postNotificationName:KMessageHomeNotif object:self];
         
-    }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){   // 好友消息推送
-        NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
-        if ([type isEqualToString:@"friendAdd"]) {
-            // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
-            [newfrendM setIsAgree:@(1)];
-            //操作类型0：添加 1：接受  2:已添加 3：待验证
-            [newfrendM setOperateType:@(2)];
-            
-            //创建本地数据库好友
-            MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
-            
-            //接受后，本地创建一条消息
-            WLMessage *textMessage = [[WLMessage alloc] initWithText:[NSString stringWithFormat:@"我已经通过你的好友请求，现在我们可以开始聊聊创业那些事了"] sender:newfrendM.name timestamp:[NSDate date]];
-            textMessage.avatorUrl = newfrendM.avatar;
-            //是否读取
-            textMessage.isRead = NO;
-            textMessage.sended = @"1";
-            textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
-
-            //更新聊天好友
-            [friendUser updateIsChatStatus:YES];
-            
-            //本地聊天数据库添加
-            ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
-            textMessage.msgId = chatMessage.msgId.stringValue;
-            
-            //更新好友列表
-            [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
-            //聊天状态发送改变
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-            
-        }else{
-            [newfrendM setIsAgree:@(0)];
-            //别人请求加我为好友
-            //操作类型0：添加 1：接受  2:已添加 3：待验证
-            MyFriendUser *myFriendUser = [MyFriendUser getMyfriendUserWithUid:newfrendM.uid];
-            if ([type isEqualToString:@"friendRequest"]) {
-                //如果是好友，设置为已添加
-                if (myFriendUser) {
-                    [newfrendM setOperateType:@(2)];
-                }else{
-                    [newfrendM setOperateType:@(1)];
-                }
-            }
-            //推荐的
-            if([type isEqualToString:@"friendCommand"]){
-                if (myFriendUser) {
-                    [newfrendM setOperateType:@(2)];
-                }else{
-                    [newfrendM setOperateType:@(0)];
-                }
-            }
-            
-            //判断当前是否已经是好友
-            NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
-            if (!newFriendUser) {
-                //不是好友，添加角标
-                NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
-                badge++;
-                [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
-                //刷新好友页面角标
-                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-            }
-        }
+    }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){
         
-        if (!newfrendM.created) {
-            //创建的时间
-            newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-        }
-        [NewFriendUser createNewFriendUserModel:newfrendM];
+        // 好友消息推送
+        [self getNewFriendMessage:dataDic];
         
     }else if([type isEqualToString:@"IM"]){
         //接收的聊天消息
-        NSDictionary *dataDic = userInfo[@"data"];
+        [self getIMGTMessage:userInfo[@"data"]];
         
-        //添加数据
-        [ChatMessage createReciveMessageWithDict:dataDic];
-        
-        //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
     } else if ([type isEqualToString:@"logout"]){
-        
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+        // 退出登录
         [self logout];
+    }else if ([type isEqualToString:@"activeCommand"]){  // 活动推荐
+    
+        
+    }else if ([type isEqualToString:@"investorResult"]){  // 后台认证投资人
+        
+        LogInUser *user =[LogInUser getLogInUserWithUid:[dataDic objectForKey:@"uid"]];
+        [user setInvestorauth:[dataDic objectForKey:@"result"]];
+        [MOC save];
     }
 }
 
+// 接受新的好友请求消息
+- (void)getNewFriendMessage:(NSDictionary *)dataDic
+{
+    NSString *type = [dataDic objectForKey:@"type"];
+    NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
+    if ([type isEqualToString:@"friendAdd"]) {
+        // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
+        [newfrendM setIsAgree:@(1)];
+        //操作类型0：添加 1：接受  2:已添加 3：待验证
+        [newfrendM setOperateType:@(2)];
+        
+        //创建本地数据库好友
+        MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
+        
+        //接受后，本地创建一条消息
+        WLMessage *textMessage = [[WLMessage alloc] initWithText:[NSString stringWithFormat:@"我已经通过你的好友请求，现在我们可以开始聊聊创业那些事了"] sender:newfrendM.name timestamp:[NSDate date]];
+        textMessage.avatorUrl = newfrendM.avatar;
+        //是否读取
+        textMessage.isRead = NO;
+        textMessage.sended = @"1";
+        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+        
+        //更新聊天好友
+        [friendUser updateIsChatStatus:YES];
+        
+        //本地聊天数据库添加
+        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+        textMessage.msgId = chatMessage.msgId.stringValue;
+        
+        //更新好友列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        //聊天状态发送改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+        
+    }else{
+        [newfrendM setIsAgree:@(0)];
+        //别人请求加我为好友
+        //操作类型0：添加 1：接受  2:已添加 3：待验证
+        MyFriendUser *myFriendUser = [MyFriendUser getMyfriendUserWithUid:newfrendM.uid];
+        if ([type isEqualToString:@"friendRequest"]) {
+            //如果是好友，设置为已添加
+            if (myFriendUser) {
+                [newfrendM setOperateType:@(2)];
+            }else{
+                [newfrendM setOperateType:@(1)];
+            }
+        }
+        //推荐的
+        if([type isEqualToString:@"friendCommand"]){
+            if (myFriendUser) {
+                [newfrendM setOperateType:@(2)];
+            }else{
+                [newfrendM setOperateType:@(0)];
+            }
+        }
+        
+        //判断当前是否已经是好友
+        NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
+        if (!newFriendUser) {
+            //不是好友，添加角标
+            NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
+            badge++;
+            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
+            //刷新好友页面角标
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        }
+    }
+    
+    if (!newfrendM.created) {
+        //创建的时间
+        newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+    [NewFriendUser createNewFriendUserModel:newfrendM];
+}
+
+
+// 接受聊天消息
+- (void)getIMGTMessage:(NSDictionary *)dataDic
+{
+    //添加数据
+    [ChatMessage createReciveMessageWithDict:dataDic];
+    
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+}
+
+
+
+// 退出登录
 - (void)logout
 {
+    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+    
     [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
         
     } fail:^(NSError *error) {
@@ -429,7 +454,6 @@ BMKMapManager* _mapManager;
     DLog(@"如果应用程序支持后台运行，则应用程序已经进入后台运行");
     // [EXT] 切后台关闭SDK，让SDK第一时间断线，让个推先用APN推送
     [self stopSdk];
-    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

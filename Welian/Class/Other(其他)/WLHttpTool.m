@@ -891,7 +891,6 @@
 #pragma mark - 取最新动态更新数量
 + (void)loadNewFeedCountParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
     NSDictionary *dic = @{@"type":@"loadNewFeedCount",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         

@@ -13,7 +13,7 @@
 /**  对外分享url   */
 @property (nonatomic, strong) NSString *shareurl;
 
-/**  投资者认证   */
+/**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
 @property (nonatomic, strong) NSNumber *investorauth;
 
 /**  创业者认证   */
