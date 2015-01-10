@@ -99,6 +99,9 @@
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
     _operateBtn.hidden = NO;
+    //重置边框颜色
+    _operateBtn.layer.borderWidth = 0.f;
+    _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
     //控制按钮显示内容，和样式
     switch (_nFriendUser.operateType.integerValue) {
         case FriendOperateTypeAdd:
@@ -161,6 +164,9 @@
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
     _operateBtn.hidden = NO;
+    //重置边框颜色
+    _operateBtn.layer.borderWidth = 0.f;
+    _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     switch (_needAddUser.friendship.integerValue) {
         case 0:

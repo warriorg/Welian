@@ -73,7 +73,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //更新所有待验证的消息为需要发送好友请求状态
-    [[LogInUser getNowLogInUser] updateAllNeedAddFriendOperateStatus];
+    if(_selectIndex == 0){
+        [[LogInUser getNowLogInUser] updateAllNeedAddFriendOperateStatus];
+    }
     
     //添加title内容
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"手机联系人",@"微信好友"]];
