@@ -31,7 +31,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx4150b21797fa0a5e</string>
+				<string>wx5e4e9a58776baed3</string>
 			</array>
 		</dict>
 	</array>
@@ -48,7 +48,7 @@
 	<key>KPlatformType</key>
 	<string>ios</string>
 	<key>KWeChatAppId</key>
-	<string>wx4150b21797fa0a5e</string>
+	<string>wx5e4e9a58776baed3</string>
 	<key>KWeChatAppSecret</key>
 	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>LSRequiresIPhoneOS</key>
