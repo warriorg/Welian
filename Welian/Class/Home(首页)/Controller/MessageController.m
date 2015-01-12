@@ -83,7 +83,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        [UserDefaults removeObjectForKey:KMessagebadge];
+        [LogInUser setUserHomemessagebadge:@(0)];
+//        [UserDefaults removeObjectForKey:KMessagebadge];
         _messageDataArray = [NSMutableArray array];
         [self.tableView setSectionHeaderHeight:0.1];
         [self.tableView setBackgroundColor:[UIColor whiteColor]];

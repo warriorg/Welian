@@ -15,4 +15,6 @@ single_interface(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge;
 
+- (void)loadNewStustupdata;
+
 @end

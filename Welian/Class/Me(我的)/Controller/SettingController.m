@@ -93,7 +93,7 @@
         
     }];
     [LogInUser setUserisNow:NO];
-    [UserDefaults removeObjectForKey:KFirstFID];
+//    [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];

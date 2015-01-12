@@ -14,7 +14,7 @@
 #import "MyLocationController.h"
 #import "HomeController.h"
 #import "InvestCerVC.h"
-
+#import "BadgeBaseCell.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -24,6 +24,7 @@
 @end
 
 static NSString *meinfocellid = @"MeinfoCell";
+static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 @implementation MeViewController
 
 
@@ -53,6 +54,7 @@ static NSString *meinfocellid = @"MeinfoCell";
 - (void)buildTableView
 {
     [self.tableView registerNib:[UINib nibWithNibName:@"MeinfoCell" bundle:nil] forCellReuseIdentifier:meinfocellid];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BadgeBaseCell" bundle:nil] forCellReuseIdentifier:BadgeBaseCellid];
 }
 
 
@@ -80,8 +82,7 @@ static NSString *meinfocellid = @"MeinfoCell";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if (indexPath.section==0) {
         MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
         
@@ -92,17 +93,30 @@ static NSString *meinfocellid = @"MeinfoCell";
         [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         return cell;
     }else{
-        if (nil == cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        }
+        BadgeBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgeBaseCellid];
         // 1.取出这行对应的字典数据
         NSDictionary *dict = _data[indexPath.section][indexPath.row];
         // 2.设置文字
-        cell.textLabel.text = dict[@"name"];
-        [cell.imageView setImage:[UIImage imageNamed:dict[@"icon"]]];
+        cell.titLabel.text = dict[@"name"];
+        [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
+        if (indexPath.section==2) {
+            [cell.deputLabel setHidden:NO];
+            [cell.badgeImage setHidden:NO];
+//            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
+            LogInUser *meinfo = [LogInUser getNowLogInUser];
+            if (meinfo.investorauth.integerValue==1) {
+                [cell.deputLabel setText:@"认证成功"];
+            }else if (meinfo.investorauth.integerValue ==-2){
+                [cell.deputLabel setText:@"正在审核"];
+            }else if (meinfo.investorauth.integerValue ==-1){
+                [cell.deputLabel setText:@"认证失败"];
+            }else{
+                [cell.deputLabel setHidden:YES];
+            }
+
+        }
+        return cell;
     }
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

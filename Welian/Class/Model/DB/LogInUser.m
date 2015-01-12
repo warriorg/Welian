@@ -26,6 +26,15 @@
 @dynamic openid;
 @dynamic unionid;
 
+@dynamic firststustid;
+@dynamic newstustcount;
+@dynamic homemessagebadge;
+@dynamic investorcount;
+@dynamic isactivebadge;
+@dynamic isinvestorbadge;
+@dynamic newfriendbadge;
+@dynamic activecount;
+
 @dynamic rsCompanys;
 @dynamic rsSchools;
 @dynamic rsMyFriends;
@@ -67,6 +76,49 @@
     [MOC save];
     return loginuser;
 }
+
+
++ (void)setUserFirststustid:(NSNumber *)firststustid
+{
+    [[LogInUser getNowLogInUser] setFirststustid:firststustid];
+    [MOC save];
+}
++ (void)setUserNewstustcount:(NSNumber *)newstustcount
+{
+    [[LogInUser getNowLogInUser] setNewstustcount:newstustcount];
+    [MOC save];
+}
++ (void)setUserHomemessagebadge:(NSNumber *)homemessagebadge
+{
+    [[LogInUser getNowLogInUser] setHomemessagebadge:homemessagebadge];
+    [MOC save];
+}
++ (void)setUserInvestorcount:(NSNumber *)investorcount
+{
+    [[LogInUser getNowLogInUser] setInvestorcount:investorcount];
+    [MOC save];
+}
++ (void)setUserActivecount:(NSNumber *)activecount
+{
+    [[LogInUser getNowLogInUser] setActivecount:activecount];
+    [MOC save];
+}
++ (void)setUserIsactivebadge:(BOOL)isactivebadge
+{
+    [[LogInUser getNowLogInUser] setIsactivebadge:@(isactivebadge)];
+    [MOC save];
+}
++ (void)setUserIsinvestorbadge:(BOOL)isinvestorbadge
+{
+    [[LogInUser getNowLogInUser] setIsinvestorbadge:@(isinvestorbadge)];
+    [MOC save];
+}
++ (void)setUserNewfriendbadge:(NSNumber *)newfriendbadge
+{
+    [[LogInUser getNowLogInUser] setNewfriendbadge:newfriendbadge];
+    [MOC save];
+}
+
 
 + (void)setUserUid:(NSNumber *)uid
 {

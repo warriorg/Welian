@@ -1,14 +1,14 @@
 //
-//  BasicCell.m
+//  BadgeBaseCell.m
 //  Welian
 //
-//  Created by dong on 15/1/10.
+//  Created by dong on 15/1/12.
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import "BasicCell.h"
+#import "BadgeBaseCell.h"
 
-@implementation BasicCell
+@implementation BadgeBaseCell
 
 - (void)awakeFromNib {
     // Initialization code

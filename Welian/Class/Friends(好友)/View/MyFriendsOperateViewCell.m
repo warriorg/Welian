@@ -25,7 +25,7 @@
                                [UIImage imageNamed:@"me_myfriend_friendsfriend_logo"]];
         
         //新的消息数量
-        NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]];
+        NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge];
         
         WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:self.bounds Titles:@[@"新的好友",@"手机联系人",@"微信好友",@"好友的好友"] Images:btnImages Bridges:@[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"]];
 //        segementedControl.delegate = self;

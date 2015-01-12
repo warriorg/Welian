@@ -103,6 +103,7 @@ BMKMapManager* _mapManager;
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
+        [mainVC loadNewStustupdata];
         [self.window setRootViewController:mainVC];
     }else{
         /** 未登陆 */
@@ -301,9 +302,10 @@ BMKMapManager* _mapManager;
     if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
 
         [HomeMessage createHomeMessageModel:[MessageHomeModel objectWithKeyValues:dataDic]];
-        NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
+        NSInteger badge = [[LogInUser getNowLogInUser].homemessagebadge integerValue];
         badge++;
-        [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
+        [LogInUser setUserHomemessagebadge:@(badge)];
+//        [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
         [[NSNotificationCenter defaultCenter] postNotificationName:KMessageHomeNotif object:self];
         
     }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){
@@ -319,13 +321,11 @@ BMKMapManager* _mapManager;
         // 退出登录
         [self logout];
     }else if ([type isEqualToString:@"activeCommand"]){  // 活动推荐
-    
+        
         
     }else if ([type isEqualToString:@"investorResult"]){  // 后台认证投资人
         
-        LogInUser *user =[LogInUser getLogInUserWithUid:[dataDic objectForKey:@"uid"]];
-        [user setInvestorauth:[dataDic objectForKey:@"result"]];
-        [MOC save];
+        [LogInUser setUserinvestorauth:[dataDic objectForKey:@"result"]];
     }
 }
 
@@ -389,9 +389,11 @@ BMKMapManager* _mapManager;
         NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
         if (!newFriendUser) {
             //不是好友，添加角标
-            NSInteger badge = [[UserDefaults objectForKey:KFriendbadge] integerValue];
+            
+            NSInteger badge = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
             badge++;
-            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
+            [LogInUser setUserNewfriendbadge:@(badge)];
+//            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
             //刷新好友页面角标
             [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
         }
@@ -428,7 +430,7 @@ BMKMapManager* _mapManager;
         
     }];
     [LogInUser setUserisNow:NO];
-    [UserDefaults removeObjectForKey:KFirstFID];
+//    [UserDefaults removeObjectForKey:KFirstFID];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
@@ -440,7 +442,7 @@ BMKMapManager* _mapManager;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DLog(@"应用程序将要进入非活动状态，即将进入后台");
-    if (!([UserDefaults objectForKey:KFriendbadge]||[UserDefaults objectForKey:KMessagebadge])) {
+    if (!([LogInUser getNowLogInUser].newfriendbadge.integerValue||[LogInUser getNowLogInUser].homemessagebadge.integerValue)) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
     
@@ -481,8 +483,7 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    
-    if (!([UserDefaults objectForKey:KFriendbadge]||[UserDefaults objectForKey:KMessagebadge])) {
+    if (!([LogInUser getNowLogInUser].newfriendbadge.integerValue||[LogInUser getNowLogInUser].homemessagebadge.integerValue)) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

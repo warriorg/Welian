@@ -716,12 +716,6 @@
 		F53356381A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F533563A1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
 		F533563B1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
-		F533B7B81A6139A000BC7978 /* BasicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F533B7B61A6139A000BC7978 /* BasicCell.m */; };
-		F533B7B91A6139A000BC7978 /* BasicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F533B7B61A6139A000BC7978 /* BasicCell.m */; };
-		F533B7BA1A6139A000BC7978 /* BasicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F533B7B61A6139A000BC7978 /* BasicCell.m */; };
-		F533B7BB1A6139A000BC7978 /* BasicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533B7B71A6139A000BC7978 /* BasicCell.xib */; };
-		F533B7BC1A6139A000BC7978 /* BasicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533B7B71A6139A000BC7978 /* BasicCell.xib */; };
-		F533B7BD1A6139A000BC7978 /* BasicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533B7B71A6139A000BC7978 /* BasicCell.xib */; };
 		F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
 		F534DAD71A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
 		F534DAD81A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
@@ -1623,6 +1617,12 @@
 		F55773251A5AB04200693279 /* login_guide4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557731B1A5AB04200693279 /* login_guide4@2x.png */; };
 		F55773261A5AB04200693279 /* login_guide4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557731B1A5AB04200693279 /* login_guide4@2x.png */; };
 		F55773271A5AB04200693279 /* login_guide4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557731B1A5AB04200693279 /* login_guide4@2x.png */; };
+		F557863B1A63749500630A46 /* BadgeBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55786391A63749500630A46 /* BadgeBaseCell.m */; };
+		F557863C1A63749500630A46 /* BadgeBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55786391A63749500630A46 /* BadgeBaseCell.m */; };
+		F557863D1A63749500630A46 /* BadgeBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55786391A63749500630A46 /* BadgeBaseCell.m */; };
+		F557863E1A63749500630A46 /* BadgeBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F557863A1A63749500630A46 /* BadgeBaseCell.xib */; };
+		F557863F1A63749500630A46 /* BadgeBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F557863A1A63749500630A46 /* BadgeBaseCell.xib */; };
+		F55786401A63749500630A46 /* BadgeBaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F557863A1A63749500630A46 /* BadgeBaseCell.xib */; };
 		F55ED9E71A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
 		F55ED9E81A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
 		F55ED9E91A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
@@ -4127,9 +4127,6 @@
 		F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add@2x.png"; sourceTree = "<group>"; };
 		F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add_already@2x.png"; sourceTree = "<group>"; };
 		F53356391A38291B000A15AC /* SigninPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SigninPlist.plist; sourceTree = "<group>"; };
-		F533B7B51A6139A000BC7978 /* BasicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicCell.h; sourceTree = "<group>"; };
-		F533B7B61A6139A000BC7978 /* BasicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicCell.m; sourceTree = "<group>"; };
-		F533B7B71A6139A000BC7978 /* BasicCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BasicCell.xib; sourceTree = "<group>"; };
 		F534DAD31A4E929500B6A725 /* InvestCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestCardCell.h; sourceTree = "<group>"; };
 		F534DAD41A4E929500B6A725 /* InvestCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestCardCell.m; sourceTree = "<group>"; };
 		F534DAD51A4E929500B6A725 /* InvestCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvestCardCell.xib; sourceTree = "<group>"; };
@@ -4247,6 +4244,10 @@
 		F55773191A5AB04200693279 /* login_guide2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_guide2@2x.png"; sourceTree = "<group>"; };
 		F557731A1A5AB04200693279 /* login_guide3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_guide3@2x.png"; sourceTree = "<group>"; };
 		F557731B1A5AB04200693279 /* login_guide4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_guide4@2x.png"; sourceTree = "<group>"; };
+		F55786381A63749500630A46 /* BadgeBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeBaseCell.h; sourceTree = "<group>"; };
+		F55786391A63749500630A46 /* BadgeBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeBaseCell.m; sourceTree = "<group>"; };
+		F557863A1A63749500630A46 /* BadgeBaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeBaseCell.xib; sourceTree = "<group>"; };
+		F55786411A639CA000630A46 /* weLian1.1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.5.xcdatamodel; sourceTree = "<group>"; };
 		F55ED9E51A58D7BB00C4AB93 /* BasicPlainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPlainTableViewController.h; sourceTree = "<group>"; };
 		F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicPlainTableViewController.m; sourceTree = "<group>"; };
 		F55ED9EA1A58D7D600C4AB93 /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
@@ -6109,9 +6110,9 @@
 				F5239B8B19F6409C00D9E696 /* StaurCell.xib */,
 				A40356181A5D5B7E006AE52C /* BaseTableViewCell.h */,
 				A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */,
-				F533B7B51A6139A000BC7978 /* BasicCell.h */,
-				F533B7B61A6139A000BC7978 /* BasicCell.m */,
-				F533B7B71A6139A000BC7978 /* BasicCell.xib */,
+				F55786381A63749500630A46 /* BadgeBaseCell.h */,
+				F55786391A63749500630A46 /* BadgeBaseCell.m */,
+				F557863A1A63749500630A46 /* BadgeBaseCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8165,7 +8166,6 @@
 				A4C143691A4C0A6B00C9BAB5 /* avator@2x.png in Resources */,
 				F5C778CE1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */,
 				F53DC4C71A49192600F5F712 /* common_card_background@2x.png in Resources */,
-				F533B7BD1A6139A000BC7978 /* BasicCell.xib in Resources */,
 				F53DC4C81A49192600F5F712 /* home_new_picture@2x.png in Resources */,
 				F53DC4C91A49192600F5F712 /* me_myfriend_star_s@2x.png in Resources */,
 				A4C1435D1A4C0A6B00C9BAB5 /* weChatBubble_Receiving_Cavern@2x.png in Resources */,
@@ -8200,6 +8200,7 @@
 				A4C1448B1A4C3EC600C9BAB5 /* circle_chat_bg_blue@2x.png in Resources */,
 				F53DC4E21A49192600F5F712 /* home_repost_cancel_bg@2x.png in Resources */,
 				A4C143FF1A4C0A6B00C9BAB5 /* face_HL@2x.png in Resources */,
+				F55786401A63749500630A46 /* BadgeBaseCell.xib in Resources */,
 				F58CA9651A5BF3AE00988A61 /* leida4@2x.png in Resources */,
 				F53DC4E31A49192600F5F712 /* InvestorUserCell.xib in Resources */,
 				F53DC4E41A49192600F5F712 /* Expression_42@2x.png in Resources */,
@@ -8462,6 +8463,7 @@
 				F5664A9B1A2AFD56008A5830 /* Icon-60@3x.png in Resources */,
 				F5664A9C1A2AFD56008A5830 /* PioneerPlist.plist in Resources */,
 				F5664A9D1A2AFD56008A5830 /* home_repost_friendcirle@2x.png in Resources */,
+				F557863E1A63749500630A46 /* BadgeBaseCell.xib in Resources */,
 				F5664A9E1A2AFD56008A5830 /* sns_icon_23@2x.png in Resources */,
 				A4C143821A4C0A6B00C9BAB5 /* section0_emotion1@2x.png in Resources */,
 				F5664A9F1A2AFD56008A5830 /* Expression_75@2x.png in Resources */,
@@ -8971,7 +8973,6 @@
 				F5664C011A2AFD56008A5830 /* Expression_44@2x.png in Resources */,
 				F5664C021A2AFD56008A5830 /* Expression_16@2x.png in Resources */,
 				A4C144091A4C0A6B00C9BAB5 /* multiMedia_HL@2x.png in Resources */,
-				F533B7BB1A6139A000BC7978 /* BasicCell.xib in Resources */,
 				F5664C031A2AFD56008A5830 /* icon_session-8.png in Resources */,
 				F5664C041A2AFD56008A5830 /* yellowbutton@2x.png in Resources */,
 				F569A7FF1A31919900B677B0 /* Storyboard.storyboard in Resources */,
@@ -9408,7 +9409,6 @@
 				A4C143681A4C0A6B00C9BAB5 /* avator@2x.png in Resources */,
 				F5C778CD1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */,
 				F5664E371A2AFDD5008A5830 /* common_card_background@2x.png in Resources */,
-				F533B7BC1A6139A000BC7978 /* BasicCell.xib in Resources */,
 				F5664E381A2AFDD5008A5830 /* home_new_picture@2x.png in Resources */,
 				F5664E391A2AFDD5008A5830 /* me_myfriend_star_s@2x.png in Resources */,
 				A4C1435C1A4C0A6B00C9BAB5 /* weChatBubble_Receiving_Cavern@2x.png in Resources */,
@@ -9443,6 +9443,7 @@
 				A4C1448A1A4C3EC600C9BAB5 /* circle_chat_bg_blue@2x.png in Resources */,
 				F5664E4E1A2AFDD5008A5830 /* home_repost_cancel_bg@2x.png in Resources */,
 				A4C143FE1A4C0A6B00C9BAB5 /* face_HL@2x.png in Resources */,
+				F557863F1A63749500630A46 /* BadgeBaseCell.xib in Resources */,
 				F58CA9641A5BF3AE00988A61 /* leida4@2x.png in Resources */,
 				F5664E511A2AFDD5008A5830 /* InvestorUserCell.xib in Resources */,
 				F5664E521A2AFDD5008A5830 /* Expression_42@2x.png in Resources */,
@@ -9734,7 +9735,6 @@
 				F534DAFE1A4F1BB100B6A725 /* AddCaseCell.m in Sources */,
 				F53DC2C21A49192600F5F712 /* NavViewController.m in Sources */,
 				A48CA6B21A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
-				F533B7BA1A6139A000BC7978 /* BasicCell.m in Sources */,
 				F53DC2C31A49192600F5F712 /* FriendsUserModel.m in Sources */,
 				F53DC2C41A49192600F5F712 /* FriendCell.m in Sources */,
 				F53DC2C51A49192600F5F712 /* SWUtilityButtonView.m in Sources */,
@@ -9856,6 +9856,7 @@
 				A4C140851A4BEA8500C9BAB5 /* UIScrollView+XHkeyboardControl.m in Sources */,
 				A4C140821A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F53DC3161A49192600F5F712 /* WLPhotoView.m in Sources */,
+				F557863D1A63749500630A46 /* BadgeBaseCell.m in Sources */,
 				F58CA9701A5CE3CD00988A61 /* BindingPhoneController.m in Sources */,
 				F53DC3171A49192600F5F712 /* BaseModel.m in Sources */,
 				F53DC3181A49192600F5F712 /* UIView+MJExtension.m in Sources */,
@@ -10132,7 +10133,6 @@
 				F566499D1A2AFD56008A5830 /* FriendsUserModel.m in Sources */,
 				A4C1408C1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
 				F566499E1A2AFD56008A5830 /* FriendCell.m in Sources */,
-				F533B7B81A6139A000BC7978 /* BasicCell.m in Sources */,
 				F566499F1A2AFD56008A5830 /* SWUtilityButtonView.m in Sources */,
 				F56649A01A2AFD56008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				F56649A11A2AFD56008A5830 /* CTAssetsViewController.m in Sources */,
@@ -10254,6 +10254,7 @@
 				F59E760B1A405D170028FBAF /* weLian.xcdatamodeld in Sources */,
 				F56649EE1A2AFD56008A5830 /* MJPhotoLoadingView.m in Sources */,
 				F56649EF1A2AFD56008A5830 /* InvestorController.m in Sources */,
+				F557863B1A63749500630A46 /* BadgeBaseCell.m in Sources */,
 				F58CA96E1A5CE3CD00988A61 /* BindingPhoneController.m in Sources */,
 				F56649F01A2AFD56008A5830 /* MJPhotoView.m in Sources */,
 				A4C1408F1A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m in Sources */,
@@ -10530,7 +10531,6 @@
 				F534DAFD1A4F1BB100B6A725 /* AddCaseCell.m in Sources */,
 				F5664C561A2AFDD5008A5830 /* NavViewController.m in Sources */,
 				A48CA6B11A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
-				F533B7B91A6139A000BC7978 /* BasicCell.m in Sources */,
 				F5664C571A2AFDD5008A5830 /* FriendsUserModel.m in Sources */,
 				F5664C581A2AFDD5008A5830 /* FriendCell.m in Sources */,
 				F5664C591A2AFDD5008A5830 /* SWUtilityButtonView.m in Sources */,
@@ -10652,6 +10652,7 @@
 				A4C140841A4BEA8500C9BAB5 /* UIScrollView+XHkeyboardControl.m in Sources */,
 				A4C140811A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F5664CA51A2AFDD5008A5830 /* WLPhotoView.m in Sources */,
+				F557863C1A63749500630A46 /* BadgeBaseCell.m in Sources */,
 				F58CA96F1A5CE3CD00988A61 /* BindingPhoneController.m in Sources */,
 				F59E75F11A4059D00028FBAF /* BaseModel.m in Sources */,
 				F5664CA61A2AFDD5008A5830 /* UIView+MJExtension.m in Sources */,
@@ -11499,13 +11500,14 @@
 			isa = XCVersionGroup;
 			children = (
 				A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */,
+				F55786411A639CA000630A46 /* weLian1.1.5.xcdatamodel */,
 				A47C5F5F1A5EB37C00E63737 /* weLian1.1.3.xcdatamodel */,
 				A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */,
 				F53D4DF91A4A71B600CA06C8 /* weLian1.1.xcdatamodel */,
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */;
+			currentVersion = F55786411A639CA000630A46 /* weLian1.1.5.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

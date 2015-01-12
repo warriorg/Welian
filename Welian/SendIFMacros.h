@@ -97,16 +97,16 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KNEWStustUpdate  @"KNEWStustUpdate"
 
 // 首页动态更新个数
-#define KNewStaustbadge @"KNewStaustbadge"
+//#define KNewStaustbadge @"KNewStaustbadge"
 
 // 首页消息通知
 #define KMessageHomeNotif @"KMessageHomeNotif"
 
 // 首页消息提示个数
-#define KMessagebadge @"KMessagebadge"
+//#define KMessagebadge @"KMessagebadge"
 
 // 好友页新好友提示个数
-#define KFriendbadge @"KFriendbadge"
+//#define KFriendbadge @"KFriendbadge"
 
 // 新好友通知
 #define KNewFriendNotif @"KNewFriendNotif"
@@ -141,7 +141,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 
 // 第一条微博fid
-#define KFirstFID @"firstFid"
+//#define KFirstFID @"firstFid"
 
 // 主色透明效果
 #define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.98]

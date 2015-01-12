@@ -12,6 +12,7 @@
 #import "TOWebViewController.h"
 #import "InvestorUsersListController.h"
 #import "ActivityViewController.h"
+#import "BadgeBaseCell.h"
 
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
 {
@@ -22,6 +23,7 @@
 
 @end
 
+static NSString *CellIdentifier = @"BadgeBaseCellid";
 @implementation FindViewController
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,6 +77,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setSectionFooterHeight:0.0];
     [self.tableView  setSectionHeaderHeight:15.0];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BadgeBaseCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:self.tableView];
 }
 
@@ -102,18 +105,30 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
+    BadgeBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
-    
     // 2.设置文字
-    cell.textLabel.text = dict[@"name"];
-    [cell.imageView setImage:[UIImage imageNamed:dict[@"icon"]]];
+    cell.titLabel.text = dict[@"name"];
+    [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
+    LogInUser *meinfo = [LogInUser getNowLogInUser];
+    if (indexPath.section==0) {
+        if (indexPath.row==1) {
+            if (meinfo.activecount.integerValue) {
+                [cell.deputLabel setHidden:NO];
+                [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
+            }
+            if (meinfo.isactivebadge.boolValue) {
+                [cell.badgeImage setHidden:NO];
+            }
+        }
+    }else if (indexPath.section==1){
+        if (meinfo.investorcount.integerValue) {
+            [cell.deputLabel setHidden:NO];
+            [cell.deputLabel setText:[NSString stringWithFormat:@"%@位已认证投资人",meinfo.investorcount]];
+        }
+    }
     return cell;
 }
 

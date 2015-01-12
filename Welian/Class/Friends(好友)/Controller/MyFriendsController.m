@@ -280,7 +280,8 @@ static NSString *fridcellid = @"fridcellid";
             NewFriendViewController *newFriendVC = [[NewFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:newFriendVC animated:YES];
             [self.navigationController.tabBarItem setBadgeValue:nil];
-            [UserDefaults removeObjectForKey:KFriendbadge];
+            [LogInUser setUserNewfriendbadge:@(0)];
+//            [UserDefaults removeObjectForKey:KFriendbadge];
         }
             break;
         case 1:
@@ -318,7 +319,7 @@ static NSString *fridcellid = @"fridcellid";
                 cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
             }
             cell.segementedControl.delegate = self;
-            NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]];
+            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge];
             cell.segementedControl.bridges = @[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"];
             return cell;
         }else{

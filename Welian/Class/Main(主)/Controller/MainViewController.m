@@ -101,12 +101,15 @@ single_implementation(MainViewController)
 - (void)loadNewStustupdata
 {
     LogInUser *mode = [LogInUser getNowLogInUser];
-    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile) {
-        NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
+    if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
-        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
+        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":mode.firststustid} success:^(id JSON) {
             NSNumber *count = [JSON objectForKey:@"count"];
-            [UserDefaults setInteger:[count integerValue] forKey:KNewStaustbadge];
+            NSNumber *activecount = [JSON objectForKey:@"activecount"];
+            NSNumber *investorcount = [JSON objectForKey:@"investorcount"];
+            [LogInUser setUserNewstustcount:count];
+            [LogInUser setUserActivecount:activecount];
+            [LogInUser setUserInvestorcount:investorcount];
             [self updataItembadge];
         } fail:^(NSError *error) {
             
@@ -119,7 +122,7 @@ single_implementation(MainViewController)
 - (void)updataItembadge
 {
     // 首页
-    if ([UserDefaults integerForKey:KNewStaustbadge]&&![UserDefaults objectForKey:KMessagebadge]) {
+    if ([LogInUser getNowLogInUser].newstustcount.integerValue &&![LogInUser getNowLogInUser].homemessagebadge.integerValue) {
         [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -127,8 +130,8 @@ single_implementation(MainViewController)
         [self.navTitleView hidePrompt];
         [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
         [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
-        if ([UserDefaults objectForKey:KMessagebadge]) {
-            NSString *badgeStr = [UserDefaults objectForKey:KMessagebadge];
+        if ([LogInUser getNowLogInUser].homemessagebadge.integerValue) {
+            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].homemessagebadge];
             [homeItem setBadgeValue:badgeStr];
         }
     }
@@ -215,7 +218,11 @@ single_implementation(MainViewController)
     
     // 好友
     circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
-    [circleItem setBadgeValue:[UserDefaults objectForKey:KFriendbadge]];
+    if ([LogInUser getNowLogInUser].newfriendbadge.integerValue) {
+        
+        [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge]];
+    }
+//    [circleItem setBadgeValue:[UserDefaults objectForKey:KFriendbadge]];
     
     MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
@@ -262,7 +269,7 @@ single_implementation(MainViewController)
 
 - (void)newFriendPuthMessga
 {
-    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]];
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge];
     [circleItem setBadgeValue:badgeStr];
 }
 

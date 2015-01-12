@@ -85,8 +85,9 @@
     // 1.第一条微博的ID
     WLStatusFrame *f = [_dataArry firstObject];
     NSString *start = [NSString stringWithFormat:@"%d",f.status.fid];
-    [UserDefaults setObject:start forKey:KFirstFID];
-    [UserDefaults synchronize];
+    [LogInUser setUserFirststustid:@(f.status.fid)];
+//    [UserDefaults setObject:start forKey:KFirstFID];
+//    [UserDefaults synchronize];
 }
 
 
@@ -122,7 +123,8 @@
                 [self.homeView setHidden:YES];
             }
         }
-        [UserDefaults setInteger:0 forKey:KNewStaustbadge];
+        [LogInUser setUserNewstustcount:@(0)];
+//        [UserDefaults setInteger:0 forKey:KNewStaustbadge];
         [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
 
@@ -249,7 +251,7 @@
 #pragma mark - 来了新消息
 - (void)messageHomenotif
 {
-    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].homemessagebadge];
     [self.navigationItem.leftBarButtonItem setBadgeValue:badgeStr];
     [[MainViewController sharedMainViewController] updataItembadge];
 }
@@ -272,9 +274,9 @@
         UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = navLeftButton;
         self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor redColor];
-        NSInteger badge = [[UserDefaults objectForKey:KMessagebadge] integerValue];
+        NSInteger badge = [[LogInUser getNowLogInUser].homemessagebadge integerValue];
         if (badge>0) {
-            self.navigationItem.leftBarButtonItem.badgeValue = [UserDefaults objectForKey:KMessagebadge];
+            self.navigationItem.leftBarButtonItem.badgeValue = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].homemessagebadge];
         }
     }
     // 背景颜色
@@ -287,7 +289,7 @@
 - (void)messageButtonPress:(id)sender
 {
     BOOL isAllMessage = YES;
-    if ([UserDefaults objectForKey:KMessagebadge]) {
+    if ([LogInUser getNowLogInUser].homemessagebadge.integerValue) {
         isAllMessage = NO;
     }
     
