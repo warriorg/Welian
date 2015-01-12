@@ -39,46 +39,27 @@
             <li class="loading">
                 <img src="http://welianfed.oss-cn-hangzhou.aliyuncs.com/app/loading.png">
             </li>
-            <li class="item" ng-repeat="act in currentList" ng-click="goToDetail()">
+            <li class="item" ng-repeat="act in activityList" ng-click="goToDetail()" on-loop>
                 <figure>
                     <img ng-src="{{act.pic_url}}">
                     <p>已报名</p>
                 </figure>
-                <div class="title">
-                    <h3>{{act.title}}</h3>
-                </div>
-                <div class="info">
-                    <time datatime="{{act.start_time}}">
-                        <span class="fa fa-clock-o"></span>
-                        <span class="date">{{act.date}}</span>
-                        <span>{{act.week}}</span>
-                    </time>
-                    <address>
-                        <span class="fa fa-map-marker"></span>{{act.city_name}}
-                    </address>
-                    <span class="entry" ng-if="act.isNotFull"><label>{{act.join}}</label>报名</span>
-                    <span class="entry" ng-if="act.isFull">已报满</span>
-                </div>
-            </li>
-            <li class="item history" ng-repeat="act in historyList" on-loop ng-click="goToDetail()">
-                <figure>
-                    <img ng-src="{{act.pic_url}}">
-                    <p>已报名</p>
-                </figure>
-                <div class="title">
-                    <h3>{{act.title}}</h3>
-                </div>
-                <div class="info">
-                    <time datatime="{{act.start_time}}">
-                        <span class="fa fa-clock-o"></span>
-                        <span class="date">{{act.date}}</span>
-                        <span>{{act.week}}</span>
-                    </time>
-                    <address>
-                        <span class="fa fa-map-marker"></span>{{act.city_name}}
-                    </address>
-                    <span class="entry" ng-if="act.isNotFull"><label>{{act.join}}</label>报名</span>
-                    <span class="entry" ng-if="act.isFull">已报满</span>
+                <div class="right">
+                    <div class="title">
+                        <h3>{{act.title}}</h3>
+                    </div>
+                    <div class="right">
+                        <div class="title">
+                            <h3>{{act.title}}</h3>
+                        </div>
+                        <div class="info">
+                            <label class="time"><span class="fa fa-clock-o"></span><i>{{act.date}}</i><span>{{act.week}}</span>
+                            </label>
+                            <label class="city"><span class="fa fa-map-marker"></span>{{act.city_name}}</label>
+                            <label class="entry"><span ng-if="act.isNotFull"><i>{{act.join}}</i>报名</span><span ng-if="act.isFull">已报满</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </li>
         </ul>

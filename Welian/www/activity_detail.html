@@ -55,48 +55,48 @@
         <div class="entry-button J_Status">
             <button id="J_EntryButton" ng-click="sign()">我要报名</button>
         </div>
-        <div class="ticket J_TicketView" ng-if="isBuy">
-            <div class="top" check="up" ng-click="showTickets()">查看我的门票<span class="fa fa-angle-double-up"></span>
-            </div>
-            <ul class="buy-list">
-                <li class="card" ng-repeat="t in buyTickets" on-loop>
-                    <div class="left">
-                        <div class="card-left"></div>
-                        <div class="card-center">
-                            <div class="type">
-                                <h4>{{t.name}}</h4>
-                                <p>{{t.intro}}</p>
+        <div ng-if="detail.ticket_type == 1">
+            <div class="ticket J_TicketView" ng-if="isBuy">
+                <div class="top" check="up" ng-click="showTickets()">查看我的门票<span class="fa fa-angle-double-up"></span>
+                </div>
+                <ul class="buy-list">
+                    <li class="card" ng-repeat="t in buyTickets" on-loop>
+                        <div class="left">
+                            <div class="card-left"></div>
+                            <div class="card-center">
+                                <div class="type">
+                                    <h4>{{t.name}}</h4>
+                                    <p>{{t.intro}}</p>
+                                </div>
+                                <div class="price">
+                                    <span>{{t.price}}</span><span>元</span>
+                                </div>
                             </div>
-                            <div class="price">
-                                <span>{{t.price}}</span><span>元</span>
-                            </div>
+                            <div class="card-right"></div>
                         </div>
-                        <div class="card-right"></div>
-                    </div>
-                    <div class="right">×{{t.num}}</div>
-                </li>
-            </ul>
-        </div>
-        <div class="ticket J_TicketView" ng-if="isNew">
-            <div class="top" check="up" ng-click="showTickets()">选择门票种类<span class="fa fa-angle-double-up"></span>
+                        <div class="right">×{{t.num}}</div>
+                    </li>
+                </ul>
             </div>
-            <ul class="list">
-                <li ng-repeat="t in newTickets" on-loop>
-                    <div class="type">
-                        <h4>{{t.name}}</h4>
-                        <p>{{t.intro}}</p>
-                    </div>
-                    <div class="num">
-                        <span ng-click="minus()"><i class="fa fa-minus"></i></span><span>{{t.num}}</span><span ng-click="plus()"><i class="fa fa-plus"></i></span>
-                    </div>
-                    <div class="price">
-                        <span>{{t.price}}</span><span>元</span>
-                    </div>
-                </li>
-                <li ng-if="isNoticket">
-                    门票已经售罄。
-                </li>
-            </ul>
+            <div class="ticket J_TicketView" ng-if="isNew">
+                <div class="top" check="up" ng-click="showTickets()">选择门票种类<span class="fa fa-angle-double-up"></span>
+                </div>
+                <ul class="list">
+                    <li ng-repeat="t in newTickets" on-loop>
+                        <div class="type">
+                            <h4>{{t.name}}</h4>
+                            <p>{{t.intro}}</p>
+                        </div>
+                        <div class="num" ng-if="t.remain > 0">
+                            <span ng-click="minus()"><i class="fa fa-minus"></i></span><span>{{t.num}}</span><span ng-click="plus()"><i class="fa fa-plus"></i></span>
+                        </div>
+                        <div class="num" ng-if="t.remain == 0">已售罄</div>
+                        <div class="price">
+                            <span>{{t.price}}</span><span>元</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="dropback in J_TicketDropback"></div>
