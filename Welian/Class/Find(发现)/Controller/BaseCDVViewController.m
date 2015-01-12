@@ -20,6 +20,12 @@
 //    [self.webView setDebug:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [WLHUDView hiddenHud];
+}
+
 /**
  When web application loads Add stuff to the DOM, mainly the user-defined settings from the Settings.plist file, and
  the device's data such as device ID, platform version, etc.
@@ -39,7 +45,6 @@
     [super webViewDidFinishLoad:theWebView];
     [WLHUDView hiddenHud];
 }
-
 
 #pragma mark - Private
 //进入活动详情页面
