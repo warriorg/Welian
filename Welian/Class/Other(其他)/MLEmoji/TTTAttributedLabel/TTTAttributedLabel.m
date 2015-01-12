@@ -744,8 +744,8 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, rect);
     CTFrameRef frame = CTFramesetterCreateFrame(framesetter, textRange, path, NULL);
-
-    [self drawBackground:frame inRect:rect context:c];
+    //画阴影
+//    [self drawBackground:frame inRect:rect context:c];
 
     CFArrayRef lines = CTFrameGetLines(frame);
     NSInteger numberOfLines = self.numberOfLines > 0 ? MIN(self.numberOfLines, CFArrayGetCount(lines)) : CFArrayGetCount(lines);

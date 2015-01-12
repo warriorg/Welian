@@ -427,6 +427,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
                 [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:tapGestureRecognizer];
                 break;
             }
+            case WLBubbleMessageMediaTypeActivity://活动
             case WLBubbleMessageMediaTypeText:
             case WLBubbleMessageMediaTypeVoice: {
                 self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];

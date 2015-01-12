@@ -100,6 +100,7 @@
 + (CGSize)getBubbleFrameWithMessage:(id <WLMessageModel>)message {
     CGSize bubbleSize;
     switch (message.messageMediaType) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText: {
             bubbleSize = [WLMessageBubbleView neededSizeForText:message.text];
             break;
@@ -193,6 +194,7 @@
                 _voiceUnreadDotImageView.hidden = NO;
             }
         }
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
         case WLBubbleMessageMediaTypeEmotion: {
             _bubbleImageView.image = [WLMessageBubbleFactory bubbleImageViewForType:message.bubbleMessageType style:WLBubbleImageViewStyleWeChat meidaType:message.messageMediaType];
@@ -258,6 +260,7 @@
 
 - (void)configureMessageDisplayMediaWithMessage:(id <WLMessageModel>)message {
     switch (message.messageMediaType) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             // 设置表情
 //            _displayLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -464,6 +467,7 @@
     [self resetActivityIndicatorViewWithBubbleFrame:bubbleFrame];
     
     switch (currentType) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
         case WLBubbleMessageMediaTypeVoice:
         case WLBubbleMessageMediaTypeEmotion: {

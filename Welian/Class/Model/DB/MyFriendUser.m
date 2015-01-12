@@ -120,7 +120,7 @@
 // 所有好友
 + (NSArray *)getAllMyFriendUsers
 {
-     return  [[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results];
+     return  [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" greaterThan:@"100"] results];
 }
 
 

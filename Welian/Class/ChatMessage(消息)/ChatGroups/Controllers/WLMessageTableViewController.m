@@ -139,6 +139,7 @@ static CGPoint  delayOffset = {0.0};
 #pragma mark - Messages View Controller
 - (void)finishSendMessageWithBubbleMessageType:(WLBubbleMessageMediaType)mediaType {
     switch (mediaType) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText: {
             [self.messageInputView.inputTextView setText:nil];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {

@@ -513,8 +513,11 @@
                         [newFuser updateOperateType:0];
                     }
                     
-                    //不包含，删除当前数据
-                    [myFriendUser delete];
+                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+                    if(myFriendUser.uid.integerValue > 100){
+                        //不包含，删除当前数据
+                        [myFriendUser delete];
+                    }
                 }
             }
             

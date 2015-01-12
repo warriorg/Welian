@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, WLBubbleMessageMediaType) {
     WLBubbleMessageMediaTypeEmotion = 4,
     WLBubbleMessageMediaTypeLocalPosition = 5,
     
+    WLBubbleMessageMediaTypeActivity = 50,//系统发送的活动通知消息，展示方式和普通问题展示一样
     WLBubbleMessageSpecialTypeText = 100,   //特殊消息提醒类型
 };
 
