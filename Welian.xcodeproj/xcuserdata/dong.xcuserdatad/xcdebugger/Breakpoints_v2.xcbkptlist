@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Welian/AppDelegate.mm"
-            timestampString = "442742716.493544"
+            timestampString = "442748960.68098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "-inceptMessage:"
             landmarkType = "5">
          </BreakpointContent>

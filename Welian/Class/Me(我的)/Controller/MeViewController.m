@@ -15,6 +15,7 @@
 #import "HomeController.h"
 #import "InvestCerVC.h"
 #import "BadgeBaseCell.h"
+#import "MainViewController.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -42,13 +43,18 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [KNSNotification addObserver:self selector:@selector(reloadInvestorstate) name:KInvestorstateNotif object:nil];
     // 2.读取plist文件的内容
     [self loadPlist];
     
     // 3.设置tableView属性
     [self buildTableView];
-    
+}
+
+// 刷新我是投资人角标
+- (void)reloadInvestorstate
+{
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)buildTableView
@@ -82,12 +88,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+        LogInUser *mode = [LogInUser getNowLogInUser];
     if (indexPath.section==0) {
         MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
-        
-        LogInUser *mode = [LogInUser getNowLogInUser];
-        
         [cell.MyNameLabel setText:mode.name];
         [cell.deleLabel setText:[NSString stringWithFormat:@"%@    %@",mode.position,mode.company]];
         [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
@@ -101,7 +104,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
         if (indexPath.section==2) {
             [cell.deputLabel setHidden:NO];
-            [cell.badgeImage setHidden:NO];
+            [cell.badgeImage setHidden:!mode.isinvestorbadge.boolValue];
 //            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
             LogInUser *meinfo = [LogInUser getNowLogInUser];
             if (meinfo.investorauth.integerValue==1) {
@@ -152,10 +155,12 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     }else if (indexPath.section==2){
         controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
         [controller setTitle:@"我是投资人"];
-//        controller = [[CertificationController alloc] init];
-//        [controller setTitle:@"认证"];
         
-
+        // 取消我是投资人角标
+        [LogInUser setUserIsinvestorbadge:NO];
+        [[MainViewController sharedMainViewController] loadNewStustupdata];
+        [self reloadInvestorstate];
+        
     }else if (indexPath.section == 3){
         controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
     }

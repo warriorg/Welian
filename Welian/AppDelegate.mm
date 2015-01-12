@@ -307,7 +307,7 @@ BMKMapManager* _mapManager;
         badge++;
         [LogInUser setUserHomemessagebadge:@(badge)];
 //        [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
-        [[NSNotificationCenter defaultCenter] postNotificationName:KMessageHomeNotif object:self];
+        [KNSNotification postNotificationName:KMessageHomeNotif object:self];
         
     }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){
         
@@ -323,10 +323,12 @@ BMKMapManager* _mapManager;
         [self logout];
     }else if ([type isEqualToString:@"activeCommand"]){  // 活动推荐
         
-        
+        [LogInUser setUserIsactivebadge:YES];
+        [KNSNotification postNotificationName:KNewactivitNotif object:self];
     }else if ([type isEqualToString:@"investorResult"]){  // 后台认证投资人
         
         [LogInUser setUserinvestorauth:[dataDic objectForKey:@"result"]];
+        [KNSNotification postNotificationName:KInvestorstateNotif object:self];
     }
 }
 
