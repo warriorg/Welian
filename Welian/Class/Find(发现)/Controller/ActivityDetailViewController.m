@@ -32,14 +32,14 @@
     _shareFriendCircle = nil;
 }
 
-- (instancetype)initWithShareDic:(NSDictionary *)dict{
-    self = [super init];
-    if (self) {
-        self.shareFriend = dict[@"friend"];
-        self.shareFriendCircle = dict[@"friendCircle"];
-    }
-    return self;
-}
+//- (instancetype)initWithShareDic:(NSDictionary *)dict{
+//    self = [super init];
+//    if (self) {
+//        self.shareFriend = dict[@"friend"];
+//        self.shareFriendCircle = dict[@"friendCircle"];
+//    }
+//    return self;
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -58,13 +58,21 @@
     // Do any additional setup after loading the view.
     self.title = @"活动详情";
     
-    //添加分享按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStyleDone target:self action:@selector(shareActivity)];//[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(shareActivity)];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//可以调用分享
+- (void)canShareWithInfo:(NSDictionary *)dict
+{
+    self.shareFriend = dict[@"friend"];
+    self.shareFriendCircle = dict[@"friendCircle"];
+    //添加分享按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStyleDone target:self action:@selector(shareActivity)];//[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(shareActivity)];
 }
 
 //分享活动

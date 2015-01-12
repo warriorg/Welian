@@ -46,6 +46,9 @@ static NSString *cellIdentifier = @"frnewCellid";
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    //返回不取消接口调用
+    self.needlessCancel = YES;
+    
     //右侧添加按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加好友"
                                                                               style:UIBarButtonItemStylePlain
@@ -69,9 +72,11 @@ static NSString *cellIdentifier = @"frnewCellid";
     //加载数据
     self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getNowLogInUser] allMyNewFriends]];
     if (_datasource.count > 0) {
+        [_notView removeFromSuperview];
         [self.tableView reloadData];
     }else{
         [self.tableView addSubview:self.notView];
+        [self.tableView sendSubviewToBack:self.notView];
     }
 }
 

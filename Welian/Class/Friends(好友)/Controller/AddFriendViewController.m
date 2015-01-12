@@ -13,10 +13,13 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "WLTool.h"
+#import "UserInfoBasicVC.h"
+#import <MessageUI/MessageUI.h>
+#import "SEImageCache.h"
 
-@interface AddFriendViewController ()
+@interface AddFriendViewController ()<MFMessageComposeViewControllerDelegate>
 
-@property (strong, nonatomic)  NSArray *datasource;
+@property (strong, nonatomic)  NSMutableArray *datasource;
 @property (assign,nonatomic) UISegmentedControl *segmentedControl;
 @property (assign,nonatomic) NSInteger selectIndex;
 
@@ -70,6 +73,14 @@
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    //返回不取消接口调用
+    self.needlessCancel = YES;
+    
+    //更新所有待验证的消息为需要发送好友请求状态
+    if(_selectIndex == 0){
+        [[LogInUser getNowLogInUser] updateAllNeedAddFriendOperateStatus];
+    }
+    
     //添加title内容
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"手机联系人",@"微信好友"]];
     [segmentedControl addTarget:self action:@selector(segmentedControlChanged:) forControlEvents:UIControlEventValueChanged];
@@ -121,11 +132,16 @@
         cell = [[NewFriendViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    cell.indexPath = indexPath;
     if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
         //邀请好友
         cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
     }else{
         cell.needAddUser = _datasource[indexPath.row];
+        WEAKSELF
+        [cell setNeedAddBlock:^(NSInteger type,NeedAddUser *needAddUser,NSIndexPath *indexPath){
+            [weakSelf needAddClickedWith:type needAddUser:needAddUser indexPath:indexPath];
+        }];
     }
     
     return cell;
@@ -135,27 +151,60 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
-        LogInUser *mode = [LogInUser getNowLogInUser];
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:[UserDefaults objectForKey:@"icon"] options:NSDataBase64Encoding64CharacterLineLength];
-        
-        UIImage *shareImage = [UIImage imageWithData:data];
-        
-        NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
-        NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
-        
         //微信邀请
-        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:@""];
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_addButtonWithTitle:@"微信好友" handler:^{
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:nil WithScene:weChat];
+            [self shareWithType:0];
         }];
         [sheet bk_addButtonWithTitle:@"微信朋友圈" handler:^{
-            [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:shareImage WithScene:weChatFriend];
+            [self shareWithType:1];
         }];
         [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet showInView:self.view];
     }else{
-        
+        NeedAddUser *needAddUser = _datasource[indexPath.row];
+        if(needAddUser.friendship.integerValue != 0 || needAddUser.uid != nil){
+            //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+//            if (needAddUser.userType.integerValue == 1) {
+                //手机联系人
+                BOOL isask = YES;
+                if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
+                    isask = NO;
+                }
+                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
+                //    __weak NewFriendController *newFVC = self;
+                __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
+                WEAKSELF
+                userInfoVC.acceptFriendBlock = ^(){
+                    [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
+                    [weakUserInfoVC addSucceed];
+                };
+                [self.navigationController pushViewController:userInfoVC animated:YES];
+//            }else{
+//                //微信好友
+//                
+//            }
+        }else{
+            //邀请手机通讯录
+            if (needAddUser.userType.integerValue == 1) {
+                //手机联系人  发送短信邀请
+                [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+            }
+        }
     }
+}
+
+//分享到微信
+- (void)shareWithType:(NSInteger)type
+{
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
+    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:[NSURL URLWithString:mode.avatar] completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:image WithScene:type == 0 ? weChat : weChatFriend];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -172,9 +221,30 @@
     return 0.01f;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.f;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    if (_datasource.count > 0) {
+        NeedAddUser *needAddUser = _datasource[indexPath.row];
+        NSString *name = @"";
+        NSString *msg = @"";
+        if (needAddUser.userType.integerValue == 1) {
+            //手机联系人
+            name = needAddUser.friendship.integerValue == 0 ? needAddUser.name : needAddUser.wlname;
+            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",needAddUser.name];
+        }else{
+            //微信联系人
+            name = needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname;
+            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname];
+        }
+        return [NewFriendViewCell configureWithName:name message:msg];
+    }else{
+        return 60.f;
+    }
 }
 
 #pragma mark - Private
@@ -189,11 +259,23 @@
 {
     //刷新动画
 //    [self refreshAnimation];
-    //获取数据
-    [self getPhoneAllFriends];
-    
+    //先刷新页面
+    [self reloadUIData];
+    //调用接口
+    if (index == 0) {
+        //获取通讯录好友
+        [self getPhoneAllFriends];
+    }else{
+        //获取微信好友
+        [self getWxFriends];
+    }
+}
+
+//刷新页面数据
+- (void)reloadUIData
+{
     //获取通讯录好友
-    self.datasource = index == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
+    self.datasource = _segmentedControl.selectedSegmentIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
     if(_datasource.count == 0){
         if (index == 0) {
             [_weChatNotView removeFromSuperview];
@@ -251,14 +333,106 @@
             }
             
             [self.refreshControl endRefreshing];
+            [self reloadUIData];
             //切换到第一个
 //            [self changeDataWithIndex:0];
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [UIAlertView showWithError:error];
+//            [UIAlertView showWithError:error];
         }];
         
     });
+}
+
+//获取微信好友数据
+- (void)getWxFriends
+{
+    [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
+                                 success:^(id JSON) {
+                                     for (NSDictionary *dic in JSON) {
+                                         //保存到数据库
+                                         [NeedAddUser createNeedAddUserWithDict:dic withType:2];
+                                     }
+                                     [self.refreshControl endRefreshing];
+                                     [self reloadUIData];
+                                 } fail:^(NSError *error) {
+                                     [self.refreshControl endRefreshing];
+                                 }];
+}
+
+- (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
+{
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    if(type == 0){
+        //发送邀请
+        DLog(@"发送邀请");
+        if (needAddUser.userType.integerValue == 1) {
+            //手机联系人  发送短信邀请
+            [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+        }
+    }else if(type != 1){
+        //添加
+        DLog(@"添加好友");
+        //添加好友，发送添加成功，状态变成待验证
+        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",needAddUser.wlname]];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
+        [alert bk_addButtonWithTitle:@"取消" handler:nil];
+        [alert bk_addButtonWithTitle:@"发送" handler:^{
+            //发送好友请求
+            [WLHttpTool requestFriendParameterDic:@{@"fid":needAddUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+                //发送邀请成功，修改状态，刷新列表
+                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+                //改变数组，刷新列表
+                [_datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                //刷新列表
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+        }];
+        [alert show];
+    }
+}
+
+#pragma mark - 短信邀请
+- (void)showMessageView:(NSString *)phone title:(NSString *)title body:(NSString *)body
+{
+    [WLHUDView showCustomHUD:@"加载中..." imageview:nil];
+    MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+    controller.recipients = [NSArray arrayWithObject:phone];
+    controller.body = body;
+    controller.messageComposeDelegate = self;
+    [controller setTitle:title];//修改短信界面标题
+    [self presentViewController:controller animated:YES completion:^{
+        [WLHUDView hiddenHud];
+    }];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+        {
+            //click cancel button
+        }
+            break;
+        case MessageComposeResultFailed:// send failed
+            
+            break;
+        case MessageComposeResultSent:
+        {
+            //do something
+        }
+            break;
+        default:
+            break;
+    }
     
 }
 

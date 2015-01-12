@@ -28,6 +28,7 @@
 - (void)dealloc
 {
     _friendUser = nil;
+    _localMessages = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

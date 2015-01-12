@@ -72,4 +72,10 @@
     
 }
 
+//可以调用分享
+- (void)canShareWithInfo:(NSDictionary *)dict
+{
+    
+}
+
 @end

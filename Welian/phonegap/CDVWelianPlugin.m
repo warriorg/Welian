@@ -140,6 +140,18 @@
 }
 
 /**
+ * 返回分享内容
+ * @param aid 活动id
+ * @param msg 分享内容
+ */
+- (void)share:(CDVInvokedUrlCommand *)command
+{
+    DLog(@"share : %@",command.arguments);
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
+    [activityVC canShareWithInfo:[command.arguments[0] JSONValue]];
+}
+
+/**
  * 跳转订单页
  * @param aid 活动id
  */

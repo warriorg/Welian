@@ -19,10 +19,12 @@ typedef enum : NSUInteger {
 } FriendOperateType;
 
 typedef void(^newFriendOperateBlock)(FriendOperateType type,NewFriendUser *newFriendUser,NSIndexPath *indexPath);
+typedef void(^addFriendOperateBlock)(NSInteger type,NeedAddUser *needAddUser,NSIndexPath *indexPath);
 
 @interface NewFriendViewCell : BaseTableViewCell
 
 @property (strong, nonatomic) newFriendOperateBlock newFriendBlock;
+@property (strong, nonatomic) addFriendOperateBlock needAddBlock;
 
 @property (strong,nonatomic) NSIndexPath *indexPath;
 //通用的类型

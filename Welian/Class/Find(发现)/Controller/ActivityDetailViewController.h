@@ -10,6 +10,6 @@
 
 @interface ActivityDetailViewController : BaseCDVViewController
 
-- (instancetype)initWithShareDic:(NSDictionary *)dict;
+//- (instancetype)initWithShareDic:(NSDictionary *)dict;
 
 @end

@@ -47,6 +47,7 @@
     _newFriendBlock = nil;
     _userInfoModel = nil;
     _needAddUser = nil;
+    _needAddBlock = nil;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -98,6 +99,9 @@
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
     _operateBtn.hidden = NO;
+    //重置边框颜色
+    _operateBtn.layer.borderWidth = 0.f;
+    _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
     //控制按钮显示内容，和样式
     switch (_nFriendUser.operateType.integerValue) {
         case FriendOperateTypeAdd:
@@ -147,12 +151,23 @@
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_needAddUser.avatar]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    _nameLabel.text = _needAddUser.name;
-    _messageLabel.text = _needAddUser.wlname;
+    if (_needAddUser.userType.integerValue == 1) {
+        _nameLabel.text = _needAddUser.friendship.integerValue == 0 ? _needAddUser.name : _needAddUser.wlname;
+        //手机联系人
+        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",_needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",_needAddUser.name];
+    }else{
+        _nameLabel.text = _needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname;
+        //微信联系人
+        _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",_needAddUser.wlname.length > 0 ? _needAddUser.wlname : _needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",_needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname];
+    }
+    
     //是否是认证投资人
-    _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
+    _iconImageView.hidden = _needAddUser.investorauth.integerValue == 1 ? NO : YES;
     
     _operateBtn.hidden = NO;
+    //重置边框颜色
+    _operateBtn.layer.borderWidth = 0.f;
+    _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     switch (_needAddUser.friendship.integerValue) {
         case 0:
@@ -184,6 +199,13 @@
             [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
             break;
+        case 4:
+        {
+            [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+        }
+            break;
         default:
             break;
     }
@@ -200,7 +222,11 @@
     _iconImageView.bottom = _logoImageView.bottom;
     _iconImageView.right = _logoImageView.right;
     
-    _operateBtn.size = CGSizeMake(kButtonWidth, kButtonHeight);
+    [_operateBtn sizeToFit];
+    if (_operateBtn.width < kButtonWidth) {
+        _operateBtn.width = kButtonWidth;
+    }
+    _operateBtn.height = kButtonHeight;
     _operateBtn.right = self.width - kMarginLeft;
     _operateBtn.top = kMarginLeft;
     
@@ -266,6 +292,10 @@
     //新的好友操作
     if (_newFriendBlock) {
         _newFriendBlock(_nFriendUser.operateType.integerValue,_nFriendUser,_indexPath);
+    }
+    
+    if (_needAddBlock) {
+        _needAddBlock(_needAddUser.friendship.integerValue,_needAddUser,_indexPath);
     }
 }
 
