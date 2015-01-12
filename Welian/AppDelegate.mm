@@ -25,6 +25,7 @@
 #import "ChatMessage.h"
 #import "WLMessage.h"
 #import "MyFriendUser.h"
+#import "NeedAddUser.h"
 #import <ShareSDK/ShareSDK.h>
 #import "LoginGuideController.h"
 
@@ -342,6 +343,10 @@ BMKMapManager* _mapManager;
         
         //创建本地数据库好友
         MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
+        
+        //修改需要添加的用户的状态
+        NeedAddUser *needAddUser = [NeedAddUser getNeedAddUserWithUid:friendUser.uid];
+        [needAddUser updateFriendShip:1];
         
         //接受后，本地创建一条消息
         WLMessage *textMessage = [[WLMessage alloc] initWithText:[NSString stringWithFormat:@"我已经通过你的好友请求，现在我们可以开始聊聊创业那些事了"] sender:newfrendM.name timestamp:[NSDate date]];

@@ -30,7 +30,11 @@
 
 @implementation AddFriendViewController
 
-//手机通讯录授权提醒
+/**
+ *  手机通讯录授权提醒
+ *
+ *  @return 提醒内容页面
+ */
 - (NotstringView *)phoneNotView
 {
     if (!_phoneNotView) {
@@ -47,7 +51,11 @@
     return _phoneNotView;
 }
 
-//微信提醒
+/**
+ *  微信没有好友提醒
+ *
+ *  @return 提醒内容页面
+ */
 - (NotstringView *)weChatNotView
 {
     if (!_weChatNotView) {
@@ -190,19 +198,6 @@
     }
 }
 
-//分享到微信
-- (void)shareWithType:(NSInteger)type
-{
-    LogInUser *mode = [LogInUser getNowLogInUser];
-    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
-    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
-    [WLHUDView showHUDWithStr:@"" dim:NO];
-    [[SEImageCache sharedInstance] imageForURL:[NSURL URLWithString:mode.avatar] completionBlock:^(UIImage *image, NSError *error) {
-        [WLHUDView hiddenHud];
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:image WithScene:type == 0 ? weChat : weChatFriend];
-    }];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (_segmentedControl.selectedSegmentIndex == 1 && section > 0) {
@@ -230,11 +225,11 @@
         NSString *msg = @"";
         if (needAddUser.userType.integerValue == 1) {
             //手机联系人
-            name = needAddUser.friendship.integerValue == 0 ? needAddUser.name : needAddUser.wlname;
+            name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
             msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",needAddUser.name];
         }else{
             //微信联系人
-            name = needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname;
+            name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
             msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname];
         }
         return [NewFriendViewCell configureWithName:name message:msg];
@@ -250,7 +245,11 @@
     [self changeDataWithIndex:sender.selectedSegmentIndex];
 }
 
-//加载数据
+/**
+ *  切换加载的数据内容
+ *
+ *  @param index 获取数据的方式：0-手机联系人 1：微信联系人
+ */
 - (void)changeDataWithIndex:(NSInteger)index
 {
     //刷新动画
@@ -267,7 +266,9 @@
     }
 }
 
-//刷新页面数据
+/**
+ *  加载刷新页面数据
+ */
 - (void)reloadUIData
 {
     //获取通讯录好友
@@ -307,7 +308,9 @@
     });
 }
 
-//获取通讯录联系人
+/**
+ *  获取系统通讯录联系人列表数据
+ */
 - (void)getPhoneAllFriends
 {
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
@@ -337,7 +340,9 @@
     });
 }
 
-//获取微信好友数据
+/**
+ *  获取系统微信好友列表数据
+ */
 - (void)getWxFriends
 {
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
@@ -353,6 +358,13 @@
                                  }];
 }
 
+/**
+ *  需要添加的好友操作
+ *
+ *  @param type        操作类型
+ *  @param needAddUser 需要添加的好友
+ *  @param indexPath   当前操作对应的tableView
+ */
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
@@ -389,7 +401,31 @@
     }
 }
 
+/**
+ *  分享到微信
+ *
+ *  @param type 分享方式：0：微信好友、1：微信朋友圈
+ */
+- (void)shareWithType:(NSInteger)type
+{
+    LogInUser *mode = [LogInUser getNowLogInUser];
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
+    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:[NSURL URLWithString:mode.avatar] completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:image WithScene:type == 0 ? weChat : weChatFriend];
+    }];
+}
+
 #pragma mark - 短信邀请
+/**
+ *  短信邀请
+ *
+ *  @param phone 电话号码
+ *  @param title 标题
+ *  @param body  邀请的内容
+ */
 - (void)showMessageView:(NSString *)phone title:(NSString *)title body:(NSString *)body
 {
     [WLHUDView showCustomHUD:@"加载中..." imageview:nil];
