@@ -77,7 +77,7 @@
     self.searcher = searcher;
     
     BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
-    geoCodeSearchOption.city = _city;
+    geoCodeSearchOption.city = [_city isKindOfClass:[NSNull class]] ? @"" : _city;
     geoCodeSearchOption.address = _address;
     BOOL flag = [_searcher geoCode:geoCodeSearchOption];
     [WLHUDView showHUDWithStr:@"获取位置中..." dim:NO];

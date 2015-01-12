@@ -50,6 +50,12 @@
  */
 - (void)goToDetail:(CDVInvokedUrlCommand *)command;
 /**
+ * 返回分享内容
+ * @param aid 活动id
+ * @param msg 分享内容
+ */
+- (void)share:(CDVInvokedUrlCommand *)command;
+/**
  * 跳转订单页
  * @param aid 活动id
  */

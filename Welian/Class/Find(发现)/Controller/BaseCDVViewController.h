@@ -27,4 +27,7 @@
 //微信支付
 - (void)wechatPay;
 
+//可以调用分享
+- (void)canShareWithInfo:(NSDictionary *)dict;
+
 @end
