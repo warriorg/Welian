@@ -101,7 +101,7 @@ single_implementation(MainViewController)
 - (void)loadNewStustupdata
 {
     LogInUser *mode = [LogInUser getNowLogInUser];
-    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile&&mode.checkcode) {
+    if ([UserDefaults objectForKey:KFirstFID]&&mode.sessionid&&mode.mobile) {
         NSInteger fid = [[UserDefaults objectForKey:KFirstFID] integerValue];
         
         [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":@(fid)} success:^(id JSON) {

@@ -253,7 +253,7 @@
             wlStatusM = _statusFrame.status;
         }
         if (_commentFrame) {
-            wlStatusM = _statusFrame.status;
+            wlStatusM = _commentFrame.status;
         }
         
         if (wlStatusM) {

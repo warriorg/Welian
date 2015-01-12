@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign) BOOL isHideSendMsgBtn;//隐藏发送消息按钮
 
+// isask  表示是否别人请求加我为好友  
 - (instancetype)initWithStyle:(UITableViewStyle)style andUsermode:(IBaseUserM *)usermode isAsk:(BOOL)isask;
 
 - (void)addSucceed;

@@ -41,7 +41,7 @@ static NSString *itemscellid = @"itemscellid";
     [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
         IIMeInvestAuthModel *meInvestAuth = [IIMeInvestAuthModel objectWithDict:JSON];
         [LogInUser setUserUrl:meInvestAuth.url];
-        [LogInUser setuserAuth:meInvestAuth.auth];
+        [LogInUser setUserinvestorauth:meInvestAuth.auth];
         for (IInvestIndustryModel *industryM in meInvestAuth.industry) {
             [InvestIndustry createInvestIndustry:industryM];
         }
@@ -115,7 +115,7 @@ static NSString *itemscellid = @"itemscellid";
 
         InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:invcellid];
         
-        NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
+        NSInteger auth = [LogInUser getNowLogInUser].investorauth.integerValue;
         NSString *urlStr = [LogInUser getNowLogInUser].url;
         if (auth == 0) {  // 默认状态
             [cell.stateLabel setText:@"上传名片，成为认证投资人"];
@@ -130,7 +130,7 @@ static NSString *itemscellid = @"itemscellid";
             [cell.stateLabel setText:@"正在认证..."];
             
         }else if (auth ==-1){ // 认证失败
-            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelAuth)]];
+            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(anewAuth)]];
             [cell.stateLabel setText:@"认证失败"];
         }
         
@@ -180,31 +180,52 @@ static NSString *itemscellid = @"itemscellid";
     return nil;
 }
 
+// 撤销认证
 - (void)cancelAuth
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"撤销认证" otherButtonTitles:@"重新认证",nil];
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [sheet bk_setDestructiveButtonWithTitle:@"撤销认证" handler:^{
+        [[[UIAlertView alloc] initWithTitle:@"确认撤销认证？" message:@"撤销之后，如果要再次认证，需要重新提交名片。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil] show];
+    }];
+    [sheet bk_addButtonWithTitle:@"重新认证" handler:^{
+        [self choosePicture];
+    }];
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+    [sheet showInView:self.view];
+
+}
+
+// 重新认证
+- (void)anewAuth
+{
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:@""];
+    [sheet bk_addButtonWithTitle:@"重新认证" handler:^{
+        [self choosePicture];
+    }];
+
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     [sheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
-    if (auth == 0) {
-        [self clickSheet:buttonIndex];
-    }else{
-        if (buttonIndex ==0) {  // 取消认证
-            [[[UIAlertView alloc] initWithTitle:@"确认撤销认证？" message:@"撤销之后，如果要再次认证，需要重新提交名片。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil] show];
-        }else if (buttonIndex ==1){  // 重新认证
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
+//    if (auth == 0) {
+//        [self clickSheet:buttonIndex];
+//    }else{
+//        if (buttonIndex ==0) {  // 取消认证
+//            [[[UIAlertView alloc] initWithTitle:@"确认撤销认证？" message:@"撤销之后，如果要再次认证，需要重新提交名片。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil] show];
+//        }else if (buttonIndex ==1){  // 重新认证
 //            [self choosePicture];
-        }
-    }
-}
+//        }
+//    }
+//}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
         [WLHttpTool deleteInvestorParameterDic:@{} success:^(id JSON) {
-            [LogInUser setuserAuth:@(0)];
+            [LogInUser setUserinvestorauth:@(0)];
             [LogInUser setUserUrl:nil];
             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         } fail:^(NSError *error) {
@@ -223,7 +244,7 @@ static NSString *itemscellid = @"itemscellid";
     
     [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr,@"photoname":@"jpg"} success:^(id JSON) {
         NSString *url = [JSON objectForKey:@"url"];
-        [LogInUser setuserAuth:@(-2)];
+        [LogInUser setUserinvestorauth:@(-2)];
         [LogInUser setUserUrl:url];
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     } fail:^(NSError *error) {
@@ -308,7 +329,6 @@ static NSString *itemscellid = @"itemscellid";
     [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
         [item delete];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
-//        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationTop];
     } fail:^(NSError *error) {
         
     }];

@@ -13,6 +13,7 @@
 {
     UITextField *_searchTF;
     NSInteger _type;
+    UIView *_backdropView;
 }
 
 @property (nonatomic, retain) NSOperationQueue *searchQueue;
@@ -58,6 +59,9 @@
     if (self) {
         _type = type;
         [self.view setBackgroundColor:WLRGB(231, 234, 238)];
+        _backdropView = [[UIView alloc] initWithFrame:self.view.bounds];
+        [_backdropView setBackgroundColor:WLRGB(231, 234, 238)];
+        [self.view addSubview:_backdropView];
         NSString *placeholder = @"单位";
         NSString *imagename = @"login_gongsi";
         if (type ==2) {
@@ -66,20 +70,20 @@
         }
         UITextField *searchTF = [self addPerfectInfoTextfWithFrameY:CGRectMake(10, 30, SuperSize.width-10-60, 40) Placeholder:placeholder leftImageName:imagename];
         [searchTF addTarget:self action:@selector(searchTextFiled:) forControlEvents:UIControlEventEditingChanged];
-        [self.view addSubview:searchTF];
+        [_backdropView addSubview:searchTF];
         _searchTF = searchTF;
         
         UIButton *cancelBut = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width-60, 30, 60, 40)];
         [cancelBut setTitle:@"取消" forState:UIControlStateNormal];
         [cancelBut setTitleColor:WLRGB(52, 116, 186) forState:UIControlStateNormal];
         [cancelBut addTarget:self action:@selector(cancelVC) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:cancelBut];
-        [self.view addSubview:self.tableView];
+        [_backdropView addSubview:cancelBut];
+        [_backdropView addSubview:self.tableView];
         if (type==1) {
             
         }else if (type==2){
-            [self.view addSubview:self.postView];
-            [self.view insertSubview:self.tableView belowSubview:self.postView];
+            [_backdropView addSubview:self.postView];
+            [_backdropView insertSubview:self.tableView belowSubview:self.postView];
         }
 
         self.searchQueue = [[NSOperationQueue alloc] init];
@@ -116,7 +120,7 @@
         [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
             self.searchArray = JSON;
             [self.tableView reloadData];
-            [self.view insertSubview:self.postView belowSubview:self.tableView];
+            [_backdropView insertSubview:self.postView belowSubview:self.tableView];
         } fail:^(NSError *error) {
             
         }];
@@ -129,14 +133,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view setAlpha:0];
+    [_backdropView setAlpha:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [UIView animateWithDuration:0.25 animations:^{
-        [self.view setAlpha:1.0];
+        [_backdropView setAlpha:1.0];
     } completion:^(BOOL finished) {
         [_searchTF becomeFirstResponder];
     }];
@@ -230,7 +234,7 @@
 {
     [_searchTF resignFirstResponder];
     [UIView animateWithDuration:0.15 animations:^{
-        [self.view setAlpha:0];
+        [_backdropView setAlpha:0];
         
     } completion:^(BOOL finished) {
         [self dismissViewControllerAnimated:NO completion:^{

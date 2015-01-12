@@ -326,7 +326,7 @@ static NSString *fridcellid = @"fridcellid";
         [mainVC setSelectedIndex:1];
         [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
     }
-    [self dismissViewControllerAnimated:NO completion:^{
+    [self dismissViewControllerAnimated:YES completion:^{
         
     }];
 }

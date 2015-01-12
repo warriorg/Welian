@@ -62,6 +62,7 @@
     loginuser.company = userInfoM.company;
     loginuser.checkcode = userInfoM.checkcode;
     loginuser.sessionid = userInfoM.sessionid;
+    loginuser.inviteurl = userInfoM.inviteurl;
     loginuser.isNow = @(1);
     [MOC save];
     return loginuser;
@@ -187,11 +188,11 @@
     [MOC save];
 }
 
-+ (void)setuserAuth:(NSNumber *)auth
-{
-    [[LogInUser getNowLogInUser] setAuth:auth];
-    [MOC save];
-}
+//+ (void)setuserAuth:(NSNumber *)auth
+//{
+//    [[LogInUser getNowLogInUser] setAuth:auth];
+//    [MOC save];
+//}
 
 + (void)setUseropenid:(NSString *)openid
 {

@@ -133,19 +133,9 @@
                                        NSDictionary *dataDic = JSON;
                                        if (dataDic) {
                                            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-                                           
                                            //记录最后一次登陆的手机号
                                            SaveLoginMobile(mode.mobile);
-//                                               SaveLoginPassWD(_pwdTF.text);
-                                           
                                            [LogInUser createLogInUserModel:mode];
-                                           
-//                                           PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-//                                           [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-//                                           NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-//                                           [self presentViewController:nav animated:YES completion:^{
-//                                               
-//                                           }];
                                            
                                           // 进入主页面
                                            MainViewController *mainVC = [[MainViewController alloc] init];

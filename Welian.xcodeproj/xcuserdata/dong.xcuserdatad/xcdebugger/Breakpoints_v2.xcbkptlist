@@ -19,60 +19,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Login(&#x767b;&#x9646;)/Controller/BSearchFriendsController.m"
-            timestampString = "442480075.769406"
+            filePath = "Welian/Class/Main(&#x4e3b;)/Controller/MainViewController.m"
+            timestampString = "442576612.055602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-getaddressBook"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "-loadNewStustupdata"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__42-[BSearchFriendsController getaddressBook]_block_invoke_2"
-                  moduleName = "weLianAppDis"
-                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Login(%E7%99%BB%E9%99%86)/Controller/BSearchFriendsController.m"
-                  timestampString = "442487112.441809"
+                  symbolName = "-[MainViewController loadNewStustupdata]"
+                  moduleName = "weLianDev"
+                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Main(%E4%B8%BB)/Controller/MainViewController.m"
+                  timestampString = "442577361.983037"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "162"
-                  endingLineNumber = "162"
-                  offsetFromSymbolStart = "90">
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
+                  offsetFromSymbolStart = "638">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__42-[BSearchFriendsController getaddressBook]_block_invoke_3"
-                  moduleName = "weLianAppDis"
-                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Login(%E7%99%BB%E9%99%86)/Controller/BSearchFriendsController.m"
-                  timestampString = "442487112.442016"
+                  symbolName = "__40-[MainViewController loadNewStustupdata]_block_invoke"
+                  moduleName = "weLianDev"
+                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Main(%E4%B8%BB)/Controller/MainViewController.m"
+                  timestampString = "442577361.983179"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "162"
-                  endingLineNumber = "162"
-                  offsetFromSymbolStart = "54">
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
+                  offsetFromSymbolStart = "58">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Login(&#x767b;&#x9646;)/Controller/LoginGuideController.m"
-            timestampString = "442495931.182796"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-authButClickWexing"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
