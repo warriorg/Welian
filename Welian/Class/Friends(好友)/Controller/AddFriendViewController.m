@@ -94,8 +94,6 @@
     
     //默认加载的数据
     [self changeDataWithIndex:segmentedControl.selectedSegmentIndex];
-//    [self getaddressBook];
-    
 }
 
 #pragma mark - Table view data source
@@ -332,13 +330,10 @@
             
             [self.refreshControl endRefreshing];
             [self reloadUIData];
-            //切换到第一个
-//            [self changeDataWithIndex:0];
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
 //            [UIAlertView showWithError:error];
         }];
-        
     });
 }
 
@@ -418,14 +413,16 @@
         case MessageComposeResultCancelled:
         {
             //click cancel button
+            DLog(@"取消发送短信");
         }
             break;
         case MessageComposeResultFailed:// send failed
-            
+            DLog(@"短信发送失败");
             break;
         case MessageComposeResultSent:
         {
             //do something
+            DLog(@"短信发送成功");
         }
             break;
         default:

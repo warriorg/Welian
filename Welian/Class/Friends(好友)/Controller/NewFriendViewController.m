@@ -63,9 +63,6 @@ static NSString *cellIdentifier = @"frnewCellid";
     segementedControl.delegate = self;
     self.tableView.tableHeaderView = segementedControl;
     
-//    [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
-//    [self.tableView setBackgroundColor:IWGlobalBg];
-    
     //重新设置新的好友中待验证的状态
     [[LogInUser getNowLogInUser] updateAllNewFriendsOperateStatus];
 
@@ -110,7 +107,6 @@ static NSString *cellIdentifier = @"frnewCellid";
         isask = NO;
     }
     UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-//    __weak NewFriendController *newFVC = self;
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     WEAKSELF
     userInfoVC.acceptFriendBlock = ^(){

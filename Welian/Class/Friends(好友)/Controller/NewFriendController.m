@@ -133,7 +133,7 @@ static NSString *frnewCellid = @"frnewCellid";
     if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendCommand"]) {
         isask = NO;
     }
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendM isAsk:isask];
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
     __weak NewFriendController *newFVC = self;
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     userInfoVC.acceptFriendBlock = ^(){
