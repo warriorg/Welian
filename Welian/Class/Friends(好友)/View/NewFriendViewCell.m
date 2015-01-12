@@ -32,6 +32,9 @@
 
 @implementation NewFriendViewCell
 
+/**
+ *  cell重用，数据清空
+ */
 - (void)prepareForReuse
 {
     [super prepareForReuse];
@@ -59,6 +62,11 @@
     return self;
 }
 
+/**
+ *  设置通用对象的内容展示
+ *
+ *  @param userInfoModel 用户信息模型
+ */
 - (void)setUserInfoModel:(UserInfoModel *)userInfoModel
 {
     [super willChangeValueForKey:@"userInfoModel"];
@@ -74,6 +82,11 @@
     _iconImageView.hidden = _userInfoModel.investorauth.integerValue == 1 ? NO : YES;
 }
 
+/**
+ *  设置普通的自定义字典数据的数据展示
+ *
+ *  @param dicData 自定义数据
+ */
 - (void)setDicData:(NSDictionary *)dicData
 {
     [super willChangeValueForKey:@"dicData"];
@@ -85,6 +98,11 @@
     _messageLabel.text = @"";
 }
 
+/**
+ *  设置新的好友展示
+ *
+ *  @param nFriendUser 新的好友
+ */
 - (void)setNFriendUser:(NewFriendUser *)nFriendUser
 {
     [super willChangeValueForKey:@"nFriendUser"];
@@ -143,6 +161,11 @@
     }
 }
 
+/**
+ *  设置需要添加的好友的展示（手机、微信）
+ *
+ *  @param needAddUser 需要添加的好友
+ */
 - (void)setNeedAddUser:(NeedAddUser *)needAddUser
 {
     [super willChangeValueForKey:@"needAddUser"];
@@ -151,12 +174,10 @@
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_needAddUser.avatar]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    _nameLabel.text = _needAddUser.wlname.length > 0 ? _needAddUser.wlname : _needAddUser.name;
     if (_needAddUser.userType.integerValue == 1) {
-        _nameLabel.text = _needAddUser.friendship.integerValue == 0 ? _needAddUser.name : _needAddUser.wlname;
-        //手机联系人
         _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",_needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",_needAddUser.name];
     }else{
-        _nameLabel.text = _needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname;
         //微信联系人
         _messageLabel.text = _needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",_needAddUser.wlname.length > 0 ? _needAddUser.wlname : _needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",_needAddUser.name.length > 0 ? _needAddUser.name : _needAddUser.wlname];
     }
@@ -286,7 +307,11 @@
     self.operateBtn = operateBtn;
 }
 
-//好友关系操作
+/**
+ *  通过Block对点击的好友关系进行操作
+ *
+ *  @param sender 操作按钮
+ */
 - (void)operateBtnClicked:(UIButton *)sender
 {
     //新的好友操作
@@ -300,6 +325,14 @@
 }
 
 //返回cell的高度
+/**
+ *  计算自定义Cell的高度
+ *
+ *  @param name 第一个label的高度
+ *  @param msg  第二个label的高度
+ *
+ *  @return 返回最终的高度
+ */
 + (CGFloat)configureWithName:(NSString *)name message:(NSString *)msg
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - kLogoWidth - kButtonWidth - kMarginLeft * 4.f;

@@ -133,7 +133,7 @@ static NSString *frnewCellid = @"frnewCellid";
     if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendCommand"]) {
         isask = NO;
     }
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendM isAsk:isask];
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
     __weak NewFriendController *newFVC = self;
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     userInfoVC.acceptFriendBlock = ^(){
@@ -194,14 +194,19 @@ static NSString *frnewCellid = @"frnewCellid";
 }
 
 
-
-- (void)jieshouFriend:(NSIndexPath*)indexPath
+/**
+ *  接收好友请求
+ *
+ *  @param indexPath 操作的数据
+ */
+- (void)jieshouFriend:(NSIndexPath *)indexPath
 {
     NewFriendUser *friendM = _dataArray[indexPath.row];
     [WLHttpTool addFriendParameterDic:@{@"fid":friendM.uid} success:^(id JSON) {
         [friendM setIsAgree:@(1)];
         FriendsUserModel *friend = [FriendsUserModel objectWithDict:[friendM keyValues]];
-        MyFriendUser *friendUser = [MyFriendUser createMyFriendUserModel:friend];
+        //添加进入好友列表
+        [MyFriendUser createMyFriendUserModel:friend];
 
         [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

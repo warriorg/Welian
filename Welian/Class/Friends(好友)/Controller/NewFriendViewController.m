@@ -63,9 +63,6 @@ static NSString *cellIdentifier = @"frnewCellid";
     segementedControl.delegate = self;
     self.tableView.tableHeaderView = segementedControl;
     
-//    [self.tableView registerNib:[UINib nibWithNibName:@"FriendsNewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
-//    [self.tableView setBackgroundColor:IWGlobalBg];
-    
     //重新设置新的好友中待验证的状态
     [[LogInUser getNowLogInUser] updateAllNewFriendsOperateStatus];
 
@@ -110,7 +107,6 @@ static NSString *cellIdentifier = @"frnewCellid";
         isask = NO;
     }
     UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-//    __weak NewFriendController *newFVC = self;
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     WEAKSELF
     userInfoVC.acceptFriendBlock = ^(){
@@ -145,7 +141,11 @@ static NSString *cellIdentifier = @"frnewCellid";
 }
 
 #pragma mark - WLSegmentedControlDelegate
-//切换
+/**
+ *  点击进入对应的添加好友页面
+ *
+ *  @param index 0:手机联系人  1：微信联系人
+ */
 - (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
 {
     //手机和微信添加好友
@@ -154,14 +154,22 @@ static NSString *cellIdentifier = @"frnewCellid";
 }
 
 #pragma mark - Private
-//右上角，添加好友按钮
+/**
+ *  右上角，添加好友按钮点击，进入添加好友列表页面
+ */
 - (void)addFriendClick
 {
     AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 
-//好友关系操作
+/**
+ *  新的好友关系操作
+ *
+ *  @param type          按钮操作类型
+ *  @param newFriendUser 新的好友对象
+ *  @param indexPath     对应的tableview
+ */
 - (void)newFriendOperate:(FriendOperateType)type newFriendUser:(NewFriendUser *)newFriendUser indexPath:(NSIndexPath *)indexPath
 {
     if (type == FriendOperateTypeAdd) {
