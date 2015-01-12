@@ -43,6 +43,7 @@
         case WLBubbleMessageMediaTypeVideo:
             messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
         case WLBubbleMessageMediaTypeVoice:
             messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];

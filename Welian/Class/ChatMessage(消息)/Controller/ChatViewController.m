@@ -11,6 +11,7 @@
 #import "UserInfoBasicVC.h"
 #import "FriendsUserModel.h"
 #import "TOWebViewController.h"
+#import "ActivityDetailViewController.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -82,6 +83,7 @@
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
                     break;
+                case WLBubbleMessageMediaTypeActivity://活动
                 case WLBubbleMessageMediaTypeText:
                     //普通文本
                     message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
@@ -213,6 +215,7 @@
     //普通文本
     WLMessage *message = nil;
     switch (chatMessage.messageType.integerValue) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
             //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
@@ -477,6 +480,7 @@
                 for (ChatMessage *chatMessage in getLocalMessages) {
                     WLMessage *message = nil;
                     switch (chatMessage.messageType.integerValue) {
+                        case WLBubbleMessageMediaTypeActivity://活动
                         case WLBubbleMessageMediaTypeText:
                             //普通文本
                             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
@@ -589,6 +593,7 @@
     //普通文本
     WLMessage *message = nil;
     switch (chatMessage.messageType.integerValue) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
             //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
@@ -686,6 +691,7 @@
 
 - (void)didSelectedSELinkTextOnMessage:(id <WLMessageModel>)message LinkText:(NSString *)linkText type:(MLEmojiLabelLinkType)textType atIndexPath:(NSIndexPath *)indexPath
 {
+    ChatMessage *chatMsg = [_localMessages objectAtIndex:indexPath.row];
     switch (textType) {
         case MLEmojiLabelLinkTypePhoneNumber:
         {
@@ -712,8 +718,20 @@
         case MLEmojiLabelLinkTypeURL:
         {
             //链接地址
-            DLog(@"点击 链接地址 >>>");
-            // 观点  虎嗅网
+            DLog(@"点击 链接地址 >>> %@",chatMsg.messageType);
+            //活动类型
+            if (chatMsg.messageType.integerValue == WLBubbleMessageMediaTypeActivity) {
+                NSArray *info = [linkText componentsSeparatedByString:@"#"];
+                NSString *sessionId = [info lastObject];
+                //活动页面，进行phoneGap页面加载
+                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
+                activityDetailVC.wwwFolderName = @"www";
+                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
+                [self.navigationController pushViewController:activityDetailVC animated:YES];
+                return;
+            }
+            
+            //普通链接
             TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkText];
             webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
             [self.navigationController pushViewController:webVC animated:YES];

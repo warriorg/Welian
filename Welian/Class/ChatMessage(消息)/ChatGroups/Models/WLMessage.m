@@ -298,6 +298,7 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     switch (self.messageMediaType) {
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             return [[[self class] allocWithZone:zone] initWithText:[self.text copy]
                                                             sender:[self.sender copy]

@@ -116,6 +116,7 @@
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
     switch (type) {
+        case WLBubbleMessageMediaTypeActivity:
         case WLBubbleMessageMediaTypeText:
             //文本
             chatMsg.message = dict[@"msg"];
