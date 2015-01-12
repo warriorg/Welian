@@ -13,6 +13,8 @@
 #import "InvestorUsersListController.h"
 #import "ActivityViewController.h"
 #import "BadgeBaseCell.h"
+#import "MainViewController.h"
+
 
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
 {
@@ -42,6 +44,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [KNSNotification addObserver:self selector:@selector(reloadNewactivit) name:KNewactivitNotif object:nil];
     if (!_urlArray) {
         
         [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
@@ -56,6 +59,13 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     // 加载页面
     [self loadUIview];
     
+}
+
+
+// 刷新活动角标
+- (void)reloadNewactivit
+{
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - 加载数据
@@ -119,9 +129,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 [cell.deputLabel setHidden:NO];
                 [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
             }
-            if (meinfo.isactivebadge.boolValue) {
-                [cell.badgeImage setHidden:NO];
-            }
+            [cell.badgeImage setHidden:!meinfo.isactivebadge.boolValue];
         }
     }else if (indexPath.section==1){
         if (meinfo.investorcount.integerValue) {
@@ -159,10 +167,13 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-//            activityVC.title = @"活动";
             activityVC.wwwFolderName = @"www";
             activityVC.startPage = @"activity.html";
             [self.navigationController pushViewController:activityVC animated:YES];
+            // 取消新活动角标
+            [LogInUser setUserIsactivebadge:NO];
+            [[MainViewController sharedMainViewController] loadNewStustupdata];
+            [self reloadNewactivit];
 //            [self presentViewController:activityVC animated:YES completion:nil];
         }
     }

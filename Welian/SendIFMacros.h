@@ -50,6 +50,8 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 配置文件
 
+#define KNSNotification   [NSNotificationCenter defaultCenter]
+
 #define KINFODic(key) [[[NSBundle mainBundle] infoDictionary] objectForKey:key]
 
 #define XcodeAppVersion KINFODic(@"CFBundleShortVersionString")
@@ -101,6 +103,12 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 首页消息通知
 #define KMessageHomeNotif @"KMessageHomeNotif"
+
+// 新活动的通知
+#define KNewactivitNotif  @"KNewactivitNotif"
+
+// 投资人状态通知
+#define KInvestorstateNotif @"KInvestorstateNotif"
 
 // 首页消息提示个数
 //#define KMessagebadge @"KMessagebadge"

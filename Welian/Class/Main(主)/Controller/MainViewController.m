@@ -77,6 +77,8 @@
     UITabBarItem *selectItem;
     UITabBarItem *circleItem;
     UITabBarItem *chatMessageItem;
+    UITabBarItem *findItem;
+    UITabBarItem *meItem;
     HomeController *homeVC;
 }
 
@@ -121,8 +123,9 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
+    LogInUser *meinfo = [LogInUser getNowLogInUser];
     // 首页
-    if ([LogInUser getNowLogInUser].newstustcount.integerValue &&![LogInUser getNowLogInUser].homemessagebadge.integerValue) {
+    if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
         [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -130,10 +133,27 @@ single_implementation(MainViewController)
         [self.navTitleView hidePrompt];
         [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
         [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
-        if ([LogInUser getNowLogInUser].homemessagebadge.integerValue) {
-            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].homemessagebadge];
+        if (meinfo.homemessagebadge.integerValue) {
+            NSString *badgeStr = [NSString stringWithFormat:@"%@",meinfo.homemessagebadge];
             [homeItem setBadgeValue:badgeStr];
         }
+    }
+    /// 有新的活动
+    if (meinfo.isactivebadge.boolValue) {
+        [findItem setImage:[[UIImage imageNamed:@"tabbar_discovery_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [findItem setSelectedImage:[[UIImage imageNamed:@"tabbar_discovery_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }else{
+        [findItem setImage:[UIImage imageNamed:@"tabbar_discovery"]];
+        [findItem setSelectedImage:[UIImage imageNamed:@"tabbar_discovery_selected"]];
+    }
+    
+    // 我的投资人认证状态改变
+    if (meinfo.isinvestorbadge.boolValue) {
+        [meItem setImage:[[UIImage imageNamed:@"tabbar_friend_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [meItem setSelectedImage:[[UIImage imageNamed:@"tabbar_friend_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }else{
+        [meItem setImage:[UIImage imageNamed:@"tabbar_me"]];
+        [meItem setSelectedImage:[UIImage imageNamed:@"tabbar_me_selected"]];
     }
 }
 
@@ -146,8 +166,8 @@ single_implementation(MainViewController)
 //更新消息数量改变
 - (void)updateChatMessageBadge:(NSNotification *)notification
 {
-    int unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
-    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",unRead];
+    NSInteger unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
+    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",(int)unRead];
 }
 
 //设置选择的为消息列表页面
@@ -161,38 +181,29 @@ single_implementation(MainViewController)
     [super viewDidLoad];
     
     // 有新好友通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
+    [KNSNotification addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
     
     // 有新动态通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
+    [KNSNotification addObserver:self selector:@selector(loadNewStustupdata) name:KNEWStustUpdate object:nil];
     
     // 首页动态消息通知
-   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataItembadge) name:KMessageHomeNotif object:nil];
+   [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KMessageHomeNotif object:nil];
     
     //添加聊天用户改变监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
+    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
     
     //如果是从好友列表进入聊天，首页变换
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];
+    [KNSNotification addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];
     
-//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-//    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-//    //这个只会在第一次访问时调用
-//    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-//        dispatch_semaphore_signal(sema);
-//        if (greanted) {
-//            [UserDefaults setObject:@"1" forKey:KAddressBook];
-//
-//        }else {
-//            [UserDefaults setObject:@"0" forKey:KAddressBook];
-//            
-//        }
-//    });
+    // 新的活动提示
+    [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KNewactivitNotif object:nil];
+    
+    // 我的认证投资人状态改变
+    [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KInvestorstateNotif object:nil];
     
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
 
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     UIImageView *a = [[UIImageView alloc] init];
     [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -213,7 +224,6 @@ single_implementation(MainViewController)
     
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
-    [self updataItembadge];
     
     
     // 好友
@@ -222,7 +232,6 @@ single_implementation(MainViewController)
         
         [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge]];
     }
-//    [circleItem setBadgeValue:[UserDefaults objectForKey:KFriendbadge]];
     
     MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
     NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
@@ -240,7 +249,7 @@ single_implementation(MainViewController)
     [chatMeeageNav setTabBarItem:chatMessageItem];
     
     // 发现
-    UITabBarItem *findItem = [self itemWithTitle:@"发现" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
+    findItem = [self itemWithTitle:@"发现" imageStr:@"tabbar_discovery" selectedImageStr:@"tabbar_discovery_selected"];
     FindViewController *findVC = [[FindViewController alloc] init];
     NavViewController *findNav = [[NavViewController alloc] initWithRootViewController:findVC];
     [findNav setDelegate:self];
@@ -248,7 +257,7 @@ single_implementation(MainViewController)
     [findNav setTabBarItem:findItem];
     
     // 我
-    UITabBarItem *meItem = [self itemWithTitle:@"我" imageStr:@"tabbar_me" selectedImageStr:@"tabbar_me_selected"];
+    meItem = [self itemWithTitle:@"我" imageStr:@"tabbar_me" selectedImageStr:@"tabbar_me_selected"];
     MeViewController *meVC = [[MeViewController alloc] init];
     NavViewController *meNav = [[NavViewController alloc] initWithRootViewController:meVC];
     [meNav setDelegate:self];
@@ -259,6 +268,8 @@ single_implementation(MainViewController)
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 
     selectItem = homeItem;
+    [self updataItembadge];
+    [self updateChatMessageBadge:nil];
 }
 
 //- (void)messageMainnotif
