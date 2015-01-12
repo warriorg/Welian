@@ -166,8 +166,8 @@ single_implementation(MainViewController)
 //更新消息数量改变
 - (void)updateChatMessageBadge:(NSNotification *)notification
 {
-    int unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
-    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",unRead];
+    NSInteger unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
+    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",(int)unRead];
 }
 
 //设置选择的为消息列表页面
@@ -224,7 +224,6 @@ single_implementation(MainViewController)
     
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
-    [self updataItembadge];
     
     
     // 好友
@@ -269,6 +268,8 @@ single_implementation(MainViewController)
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 
     selectItem = homeItem;
+    [self updataItembadge];
+    [self updateChatMessageBadge:nil];
 }
 
 //- (void)messageMainnotif

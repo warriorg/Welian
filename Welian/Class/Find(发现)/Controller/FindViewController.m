@@ -129,9 +129,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 [cell.deputLabel setHidden:NO];
                 [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
             }
-            if (meinfo.isactivebadge.boolValue) {
-                [cell.badgeImage setHidden:NO];
-            }
+            [cell.badgeImage setHidden:!meinfo.isactivebadge.boolValue];
         }
     }else if (indexPath.section==1){
         if (meinfo.investorcount.integerValue) {
@@ -169,7 +167,6 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-//            activityVC.title = @"活动";
             activityVC.wwwFolderName = @"www";
             activityVC.startPage = @"activity.html";
             [self.navigationController pushViewController:activityVC animated:YES];

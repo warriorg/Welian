@@ -225,7 +225,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
     
     NSArray *buttons = @[@"举报"];
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
         buttons = @[@"删除该动态",@"举报"];
@@ -483,29 +482,11 @@ static NSString *noCommentCell = @"NoCommentCell";
         _selecCommFrame = _dataArrayM[indexPath.row];
     }
     
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getNowLogInUser];
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:nil, nil];
-        [sheet setTag:555+0];
-        [sheet showInView:self.view];
-    }else{
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"回复" otherButtonTitles:nil, nil];
-        [sheet setTag:555+1];
-        [sheet showInView:self.view];
-    }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (actionSheet.tag==555+1) {
-        if (buttonIndex==0) {  // 回复评论
-            [self.messageView startCompile:_selecCommFrame.commentM.user];
-        }
-        
-    }else if(actionSheet.tag==555+0){
-        if (buttonIndex==0) {  // 删除评论
+        [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
             [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
                 [_dataArrayM removeObject:_selecCommFrame];
                 NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_dataArrayM.count];
@@ -517,15 +498,57 @@ static NSString *noCommentCell = @"NoCommentCell";
                 [self updataCommentBlock];
                 _selecCommFrame = nil;
                 [self.tableView reloadData];
-
+                
                 self.commentHeadView;
                 
             } fail:^(NSError *error) {
                 
             }];
-        }
+
+        }];
+
+//        [sheet setTag:555+0];
+        [sheet showInView:self.view];
+    }else{
+        [sheet bk_addButtonWithTitle:@"回复" handler:^{
+            [self.messageView startCompile:_selecCommFrame.commentM.user];
+        }];
+//        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"回复" otherButtonTitles:nil, nil];
+//        [sheet setTag:555+1];
+        [sheet showInView:self.view];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+//- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+//{
+//    if (actionSheet.tag==555+1) {
+//        if (buttonIndex==0) {  // 回复评论
+//            [self.messageView startCompile:_selecCommFrame.commentM.user];
+//        }
+//        
+//    }else if(actionSheet.tag==555+0){
+//        if (buttonIndex==0) {  // 删除评论
+////            [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
+////                [_dataArrayM removeObject:_selecCommFrame];
+////                NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_dataArrayM.count];
+////                for (CommentCellFrame *comCellF in _dataArrayM) {
+////                    [commentAM addObject:comCellF.commentM];
+////                }
+////                [self.statusM setCommentsArray:commentAM];
+////                self.statusM.commentcount--;
+////                [self updataCommentBlock];
+////                _selecCommFrame = nil;
+////                [self.tableView reloadData];
+////
+////                self.commentHeadView;
+////                
+////            } fail:^(NSError *error) {
+////                
+////            }];
+//        }
+//    }
+//}
 
 
 - (void)refreshDataChangde:(WLStatusM *)status
