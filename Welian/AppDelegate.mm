@@ -327,7 +327,8 @@ BMKMapManager* _mapManager;
         [KNSNotification postNotificationName:KNewactivitNotif object:self];
     }else if ([type isEqualToString:@"investorResult"]){  // 后台认证投资人
         
-        [LogInUser setUserinvestorauth:[dataDic objectForKey:@"result"]];
+        [LogInUser setUserinvestorauth:[dataDic objectForKey:@"state"]];
+        [LogInUser setUserIsinvestorbadge:YES];
         [KNSNotification postNotificationName:KInvestorstateNotif object:self];
     }
 }
