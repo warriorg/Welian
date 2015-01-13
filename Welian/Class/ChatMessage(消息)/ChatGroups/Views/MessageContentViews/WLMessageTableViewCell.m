@@ -216,7 +216,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             }
             
             UIButton *avatorButton = [[UIButton alloc] initWithFrame:avatorButtonFrame];
-            [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+            [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
             [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             //        avatorButton.hidden = message.messageMediaType == WLBubbleMessageSpecialTypeText ? YES : NO;
             [self.contentView addSubview:avatorButton];
@@ -390,9 +390,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
         //设置圆角
         self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
         //设置头像
-        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"avator"] showActivityIndicatorView:YES];
+        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"user_small"] showActivityIndicatorView:YES];
     }else{
-        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"avator"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+        [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }
 }
 
