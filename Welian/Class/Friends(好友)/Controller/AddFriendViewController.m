@@ -75,6 +75,12 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [WLHUDView hiddenHud];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -101,7 +107,7 @@
     [self.tableView addSubview:self.refreshControl];
     
     //默认加载的数据
-    [self changeDataWithIndex:segmentedControl.selectedSegmentIndex];
+    [self changeDataWithIndex:_selectIndex];
 }
 
 #pragma mark - Table view data source
@@ -242,7 +248,12 @@
 - (void)segmentedControlChanged:(UISegmentedControl *)sender
 {
     DLog(@"segmentedControlChanged-->%d",sender.selectedSegmentIndex);
-    [self changeDataWithIndex:sender.selectedSegmentIndex];
+    //取消请求
+    [WLHUDView hiddenHud];
+    [WLHttpTool cancelAllRequestHttpTool];
+    
+    self.selectIndex = sender.selectedSegmentIndex;
+    [self changeDataWithIndex:_selectIndex];
 }
 
 /**
@@ -271,10 +282,14 @@
  */
 - (void)reloadUIData
 {
+    //清除提醒
+    [_phoneNotView removeFromSuperview];
+    [_weChatNotView removeFromSuperview];
+    
     //获取通讯录好友
-    self.datasource = _segmentedControl.selectedSegmentIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
+    self.datasource = _selectIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
     if(_datasource.count == 0){
-        if (index == 0) {
+        if (_selectIndex == 0) {
             [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
         }else{
@@ -282,9 +297,6 @@
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
         }
-    }else{
-        [_phoneNotView removeFromSuperview];
-        [_weChatNotView removeFromSuperview];
     }
     [self.tableView reloadData];
 }
@@ -313,6 +325,8 @@
  */
 - (void)getPhoneAllFriends
 {
+    //通讯录联系人
+    [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -324,8 +338,8 @@
             address = [WLTool getAddressBookArray];
         }
         
-        //通讯录联系人
         [WLHttpTool uploadPhonebookParameterDic:address success:^(id JSON) {
+            [WLHUDView hiddenHud];
             for (NSDictionary *dic in JSON) {
                 //保存到数据库
                 [NeedAddUser createNeedAddUserWithDict:dic withType:1];
@@ -345,8 +359,10 @@
  */
 - (void)getWxFriends
 {
+    [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
+                                     [WLHUDView hiddenHud];
                                      for (NSDictionary *dic in JSON) {
                                          //保存到数据库
                                          [NeedAddUser createNeedAddUserWithDict:dic withType:2];

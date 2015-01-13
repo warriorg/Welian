@@ -162,7 +162,7 @@
         succeBlock (datajson);
     } failure:^(NSError *error) {
         failurBlock (error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 获取微信好友列表
@@ -175,7 +175,7 @@
         succeBlock (datajson);
     } failure:^(NSError *error) {
         failurBlock (error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 修改用户信息

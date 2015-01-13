@@ -151,7 +151,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.f;
+    if (tableView == _searchDisplayVC.searchResultsTableView) {
+        UserInfoModel *mode = _filterArray[indexPath.row];
+        return [NewFriendViewCell configureWithName:mode.name message:[NSString stringWithFormat:@"%@ %@",mode.company,mode.position]];
+    }else{
+        return 60.f;
+    }
 }
 
 //===============================================
