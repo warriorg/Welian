@@ -22,6 +22,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    // 清除内存中的图片缓存
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
     DLog(@"%@ ------  didReceiveMemoryWarning",[self class]);
 }
 

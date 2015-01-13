@@ -628,7 +628,7 @@
 {
     // iterate through all the plugin objects, and call hasPendingOperation
     // if at least one has a pending operation, we don't call [super didReceiveMemoryWarning]
-
+    
     NSEnumerator* enumerator = [self.pluginObjects objectEnumerator];
     CDVPlugin* plugin;
 
@@ -1042,5 +1042,6 @@
     [_commandQueue dispose];
     [[self.pluginObjects allValues] makeObjectsPerformSelector:@selector(dispose)];
 }
+
 
 @end

@@ -512,6 +512,9 @@ static CGPoint  delayOffset = {0.0};
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
     // Dispose of any resources that can be recreated.
 }
 

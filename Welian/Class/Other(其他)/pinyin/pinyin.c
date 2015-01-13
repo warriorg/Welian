@@ -6,11 +6,10 @@
  *  Copyright 2010 RED/SAFI. All rights reserved.
  *
  */
-
 #define HANZI_START 19968
 #define HANZI_COUNT 20902
 
-static char firstLetterArray[HANZI_COUNT] = 
+static char firstLetterArray[HANZI_COUNT] =
 "ydkqsxnwzssxjbymgcczqpssqbycdscdqldylybssjgyqzjjfgcclzznwdwzjljpfyynnjjtmynzwzhflzppqhgccyynmjqyxxgd"
 "nnsnsjnjnsnnmlnrxyfsngnnnnqzggllyjlnyzssecykyyhqwjssggyxyqyjtwktjhychmnxjtlhjyqbyxdldwrrjnwysrldzjpc"
 "bzjjbrcfslnczstzfxxchtrqggddlyccssymmrjcyqzpwwjjyfcrwfdfzqpyddwyxkyjawjffxjbcftzyhhycyswccyxsclcxxwz"
@@ -224,13 +223,13 @@ static char firstLetterArray[HANZI_COUNT] =
 
 char pinyinFirstLetter(unsigned short hanzi)
 {
-	int index = hanzi - HANZI_START;
-	if (index >= 0 && index <= HANZI_COUNT)
-	{
-		return firstLetterArray[index];
-	}
-	else
-	{
-		return '#';
-	}
+    int index = hanzi - HANZI_START;
+    if (index >= 0 && index <= HANZI_COUNT)
+    {
+        return firstLetterArray[index];
+    }
+    else
+    {
+        return hanzi;
+    }
 }

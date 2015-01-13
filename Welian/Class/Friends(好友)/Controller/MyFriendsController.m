@@ -395,10 +395,4 @@ static NSString *fridcellid = @"fridcellid";
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 @end

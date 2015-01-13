@@ -121,7 +121,9 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
 }
 
 @end

@@ -540,7 +540,6 @@
 #pragma mark - 请求添加为好友
 + (void)requestFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
     NSDictionary *dic = @{@"type":@"requestFriend",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
@@ -558,17 +557,14 @@
     for (FriendsUserModel *mode in arrToSort) {
         if (!mode.name) continue;
         ChineseString *chineseString=[[ChineseString alloc]init];
-        chineseString.string=[NSString stringWithString:mode.name];
+        chineseString.string=[[NSString stringWithString:mode.name] substringToIndex:1];
         chineseString.modeUser = mode;
         
         if(![chineseString.string isEqualToString:@""]){
-            //join the pinYin
             NSString *pinYinResult = [NSString string];
-            HanyuPinyinOutputFormat *format = [[HanyuPinyinOutputFormat alloc] init];
-            
-            NSString *nameStr = [[PinyinHelper toHanyuPinyinStringWithNSString:chineseString.string  withHanyuPinyinOutputFormat:format withNSString:@""] uppercaseString];
-            for(int j = 0;j < nameStr.length; j++) {
-                NSString *singlePinyinLetter = [[NSString stringWithFormat:@"%c",[nameStr characterAtIndex:j]] uppercaseString];
+            for(int j = 0;j < chineseString.string.length; j++) {
+                NSString *singlePinyinLetter = [[NSString stringWithFormat:@"%c",
+                                                 pinyinFirstLetter([chineseString.string characterAtIndex:j])]uppercaseString];
                 
                 pinYinResult = [pinYinResult stringByAppendingString:singlePinyinLetter];
             }
@@ -582,7 +578,6 @@
     //sort the ChineseStringArr by pinYin
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"pinYin" ascending:YES]];
     [chineseStringsArray sortUsingDescriptors:sortDescriptors];
-    
     
     NSMutableArray *arrayForArrays = [NSMutableArray array];
     BOOL checkValueAtIndex= NO;  //flag to check
