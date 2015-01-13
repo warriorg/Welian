@@ -66,9 +66,9 @@
     //是否隐藏
     _numBtn.hidden = unRead <= 0 ? YES : NO;
     if (unRead < 100) {
-        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1.png"] forState:UIControlStateNormal];
+        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];
     }else{
-        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2.png"] forState:UIControlStateNormal];
+        [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateNormal];
     }
     [_numBtn setTitle:[NSString stringWithFormat:@"%d",(int)unRead] forState:UIControlStateNormal];
     
@@ -169,7 +169,7 @@
     numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
 //    [numBtn setTitle:@"99" forState:UIControlStateNormal];
     [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1.png"] forState:UIControlStateNormal];
+    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];
     [self addSubview:numBtn];
     self.numBtn = numBtn;
     
