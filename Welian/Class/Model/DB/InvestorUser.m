@@ -20,6 +20,7 @@
     return [[InvestorUser queryInManagedObjectContext:MOC] results];
 }
 
+
 //创建新收据
 + (void)createInvestor:(InvestorUserM *)iInvestor
 {

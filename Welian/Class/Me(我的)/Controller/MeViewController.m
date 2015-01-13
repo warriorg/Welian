@@ -35,8 +35,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     if (self.tableView) {
         NSIndexSet *set = [NSIndexSet indexSetWithIndex:0];
         [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationNone];
-//        NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationFade];
+        [self reloadInvestorstate];
     }
 }
 

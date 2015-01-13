@@ -38,6 +38,7 @@ static NSString *identifier = @"investorcellid";
         [self hideRefreshView];        
 
         NSArray *arr = JSON;
+        [InvestorUser deleteAll];
         for (InvestorUserM *invest in JSON) {
             [InvestorUser createInvestor:invest];
         }
