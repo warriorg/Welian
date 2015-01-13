@@ -125,7 +125,7 @@
         //设定当前地图的显示范围
         [_mapView setRegion:BMKCoordinateRegionMake(result.location,BMKCoordinateSpanMake(0.02,0.02))];
         //设置地图缩放级别
-        [_mapView setZoomLevel:17];
+        [_mapView setZoomLevel:19];
         //设置选中标记
         [_mapView selectAnnotation:annotation animated:YES];
     }

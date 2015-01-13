@@ -133,7 +133,7 @@
     //活动页面，进行phoneGap页面加载
     ActivityEntryViewController *activityEntryVC = [[ActivityEntryViewController alloc] init];
     activityEntryVC.wwwFolderName = @"www";
-    activityEntryVC.startPage = [NSString stringWithFormat:@"activity_entry.html?%@?%@",infos[0],infos[1]];
+    activityEntryVC.startPage = [NSString stringWithFormat:@"activity_entry.html?%@?%@?t=%@",infos[0],infos[1],[NSString getNowTimestamp]];
     [self.navigationController pushViewController:activityEntryVC animated:YES];
 }
 
@@ -145,7 +145,7 @@
     ActivityOrderViewController *activityOrderVC = [[ActivityOrderViewController alloc] init];
     activityOrderVC.orderInfo = infos[1];
     activityOrderVC.wwwFolderName = @"www";
-    activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@",infos[0]];
+    activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@?t=%@",infos[0],[NSString getNowTimestamp]];
     [self.navigationController pushViewController:activityOrderVC animated:YES];
 }
 

@@ -168,7 +168,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
             activityVC.wwwFolderName = @"www";
-            activityVC.startPage = @"activity.html";
+            activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
             [self.navigationController pushViewController:activityVC animated:YES];
             // 取消新活动角标
             [LogInUser setUserIsactivebadge:NO];

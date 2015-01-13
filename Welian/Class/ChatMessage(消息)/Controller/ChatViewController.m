@@ -726,7 +726,7 @@
                 //活动页面，进行phoneGap页面加载
                 ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
                 activityDetailVC.wwwFolderName = @"www";
-                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];
+                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];
                 [self.navigationController pushViewController:activityDetailVC animated:YES];
                 return;
             }

@@ -83,4 +83,12 @@
     return [[NSString stringWithFormat:@"%c",[outputPinyin characterAtIndex:0]] uppercaseString];
 }
 
+//获取时间戳
++ (NSString *)getNowTimestamp
+{
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSString *timeString = [NSString stringWithFormat:@"%ld", (long)[dat timeIntervalSince1970]];
+    return timeString;
+}
+
 @end

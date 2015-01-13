@@ -325,8 +325,10 @@
  */
 - (void)getPhoneAllFriends
 {
-    //通讯录联系人
-    [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
+    if([NeedAddUser allNeedAddUserWithType:1].count <= 0){
+        //通讯录联系人
+        [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
+    }
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     dispatch_semaphore_t sema=dispatch_semaphore_create(0);
     //这个只会在第一次访问时调用
@@ -359,7 +361,9 @@
  */
 - (void)getWxFriends
 {
-    [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
+    if ([NeedAddUser allNeedAddUserWithType:2].count <= 0) {
+        [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
+    }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
                                      [WLHUDView hiddenHud];
