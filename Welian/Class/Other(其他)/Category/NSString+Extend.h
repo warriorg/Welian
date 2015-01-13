@@ -26,5 +26,8 @@
 //汉字首字母转换
 - (NSString *)getHanziFirstString;
 
+//获取时间戳
++ (NSString *)getNowTimestamp;
+
 
 @end

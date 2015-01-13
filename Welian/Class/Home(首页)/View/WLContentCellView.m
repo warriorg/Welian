@@ -265,7 +265,7 @@
 //                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] initWithShareDic:@{@"key":@"value"}];
                 ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
                 activityDetailVC.wwwFolderName = @"www";
-                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@",sessionId];//sessionId
+                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];//sessionId
                 [self.homeVC.navigationController pushViewController:activityDetailVC animated:YES];
             }else{
                 //普通链接
