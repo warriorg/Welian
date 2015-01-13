@@ -45,9 +45,10 @@
 - (UITableView *)tableView
 {
     if (_tableView ==nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 85, SuperSize.width, SuperSize.height-85) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 85, SuperSize.width, SuperSize.height-85) style:UITableViewStyleGrouped];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
+        [_tableView setSectionHeaderHeight:0];
         [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     }
     return _tableView;
@@ -158,20 +159,9 @@
     return self.searchArray.count;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (self.searchArray.count) {
-        return @" 你是不是要找：";
-    }
-    return nil;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.searchArray.count) {
-        return 35.0;
-    }
-    return 0;
+    return 0.1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

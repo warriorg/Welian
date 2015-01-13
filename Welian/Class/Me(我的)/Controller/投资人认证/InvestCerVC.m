@@ -207,20 +207,6 @@ static NSString *itemscellid = @"itemscellid";
     [sheet showInView:self.view];
 }
 
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
-//    if (auth == 0) {
-//        [self clickSheet:buttonIndex];
-//    }else{
-//        if (buttonIndex ==0) {  // 取消认证
-//            [[[UIAlertView alloc] initWithTitle:@"确认撤销认证？" message:@"撤销之后，如果要再次认证，需要重新提交名片。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil] show];
-//        }else if (buttonIndex ==1){  // 重新认证
-//            [self choosePicture];
-//        }
-//    }
-//}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
