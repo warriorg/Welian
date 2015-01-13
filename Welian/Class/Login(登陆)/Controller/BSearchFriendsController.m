@@ -208,10 +208,8 @@ static NSString *fridcellid = @"fridcellid";
                         [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
                         [self.view insertSubview:self.tableView belowSubview:_searchView];
                         
-                        
                     }else{
                         [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
-                        
                     }
                     [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
                     [_leidaImage stopAnimating];

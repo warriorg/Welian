@@ -28,7 +28,8 @@
     [super viewDidLoad];
     
     self.title = @"添加好友";
-    
+    //隐藏tableiView分割线
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //搜索栏
     UISearchBar *searchBar = [[UISearchBar alloc] init];
     searchBar.placeholder = @"手机号/姓名";

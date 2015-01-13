@@ -187,14 +187,15 @@ static NSString *fridcellid = @"fridcellid";
 }
 
 //解决加入索引图标混乱
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    if (index == 0) {
-        [tableView scrollRectToVisible:tableView.tableHeaderView.frame animated:NO];
-    }
-    //返回的是section
-    return index-1;
-}
+//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+//{
+//    if (index == 0) {
+////        [tableView scrollRectToVisible:tableView.tableHeaderView.frame animated:NO];
+//        [tableView scrollsToTop];
+//    }
+//    //返回的是section
+//    return index;
+//}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

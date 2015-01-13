@@ -93,11 +93,6 @@
         
     }];
     [LogInUser setUserisNow:NO];
-//    [UserDefaults removeObjectForKey:KFirstFID];
-    
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
-    
     [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 
@@ -168,17 +163,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section==0&&indexPath.row==1) {
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-//        NameController *phoneVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-//            [mode setMobile:userInfo];
-//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
-//            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        }withType:IWVerifiedTypeAddress];
-//        [phoneVC setUserInfoStr:mode.mobile];
-//        
-//        [self.navigationController pushViewController:phoneVC animated:YES];
-    }else if (indexPath.section==1&&indexPath.row==0){
+    if (indexPath.section==1&&indexPath.row==0){
         AboutViewController *aboutVC = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
         

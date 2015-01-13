@@ -69,7 +69,6 @@
 - (void)perform:(DKArrayQueryFinish)block {
     
     [self perform:block background:NO];
-    
 }
 
 - (void)perform:(DKArrayQueryFinish)block background:(BOOL)background {

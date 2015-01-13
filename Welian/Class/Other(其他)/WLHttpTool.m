@@ -96,14 +96,9 @@
 + (void)getCheckCodeParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
      NSDictionary *dic = @{@"type":@"getCheckCode",@"data":parameterDic};
-    
-#warning flkajsdfjakjs;ldfkjal;sjkdf;ad
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
-        
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         [LogInUser setUserSessionid:[JSON objectForKey:@"sessionid"]];
         [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:@"SID"];
-//        [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
         
         succeBlock(JSON);
     } failure:^(NSError *error) {
@@ -487,6 +482,8 @@
 #pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
+    
+    
     NSArray *myFriends = [MyFriendUser getAllMyFriendUsers];
     if (isSQL) {
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
@@ -555,7 +552,7 @@
 
 
 + (NSMutableArray *)getChineseStringArr:(NSArray *)arrToSort {
-    
+   
     NSMutableArray *_sectionHeadsKeys = [NSMutableArray array];
     NSMutableArray *chineseStringsArray = [NSMutableArray array];
     for (FriendsUserModel *mode in arrToSort) {
