@@ -96,6 +96,7 @@
     _logoImageView.image = [UIImage imageNamed:_dicData[@"logo"]];
     _nameLabel.text = _dicData[@"name"];
     _messageLabel.text = @"";
+    _iconImageView.hidden = YES;
 }
 
 /**
