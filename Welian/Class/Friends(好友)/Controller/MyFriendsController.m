@@ -22,6 +22,7 @@
 #import "NewFriendViewController.h"
 #import "AddFriendViewController.h"
 #import "AddFriendTypeListViewController.h"
+#import "UIImage+ImageEffects.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
@@ -85,7 +86,6 @@ static NSString *fridcellid = @"fridcellid";
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(addFriendClick)];
-    //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     
     //搜索栏
     self.searchBar = [[UISearchBar alloc] init];
@@ -97,6 +97,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                              forKey:@"_searchResultsTableViewStyle"];
     [self.tableView setTableHeaderView:self.searchBar];
+    [self.searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadMyAllFriends) forControlEvents:UIControlEventValueChanged];
@@ -116,8 +117,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC.searchResultsTableView setSeparatorInset:UIEdgeInsetsZero];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
-    
-//    [self.tableView registerNib:[UINib nibWithNibName:@"NewFriendsCell" bundle:nil] forCellReuseIdentifier:newFriendcellid];
+
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 }
 
@@ -187,7 +187,6 @@ static NSString *fridcellid = @"fridcellid";
 }
 
 //解决加入索引图标混乱
-
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
     if (index == 0) {
@@ -367,7 +366,7 @@ static NSString *fridcellid = @"fridcellid";
             NSDictionary *usersDic = self.allArray[indexPath.section-1];
             NSArray *modear = usersDic[@"userF"];
             userMode = modear[indexPath.row];
-            
+            [userMode setFriendship:@(1)];
             UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
             
             [self.navigationController pushViewController:userInfoVC animated:YES];

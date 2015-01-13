@@ -11,6 +11,7 @@
 #import "BSearchFriendsController.h"
 #import "NewFriendViewCell.h"
 #import "UserInfoBasicVC.h"
+#import "UIImage+ImageEffects.h"
 
 @interface AddFriendTypeListViewController ()<UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -32,6 +33,7 @@
     UISearchBar *searchBar = [[UISearchBar alloc] init];
     searchBar.placeholder = @"手机号/姓名";
     searchBar.delegate = self;
+    [searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
     [searchBar sizeToFit];
     
     UISearchDisplayController *searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];

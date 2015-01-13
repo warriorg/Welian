@@ -110,10 +110,7 @@ BMKMapManager* _mapManager;
         /** 未登陆 */
         LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
         [self.window setRootViewController:loginGuideVC];
-        
-//        LoginViewController *loginVC = [[LoginViewController alloc] init];
-//        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginVC];
-//        [self.window setRootViewController:nav];
+
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"====沙盒路径=======%@",paths);
@@ -438,10 +435,6 @@ BMKMapManager* _mapManager;
         
     }];
     [LogInUser setUserisNow:NO];
-//    [UserDefaults removeObjectForKey:KFirstFID];
-    
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    NavViewController  *detailViewController = [[NavViewController alloc] initWithRootViewController:loginVC];
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 

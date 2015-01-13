@@ -154,63 +154,51 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)moreItmeClick:(UIBarButtonItem*)item
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] init];
-    [sheet setDelegate:self];
-    [sheet addButtonWithTitle:@"推荐给好友"];
-    if ([_userMode.friendship integerValue]==1) {
-        [sheet addButtonWithTitle:@"删除该好友"];
-        [sheet setDestructiveButtonIndex:1];
-    }
-    [sheet addButtonWithTitle:@"取消"];
-    [sheet setCancelButtonIndex:sheet.numberOfButtons-1];
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [sheet bk_setDestructiveButtonWithTitle:@"删除该好友" handler:^{
+        [self deleteFriend];
+    }];
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     [sheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+// 删除好友
+- (void)deleteFriend
 {
-    if (buttonIndex==0) {  //推荐给好友
+    [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
         
-    }else if(buttonIndex==1){
-        if ([_userMode.friendship integerValue]==1) {  // 删除好友
-            [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
-                
-//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KMyAllFriendsKey];
-                
-                MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
-                //数据库删除当前好友
-                [[LogInUser getNowLogInUser] removeRsMyFriendsObject:friendUser];
-                
-                //删除新的好友本地数据库
-                NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
-                if (newFuser) {
-                    //删除好友请求数据
-//                    [newFuser delete];
-                    //更新好友请求列表数据为 添加
-                    [newFuser updateOperateType:0];
-//                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
-                }
-                //更新本地添加好友数据库
-                NeedAddUser *needAddUser = [NeedAddUser getNeedAddUserWithUid:_userMode.uid];
-                if (needAddUser) {
-                    //更新未好友的好友
-                    [needAddUser updateFriendShip:2];
-                }
-                
-                //聊天状态发送改变
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-                
-//                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
-                [MOC save];
-                [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
-                [self.navigationController popViewControllerAnimated:YES];
-                [WLHUDView showSuccessHUD:@"删除成功！"];
-            } fail:^(NSError *error) {
-                
-            }];
-            
+        MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
+        //数据库删除当前好友
+        [[LogInUser getNowLogInUser] removeRsMyFriendsObject:friendUser];
+        
+        //删除新的好友本地数据库
+        NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:_userMode.uid];
+        if (newFuser) {
+            //删除好友请求数据
+            //                    [newFuser delete];
+            //更新好友请求列表数据为 添加
+            [newFuser updateOperateType:0];
+            //                    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
         }
-    }
-    
+        //更新本地添加好友数据库
+        NeedAddUser *needAddUser = [NeedAddUser getNeedAddUserWithUid:_userMode.uid];
+        if (needAddUser) {
+            //更新未好友的好友
+            [needAddUser updateFriendShip:2];
+        }
+        
+        //聊天状态发送改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+        
+        //                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
+        [MOC save];
+        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        [self.navigationController popViewControllerAnimated:YES];
+        [WLHUDView showSuccessHUD:@"删除成功！"];
+    } fail:^(NSError *error) {
+        
+    }];
+
 }
 
 
@@ -223,7 +211,7 @@ static NSString *staurCellid = @"staurCellid";
         [self.tableView setSectionHeaderHeight:0.0];
         
         LogInUser *mode = [LogInUser getNowLogInUser];
-        if (!([mode.uid integerValue]==[_userMode.uid integerValue])) {
+        if (!([mode.uid integerValue]==[_userMode.uid integerValue])&&[usermode.friendship integerValue]==1) {
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
         }
