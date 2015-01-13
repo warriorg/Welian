@@ -136,6 +136,8 @@
                                            //记录最后一次登陆的手机号
                                            SaveLoginMobile(mode.mobile);
                                            [LogInUser createLogInUserModel:mode];
+                                           [LogInUser setUseropenid:[sourceDic objectForKey:@"openid"]];
+                                           [LogInUser setUserunionid:[sourceDic objectForKey:@"unionid"]];
                                            
                                           // 进入主页面
                                            MainViewController *mainVC = [[MainViewController alloc] init];
@@ -166,15 +168,13 @@
                                    } isHUD:YES];
                                    
                                    
-                                   
-
                                }else{
                                      [WLHUDView hiddenHud];
                                    [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
 
                                }
-//                                   [WLHUDView hiddenHud];
-                               NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+
+                               DLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
                            }];
     
 }
