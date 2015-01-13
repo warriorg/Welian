@@ -79,7 +79,7 @@
     [outputFormat setVCharType:VCharTypeWithV];
     [outputFormat setCaseType:CaseTypeLowercase];
 
-    NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:self withHanyuPinyinOutputFormat:outputFormat withNSString:@" "];
+    NSString *outputPinyin=[PinyinHelper toHanyuPinyinStringWithNSString:[self substringToIndex:1] withHanyuPinyinOutputFormat:outputFormat withNSString:@" "];
     return [[NSString stringWithFormat:@"%c",[outputPinyin characterAtIndex:0]] uppercaseString];
 }
 
