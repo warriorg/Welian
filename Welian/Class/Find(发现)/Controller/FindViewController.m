@@ -167,6 +167,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             
             //活动页面，进行phoneGap页面加载
             ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
             activityVC.wwwFolderName = @"www";
             activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
             [self.navigationController pushViewController:activityVC animated:YES];
