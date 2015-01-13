@@ -72,9 +72,9 @@
     needAddUser.avatar = avatar;
     needAddUser.friendship = friendship;
     needAddUser.mobile = mobile;
-    needAddUser.name = name;
-    needAddUser.wlname = wlName;
-    needAddUser.pinyin = [name getHanziFirstString];
+    needAddUser.name = name.length > 0 ? name : (wlName.length > 0 ? wlName : @"未知");
+    needAddUser.wlname = wlName.length > 0 ? wlName : (name.length > 0 ? name : @"未知");
+    needAddUser.pinyin = [needAddUser.name getHanziFirstString];
     needAddUser.userType = @(type);
     needAddUser.company = company;
     needAddUser.position = position;

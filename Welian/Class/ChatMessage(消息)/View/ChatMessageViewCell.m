@@ -17,6 +17,7 @@
 @interface ChatMessageViewCell ()
 
 @property (assign,nonatomic) UIImageView *logoImageView;
+@property (assign, nonatomic) UIImageView *iconImageView;
 @property (assign,nonatomic) UIButton *numBtn;
 @property (assign,nonatomic) UILabel *nickNameLabel;
 @property (assign,nonatomic) UILabel *timeLabel;
@@ -55,6 +56,9 @@
     [super didChangeValueForKey:@"myFriendUser"];
     //设置头像
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_myFriendUser.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    //是否是认证投资人
+    _iconImageView.hidden = _myFriendUser.investorauth.integerValue == 1 ? NO : YES;
     
     _nickNameLabel.text = _myFriendUser.name;
     
@@ -99,6 +103,10 @@
     _logoImageView.size = CGSizeMake(kLogoImageWidth, kLogoImageWidth);
     _logoImageView.left = kMarginLeft;
     _logoImageView.centerY = self.height / 2.f;
+    
+    [_iconImageView sizeToFit];
+    _iconImageView.bottom = _logoImageView.bottom;
+    _iconImageView.right = _logoImageView.right;
     
     //消息数量
     _numBtn.size = CGSizeMake([_myFriendUser unReadChatMessageNum] < 100 ? kBadgeHeight : kBadge2Width, kBadgeHeight);
@@ -146,6 +154,13 @@
 //    [logoImageView setDebug:YES];
     
     [_logoImageView sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    //认证透过投资人标志
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_mycard_tou_big"]];
+    iconImageView.backgroundColor = [UIColor clearColor];
+    iconImageView.hidden = YES;
+    [self addSubview:iconImageView];
+    self.iconImageView = iconImageView;
     
     //消息数量
     UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
