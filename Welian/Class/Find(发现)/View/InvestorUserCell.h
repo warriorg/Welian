@@ -22,4 +22,6 @@
 //** 投资案例 *//
 @property (weak, nonatomic) IBOutlet UILabel *caseLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *investorauthImage;
+
 @end

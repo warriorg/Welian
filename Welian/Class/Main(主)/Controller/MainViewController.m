@@ -124,6 +124,7 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
+     [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *meinfo = [LogInUser getNowLogInUser];
     // 首页
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
@@ -220,7 +221,6 @@ single_implementation(MainViewController)
     homeItem = [self itemWithTitle:@"创业圈" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
 //    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
-    [homeVC.navigationItem setTitleView:self.navTitleView];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     
     [homeNav setDelegate:self];
