@@ -93,7 +93,6 @@
 
 - (void)beginPullDownRefreshing
 {
-//    [self.tableView setFooterHidden:YES];
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
 
@@ -105,6 +104,7 @@
     }
     
     [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
+        
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         
         // 1.在拿到最新微博数据的同时计算它的frame
@@ -124,7 +124,6 @@
             }
         }
         [LogInUser setUserNewstustcount:@(0)];
-//        [UserDefaults setInteger:0 forKey:KNewStaustbadge];
         [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
 
