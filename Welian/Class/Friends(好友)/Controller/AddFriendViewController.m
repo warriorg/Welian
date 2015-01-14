@@ -310,6 +310,7 @@
         if (_selectIndex == 0) {
             [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
+            [self.view sendSubviewToBack:_phoneNotView];
         }else{
             [_phoneNotView removeFromSuperview];
             [self.view addSubview:self.weChatNotView];
