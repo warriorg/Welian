@@ -247,7 +247,7 @@
 #pragma mark - Private
 - (void)segmentedControlChanged:(UISegmentedControl *)sender
 {
-    DLog(@"segmentedControlChanged-->%d",sender.selectedSegmentIndex);
+//    DLog(@"segmentedControlChanged-->%d",sender.selectedSegmentIndex);
     //取消请求
     [WLHUDView hiddenHud];
     [WLHttpTool cancelAllRequestHttpTool];
