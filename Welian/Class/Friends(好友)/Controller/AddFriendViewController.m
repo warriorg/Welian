@@ -352,6 +352,7 @@
             
             [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
                 [WLHUDView hiddenHud];
+                
                 for (NSDictionary *dic in JSON) {
                     //保存到数据库
                     [NeedAddUser createNeedAddUserWithDict:dic withType:1];
