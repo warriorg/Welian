@@ -116,16 +116,8 @@
     [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
-    //询问调用通讯录
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-    //这个只会在第一次访问时调用
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-        dispatch_semaphore_signal(sema);
-        //默认加载的数据
-        [self changeDataWithIndex:_selectIndex];
-    });
-    CFRelease(addressBookRef);
+    //默认加载的数据
+    [self changeDataWithIndex:_selectIndex];
 }
 
 #pragma mark - Table view data source
@@ -308,11 +300,9 @@
     self.datasource = _selectIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
     if(_datasource.count == 0){
         if (_selectIndex == 0) {
-            [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
             [self.view sendSubviewToBack:_phoneNotView];
         }else{
-            [_phoneNotView removeFromSuperview];
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
         }
@@ -344,22 +334,22 @@
  */
 - (void)getPhoneAllFriends
 {
-    //如果没有授权则退出
-    if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized){
-        //如果没有授权
-        [self.refreshControl endRefreshing];
-        [self reloadUIData];
-    }else{
-        if([NeedAddUser allNeedAddUserWithType:1].count <= 0){
-            //通讯录联系人
-            [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
-        }
-        if (!_localPhoneArray) {
-            self.localPhoneArray = [WLTool getAddressBookArray];
-        }
-        
-        // 2) 在全局队列上异步调用方法，加载并更新图像
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    if([NeedAddUser allNeedAddUserWithType:1].count <= 0){
+        //通讯录联系人
+        [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
+    }
+    // 2) 在全局队列上异步调用方法，加载并更新图像
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //询问调用通讯录
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+        dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+        //这个只会在第一次访问时调用
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+            dispatch_semaphore_signal(sema);
+            if (!_localPhoneArray) {
+                self.localPhoneArray = [WLTool getAddressBookArray];
+            }
+            
             [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
                 [WLHUDView hiddenHud];
                 for (NSDictionary *dic in JSON) {
@@ -368,12 +358,15 @@
                 }
                 
                 [self.refreshControl endRefreshing];
+                // 3) 设置UI
                 [self reloadUIData];
             } fail:^(NSError *error) {
                 [self.refreshControl endRefreshing];
             }];
+            
         });
-    }
+        CFRelease(addressBookRef);
+    });
 }
 
 /**
