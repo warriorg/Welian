@@ -16,19 +16,29 @@
 #import "UserInfoBasicVC.h"
 #import <MessageUI/MessageUI.h>
 #import "SEImageCache.h"
+#import "NSString+val.h"
 
 @interface AddFriendViewController ()<MFMessageComposeViewControllerDelegate>
 
-@property (strong, nonatomic)  NSMutableArray *datasource;
+@property (strong,nonatomic) NSMutableArray *datasource;
 @property (assign,nonatomic) UISegmentedControl *segmentedControl;
 @property (assign,nonatomic) NSInteger selectIndex;
+@property (strong,nonatomic) NSMutableArray* localPhoneArray;
 
-@property (strong, nonatomic) NotstringView *phoneNotView;//手机提醒
-@property (strong, nonatomic) NotstringView *weChatNotView;//微信提醒
+@property (strong,nonatomic) NotstringView *phoneNotView;//手机提醒
+@property (strong,nonatomic) NotstringView *weChatNotView;//微信提醒
 
 @end
 
 @implementation AddFriendViewController
+
+- (void)dealloc
+{
+    _datasource = nil;
+    _localPhoneArray = nil;
+    _phoneNotView = nil;
+    _weChatNotView = nil;
+}
 
 /**
  *  手机通讯录授权提醒
@@ -290,10 +300,9 @@
     self.datasource = _selectIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
     if(_datasource.count == 0){
         if (_selectIndex == 0) {
-            [_weChatNotView removeFromSuperview];
             [self.view addSubview:self.phoneNotView];
+            [self.view sendSubviewToBack:_phoneNotView];
         }else{
-            [_phoneNotView removeFromSuperview];
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
         }
@@ -329,30 +338,34 @@
         //通讯录联系人
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-    //这个只会在第一次访问时调用
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-        dispatch_semaphore_signal(sema);
-        NSMutableArray *address = [NSMutableArray array];
-        if (greanted) {
-            //获取通讯录
-            address = [WLTool getAddressBookArray];
-        }
-        
-        [WLHttpTool uploadPhonebookParameterDic:address success:^(id JSON) {
-            [WLHUDView hiddenHud];
-            for (NSDictionary *dic in JSON) {
-                //保存到数据库
-                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
+    // 2) 在全局队列上异步调用方法，加载并更新图像
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //询问调用通讯录
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+        dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+        //这个只会在第一次访问时调用
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+            dispatch_semaphore_signal(sema);
+            if (!_localPhoneArray) {
+                self.localPhoneArray = [WLTool getAddressBookArray];
             }
             
-            [self.refreshControl endRefreshing];
-            [self reloadUIData];
-        } fail:^(NSError *error) {
-            [self.refreshControl endRefreshing];
-//            [UIAlertView showWithError:error];
-        }];
+            [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
+                [WLHUDView hiddenHud];
+                for (NSDictionary *dic in JSON) {
+                    //保存到数据库
+                    [NeedAddUser createNeedAddUserWithDict:dic withType:1];
+                }
+                
+                [self.refreshControl endRefreshing];
+                // 3) 设置UI
+                [self reloadUIData];
+            } fail:^(NSError *error) {
+                [self.refreshControl endRefreshing];
+            }];
+            
+        });
+        CFRelease(addressBookRef);
     });
 }
 
