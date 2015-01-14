@@ -402,36 +402,39 @@
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    if(type == 0){
-        //发送邀请
-        DLog(@"发送邀请");
-        if (needAddUser.userType.integerValue == 1) {
-            //手机联系人  发送短信邀请
-            [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
-        }
-    }else if(type != 1){
-        //添加
-        DLog(@"添加好友");
-        //添加好友，发送添加成功，状态变成待验证
-        LogInUser *loginUser = [LogInUser getNowLogInUser];
-        UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",needAddUser.wlname]];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
-        [alert bk_addButtonWithTitle:@"取消" handler:nil];
-        [alert bk_addButtonWithTitle:@"发送" handler:^{
-            //发送好友请求
-            [WLHttpTool requestFriendParameterDic:@{@"fid":needAddUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                //发送邀请成功，修改状态，刷新列表
-                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
-                //改变数组，刷新列表
-                [_datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
-                //刷新列表
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
+    if(needAddUser.uid){
+        if(type != 1){
+            //添加
+            DLog(@"添加好友");
+            //添加好友，发送添加成功，状态变成待验证
+            LogInUser *loginUser = [LogInUser getNowLogInUser];
+            UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",needAddUser.wlname]];
+            [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+            [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
+            [alert bk_addButtonWithTitle:@"取消" handler:nil];
+            [alert bk_addButtonWithTitle:@"发送" handler:^{
+                //发送好友请求
+                [WLHttpTool requestFriendParameterDic:@{@"fid":needAddUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+                    //发送邀请成功，修改状态，刷新列表
+                    NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+                    //改变数组，刷新列表
+                    [_datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                    //刷新列表
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                } fail:^(NSError *error) {
+                    
+                }];
             }];
-        }];
-        [alert show];
+            [alert show];
+        }
+    }else{
+        //非系统好友 发送邀请
+        DLog(@"发送邀请");
+        //手机联系人  发送短信邀请
+        [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+//        if (needAddUser.userType.integerValue == 1) {
+//            
+//        }
     }
 }
 

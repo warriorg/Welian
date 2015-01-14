@@ -102,13 +102,13 @@
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     LogInUser *loginUser = [LogInUser getNowLogInUser];
     //系统非好友联系人
-    NSArray *systemNoFriendArray = [[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"friendship" equals:@"2"] orderBy:@"pinyin" ascending:YES] results];
+    NSArray *systemNoFriendArray = [[[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"uid" isNotNull:YES] where:@"friendship" doesntEqual:@"1"] orderBy:@"pinyin" ascending:YES] results];
     
     //系统好友联系人
-    NSArray *systemFriendArray = [[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"friendship" equals:@"1"] orderBy:@"pinyin" ascending:YES] results];
+    NSArray *systemFriendArray = [[[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"uid" isNotNull:YES] where:@"friendship" equals:@"1"] orderBy:@"pinyin" ascending:YES] results];
     
-    //获取按照首字母排序的，其他联系人
-    NSArray *otherUserArray = [[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"friendship" equals:@"0"] orderBy:@"pinyin" ascending:YES] results];
+    //获取按照首字母排序的，非系统的联系人
+    NSArray *otherUserArray = [[[[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:loginUser] where:@"userType" equals:@(type).stringValue] where:@"uid" isNull:YES] orderBy:@"pinyin" ascending:YES] results];
     
     //排序
     NSMutableArray *arrayForArrays = [NSMutableArray array];
