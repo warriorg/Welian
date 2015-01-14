@@ -124,9 +124,13 @@
         //修改聊天状态
         MyFriendUser *friendUser = _datasource[indexPath.row];
         [friendUser updateIsChatStatus:NO];
+        
+        //更新当前聊天的所有消息为已读状态
+        [friendUser updateAllMessageReadStatus];
         //刷新列表
         self.datasource = [[LogInUser getNowLogInUser] chatUsers];
         [self.tableView reloadData];
+        
 //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 //        [(NSMutableArray *)_datasource removeObjectAtIndex:indexPath.row];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
