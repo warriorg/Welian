@@ -191,45 +191,46 @@
     _operateBtn.layer.borderWidth = 0.f;
     _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    switch (_needAddUser.friendship.integerValue) {
-        case 0:
-        {
-            [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
-            [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
-            _operateBtn.backgroundColor = [UIColor clearColor];
-            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if (_needAddUser.uid) {
+        switch (_needAddUser.friendship.integerValue) {
+            case 1:
+            {
+                [_operateBtn setTitle:@"已添加" forState:UIControlStateNormal];
+                [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                _operateBtn.backgroundColor = [UIColor clearColor];
+            }
+                break;
+            case 0:
+            case 2:
+            {
+                //添加
+                [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
+                [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                //圆角
+                _operateBtn.layer.cornerRadius = 5.f;
+                _operateBtn.layer.masksToBounds = YES;
+                _operateBtn.layer.borderWidth = 0.5;
+                _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
+                _operateBtn.backgroundColor = BtnTianJiaColor;
+                [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            }
+                break;
+            case 4:
+            {
+                [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
+                [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                _operateBtn.backgroundColor = [UIColor clearColor];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 1:
-        {
-            [_operateBtn setTitle:@"已添加" forState:UIControlStateNormal];
-            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            _operateBtn.backgroundColor = [UIColor clearColor];
-        }
-            break;
-        case 2:
-        {
-            //添加
-            [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
-            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            //圆角
-            _operateBtn.layer.cornerRadius = 5.f;
-            _operateBtn.layer.masksToBounds = YES;
-            _operateBtn.layer.borderWidth = 0.5;
-            _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
-            _operateBtn.backgroundColor = BtnTianJiaColor;
-            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        }
-            break;
-        case 4:
-        {
-            [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
-            [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            _operateBtn.backgroundColor = [UIColor clearColor];
-        }
-            break;
-        default:
-            break;
+    }else{
+        //非系统好友
+        [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
+        [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
+        _operateBtn.backgroundColor = [UIColor clearColor];
+        [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
