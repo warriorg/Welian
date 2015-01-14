@@ -339,7 +339,7 @@
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
     // 2) 在全局队列上异步调用方法，加载并更新图像
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //询问调用通讯录
         ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
         dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -351,23 +351,27 @@
             }
             
             [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
-                [WLHUDView hiddenHud];
-                
-                for (NSDictionary *dic in JSON) {
-                    //保存到数据库
-                    [NeedAddUser createNeedAddUserWithDict:dic withType:1];
-                }
-                
-                [self.refreshControl endRefreshing];
-                // 3) 设置UI
-                [self reloadUIData];
+                // 2) 在全局队列上异步调用方法，加载并更新图像
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    for (NSDictionary *dic in JSON) {
+                        //保存到数据库
+                        [NeedAddUser createNeedAddUserWithDict:dic withType:1];
+                    }
+                    // 3) 在在主线程队列中，调用异步方法设置UI
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        [WLHUDView hiddenHud];
+                        [self.refreshControl endRefreshing];
+                        // 3) 设置UI
+                        [self reloadUIData];
+                    });
+                });
             } fail:^(NSError *error) {
                 [self.refreshControl endRefreshing];
             }];
             
         });
         CFRelease(addressBookRef);
-    });
+//    });
 }
 
 /**
@@ -380,13 +384,20 @@
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
-                                     [WLHUDView hiddenHud];
-                                     for (NSDictionary *dic in JSON) {
-                                         //保存到数据库
-                                         [NeedAddUser createNeedAddUserWithDict:dic withType:2];
-                                     }
-                                     [self.refreshControl endRefreshing];
-                                     [self reloadUIData];
+                                     // 2) 在全局队列上异步调用方法，加载并更新图像
+                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                         for (NSDictionary *dic in JSON) {
+                                             //保存到数据库
+                                             [NeedAddUser createNeedAddUserWithDict:dic withType:2];
+                                         }
+                                         // 3) 在在主线程队列中，调用异步方法设置UI
+                                         dispatch_sync(dispatch_get_main_queue(), ^{
+                                             [WLHUDView hiddenHud];
+                                             [self.refreshControl endRefreshing];
+                                             // 3) 设置UI
+                                             [self reloadUIData];
+                                         });
+                                     });
                                  } fail:^(NSError *error) {
                                      [self.refreshControl endRefreshing];
                                  }];
