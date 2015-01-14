@@ -103,7 +103,7 @@
     
     //下拉刷新
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(getPhoneAllFriends) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
     //默认加载的数据
@@ -268,7 +268,7 @@
     //先刷新页面
     [self reloadUIData];
     //调用接口
-    if (index == 0) {
+    if (_selectIndex == 0) {
         //获取通讯录好友
         [self getPhoneAllFriends];
     }else{
