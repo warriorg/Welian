@@ -41,7 +41,7 @@
 @end
 
 @implementation AppDelegate
-
+single_implementation(AppDelegate)
 BMKMapManager* _mapManager;
 
 

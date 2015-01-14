@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GexinSdk.h"
-
+#import "Singleton.h"
 
 typedef enum {
     SdkStatusStoped,
@@ -20,6 +20,8 @@ typedef enum {
 {
     NSString *_deviceToken;
 }
+
+single_interface(AppDelegate)
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) GexinSdk *gexinPusher;
@@ -39,5 +41,8 @@ typedef enum {
 - (void)setDeviceToken:(NSString *)aToken;
 - (BOOL)setTags:(NSArray *)aTag error:(NSError **)error;
 - (NSString *)sendMessage:(NSData *)body error:(NSError **)error;
+
+// 退出登录
+- (void)logout;
 
 @end
