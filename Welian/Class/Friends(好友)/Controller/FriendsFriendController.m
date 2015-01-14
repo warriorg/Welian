@@ -158,7 +158,11 @@ static NSString *identifier = @"investorcellid";
         [labestr appendString:@"可为您引荐"];
     }
     [cell.caseLabel setText:labestr];
-    
+    if (friendinfoM.investorauth.integerValue==1) {
+        [cell.investorauthImage setHidden:NO];
+    }else{
+        [cell.investorauthImage setHidden:YES];
+    }
     return cell;
 }
 

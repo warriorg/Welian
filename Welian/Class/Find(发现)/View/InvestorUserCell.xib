@@ -55,6 +55,9 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="me_mycard_tou_big.png" translatesAutoresizingMaskIntoConstraints="NO" id="IH6-4f-1LL">
+                        <rect key="frame" x="40" y="46" width="15" height="15"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kQ6-ff-G78" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="5n1-X2-4Pf"/>
@@ -79,11 +82,15 @@
                 <outlet property="caseLabel" destination="ugG-SI-7e4" id="UZF-fy-HaA"/>
                 <outlet property="iconImage" destination="kQ6-ff-G78" id="h44-bS-7F5"/>
                 <outlet property="infoLabel" destination="UbO-VV-w7G" id="xkW-dn-fwW"/>
+                <outlet property="investorauthImage" destination="IH6-4f-1LL" id="N0j-c2-Sv7"/>
                 <outlet property="nameLabel" destination="A8q-Eh-4OC" id="YXz-Al-OoJ"/>
             </connections>
-            <point key="canvasLocation" x="171" y="171.5"/>
+            <point key="canvasLocation" x="90" y="151.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="me_mycard_tou_big.png" width="15" height="15"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

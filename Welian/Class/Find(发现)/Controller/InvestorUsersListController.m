@@ -89,7 +89,6 @@ static NSString *identifier = @"investorcellid";
     if (self) {
         
         self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
-
     }
     return self;
 }
@@ -117,10 +116,10 @@ static NSString *identifier = @"investorcellid";
     [self.tableView setFooterHidden:YES];
     [self.tableView setBackgroundColor:WLLineColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
-//    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
-    [self.searchDisplayVC.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+//    [self.searchDisplayVC.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
     [self loadNewDataArray];
 }
@@ -156,7 +155,11 @@ static NSString *identifier = @"investorcellid";
     [cell.nameLabel setText:invesM.name];
     [cell.infoLabel setText:[NSString stringWithFormat:@"%@  %@",invesM.position,invesM.company]];
     [cell.caseLabel setText:[NSString stringWithFormat:@"投资案例:%@",invesM.items?invesM.items:@"暂无"]];
-    
+    if (invesM.investorauth.integerValue==1) {
+        [cell.investorauthImage setHidden:NO];
+    }else{
+        [cell.investorauthImage setHidden:YES];
+    }
     return cell;
 }
 
