@@ -99,13 +99,9 @@
             [self presentViewController:BSearchFVC animated:YES completion:^{
                 [self.navigationController popToRootViewControllerAnimated:NO];
             }];
-
-            
-//            //进入主页面
-//            MainViewController *mainVC = [[MainViewController alloc] init];
-//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         }
     } fail:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.domain];
         if (error.code==1) {
             
         }else if (error.code==-1){

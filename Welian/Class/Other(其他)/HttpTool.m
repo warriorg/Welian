@@ -8,6 +8,7 @@
 
 #import "HttpTool.h"
 #import "WLHUDView.h"
+#import "AppDelegate.h"
 
 @interface HttpTool()
 {
@@ -109,7 +110,10 @@ static HttpTool *engine;
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([[NSError alloc] init]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
+            [[self operationQueue] cancelAllOperations];
+            [[AppDelegate sharedAppDelegate] logout];
+            failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
             _seleDic = parameterDic;
             
         }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
