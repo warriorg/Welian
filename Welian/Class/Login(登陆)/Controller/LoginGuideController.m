@@ -13,6 +13,8 @@
 #import "UIImage+ImageEffects.h"
 #import "MainViewController.h"
 #import "MJExtension.h"
+#import "LoginPhoneVC.h"
+#import "SignInPhoneController.h"
 
 @interface LoginGuideController () <UIScrollViewDelegate>
 {
@@ -33,9 +35,9 @@
     [scrollView setAlwaysBounceHorizontal:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setShowsHorizontalScrollIndicator:NO];
-    CGFloat imageY = 50;
-    CGFloat butY = 25;
-    CGFloat PageY = 0;
+    CGFloat imageY = 40;
+    CGFloat butY = 45;
+    CGFloat PageY = 10;
     if (Iphone5){
         imageY += 50;
         butY += 10;
@@ -80,7 +82,8 @@
     // 设置分页控件监听方法
     [page addTarget:self action:@selector(updatepagechangen:) forControlEvents:UIControlEventValueChanged]; // 页码的变化
     
-    UIButton *authBut = [[UIButton alloc] initWithFrame:CGRectMake(25, SuperSize.height-butY-44, SuperSize.width-50, 44)];
+    // 微信登陆
+    UIButton *authBut = [[UIButton alloc] initWithFrame:CGRectMake(25, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
     [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
     [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
     [authBut setImage:[UIImage imageNamed:@"login_wechat_logo"] forState:UIControlStateNormal];
@@ -89,18 +92,49 @@
     [authBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     [authBut addTarget:self action:@selector(authButClickWexing) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:authBut];
+    
+    // 手机登陆
+    UIButton *phongBut = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(authBut.frame)+20, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
+    [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
+    [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
+    [phongBut setTitle:@"手机登陆" forState:UIControlStateNormal];
+    [phongBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [phongBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    [phongBut addTarget:self action:@selector(phoneLoginButClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:phongBut];
+    
+    // 注册新用户
+    UIButton *registBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.center.x-45, SuperSize.height-40, 90, 30)];
+    [registBut.titleLabel setFont:WLFONT(13)];
+    [registBut setTitle:@"新用户注册" forState:UIControlStateNormal];
+    [registBut setTitleColor:WLRGB(173, 173, 173) forState:UIControlStateNormal];
+    [registBut addTarget:self action:@selector(registerNewButClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:registBut];
 }
 
+// 注册新用户
+- (void)registerNewButClick
+{
+    SignInPhoneController *signInVC = [[SignInPhoneController alloc] init];
+    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:signInVC];
+    [self presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
+
+// 手机登陆
+- (void)phoneLoginButClick
+{
+    LoginPhoneVC *loginPhong = [[LoginPhoneVC alloc] init];
+    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:loginPhong];
+    [self presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
+
+// 微信登陆
 - (void)authButClickWexing
 {
-//    PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
-////    [perfcetInfoVC setUserInfoDic:[userInfo sourceData]];
-//    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
-//    [self presentViewController:nav animated:YES completion:^{
-//        
-//    }];
-    
-
     //取消授权
     [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
     

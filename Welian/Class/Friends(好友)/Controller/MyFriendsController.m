@@ -110,7 +110,7 @@ static NSString *fridcellid = @"fridcellid";
     [footLabel setBackgroundColor:[UIColor clearColor]];
     [footLabel setTextColor:[UIColor lightGrayColor]];
     [footLabel setFont:[UIFont systemFontOfSize:15]];
-    [footLabel setText:[NSString stringWithFormat:@"%d位好友",_count]];
+    [footLabel setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
     [footLabel setTextAlignment:NSTextAlignmentCenter];
     [self.tableView setTableFooterView:footLabel];
     

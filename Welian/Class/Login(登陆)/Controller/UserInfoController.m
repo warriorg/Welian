@@ -104,7 +104,7 @@
                     UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                     [mode setCheckcode:self.pwdString];
                     [LogInUser createLogInUserModel:mode];
-
+                    
                     MainViewController *mainVC = [[MainViewController alloc] init];
                     [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                 }

@@ -482,8 +482,6 @@
 #pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
-    
     NSArray *myFriends = [MyFriendUser getAllMyFriendUsers];
     if (isSQL) {
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
@@ -491,45 +489,49 @@
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
-            NSArray  *json = [NSArray arrayWithArray:JSON];
-//            NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
+            // 获取全局列队
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
-            //循环，删除本地数据库多余的缓存数据
-            for (int i = 0; i < [myFriends count]; i++){
-                MyFriendUser *myFriendUser = myFriends[i];
-                //判断返回的数组是否包含
-                BOOL isHave = [json bk_any:^BOOL(id obj) {
-                    //判断是否包含对应的
-                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
-                }];
-                if(!isHave){
-                    //删除新的好友本地数据库
-                    NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:myFriendUser.uid];
-                    if (newFuser) {
-                        //更新好友请求列表数据为 添加
-                        [newFuser updateOperateType:0];
-                    }
-                    
-                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
-                    if(myFriendUser.uid.integerValue > 100){
-                        //不包含，删除当前数据
-                        [myFriendUser delete];
+            // 2) 在全局队列上异步调用方法，加载并更新图像
+            dispatch_async(queue, ^{
+                NSArray  *json = [NSArray arrayWithArray:JSON];
+                
+                //循环，删除本地数据库多余的缓存数据
+                for (int i = 0; i < [myFriends count]; i++){
+                    MyFriendUser *myFriendUser = myFriends[i];
+                    //判断返回的数组是否包含
+                    BOOL isHave = [json bk_any:^BOOL(id obj) {
+                        //判断是否包含对应的
+                        return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
+                    }];
+                    if(!isHave){
+                        //删除新的好友本地数据库
+                        NewFriendUser *newFuser = [NewFriendUser getNewFriendUserWithUid:myFriendUser.uid];
+                        if (newFuser) {
+                            //更新好友请求列表数据为 添加
+                            [newFuser updateOperateType:0];
+                        }
+                        
+                        //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+                        if(myFriendUser.uid.integerValue > 100){
+                            //不包含，删除当前数据
+                            [myFriendUser delete];
+                        }
                     }
                 }
-            }
-            
-            NSArray *myFriends = [NSArray array];
-            if (json.count) {
-                //循环添加数据库数据
-                for (NSDictionary *modic in json) {
-                    FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
-                    [MyFriendUser createMyFriendUserModel:friendM];
-//                    [mutabArray addObject:friendM];
+                
+                NSArray *myFriends = [NSArray array];
+                if (json.count) {
+                    //循环添加数据库数据
+                    for (NSDictionary *modic in json) {
+                        FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                        [MyFriendUser createMyFriendUserModel:friendM];
+                        //                    [mutabArray addObject:friendM];
+                    }
+                    myFriends = [MyFriendUser getAllMyFriendUsers];
                 }
-                myFriends = [MyFriendUser getAllMyFriendUsers];
-            }
-            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:myFriends]});
-//            succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:mutabArray]});
+                succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:myFriends]});
+            });
             
         } failure:^(NSError *error) {
             failurBlock(error);

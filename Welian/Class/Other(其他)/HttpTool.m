@@ -11,9 +11,7 @@
 #import "AppDelegate.h"
 
 @interface HttpTool()
-{
-    NSDictionary *_seleDic;
-}
+
 @end
 
 @implementation HttpTool
@@ -57,11 +55,8 @@ static HttpTool *engine;
 
             success([dic objectForKey:@"data"]);
         }else if([[dic objectForKey:@"state"] integerValue]==1){ // 失败
-//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:1 userInfo:nil]);
-            
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-//            [WLHUDView showErrorHUD:@"senddidddd超时"];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
         }else if ([[dic objectForKey:@"state"] integerValue]==-1){
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-1 userInfo:nil]);
@@ -93,8 +88,9 @@ static HttpTool *engine;
     LogInUser *mode = [LogInUser getNowLogInUser];
     NSString *sessid = mode.sessionid;
     if (!sessid) {
-        sessid = [UserDefaults objectForKey:@"SID"];
+        sessid = [UserDefaults objectForKey:@"sid"];
     }
+    if (!sessid)  return;
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
 
@@ -114,7 +110,6 @@ static HttpTool *engine;
             [[self operationQueue] cancelAllOperations];
             [[AppDelegate sharedAppDelegate] logout];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
-            _seleDic = parameterDic;
             
         }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];

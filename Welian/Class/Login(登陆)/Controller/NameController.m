@@ -76,6 +76,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [self.searchQueue cancelAllOperations];
     if (_isSave) {
         _userBlock(self.searchTextField.text);
     }
@@ -164,26 +165,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.1f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section) {
-        return 40.0;
-    }
-        return 20.0;
-}
-
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section&&self.dataArray.count) {
-        UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
-        sectionHeader.font = [UIFont systemFontOfSize:16];
-        sectionHeader.textColor = [UIColor grayColor];
-        sectionHeader.text = [NSString stringWithFormat:@"    你是不是要找："];
-        return sectionHeader;
-    }
-    return nil;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
