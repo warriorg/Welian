@@ -97,6 +97,7 @@
     UIButton *phongBut = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(authBut.frame)+20, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
+    [phongBut setImage:[UIImage imageNamed:@"login_phone_logo"] forState:UIControlStateNormal];
     [phongBut setTitle:@"手机登陆" forState:UIControlStateNormal];
     [phongBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [phongBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
@@ -105,8 +106,8 @@
     
     // 注册新用户
     UIButton *registBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.center.x-45, SuperSize.height-40, 90, 30)];
-    [registBut.titleLabel setFont:WLFONT(13)];
-    [registBut setTitle:@"新用户注册" forState:UIControlStateNormal];
+    [registBut.titleLabel setFont:WLFONT(14)];
+    [registBut setTitle:@"手机注册" forState:UIControlStateNormal];
     [registBut setTitleColor:WLRGB(173, 173, 173) forState:UIControlStateNormal];
     [registBut addTarget:self action:@selector(registerNewButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registBut];
