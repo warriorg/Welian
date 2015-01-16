@@ -28,7 +28,7 @@
 @property (strong,nonatomic) NotstringView *phoneNotView;//手机提醒
 @property (strong,nonatomic) NotstringView *weChatNotView;//微信提醒
 
-@property (strong,nonatomic) NSOperationQueue *operationQueue;
+//@property (strong,nonatomic) NSOperationQueue *operationQueue;
 @property (assign,nonatomic) BOOL canOpenAddress;//是否可以打开通讯录
 
 @end
@@ -41,7 +41,7 @@
     _localPhoneArray = nil;
     _phoneNotView = nil;
     _weChatNotView = nil;
-    _operationQueue = nil;
+//    _operationQueue = nil;
 }
 
 /**
@@ -49,14 +49,14 @@
  *
  *  @return 返回队操作
  */
-- (NSOperationQueue *)operationQueue
-{
-    if (!_operationQueue) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;//设置线程最大操作数
-    }
-    return _operationQueue;
-}
+//- (NSOperationQueue *)operationQueue
+//{
+//    if (!_operationQueue) {
+//        _operationQueue = [[NSOperationQueue alloc] init];
+//        _operationQueue.maxConcurrentOperationCount = 1;//设置线程最大操作数
+//    }
+//    return _operationQueue;
+//}
 
 /**
  *  手机通讯录授权提醒
@@ -315,7 +315,7 @@
     
     //调用接口
     //取消线程
-    [_operationQueue cancelAllOperations];
+//    [_operationQueue cancelAllOperations];
     if (_selectIndex == 0) {
         if (_canOpenAddress) {
             //获取通讯录好友
@@ -398,7 +398,7 @@
 - (void)getPhoneData
 {
     [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
-        [self.operationQueue addOperationWithBlock:^{
+//        [self.operationQueue addOperationWithBlock:^{
 //            DLog(@"------------->Block");
             for (NSDictionary *dic in JSON) {
                 //保存到数据库
@@ -406,15 +406,15 @@
             }
             
             // 在在主线程队列中，调用异步方法设置UI
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
 //                [MOC save];
-                WEAKSELF
+//                WEAKSELF
                 [WLHUDView hiddenHud];
-                [weakSelf.refreshControl endRefreshing];
+                [self.refreshControl endRefreshing];
                 // 3) 设置UI
-                [weakSelf reloadUIData];
-            }];
-        }];
+                [self reloadUIData];
+//            }];
+//        }];
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
     }];
@@ -431,7 +431,7 @@
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
                                      //异步处理
-                                     [self.operationQueue addOperationWithBlock:^{
+//                                     [self.operationQueue addOperationWithBlock:^{
                                          //删除本地数据库微信数据
                                          NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUserWithType:2];
                                          
@@ -454,13 +454,13 @@
                                              [NeedAddUser createNeedAddUserWithDict:dic withType:2];
                                          }
                                          // 在在主线程队列中，调用异步方法设置UI
-                                         dispatch_sync(dispatch_get_main_queue(), ^{
+//                                         dispatch_sync(dispatch_get_main_queue(), ^{
                                              [WLHUDView hiddenHud];
                                              [self.refreshControl endRefreshing];
                                              // 3) 设置UI
                                              [self reloadUIData];
-                                         });
-                                     }];
+//                                         });
+//                                     }];
                                  } fail:^(NSError *error) {
                                      [self.refreshControl endRefreshing];
                                  }];
@@ -477,7 +477,7 @@
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     //取消线程
-    [_operationQueue cancelAllOperations];
+//    [_operationQueue cancelAllOperations];
 //    _operationQueue = nil;
     if(needAddUser.uid){
         if(type != 1){
