@@ -34,9 +34,28 @@
 	if (self) {
 		initialType = [NSSQLiteStoreType retain];
 		storePath = [[[self applicationDocumentsDirectory] stringByAppendingPathComponent:self.dbNameWithExt] retain];
+        
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mocDidSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+//        [self setupSaveNotification];
 	}
 	return self;
 }
+
+- (void)setupSaveNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification* note) {
+                                                      NSManagedObjectContext *moc = self.threadManagedObjectContext;
+                                                      if (note.object != moc) {
+                                                          [moc performBlock:^(){
+                                                              [moc mergeChangesFromContextDidSaveNotification:note];
+                                                          }];
+                                                      }
+                                                  }];
+}
+
 
 - (NSString *)dbName {
     
@@ -83,7 +102,10 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
         threadManagedObjectContext = [[NSManagedObjectContext alloc] init];
+//        threadManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+//        threadManagedObjectContext.undoManager = nil;
         [threadManagedObjectContext setPersistentStoreCoordinator:coordinator];
+//        [threadManagedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     }
     return threadManagedObjectContext;
 }
@@ -182,6 +204,7 @@
 - (void)initContext {
     
     [self saveContext];
+
     
     [managedObjectContext autorelease];
     managedObjectContext = nil;
@@ -199,6 +222,24 @@
         return [self threadManagedObjectContext];
     }
 }
+
+//- (void)mocDidSaveNotification:(NSNotification *)notification
+//{
+//    NSManagedObjectContext *savedContext = [notification object];
+//    
+//    if (savedContext == self.contextForCurrentThread) {
+//        return ;
+//    }
+//    
+//    if (savedContext.persistentStoreCoordinator != self.persistentStoreCoordinator) {
+//        return ;
+//    }
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"Merge changes from other context.\n");
+//        [self.contextForCurrentThread mergeChangesFromContextDidSaveNotification:notification];
+//    });
+//}
 
 #pragma mark - Private
 

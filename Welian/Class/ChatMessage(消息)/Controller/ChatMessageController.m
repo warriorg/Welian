@@ -33,6 +33,19 @@
     return _notHasDataView;
 }
 
+- (instancetype)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        //添加聊天用户改变监听
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+        
+        //如果是从好友列表进入聊天，首页变换
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -52,12 +65,6 @@
         [self.tableView addSubview:self.notHasDataView];
         [self.tableView sendSubviewToBack:_notHasDataView];
     }
-    
-    //添加聊天用户改变监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
-    
-    //如果是从好友列表进入聊天，首页变换
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

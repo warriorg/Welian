@@ -38,9 +38,9 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    _nameLabel.text = nil;
-    _messageLabel.text = nil;
-    _logoImageView.image = nil;
+//    _nameLabel.text = nil;
+//    _messageLabel.text = nil;
+//    _logoImageView.image = nil;
 }
 
 - (void)dealloc

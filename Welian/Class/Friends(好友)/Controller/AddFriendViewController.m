@@ -28,6 +28,9 @@
 @property (strong,nonatomic) NotstringView *phoneNotView;//手机提醒
 @property (strong,nonatomic) NotstringView *weChatNotView;//微信提醒
 
+@property (strong,nonatomic) NSOperationQueue *operationQueue;
+@property (assign,nonatomic) BOOL canOpenAddress;//是否可以打开通讯录
+
 @end
 
 @implementation AddFriendViewController
@@ -38,6 +41,21 @@
     _localPhoneArray = nil;
     _phoneNotView = nil;
     _weChatNotView = nil;
+    _operationQueue = nil;
+}
+
+/**
+ *  初始化队列
+ *
+ *  @return 返回队操作
+ */
+- (NSOperationQueue *)operationQueue
+{
+    if (!_operationQueue) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;//设置线程最大操作数
+    }
+    return _operationQueue;
 }
 
 /**
@@ -100,6 +118,9 @@
     //返回不取消接口调用
     self.needlessCancel = YES;
     
+    self.datasource = [NSMutableArray array];
+    self.localPhoneArray = [NSMutableArray array];
+    
     //更新所有待验证的消息为需要发送好友请求状态
     [[LogInUser getNowLogInUser] updateAllNeedAddFriendOperateStatus];
     
@@ -116,14 +137,24 @@
     [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+    //这个只会在第一次访问时调用
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+        dispatch_semaphore_signal(sema);
+        self.canOpenAddress = greanted;
+        //默认加载的数据
+        [self changeDataWithIndex:_selectIndex];
+    });
+    
     //默认加载的数据
-    [self changeDataWithIndex:_selectIndex];
+//    [self changeDataWithIndex:_selectIndex];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (_segmentedControl.selectedSegmentIndex == 0) {
+    if (_selectIndex == 0) {
         //手机联系人
         return 1;
     }else{
@@ -135,7 +166,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //微信联系人
-    if (_segmentedControl.selectedSegmentIndex == 1 && section == 0) {
+    if (_selectIndex == 1 && section == 0) {
         return 1;
     }else{
         return _datasource.count;
@@ -153,7 +184,7 @@
     }
     
     cell.indexPath = indexPath;
-    if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
+    if (_selectIndex == 1 && indexPath.section == 0) {
         //邀请好友
         cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
     }else{
@@ -170,7 +201,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (_segmentedControl.selectedSegmentIndex == 1 && indexPath.section == 0) {
+    if (_selectIndex == 1 && indexPath.section == 0) {
         //微信邀请
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_addButtonWithTitle:@"微信好友" handler:^{
@@ -216,7 +247,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (_segmentedControl.selectedSegmentIndex == 1 && section > 0) {
+    if (_selectIndex == 1 && section > 0) {
         return 10.f;
     }else{
         return 0.01f;
@@ -235,22 +266,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_datasource.count > 0) {
-        NeedAddUser *needAddUser = _datasource[indexPath.row];
-        NSString *name = @"";
-        NSString *msg = @"";
-        if (needAddUser.userType.integerValue == 1) {
-            //手机联系人
-            name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
-            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",needAddUser.name];
-        }else{
-            //微信联系人
-            name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
-            msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname];
-        }
-        return [NewFriendViewCell configureWithName:name message:msg];
+    if (_selectIndex == 1 && indexPath.section > 0) {
+        return 60;
     }else{
-        return 60.f;
+        if (_datasource.count > 0) {
+            NeedAddUser *needAddUser = _datasource[indexPath.row];
+            NSString *name = @"";
+            NSString *msg = @"";
+            if (needAddUser.userType.integerValue == 1) {
+                //手机联系人
+                name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
+                msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"手机号码：%@",needAddUser.mobile] : [NSString stringWithFormat:@"手机联系人：%@",needAddUser.name];
+            }else{
+                //微信联系人
+                name = needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name;
+                msg = needAddUser.friendship.integerValue == 0 ? [NSString stringWithFormat:@"微信好友：%@",needAddUser.wlname.length > 0 ? needAddUser.wlname : needAddUser.name] : [NSString stringWithFormat:@"微信好友：%@",needAddUser.name.length > 0 ? needAddUser.name : needAddUser.wlname];
+            }
+            return [NewFriendViewCell configureWithName:name message:msg];
+        }else{
+            return 60.f;
+        }
     }
 }
 
@@ -277,10 +312,17 @@
 //    [self refreshAnimation];
     //先刷新页面
     [self reloadUIData];
+    
     //调用接口
+    //取消线程
+    [_operationQueue cancelAllOperations];
     if (_selectIndex == 0) {
-        //获取通讯录好友
-        [self getPhoneAllFriends];
+        if (_canOpenAddress) {
+            //获取通讯录好友
+            [self getPhoneAllFriends];
+        }else{
+            [self.refreshControl endRefreshing];
+        }
     }else{
         //获取微信好友
         [self getWxFriends];
@@ -296,13 +338,20 @@
     [_phoneNotView removeFromSuperview];
     [_weChatNotView removeFromSuperview];
     
-    //获取通讯录好友
-    self.datasource = _selectIndex == 0 ? [NeedAddUser allNeedAddUserWithType:1] : [NeedAddUser allNeedAddUserWithType:2];
-    if(_datasource.count == 0){
-        if (_selectIndex == 0) {
+    if (_selectIndex == 0) {
+        //不能访问通讯录,显示提醒
+        if(!_canOpenAddress){
+            self.datasource = [NSMutableArray array];
             [self.view addSubview:self.phoneNotView];
             [self.view sendSubviewToBack:_phoneNotView];
         }else{
+            //手机通讯录
+            self.datasource = [NeedAddUser allNeedAddUserWithType:1];
+        }
+    }else{
+        //微信
+        self.datasource = [NeedAddUser allNeedAddUserWithType:2];
+        if(_datasource.count == 0){
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
         }
@@ -338,40 +387,37 @@
         //通讯录联系人
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
-    // 2) 在全局队列上异步调用方法，加载并更新图像
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //询问调用通讯录
-        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-        dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-        //这个只会在第一次访问时调用
-        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-            dispatch_semaphore_signal(sema);
-            if (!_localPhoneArray) {
-                self.localPhoneArray = [WLTool getAddressBookArray];
+    if (!_localPhoneArray || _localPhoneArray.count == 0) {
+        self.localPhoneArray = [WLTool getAddressBookArray];
+    }
+    
+    //调用数据库接口
+    [self getPhoneData];
+}
+
+- (void)getPhoneData
+{
+    [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
+        [self.operationQueue addOperationWithBlock:^{
+//            DLog(@"------------->Block");
+            for (NSDictionary *dic in JSON) {
+                //保存到数据库
+                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
             }
             
-            [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
-                // 2) 在全局队列上异步调用方法，加载并更新图像
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    for (NSDictionary *dic in JSON) {
-                        //保存到数据库
-                        [NeedAddUser createNeedAddUserWithDict:dic withType:1];
-                    }
-                    // 3) 在在主线程队列中，调用异步方法设置UI
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        [WLHUDView hiddenHud];
-                        [self.refreshControl endRefreshing];
-                        // 3) 设置UI
-                        [self reloadUIData];
-                    });
-                });
-            } fail:^(NSError *error) {
-                [self.refreshControl endRefreshing];
+            // 在在主线程队列中，调用异步方法设置UI
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                [MOC save];
+                WEAKSELF
+                [WLHUDView hiddenHud];
+                [weakSelf.refreshControl endRefreshing];
+                // 3) 设置UI
+                [weakSelf reloadUIData];
             }];
-            
-        });
-        CFRelease(addressBookRef);
-//    });
+        }];
+    } fail:^(NSError *error) {
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 /**
@@ -384,20 +430,37 @@
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
-                                     // 2) 在全局队列上异步调用方法，加载并更新图像
-                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                     //异步处理
+                                     [self.operationQueue addOperationWithBlock:^{
+                                         //删除本地数据库微信数据
+                                         NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUserWithType:2];
+                                         
+                                         //循环，删除本地数据库多余的缓存数据
+                                         for (int i = 0; i < [wxAddUser count]; i++){
+                                             NeedAddUser *addUser = wxAddUser[i];
+                                             //判断返回的数组是否包含
+                                             BOOL isHave = [JSON bk_any:^BOOL(id obj) {
+                                                 //判断是否包含对应的
+                                                 return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue;
+                                             }];
+                                             if(!isHave){
+                                                 //删除
+                                                 [addUser delete];
+                                             }
+                                         }
+                                         
                                          for (NSDictionary *dic in JSON) {
                                              //保存到数据库
                                              [NeedAddUser createNeedAddUserWithDict:dic withType:2];
                                          }
-                                         // 3) 在在主线程队列中，调用异步方法设置UI
+                                         // 在在主线程队列中，调用异步方法设置UI
                                          dispatch_sync(dispatch_get_main_queue(), ^{
                                              [WLHUDView hiddenHud];
                                              [self.refreshControl endRefreshing];
                                              // 3) 设置UI
                                              [self reloadUIData];
                                          });
-                                     });
+                                     }];
                                  } fail:^(NSError *error) {
                                      [self.refreshControl endRefreshing];
                                  }];
@@ -413,6 +476,9 @@
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    //取消线程
+    [_operationQueue cancelAllOperations];
+//    _operationQueue = nil;
     if(needAddUser.uid){
         if(type != 1){
             //添加
@@ -429,7 +495,7 @@
                     //发送邀请成功，修改状态，刷新列表
                     NeedAddUser *addUser = [needAddUser updateFriendShip:4];
                     //改变数组，刷新列表
-                    [_datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                    [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
                     //刷新列表
                     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 } fail:^(NSError *error) {
