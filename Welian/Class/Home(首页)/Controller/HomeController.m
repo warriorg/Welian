@@ -83,11 +83,8 @@
 - (void)loadFirstFID
 {
     // 1.第一条微博的ID
-    WLStatusFrame *f = [_dataArry firstObject];
-    NSString *start = [NSString stringWithFormat:@"%d",f.status.fid];
-    [LogInUser setUserFirststustid:@(f.status.fid)];
-//    [UserDefaults setObject:start forKey:KFirstFID];
-//    [UserDefaults synchronize];
+    WLStatusFrame *startf = [_dataArry firstObject];
+    [LogInUser setUserFirststustid:@(startf.status.fid)];
 }
 
 

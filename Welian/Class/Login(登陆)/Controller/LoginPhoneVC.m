@@ -23,20 +23,6 @@
 
 @implementation LoginPhoneVC
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
-    
-    if (_phoneTextField.text.length == 0){
-        [_phoneTextField becomeFirstResponder];
-    }else{
-        if (_pwdTextField.text.length == 0) {
-            [_pwdTextField becomeFirstResponder];
-        }
-    }
-}
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField == self.phoneTextField) {
@@ -80,6 +66,7 @@
     [self.view setBackgroundColor:WLLineColor];
     //设置右上角
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(loginPhonePWD:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancellVC)];
     
     //手机号码
     WLTextField *phoneTF = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
@@ -108,6 +95,14 @@
     [forgetBut setTitle:@"忘记密码?" forState:UIControlStateNormal];
     [forgetBut addTarget:self action:@selector(forgetPwd:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:forgetBut];
+}
+
+- (void)cancellVC
+{
+    [self.view.findFirstResponder resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -149,21 +144,11 @@
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
             SaveLoginPassWD(self.pwdTextField.text);
-            
             [LogInUser createLogInUserModel:mode];
-            //保存用户信息到本地 归档
-//            [[UserInfoTool sharedUserInfoTool] saveUserInfo:mode];
 
             //进入主页面
             MainViewController *mainVC = [[MainViewController alloc] init];
             [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
-            
-            if (![UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-                
-
-            }else{
-                
-            }
         }
 
     } fail:^(NSError *error) {

@@ -36,7 +36,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadUIView];
-    [_phoneTextField becomeFirstResponder];
 }
 
 - (void)loadUIView
@@ -44,6 +43,8 @@
     [self setTitle:@"注册"];
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(coderPhoneClick:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancellVC)];
+    
     
     self.phoneTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
     [_phoneTextField setPlaceholder:@"手机号码"];
@@ -51,13 +52,21 @@
     [_phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:_phoneTextField];
     
-    
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, _phoneTextField.bottom+15, self.view.width-40, 40)];
     [textLabel setNumberOfLines:0];
     [textLabel setText:@"该手机号码作为您在微链的登陆账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];
     [textLabel setFont:[UIFont systemFontOfSize:13.0]];
     [self.view addSubview:textLabel];
+}
+
+
+- (void)cancellVC
+{
+    [self.view.findFirstResponder resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,10 +100,10 @@
             if ([[JSON objectForKey:@"flag"] integerValue]==0) {
             // 未注册
               NSString *coderStr = [JSON objectForKey:@"checkcode"];
-                
                 SignInPWDController  *signInPWDVC = [[SignInPWDController alloc] init];
                 [signInPWDVC setPhoneString:self.phoneTextField.text];
                 [signInPWDVC setCoderString:coderStr];
+                [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:@"sid"];
                 [self.navigationController pushViewController:signInPWDVC animated:YES];
                 
             }else if ([[JSON objectForKey:@"flag"] integerValue]==1){

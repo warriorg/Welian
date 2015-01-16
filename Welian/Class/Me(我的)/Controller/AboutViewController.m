@@ -25,11 +25,11 @@
     [self.view addSubview:aboutImageView];
     
     
-    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+//    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     UILabel *verLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(aboutImageView.frame)+10, self.view.bounds.size.width, 30)];
     [verLabel setFont:[UIFont systemFontOfSize:15]];
     [verLabel setTextColor:[UIColor lightGrayColor]];
-    [verLabel setText:[NSString stringWithFormat:@"Ver %@",localVersion]];
+    [verLabel setText:[NSString stringWithFormat:@"Ver %@",XcodeAppVersion]];
     [verLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:verLabel];
     
