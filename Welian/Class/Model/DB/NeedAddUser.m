@@ -52,7 +52,7 @@
     NSString *position = dict[@"position"];
     //是否投资认证人
     NSNumber *investorauth = @([dict[@"investorauth"] integerValue]);
-    NSNumber *friendship = dict[@"friendship"] == nil ? @(0) : @([dict[@"friendship"] integerValue]);
+    NSNumber *friendship = @([dict[@"friendship"] integerValue]);
     //如果未返回uid的微信好友，不展示
     if (!uid && type == 2) {
         //设置为好友
@@ -151,6 +151,7 @@
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4.等待验证 */
     self.friendship = @(type);
     [MOC save];
+    
     return self;
 }
 
