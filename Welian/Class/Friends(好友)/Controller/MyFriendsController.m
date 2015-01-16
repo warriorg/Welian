@@ -140,7 +140,7 @@ static NSString *fridcellid = @"fridcellid";
 -(void)loadMyAllFriends
 {
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-
+        
         [self.refreshControl endRefreshing];
         self.allArray = [JSON objectForKey:@"array"];
         _count = [[JSON objectForKey:@"count"] integerValue];

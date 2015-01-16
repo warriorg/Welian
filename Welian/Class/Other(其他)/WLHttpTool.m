@@ -489,11 +489,9 @@
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
-            // 获取全局列队
-            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
-            // 2) 在全局队列上异步调用方法，加载并更新图像
-            dispatch_async(queue, ^{
+            // 1) 在全局队列上异步调用方法，加载并更新图像
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSArray  *json = [NSArray arrayWithArray:JSON];
                 
                 //循环，删除本地数据库多余的缓存数据
@@ -531,7 +529,7 @@
                     myFriends = [MyFriendUser getAllMyFriendUsers];
                 }
                 succeBlock (@{@"count":@(json.count),@"array":[self getChineseStringArr:myFriends]});
-            });
+//            });
             
         } failure:^(NSError *error) {
             failurBlock(error);

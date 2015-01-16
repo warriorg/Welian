@@ -202,7 +202,6 @@
                                        [WLHUDView hiddenHud];
                                    } isHUD:YES];
                                    
-                                   
                                }else{
                                      [WLHUDView hiddenHud];
                                    [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
