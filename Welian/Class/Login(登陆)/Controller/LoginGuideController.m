@@ -107,7 +107,7 @@
     // 注册新用户
     UIButton *registBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.center.x-45, SuperSize.height-40, 90, 30)];
     [registBut.titleLabel setFont:WLFONT(14)];
-    [registBut setTitle:@"手机注册" forState:UIControlStateNormal];
+    [registBut setTitle:@"新用户注册" forState:UIControlStateNormal];
     [registBut setTitleColor:WLRGB(173, 173, 173) forState:UIControlStateNormal];
     [registBut addTarget:self action:@selector(registerNewButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registBut];
