@@ -103,6 +103,7 @@
                 if (dataDic) {
                     UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                     [mode setCheckcode:self.pwdString];
+                    [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
                     [LogInUser createLogInUserModel:mode];
                     
                     MainViewController *mainVC = [[MainViewController alloc] init];

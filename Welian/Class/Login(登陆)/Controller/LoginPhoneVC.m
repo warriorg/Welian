@@ -141,6 +141,7 @@
             UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
             [mode setCheckcode:self.pwdTextField.text];
             
+            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
             SaveLoginPassWD(self.pwdTextField.text);

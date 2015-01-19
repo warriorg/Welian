@@ -90,10 +90,10 @@
             SaveLoginMobile(_phoneTF.text);
             SaveLoginPassWD(_pwdTF.text);
             
+            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
             [LogInUser createLogInUserModel:mode];
             [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
-            
             BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
             [BSearchFVC setIsStart:YES];
             [self presentViewController:BSearchFVC animated:YES completion:^{

@@ -86,11 +86,14 @@ static HttpTool *engine;
     NSString *parameterStr = [self dicTostring:parameterDic];
 
     LogInUser *mode = [LogInUser getNowLogInUser];
-    NSString *sessid = mode.sessionid;
-    if (!sessid) {
+    NSString *sessid = [UserDefaults objectForKey:@"sessionid"];
+    if (!sessid.length) {
         sessid = [UserDefaults objectForKey:@"sid"];
     }
-    if (!sessid)  return;
+    if (!sessid) {
+        [[self operationQueue] cancelAllOperations];
+        return;
+    }
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
 

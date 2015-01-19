@@ -15,6 +15,7 @@
 #import "MJExtension.h"
 #import "LoginPhoneVC.h"
 #import "SignInPhoneController.h"
+#import "WXApi.h"
 
 @interface LoginGuideController () <UIScrollViewDelegate>
 {
@@ -82,19 +83,23 @@
     // 设置分页控件监听方法
     [page addTarget:self action:@selector(updatepagechangen:) forControlEvents:UIControlEventValueChanged]; // 页码的变化
     
+
+    CGRect phoneF = CGRectMake(25, SuperSize.height-butY-44, SuperSize.width-50, 44);
     // 微信登陆
-    UIButton *authBut = [[UIButton alloc] initWithFrame:CGRectMake(25, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
-    [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
-    [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
-    [authBut setImage:[UIImage imageNamed:@"login_wechat_logo"] forState:UIControlStateNormal];
-    [authBut setTitle:@"微信登录" forState:UIControlStateNormal];
-    [authBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [authBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-    [authBut addTarget:self action:@selector(authButClickWexing) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:authBut];
-    
+    if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]) {
+        UIButton *authBut = [[UIButton alloc] initWithFrame:CGRectMake(25, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
+        [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
+        [authBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
+        [authBut setImage:[UIImage imageNamed:@"login_wechat_logo"] forState:UIControlStateNormal];
+        [authBut setTitle:@"微信登录" forState:UIControlStateNormal];
+        [authBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [authBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+        [authBut addTarget:self action:@selector(authButClickWexing) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:authBut];
+        phoneF = CGRectMake(CGRectGetMaxX(authBut.frame)+20, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44);
+    }
     // 手机登陆
-    UIButton *phongBut = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(authBut.frame)+20, SuperSize.height-butY-44, (SuperSize.width-50-20)*0.5, 44)];
+    UIButton *phongBut = [[UIButton alloc] initWithFrame:phoneF];
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
     [phongBut setImage:[UIImage imageNamed:@"login_phone_logo"] forState:UIControlStateNormal];
@@ -170,10 +175,10 @@
                                            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                                            //记录最后一次登陆的手机号
                                            SaveLoginMobile(mode.mobile);
+                                           [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
                                            [LogInUser createLogInUserModel:mode];
                                            [LogInUser setUseropenid:[sourceDic objectForKey:@"openid"]];
                                            [LogInUser setUserunionid:[sourceDic objectForKey:@"unionid"]];
-                                           
                                           // 进入主页面
                                            MainViewController *mainVC = [[MainViewController alloc] init];
                                            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
@@ -203,7 +208,7 @@
                                    } isHUD:YES];
                                    
                                }else{
-                                     [WLHUDView hiddenHud];
+                                    [WLHUDView hiddenHud];
                                    [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
 
                                }

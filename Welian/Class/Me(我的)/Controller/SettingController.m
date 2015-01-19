@@ -92,6 +92,7 @@
     } fail:^(NSError *error) {
         
     }];
+    [UserDefaults removeObjectForKey:@"sessionid"];
     [LogInUser setUserisNow:NO];
     [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
 }
