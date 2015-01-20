@@ -389,7 +389,7 @@ BMKMapManager* _mapManager;
         }
         //推荐的
         if([type isEqualToString:@"friendCommand"]){
-            NSInteger newF = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
+            NSInteger newF = [loginUser.newfriendbadge integerValue];
             [LogInUser setUserNewfriendbadge:@(newF+1)];
             if (myFriendUser) {
                 [newfrendM setOperateType:@(2)];
