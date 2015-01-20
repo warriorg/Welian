@@ -748,38 +748,37 @@
     NSDictionary *dic = @{@"type":@"loadUserInfo",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSDictionary *dataDic = [NSDictionary dictionaryWithDictionary:JSON];
-        // 动态
-        NSDictionary *feed = [dataDic objectForKey:@"feed"];
-        WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
-        
-        // 投资案例
-        NSDictionary *investor = [dataDic objectForKey:@"investor"];
-        IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
-        
         // 详细信息
         NSDictionary *profile = [dataDic objectForKey:@"profile"];
-        UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
-        
-        // 创业者
-//        NSDictionary *startup = [dataDic objectForKey:@"startup"];
-        
-        // 工作经历列表
-        NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
-        NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
-        for (NSDictionary *dic in usercompany) {
-            ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
-            [companyArrayM addObject:usercompanyM];
-        }
-        
-        // 教育经历列表
-        NSArray *userschool = [dataDic objectForKey:@"userschool"];
-        NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
-        for (NSDictionary *dic  in userschool) {
-            ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
-            [schoolArrayM addObject:userschoolM];
-        }
-        
-        succeBlock(@{@"feed":feedM,@"investor":investorM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+        [[WLDataDBTool sharedService] putObject:dataDic withId:[[profile objectForKey:@"uid"] stringValue] intoTable:KWLUserInfoTableName];
+//        UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+//        // 动态
+//        NSDictionary *feed = [dataDic objectForKey:@"feed"];
+//        WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
+//        
+//        // 投资案例
+//        NSDictionary *investor = [dataDic objectForKey:@"investor"];
+//        IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
+//        
+//        // 创业者
+////        NSDictionary *startup = [dataDic objectForKey:@"startup"];
+//        
+//        // 工作经历列表
+//        NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
+//        NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
+//        for (NSDictionary *dic in usercompany) {
+//            ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
+//            [companyArrayM addObject:usercompanyM];
+//        }
+//        
+//        // 教育经历列表
+//        NSArray *userschool = [dataDic objectForKey:@"userschool"];
+//        NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
+//        for (NSDictionary *dic  in userschool) {
+//            ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
+//            [schoolArrayM addObject:userschoolM];
+//        }
+    succeBlock(dataDic);
     } failure:^(NSError *error) {
         [WLHUDView showErrorHUD:@""];
         failurBlock(error);

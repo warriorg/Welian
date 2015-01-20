@@ -103,7 +103,7 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-    [homeVC.navigationItem setTitleView:self.navTitleView];
+//    [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
@@ -125,7 +125,7 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
-     [homeVC.navigationItem setTitleView:self.navTitleView];
+//     [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     // 首页
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
@@ -273,12 +273,6 @@ single_implementation(MainViewController)
     [self updateChatMessageBadge:nil];
 }
 
-//- (void)messageMainnotif
-//{
-//    NSString *badgeStr = [NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KMessagebadge]];
-//    [homeItem setBadgeValue:badgeStr];
-//}
-
 - (void)newFriendPuthMessga
 {
     NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
@@ -304,10 +298,8 @@ single_implementation(MainViewController)
             // code to be executed on the main queue after delay
             [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
         });
-
     }
-
-        selectItem = item;
+    selectItem = item;
 }
 
 - (UITabBarItem*)itemWithTitle:(NSString *)title imageStr:(NSString *)imageStr selectedImageStr:(NSString *)selectedImageStr

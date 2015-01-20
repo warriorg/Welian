@@ -128,19 +128,13 @@ static NSString *fridcellid = @"fridcellid";
 {
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-//    NewFriendsCell *ncell = (NewFriendsCell*)[self.tableView cellForRowAtIndexPath:path];
-//    
-//    [ncell.tipLabel setTitle:[NSString stringWithFormat:@"%@",[UserDefaults objectForKey:KFriendbadge]] forState:UIControlStateDisabled];
-//        
-//    if ([[UserDefaults objectForKey:KFriendbadge] integerValue]) {
-//        [ncell.tipLabel setHidden:NO];
-//    }else{
-//        [ncell.tipLabel setHidden:YES];
-//    }
 }
 
 -(void)loadMyAllFriends
 {
+    if (![[LogInUser getCurrentLoginUser] getAllMyFriendUsers].count) {
+        [WLHUDView showCustomHUD:@"加载好友..." imageview:nil];
+    }
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
         NSArray *myFriends = [loginUser getAllMyFriendUsers];
@@ -169,56 +163,45 @@ static NSString *fridcellid = @"fridcellid";
                     //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
                     if(myFriendUser.uid.integerValue > 100){
                         //不包含，删除当前数据
-                        //                            [myFriendUser delete];
                         [myFriendUser MR_deleteEntityInContext:loginUser.managedObjectContext];
                     }
                 }
             }
-            
-//            NSArray *myFriends = [NSArray array];
-            if (json.count) {
-                //循环添加数据库数据
-                for (NSDictionary *modic in json) {
-                    FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
-                    
-                    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
-                    MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:[loginUser managedObjectContext]];
-                    
-                    if (!myFriend) {
-                        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
-                    }
-                    myFriend.uid = friendM.uid;
-                    myFriend.mobile = friendM.mobile;
-                    myFriend.position = friendM.position;
-                    myFriend.provinceid = friendM.provinceid;
-                    myFriend.provincename = friendM.provincename;
-                    myFriend.cityid = friendM.cityid;
-                    myFriend.cityname = friendM.cityname;
-                    myFriend.friendship = friendM.friendship;
-                    myFriend.shareurl = friendM.shareurl;
-                    myFriend.avatar = friendM.avatar;
-                    myFriend.name = friendM.name;
-                    myFriend.address = friendM.address;
-                    myFriend.email = friendM.email;
-                    myFriend.investorauth = friendM.investorauth;
-                    myFriend.startupauth = friendM.startupauth;
-                    myFriend.company = friendM.company;
-                    myFriend.status = friendM.status;
-                    [loginUser addRsMyFriendsObject:myFriend];
-                    
-//                    [MyFriendUser createMyFriendUserModel:friendM];
-                    //                    [mutabArray addObject:friendM];
+            //循环添加数据库数据
+            for (NSDictionary *modic in json) {
+                FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                
+                NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
+                MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:[loginUser managedObjectContext]];
+                
+                if (!myFriend) {
+                    myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
                 }
-//                myFriends = [loginUser getAllMyFriendUsers];
+                myFriend.uid = friendM.uid;
+                myFriend.mobile = friendM.mobile;
+                myFriend.position = friendM.position;
+                myFriend.provinceid = friendM.provinceid;
+                myFriend.provincename = friendM.provincename;
+                myFriend.cityid = friendM.cityid;
+                myFriend.cityname = friendM.cityname;
+                myFriend.friendship = friendM.friendship;
+                myFriend.shareurl = friendM.shareurl;
+                myFriend.avatar = friendM.avatar;
+                myFriend.name = friendM.name;
+                myFriend.address = friendM.address;
+                myFriend.email = friendM.email;
+                myFriend.investorauth = friendM.investorauth;
+                myFriend.startupauth = friendM.startupauth;
+                myFriend.company = friendM.company;
+                myFriend.status = friendM.status;
+                [loginUser addRsMyFriendsObject:myFriend];
             }
-
             
         } completion:^(BOOL contextDidSave, NSError *error) {
-            
-//            LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             NSArray *myFriends = [loginUser getAllMyFriendUsers];
             NSDictionary *alldataDic =  @{@"count":@(myFriends.count),@"array":[WLHttpTool getChineseStringArr:myFriends]};
             [self.refreshControl endRefreshing];
+            [WLHUDView hiddenHud];
             self.allArray = [alldataDic objectForKey:@"array"];
             _count = [[alldataDic objectForKey:@"count"] integerValue];
             if (self.allArray.count) {
@@ -226,12 +209,11 @@ static NSString *fridcellid = @"fridcellid";
                 [fff setText:[NSString stringWithFormat:@"%d位好友",_count]];
                 [self.tableView reloadData];
             }
-
-            
         }];
         
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
+        [WLHUDView hiddenHud];
     }];
 }
 

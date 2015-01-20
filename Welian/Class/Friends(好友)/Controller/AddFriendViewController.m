@@ -537,8 +537,6 @@
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     //取消线程
-//    [_operationQueue cancelAllOperations];
-//    _operationQueue = nil;
     if(needAddUser.uid){
         if(type != 1){
             //添加
