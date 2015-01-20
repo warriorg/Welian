@@ -212,10 +212,10 @@
             //记录最后一次登陆的手机号
             SaveLoginMobile(mode.mobile);
             
+            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
             [LogInUser createLogInUserModel:mode];
             [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
-            
             BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
             [bsearchVC setIsStart:YES];
             [self presentViewController:bsearchVC animated:YES completion:^{

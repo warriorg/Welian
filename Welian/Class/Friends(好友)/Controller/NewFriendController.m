@@ -28,7 +28,7 @@ static NSString *frnewCellid = @"frnewCellid";
 }
 
 @property (nonatomic, strong) NotstringView *notView;
-
+@property (nonatomic, strong) UserInfoBasicVC *userBasicVC;
 @end
 
 @implementation NewFriendController
@@ -138,8 +138,9 @@ static NSString *frnewCellid = @"frnewCellid";
     __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     userInfoVC.acceptFriendBlock = ^(){
         [newFVC jieshouFriend:indexPath];
-        [weakUserInfoVC addSucceed];
+
     };
+    self.userBasicVC = userInfoVC;
     [self.navigationController pushViewController:userInfoVC animated:YES];
     
 }
@@ -207,7 +208,9 @@ static NSString *frnewCellid = @"frnewCellid";
         FriendsUserModel *friend = [FriendsUserModel objectWithDict:[friendM keyValues]];
         //添加进入好友列表
         [MyFriendUser createMyFriendUserModel:friend];
-
+        if (self.userBasicVC) {
+            [self.userBasicVC addSucceed];
+        }
         [_dataArray setObject:friendM atIndexedSubscript:indexPath.row];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         

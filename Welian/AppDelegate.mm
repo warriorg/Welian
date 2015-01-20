@@ -104,7 +104,7 @@ BMKMapManager* _mapManager;
 
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     DLog(@"%@",mode.description);
-    if (mode.sessionid&&mode.mobile&&mode.unionid) {
+    if (mode.sessionid&&mode.mobile&&[UserDefaults objectForKey:@"sessionid"]) {
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
@@ -114,7 +114,6 @@ BMKMapManager* _mapManager;
         /** 未登陆 */
         LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
         [self.window setRootViewController:loginGuideVC];
-
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"====沙盒路径=======%@",paths);
@@ -384,10 +383,14 @@ BMKMapManager* _mapManager;
                 [newfrendM setOperateType:@(2)];
             }else{
                 [newfrendM setOperateType:@(1)];
+//                NSInteger newF = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
+//                [LogInUser setUserNewfriendbadge:@(newF+1)];
             }
         }
         //推荐的
         if([type isEqualToString:@"friendCommand"]){
+            NSInteger newF = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
+            [LogInUser setUserNewfriendbadge:@(newF+1)];
             if (myFriendUser) {
                 [newfrendM setOperateType:@(2)];
             }else{
@@ -439,6 +442,7 @@ BMKMapManager* _mapManager;
     } fail:^(NSError *error) {
         
     }];
+    [UserDefaults removeObjectForKey:@"sessionid"];
     [LogInUser setUserisNow:NO];
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
 }

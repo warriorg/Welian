@@ -9,7 +9,7 @@
 #import "WLPhotoView.h"
 #import "WLPhoto.h"
 #import "UIImageView+WebCache.h"
-
+#import "UIImage+ImageEffects.h"
 
 @interface WLPhotoView ()
 {
@@ -23,6 +23,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        [self setBackgroundColor:WLRGB(236, 237, 239)];
         // 添加gif标识(位置、尺寸)
         _gifView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeline_image_gif"]];
         
@@ -46,7 +47,7 @@
     _photo = photo;
 
     // 1.下载图片
-    [self sd_setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:[UIImage imageNamed:@"picture_loading"] options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self sd_setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:nil options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [[SDImageCache sharedImageCache] storeImage:image forKey:photo.url];
     }];
     

@@ -12,6 +12,7 @@
 #import "MainViewController.h"
 #import "WLHUDView.h"
 #import "MJExtension.h"
+#import "BSearchFriendsController.h"
 
 @interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -103,10 +104,16 @@
                 if (dataDic) {
                     UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                     [mode setCheckcode:self.pwdString];
+                    [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
                     [LogInUser createLogInUserModel:mode];
                     
-                    MainViewController *mainVC = [[MainViewController alloc] init];
-                    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+                    BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
+                    [bsearchVC setIsStart:YES];
+                    [self presentViewController:bsearchVC animated:YES completion:^{
+                        
+                    }];
+//                    MainViewController *mainVC = [[MainViewController alloc] init];
+//                    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                 }
                 
             } fail:^(NSError *error) {

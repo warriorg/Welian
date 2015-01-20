@@ -90,7 +90,10 @@ static HttpTool *engine;
     if (!sessid) {
         sessid = [UserDefaults objectForKey:@"sid"];
     }
-    if (!sessid)  return;
+    if (!sessid) {
+        [[self operationQueue] cancelAllOperations];
+        return;
+    }
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
 
