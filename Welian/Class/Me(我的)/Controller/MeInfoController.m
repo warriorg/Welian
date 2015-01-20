@@ -27,7 +27,7 @@
 {
     if (nil == _iconImage) {
 //        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        LogInUser *mode = [LogInUser getNowLogInUser];
+        LogInUser *mode = [LogInUser getCurrentLoginUser];
         _iconImage = [[UIImageView alloc] init];
         
         [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
@@ -43,7 +43,7 @@
     // 1.封装图片数据
 //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     // 替换为中等尺寸图片
-    NSString *url = [LogInUser getNowLogInUser].avatar;
+    NSString *url = [LogInUser getCurrentLoginUser].avatar;
     MJPhoto *photo = [[MJPhoto alloc] init];
     url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
     url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
@@ -76,7 +76,7 @@
 {
     UserCardController *carVC = [[UserCardController alloc] init];
 
-    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getNowLogInUser]];
+    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getCurrentLoginUser]];
     [carVC setUserinfoM:mode];
     [self.navigationController pushViewController:carVC animated:YES];
 }
@@ -133,7 +133,7 @@
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
 //    UserInfoModel *modeuser = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     
     if (indexPath.section==0) {
         [self.iconImage setFrame:CGRectMake(self.view.bounds.size.width-70, 10, 40, 40)];
@@ -189,7 +189,7 @@
                 controller = [[WorksListController alloc] initWithType:WLCompany];
             }
         }else {
-            LogInUser *mode = [LogInUser getNowLogInUser];
+            LogInUser *mode = [LogInUser getCurrentLoginUser];
 
             if (indexPath.row==0) {
                 controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {

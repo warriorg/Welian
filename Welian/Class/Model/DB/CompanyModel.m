@@ -22,10 +22,10 @@
 //创建新收据
 + (CompanyModel*)createCompanyModel:(ICompanyResult *)iCompany
 {
-    CompanyModel *company = [self getCompanyModelWithUcid:iCompany.ucid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    CompanyModel *company = [loginUser getCompanyModelWithUcid:iCompany.ucid];
     if (!company) {
-
-        company = [CompanyModel create];
+        company = [CompanyModel MR_createEntityInContext:loginUser.managedObjectContext];
     }
     company.companyname = iCompany.companyname;
     company.companyid = iCompany.companyid;
@@ -36,26 +36,28 @@
     company.jobname = iCompany.jobname;
     company.jobid = iCompany.jobid;
     company.ucid = iCompany.ucid;
-    company.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
+    
+    [loginUser addRsCompanysObject:company];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    company.rsLogInUser = [LogInUser getCurrentLoginUser];
+//    [MOC save];
     return company;
 
 }
 
 //通过ucid查询
-+ (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid
-{
-    CompanyModel *company = [[[[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"ucid" equals:ucid] results] firstObject];
-    
-    return company;
-}
+//+ (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid
+//{
+//    CompanyModel *company = [[[[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"ucid" equals:ucid] results] firstObject];
+//    
+//    return company;
+//}
 
 // 查询所有数据并返回
-+ (NSArray *)allCompanyModels
-{
-    
-    return [[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results];
-}
+//+ (NSArray *)allCompanyModels
+//{
+//    return [[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] results];
+//}
 
 
 @end

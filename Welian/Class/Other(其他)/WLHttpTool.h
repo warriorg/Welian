@@ -16,6 +16,9 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 取消所有请求
 + (void)cancelAllRequestHttpTool;
 
+#pragma mark - 按首字母排序
++ (NSMutableArray *)getChineseStringArr:(NSArray *)arrToSort;
+
 #pragma mark - 版本号更新提示
 + (void)updateParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 

@@ -23,9 +23,10 @@
 //创建新收据
 + (NewFriendUser *)createNewFriendUserModel:(NewFriendModel *)userInfoM
 {
-    NewFriendUser *newFriend = [NewFriendUser getNewFriendUserWithUid:userInfoM.uid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NewFriendUser *newFriend = [loginUser getNewFriendUserWithUid:userInfoM.uid];
     if (!newFriend) {
-        newFriend = [NewFriendUser create];
+        newFriend = [NewFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     
     newFriend.uid = userInfoM.uid;
@@ -50,24 +51,27 @@
     newFriend.msg = userInfoM.msg;
     newFriend.isAgree = userInfoM.isAgree;
     newFriend.operateType = userInfoM.operateType;
-    newFriend.rsLogInUser = [LogInUser getNowLogInUser];
     
-    [MOC save];
+    [loginUser addRsNewFriendsObject:newFriend];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    newFriend.rsLogInUser = [LogInUser getCurrentLoginUser];
+//    [MOC save];
     return newFriend;
 }
 
 // //通过uid查询
-+ (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid
-{
-    NewFriendUser *newFriend = [[[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:uid] results] firstObject];
-    return newFriend;
-}
+//+ (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid
+//{
+//    NewFriendUser *newFriend = [[[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"uid" equals:uid] results] firstObject];
+//    return newFriend;
+//}
 
 //更新操作按钮状态
 - (NewFriendUser *)updateOperateType:(NSInteger)type
 {
     self.operateType = @(type);
-    [MOC save];
+//    [MOC save];
+    [[self managedObjectContext] MR_saveToPersistentStoreAndWait];
     return self;
 }
 

@@ -22,15 +22,17 @@
 // 查询所有数据并返回
 + (NSArray *)allSchoolModels
 {
-    return [[SchoolModel queryInManagedObjectContext:MOC] results];
+//    return [[SchoolModel queryInManagedObjectContext:MOC] results];
+    return [SchoolModel MR_findAll];
 }
 
 //创建新收据
 + (SchoolModel *)createCompanyModel:(ISchoolResult *)iSchool
 {
-    SchoolModel *schoolM = [self getCompanyModelWithUcid:iSchool.usid]; 
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    SchoolModel *schoolM = [loginUser getSchoolModelWithUcid:iSchool.usid];
     if (!schoolM) {
-        schoolM = [SchoolModel create];
+        schoolM = [SchoolModel MR_createEntityInContext:loginUser.managedObjectContext];
     }
     schoolM.schoolname = iSchool.schoolname;
     schoolM.schoolid = iSchool.schoolid;
@@ -41,18 +43,22 @@
     schoolM.specialtyname = iSchool.specialtyname;
     schoolM.specialtyid = iSchool.specialtyid;
     schoolM.usid = iSchool.usid;
-    schoolM.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
+    
+    [loginUser addRsSchoolsObject:schoolM];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
+//    schoolM.rsLogInUser = [LogInUser getCurrentLoginUser];
+//    [MOC save];
     return schoolM;
 }
 
 //通过ucid查询
-+ (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid
-{
-    SchoolModel *schoolM = [[[[[SchoolModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"usid" equals:usid] results] firstObject];
-    
-    return schoolM;
-}
+//+ (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid
+//{
+//    SchoolModel *schoolM = [[[[[SchoolModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"usid" equals:usid] results] firstObject];
+//    
+//    return schoolM;
+//}
 
 
 @end

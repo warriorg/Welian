@@ -122,7 +122,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     // 2.设置文字
     cell.titLabel.text = dict[@"name"];
     [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
-    LogInUser *meinfo = [LogInUser getNowLogInUser];
+    LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     if (indexPath.section==0) {
         if (indexPath.row==1) {
             if (meinfo.activecount.integerValue) {

@@ -11,7 +11,7 @@
 @implementation InvestCardCell
 
 - (void)awakeFromNib {
-//    NSInteger auth = [LogInUser getNowLogInUser].auth.integerValue;
+//    NSInteger auth = [LogInUser getCurrentLoginUser].auth.integerValue;
 //    switch (auth) {
 //        case 0:
 //            

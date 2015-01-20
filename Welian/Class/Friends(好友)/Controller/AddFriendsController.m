@@ -272,10 +272,10 @@ static NSString *fridcellid = @"fridcellid";
             if ([[dic objectForKey:@"n"] isEqualToString:@"1"]) {
                 
 //                UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-                LogInUser *mode = [LogInUser getNowLogInUser];
+                LogInUser *mode = [LogInUser getCurrentLoginUser];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_selecFriend.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                
+
                 [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
                 [alert show];
             }else if ([[dic objectForKey:@"n"] isEqualToString:@"2"]){  // 短信验证
@@ -296,7 +296,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     NSData *data = [[NSData alloc]initWithBase64EncodedString:[UserDefaults objectForKey:@"icon"] options:NSDataBase64Encoding64CharacterLineLength];
     
     UIImage *shareImage = [UIImage imageWithData:data];

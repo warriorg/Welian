@@ -28,9 +28,10 @@
 //创建新收据
 + (HomeMessage *)createHomeMessageModel:(MessageHomeModel *)messageM
 {
-    HomeMessage *homeMessage = [HomeMessage getHomeMessageWithUid:messageM.commentid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    HomeMessage *homeMessage = [loginUser getHomeMessageWithUid:messageM.commentid];
     if (!homeMessage) {
-        homeMessage = [HomeMessage create];
+        homeMessage = [HomeMessage MR_createEntityInContext:loginUser.managedObjectContext];
     }
     
     homeMessage.commentid = messageM.commentid;
@@ -44,35 +45,38 @@
     homeMessage.msg = messageM.msg;
     homeMessage.type = messageM.type;
     homeMessage.created = messageM.created;
-    homeMessage.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
-    return homeMessage;
-}
-
-// 获取未读消息
-+ (NSArray *)getIsLookNotMessages
-{
-    NSArray *homearray = [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"isLook" isTrue:NO] results];
-    for (HomeMessage *meee  in homearray) {
-        meee.isLook = @(1);
-    }
-    [MOC save];
-    return homearray;
-}
-
-// 获取全部消息
-+ (NSArray *)getAllMessages
-{
-    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
     
-   return [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] results]  sortedArrayUsingDescriptors:@[bookNameDes]];
-}
-
-// //通过commentid查询
-+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid
-{
-    HomeMessage *homeMessage = [[[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"commentid" equals:commentid] results] firstObject];
+    [loginUser addRsHomeMessagesObject:homeMessage];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    homeMessage.rsLogInUser = [LogInUser getCurrentLoginUser];
+//    [MOC save];
     return homeMessage;
 }
+
+//// 获取未读消息
+//+ (NSArray *)getIsLookNotMessages
+//{
+//    NSArray *homearray = [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"isLook" isTrue:NO] results];
+//    for (HomeMessage *meee  in homearray) {
+//        meee.isLook = @(1);
+//    }
+//    [MOC save];
+//    return homearray;
+//}
+//
+//// 获取全部消息
+//+ (NSArray *)getAllMessages
+//{
+//    NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+//    
+//   return [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] results]  sortedArrayUsingDescriptors:@[bookNameDes]];
+//}
+//
+//// //通过commentid查询
+//+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid
+//{
+//    HomeMessage *homeMessage = [[[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"commentid" equals:commentid] results] firstObject];
+//    return homeMessage;
+//}
 
 @end

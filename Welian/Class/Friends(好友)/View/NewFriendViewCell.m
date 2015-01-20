@@ -303,7 +303,7 @@
     self.messageLabel = messageLabel;
     
     //操作按钮
-    UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;

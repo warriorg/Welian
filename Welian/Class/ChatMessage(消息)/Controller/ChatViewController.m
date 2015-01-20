@@ -34,10 +34,10 @@
 }
 
 //- (WLMessage *)getTextMessageWithBubbleMessageType:(WLBubbleMessageType)bubbleMessageType {
-//    WLMessage *textMessage = [[WLMessage alloc] initWithText:@"Call Me 15915895880. 这是华捷微信，为什么模仿这个页面效果呢？希望微信团队能看到我们在努力，请微信团队给个机会，让我好好的努力靠近大神，希望自己也能发亮，好像有点过分的希望了，如果大家喜欢这个开源库，请大家帮帮忙支持这个开源库吧！我是Jack，叫华仔也行，曾宪华就是我啦！" sender:[LogInUser getNowLogInUser].name timestamp:[NSDate distantPast]];
+//    WLMessage *textMessage = [[WLMessage alloc] initWithText:@"Call Me 15915895880. 这是华捷微信，为什么模仿这个页面效果呢？希望微信团队能看到我们在努力，请微信团队给个机会，让我好好的努力靠近大神，希望自己也能发亮，好像有点过分的希望了，如果大家喜欢这个开源库，请大家帮帮忙支持这个开源库吧！我是Jack，叫华仔也行，曾宪华就是我啦！" sender:[LogInUser getCurrentLoginUser].name timestamp:[NSDate distantPast]];
 //    textMessage.avator = [UIImage imageNamed:@"user_small"];
 //    textMessage.sended = @"1";
-//    textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;// @"http://www.pailixiu.com/jack/meIcon@2x.png";
+//    textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;// @"http://www.pailixiu.com/jack/meIcon@2x.png";
 //    textMessage.bubbleMessageType = bubbleMessageType;
 //    
 //    return textMessage;
@@ -218,7 +218,7 @@
         case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
@@ -375,8 +375,8 @@
     [self exMainQueue:^{
         //已经不是好友关系
         WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",_friendUser.name] sender:@"" timestamp:[NSDate date]];
-        textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
-        textMessage.sender = [LogInUser getNowLogInUser].name;
+        textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+        textMessage.sender = [LogInUser getCurrentLoginUser].name;
         textMessage.uid = _friendUser.uid.stringValue;
         //是否读取
         textMessage.isRead = YES;
@@ -484,7 +484,7 @@
                         case WLBubbleMessageMediaTypeText:
                             //普通文本
                             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-                            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+                            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
                             message.msgId = chatMessage.msgId.stringValue;
                             message.avatorUrl = chatMessage.avatorUrl;
                             message.sended = chatMessage.sendStatus.stringValue;
@@ -522,9 +522,9 @@
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     WLMessage *textMessage = [[WLMessage alloc] initWithText:text sender:sender timestamp:date];
-//    textMessage.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];// [UIImage imageNamed:@"user_small"];
-    textMessage.avatorUrl = [LogInUser getNowLogInUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
-    textMessage.sender = [LogInUser getNowLogInUser].name;
+//    textMessage.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];// [UIImage imageNamed:@"user_small"];
+    textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
+    textMessage.sender = [LogInUser getCurrentLoginUser].name;
     textMessage.uid = _friendUser.uid.stringValue;
     //是否读取
     textMessage.isRead = YES;
@@ -596,7 +596,7 @@
         case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getNowLogInUser].avatar]]];
+            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
@@ -750,7 +750,7 @@
         {
             DLog(@"聊天 发送好友请求 >>>");
             //发送好友请求
-            LogInUser *loginUser = [LogInUser getNowLogInUser];
+            LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
             //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
             [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
@@ -770,7 +770,7 @@
 //{
 //    if ([linkText isEqualToString:@"发送好友请求"]) {
 //        //发送好友请求
-//        LogInUser *loginUser = [LogInUser getNowLogInUser];
+//        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
 //        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
 //        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
 //        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
@@ -802,14 +802,14 @@
 //    DLog(@"点击头像---------");
     
     IBaseUserM *userMode = [[IBaseUserM alloc] init];
+    //自己发送
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (message.bubbleMessageType == WLBubbleMessageTypeSending) {
-        //自己发送
-        LogInUser *loginUser = [LogInUser getNowLogInUser];
         userMode.uid = loginUser.uid;
         userMode.name = loginUser.name;
     }else{
         //好友头像
-        MyFriendUser *friendUser = [MyFriendUser getMyfriendUserWithUid:@(message.uid.integerValue)];
+        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:@(message.uid.integerValue)];
         userMode.uid = friendUser.uid;
         userMode.name = friendUser.name;
     }

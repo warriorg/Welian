@@ -103,7 +103,7 @@
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good"] forState:UIControlStateNormal];
     }
 //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     if ([status.user.uid integerValue]==[mode.uid integerValue]) {
         [_repostBtn setEnabled:NO];
     }else{

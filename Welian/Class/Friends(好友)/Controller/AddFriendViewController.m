@@ -122,7 +122,7 @@
     self.localPhoneArray = [NSMutableArray array];
     
     //更新所有待验证的消息为需要发送好友请求状态
-    [[LogInUser getNowLogInUser] updateAllNeedAddFriendOperateStatus];
+//    [[LogInUser getCurrentLoginUser] updateAllNeedAddFriendOperateStatus];
     
     //添加title内容
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"手机联系人",@"微信好友"]];
@@ -346,11 +346,11 @@
             [self.view sendSubviewToBack:_phoneNotView];
         }else{
             //手机通讯录
-            self.datasource = [NeedAddUser allNeedAddUserWithType:1];
+            self.datasource = [NeedAddUser allNeedAddUsersWithType:1];//[NeedAddUser allNeedAddUserWithType:1];
         }
     }else{
         //微信
-        self.datasource = [NeedAddUser allNeedAddUserWithType:2];
+        self.datasource = [NeedAddUser allNeedAddUsersWithType:2];
         if(_datasource.count == 0){
             [self.view addSubview:self.weChatNotView];
             [self.view sendSubviewToBack:_weChatNotView];
@@ -383,7 +383,7 @@
  */
 - (void)getPhoneAllFriends
 {
-    if([NeedAddUser allNeedAddUserWithType:1].count <= 0){
+    if([NeedAddUser allNeedAddUsersWithType:1].count <= 0){
         //通讯录联系人
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
@@ -400,23 +400,85 @@
     [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
 //        [self.operationQueue addOperationWithBlock:^{
 //            DLog(@"------------->Block");
-            for (NSDictionary *dic in JSON) {
-                //保存到数据库
-                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
-            }
-            
+//            for (NSDictionary *dic in JSON) {
+//                //保存到数据库
+//                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
+//            }
+        [self createNeedAddUserWithInfo:JSON withType:1];
+        //保存到数据库
+//        [NeedAddUser createNeedAddUserWithInfo:JSON withType:1];
+        
             // 在在主线程队列中，调用异步方法设置UI
 //            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
 //                [MOC save];
 //                WEAKSELF
-                [WLHUDView hiddenHud];
-                [self.refreshControl endRefreshing];
-                // 3) 设置UI
-                [self reloadUIData];
+        
 //            }];
 //        }];
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
+    }];
+}
+
+//创建需要添加的好友对象
+- (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type
+{
+//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
+        LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
+        
+        for (NSDictionary *info in users) {
+            NSNumber *uid = info[@"uid"] == nil ? nil : @([info[@"uid"] integerValue]);
+            NSString *name = info[@"name"];
+            NSString *wlName = info[@"wlname"];
+            NSString *mobile = info[@"mobile"];
+            NSString *avatar = info[@"avatar"];
+            NSString *company = info[@"company"];
+            NSString *position = info[@"position"];
+            //是否投资认证人
+            NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
+            NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
+            //如果未返回uid的微信好友，不展示
+            if (!uid && type == 2) {
+                //设置为好友
+                friendship = @(1);
+                return;
+            }
+            if (friendship.integerValue == -1) {
+                //自己
+                return;
+            }
+            
+            NSPredicate *pre = nil;
+            if (uid != nil) {
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" , uid];
+            }else{
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile];
+            }
+            
+            NeedAddUser *needAddUser = [NeedAddUser MR_findFirstWithPredicate:pre inContext:localContext];
+            if (!needAddUser) {
+                needAddUser = [NeedAddUser MR_createEntityInContext:localContext];
+            }
+            needAddUser.uid = uid;
+            needAddUser.avatar = avatar;
+            needAddUser.friendship = friendship;
+            needAddUser.mobile = mobile;
+            needAddUser.name = name.length > 0 ? name : (wlName.length > 0 ? wlName : @"未知");
+            needAddUser.wlname = wlName.length > 0 ? wlName : (name.length > 0 ? name : @"未知");
+            needAddUser.pinyin = [needAddUser.name getHanziFirstString];
+            needAddUser.userType = @(type);
+            needAddUser.company = company;
+            needAddUser.position = position;
+            needAddUser.investorauth = investorauth;
+            [loginUser addRsNeedAddUsersObject:needAddUser];
+        }
+    } completion:^(BOOL contextDidSave, NSError *error) {
+        [WLHUDView hiddenHud];
+        [self.refreshControl endRefreshing];
+        // 3) 设置UI
+        [self reloadUIData];
     }];
 }
 
@@ -425,40 +487,38 @@
  */
 - (void)getWxFriends
 {
-    if ([NeedAddUser allNeedAddUserWithType:2].count <= 0) {
+    if ([NeedAddUser allNeedAddUsersWithType:2].count <= 0) {
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
                                      //异步处理
 //                                     [self.operationQueue addOperationWithBlock:^{
-                                         //删除本地数据库微信数据
-                                         NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUserWithType:2];
-                                         
-                                         //循环，删除本地数据库多余的缓存数据
-                                         for (int i = 0; i < [wxAddUser count]; i++){
-                                             NeedAddUser *addUser = wxAddUser[i];
-                                             //判断返回的数组是否包含
-                                             BOOL isHave = [JSON bk_any:^BOOL(id obj) {
-                                                 //判断是否包含对应的
-                                                 return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue;
-                                             }];
-                                             if(!isHave){
-                                                 //删除
-                                                 [addUser delete];
-                                             }
+                                     //删除本地数据库微信数据
+                                     NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
+                                     
+                                     //循环，删除本地数据库多余的缓存数据
+                                     for (int i = 0; i < [wxAddUser count]; i++){
+                                         NeedAddUser *addUser = wxAddUser[i];
+                                         //判断返回的数组是否包含
+                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
+                                             //判断是否包含对应的
+                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue;
+                                         }];
+                                         if(!isHave){
+                                             //删除
+                                             [addUser delete];
                                          }
-                                         
-                                         for (NSDictionary *dic in JSON) {
-                                             //保存到数据库
-                                             [NeedAddUser createNeedAddUserWithDict:dic withType:2];
-                                         }
+                                     }
+                                     
+                                     //保存到数据库
+                                     [self createNeedAddUserWithInfo:JSON withType:2];
                                          // 在在主线程队列中，调用异步方法设置UI
 //                                         dispatch_sync(dispatch_get_main_queue(), ^{
-                                             [WLHUDView hiddenHud];
-                                             [self.refreshControl endRefreshing];
-                                             // 3) 设置UI
-                                             [self reloadUIData];
+//                                             [WLHUDView hiddenHud];
+//                                             [self.refreshControl endRefreshing];
+//                                             // 3) 设置UI
+//                                             [self reloadUIData];
 //                                         });
 //                                     }];
                                  } fail:^(NSError *error) {
@@ -484,7 +544,7 @@
             //添加
             DLog(@"添加好友");
             //添加好友，发送添加成功，状态变成待验证
-            LogInUser *loginUser = [LogInUser getNowLogInUser];
+            LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",needAddUser.wlname]];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
@@ -522,7 +582,7 @@
  */
 - (void)shareWithType:(NSInteger)type
 {
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
     NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
     [WLHUDView showHUDWithStr:@"" dim:NO];

@@ -30,12 +30,12 @@
 + (HomeMessage *)createHomeMessageModel:(MessageHomeModel *)userInfoM;
 
 // //通过commentid查询
-+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
-
-// 获取未读消息
-+ (NSArray *)getIsLookNotMessages;
-
-// 获取全部消息
-+ (NSArray *)getAllMessages;
+//+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
+//
+//// 获取未读消息
+//+ (NSArray *)getIsLookNotMessages;
+//
+//// 获取全部消息
+//+ (NSArray *)getAllMessages;
 
 @end

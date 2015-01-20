@@ -53,7 +53,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空列表" style:UIBarButtonItemStyleBordered target:self action:@selector(cleacMessage)];
     [_messageDataArray removeAllObjects];
     _allMessgeArray = nil;
-    _allMessgeArray = [HomeMessage getAllMessages];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    _allMessgeArray = [loginUser getAllMessages];
     for (HomeMessage *mesitme in _allMessgeArray) {
         MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
         [messageFrameM setMessageDataM:mesitme];
@@ -72,7 +73,7 @@
 
 - (void)cleacMessage
 {    
-    [LogInUser getNowLogInUser].rsHomeMessages = nil;
+    [LogInUser getCurrentLoginUser].rsHomeMessages = nil;
     [MOC save];
     [_messageDataArray removeAllObjects];
     [self.tableView reloadData];
@@ -91,7 +92,8 @@
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         [self.tableView setSectionFooterHeight:0];
         
-        _allMessgeArray = [HomeMessage getAllMessages];
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        _allMessgeArray = [loginUser getAllMessages];
         
         if (isAllMessage) {
             

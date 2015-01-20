@@ -34,6 +34,6 @@
 + (SchoolModel *)createCompanyModel:(ISchoolResult *)iSchool;
 
 //通过ucid查询
-+ (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid;
+//+ (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid;
 
 @end

@@ -87,7 +87,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        LogInUser *mode = [LogInUser getNowLogInUser];
+        LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (indexPath.section==0) {
         MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
         [cell.MyNameLabel setText:mode.name];
@@ -105,7 +105,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
             [cell.deputLabel setHidden:NO];
             [cell.badgeImage setHidden:!mode.isinvestorbadge.boolValue];
 //            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
-            LogInUser *meinfo = [LogInUser getNowLogInUser];
+            LogInUser *meinfo = [LogInUser getCurrentLoginUser];
             if (meinfo.investorauth.integerValue==1) {
                 [cell.deputLabel setText:@"认证成功"];
             }else if (meinfo.investorauth.integerValue ==-2){

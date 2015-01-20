@@ -26,7 +26,7 @@
 + (NewFriendUser *)createNewFriendUserModel:(NewFriendModel *)userInfoM;
 
 // //通过uid查询
-+ (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
+//+ (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
 
 //更新操作按钮状态
 - (NewFriendUser *)updateOperateType:(NSInteger)type;
