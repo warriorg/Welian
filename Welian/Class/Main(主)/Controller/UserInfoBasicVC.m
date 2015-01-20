@@ -74,8 +74,7 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)addSucceed
 {
-    [self.tableView setTableFooterView:nil];
-//    [self.tableView setTableFooterView:self.sendView];
+    [self.tableView setTableFooterView:self.sendView];
 }
 
 - (UIView*)sendView

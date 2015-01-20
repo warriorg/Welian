@@ -25,6 +25,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 @property (strong, nonatomic) NotstringView *notView;
 
 @property (strong, nonatomic) NSMutableArray *datasource;
+@property (nonatomic, strong) UserInfoBasicVC *userBasicVC;
 
 @end
 
@@ -111,8 +112,9 @@ static NSString *cellIdentifier = @"frnewCellid";
     WEAKSELF
     userInfoVC.acceptFriendBlock = ^(){
         [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];
-        [weakUserInfoVC addSucceed];
+//        [weakUserInfoVC addSucceed];
     };
+    self.userBasicVC = userInfoVC;
     [self.navigationController pushViewController:userInfoVC animated:YES];
     
 }
@@ -198,12 +200,16 @@ static NSString *cellIdentifier = @"frnewCellid";
     if (type == FriendOperateTypeAccept) {
         //接受好友请求
         [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
+            
             [newFriendUser setIsAgree:@(1)];
             //更新好友列表数据库
             [MyFriendUser createWithNewFriendUser:newFriendUser];
             
             //发送邀请成功，修改状态，刷新列表
             NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+            if (self.userBasicVC) {
+                [self.userBasicVC addSucceed];
+            }
             //改变数组，刷新列表
             [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

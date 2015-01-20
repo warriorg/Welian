@@ -11,6 +11,7 @@
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "AddFriendsController.h"
+#import "AddFriendTypeListViewController.h"
 
 @interface HomeView()
 
@@ -45,7 +46,6 @@
         [publeshBut addTarget:self action:@selector(publeshButClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:publeshBut];
         
-        
         UIButton *addFriendBut = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(publeshBut.frame)+20, CGRectGetMaxY(label.frame)+25, (frame.size.width-100)*0.5, 40)];
         [addFriendBut setBackgroundImage:[UIImage resizedImage:@"home_empty_button"] forState:UIControlStateNormal];
         [addFriendBut setBackgroundImage:[UIImage resizedImage:@"home_empty_button_highlight"] forState:UIControlStateHighlighted];
@@ -74,11 +74,8 @@
 // 添加好友
 - (void)addFriendButClick:(UIButton*)but
 {
-    AddFriendsController *addFriendVC = [[AddFriendsController alloc] initWithStyle:UITableViewStylePlain];
-
-    [self.homeController presentViewController:[[NavViewController alloc] initWithRootViewController:addFriendVC] animated:YES completion:^{
-        
-    }];
+    AddFriendTypeListViewController *addFriendVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStylePlain];
+    [self.homeController.navigationController pushViewController:addFriendVC animated:YES];
 }
 
 @end

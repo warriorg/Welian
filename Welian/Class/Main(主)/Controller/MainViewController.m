@@ -55,8 +55,9 @@
     [titLabel setText:titStr];
     [titLabel sizeToFit];
     [titLabel setCenter:self.center];
-
+    
     [prompt setFrame:CGRectMake(CGRectGetMaxX(titLabel.frame)-2, 0, 10, 10)];
+    
 }
 
 - (void)showPrompt
@@ -102,7 +103,7 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-    [homeVC.navigationItem setTitleView:self.navTitleView];
+//    [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *mode = [LogInUser getNowLogInUser];
     if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
@@ -124,7 +125,7 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
-     [homeVC.navigationItem setTitleView:self.navTitleView];
+//     [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *meinfo = [LogInUser getNowLogInUser];
     // 首页
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
@@ -222,10 +223,9 @@ single_implementation(MainViewController)
 //    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
     homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
-    
+    [homeVC.navigationItem setTitle:@"创业圈"];
     [homeNav setDelegate:self];
     [homeNav setTabBarItem:homeItem];
-    
     
     // 好友
     circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
@@ -294,7 +294,6 @@ single_implementation(MainViewController)
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-
     if (selectItem == homeItem && item == homeItem) {
         [homeVC.refreshControl beginRefreshing];
         [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];

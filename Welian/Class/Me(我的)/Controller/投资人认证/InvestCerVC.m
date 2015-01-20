@@ -198,7 +198,7 @@ static NSString *itemscellid = @"itemscellid";
 // 重新认证
 - (void)anewAuth
 {
-    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:@""];
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [sheet bk_addButtonWithTitle:@"重新认证" handler:^{
         [self choosePicture];
     }];

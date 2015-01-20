@@ -218,7 +218,7 @@
             //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
 //            if (needAddUser.userType.integerValue == 1) {
                 //手机联系人
-                BOOL isask = YES;
+                BOOL isask = NO;
                 if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
                     isask = NO;
                 }
@@ -228,7 +228,7 @@
                 WEAKSELF
                 userInfoVC.acceptFriendBlock = ^(){
                     [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
-                    [weakUserInfoVC addSucceed];
+//                    [weakUserInfoVC addSucceed];
                 };
                 [self.navigationController pushViewController:userInfoVC animated:YES];
 //            }else{
