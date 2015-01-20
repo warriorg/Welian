@@ -21,10 +21,10 @@
 //创建新数据
 + (InvestItems *)createInvestItems:(InvestItemM *)investItemM;
 
-// 获取全部消息
-+ (NSArray *)getAllInvestItems;
-
-// //通过item查询
-+ (InvestItems *)getInvestItemsWithItem:(NSString *)item;
+//// 获取全部消息
+//+ (NSArray *)getAllInvestItems;
+//
+//// //通过item查询
+//+ (InvestItems *)getInvestItemsWithItem:(NSString *)item;
 
 @end

@@ -21,6 +21,6 @@
 + (InvestIndustry *)createInvestIndustry:(IInvestIndustryModel *)investIndustry;
 
 // //通过item查询
-+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name;
+//+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name;
 
 @end

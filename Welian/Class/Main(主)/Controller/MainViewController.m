@@ -103,8 +103,8 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-//    [homeVC.navigationItem setTitleView:self.navTitleView];
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    [homeVC.navigationItem setTitleView:self.navTitleView];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
         [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":mode.firststustid} success:^(id JSON) {
@@ -125,8 +125,8 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
-//     [homeVC.navigationItem setTitleView:self.navTitleView];
-    LogInUser *meinfo = [LogInUser getNowLogInUser];
+     [homeVC.navigationItem setTitleView:self.navTitleView];
+    LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     // 首页
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
         [self.navTitleView showPrompt];
@@ -169,7 +169,7 @@ single_implementation(MainViewController)
 //更新消息数量改变
 - (void)updateChatMessageBadge:(NSNotification *)notification
 {
-    NSInteger unRead = [[LogInUser getNowLogInUser] allUnReadChatMessageNum];
+    NSInteger unRead = [[LogInUser getCurrentLoginUser] allUnReadChatMessageNum];
     chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",(int)unRead];
 }
 
@@ -207,7 +207,7 @@ single_implementation(MainViewController)
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];
 
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     UIImageView *a = [[UIImageView alloc] init];
     [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
@@ -229,9 +229,9 @@ single_implementation(MainViewController)
     
     // 好友
     circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
-    if ([LogInUser getNowLogInUser].newfriendbadge.integerValue) {
+    if ([LogInUser getCurrentLoginUser].newfriendbadge.integerValue) {
         
-        [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge]];
+        [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge]];
     }
     
     MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
@@ -281,7 +281,7 @@ single_implementation(MainViewController)
 
 - (void)newFriendPuthMessga
 {
-    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge];
+    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
     [circleItem setBadgeValue:badgeStr];
 }
 

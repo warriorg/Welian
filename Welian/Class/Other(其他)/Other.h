@@ -14,6 +14,9 @@
 #import "e0571CoreData.h"
 #import "NSManagedObject+ManagedObjectQuery.h"
 
+#define MR_ENABLE_ACTIVE_RECORD_LOGGING 0
+#import "CoreData+MagicalRecord.h"
+
 #pragma mark - Categorys
 #import "NSObject+Extend.h"
 #import "UIView+Size.h"

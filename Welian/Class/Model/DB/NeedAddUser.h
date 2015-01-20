@@ -21,13 +21,21 @@
 @property (nonatomic, retain) LogInUser * rsLoginUser;
 
 //创建需要添加的好友对象
-+ (void)createNeedAddUserWithDict:(NSDictionary *)dict withType:(NSInteger)type;
-//获取已经存在的好友对象
-+ (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
-//获取已经存在的好友对象
-+ (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
++ (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type;
+
 //获取排序后的通讯录联系人
-+ (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
++ (NSMutableArray *)allNeedAddUsersWithType:(NSInteger)type;
+
+
+
+//创建需要添加的好友对象
+//+ (void)createNeedAddUserWithDict:(NSDictionary *)dict withType:(NSInteger)type;
+////获取已经存在的好友对象
+//+ (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
+////获取已经存在的好友对象
+//+ (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
+//获取排序后的通讯录联系人
+//+ (NSMutableArray *)allNeedAddUserWithType:(NSInteger)type;
 
 //更新好友关系状态
 - (NeedAddUser *)updateFriendShip:(NSInteger)type;

@@ -35,15 +35,17 @@
 @property (nonatomic, retain) NSSet *rsInvestIndustrys;
 @property (nonatomic, retain) NSSet *rsNeedAddUsers;
 
+
+//获取当前登陆的账户
++ (LogInUser *)getCurrentLoginUser;
+
+//<-------------------------------->
+
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
 
 //通过ucid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;
-
-// 当前登录账户信息
-+ (LogInUser *)getNowLogInUser;
-
 
 //获取正在聊天的好友列表
 - (NSArray *)chatUsers;
@@ -57,6 +59,60 @@
 - (void)updateAllNewFriendsOperateStatus;
 //更新所有添加好友中，待验证的状态为添加状态
 - (void)updateAllNeedAddFriendOperateStatus;
+
+//---------------------  我的好友  MyFriendUser操作 ---------------------/
+// //通过uid查询
+- (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
+// 所有好友
+- (NSArray *)getAllMyFriendUsers;
+
+
+//---------------------- SchoolModel ------------
+//通过ucid查询
+- (SchoolModel *)getSchoolModelWithUcid:(NSNumber*)usid;
+
+//---------------------- CompanyModel ------------
+//通过ucid查询
+- (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid;
+// 查询所有数据并返回
+- (NSArray *)allCompanyModels;
+
+//---------------------- NewFriendUser -------
+- (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
+
+
+//---------------------HomeMessage----------
+// //通过commentid查询
+- (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
+// 获取未读消息
+- (NSArray *)getIsLookNotMessages;
+// 获取全部消息
+- (NSArray *)getAllMessages;
+
+//--------------------InvestIndustry-----------
+// //通过item查询
+- (InvestIndustry *)getInvestIndustryWithName:(NSString *)name;
+
+//--------------------InvestStages-------------
+// //通过item查询
+- (InvestStages *)getInvestStagesWithStage:(NSString *)item;
+
+//--------------------InvestItems--------------
+// 获取全部消息
+- (NSArray *)getAllInvestItems;
+// //通过item查询
+- (InvestItems *)getInvestItemsWithItem:(NSString *)item;
+
+
+//--------------------NeedAddUser---------------
+//获取已经存在的好友对象
+- (NeedAddUser *)getNeedAddUserWithUid:(NSNumber *)uid;
+//获取已经存在的好友对象
+- (NeedAddUser *)getNeedAddUserWithMobile:(NSString *)mobile;
+
+
+
+
 
 // 首页动态第一个id
 @property (nonatomic, retain) NSNumber * firststustid;

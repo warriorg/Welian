@@ -27,12 +27,6 @@
 + (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM;
 + (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser;
 
-// //通过uid查询
-+ (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid;
-
-// 所有好友
-+ (NSArray *)getAllMyFriendUsers;
-
 //创建接收消息的聊天对象
 + (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict;
 

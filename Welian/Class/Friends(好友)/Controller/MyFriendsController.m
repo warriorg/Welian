@@ -23,6 +23,8 @@
 #import "AddFriendViewController.h"
 #import "AddFriendTypeListViewController.h"
 #import "UIImage+ImageEffects.h"
+#import "MyFriendUser.h"
+#import "NewFriendUser.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
 
@@ -140,16 +142,94 @@ static NSString *fridcellid = @"fridcellid";
 -(void)loadMyAllFriends
 {
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        NSArray *myFriends = [loginUser getAllMyFriendUsers];
         
-        [self.refreshControl endRefreshing];
-        self.allArray = [JSON objectForKey:@"array"];
-        _count = [[JSON objectForKey:@"count"] integerValue];
-        if (self.allArray.count) {
-            UILabel *fff = (UILabel*)self.tableView.tableFooterView;
-            [fff setText:[NSString stringWithFormat:@"%d位好友",_count]];
-            [self.tableView reloadData];
-        }
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
+            LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
+            
+            NSArray  *json = [NSArray arrayWithArray:JSON];
+            //循环，删除本地数据库多余的缓存数据
+            for (int i = 0; i < [myFriends count]; i++){
+                MyFriendUser *myFriendUser = myFriends[i];
+                //判断返回的数组是否包含
+                BOOL isHave = [json bk_any:^BOOL(id obj) {
+                    //判断是否包含对应的
+                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
+                }];
+                if(!isHave){
+                    //删除新的好友本地数据库
+                    NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:myFriendUser.uid];
+                    if (newFuser) {
+                        //更新好友请求列表数据为 添加
+                        [newFuser updateOperateType:0];
+                    }
+                    
+                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+                    if(myFriendUser.uid.integerValue > 100){
+                        //不包含，删除当前数据
+                        //                            [myFriendUser delete];
+                        [myFriendUser MR_deleteEntityInContext:loginUser.managedObjectContext];
+                    }
+                }
+            }
+            
+//            NSArray *myFriends = [NSArray array];
+            if (json.count) {
+                //循环添加数据库数据
+                for (NSDictionary *modic in json) {
+                    FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                    
+                    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
+                    MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:[loginUser managedObjectContext]];
+                    
+                    if (!myFriend) {
+                        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
+                    }
+                    myFriend.uid = friendM.uid;
+                    myFriend.mobile = friendM.mobile;
+                    myFriend.position = friendM.position;
+                    myFriend.provinceid = friendM.provinceid;
+                    myFriend.provincename = friendM.provincename;
+                    myFriend.cityid = friendM.cityid;
+                    myFriend.cityname = friendM.cityname;
+                    myFriend.friendship = friendM.friendship;
+                    myFriend.shareurl = friendM.shareurl;
+                    myFriend.avatar = friendM.avatar;
+                    myFriend.name = friendM.name;
+                    myFriend.address = friendM.address;
+                    myFriend.email = friendM.email;
+                    myFriend.investorauth = friendM.investorauth;
+                    myFriend.startupauth = friendM.startupauth;
+                    myFriend.company = friendM.company;
+                    myFriend.status = friendM.status;
+                    [loginUser addRsMyFriendsObject:myFriend];
+                    
+//                    [MyFriendUser createMyFriendUserModel:friendM];
+                    //                    [mutabArray addObject:friendM];
+                }
+//                myFriends = [loginUser getAllMyFriendUsers];
+            }
 
+            
+        } completion:^(BOOL contextDidSave, NSError *error) {
+            
+//            LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+            NSArray *myFriends = [loginUser getAllMyFriendUsers];
+            NSDictionary *alldataDic =  @{@"count":@(myFriends.count),@"array":[WLHttpTool getChineseStringArr:myFriends]};
+            [self.refreshControl endRefreshing];
+            self.allArray = [alldataDic objectForKey:@"array"];
+            _count = [[alldataDic objectForKey:@"count"] integerValue];
+            if (self.allArray.count) {
+                UILabel *fff = (UILabel*)self.tableView.tableFooterView;
+                [fff setText:[NSString stringWithFormat:@"%d位好友",_count]];
+                [self.tableView reloadData];
+            }
+
+            
+        }];
+        
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
     }];
@@ -319,7 +399,7 @@ static NSString *fridcellid = @"fridcellid";
                 cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
             }
             cell.segementedControl.delegate = self;
-            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getNowLogInUser].newfriendbadge];
+            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
             cell.segementedControl.bridges = @[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"];
             return cell;
         }else{

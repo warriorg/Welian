@@ -65,6 +65,10 @@ BMKMapManager* _mapManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //数据库操作
+    [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelVerbose];
+    [MagicalRecord setupAutoMigratingCoreDataStack];
+    
     // 版本更新
     [self detectionUpdataVersionDic];
     //判断是不是第一次启动应用
@@ -98,7 +102,7 @@ BMKMapManager* _mapManager;
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     DLog(@"%@",mode.description);
     if (mode.sessionid&&mode.mobile&&[UserDefaults objectForKey:@"sessionid"]) {
         /** 已登陆 */
@@ -299,7 +303,7 @@ BMKMapManager* _mapManager;
     if ([type isEqualToString:@"feedZan"]||[type isEqualToString:@"feedComment"]||[type isEqualToString:@"feedForward"]) {     // 动态消息推送
 
         [HomeMessage createHomeMessageModel:[MessageHomeModel objectWithKeyValues:dataDic]];
-        NSInteger badge = [[LogInUser getNowLogInUser].homemessagebadge integerValue];
+        NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
         badge++;
         [LogInUser setUserHomemessagebadge:@(badge)];
 //        [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KMessagebadge];
@@ -334,6 +338,7 @@ BMKMapManager* _mapManager;
 {
     NSString *type = [dataDic objectForKey:@"type"];
     NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if ([type isEqualToString:@"friendAdd"]) {
         // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
         [newfrendM setIsAgree:@(1)];
@@ -344,7 +349,7 @@ BMKMapManager* _mapManager;
         MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
         
         //修改需要添加的用户的状态
-        NeedAddUser *needAddUser = [NeedAddUser getNeedAddUserWithUid:friendUser.uid];
+        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:friendUser.uid];
         [needAddUser updateFriendShip:1];
         
         //接受后，本地创建一条消息
@@ -371,7 +376,7 @@ BMKMapManager* _mapManager;
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友
         //操作类型0：添加 1：接受  2:已添加 3：待验证
-        MyFriendUser *myFriendUser = [MyFriendUser getMyfriendUserWithUid:newfrendM.uid];
+        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
         if ([type isEqualToString:@"friendRequest"]) {
             //如果是好友，设置为已添加
             if (myFriendUser) {
@@ -382,7 +387,7 @@ BMKMapManager* _mapManager;
         }
         //推荐的
         if([type isEqualToString:@"friendCommand"]){
-            NSInteger newF = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
+            NSInteger newF = [loginUser.newfriendbadge integerValue];
             [LogInUser setUserNewfriendbadge:@(newF+1)];
             if (myFriendUser) {
                 [newfrendM setOperateType:@(2)];
@@ -392,11 +397,11 @@ BMKMapManager* _mapManager;
         }
         
         //判断当前是否已经是好友
-        NewFriendUser *newFriendUser = [NewFriendUser getNewFriendUserWithUid:newfrendM.uid];
+        NewFriendUser *newFriendUser = [loginUser getNewFriendUserWithUid:newfrendM.uid];
         if (!newFriendUser) {
             //不是好友，添加角标
             
-            NSInteger badge = [[LogInUser getNowLogInUser].newfriendbadge integerValue];
+            NSInteger badge = [[LogInUser getCurrentLoginUser].newfriendbadge integerValue];
             badge++;
             [LogInUser setUserNewfriendbadge:@(badge)];
 //            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
@@ -445,7 +450,7 @@ BMKMapManager* _mapManager;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DLog(@"应用程序将要进入非活动状态，即将进入后台");
-    if (!([LogInUser getNowLogInUser].newfriendbadge.integerValue||[LogInUser getNowLogInUser].homemessagebadge.integerValue)) {
+    if (!([LogInUser getCurrentLoginUser].newfriendbadge.integerValue||[LogInUser getCurrentLoginUser].homemessagebadge.integerValue)) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
     
@@ -486,7 +491,10 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    if (!([LogInUser getNowLogInUser].newfriendbadge.integerValue||[LogInUser getNowLogInUser].homemessagebadge.integerValue)) {
+    //数据库操作
+    [MagicalRecord cleanUp];
+    
+    if (!([LogInUser getCurrentLoginUser].newfriendbadge.integerValue||[LogInUser getCurrentLoginUser].homemessagebadge.integerValue)) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

@@ -80,7 +80,7 @@ static NSString *itemscellid = @"itemscellid";
     }else if (section==1){
         return 2;
     }else{
-        return 1+[LogInUser getNowLogInUser].rsInvestItems.count;
+        return 1+[LogInUser getCurrentLoginUser].rsInvestItems.count;
     }
 }
 
@@ -115,8 +115,8 @@ static NSString *itemscellid = @"itemscellid";
 
         InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:invcellid];
         
-        NSInteger auth = [LogInUser getNowLogInUser].investorauth.integerValue;
-        NSString *urlStr = [LogInUser getNowLogInUser].url;
+        NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+        NSString *urlStr = [LogInUser getCurrentLoginUser].url;
         if (auth == 0) {  // 默认状态
             [cell.stateLabel setText:@"上传名片，成为认证投资人"];
             [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosePicture)]];
@@ -146,7 +146,7 @@ static NSString *itemscellid = @"itemscellid";
         if (indexPath.row ==0) {      // 投资领域
             [cell.textLabel setText:@"投资领域"];
             NSMutableString *industryStr = [NSMutableString string];
-            NSArray *investIndustryarray = [LogInUser getNowLogInUser].rsInvestIndustrys.allObjects;
+            NSArray *investIndustryarray = [LogInUser getCurrentLoginUser].rsInvestIndustrys.allObjects;
             for (InvestIndustry *induM in investIndustryarray) {
                 [industryStr appendFormat:@"%@  ",induM.industryname];
             }
@@ -154,7 +154,7 @@ static NSString *itemscellid = @"itemscellid";
         }else if (indexPath.row ==1){  // 投资阶段
             [cell.textLabel setText:@"投资阶段"];
             NSMutableString *stagesStr = [NSMutableString string];
-            NSArray *investIndustryarray = [LogInUser getNowLogInUser].rsInvestStages.allObjects;
+            NSArray *investIndustryarray = [LogInUser getCurrentLoginUser].rsInvestStages.allObjects;
             for (InvestStages *stage in investIndustryarray) {
                 [stagesStr appendFormat:@"%@  ",stage.stagename];
             }
@@ -162,7 +162,7 @@ static NSString *itemscellid = @"itemscellid";
         }
         return cell;
     }else if (indexPath.section ==2){
-        if (indexPath.row==[LogInUser getNowLogInUser].rsInvestItems.count) {
+        if (indexPath.row==[LogInUser getCurrentLoginUser].rsInvestItems.count) {
             AddCaseCell *addcell = [tableView dequeueReusableCellWithIdentifier:addcasecellid];
             return addcell;
         }else{
@@ -170,7 +170,7 @@ static NSString *itemscellid = @"itemscellid";
             if (cell ==nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:itemscellid];
             }
-            NSArray *itemS = [InvestItems getAllInvestItems];
+            NSArray *itemS = [[LogInUser getCurrentLoginUser] getAllInvestItems];
             
             InvestItems *item = itemS[indexPath.row];
             [cell.textLabel setText:item.item];
@@ -264,11 +264,11 @@ static NSString *itemscellid = @"itemscellid";
             [self.navigationController pushViewController:investVC animated:YES];
         }
     }else if (indexPath.section==2){
-        if (indexPath.row == [LogInUser getNowLogInUser].rsInvestItems.count) {
+        if (indexPath.row == [LogInUser getCurrentLoginUser].rsInvestItems.count) {
             
             NameController *caseVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                 
-                NSArray *itemArray = [LogInUser getNowLogInUser].rsInvestItems.allObjects;
+                NSArray *itemArray = [LogInUser getCurrentLoginUser].rsInvestItems.allObjects;
                 NSMutableArray *arryM = [NSMutableArray array];
                 for (InvestItems *item in itemArray) {
                     [arryM addObject:@{@"item":item.item}];
@@ -293,7 +293,7 @@ static NSString *itemscellid = @"itemscellid";
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
-    if (indexPath.section==2&&indexPath.row != [LogInUser getNowLogInUser].rsInvestItems.count) {
+    if (indexPath.section==2&&indexPath.row != [LogInUser getCurrentLoginUser].rsInvestItems.count) {
         result = UITableViewCellEditingStyleDelete;//设置编辑风格为删除风格
     }
     return result;
@@ -303,7 +303,7 @@ static NSString *itemscellid = @"itemscellid";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    NSArray *itemArray = [InvestItems getAllInvestItems];
+    NSArray *itemArray = [[LogInUser getCurrentLoginUser] getAllInvestItems];
     InvestItems *item = itemArray[indexPath.row];
     NSMutableArray *itemMuArray = [NSMutableArray arrayWithArray:itemArray];
     [itemMuArray removeObject:item];

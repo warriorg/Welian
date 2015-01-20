@@ -19,23 +19,27 @@
 //创建新收据
 + (InvestIndustry *)createInvestIndustry:(IInvestIndustryModel *)investIndustry
 {
-    InvestIndustry *investitem = [InvestIndustry getInvestIndustryWithName:investIndustry.industryname];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    InvestIndustry *investitem = [loginUser getInvestIndustryWithName:investIndustry.industryname];
     if (!investitem) {
-        investitem = [InvestIndustry create];
+        investitem = [InvestIndustry MR_createEntityInContext:loginUser.managedObjectContext];
     }
     investitem.industryid = investIndustry.industryid;
     investitem.industryname = investIndustry.industryname;
-    investitem.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
+    
+    [loginUser addRsInvestIndustryObject:investitem];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    investitem.rsLogInUser = [LogInUser getCurrentLoginUser];
+//    [MOC save];
     return investitem;
 }
 
 // //通过item查询
-+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name
-{
-    InvestIndustry *investIndustry = [[[[[InvestIndustry queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"industryname" equals:name] results] firstObject];
-    return investIndustry;
-}
+//+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name
+//{
+//    InvestIndustry *investIndustry = [[[[[InvestIndustry queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"industryname" equals:name] results] firstObject];
+//    return investIndustry;
+//}
 
 
 @end

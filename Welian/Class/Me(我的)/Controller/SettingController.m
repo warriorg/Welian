@@ -146,7 +146,7 @@
     if (indexPath.section==0&&indexPath.row==0) {
 //        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
         
-        [cell.detailTextLabel setText:[LogInUser getNowLogInUser].mobile];
+        [cell.detailTextLabel setText:[LogInUser getCurrentLoginUser].mobile];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
 

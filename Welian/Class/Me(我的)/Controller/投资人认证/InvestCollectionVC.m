@@ -50,7 +50,8 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     [_alldataArray removeAllObjects];
     [_selectCells removeAllObjects];
-    InvestIndustry *firstIndustry = [InvestIndustry getInvestIndustryWithName:@"不限"];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    InvestIndustry *firstIndustry = [loginUser getInvestIndustryWithName:@"不限"];
     if (firstIndustry) {
         for (NSDictionary *indDic in dataarray) {
             IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
@@ -71,7 +72,7 @@ static NSString * const reuseIdentifier = @"Cell";
             IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
             [indust setIndustryid:[indDic objectForKey:@"id"]];
             [indust setIndustryname:[indDic objectForKey:@"name"]];
-            if ([InvestIndustry getInvestIndustryWithName:indust.industryname]) {
+            if ([loginUser getInvestIndustryWithName:indust.industryname]) {
                 
                 [indust setIsSelect:YES];
                 [_selectCells addObject:indust];
@@ -121,7 +122,7 @@ static NSString * const reuseIdentifier = @"Cell";
                 IInvestStageModel *stageM = [[IInvestStageModel alloc] init];
                 [stageM setStage:[stageDic objectForKey:@"stage"]];
                 [stageM setStagename:[stageDic objectForKey:@"stagename"]];
-                if ([InvestStages getInvestStagesWithStage:stageM.stagename]) {
+                if ([[LogInUser getCurrentLoginUser] getInvestStagesWithStage:stageM.stagename]) {
                     [stageM setIsSelect:YES];
                     [_selectCells addObject:stageM];
                 }
@@ -162,7 +163,7 @@ static NSString * const reuseIdentifier = @"Cell";
     }
     [WLHttpTool investAuthParameterDic:ruqstDic success:^(id JSON) {
         if (_type ==1) {
-            [LogInUser getNowLogInUser].rsInvestIndustrys = nil;
+            [LogInUser getCurrentLoginUser].rsInvestIndustrys = nil;
              InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             
             if (cell.checkImageView.selected) {
@@ -177,7 +178,7 @@ static NSString * const reuseIdentifier = @"Cell";
             }
             
         }else if (_type ==2){
-            [LogInUser getNowLogInUser].rsInvestStages = nil;
+            [LogInUser getCurrentLoginUser].rsInvestStages = nil;
             for (IInvestStageModel *stageM in _selectCells) {
                 [InvestStages createInvestStages:stageM];
             }

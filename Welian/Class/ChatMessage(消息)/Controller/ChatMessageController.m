@@ -57,7 +57,7 @@
     //隐藏分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.datasource = [[LogInUser getNowLogInUser] chatUsers];
+    self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
         [_notHasDataView removeFromSuperview];
@@ -135,7 +135,7 @@
         //更新当前聊天的所有消息为已读状态
         [friendUser updateAllMessageReadStatus];
         //刷新列表
-        self.datasource = [[LogInUser getNowLogInUser] chatUsers];
+        self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
         [self.tableView reloadData];
         
 //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -173,7 +173,7 @@
 //聊天列表改变
 - (void)chatUsersChanged:(NSNotification *)notification
 {
-    self.datasource = [[LogInUser getNowLogInUser] chatUsers];
+    self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
         [_notHasDataView removeFromSuperview];
@@ -191,7 +191,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
     
     NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
-    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:uid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    MyFriendUser *user = [loginUser getMyfriendUserWithUid:uid];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
     [self.navigationController pushViewController:chatVC animated:YES];
 }

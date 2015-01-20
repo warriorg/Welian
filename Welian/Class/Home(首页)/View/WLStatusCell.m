@@ -148,7 +148,7 @@
     if (!_mode) {
 //        _mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     }
-    if ([[LogInUser getNowLogInUser].uid integerValue]==[user.uid integerValue]) {
+    if ([[LogInUser getCurrentLoginUser].uid integerValue]==[user.uid integerValue]) {
         [_moreBut setHidden:NO];
     }else{
         [_moreBut setHidden:YES];

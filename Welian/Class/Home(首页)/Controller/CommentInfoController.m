@@ -224,7 +224,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
     
     NSArray *buttons = @[@"举报"];
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
         buttons = @[@"删除该动态",@"举报"];
     }
@@ -481,7 +481,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         _selecCommFrame = _dataArrayM[indexPath.row];
     }
     
-    LogInUser *mode = [LogInUser getNowLogInUser];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {

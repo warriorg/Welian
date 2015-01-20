@@ -85,9 +85,9 @@ static HttpTool *engine;
     
     NSString *parameterStr = [self dicTostring:parameterDic];
 
-    LogInUser *mode = [LogInUser getNowLogInUser];
-    NSString *sessid = [UserDefaults objectForKey:@"sessionid"];
-    if (!sessid.length) {
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
+    NSString *sessid = mode.sessionid;
+    if (!sessid) {
         sessid = [UserDefaults objectForKey:@"sid"];
     }
     if (!sessid) {

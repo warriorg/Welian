@@ -57,7 +57,7 @@
 //{
 //    DLog(@"getUserInfo : %@",command.arguments);
 //    
-//    NSDictionary *userinfo = [[LogInUser getNowLogInUser] keyValues];
+//    NSDictionary *userinfo = [[LogInUser getCurrentLoginUser] keyValues];
 //    NSString *jsonString = userinfo.toJSONString;
 //    [self send:command backInfo:jsonString];
 //
@@ -82,7 +82,7 @@
 - (void)getSessionId:(CDVInvokedUrlCommand *)command
 {
     DLog(@"getSessionId : %@",command.arguments);
-    NSString *sessionId = [LogInUser getNowLogInUser].sessionid;
+    NSString *sessionId = [LogInUser getCurrentLoginUser].sessionid;
     [self send:command backInfo:sessionId];
 }
 
@@ -94,8 +94,8 @@
 {
     //('{"name":"夏显林","mobile":"15068114669","company":"杭州传送门网络科技有限公司","position":"前端开发工程师"}')
     DLog(@"getUserInfo : %@",command.arguments);
-    LogInUser *loginUser = [LogInUser getNowLogInUser];
-    NSDictionary *userinfo = @{@"name":loginUser.name,@"mobile":loginUser.mobile,@"company":loginUser.company,@"position":loginUser.position};//[[LogInUser getNowLogInUser] keyValues];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSDictionary *userinfo = @{@"name":loginUser.name,@"mobile":loginUser.mobile,@"company":loginUser.company,@"position":loginUser.position};//[[LogInUser getCurrentLoginUser] keyValues];
     NSString *jsonString = userinfo.toJSONString;
     [self send:command backInfo:jsonString];
 }

@@ -28,12 +28,12 @@
 @property (nonatomic, retain) LogInUser *rsLogInUser;
 
 // 查询所有数据并返回
-+ (NSArray *)allCompanyModels;
+//+ (NSArray *)allCompanyModels;
 
 //创建新收据
 + (CompanyModel*)createCompanyModel:(ICompanyResult *)iCompany;
 
 //通过ucid查询
-+ (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid;
+//+ (CompanyModel *)getCompanyModelWithUcid:(NSNumber*)ucid;
 
 @end

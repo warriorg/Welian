@@ -42,7 +42,7 @@
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
-    ChatMessage *chatMsg = [ChatMessage create];
+    ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(wlMessage.messageMediaType);
@@ -62,7 +62,8 @@
     chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
     chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
     chatMsg.sender = wlMessage.sender;
-    chatMsg.rsMyFriendUser = friendUser;
+//    chatMsg.rsMyFriendUser = friendUser;
+    [friendUser addRsChatMessagesObject:chatMsg];
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -76,7 +77,8 @@
         chatMsg.showTimeStamp = @(YES);
     }
     
-    [MOC save];
+//    [MOC save];
+    [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新好友的聊天时间
     [friendUser updateLastChatTime:chatMsg.timestamp];
@@ -111,7 +113,7 @@
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
-    ChatMessage *chatMsg = [ChatMessage create];
+    ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
@@ -161,7 +163,8 @@
 //    chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
 //    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
     chatMsg.sender = friendUser.name;
-    chatMsg.rsMyFriendUser = friendUser;
+//    chatMsg.rsMyFriendUser = friendUser;
+    [friendUser addRsChatMessagesObject:chatMsg];
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -175,7 +178,8 @@
         chatMsg.showTimeStamp = @(YES);
     }
     
-    [MOC save];
+//    [MOC save];
+    [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新好友的聊天时间
     [friendUser updateLastChatTime:chatMsg.timestamp];
@@ -192,7 +196,7 @@
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
-    ChatMessage *chatMsg = [ChatMessage create];
+    ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     chatMsg.message = wlMessage.text;
     chatMsg.messageType = @(WLBubbleMessageSpecialTypeText);
@@ -212,7 +216,8 @@
     chatMsg.latitude = 0;
     chatMsg.longitude = 0;
     chatMsg.sender = wlMessage.sender;
-    chatMsg.rsMyFriendUser = friendUser;
+//    chatMsg.rsMyFriendUser = friendUser;
+    [friendUser addRsChatMessagesObject:chatMsg];
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -226,7 +231,8 @@
         chatMsg.showTimeStamp = @(YES);
     }
     
-    [MOC save];
+    [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    [MOC save];
     
     //更新好友的聊天时间
     [friendUser updateLastChatTime:chatMsg.timestamp];
@@ -238,8 +244,8 @@
 - (void)updateSendStatus:(NSInteger)status
 {
     self.sendStatus = @(status);
-    
-    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    [MOC save];
     
     DLog(@"changed: ---- %d",self.sendStatus.intValue);
     
@@ -251,7 +257,8 @@
 - (void)updateReadStatus:(BOOL)status
 {
     self.isRead = @(status);
-    [MOC save];
+//    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 //更新重新发送状态
@@ -259,15 +266,16 @@
 {
     self.sendStatus = @(0);
     self.timestamp = [NSDate date];
-    [MOC save];
+//    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 //更新发送的消息的服务器时间
 - (void)updateTimeStampFromServer:(NSString *)time
 {
     self.timestamp = [time dateFromShortString];
-    
-    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+//    [MOC save];
 }
 
 @end

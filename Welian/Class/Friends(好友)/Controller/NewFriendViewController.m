@@ -65,10 +65,10 @@ static NSString *cellIdentifier = @"frnewCellid";
     self.tableView.tableHeaderView = segementedControl;
     
     //重新设置新的好友中待验证的状态
-    [[LogInUser getNowLogInUser] updateAllNewFriendsOperateStatus];
+    [[LogInUser getCurrentLoginUser] updateAllNewFriendsOperateStatus];
 
     //加载数据
-    self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getNowLogInUser] allMyNewFriends]];
+    self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getCurrentLoginUser] allMyNewFriends]];
     if (_datasource.count > 0) {
         [_notView removeFromSuperview];
         [self.tableView reloadData];
@@ -176,7 +176,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 {
     if (type == FriendOperateTypeAdd) {
         //添加好友，发送添加成功，状态变成待验证
-        LogInUser *loginUser = [LogInUser getNowLogInUser];
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
         UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFriendUser.name]];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];

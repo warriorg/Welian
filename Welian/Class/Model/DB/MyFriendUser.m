@@ -24,9 +24,10 @@
 //创建新收据
 + (MyFriendUser *)createMyFriendUserModel:(FriendsUserModel *)userInfoM
 {
-    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:userInfoM.uid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:userInfoM.uid];
     if (!myFriend) {
-        myFriend = [MyFriendUser create];
+        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     myFriend.uid = userInfoM.uid;
     myFriend.mobile = userInfoM.mobile;
@@ -45,17 +46,20 @@
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.status = userInfoM.status;
-    myFriend.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
+    
+    [loginUser addRsMyFriendsObject:myFriend];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
     return myFriend;
 }
 
 //创建新的同意好意请求数据
 + (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM
 {
-    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:userInfoM.uid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:userInfoM.uid];
     if (!myFriend) {
-        myFriend = [MyFriendUser create];
+        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     myFriend.uid = userInfoM.uid;
     myFriend.mobile = userInfoM.mobile;
@@ -74,16 +78,19 @@
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
 //    myFriend.status = userInfoM.status;
-    myFriend.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
+    
+    [loginUser addRsMyFriendsObject:myFriend];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
     return myFriend;
 }
 
 + (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser
 {
-    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:newFriendUser.uid];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:newFriendUser.uid];
     if (!myFriend) {
-        myFriend = [MyFriendUser create];
+        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     myFriend.uid = newFriendUser.uid;
     myFriend.mobile = newFriendUser.mobile;
@@ -102,25 +109,9 @@
     myFriend.startupauth = newFriendUser.startupauth;
     myFriend.company = newFriendUser.company;
     //    myFriend.status = userInfoM.status;
-    myFriend.rsLogInUser = [LogInUser getNowLogInUser];
-    [MOC save];
-}
-
-
-// //通过uid查询
-+ (MyFriendUser *)getMyfriendUserWithUid:(NSNumber *)uid
-{
-//    [LogInUser getNowLogInUser].rsMyFriends.allObjects
-//    NSPredicate * filter = [NSPredicate predicateWithFormat:@"uid = %@",uid];
     
-    MyFriendUser *myFriend = [[[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" equals:uid] results] firstObject];
-    return myFriend;
-}
-
-// 所有好友
-+ (NSArray *)getAllMyFriendUsers
-{
-     return  [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getNowLogInUser]] where:@"uid" greaterThan:@"100"] results];
+    [loginUser addRsMyFriendsObject:myFriend];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 
@@ -128,17 +119,21 @@
 + (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict
 {
     NSDictionary *fromuser = dict[@"fromuser"];
-    LogInUser *user = [LogInUser getLogInUserWithUid:dict[@"uid"]];
-    MyFriendUser *myFriend = [MyFriendUser getMyfriendUserWithUid:fromuser[@"uid"]];
+    LogInUser *loginUser = [LogInUser getLogInUserWithUid:dict[@"uid"]];
+    
+    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:fromuser[@"uid"]];
     if (!myFriend) {
-        myFriend = [MyFriendUser create];
+        myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
         myFriend.uid = fromuser[@"uid"];
         myFriend.avatar = fromuser[@"avatar"];
         myFriend.name = fromuser[@"name"];
-        myFriend.rsLogInUser = user;
+        
+        [loginUser addRsMyFriendsObject:myFriend];
     }
     myFriend.isChatNow = @(YES);
-    [MOC save];
+    
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
     return myFriend;
 }
 
@@ -146,7 +141,8 @@
 - (void)updateIsChatStatus:(BOOL)status
 {
     self.isChatNow = @(status);
-    [MOC save];
+//    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //聊天状态发送改变
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
@@ -155,7 +151,10 @@
 //更新所有未读消息为读取状态
 - (void)updateAllMessageReadStatus
 {
-    NSArray *unReadMessages = [[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser",self,@"isRead",@(NO)];
+    NSArray *unReadMessages = [ChatMessage MR_findAllWithPredicate:pre];
+    
+//    NSArray *unReadMessages = [[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results];
     for (ChatMessage *chatMsg in unReadMessages) {
         [chatMsg updateReadStatus:YES];
     }
@@ -169,32 +168,46 @@
 //获取最新的一条消息
 - (ChatMessage *)getTheNewChatMessage
 {
-    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:YES inContext:self.managedObjectContext];
+    return chatMessage;
+    
+//    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
 }
 
 //获取最后一条消息
 - (ChatMessage *)getTheLastChatMessage
 {
-    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:YES inContext:self.managedObjectContext];
+    return chatMessage;
+//    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
 }
 
 //更新最新一条聊天时间
 - (void)updateLastChatTime:(NSDate *)chatTime
 {
     self.lastChatTime = chatTime;
-    [MOC save];
+//    [MOC save];
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 //获取未读取的聊天消息数量
 - (NSInteger)unReadChatMessageNum
 {
-    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results] count];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser",self,@"isRead",@(NO)];
+    NSArray *users = [ChatMessage MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    return users.count;
+//    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"isRead" isTrue:NO] results] count];
 }
 
 //获取当前最大的消息ID
 - (NSNumber *)getMaxChatMessageId
 {
-    ChatMessage *chatMessage = [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:NO] results] firstObject];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"msgId" ascending:NO inContext:self.managedObjectContext];
+    
+//    ChatMessage *chatMessage = [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"msgId" ascending:NO] results] firstObject];
     if (chatMessage) {
         return chatMessage.msgId;
     }else{
@@ -205,24 +218,30 @@
 //获取对应msgId的消息
 - (ChatMessage *)getChatMessageWithMsgId:(NSString *)msgId
 {
-    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"msgId" equals:msgId] results] firstObject];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser",self,@"msgId",msgId];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre inContext:self.managedObjectContext];
+    return chatMessage;
+//    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] where:@"msgId" equals:msgId] results] firstObject];
 }
 
 //获取所有的聊天消息列表
 - (NSArray *)allChatMessages
 {
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
-    //返回的数量 限制
-//    [[query offset:1] limit:2];
-    
-    return query.results;
+//    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+//    //返回的数量 限制
+////    [[query offset:1] limit:2];
+//    return query.results;
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    NSArray *all = [ChatMessage MR_findAllSortedBy:@"timestamp" ascending:YES withPredicate:pre];
+    return all;
 }
 
 - (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count
 {
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+    
+    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:self.managedObjectContext] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
     //返回的数量 限制
-    [[query offset:offset] limit:count];
+    [[query offset:(int)offset] limit:(int)count];
 //    DLog(@"message--- %d",[[query results] count]);
     return query.results;
 }

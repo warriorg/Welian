@@ -17,7 +17,8 @@
 // 查询所有数据并返回
 + (NSArray *)allInvestorUsers
 {
-    return [[InvestorUser queryInManagedObjectContext:MOC] results];
+    return [InvestorUser MR_findAll];
+//    return [[InvestorUser queryInManagedObjectContext:MOC] results];
 }
 
 
@@ -26,7 +27,7 @@
 {
     InvestorUser *investM = [self getInvestorUserWithUcid:iInvestor.uid];
     if (!investM) {
-        investM = [InvestorUser create];
+        investM = [InvestorUser MR_createEntity];
     }
     investM.uid = iInvestor.uid;
     investM.avatar = iInvestor.avatar;
@@ -47,14 +48,16 @@
     investM.items = iInvestor.items;
     investM.shareurl = iInvestor.shareurl;
     
-    [MOC save];
-    
+//    [MOC save];
+    [investM.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 //通过uid查询
 + (InvestorUser *)getInvestorUserWithUcid:(NSNumber*)uid
 {
-    InvestorUser *investM = [[[[InvestorUser queryInManagedObjectContext:MOC] where:@"uid" equals:uid] results] firstObject];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"uid",uid];
+    InvestorUser *investM = [InvestorUser MR_findFirstWithPredicate:pre];
+//    InvestorUser *investM = [[[[InvestorUser queryInManagedObjectContext:MOC] where:@"uid" equals:uid] results] firstObject];
     return investM;
 }
 

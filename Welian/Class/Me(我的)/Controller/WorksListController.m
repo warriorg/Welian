@@ -33,9 +33,9 @@ static NSString *cellid = @"workscellid";
     if (self) {
         _wlUserLoadType = type;
         if (type==WLCompany) {
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getNowLogInUser].rsCompanys.allObjects];
+            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
         }else if (type == WLSchool){
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getNowLogInUser].rsSchools.allObjects];
+            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
         }
     }
     return self;
@@ -89,7 +89,7 @@ static NSString *cellid = @"workscellid";
                 [SchoolModel createCompanyModel:iSchool];
             }
             
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getNowLogInUser].rsSchools.allObjects];
+            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
 
             if (self.dataArray.count) {
                 [self.tableView reloadData];
@@ -111,7 +111,7 @@ static NSString *cellid = @"workscellid";
             for (ICompanyResult *iCompany in JSON) {
                 [CompanyModel createCompanyModel:iCompany];
             }
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getNowLogInUser].rsCompanys.allObjects];
+            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
             if (self.dataArray.count) {
                 [self.tableView reloadData];
                 [self.nolistView removeFromSuperview];

@@ -20,7 +20,7 @@
 //创建新收据
 + (InvestStages *)createInvestStages:(IInvestStageModel *)investItemM;
 
-// //通过item查询
-+ (InvestStages *)getInvestStagesWithStage:(NSString *)item;
+//// //通过item查询
+//+ (InvestStages *)getInvestStagesWithStage:(NSString *)item;
 
 @end

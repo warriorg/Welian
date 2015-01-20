@@ -50,7 +50,7 @@ static NSString *frnewCellid = @"frnewCellid";
     [self.tableView setBackgroundColor:IWGlobalBg];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     
-    NSArray *newFarray = [LogInUser getNowLogInUser].rsNewFriends.allObjects;
+    NSArray *newFarray = [LogInUser getCurrentLoginUser].rsNewFriends.allObjects;
     
     for (NewFriendUser *newfriend in newFarray) {
         newfriend.isLook = @(1);
@@ -150,7 +150,7 @@ static NSString *frnewCellid = @"frnewCellid";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NewFriendUser *friendM = _dataArray[indexPath.row];
-    [[LogInUser getNowLogInUser] removeRsNewFriendsObject:_dataArray[indexPath.row]];
+    [[LogInUser getCurrentLoginUser] removeRsNewFriendsObject:_dataArray[indexPath.row]];
     [_dataArray removeObject:friendM];
     //移除tableView中的数据
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
@@ -171,7 +171,7 @@ static NSString *frnewCellid = @"frnewCellid";
             [self jieshouFriend:indexPath];
         }else if ([newFM.pushType isEqualToString:@"friendCommand"]){
 
-            LogInUser *mode = [LogInUser getNowLogInUser];
+            LogInUser *mode = [LogInUser getCurrentLoginUser];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",newFM.name] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
             [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
             
