@@ -208,10 +208,10 @@
 - (void)addRsInvestStages:(NSSet *)values;
 - (void)removeRsInvestStages:(NSSet *)values;
 
-- (void)addRsInvestIndustryObject:(InvestIndustry *)value;
-- (void)removeRsInvestIndustryObject:(InvestIndustry *)value;
-- (void)addRsInvestIndustry:(NSSet *)values;
-- (void)removeRsInvestIndustry:(NSSet *)values;
+- (void)addRsInvestIndustrysObject:(InvestIndustry *)value;
+- (void)removeRsInvestIndustrysObject:(InvestIndustry *)value;
+- (void)addRsInvestIndustrys:(NSSet *)values;
+- (void)removeRsInvestIndustrys:(NSSet *)values;
 
 - (void)addRsNeedAddUsersObject:(NeedAddUser *)value;
 - (void)removeRsNeedAddUsersObject:(NeedAddUser *)value;

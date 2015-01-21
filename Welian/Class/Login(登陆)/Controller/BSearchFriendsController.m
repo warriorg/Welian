@@ -333,6 +333,7 @@ static NSString *fridcellid = @"fridcellid";
     }
     
     UserInfoBasicVC *userVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friends isAsk:NO];
+    [userVC setIsHideSendMsgBtn:YES];
     [self.navigationController pushViewController:userVC animated:YES];
 //    [self cancelClick];
 }

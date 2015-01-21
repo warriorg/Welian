@@ -107,7 +107,6 @@
                     [mode setCheckcode:self.pwdString];
                     [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
                     [LogInUser createLogInUserModel:mode];
-                    
                     BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
                     [bsearchVC setIsStart:YES];
                     NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];

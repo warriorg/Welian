@@ -127,7 +127,7 @@
 {
     NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
-        
+        [UserDefaults removeObjectForKey:@"sid"];
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -782,7 +782,7 @@
     } failure:^(NSError *error) {
         [WLHUDView showErrorHUD:@""];
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 
@@ -792,19 +792,11 @@
     NSDictionary *dic = @{@"type":@"loadSameFriend",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithDictionary:JSON];
-        NSArray *sameFA = [dataDic objectForKey:@"samefriends"];
-        NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
-        for (NSDictionary *infoD in sameFA) {
-            FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
-            [fmode setKeyValues:infoD];
-            [sameFrindM addObject:fmode];
-        }
-        [dataDic setObject:sameFrindM forKey:@"samefriends"];
         succeBlock(dataDic);
     } failure:^(NSError *error) {
 
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 搜索用户

@@ -27,6 +27,7 @@
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
 #import "MJExtension.h"
+#import "FriendsUserModel.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -233,10 +234,17 @@ static NSString *staurCellid = @"staurCellid";
             [self.tableView reloadData];
         }
         
+        YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLSamefriendsTableName];
+        if (sameFitem) {
+            _sameFriendArry = [self getSameFriendsWith:sameFitem.itemObject];
+            [self.tableView reloadData];
+        }
+        
         [WLHttpTool loadUserInfoParameterDic:@{@"uid":_userMode.uid} success:^(id JSON) {
 
             [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(1000)} success:^(id JSON) {
-                _sameFriendArry = [JSON objectForKey:@"samefriends"];
+                [[WLDataDBTool sharedService] putObject:JSON withId:_userMode.uid.stringValue intoTable:KWLSamefriendsTableName];
+                _sameFriendArry = [self getSameFriendsWith:JSON];
                 [self.tableView reloadData];
             } fail:^(NSError *error) {
                 
@@ -273,6 +281,18 @@ static NSString *staurCellid = @"staurCellid";
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     }
     return self;
+}
+
+- (NSMutableArray *)getSameFriendsWith:(NSDictionary *)friendsDic
+{
+    NSArray *sameFA = [friendsDic objectForKey:@"samefriends"];
+    NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
+    for (NSDictionary *infoD in sameFA) {
+        FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
+        [fmode setKeyValues:infoD];
+        [sameFrindM addObject:fmode];
+    }
+    return sameFrindM;
 }
 
 - (NSDictionary *)getUserInfoWith:(NSDictionary *)dataDic
