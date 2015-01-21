@@ -135,14 +135,11 @@ static NSString *frnewCellid = @"frnewCellid";
     }
     UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
     __weak NewFriendController *newFVC = self;
-    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
     userInfoVC.acceptFriendBlock = ^(){
         [newFVC jieshouFriend:indexPath];
-
     };
     self.userBasicVC = userInfoVC;
     [self.navigationController pushViewController:userInfoVC animated:YES];
-    
 }
 
 
