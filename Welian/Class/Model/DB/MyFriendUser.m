@@ -45,7 +45,7 @@
     myFriend.investorauth = userInfoM.investorauth;
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
-    myFriend.status = userInfoM.status;
+//    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];

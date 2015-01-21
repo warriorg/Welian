@@ -26,6 +26,7 @@
 #import "CommentMode.h"
 #import "MainViewController.h"
 #import <ShareSDK/ShareSDK.h>
+#import "AFNetworkReachabilityManager.h"
 
 @interface HomeController () <UIActionSheetDelegate>
 {
@@ -61,7 +62,6 @@
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
         [self.refreshControl beginRefreshing];
-        
         _dataArry = [NSMutableArray array];
         if (!_uid) {
             NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
@@ -279,6 +279,14 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setBackgroundColor:WLLineColor];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, IWTableBorderWidth, 0);
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        DLog(@"status===%d",status);
+        if (status == AFNetworkReachabilityStatusNotReachable) {
+        }else{
+        }
+    }];
+
 }
 
 #pragma mark - 消息页面

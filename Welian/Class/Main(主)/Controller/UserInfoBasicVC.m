@@ -48,6 +48,12 @@ static NSString *staurCellid = @"staurCellid";
 
 @implementation UserInfoBasicVC
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (UIView*)askView
 {
     if (_askView==nil) {
@@ -224,17 +230,6 @@ static NSString *staurCellid = @"staurCellid";
         if (item) {
             _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:item.itemObject]];
             _userMode = [_dataDicM objectForKey:@"profile"];
-            if (!isask) {
-                if ([_userMode.friendship integerValue]==-1) {
-                    
-                }else if ([_userMode.friendship integerValue]==1) {
-                    if (!_isHideSendMsgBtn) {
-                        [self.tableView setTableFooterView:self.sendView];
-                    }
-                }else {
-                    [self.tableView setTableFooterView:self.addFriendView];
-                }
-            }
             [self.tableView reloadData];
         }
         
@@ -253,6 +248,7 @@ static NSString *staurCellid = @"staurCellid";
                 if ([_userMode.friendship integerValue]==-1) {
                     
                 }else if ([_userMode.friendship integerValue]==1) {
+                    [MyFriendUser createMyFriendUserModel:_userMode];
                     if (!_isHideSendMsgBtn) {
                         [self.tableView setTableFooterView:self.sendView];
                     }

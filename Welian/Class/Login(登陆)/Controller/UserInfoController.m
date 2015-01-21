@@ -13,6 +13,7 @@
 #import "WLHUDView.h"
 #import "MJExtension.h"
 #import "BSearchFriendsController.h"
+#import "NavViewController.h"
 
 @interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -109,11 +110,10 @@
                     
                     BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
                     [bsearchVC setIsStart:YES];
-                    [self presentViewController:bsearchVC animated:YES completion:^{
+                    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
+                    [self presentViewController:nav animated:YES completion:^{
                         
                     }];
-//                    MainViewController *mainVC = [[MainViewController alloc] init];
-//                    [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                 }
                 
             } fail:^(NSError *error) {

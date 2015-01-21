@@ -12,6 +12,7 @@
 #import "MainViewController.h"
 #import "BSearchFriendsController.h"
 #import "NSString+val.h"
+#import "NavViewController.h"
 
 @interface BindingPhoneController () <UITextFieldDelegate>
 {
@@ -96,7 +97,9 @@
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
             BSearchFriendsController *BSearchFVC = [[BSearchFriendsController alloc] init];
             [BSearchFVC setIsStart:YES];
-            [self presentViewController:BSearchFVC animated:YES completion:^{
+            NavViewController *nav = [[NavViewController alloc] initWithRootViewController:BSearchFVC];
+//            [self.navigationController pushViewController:nav animated:YES];
+            [self presentViewController:nav animated:YES completion:^{
                 [self.navigationController popToRootViewControllerAnimated:NO];
             }];
         }
