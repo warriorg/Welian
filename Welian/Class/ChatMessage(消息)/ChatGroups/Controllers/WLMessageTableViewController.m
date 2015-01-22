@@ -7,6 +7,7 @@
 //
 
 #import "WLMessageTableViewController.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 //#import "MyFriendUser.h"
 //#import "ChatMessage.h"
 
@@ -22,9 +23,20 @@
 @property (nonatomic, assign) WLInputViewType textViewInputViewType;
 @property (nonatomic, weak, readwrite) WLMessageTableView *messageTableView;
 @property (nonatomic, weak, readwrite) WLMessageInputView *messageInputView;
+@property (nonatomic, weak, readwrite) WLShareMenuView *shareMenuView;
 
 @property (nonatomic, strong) UIView *headerContainerView;
 @property (nonatomic, strong) UIActivityIndicatorView *loadMoreActivityIndicatorView;
+
+/**
+ *  管理本机的摄像和图片库的工具对象
+ */
+@property (nonatomic, strong) WLPhotographyHelper *photographyHelper;
+
+/**
+ *  管理地理位置的工具对象
+ */
+@property (nonatomic, strong) WLLocationHelper *locationHelper;
 
 //判断是不是超出了录音最大时长
 @property (nonatomic) BOOL isMaxTimeStop;
@@ -237,19 +249,19 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
-//- (XHShareMenuView *)shareMenuView {
-//    if (!_shareMenuView) {
-//        XHShareMenuView *shareMenuView = [[XHShareMenuView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds), self.keyboardViewHeight)];
-//        shareMenuView.delegate = self;
-//        shareMenuView.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
-//        shareMenuView.alpha = 0.0;
-//        shareMenuView.shareMenuItems = self.shareMenuItems;
-//        [self.view addSubview:shareMenuView];
-//        _shareMenuView = shareMenuView;
-//    }
-//    [self.view bringSubviewToFront:_shareMenuView];
-//    return _shareMenuView;
-//}
+- (WLShareMenuView *)shareMenuView {
+    if (!_shareMenuView) {
+        WLShareMenuView *shareMenuView = [[WLShareMenuView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds), self.keyboardViewHeight)];
+        shareMenuView.delegate = self;
+        shareMenuView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithWhite:0.961 alpha:1.000];
+        shareMenuView.alpha = 0.0;
+        shareMenuView.shareMenuItems = self.shareMenuItems;
+        [self.view addSubview:shareMenuView];
+        _shareMenuView = shareMenuView;
+    }
+    [self.view bringSubviewToFront:_shareMenuView];
+    return _shareMenuView;
+}
 //
 //- (XHEmotionManagerView *)emotionManagerView {
 //    if (!_emotionManagerView) {
@@ -272,19 +284,19 @@ static CGPoint  delayOffset = {0.0};
 //    return _voiceRecordHUD;
 //}
 //
-//- (XHPhotographyHelper *)photographyHelper {
-//    if (!_photographyHelper) {
-//        _photographyHelper = [[XHPhotographyHelper alloc] init];
-//    }
-//    return _photographyHelper;
-//}
-//
-//- (XHLocationHelper *)locationHelper {
-//    if (!_locationHelper) {
-//        _locationHelper = [[XHLocationHelper alloc] init];
-//    }
-//    return _locationHelper;
-//}
+- (WLPhotographyHelper *)photographyHelper {
+    if (!_photographyHelper) {
+        _photographyHelper = [[WLPhotographyHelper alloc] init];
+    }
+    return _photographyHelper;
+}
+
+- (WLLocationHelper *)locationHelper {
+    if (!_locationHelper) {
+        _locationHelper = [[WLLocationHelper alloc] init];
+    }
+    return _locationHelper;
+}
 //
 //- (XHVoiceRecordHelper *)voiceRecordHelper {
 //    if (!_voiceRecordHelper) {
@@ -483,7 +495,7 @@ static CGPoint  delayOffset = {0.0};
         if ([weakSelf.messageInputView.inputTextView isFirstResponder]) {
             if (didShowed) {
                 if (weakSelf.textViewInputViewType == WLInputViewTypeText) {
-//                    weakSelf.shareMenuView.alpha = 0.0;
+                    weakSelf.shareMenuView.alpha = 0.0;
 //                    weakSelf.emotionManagerView.alpha = 0.0;
                 }
             }
@@ -837,7 +849,6 @@ static CGPoint  delayOffset = {0.0};
 }
 
 #pragma mark - Message Send helper Method
-
 - (void)didSendMessageWithText:(NSString *)text {
     DLog(@"send text : %@", text);
     if ([self.delegate respondsToSelector:@selector(didSendText:fromSender:onDate:)]) {
@@ -845,20 +856,21 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
-//- (void)didSendMessageWithPhoto:(UIImage *)photo {
-//    DLog(@"send photo : %@", photo);
-//    if ([self.delegate respondsToSelector:@selector(didSendPhoto:fromSender:onDate:)]) {
-//        [self.delegate didSendPhoto:photo fromSender:self.messageSender onDate:[NSDate date]];
-//    }
-//}
-//
-//- (void)didSendMessageWithVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath  {
-//    DLog(@"send videoPath : %@  videoConverPhoto : %@", videoPath, videoConverPhoto);
-//    if ([self.delegate respondsToSelector:@selector(didSendVideoConverPhoto:videoPath:fromSender:onDate:)]) {
-//        [self.delegate didSendVideoConverPhoto:videoConverPhoto videoPath:videoPath fromSender:self.messageSender onDate:[NSDate date]];
-//    }
-//}
-//
+//发送照片
+- (void)didSendMessageWithPhoto:(UIImage *)photo {
+    DLog(@"send photo : %@", photo);
+    if ([self.delegate respondsToSelector:@selector(didSendPhoto:fromSender:onDate:)]) {
+        [self.delegate didSendPhoto:photo fromSender:self.messageSender onDate:[NSDate date]];
+    }
+}
+
+- (void)didSendMessageWithVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath  {
+    DLog(@"send videoPath : %@  videoConverPhoto : %@", videoPath, videoConverPhoto);
+    if ([self.delegate respondsToSelector:@selector(didSendVideoConverPhoto:videoPath:fromSender:onDate:)]) {
+        [self.delegate didSendVideoConverPhoto:videoConverPhoto videoPath:videoPath fromSender:self.messageSender onDate:[NSDate date]];
+    }
+}
+
 //- (void)didSendMessageWithVoice:(NSString *)voicePath voiceDuration:(NSString*)voiceDuration {
 //    DLog(@"send voicePath : %@", voicePath);
 //    if ([self.delegate respondsToSelector:@selector(didSendVoice:voiceDuration:fromSender:onDate:)]) {
@@ -881,60 +893,59 @@ static CGPoint  delayOffset = {0.0};
 //}
 
 #pragma mark - XHShareMenuView Delegate
-//
-//- (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
-//    DLog(@"title : %@   index:%ld", shareMenuItem.title, (long)index);
-//    
-//    WEAKSELF
-//    void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
-//        if (image) {
-//            [weakSelf didSendMessageWithPhoto:image];
-//        } else {
-//            if (!editingInfo)
-//                return ;
-//            NSString *mediaType = [editingInfo objectForKey: UIImagePickerControllerMediaType];
-//            NSString *videoPath;
-//            NSURL *videoUrl;
-//            if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-//                videoUrl = (NSURL*)[editingInfo objectForKey:UIImagePickerControllerMediaURL];
-//                videoPath = [videoUrl path];
-//                
-//                UIImage *thumbnailImage = [XHMessageVideoConverPhotoFactory videoConverPhotoWithVideoPath:videoPath];
-//                
-//                [weakSelf didSendMessageWithVideoConverPhoto:thumbnailImage videoPath:videoPath];
-//            } else {
-//                [weakSelf didSendMessageWithPhoto:[editingInfo valueForKey:UIImagePickerControllerOriginalImage]];
-//            }
-//        }
-//    };
-//    switch (index) {
-//        case 0: {
-//            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypePhotoLibrary onViewController:self compled:PickerMediaBlock];
-//            break;
-//        }
-//        case 1: {
-//            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
-//            break;
-//        }
-//        case 2: {
-//            WEAKSELF
-//            [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
-//                CLPlacemark *placemark = [placemarks lastObject];
-//                if (placemark) {
-//                    NSDictionary *addressDictionary = placemark.addressDictionary;
-//                    NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-//                    NSString *geoLocations = [formattedAddressLines lastObject];
-//                    if (geoLocations) {
+- (void)didSelecteShareMenuItem:(WLShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
+    DLog(@"title : %@   index:%ld", shareMenuItem.title, (long)index);
+    
+    WEAKSELF
+    void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
+        if (image) {
+            [weakSelf didSendMessageWithPhoto:image];
+        } else {
+            if (!editingInfo)
+                return ;
+            NSString *mediaType = [editingInfo objectForKey: UIImagePickerControllerMediaType];
+            NSString *videoPath;
+            NSURL *videoUrl;
+            if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+                videoUrl = (NSURL*)[editingInfo objectForKey:UIImagePickerControllerMediaURL];
+                videoPath = [videoUrl path];
+                
+                UIImage *thumbnailImage = [WLMessageVideoConverPhotoFactory videoConverPhotoWithVideoPath:videoPath];
+                
+                [weakSelf didSendMessageWithVideoConverPhoto:thumbnailImage videoPath:videoPath];
+            } else {
+                [weakSelf didSendMessageWithPhoto:[editingInfo valueForKey:UIImagePickerControllerOriginalImage]];
+            }
+        }
+    };
+    switch (index) {
+        case 0: {
+            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypePhotoLibrary onViewController:self compled:PickerMediaBlock];
+            break;
+        }
+        case 1: {
+            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
+            break;
+        }
+        case 2: {
+            WEAKSELF
+            [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+                CLPlacemark *placemark = [placemarks lastObject];
+                if (placemark) {
+                    NSDictionary *addressDictionary = placemark.addressDictionary;
+                    NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+                    NSString *geoLocations = [formattedAddressLines lastObject];
+                    if (geoLocations) {
 //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-//                    }
-//                }
-//            }];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//}
+                    }
+                }
+            }];
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 #pragma mark - XHEmotionManagerView Delegate
 //- (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
@@ -1026,10 +1037,10 @@ static CGPoint  delayOffset = {0.0};
         };
         
         void (^ShareMenuViewAnimation)(BOOL hide) = ^(BOOL hide) {
-//            otherMenuViewFrame = self.shareMenuView.frame;
-//            otherMenuViewFrame.origin.y = (hide ? CGRectGetHeight(self.view.frame) : (CGRectGetHeight(self.view.frame) - CGRectGetHeight(otherMenuViewFrame)));
-//            self.shareMenuView.alpha = !hide;
-//            self.shareMenuView.frame = otherMenuViewFrame;
+            otherMenuViewFrame = self.shareMenuView.frame;
+            otherMenuViewFrame.origin.y = (hide ? CGRectGetHeight(self.view.frame) : (CGRectGetHeight(self.view.frame) - CGRectGetHeight(otherMenuViewFrame)));
+            self.shareMenuView.alpha = !hide;
+            self.shareMenuView.frame = otherMenuViewFrame;
         };
         
         if (hide) {

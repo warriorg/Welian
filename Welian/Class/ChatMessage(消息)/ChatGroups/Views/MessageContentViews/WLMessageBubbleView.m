@@ -19,6 +19,9 @@
 
 #define kWLArrowMarginWidth 14
 
+#define PHOTO_MAX_SIZE_WIDTH 100.f
+#define PHOTO_MAX_SIZE_HEIGHT 150.f
+
 @interface WLMessageBubbleView ()
 
 //@property (nonatomic, weak, readwrite) SETextView *displayTextView;
@@ -47,6 +50,16 @@
 
 
 #pragma mark - Bubble view
++ (CGSize)fitsize:(CGSize)thisSize
+{
+    if(thisSize.width == 0 && thisSize.height ==0)
+        return CGSizeMake(0, 0);
+    CGFloat wscale = thisSize.width/PHOTO_MAX_SIZE_WIDTH;
+    CGFloat hscale = thisSize.height/PHOTO_MAX_SIZE_HEIGHT;
+    CGFloat scale = (wscale>hscale) ? wscale:hscale;
+    CGSize newSize = CGSizeMake(thisSize.width/scale, thisSize.height/scale);
+    return newSize;
+}
 
 + (CGFloat)neededWidthForText:(NSString *)text {
     CGSize stringSize;
@@ -80,7 +93,7 @@
 
 + (CGSize)neededSizeForPhoto:(UIImage *)photo {
     // 这里需要缩放后的size
-    CGSize photoSize = CGSizeMake(120, 120);
+    CGSize photoSize = [self fitsize:photo.size];//CGSizeMake(120, 120);
     return photoSize;
 }
 
@@ -368,7 +381,7 @@
             WLBubblePhotoImageView *bubblePhotoImageView = [[WLBubblePhotoImageView alloc] initWithFrame:CGRectZero];
             [self addSubview:bubblePhotoImageView];
             _bubblePhotoImageView = bubblePhotoImageView;
-            [bubblePhotoImageView setDebug:YES];
+//            [bubblePhotoImageView setDebug:YES];
             if (!_videoPlayImageView) {
                 UIImageView *videoPlayImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessageVideoPlay"]];
                 [bubblePhotoImageView addSubview:videoPlayImageView];

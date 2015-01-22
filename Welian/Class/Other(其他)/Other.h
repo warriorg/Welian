@@ -37,4 +37,6 @@
 #import <BlocksKit/BlocksKit.h>
 #import <BlocksKit/BlocksKit+UIKit.h>
 
+#import "UIButton+WebCache.h"
+
 #endif

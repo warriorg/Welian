@@ -15,12 +15,18 @@
 #import "WLMessageTableView.h"
 #import "WLMessageTableViewCell.h"
 #import "WLMessageInputView.h"
+#import "WLShareMenuView.h"
 
 // Factory
 #import "WLMessageBubbleFactory.h"
+#import "WLMessageVideoConverPhotoFactory.h"
 
 // Categorys
 #import "UIScrollView+XHkeyboardControl.h"
+
+// Helper
+#import "WLPhotographyHelper.h"
+#import "WLLocationHelper.h"
 
 
 @protocol WLMessageTableViewControllerDelegate <NSObject>
@@ -130,7 +136,7 @@
 
 @end
 
-@interface WLMessageTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate>
+@interface WLMessageTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate,WLShareMenuViewDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <WLMessageTableViewControllerDataSource> dataSource;
@@ -144,10 +150,15 @@
 //是否正在加载更多旧的消息数据
 @property (nonatomic, assign) BOOL loadingMoreMessage;
 
+//第三方接入的功能，也包括系统自身的功能，比如拍照、发送地理位置
+@property (nonatomic, strong) NSArray *shareMenuItems;
+
 //用于显示消息的TableView
 @property (nonatomic,weak,readonly) WLMessageTableView *messageTableView;
 //用于显示发送消息类型控制的工具条，在底部
 @property (nonatomic, weak, readonly) WLMessageInputView *messageInputView;
+//替换键盘的位置的第三方功能控件
+@property (nonatomic, weak, readonly) WLShareMenuView *shareMenuView;
 
 
 #pragma mark - Message View Controller Default stup

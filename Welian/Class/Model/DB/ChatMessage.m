@@ -44,15 +44,21 @@
     
     ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
-    chatMsg.message = wlMessage.text;
+    switch (wlMessage.messageMediaType) {
+        case WLBubbleMessageMediaTypePhoto:
+            chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
+            chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
+            break;
+        default:
+            chatMsg.message = wlMessage.text;
+            break;
+    }
     chatMsg.messageType = @(wlMessage.messageMediaType);
     chatMsg.timestamp = wlMessage.timestamp;
     chatMsg.avatorUrl = wlMessage.avatorUrl;
     chatMsg.isRead = @(wlMessage.isRead);
     chatMsg.sendStatus = @(wlMessage.sended.intValue);
     chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
-    chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
-    chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
     chatMsg.videoPath = wlMessage.videoPath;
     chatMsg.videoUrl = wlMessage.videoUrl;
 //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;
@@ -68,7 +74,7 @@
     //是否显示时间戳
     if (lastChatMsg) {
         double min = [chatMsg.timestamp minutesLaterThan:lastChatMsg.timestamp];
-        if (min > 1) {
+        if (min > 2) {
             chatMsg.showTimeStamp = @(YES);
         }else{
             chatMsg.showTimeStamp = @(NO);
@@ -77,11 +83,17 @@
         chatMsg.showTimeStamp = @(YES);
     }
     
+    //更新聊天好友
+    friendUser.isChatNow = @(YES);
+    //更新好友的聊天时间
+    friendUser.lastChatTime = chatMsg.timestamp;
 //    [MOC save];
     [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新好友的聊天时间
-    [friendUser updateLastChatTime:chatMsg.timestamp];
+//    [friendUser updateLastChatTime:chatMsg.timestamp];
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
     
     return chatMsg;
 }
@@ -126,7 +138,7 @@
         case WLBubbleMessageMediaTypePhoto://照片
             chatMsg.message = @"[图片]";
             chatMsg.messageType = @(type);
-            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+            chatMsg.messageType = @(WLBubbleMessageMediaTypePhoto);
             break;
         case WLBubbleMessageMediaTypeVoice:
             chatMsg.message = @"[语音]";

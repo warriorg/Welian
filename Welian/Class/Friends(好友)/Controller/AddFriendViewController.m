@@ -28,7 +28,6 @@
 @property (strong,nonatomic) NotstringView *phoneNotView;//手机提醒
 @property (strong,nonatomic) NotstringView *weChatNotView;//微信提醒
 
-//@property (strong,nonatomic) NSOperationQueue *operationQueue;
 @property (assign,nonatomic) BOOL canOpenAddress;//是否可以打开通讯录
 
 @end
@@ -41,22 +40,7 @@
     _localPhoneArray = nil;
     _phoneNotView = nil;
     _weChatNotView = nil;
-//    _operationQueue = nil;
 }
-
-/**
- *  初始化队列
- *
- *  @return 返回队操作
- */
-//- (NSOperationQueue *)operationQueue
-//{
-//    if (!_operationQueue) {
-//        _operationQueue = [[NSOperationQueue alloc] init];
-//        _operationQueue.maxConcurrentOperationCount = 1;//设置线程最大操作数
-//    }
-//    return _operationQueue;
-//}
 
 /**
  *  手机通讯录授权提醒
@@ -137,18 +121,9 @@
     [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
-    dispatch_semaphore_t sema=dispatch_semaphore_create(0);
-    //这个只会在第一次访问时调用
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
-        dispatch_semaphore_signal(sema);
-        self.canOpenAddress = greanted;
-        //默认加载的数据
-        [self changeDataWithIndex:_selectIndex];
-    });
-    
     //默认加载的数据
-//    [self changeDataWithIndex:_selectIndex];
+    self.canOpenAddress = YES;
+    [self changeDataWithIndex:_selectIndex];
 }
 
 #pragma mark - Table view data source
@@ -314,15 +289,23 @@
     [self reloadUIData];
     
     //调用接口
-    //取消线程
-//    [_operationQueue cancelAllOperations];
     if (_selectIndex == 0) {
-        if (_canOpenAddress) {
-            //获取通讯录好友
-            [self getPhoneAllFriends];
-        }else{
-            [self.refreshControl endRefreshing];
-        }
+        //通讯录
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+        dispatch_semaphore_t sema=dispatch_semaphore_create(0);
+        //这个只会在第一次访问时调用
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
+            dispatch_semaphore_signal(sema);
+            self.canOpenAddress = greanted;
+            
+            //默认加载的数据
+            if (_canOpenAddress) {
+                //获取通讯录好友
+                [self getPhoneAllFriends];
+            }else{
+                [self.refreshControl endRefreshing];
+            }
+        });
     }else{
         //获取微信好友
         [self getWxFriends];
@@ -398,23 +381,8 @@
 - (void)getPhoneData
 {
     [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
-//        [self.operationQueue addOperationWithBlock:^{
-//            DLog(@"------------->Block");
-//            for (NSDictionary *dic in JSON) {
-//                //保存到数据库
-//                [NeedAddUser createNeedAddUserWithDict:dic withType:1];
-//            }
+        //保存数据到数据库
         [self createNeedAddUserWithInfo:JSON withType:1];
-        //保存到数据库
-//        [NeedAddUser createNeedAddUserWithInfo:JSON withType:1];
-        
-            // 在在主线程队列中，调用异步方法设置UI
-//            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                [MOC save];
-//                WEAKSELF
-        
-//            }];
-//        }];
     } fail:^(NSError *error) {
         [self.refreshControl endRefreshing];
     }];
@@ -492,8 +460,6 @@
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
-                                     //异步处理
-//                                     [self.operationQueue addOperationWithBlock:^{
                                      //删除本地数据库微信数据
                                      NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
                                      
@@ -513,14 +479,6 @@
                                      
                                      //保存到数据库
                                      [self createNeedAddUserWithInfo:JSON withType:2];
-                                         // 在在主线程队列中，调用异步方法设置UI
-//                                         dispatch_sync(dispatch_get_main_queue(), ^{
-//                                             [WLHUDView hiddenHud];
-//                                             [self.refreshControl endRefreshing];
-//                                             // 3) 设置UI
-//                                             [self reloadUIData];
-//                                         });
-//                                     }];
                                  } fail:^(NSError *error) {
                                      [self.refreshControl endRefreshing];
                                  }];
@@ -536,7 +494,6 @@
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    //取消线程
     if(needAddUser.uid){
         if(type != 1){
             //添加
