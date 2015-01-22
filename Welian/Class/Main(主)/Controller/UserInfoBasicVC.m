@@ -24,6 +24,10 @@
 #import "InvestItemM.h"
 #import "InvestInfoListVC.h"
 #import "NeedAddUser.h"
+#import "ICompanyResult.h"
+#import "ISchoolResult.h"
+#import "MJExtension.h"
+#import "FriendsUserModel.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
@@ -44,6 +48,12 @@ static NSString *sameFriendcellid = @"sameFriendcellid";
 static NSString *staurCellid = @"staurCellid";
 
 @implementation UserInfoBasicVC
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 
 - (UIView*)askView
 {
@@ -217,21 +227,36 @@ static NSString *staurCellid = @"staurCellid";
             
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
         }
+        YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLUserInfoTableName];
+        if (item) {
+            _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:item.itemObject]];
+            _userMode = [_dataDicM objectForKey:@"profile"];
+            [self.tableView reloadData];
+        }
+        
+        YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLSamefriendsTableName];
+        if (sameFitem) {
+            _sameFriendArry = [self getSameFriendsWith:sameFitem.itemObject];
+            [self.tableView reloadData];
+        }
+        
         [WLHttpTool loadUserInfoParameterDic:@{@"uid":_userMode.uid} success:^(id JSON) {
-            
+
             [WLHttpTool loadSameFriendParameterDic:@{@"uid":mode.uid,@"fid":_userMode.uid,@"size":@(1000)} success:^(id JSON) {
-                _sameFriendArry = [JSON objectForKey:@"samefriends"];
+                [[WLDataDBTool sharedService] putObject:JSON withId:_userMode.uid.stringValue intoTable:KWLSamefriendsTableName];
+                _sameFriendArry = [self getSameFriendsWith:JSON];
                 [self.tableView reloadData];
             } fail:^(NSError *error) {
                 
             }];
 
-            _dataDicM = [NSMutableDictionary dictionaryWithDictionary:JSON];
+            _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
             _userMode = [_dataDicM objectForKey:@"profile"];
             if (!isask) {
                 if ([_userMode.friendship integerValue]==-1) {
                     
                 }else if ([_userMode.friendship integerValue]==1) {
+                    [MyFriendUser createMyFriendUserModel:_userMode];
                     if (!_isHideSendMsgBtn) {
                         [self.tableView setTableFooterView:self.sendView];
                     }
@@ -257,6 +282,53 @@ static NSString *staurCellid = @"staurCellid";
     }
     return self;
 }
+
+- (NSMutableArray *)getSameFriendsWith:(NSDictionary *)friendsDic
+{
+    NSArray *sameFA = [friendsDic objectForKey:@"samefriends"];
+    NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
+    for (NSDictionary *infoD in sameFA) {
+        FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
+        [fmode setKeyValues:infoD];
+        [sameFrindM addObject:fmode];
+    }
+    return sameFrindM;
+}
+
+- (NSDictionary *)getUserInfoWith:(NSDictionary *)dataDic
+{
+    // 详细信息
+    NSDictionary *profile = [dataDic objectForKey:@"profile"];
+    UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+    // 动态
+    NSDictionary *feed = [dataDic objectForKey:@"feed"];
+    WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
+    
+    // 投资案例
+    NSDictionary *investor = [dataDic objectForKey:@"investor"];
+    IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
+    
+    // 创业者
+    //        NSDictionary *startup = [dataDic objectForKey:@"startup"];
+    
+    // 工作经历列表
+    NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
+    NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
+    for (NSDictionary *dic in usercompany) {
+        ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
+        [companyArrayM addObject:usercompanyM];
+    }
+    
+    // 教育经历列表
+    NSArray *userschool = [dataDic objectForKey:@"userschool"];
+    NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
+    for (NSDictionary *dic  in userschool) {
+        ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
+        [schoolArrayM addObject:userschoolM];
+    }
+    return (@{@"feed":feedM,@"investor":investorM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {

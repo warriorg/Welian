@@ -110,11 +110,9 @@ static HttpTool *engine;
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             failureBlock ([[NSError alloc] init]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
-//            [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             [[self operationQueue] cancelAllOperations];
             [[AppDelegate sharedAppDelegate] logout];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
-            
         }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];
             success(@{@"state":@"-1"});
@@ -123,8 +121,6 @@ static HttpTool *engine;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"%@",error);
-        [WLHUDView showErrorHUD:@"请求失败"];
-//            [WLHUDView showErrorHUD:error.localizedDescription];
         failureBlock(error);
     }];
 }

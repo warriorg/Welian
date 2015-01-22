@@ -153,8 +153,7 @@
     }else if (indexPath.section==0&&indexPath.row==1){
         
     }else if (indexPath.section==1&&indexPath.row==1){
-        NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-        [cell.detailTextLabel setText:localVersion];
+        [cell.detailTextLabel setText:XcodeAppVersion];
     }
     return cell;
 }

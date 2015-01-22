@@ -12,6 +12,7 @@
 #import "NewFriendViewCell.h"
 #import "UserInfoBasicVC.h"
 #import "UIImage+ImageEffects.h"
+#import "NavViewController.h"
 
 @interface AddFriendTypeListViewController ()<UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -125,7 +126,8 @@
             {
                 //雷达搜索
                 BSearchFriendsController *bSearchVC = [[BSearchFriendsController alloc] init];
-                [self presentViewController:bSearchVC animated:YES completion:nil];
+                NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bSearchVC];
+                [self presentViewController:nav animated:YES completion:nil];
             }
                 break;
             default:

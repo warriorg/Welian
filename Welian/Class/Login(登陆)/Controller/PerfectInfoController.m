@@ -16,7 +16,7 @@
 #import "MainViewController.h"
 #import "MJExtension.h"
 #import "NSString+val.h"
-#import "BSearchFriendsController.h"
+#import "NavViewController.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 
@@ -218,7 +218,8 @@
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
             BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
             [bsearchVC setIsStart:YES];
-            [self presentViewController:bsearchVC animated:YES completion:^{
+            NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
+            [self presentViewController:nav animated:YES completion:^{
                 
             }];
             

@@ -14,6 +14,7 @@
 
 @implementation NavViewController
 
+
 + (void)initialize
 {
     UINavigationBar *navBar = [UINavigationBar appearance];

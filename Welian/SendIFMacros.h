@@ -166,6 +166,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[LogInUser getCurrentLoginUser].uid]
 // 所有动态数据
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[LogInUser getCurrentLoginUser].uid]
+// 所有用户详细信息
+#define KWLUserInfoTableName [NSString stringWithFormat:@"UserInfo%@",[LogInUser getCurrentLoginUser].uid]
+// 用户共同好友
+#define KWLSamefriendsTableName [NSString stringWithFormat:@"Samefriends%@",[LogInUser getCurrentLoginUser].uid] 
 
 // 投资领域数据 行业
 #define KInvestIndustryTableName @"InvestIndustry"

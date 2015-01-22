@@ -27,7 +27,7 @@
     investitem.industryid = investIndustry.industryid;
     investitem.industryname = investIndustry.industryname;
     
-    [loginUser addRsInvestIndustryObject:investitem];
+    [loginUser addRsInvestIndustrysObject:investitem];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
 //    investitem.rsLogInUser = [LogInUser getCurrentLoginUser];
 //    [MOC save];

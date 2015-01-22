@@ -16,6 +16,7 @@
 #import "NotstringView.h"
 #import "FriendCell.h"
 #import "MainViewController.h"
+#import "UserInfoBasicVC.h"
 
 @interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -34,6 +35,12 @@
 static NSString *fridcellid = @"fridcellid";
 
 @implementation BSearchFriendsController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
 
 - (NotstringView *)notFriendsView
 {
@@ -314,7 +321,21 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self cancelClick];
+    FriendsAddressBook *friends;
+    if (indexPath.section==0) {
+        if (self.friendsBook.count) {
+            friends = self.friendsBook[indexPath.row];
+        }else if(self.friendsWeixing.count){
+            friends = self.friendsWeixing[indexPath.row];
+        }
+    }else if (indexPath.section==1){
+        friends = self.friendsWeixing[indexPath.row];
+    }
+    
+    UserInfoBasicVC *userVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friends isAsk:NO];
+    [userVC setIsHideSendMsgBtn:YES];
+    [self.navigationController pushViewController:userVC animated:YES];
+//    [self cancelClick];
 }
 
 - (void)cancelClick

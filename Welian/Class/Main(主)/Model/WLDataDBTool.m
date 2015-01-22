@@ -25,6 +25,8 @@ static WLDataDBTool *wlDataDBTool;
     [wlDataDBTool createTableWithName:KHomeDataTableName];
     [wlDataDBTool createTableWithName:KWLStutarDataTableName];
     [wlDataDBTool createTableWithName:KInvestIndustryTableName];
+    [wlDataDBTool createTableWithName:KWLUserInfoTableName];
+    [wlDataDBTool createTableWithName:KWLSamefriendsTableName];
     return wlDataDBTool;
 }
 
