@@ -167,7 +167,7 @@
  * @param money
  * @param callbackContext
  */
-- (void)wechatPay:(CDVInvokedUrlCommand *)command
+- (void)wechatpay:(CDVInvokedUrlCommand *)command
 {
     DLog(@"wechatPay : %@",command.arguments);
     [self send:command backInfo:@"微信支付"];
