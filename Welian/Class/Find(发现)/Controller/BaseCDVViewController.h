@@ -25,7 +25,7 @@
 - (void)toOrderVC:(NSArray *)infos;
 
 //微信支付
-- (void)wechatPay;
+- (void)wechatPay:(NSArray *)infos;
 
 //可以调用分享
 - (void)canShareWithInfo:(NSDictionary *)dict;

@@ -14,6 +14,9 @@
 #import "LXActivity.h"
 #import "ShareEngine.h"
 #import "SEImageCache.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
+#import "DataSigner.h"
 
 @interface ActivityDetailViewController ()<LXActivityDelegate>
 {
@@ -151,6 +154,99 @@
     activityOrderVC.wwwFolderName = @"www";
     activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@?t=%@",infos[0],[NSString getNowTimestamp]];
     [self.navigationController pushViewController:activityOrderVC animated:YES];
+}
+
+//微信支付
+- (void)wechatPay:(NSArray *)infos
+{
+    NSDictionary *payInfo = infos[0];
+    DLog(@"payInfo -----> %@",payInfo);
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:@"在线支付"];
+    [sheet bk_addButtonWithTitle:@"支付宝支付" handler:^{
+        [self alipayWithInfo:payInfo];
+    }];
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+    [sheet showInView:self.view];
+}
+
+- (void)alipayWithInfo:(NSDictionary *)info
+{
+    /*
+     *商户的唯一的parnter和seller。
+     *签约后，支付宝会为每个商户分配一个唯一的 parnter 和 seller。
+     */
+    
+    /*============================================================================*/
+    /*=======================需要填写商户app申请的===================================*/
+    /*============================================================================*/
+    //如果partner和seller数据存于其他位置,请改写下面两行代码
+//    let partner: String = NSBundle.mainBundle().objectForInfoDictionaryKey("Partner") as String
+//    let seller: String = NSBundle.mainBundle().objectForInfoDictionaryKey("Seller") as String
+    
+    NSString *partner = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
+    NSString *seller = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
+    NSString *privateKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
+    /*============================================================================*/
+    /*============================================================================*/
+    /*============================================================================*/
+    
+    //partner和seller获取失败,提示
+    if ([partner length] == 0 || [seller length] == 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"缺少partner或者seller。"
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    /*
+     *生成订单信息及签名
+     */
+    //将商品信息赋予AlixPayOrder的成员变量
+    Order *order = [[Order alloc] init];
+    order.partner = partner;
+    order.seller = seller;
+    order.tradeNO = @""; //订单ID（由商家自行制定）
+    order.productName = @""; //商品标题
+    order.productDescription = @""; //商品描述
+    order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格
+    order.notifyURL =  @"http://www.xxx.com"; //回调URL
+    
+    order.service = @"mobile.securitypay.pay";
+    order.paymentType = @"1";
+    order.inputCharset = @"utf-8";
+    order.itBPay = @"30m";
+    order.showUrl = @"m.alipay.com";
+    
+    //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
+    NSString *appScheme = @"AlipayWeLian";
+    
+    //将商品信息拼接成字符串
+    NSString *orderSpec = [order description];
+    NSLog(@"orderSpec = %@",orderSpec);
+    
+    //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+    id<DataSigner> signer = CreateRSADataSigner(privateKey);
+    NSString *signedString = [signer signString:orderSpec];
+    
+    //将签名成功字符串格式化为订单字符串,请严格按照该格式
+    NSString *orderString = nil;
+    if (signedString != nil) {
+        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                       orderSpec, signedString, @"RSA"];
+        
+        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
+            if (resultStatus == 9000) {
+                //支付成功
+                
+            }
+            DLog(@"支付结果 result = %@", resultDic);
+        }];
+    }
 }
 
 @end

@@ -1202,6 +1202,58 @@
 		A49C7FCC1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C7FCA1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m */; };
 		A49C7FCD1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C7FCA1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m */; };
 		A49C7FCE1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C7FCA1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m */; };
+		A49C80341A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */; };
+		A49C80351A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */; };
+		A49C80361A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */; };
+		A49C80371A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */; };
+		A49C80381A71040F00F2AEC5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */; };
+		A49C80391A71040F00F2AEC5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */; };
+		A49C803A1A71041000F2AEC5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */; };
+		A49C803B1A71041000F2AEC5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */; };
+		A49C803C1A71041000F2AEC5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD21A71040F00F2AEC5 /* libcrypto.a */; };
+		A49C803D1A71041000F2AEC5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD21A71040F00F2AEC5 /* libcrypto.a */; };
+		A49C803E1A71041000F2AEC5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD21A71040F00F2AEC5 /* libcrypto.a */; };
+		A49C803F1A71041000F2AEC5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD21A71040F00F2AEC5 /* libcrypto.a */; };
+		A49C80401A71041000F2AEC5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD31A71040F00F2AEC5 /* libssl.a */; };
+		A49C80411A71041000F2AEC5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD31A71040F00F2AEC5 /* libssl.a */; };
+		A49C80421A71041000F2AEC5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD31A71040F00F2AEC5 /* libssl.a */; };
+		A49C80431A71041000F2AEC5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49C7FD31A71040F00F2AEC5 /* libssl.a */; };
+		A49C80441A71041000F2AEC5 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80211A71040F00F2AEC5 /* Order.m */; };
+		A49C80451A71041000F2AEC5 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80211A71040F00F2AEC5 /* Order.m */; };
+		A49C80461A71041000F2AEC5 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80211A71040F00F2AEC5 /* Order.m */; };
+		A49C80471A71041000F2AEC5 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80211A71040F00F2AEC5 /* Order.m */; };
+		A49C80481A71041000F2AEC5 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80241A71040F00F2AEC5 /* base64.m */; };
+		A49C80491A71041000F2AEC5 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80241A71040F00F2AEC5 /* base64.m */; };
+		A49C804A1A71041000F2AEC5 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80241A71040F00F2AEC5 /* base64.m */; };
+		A49C804B1A71041000F2AEC5 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80241A71040F00F2AEC5 /* base64.m */; };
+		A49C804C1A71041000F2AEC5 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80271A71040F00F2AEC5 /* DataSigner.m */; };
+		A49C804D1A71041000F2AEC5 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80271A71040F00F2AEC5 /* DataSigner.m */; };
+		A49C804E1A71041000F2AEC5 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80271A71040F00F2AEC5 /* DataSigner.m */; };
+		A49C804F1A71041000F2AEC5 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80271A71040F00F2AEC5 /* DataSigner.m */; };
+		A49C80501A71041000F2AEC5 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80291A71040F00F2AEC5 /* DataVerifier.m */; };
+		A49C80511A71041000F2AEC5 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80291A71040F00F2AEC5 /* DataVerifier.m */; };
+		A49C80521A71041000F2AEC5 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80291A71040F00F2AEC5 /* DataVerifier.m */; };
+		A49C80531A71041000F2AEC5 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80291A71040F00F2AEC5 /* DataVerifier.m */; };
+		A49C80541A71041000F2AEC5 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */; };
+		A49C80551A71041000F2AEC5 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */; };
+		A49C80561A71041000F2AEC5 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */; };
+		A49C80571A71041000F2AEC5 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */; };
+		A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802D1A71040F00F2AEC5 /* NSDataEx.m */; };
+		A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802D1A71040F00F2AEC5 /* NSDataEx.m */; };
+		A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802D1A71040F00F2AEC5 /* NSDataEx.m */; };
+		A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802D1A71040F00F2AEC5 /* NSDataEx.m */; };
+		A49C805C1A71041000F2AEC5 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */; };
+		A49C805D1A71041000F2AEC5 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */; };
+		A49C805E1A71041000F2AEC5 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */; };
+		A49C805F1A71041000F2AEC5 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */; };
+		A49C80601A71041000F2AEC5 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80311A71040F00F2AEC5 /* RSADataSigner.m */; };
+		A49C80611A71041000F2AEC5 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80311A71040F00F2AEC5 /* RSADataSigner.m */; };
+		A49C80621A71041000F2AEC5 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80311A71040F00F2AEC5 /* RSADataSigner.m */; };
+		A49C80631A71041000F2AEC5 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80311A71040F00F2AEC5 /* RSADataSigner.m */; };
+		A49C80641A71041000F2AEC5 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */; };
+		A49C80651A71041000F2AEC5 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */; };
+		A49C80661A71041000F2AEC5 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */; };
+		A49C80671A71041000F2AEC5 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */; };
 		A4A2EADC1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
 		A4A2EADD1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
 		A4A2EADE1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
@@ -4271,6 +4323,104 @@
 		A49C7FC81A70EA0B00F2AEC5 /* weLian1.1.6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.6.xcdatamodel; sourceTree = "<group>"; };
 		A49C7FC91A70F07B00F2AEC5 /* WLDisplayMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDisplayMediaViewController.h; sourceTree = "<group>"; };
 		A49C7FCA1A70F07B00F2AEC5 /* WLDisplayMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDisplayMediaViewController.m; sourceTree = "<group>"; };
+		A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		A49C7FD21A71040F00F2AEC5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		A49C7FD31A71040F00F2AEC5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		A49C7FD51A71040F00F2AEC5 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		A49C7FD61A71040F00F2AEC5 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
+		A49C7FD71A71040F00F2AEC5 /* asn1_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1_mac.h; sourceTree = "<group>"; };
+		A49C7FD81A71040F00F2AEC5 /* asn1t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1t.h; sourceTree = "<group>"; };
+		A49C7FD91A71040F00F2AEC5 /* bio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bio.h; sourceTree = "<group>"; };
+		A49C7FDA1A71040F00F2AEC5 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
+		A49C7FDB1A71040F00F2AEC5 /* bn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bn.h; sourceTree = "<group>"; };
+		A49C7FDC1A71040F00F2AEC5 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		A49C7FDD1A71040F00F2AEC5 /* camellia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camellia.h; sourceTree = "<group>"; };
+		A49C7FDE1A71040F00F2AEC5 /* cast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cast.h; sourceTree = "<group>"; };
+		A49C7FDF1A71040F00F2AEC5 /* cmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmac.h; sourceTree = "<group>"; };
+		A49C7FE01A71040F00F2AEC5 /* cms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cms.h; sourceTree = "<group>"; };
+		A49C7FE11A71040F00F2AEC5 /* comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comp.h; sourceTree = "<group>"; };
+		A49C7FE21A71040F00F2AEC5 /* conf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf.h; sourceTree = "<group>"; };
+		A49C7FE31A71040F00F2AEC5 /* conf_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf_api.h; sourceTree = "<group>"; };
+		A49C7FE41A71040F00F2AEC5 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		A49C7FE51A71040F00F2AEC5 /* des.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des.h; sourceTree = "<group>"; };
+		A49C7FE61A71040F00F2AEC5 /* des_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des_old.h; sourceTree = "<group>"; };
+		A49C7FE71A71040F00F2AEC5 /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dh.h; sourceTree = "<group>"; };
+		A49C7FE81A71040F00F2AEC5 /* dsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsa.h; sourceTree = "<group>"; };
+		A49C7FE91A71040F00F2AEC5 /* dso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dso.h; sourceTree = "<group>"; };
+		A49C7FEA1A71040F00F2AEC5 /* dtls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtls1.h; sourceTree = "<group>"; };
+		A49C7FEB1A71040F00F2AEC5 /* e_os2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = e_os2.h; sourceTree = "<group>"; };
+		A49C7FEC1A71040F00F2AEC5 /* ebcdic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ebcdic.h; sourceTree = "<group>"; };
+		A49C7FED1A71040F00F2AEC5 /* ec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ec.h; sourceTree = "<group>"; };
+		A49C7FEE1A71040F00F2AEC5 /* ecdh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdh.h; sourceTree = "<group>"; };
+		A49C7FEF1A71040F00F2AEC5 /* ecdsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdsa.h; sourceTree = "<group>"; };
+		A49C7FF01A71040F00F2AEC5 /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
+		A49C7FF11A71040F00F2AEC5 /* err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = err.h; sourceTree = "<group>"; };
+		A49C7FF21A71040F00F2AEC5 /* evp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evp.h; sourceTree = "<group>"; };
+		A49C7FF31A71040F00F2AEC5 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		A49C7FF41A71040F00F2AEC5 /* idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idea.h; sourceTree = "<group>"; };
+		A49C7FF51A71040F00F2AEC5 /* krb5_asn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = krb5_asn.h; sourceTree = "<group>"; };
+		A49C7FF61A71040F00F2AEC5 /* kssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kssl.h; sourceTree = "<group>"; };
+		A49C7FF71A71040F00F2AEC5 /* lhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
+		A49C7FF81A71040F00F2AEC5 /* md4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md4.h; sourceTree = "<group>"; };
+		A49C7FF91A71040F00F2AEC5 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		A49C7FFA1A71040F00F2AEC5 /* mdc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdc2.h; sourceTree = "<group>"; };
+		A49C7FFB1A71040F00F2AEC5 /* modes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modes.h; sourceTree = "<group>"; };
+		A49C7FFC1A71040F00F2AEC5 /* obj_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_mac.h; sourceTree = "<group>"; };
+		A49C7FFD1A71040F00F2AEC5 /* objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objects.h; sourceTree = "<group>"; };
+		A49C7FFE1A71040F00F2AEC5 /* ocsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ocsp.h; sourceTree = "<group>"; };
+		A49C7FFF1A71040F00F2AEC5 /* opensslconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslconf.h; sourceTree = "<group>"; };
+		A49C80001A71040F00F2AEC5 /* opensslv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslv.h; sourceTree = "<group>"; };
+		A49C80011A71040F00F2AEC5 /* ossl_typ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ossl_typ.h; sourceTree = "<group>"; };
+		A49C80021A71040F00F2AEC5 /* pem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem.h; sourceTree = "<group>"; };
+		A49C80031A71040F00F2AEC5 /* pem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem2.h; sourceTree = "<group>"; };
+		A49C80041A71040F00F2AEC5 /* pkcs12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs12.h; sourceTree = "<group>"; };
+		A49C80051A71040F00F2AEC5 /* pkcs7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs7.h; sourceTree = "<group>"; };
+		A49C80061A71040F00F2AEC5 /* pqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pqueue.h; sourceTree = "<group>"; };
+		A49C80071A71040F00F2AEC5 /* rand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rand.h; sourceTree = "<group>"; };
+		A49C80081A71040F00F2AEC5 /* rc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc2.h; sourceTree = "<group>"; };
+		A49C80091A71040F00F2AEC5 /* rc4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc4.h; sourceTree = "<group>"; };
+		A49C800A1A71040F00F2AEC5 /* ripemd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ripemd.h; sourceTree = "<group>"; };
+		A49C800B1A71040F00F2AEC5 /* rsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rsa.h; sourceTree = "<group>"; };
+		A49C800C1A71040F00F2AEC5 /* safestack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safestack.h; sourceTree = "<group>"; };
+		A49C800D1A71040F00F2AEC5 /* seed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = seed.h; sourceTree = "<group>"; };
+		A49C800E1A71040F00F2AEC5 /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
+		A49C800F1A71040F00F2AEC5 /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
+		A49C80101A71040F00F2AEC5 /* srtp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtp.h; sourceTree = "<group>"; };
+		A49C80111A71040F00F2AEC5 /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl.h; sourceTree = "<group>"; };
+		A49C80121A71040F00F2AEC5 /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl2.h; sourceTree = "<group>"; };
+		A49C80131A71040F00F2AEC5 /* ssl23.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl23.h; sourceTree = "<group>"; };
+		A49C80141A71040F00F2AEC5 /* ssl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl3.h; sourceTree = "<group>"; };
+		A49C80151A71040F00F2AEC5 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		A49C80161A71040F00F2AEC5 /* symhacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = symhacks.h; sourceTree = "<group>"; };
+		A49C80171A71040F00F2AEC5 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tls1.h; sourceTree = "<group>"; };
+		A49C80181A71040F00F2AEC5 /* ts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ts.h; sourceTree = "<group>"; };
+		A49C80191A71040F00F2AEC5 /* txt_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt_db.h; sourceTree = "<group>"; };
+		A49C801A1A71040F00F2AEC5 /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui.h; sourceTree = "<group>"; };
+		A49C801B1A71040F00F2AEC5 /* ui_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_compat.h; sourceTree = "<group>"; };
+		A49C801C1A71040F00F2AEC5 /* whrlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = whrlpool.h; sourceTree = "<group>"; };
+		A49C801D1A71040F00F2AEC5 /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
+		A49C801E1A71040F00F2AEC5 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
+		A49C801F1A71040F00F2AEC5 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
+		A49C80201A71040F00F2AEC5 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		A49C80211A71040F00F2AEC5 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
+		A49C80231A71040F00F2AEC5 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		A49C80241A71040F00F2AEC5 /* base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = base64.m; sourceTree = "<group>"; };
+		A49C80251A71040F00F2AEC5 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		A49C80261A71040F00F2AEC5 /* DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSigner.h; sourceTree = "<group>"; };
+		A49C80271A71040F00F2AEC5 /* DataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSigner.m; sourceTree = "<group>"; };
+		A49C80281A71040F00F2AEC5 /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
+		A49C80291A71040F00F2AEC5 /* DataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataVerifier.m; sourceTree = "<group>"; };
+		A49C802A1A71040F00F2AEC5 /* MD5DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5DataSigner.h; sourceTree = "<group>"; };
+		A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5DataSigner.m; sourceTree = "<group>"; };
+		A49C802C1A71040F00F2AEC5 /* NSDataEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataEx.h; sourceTree = "<group>"; };
+		A49C802D1A71040F00F2AEC5 /* NSDataEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataEx.m; sourceTree = "<group>"; };
+		A49C802E1A71040F00F2AEC5 /* openssl_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl_wrapper.h; sourceTree = "<group>"; };
+		A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openssl_wrapper.m; sourceTree = "<group>"; };
+		A49C80301A71040F00F2AEC5 /* RSADataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataSigner.h; sourceTree = "<group>"; };
+		A49C80311A71040F00F2AEC5 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
+		A49C80321A71040F00F2AEC5 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
+		A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		A4A2EA9F1A6CF7C8006ADA55 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
 		A4A2EAA11A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -5739,6 +5889,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A49C7D6C1A70D42700F2AEC5 /* MapKit.framework in Frameworks */,
+				A49C803B1A71041000F2AEC5 /* AlipaySDK.framework in Frameworks */,
+				A49C80431A71041000F2AEC5 /* libssl.a in Frameworks */,
 				A49C7D6D1A70D42700F2AEC5 /* CoreText.framework in Frameworks */,
 				A49C7D6E1A70D42700F2AEC5 /* Security.framework in Frameworks */,
 				A49C7D6F1A70D42700F2AEC5 /* libz.1.2.5.dylib in Frameworks */,
@@ -5761,6 +5913,7 @@
 				A49C7D801A70D42700F2AEC5 /* MediaPlayer.framework in Frameworks */,
 				A49C7D811A70D42700F2AEC5 /* QuartzCore.framework in Frameworks */,
 				A49C7D821A70D42700F2AEC5 /* MobileCoreServices.framework in Frameworks */,
+				A49C803F1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
 				A49C7D831A70D42700F2AEC5 /* CoreMedia.framework in Frameworks */,
 				A49C7D841A70D42700F2AEC5 /* AssetsLibrary.framework in Frameworks */,
 				A49C7D851A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */,
@@ -5785,6 +5938,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A45065541A5BD4620057F8AA /* MapKit.framework in Frameworks */,
+				A49C803A1A71041000F2AEC5 /* AlipaySDK.framework in Frameworks */,
+				A49C80421A71041000F2AEC5 /* libssl.a in Frameworks */,
 				A4C60B421A59484100F1F965 /* CoreText.framework in Frameworks */,
 				F53DC3BF1A49192600F5F712 /* Security.framework in Frameworks */,
 				F5B5FE561A594CAB007FE11B /* libz.1.2.5.dylib in Frameworks */,
@@ -5807,6 +5962,7 @@
 				F53DC3B01A49192600F5F712 /* MediaPlayer.framework in Frameworks */,
 				F53DC3B11A49192600F5F712 /* QuartzCore.framework in Frameworks */,
 				F53DC3B21A49192600F5F712 /* MobileCoreServices.framework in Frameworks */,
+				A49C803E1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
 				F53DC3B31A49192600F5F712 /* CoreMedia.framework in Frameworks */,
 				F53DC3B41A49192600F5F712 /* AssetsLibrary.framework in Frameworks */,
 				F5C779661A52F1D30098BC29 /* libBlocksKit.a in Frameworks */,
@@ -5830,6 +5986,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49C80401A71041000F2AEC5 /* libssl.a in Frameworks */,
 				A45065521A5BD4450057F8AA /* MapKit.framework in Frameworks */,
 				F5664A7C1A2AFD56008A5830 /* Security.framework in Frameworks */,
 				F5B5FE2D1A59491C007FE11B /* libz.1.2.5.dylib in Frameworks */,
@@ -5851,7 +6008,9 @@
 				A4F646B11A43C290002E66FC /* CoreMedia.framework in Frameworks */,
 				F5B5FE7A1A596D4B007FE11B /* ShareSDK.framework in Frameworks */,
 				A4F646AF1A43C287002E66FC /* AssetsLibrary.framework in Frameworks */,
+				A49C80381A71040F00F2AEC5 /* AlipaySDK.framework in Frameworks */,
 				F5664A711A2AFD56008A5830 /* libbaidumapapi.a in Frameworks */,
+				A49C803C1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
 				F5664A721A2AFD56008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F5664A731A2AFD56008A5830 /* libz.dylib in Frameworks */,
 				F5664A741A2AFD56008A5830 /* libsqlite3.dylib in Frameworks */,
@@ -5874,6 +6033,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49C80411A71041000F2AEC5 /* libssl.a in Frameworks */,
 				A45065531A5BD45B0057F8AA /* MapKit.framework in Frameworks */,
 				F5664D371A2AFDD5008A5830 /* SystemConfiguration.framework in Frameworks */,
 				A4776AC91A44284D0022E211 /* QuartzCore.framework in Frameworks */,
@@ -5895,7 +6055,9 @@
 				A4776ACA1A44285F0022E211 /* MediaPlayer.framework in Frameworks */,
 				F5B5FE7B1A596D4B007FE11B /* ShareSDK.framework in Frameworks */,
 				A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */,
+				A49C80391A71040F00F2AEC5 /* AlipaySDK.framework in Frameworks */,
 				A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */,
+				A49C803D1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
 				A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */,
 				F5664D2B1A2AFDD5008A5830 /* libbaidumapapi.a in Frameworks */,
 				F5664D2C1A2AFDD5008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
@@ -6057,6 +6219,127 @@
 				A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */,
 			);
 			path = DateTools;
+			sourceTree = "<group>";
+		};
+		A49C7FCF1A71040F00F2AEC5 /* alipay */ = {
+			isa = PBXGroup;
+			children = (
+				A49C7FD01A71040F00F2AEC5 /* AlipaySDK.bundle */,
+				A49C7FD11A71040F00F2AEC5 /* AlipaySDK.framework */,
+				A49C7FD21A71040F00F2AEC5 /* libcrypto.a */,
+				A49C7FD31A71040F00F2AEC5 /* libssl.a */,
+				A49C7FD41A71040F00F2AEC5 /* openssl */,
+				A49C80201A71040F00F2AEC5 /* Order.h */,
+				A49C80211A71040F00F2AEC5 /* Order.m */,
+				A49C80221A71040F00F2AEC5 /* Util */,
+			);
+			path = alipay;
+			sourceTree = "<group>";
+		};
+		A49C7FD41A71040F00F2AEC5 /* openssl */ = {
+			isa = PBXGroup;
+			children = (
+				A49C7FD51A71040F00F2AEC5 /* aes.h */,
+				A49C7FD61A71040F00F2AEC5 /* asn1.h */,
+				A49C7FD71A71040F00F2AEC5 /* asn1_mac.h */,
+				A49C7FD81A71040F00F2AEC5 /* asn1t.h */,
+				A49C7FD91A71040F00F2AEC5 /* bio.h */,
+				A49C7FDA1A71040F00F2AEC5 /* blowfish.h */,
+				A49C7FDB1A71040F00F2AEC5 /* bn.h */,
+				A49C7FDC1A71040F00F2AEC5 /* buffer.h */,
+				A49C7FDD1A71040F00F2AEC5 /* camellia.h */,
+				A49C7FDE1A71040F00F2AEC5 /* cast.h */,
+				A49C7FDF1A71040F00F2AEC5 /* cmac.h */,
+				A49C7FE01A71040F00F2AEC5 /* cms.h */,
+				A49C7FE11A71040F00F2AEC5 /* comp.h */,
+				A49C7FE21A71040F00F2AEC5 /* conf.h */,
+				A49C7FE31A71040F00F2AEC5 /* conf_api.h */,
+				A49C7FE41A71040F00F2AEC5 /* crypto.h */,
+				A49C7FE51A71040F00F2AEC5 /* des.h */,
+				A49C7FE61A71040F00F2AEC5 /* des_old.h */,
+				A49C7FE71A71040F00F2AEC5 /* dh.h */,
+				A49C7FE81A71040F00F2AEC5 /* dsa.h */,
+				A49C7FE91A71040F00F2AEC5 /* dso.h */,
+				A49C7FEA1A71040F00F2AEC5 /* dtls1.h */,
+				A49C7FEB1A71040F00F2AEC5 /* e_os2.h */,
+				A49C7FEC1A71040F00F2AEC5 /* ebcdic.h */,
+				A49C7FED1A71040F00F2AEC5 /* ec.h */,
+				A49C7FEE1A71040F00F2AEC5 /* ecdh.h */,
+				A49C7FEF1A71040F00F2AEC5 /* ecdsa.h */,
+				A49C7FF01A71040F00F2AEC5 /* engine.h */,
+				A49C7FF11A71040F00F2AEC5 /* err.h */,
+				A49C7FF21A71040F00F2AEC5 /* evp.h */,
+				A49C7FF31A71040F00F2AEC5 /* hmac.h */,
+				A49C7FF41A71040F00F2AEC5 /* idea.h */,
+				A49C7FF51A71040F00F2AEC5 /* krb5_asn.h */,
+				A49C7FF61A71040F00F2AEC5 /* kssl.h */,
+				A49C7FF71A71040F00F2AEC5 /* lhash.h */,
+				A49C7FF81A71040F00F2AEC5 /* md4.h */,
+				A49C7FF91A71040F00F2AEC5 /* md5.h */,
+				A49C7FFA1A71040F00F2AEC5 /* mdc2.h */,
+				A49C7FFB1A71040F00F2AEC5 /* modes.h */,
+				A49C7FFC1A71040F00F2AEC5 /* obj_mac.h */,
+				A49C7FFD1A71040F00F2AEC5 /* objects.h */,
+				A49C7FFE1A71040F00F2AEC5 /* ocsp.h */,
+				A49C7FFF1A71040F00F2AEC5 /* opensslconf.h */,
+				A49C80001A71040F00F2AEC5 /* opensslv.h */,
+				A49C80011A71040F00F2AEC5 /* ossl_typ.h */,
+				A49C80021A71040F00F2AEC5 /* pem.h */,
+				A49C80031A71040F00F2AEC5 /* pem2.h */,
+				A49C80041A71040F00F2AEC5 /* pkcs12.h */,
+				A49C80051A71040F00F2AEC5 /* pkcs7.h */,
+				A49C80061A71040F00F2AEC5 /* pqueue.h */,
+				A49C80071A71040F00F2AEC5 /* rand.h */,
+				A49C80081A71040F00F2AEC5 /* rc2.h */,
+				A49C80091A71040F00F2AEC5 /* rc4.h */,
+				A49C800A1A71040F00F2AEC5 /* ripemd.h */,
+				A49C800B1A71040F00F2AEC5 /* rsa.h */,
+				A49C800C1A71040F00F2AEC5 /* safestack.h */,
+				A49C800D1A71040F00F2AEC5 /* seed.h */,
+				A49C800E1A71040F00F2AEC5 /* sha.h */,
+				A49C800F1A71040F00F2AEC5 /* srp.h */,
+				A49C80101A71040F00F2AEC5 /* srtp.h */,
+				A49C80111A71040F00F2AEC5 /* ssl.h */,
+				A49C80121A71040F00F2AEC5 /* ssl2.h */,
+				A49C80131A71040F00F2AEC5 /* ssl23.h */,
+				A49C80141A71040F00F2AEC5 /* ssl3.h */,
+				A49C80151A71040F00F2AEC5 /* stack.h */,
+				A49C80161A71040F00F2AEC5 /* symhacks.h */,
+				A49C80171A71040F00F2AEC5 /* tls1.h */,
+				A49C80181A71040F00F2AEC5 /* ts.h */,
+				A49C80191A71040F00F2AEC5 /* txt_db.h */,
+				A49C801A1A71040F00F2AEC5 /* ui.h */,
+				A49C801B1A71040F00F2AEC5 /* ui_compat.h */,
+				A49C801C1A71040F00F2AEC5 /* whrlpool.h */,
+				A49C801D1A71040F00F2AEC5 /* x509.h */,
+				A49C801E1A71040F00F2AEC5 /* x509_vfy.h */,
+				A49C801F1A71040F00F2AEC5 /* x509v3.h */,
+			);
+			path = openssl;
+			sourceTree = "<group>";
+		};
+		A49C80221A71040F00F2AEC5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A49C80231A71040F00F2AEC5 /* base64.h */,
+				A49C80241A71040F00F2AEC5 /* base64.m */,
+				A49C80251A71040F00F2AEC5 /* config.h */,
+				A49C80261A71040F00F2AEC5 /* DataSigner.h */,
+				A49C80271A71040F00F2AEC5 /* DataSigner.m */,
+				A49C80281A71040F00F2AEC5 /* DataVerifier.h */,
+				A49C80291A71040F00F2AEC5 /* DataVerifier.m */,
+				A49C802A1A71040F00F2AEC5 /* MD5DataSigner.h */,
+				A49C802B1A71040F00F2AEC5 /* MD5DataSigner.m */,
+				A49C802C1A71040F00F2AEC5 /* NSDataEx.h */,
+				A49C802D1A71040F00F2AEC5 /* NSDataEx.m */,
+				A49C802E1A71040F00F2AEC5 /* openssl_wrapper.h */,
+				A49C802F1A71040F00F2AEC5 /* openssl_wrapper.m */,
+				A49C80301A71040F00F2AEC5 /* RSADataSigner.h */,
+				A49C80311A71040F00F2AEC5 /* RSADataSigner.m */,
+				A49C80321A71040F00F2AEC5 /* RSADataVerifier.h */,
+				A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		A4A2EA9C1A6CF7C8006ADA55 /* MagicalRecord */ = {
@@ -8474,6 +8757,7 @@
 			isa = PBXGroup;
 			children = (
 				10389B611A3EC8E3001A785C /* Other.h */,
+				A49C7FCF1A71040F00F2AEC5 /* alipay */,
 				A4A2EA9C1A6CF7C8006ADA55 /* MagicalRecord */,
 				F58CA98C1A5D4F9100988A61 /* DaiDodgeKeyboard */,
 				F5B5FE581A596D4A007FE11B /* ShareSDK */,
@@ -9103,6 +9387,7 @@
 				A49C7E4F1A70D42700F2AEC5 /* contacts_add_newmessage@2x.png in Resources */,
 				A49C7E501A70D42700F2AEC5 /* Expression_13@2x.png in Resources */,
 				A49C7E511A70D42700F2AEC5 /* section0_emotion4@2x.png in Resources */,
+				A49C80371A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */,
 				A49C7E521A70D42700F2AEC5 /* RecordingSignal008@2x.png in Resources */,
 				A49C7E531A70D42700F2AEC5 /* login_my_button@2x.png in Resources */,
 				A49C7E541A70D42700F2AEC5 /* greenbutton@2x.png in Resources */,
@@ -9665,6 +9950,7 @@
 				A4C1443B1A4C0A6B00C9BAB5 /* contacts_add_newmessage@2x.png in Resources */,
 				F53DC4571A49192600F5F712 /* Expression_13@2x.png in Resources */,
 				A4C1438D1A4C0A6B00C9BAB5 /* section0_emotion4@2x.png in Resources */,
+				A49C80361A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */,
 				A4C144651A4C0A6B00C9BAB5 /* RecordingSignal008@2x.png in Resources */,
 				F55772DB1A5AA3E200693279 /* login_my_button@2x.png in Resources */,
 				F53DC45A1A49192600F5F712 /* greenbutton@2x.png in Resources */,
@@ -10227,6 +10513,7 @@
 				F5664B111A2AFD56008A5830 /* Expression_13@2x.png in Resources */,
 				A4C143EB1A4C0A6B00C9BAB5 /* input-bar-background@2x.png in Resources */,
 				F534DAEF1A4EB0E000B6A725 /* investor_attestation_selected@2x.png in Resources */,
+				A49C80341A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */,
 				F5664B151A2AFD56008A5830 /* greenbutton@2x.png in Resources */,
 				F5664B161A2AFD56008A5830 /* me_mywriten_good_pre@2x.png in Resources */,
 				F5664B1A1A2AFD56008A5830 /* home_new_upload_picture_add@2x.png in Resources */,
@@ -10789,6 +11076,7 @@
 				A4C1443A1A4C0A6B00C9BAB5 /* contacts_add_newmessage@2x.png in Resources */,
 				F5664DCB1A2AFDD5008A5830 /* Expression_13@2x.png in Resources */,
 				A4C1438C1A4C0A6B00C9BAB5 /* section0_emotion4@2x.png in Resources */,
+				A49C80351A71040F00F2AEC5 /* AlipaySDK.bundle in Resources */,
 				A4C144641A4C0A6B00C9BAB5 /* RecordingSignal008@2x.png in Resources */,
 				F55772DA1A5AA3E200693279 /* login_my_button@2x.png in Resources */,
 				F5664DCF1A2AFDD5008A5830 /* greenbutton@2x.png in Resources */,
@@ -11220,6 +11508,7 @@
 				A49C7BEE1A70D42700F2AEC5 /* NSUserDefaults+Standard.m in Sources */,
 				A49C7BEF1A70D42700F2AEC5 /* LoginUserModel.m in Sources */,
 				A49C7BF01A70D42700F2AEC5 /* FindViewController.m in Sources */,
+				A49C804F1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				A49C7BF11A70D42700F2AEC5 /* MBProgressHUD.m in Sources */,
 				A49C7BF21A70D42700F2AEC5 /* MJMember.m in Sources */,
 				A49C7BF31A70D42700F2AEC5 /* WorksListController.m in Sources */,
@@ -11253,6 +11542,7 @@
 				A49C7C0F1A70D42700F2AEC5 /* MJPhoto.m in Sources */,
 				A49C7C101A70D42700F2AEC5 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				A49C7C111A70D42700F2AEC5 /* FeedAndZanFrameM.m in Sources */,
+				A49C80471A71041000F2AEC5 /* Order.m in Sources */,
 				A49C7C121A70D42700F2AEC5 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				A49C7C131A70D42700F2AEC5 /* WeixinActivityBase.m in Sources */,
 				A49C7C141A70D42700F2AEC5 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -11305,6 +11595,7 @@
 				A49C7C431A70D42700F2AEC5 /* WLLocationHelper.m in Sources */,
 				A49C7C441A70D42700F2AEC5 /* UILabel+AttributedLabel.m in Sources */,
 				A49C7C451A70D42700F2AEC5 /* MagicalRecord+Actions.m in Sources */,
+				A49C805F1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
 				A49C7C461A70D42700F2AEC5 /* BasicViewController.m in Sources */,
 				A49C7C471A70D42700F2AEC5 /* InvestCardCell.m in Sources */,
 				A49C7C481A70D42700F2AEC5 /* MyLocationController.m in Sources */,
@@ -11315,6 +11606,7 @@
 				A49C7C4D1A70D42700F2AEC5 /* HomeController.m in Sources */,
 				A49C7C4E1A70D42700F2AEC5 /* MainViewController.m in Sources */,
 				A49C7C4F1A70D42700F2AEC5 /* WLMessageTextView.m in Sources */,
+				A49C80531A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				A49C7C501A70D42700F2AEC5 /* WLHUDView.m in Sources */,
 				A49C7C511A70D42700F2AEC5 /* ZBExpressionSectionBar.m in Sources */,
 				A49C7C521A70D42700F2AEC5 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -11387,6 +11679,7 @@
 				A49C7C951A70D42700F2AEC5 /* XHSoundManager.m in Sources */,
 				A49C7C961A70D42700F2AEC5 /* FLAnimatedImage.m in Sources */,
 				A49C7C971A70D42700F2AEC5 /* NSObject+Extend.m in Sources */,
+				A49C804B1A71041000F2AEC5 /* base64.m in Sources */,
 				A49C7C981A70D42700F2AEC5 /* NSString+MagicalDataImport.m in Sources */,
 				A49C7C991A70D42700F2AEC5 /* WeixinSessionActivity.m in Sources */,
 				A49C7C9A1A70D42700F2AEC5 /* DKArrayQuery.m in Sources */,
@@ -11485,8 +11778,10 @@
 				A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */,
 				A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A49C7CFA1A70D42700F2AEC5 /* ActivityDetailViewController.m in Sources */,
 				A49C7CFB1A70D42700F2AEC5 /* MessageFrameModel.m in Sources */,
+				A49C80571A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */,
 				A49C7CFD1A70D42700F2AEC5 /* DTTimePeriodCollection.m in Sources */,
 				A49C7CFE1A70D42700F2AEC5 /* CALayer+XibConfiguration.m in Sources */,
@@ -11499,6 +11794,7 @@
 				A49C7D051A70D42700F2AEC5 /* UIScrollView+MJExtension.m in Sources */,
 				A49C7D061A70D42700F2AEC5 /* MJPhotoBrowser.m in Sources */,
 				A49C7D071A70D42700F2AEC5 /* ForwardPublishView.m in Sources */,
+				A49C80631A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				A49C7D081A70D42700F2AEC5 /* NSString+PinYin4Cocoa.m in Sources */,
 				A49C7D091A70D42700F2AEC5 /* InvestCollectionCell.m in Sources */,
 				A49C7D0A1A70D42700F2AEC5 /* FriendsFriendModel.m in Sources */,
@@ -11564,6 +11860,7 @@
 				A49C7D461A70D42700F2AEC5 /* AFHTTPSessionManager.m in Sources */,
 				A49C7D471A70D42700F2AEC5 /* IWTextView.m in Sources */,
 				A49C7D481A70D42700F2AEC5 /* NSString+val.m in Sources */,
+				A49C80671A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */,
 				A49C7D4A1A70D42700F2AEC5 /* MJRefreshBaseView.m in Sources */,
 				A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */,
@@ -11653,6 +11950,7 @@
 				F53DC2B91A49192600F5F712 /* NSUserDefaults+Standard.m in Sources */,
 				F53D4E571A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F53DC2BA1A49192600F5F712 /* FindViewController.m in Sources */,
+				A49C804E1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				F53DC2BB1A49192600F5F712 /* MBProgressHUD.m in Sources */,
 				F53DC2BC1A49192600F5F712 /* MJMember.m in Sources */,
 				F53DC2BD1A49192600F5F712 /* WorksListController.m in Sources */,
@@ -11686,6 +11984,7 @@
 				F53DC2CF1A49192600F5F712 /* MJPhoto.m in Sources */,
 				A4A2EAF61A6CF7C8006ADA55 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				F53DC2D01A49192600F5F712 /* FeedAndZanFrameM.m in Sources */,
+				A49C80461A71041000F2AEC5 /* Order.m in Sources */,
 				A4A2EB0E1A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				F53DC2D11A49192600F5F712 /* WeixinActivityBase.m in Sources */,
 				F53DC2D21A49192600F5F712 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -11738,6 +12037,7 @@
 				A41CE1E81A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F53328FC1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB1A1A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
+				A49C805E1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
 				F55ED9EE1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F534DAD81A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F53DC2EF1A49192600F5F712 /* MyLocationController.m in Sources */,
@@ -11748,6 +12048,7 @@
 				F53DC2F21A49192600F5F712 /* HomeController.m in Sources */,
 				F53DC2F31A49192600F5F712 /* MainViewController.m in Sources */,
 				A4C140A31A4BEA8500C9BAB5 /* WLMessageTextView.m in Sources */,
+				A49C80521A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				F53DC2F41A49192600F5F712 /* WLHUDView.m in Sources */,
 				F53DC2F51A49192600F5F712 /* ZBExpressionSectionBar.m in Sources */,
 				F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -11820,6 +12121,7 @@
 				A4C141761A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C141101A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
 				F53DC3211A49192600F5F712 /* NSObject+Extend.m in Sources */,
+				A49C804A1A71041000F2AEC5 /* base64.m in Sources */,
 				A4A2EAF01A6CF7C8006ADA55 /* NSString+MagicalDataImport.m in Sources */,
 				F53DC3221A49192600F5F712 /* WeixinSessionActivity.m in Sources */,
 				F53DC3231A49192600F5F712 /* DKArrayQuery.m in Sources */,
@@ -11918,8 +12220,10 @@
 				A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */,
+				A49C80561A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
 				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
@@ -11932,6 +12236,7 @@
 				F53DC36C1A49192600F5F712 /* UIScrollView+MJExtension.m in Sources */,
 				F53DC36D1A49192600F5F712 /* MJPhotoBrowser.m in Sources */,
 				F53DC36E1A49192600F5F712 /* ForwardPublishView.m in Sources */,
+				A49C80621A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F53DC36F1A49192600F5F712 /* NSString+PinYin4Cocoa.m in Sources */,
 				F534DAEA1A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F53DC3701A49192600F5F712 /* FriendsFriendModel.m in Sources */,
@@ -11997,6 +12302,7 @@
 				F53DC3921A49192600F5F712 /* AFHTTPSessionManager.m in Sources */,
 				F53DC3931A49192600F5F712 /* IWTextView.m in Sources */,
 				F53DC3941A49192600F5F712 /* NSString+val.m in Sources */,
+				A49C80661A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */,
 				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
@@ -12086,6 +12392,7 @@
 				F56649931A2AFD56008A5830 /* UserInfoModel.m in Sources */,
 				F56649941A2AFD56008A5830 /* MLEmojiLabel.m in Sources */,
 				F56649951A2AFD56008A5830 /* FindViewController.m in Sources */,
+				A49C804C1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				A4C141231A4BEF5700C9BAB5 /* MultiSelectItem.m in Sources */,
 				F56649961A2AFD56008A5830 /* MBProgressHUD.m in Sources */,
 				F56649971A2AFD56008A5830 /* MJMember.m in Sources */,
@@ -12119,6 +12426,7 @@
 				F56649A71A2AFD56008A5830 /* UIBarButtonItem+Badge.m in Sources */,
 				A4A2EAF41A6CF7C8006ADA55 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				F56649A81A2AFD56008A5830 /* ChineseString.m in Sources */,
+				A49C80441A71041000F2AEC5 /* Order.m in Sources */,
 				A4A2EB0C1A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				A4C1414D1A4BEF5700C9BAB5 /* SETextEditingCaret.m in Sources */,
 				F56649A91A2AFD56008A5830 /* MJPhoto.m in Sources */,
@@ -12171,6 +12479,7 @@
 				A41CE1E61A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F53328FA1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB181A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
+				A49C805C1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
 				F55ED9EC1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F56649C81A2AFD56008A5830 /* MyLocationController.m in Sources */,
 				F56649C91A2AFD56008A5830 /* FMDatabaseQueue.m in Sources */,
@@ -12181,6 +12490,7 @@
 				F56649CE1A2AFD56008A5830 /* ZBExpressionSectionBar.m in Sources */,
 				F56649CF1A2AFD56008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				F56649D01A2AFD56008A5830 /* NSString+MD5.m in Sources */,
+				A49C80501A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				A4F647A41A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				F56649D11A2AFD56008A5830 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F56649D21A2AFD56008A5830 /* MJType.m in Sources */,
@@ -12253,6 +12563,7 @@
 				F56649F71A2AFD56008A5830 /* SDImageCache.m in Sources */,
 				A4C1414A1A4BEF5700C9BAB5 /* SETextAttachment.m in Sources */,
 				F56649F81A2AFD56008A5830 /* WLTextField.m in Sources */,
+				A49C80481A71041000F2AEC5 /* base64.m in Sources */,
 				A4A2EAEE1A6CF7C8006ADA55 /* NSString+MagicalDataImport.m in Sources */,
 				F56649F91A2AFD56008A5830 /* ZBMessageManagerFaceView.m in Sources */,
 				A4C1415F1A4BEF5700C9BAB5 /* SETextSelection.m in Sources */,
@@ -12351,8 +12662,10 @@
 				A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */,
+				A49C80541A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F59E76001A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
 				F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
@@ -12365,6 +12678,7 @@
 				A48CA6A41A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A4C141321A4BEF5700C9BAB5 /* MultiSelectViewController.m in Sources */,
 				F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */,
+				A49C80601A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */,
 				F5664A361A2AFD56008A5830 /* UIScrollView+MJExtension.m in Sources */,
@@ -12430,6 +12744,7 @@
 				F5664A5A1A2AFD56008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664A5B1A2AFD56008A5830 /* IWTextView.m in Sources */,
 				F5664A5C1A2AFD56008A5830 /* NSString+val.m in Sources */,
+				A49C80641A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664A5D1A2AFD56008A5830 /* MJRefreshBaseView.m in Sources */,
 				F59E75F41A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
@@ -12519,6 +12834,7 @@
 				10389B5E1A3EC789001A785C /* NSUserDefaults+Standard.m in Sources */,
 				F53D4E561A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */,
+				A49C804D1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				F5664C501A2AFDD5008A5830 /* MBProgressHUD.m in Sources */,
 				F5664C511A2AFDD5008A5830 /* MJMember.m in Sources */,
 				F5664C521A2AFDD5008A5830 /* WorksListController.m in Sources */,
@@ -12552,6 +12868,7 @@
 				F5664C631A2AFDD5008A5830 /* MJPhoto.m in Sources */,
 				A4A2EAF51A6CF7C8006ADA55 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				F5664C641A2AFDD5008A5830 /* FeedAndZanFrameM.m in Sources */,
+				A49C80451A71041000F2AEC5 /* Order.m in Sources */,
 				A4A2EB0D1A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				F5664C651A2AFDD5008A5830 /* WeixinActivityBase.m in Sources */,
 				F5664C661A2AFDD5008A5830 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -12604,6 +12921,7 @@
 				A41CE1E71A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F53328FB1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB191A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
+				A49C805D1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
 				F55ED9ED1A58D7D600C4AB93 /* BasicViewController.m in Sources */,
 				F534DAD71A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664C821A2AFDD5008A5830 /* MyLocationController.m in Sources */,
@@ -12614,6 +12932,7 @@
 				F5664C851A2AFDD5008A5830 /* HomeController.m in Sources */,
 				F5664C861A2AFDD5008A5830 /* MainViewController.m in Sources */,
 				A4C140A21A4BEA8500C9BAB5 /* WLMessageTextView.m in Sources */,
+				A49C80511A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				F5664C871A2AFDD5008A5830 /* WLHUDView.m in Sources */,
 				F5664C881A2AFDD5008A5830 /* ZBExpressionSectionBar.m in Sources */,
 				F5664C891A2AFDD5008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -12686,6 +13005,7 @@
 				A4C141751A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C1410F1A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
 				A4F647BB1A43FB0E002E66FC /* NSObject+Extend.m in Sources */,
+				A49C80491A71041000F2AEC5 /* base64.m in Sources */,
 				A4A2EAEF1A6CF7C8006ADA55 /* NSString+MagicalDataImport.m in Sources */,
 				F5664CAE1A2AFDD5008A5830 /* WeixinSessionActivity.m in Sources */,
 				F59E75F91A4059D00028FBAF /* DKArrayQuery.m in Sources */,
@@ -12784,8 +13104,10 @@
 				A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */,
+				A49C80551A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
 				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
@@ -12798,6 +13120,7 @@
 				F5664CF01A2AFDD5008A5830 /* UIScrollView+MJExtension.m in Sources */,
 				F5664CF21A2AFDD5008A5830 /* MJPhotoBrowser.m in Sources */,
 				F5664CF31A2AFDD5008A5830 /* ForwardPublishView.m in Sources */,
+				A49C80611A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664CF41A2AFDD5008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
 				F534DAE91A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F5664CF51A2AFDD5008A5830 /* FriendsFriendModel.m in Sources */,
@@ -12863,6 +13186,7 @@
 				F5664D141A2AFDD5008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664D151A2AFDD5008A5830 /* IWTextView.m in Sources */,
 				F5664D161A2AFDD5008A5830 /* NSString+val.m in Sources */,
+				A49C80651A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */,
 				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
@@ -13000,6 +13324,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13008,6 +13333,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianAppDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13020,6 +13346,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -13046,6 +13373,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13054,6 +13382,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianAppDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13066,6 +13395,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -13091,6 +13421,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13099,6 +13430,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianAppDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13111,6 +13443,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -13137,6 +13470,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13145,6 +13479,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianAppDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13157,6 +13492,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -13182,6 +13518,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13190,6 +13527,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13202,6 +13540,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -13228,6 +13567,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13236,6 +13576,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13248,6 +13589,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -13273,6 +13615,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13281,6 +13624,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13293,6 +13637,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -13319,6 +13664,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Connection",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Core",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Welian/weLian.pch;
@@ -13327,6 +13673,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(OBJROOT)/UninstalledProducts/include",
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
+					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
 				INFOPLIST_FILE = "weLianDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -13339,6 +13686,7 @@
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/BlocksKit",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK/Extend/WeChatSDK",
 					"$(PROJECT_DIR)/Welian/Class/Other(其他)/ShareSDK",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/alipay",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",

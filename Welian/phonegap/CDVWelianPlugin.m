@@ -170,7 +170,9 @@
 - (void)wechatpay:(CDVInvokedUrlCommand *)command
 {
     DLog(@"wechatPay : %@",command.arguments);
-    [self send:command backInfo:@"微信支付"];
+//    [self send:command backInfo:@"微信支付"];
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
+    [activityVC wechatPay:command.arguments];
 }
 
 /**
