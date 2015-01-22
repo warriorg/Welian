@@ -82,7 +82,7 @@ static HttpTool *engine;
     if (isHUD) {
         [WLHUDView showHUDWithStr:@"加载中" dim:isDim];
     }
-    
+   
     NSString *parameterStr = [self dicTostring:parameterDic];
 
     LogInUser *mode = [LogInUser getCurrentLoginUser];
@@ -94,6 +94,7 @@ static HttpTool *engine;
         [[self operationQueue] cancelAllOperations];
         return;
     }
+//    NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     NSDictionary *parmetDic = @{@"json":parameterStr,@"sessionid":sessid};
     [self formatUrlAndParameters:parmetDic];
 

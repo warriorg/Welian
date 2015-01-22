@@ -130,7 +130,7 @@
         // 配置输入框UI的样式
         self.allowsSendVoice = NO;
         self.allowsSendFace = NO;
-        self.allowsSendMultiMedia = NO;
+        self.allowsSendMultiMedia = YES;
         
         self.friendUser = friendUser;
     }
@@ -183,6 +183,9 @@
     // 设置整体背景颜色
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
     
+    //设置聊天布局
+    [self setNormalInfo];
+    
     //初始化数据查询
     self.count = 15;
     if (_friendUser.rsChatMessages.count > _count) {
@@ -198,6 +201,24 @@
     //添加新消息监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewChatMessage:) name:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",_friendUser.uid.stringValue] object:nil];
     
+}
+
+- (void)setNormalInfo
+{
+    // 添加第三方接入数据
+    NSMutableArray *shareMenuItems = [NSMutableArray array];
+    //, @"me_circle_chat_location", @"me_circle_chat_card"
+    NSArray *plugIcons = @[@"me_circle_chat_picture", @"me_circle_chat_camera"];
+    //, @"位置", @"名片"
+    NSArray *plugTitle = @[@"照片", @"拍摄"];
+//    NSArray *plugIcons = @[@"sharemore_pic", @"sharemore_video", @"sharemore_location", @"sharemore_friendcard", @"sharemore_myfav", @"sharemore_wxtalk", @"sharemore_videovoip", @"sharemore_voiceinput", @"sharemore_openapi", @"sharemore_openapi", @"avatar"];
+//    NSArray *plugTitle = @[@"照片", @"拍摄", @"位置", @"名片", @"我的收藏", @"实时对讲机", @"视频聊天", @"语音输入", @"大众点评", @"应用", @"曾宪华"];
+    for (NSString *plugIcon in plugIcons) {
+        WLShareMenuItem *shareMenuItem = [[WLShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:plugIcon] title:[plugTitle objectAtIndex:[plugIcons indexOfObject:plugIcon]]];
+        [shareMenuItems addObject:shareMenuItem];
+    }
+    self.shareMenuItems = shareMenuItems;
+    [self.shareMenuView reloadData];
 }
 
 //刷新获取新的消息
@@ -256,7 +277,6 @@
     dispatch_async(dispatch_get_main_queue(), queue);
 }
 
-
 - (void)addMessage:(WLMessage *)addedMessage needSend:(BOOL)needSend{
     NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
     [messages addObject:addedMessage];
@@ -264,14 +284,12 @@
     NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
     [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
     
-    if (needSend) {
-        //发送消息
-        [self sendMessage:addedMessage withIndexPath:indexPaths];
-    }
-    
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
-        
+        if (needSend) {
+            //发送消息
+            [self sendMessage:addedMessage withIndexPath:indexPaths];
+        }
         [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
             [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
@@ -283,7 +301,39 @@
 //发送消息
 - (void)sendMessage:(WLMessage *)message withIndexPath:(NSMutableArray *)indexPaths
 {
-    NSDictionary *param = @{@"type":@(message.messageMediaType),@"msg":message.text,@"touser":message.uid};
+    NSDictionary *param = [NSDictionary dictionary];
+    switch (message.messageMediaType) {
+        case WLBubbleMessageMediaTypeText:
+            param = @{@"type":@(message.messageMediaType),@"msg":message.text,@"touser":message.uid};
+            break;
+        case WLBubbleMessageMediaTypePhoto:
+        {
+            NSString *avatarStr = [UIImageJPEGRepresentation(message.photo, 0.05) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            param = @{@"type":@(message.messageMediaType),@"msg":avatarStr,@"touser":message.uid,@"title":@"png"};
+        }
+            break;
+        case WLBubbleMessageMediaTypeVoice:
+            
+            break;
+        case WLBubbleMessageMediaTypeVideo:
+            
+            break;
+        case WLBubbleMessageMediaTypeEmotion:
+            
+            break;
+        case WLBubbleMessageMediaTypeLocalPosition:
+            
+            break;
+        case WLBubbleMessageMediaTypeActivity:
+            
+            break;
+        case WLBubbleMessageSpecialTypeText:
+            
+            break;
+            
+        default:
+            break;
+    }
     NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
     //获取数据库中发送的消息对象
     ChatMessage *chatMessage = _localMessages[indexPath.row];// [_friendUser getChatMessageWithMsgId:msg.msgId];
@@ -403,7 +453,7 @@
 //        [self scrollToBottomAnimated:YES];
         
         //添加这条数据，不需要发送
-        [self addMessage:textMessage needSend:NO];
+        [self addMessage:textMessage needSend:YES];
     }];
     
 }
@@ -532,9 +582,9 @@
     textMessage.timestamp = [NSDate date];
     
     //更新聊天好友
-    [_friendUser updateIsChatStatus:YES];
+//    [_friendUser updateIsChatStatus:YES];
     
-//    //本地聊天数据库添加
+    //本地聊天数据库添加
     ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:_friendUser];
     textMessage.msgId = chatMessage.msgId.stringValue;
     
@@ -545,14 +595,101 @@
 //    [self sendMessage:textMessage];
     [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypeText];
     
-    //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-    
     //如果是从好友列表进入聊天，首页变换
 //    if(_isFromUserInfo){
 //        _isFromUserInfo = NO;
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
 //    }
+}
+
+/**
+ *  发送图片消息的回调方法
+ *
+ *  @param photo  目标图片对象，后续有可能会换
+ *  @param sender 发送者的名字
+ *  @param date   发送时间
+ */
+- (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    WLMessage *photoMessage = [[WLMessage alloc] initWithPhoto:photo thumbnailUrl:nil originPhotoUrl:nil sender:sender timestamp:date];
+    photoMessage.avatorUrl = loginUser.avatar;
+    photoMessage.sender = loginUser.name;
+    photoMessage.uid = _friendUser.uid.stringValue;
+    //是否读取
+    photoMessage.isRead = YES;
+    photoMessage.sended = @"0";
+    photoMessage.timestamp = [NSDate date];
+    //本地聊天数据库添加
+    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:photoMessage FriendUser:_friendUser];
+    photoMessage.msgId = chatMessage.msgId.stringValue;
+    
+    //添加数据
+    [_localMessages addObject:chatMessage];
+    
+    [self addMessage:photoMessage needSend:YES];
+//    [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
+}
+
+/**
+ *  发送视频消息的回调方法
+ *
+ *  @param videoPath 目标视频本地路径
+ *  @param sender    发送者的名字
+ *  @param date      发送时间
+ */
+- (void)didSendVideoConverPhoto:(UIImage *)videoConverPhoto videoPath:(NSString *)videoPath fromSender:(NSString *)sender onDate:(NSDate *)date {
+//    XHMessage *videoMessage = [[XHMessage alloc] initWithVideoConverPhoto:videoConverPhoto videoPath:videoPath videoUrl:nil sender:sender timestamp:date];
+//    videoMessage.avatar = [UIImage imageNamed:@"avatar"];
+//    videoMessage.avatarUrl = @"http://www.pailixiu.com/jack/meIcon@2x.png";
+//    [self addMessage:videoMessage];
+//    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVideo];
+}
+
+/**
+ *  发送语音消息的回调方法
+ *
+ *  @param voicePath        目标语音本地路径
+ *  @param voiceDuration    目标语音时长
+ *  @param sender           发送者的名字
+ *  @param date             发送时间
+ */
+- (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString*)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
+//    XHMessage *voiceMessage = [[XHMessage alloc] initWithVoicePath:voicePath voiceUrl:nil voiceDuration:voiceDuration sender:sender timestamp:date];
+//    voiceMessage.avatar = [UIImage imageNamed:@"avatar"];
+//    voiceMessage.avatarUrl = @"http://www.pailixiu.com/jack/meIcon@2x.png";
+//    [self addMessage:voiceMessage];
+//    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
+}
+
+/**
+ *  发送第三方表情消息的回调方法
+ *
+ *  @param facePath 目标第三方表情的本地路径
+ *  @param sender   发送者的名字
+ *  @param date     发送时间
+ */
+- (void)didSendEmotion:(NSString *)emotionPath fromSender:(NSString *)sender onDate:(NSDate *)date {
+//    if (emotionPath) {
+//        XHMessage *emotionMessage = [[XHMessage alloc] initWithEmotionPath:emotionPath sender:sender timestamp:date];
+//        emotionMessage.avatar = [UIImage imageNamed:@"avatar"];
+//        emotionMessage.avatarUrl = @"http://www.pailixiu.com/jack/meIcon@2x.png";
+//        [self addMessage:emotionMessage];
+//        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
+//        
+//    } else {
+//        [[[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"如果想测试，请运行MessageDisplayKitWeChatExample工程" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+//    }
+}
+
+/**
+ *  有些网友说需要发送地理位置，这个我暂时放一放
+ */
+- (void)didSendGeoLocationsPhoto:(UIImage *)geoLocationsPhoto geolocations:(NSString *)geolocations location:(CLLocation *)location fromSender:(NSString *)sender onDate:(NSDate *)date {
+//    XHMessage *geoLocationsMessage = [[XHMessage alloc] initWithLocalPositionPhoto:geoLocationsPhoto geolocations:geolocations location:location sender:sender timestamp:date];
+//    geoLocationsMessage.avatar = [UIImage imageNamed:@"avatar"];
+//    geoLocationsMessage.avatarUrl = @"http://www.pailixiu.com/jack/meIcon@2x.png";
+//    [self addMessage:geoLocationsMessage];
+//    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeLocalPosition];
 }
 
 /**

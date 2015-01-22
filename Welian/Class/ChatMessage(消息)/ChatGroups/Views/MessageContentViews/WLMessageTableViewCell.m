@@ -388,9 +388,19 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     }
     if (message.avatorUrl) {
         //设置圆角
-        self.avatorButton.messageAvatorType = WLMessageAvatorTypeCircle;
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:message.avatorUrl]
+                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                            [self.avatorButton setImage:[UIImage imageNamed:@"user_small"] forState:UIControlStateNormal];
+                                                        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                            UIImage *avatorImage = [UIImage imageNamed:@"user_small"];
+                                                            if (image) {
+                                                                avatorImage = [WLMessageAvatorFactory avatarImageNamed:image messageAvatorType:WLMessageAvatorTypeCircle];
+                                                            }
+                                                            [self.avatorButton setImage:avatorImage forState:UIControlStateNormal];
+                                                        }];
+//        [self.avatorButton sd_setImageWithURL:[NSURL URLWithString:message.avatorUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         //设置头像
-        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"user_small"] showActivityIndicatorView:YES];
+//        [self.avatorButton setImageWithURL:[NSURL URLWithString:message.avatorUrl] placeholer:[UIImage imageNamed:@"user_small"] showActivityIndicatorView:YES];
     }else{
         [self.avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
     }

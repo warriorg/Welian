@@ -10,6 +10,7 @@
 #import "ActivityEntryViewController.h"
 #import "ActivityOrderViewController.h"
 #import "ActivityMapViewController.h"
+#import "ActivityUserListViewController.h"
 #import "LXActivity.h"
 #import "ShareEngine.h"
 #import "SEImageCache.h"
@@ -129,12 +130,15 @@
 //显示已报名人数
 - (void)showEntry:(NSArray *)infos
 {
-    DLog(@"showEntry -----> %@,%@",infos[0],infos[1]);
+    DLog(@"showEntry -----> 活动编号：%@, 人数：%@",infos[0],infos[1]);
     //活动页面，进行phoneGap页面加载
-    ActivityEntryViewController *activityEntryVC = [[ActivityEntryViewController alloc] init];
-    activityEntryVC.wwwFolderName = @"www";
-    activityEntryVC.startPage = [NSString stringWithFormat:@"activity_entry.html?%@?%@?t=%@",infos[0],infos[1],[NSString getNowTimestamp]];
-    [self.navigationController pushViewController:activityEntryVC animated:YES];
+//    ActivityEntryViewController *activityEntryVC = [[ActivityEntryViewController alloc] init];
+//    activityEntryVC.wwwFolderName = @"www";
+//    activityEntryVC.startPage = [NSString stringWithFormat:@"activity_entry.html?%@?%@?t=%@",infos[0],infos[1],[NSString getNowTimestamp]];
+//    [self.navigationController pushViewController:activityEntryVC animated:YES];
+    
+    ActivityUserListViewController *userListVC = [[ActivityUserListViewController alloc] initWithStyle:UITableViewStylePlain activeInfo:infos];
+    [self.navigationController pushViewController:userListVC animated:YES];
 }
 
 //进入订单页面

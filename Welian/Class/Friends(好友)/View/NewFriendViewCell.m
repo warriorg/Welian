@@ -261,8 +261,12 @@
        _nameLabel.top = kMarginTop;
     }
     
-    _messageLabel.width = self.width - (_operateBtn.hidden ? 0 : _operateBtn.width) - _nameLabel.left - kMarginLeft * 2.f;
+    _messageLabel.width = self.width - (_operateBtn.hidden == YES ? 0 : _operateBtn.width) - _nameLabel.left - kMarginLeft * 2.f;
     [_messageLabel sizeToFit];
+    if (_messageLabel.numberOfLines == 1) {
+        //固定宽度
+        _messageLabel.width = self.width - (_operateBtn.hidden == YES ? 0 : _operateBtn.width) - _nameLabel.left - kMarginLeft;
+    }
     _messageLabel.top = _nameLabel.bottom + 5.f;
     _messageLabel.left = _nameLabel.left;
 }
@@ -303,7 +307,7 @@
     self.messageLabel = messageLabel;
     
     //操作按钮
-    UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;

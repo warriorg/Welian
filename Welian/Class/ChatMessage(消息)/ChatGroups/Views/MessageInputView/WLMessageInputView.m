@@ -162,7 +162,7 @@
     CGFloat horizontalPadding = 8;
     
     // 垂直间隔
-    CGFloat verticalPadding = 5;
+    CGFloat verticalPadding = 8;
     
     // 输入框
     CGFloat textViewLeftMargin = ((style == WLMessageInputViewStyleFlat) ? 6.0 : 4.0);
@@ -179,6 +179,7 @@
         [button addTarget:self action:@selector(messageStyleButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 0;
         [button setImage:[UIImage imageNamed:@"keyborad"] forState:UIControlStateSelected];
+        [button sizeToFit];
         buttonFrame = button.frame;
         buttonFrame.origin = CGPointMake(horizontalPadding, verticalPadding);
         button.frame = buttonFrame;
@@ -195,6 +196,7 @@
         button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [button addTarget:self action:@selector(messageStyleButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 2;
+        [button sizeToFit];
         buttonFrame = button.frame;
         buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
         button.frame = buttonFrame;
@@ -211,6 +213,7 @@
         [button setImage:[UIImage imageNamed:@"keyborad"] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(messageStyleButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 1;
+        [button sizeToFit];
         buttonFrame = button.frame;
         if (self.allowsSendMultiMedia) {
             buttonFrame.origin = CGPointMake(CGRectGetMinX(self.multiMediaSendButton.frame) - CGRectGetWidth(buttonFrame) - horizontalPadding, verticalPadding);

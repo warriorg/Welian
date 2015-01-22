@@ -169,7 +169,7 @@
 - (ChatMessage *)getTheNewChatMessage
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
-    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:YES inContext:self.managedObjectContext];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:NO inContext:self.managedObjectContext];
     return chatMessage;
     
 //    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
@@ -179,7 +179,7 @@
 - (ChatMessage *)getTheLastChatMessage
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
-    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:YES inContext:self.managedObjectContext];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"timestamp" ascending:NO inContext:self.managedObjectContext];
     return chatMessage;
 //    return [[[[[ChatMessage queryInManagedObjectContext:MOC] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES] results] lastObject];
 }
