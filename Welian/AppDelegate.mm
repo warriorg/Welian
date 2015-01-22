@@ -419,6 +419,13 @@ BMKMapManager* _mapManager;
 // 接受聊天消息
 - (void)getIMGTMessage:(NSDictionary *)dataDic
 {
+    NSDictionary *fromuser = dataDic[@"fromuser"];
+    LogInUser *loginUser = [LogInUser getLogInUserWithUid:fromuser[@"uid"]];
+    //如果本地数据库没有当前登陆用户，不处理
+    if (loginUser == nil) {
+        return;
+    }
+    
     //添加数据
     [ChatMessage createReciveMessageWithDict:dataDic];
     

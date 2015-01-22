@@ -285,7 +285,6 @@
 {
     //刷新动画
 //    [self refreshAnimation];
-    //先刷新页面
     [self reloadUIData];
     
     //调用接口
@@ -303,7 +302,8 @@
                 //获取通讯录好友
                 [self getPhoneAllFriends];
             }else{
-                [self.refreshControl endRefreshing];
+//                [self.refreshControl endRefreshing];
+                [self reloadUIData];
             }
         });
     }else{
