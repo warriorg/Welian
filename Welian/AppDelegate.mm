@@ -525,7 +525,7 @@ BMKMapManager* _mapManager;
              NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
              if (resultStatus == 9000) {
                  //支付成功
-                 
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
              }
              DLog(@"支付结果 result = %@", resultDic);
          }];
@@ -537,7 +537,7 @@ BMKMapManager* _mapManager;
             NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
             if (resultStatus == 9000) {
                 //支付成功
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
             }
             DLog(@"支付结果 result = %@", resultDic);
         }];

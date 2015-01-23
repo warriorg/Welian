@@ -1056,6 +1056,17 @@
     } withHUD:YES andDim:NO];
 }
 
+#pragma mark - 修改活动支付订单状态
++ (void)updateTicketOrderStatusParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"ticketOrderStatus",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {

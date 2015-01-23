@@ -11,5 +11,6 @@
 @interface ActivityOrderViewController : BaseCDVViewController
 
 @property (nonatomic, strong) NSString *orderInfo;
+@property (nonatomic, strong) NSDictionary *payInfo;
 
 @end
