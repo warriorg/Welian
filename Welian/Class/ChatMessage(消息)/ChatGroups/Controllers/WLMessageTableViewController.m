@@ -623,12 +623,18 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
+//点击更多操作按钮，键盘切换
 - (void)didSelectedMultipleMediaAction {
     DLog(@"didSelectedMultipleMediaAction");
-    self.textViewInputViewType = WLInputViewTypeShareMenu;
-    [self layoutOtherMenuViewHiden:NO];
+    if(_textViewInputViewType == WLInputViewTypeShareMenu){
+        [self.messageInputView.inputTextView becomeFirstResponder];
+    }else{
+        self.textViewInputViewType = WLInputViewTypeShareMenu;
+        [self layoutOtherMenuViewHiden:NO];
+    }
 }
 
+//点击表情选择按钮，键盘切换
 - (void)didSendFaceAction:(BOOL)sendFace {
     if (sendFace) {
         self.textViewInputViewType = WLInputViewTypeEmotion;
@@ -928,7 +934,7 @@ static CGPoint  delayOffset = {0.0};
             break;
         }
         case 2: {
-            WEAKSELF
+//            WEAKSELF
             [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
                 CLPlacemark *placemark = [placemarks lastObject];
                 if (placemark) {

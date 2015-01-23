@@ -176,8 +176,6 @@
 //    }
     
 //    {"total":{"count":4,"money":752},"list":[{"tid":"42","name":"普通票","price":"88","remain":"100","intro":"不含餐费","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":2,"$$hashKey":"object:5"},{"tid":"43","name":"VIP票","price":"288","remain":"100","intro":"含所有费用","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":2,"$$hashKey":"object:6"}]}
-
-
     
     if (type == 1) {
         //普通活动
@@ -186,8 +184,8 @@
 //        NSArray *list = [infos[1] objectForKey:@"list"];
         //需要支付的活动
         param = @{@"activeid":@([infos[0] integerValue]),
-                  @"ticket":@[@{@"ticketid":@(40),@"count":@(1)},
-                              @{@"ticketid":@(41),@"count":@(1)}]};
+                  @"ticket":@[@{@"ticketid":@(44),@"count":@(1)},
+                              @{@"ticketid":@(45),@"count":@(1)}]};
     }
     [WLHttpTool createTicketOrderParameterDic:param
                                       success:^(id JSON) {
