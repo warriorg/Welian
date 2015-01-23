@@ -38,7 +38,7 @@ static NSString *identifier = @"investorcellid";
         [self hideRefreshView];        
 
         NSArray *arr = JSON;
-        [InvestorUser deleteAll];
+        [InvestorUser MR_deleteAllMatchingPredicate:nil];
         for (InvestorUserM *invest in JSON) {
             [InvestorUser createInvestor:invest];
         }
@@ -50,6 +50,7 @@ static NSString *identifier = @"investorcellid";
         }else{
             [self.tableView setFooterHidden:NO];
         }
+        page++;
     } fail:^(NSError *error) {
         [self hideRefreshView];
     }];

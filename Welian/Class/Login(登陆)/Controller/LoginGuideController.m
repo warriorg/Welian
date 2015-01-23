@@ -160,7 +160,7 @@
                                {
                                    NSLog(@"sourceData = %@",[userInfo sourceData]);
                                    NSDictionary *sourceDic = [userInfo sourceData];
-                                   
+                                   if (!sourceDic) return;
                                    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
                                    [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
                                    [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];

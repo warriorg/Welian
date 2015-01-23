@@ -71,7 +71,7 @@ static NSString *fridcellid = @"fridcellid";
         [but setBackgroundImage:[UIImage resizedImage:@"research_bg_pre"] forState:UIControlStateHighlighted];
         [but.titleLabel setFont:WLFONT(17)];
         [but setTitle:@"重新搜索" forState:UIControlStateNormal];
-        [but addTarget:self action:@selector(getaddressBook) forControlEvents:UIControlEventTouchUpInside];
+//        [but addTarget:self action:@selector(getaddressBook) forControlEvents:UIControlEventTouchUpInside];
         [but setTitleColor:WLRGB(52, 116, 186) forState:UIControlStateNormal];
         [but setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
         [_addressBookRefView addSubview:but];
