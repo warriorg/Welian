@@ -155,6 +155,9 @@ static NSString *staurCellid = @"staurCellid";
     if (buttonIndex==1) {
         [WLHttpTool requestFriendParameterDic:@{@"fid":_userMode.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
             [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+            if (_addFriendBlock) {
+                _addFriendBlock();
+            }
         } fail:^(NSError *error) {
             
         }];

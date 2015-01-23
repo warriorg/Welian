@@ -66,7 +66,7 @@
 }
 
 //进入订单页面
-- (void)toOrderVC:(NSArray *)infos
+- (void)toOrderVC:(CDVInvokedUrlCommand *)command
 {
     
 }
@@ -81,6 +81,28 @@
 - (void)canShareWithInfo:(NSDictionary *)dict
 {
     
+}
+
+//普通活动报名
+- (void)entry:(CDVInvokedUrlCommand *)command
+{
+    
+}
+
+//发送回复
+- (void)send:(CDVInvokedUrlCommand *)command backInfo:(NSString *)backInfo
+{
+//    NSString *callbackID = command.callbackId;
+    CDVPluginResult* pluginResult = nil;
+    //    NSString* myarg = [command.arguments objectAtIndex:0];
+    
+    //    if (myarg != nil) {
+    //        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:backInfo];
+    //    } else {
+    //        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Arg was null"];
+    //    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)didReceiveMemoryWarning {

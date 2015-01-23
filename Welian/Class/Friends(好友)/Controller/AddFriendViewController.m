@@ -199,7 +199,7 @@
                 }
                 UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
                 //    __weak NewFriendController *newFVC = self;
-                __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
+//                __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
                 WEAKSELF
                 userInfoVC.acceptFriendBlock = ^(){
                     [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
@@ -269,9 +269,8 @@
 {
 //    DLog(@"segmentedControlChanged-->%d",sender.selectedSegmentIndex);
     //取消请求
-    [WLHUDView hiddenHud];
-    [WLHttpTool cancelAllRequestHttpTool];
-    
+//    [WLHUDView hiddenHud];
+//    [WLHttpTool cancelAllRequestHttpTool];
     self.selectIndex = sender.selectedSegmentIndex;
     [self changeDataWithIndex:_selectIndex];
 }
@@ -443,10 +442,12 @@
             [loginUser addRsNeedAddUsersObject:needAddUser];
         }
     } completion:^(BOOL contextDidSave, NSError *error) {
-        [WLHUDView hiddenHud];
-        [self.refreshControl endRefreshing];
-        // 3) 设置UI
-        [self reloadUIData];
+        if (_selectIndex == type - 1) {
+            [WLHUDView hiddenHud];
+            [self.refreshControl endRefreshing];
+            // 3) 设置UI
+            [self reloadUIData];
+        }
     }];
 }
 
@@ -473,7 +474,7 @@
                                          }];
                                          if(!isHave){
                                              //删除
-                                             [addUser delete];
+                                             [addUser MR_deleteEntity];
                                          }
                                      }
                                      

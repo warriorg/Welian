@@ -11,6 +11,7 @@
 @interface UserInfoBasicVC : BasicTableViewController
 
 @property (nonatomic, copy) dispatch_block_t acceptFriendBlock;
+@property (nonatomic, copy) dispatch_block_t addFriendBlock;
 
 @property (nonatomic, assign) BOOL isHideSendMsgBtn;//隐藏发送消息按钮
 

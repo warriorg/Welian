@@ -115,12 +115,16 @@
         baseUser.friendship = @([info[@"friendship"] integerValue]);
         //系统联系人
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:baseUser isAsk:NO];
-        //    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
-        //    WEAKSELF
         //添加好友成功
-        //    userInfoVC.acceptFriendBlock = ^(){
-        //
-        //    };
+        [userInfoVC setAddFriendBlock:^(){
+            NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
+            //重置好友关系
+            [infoDic setValue:@"4" forKey:@"friendship"];
+            //改变数组，刷新列表
+            [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
+            //刷新列表
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
@@ -198,13 +202,16 @@
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
             [WLHttpTool requestFriendParameterDic:@{@"fid":uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                [UIAlertView showWithTitle:@"系统提示" message:@"好友请求已发送！"];
+                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
+                //重置好友关系
+                [infoDic setValue:@"4" forKey:@"friendship"];
 //                //发送邀请成功，修改状态，刷新列表
 //                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
-//                //改变数组，刷新列表
-//                [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                //改变数组，刷新列表
+                [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
                 //刷新列表
-//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             } fail:^(NSError *error) {
                 
             }];
