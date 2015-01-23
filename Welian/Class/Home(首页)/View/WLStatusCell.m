@@ -145,9 +145,7 @@
     WLBasicTrends *tuiuser = status.tuiuser;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
     CGSize mainSize = [UIScreen mainScreen].bounds.size;
-    if (!_mode) {
-//        _mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    }
+
     if ([[LogInUser getCurrentLoginUser].uid integerValue]==[user.uid integerValue]) {
         [_moreBut setHidden:NO];
     }else{

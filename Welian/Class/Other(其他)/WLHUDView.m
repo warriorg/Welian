@@ -44,7 +44,7 @@ MBProgressHUD *HUD;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     }
     HUD.mode = MBProgressHUDModeCustomView;
-    [HUD hide:YES afterDelay:0.5];
+    [HUD hide:YES afterDelay:1.0];
 }
 
 

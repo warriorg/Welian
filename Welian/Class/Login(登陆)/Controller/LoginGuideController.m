@@ -150,7 +150,7 @@
                                                          authViewStyle:SSAuthViewStyleFullScreenPopup
                                                           viewDelegate:nil
                                                authManagerViewDelegate:nil];
-    [WLHUDView showHUDWithStr:@"授权中..." dim:NO];
+    [WLHUDView showHUDWithStr:@"授权中..." dim:YES];
 
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
                       authOptions:authOptions
@@ -160,7 +160,7 @@
                                {
                                    NSLog(@"sourceData = %@",[userInfo sourceData]);
                                    NSDictionary *sourceDic = [userInfo sourceData];
-                                   
+                                   if (!sourceDic) return;
                                    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
                                    [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
                                    [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];

@@ -221,7 +221,7 @@ single_implementation(MainViewController)
     // 首页
     homeItem = [self itemWithTitle:@"创业圈" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
 //    [homeItem setBadgeValue:[UserDefaults objectForKey:KMessagebadge]];
-    homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:nil];
+    homeVC = [[HomeController alloc] initWithUid:nil];
     NavViewController *homeNav = [[NavViewController alloc] initWithRootViewController:homeVC];
     [homeVC.navigationItem setTitle:@"创业圈"];
     [homeNav setDelegate:self];

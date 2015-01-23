@@ -143,7 +143,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         [controller setTitle:@"个人信息"];
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
-            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
+            controller = [[HomeController alloc] initWithUid:@(0)];
             [controller setTitle:@"我的动态"];
 
         }else if (indexPath.row ==1){

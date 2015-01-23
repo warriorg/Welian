@@ -95,7 +95,6 @@ BMKMapManager* _mapManager;
     [ShareSDK connectWeChatWithAppId:kWeChatAppId
                            appSecret:KWeChatAppSecret
                            wechatCls:[WXApi class]];
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     /**
@@ -576,7 +575,6 @@ BMKMapManager* _mapManager;
     [self inceptMessage:payloadDic];
     DLog(@"-----------个推消息--------%@    \n%d",payloadDic,++_lastPayloadIndex);
 }
-
 
 - (void)GexinSdkDidSendMessage:(NSString *)messageId result:(int)result {
     // [4-EXT]:发送上行消息结果反馈

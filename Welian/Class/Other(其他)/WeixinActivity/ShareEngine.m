@@ -37,7 +37,7 @@ single_implementation(ShareEngine)
 
 - (void)sendWeChatMessage:(NSString*)message andDescription:(NSString *)descriptStr WithUrl:(NSString*)appUrl andImage:(UIImage *)thumbImage WithScene:(WeiboType)weiboType;
 {
-    UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(40, 40)];
+    UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(180, 180)];
     
     NSData * imageData = UIImageJPEGRepresentation(scaledImage,1);
     NSInteger length = [imageData length]/1024;
