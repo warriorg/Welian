@@ -103,12 +103,12 @@ static NSString *cellIdentifier = @"frnewCellid";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NewFriendUser *friendM = _datasource[indexPath.row];
-    BOOL isask = YES;
-    if ([friendM.operateType integerValue] == 2 ||[friendM.pushType isEqualToString:@"friendCommand"]) {
-        isask = NO;
+    BOOL isask = NO;
+    if ([friendM.operateType integerValue] == 1 ||[friendM.pushType isEqualToString:@"friendCommand"]) {
+        isask = YES;
     }
     UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-    __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
+    [userInfoVC setNeedlessCancel:YES];
     WEAKSELF
     userInfoVC.acceptFriendBlock = ^(){
         [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];

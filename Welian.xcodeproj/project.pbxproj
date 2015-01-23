@@ -1876,6 +1876,10 @@
 		F51A9AC61A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
 		F51A9AC71A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
 		F51A9AC81A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
+		F51A9AD71A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
+		F51A9AD81A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
+		F51A9AD91A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
+		F51A9ADA1A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
 		F51BA43E1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA43F1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA4401A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4351A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png */; };
@@ -4823,6 +4827,8 @@
 		F5188ACA19CF017600FE9273 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		F51A9AC11A6E474C00918025 /* homeCellbackground_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeCellbackground_highlight@2x.png"; sourceTree = "<group>"; };
 		F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeCellbackground_normal@2x.png"; sourceTree = "<group>"; };
+		F51A9AD51A720DAC00918025 /* YMReplyInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMReplyInputView.h; sourceTree = "<group>"; };
+		F51A9AD61A720DAC00918025 /* YMReplyInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMReplyInputView.m; sourceTree = "<group>"; };
 		F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_circle_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA4351A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_circle_selected_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA4361A444DA2009E5CDF /* tabbar_discovery_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discovery_prompt@2x.png"; sourceTree = "<group>"; };
@@ -8571,6 +8577,8 @@
 		F5CE863819BFF44100A9D14C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F51A9AD51A720DAC00918025 /* YMReplyInputView.h */,
+				F51A9AD61A720DAC00918025 /* YMReplyInputView.m */,
 				F5F3C86219D292BC00110C07 /* IWTextView.h */,
 				F5F3C86319D292BC00110C07 /* IWTextView.m */,
 				F520EDC219CFF94200E753E4 /* PictureCell.h */,
@@ -11878,6 +11886,7 @@
 				A49C7D571A70D42700F2AEC5 /* WLTogetherUser.m in Sources */,
 				A49C7D581A70D42700F2AEC5 /* NoListView.m in Sources */,
 				A49C7D591A70D42700F2AEC5 /* WLMessageAvatorFactory.m in Sources */,
+				F51A9ADA1A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				A49C7D5A1A70D42700F2AEC5 /* CTAssetsPickerController.m in Sources */,
 				A49C7D5B1A70D42700F2AEC5 /* UserInfoTool.m in Sources */,
 				A49C7D5C1A70D42700F2AEC5 /* XHOperationNetworkKit.m in Sources */,
@@ -12320,6 +12329,7 @@
 				F53DC39C1A49192600F5F712 /* WLTogetherUser.m in Sources */,
 				F53DC39D1A49192600F5F712 /* NoListView.m in Sources */,
 				A4C1417E1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
+				F51A9AD91A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F53DC39F1A49192600F5F712 /* CTAssetsPickerController.m in Sources */,
 				F53DC3A01A49192600F5F712 /* UserInfoTool.m in Sources */,
 				A4C140BF1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
@@ -12762,6 +12772,7 @@
 				A4C140771A4BEA8500C9BAB5 /* UIImage+RoundedCorner.m in Sources */,
 				A4C140981A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F5664A651A2AFD56008A5830 /* CTAssetsPickerController.m in Sources */,
+				F51A9AD71A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F5664A661A2AFD56008A5830 /* UserInfoTool.m in Sources */,
 				A4C141261A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F5664A671A2AFD56008A5830 /* pinyin.c in Sources */,
@@ -13204,6 +13215,7 @@
 				F5664D1C1A2AFDD5008A5830 /* WLTogetherUser.m in Sources */,
 				F5664D1D1A2AFDD5008A5830 /* NoListView.m in Sources */,
 				A4C1417D1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
+				F51A9AD81A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F5664D1F1A2AFDD5008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664D201A2AFDD5008A5830 /* UserInfoTool.m in Sources */,
 				A4C140BE1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,

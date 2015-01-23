@@ -524,7 +524,7 @@ static NSString *staurCellid = @"staurCellid";
                 }else if (_sameFriendArry.count){
                     [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
-                    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                    HomeController *homeVC = [[HomeController alloc] initWithUid:_userMode.uid];
                     [homeVC setTitle:@"最新动态"];
                     [self.navigationController pushViewController:homeVC animated:YES];
                 }
@@ -533,13 +533,13 @@ static NSString *staurCellid = @"staurCellid";
                     
                     [self.navigationController pushViewController:[[CommonFriendsController alloc] initWithStyle:UITableViewStylePlain withFriends:_sameFriendArry] animated:YES];
                 }else{
-                    HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                    HomeController *homeVC = [[HomeController alloc] initWithUid:_userMode.uid];
                     [homeVC setTitle:@"最新动态"];
                     [self.navigationController pushViewController:homeVC animated:YES];
                 }
             }else if (indexPath.row==2){
                 
-                HomeController *homeVC = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:_userMode.uid];
+                HomeController *homeVC = [[HomeController alloc] initWithUid:_userMode.uid];
                 [homeVC setTitle:@"最新动态"];
                 [self.navigationController pushViewController:homeVC animated:YES];
             }

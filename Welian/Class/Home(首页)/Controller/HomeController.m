@@ -28,7 +28,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import "AFNetworkReachabilityManager.h"
 
-@interface HomeController () <UIActionSheetDelegate>
+@interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 {
    __block NSMutableArray *_dataArry;
     
@@ -36,7 +36,6 @@
     NSNumber *_uid;
     NSIndexPath *_seletIndexPath;
 }
-
 @property (nonatomic, strong) HomeView *homeView;
 
 @end
@@ -53,11 +52,16 @@
     return _homeView;
 }
 
-- (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid
+- (instancetype)initWithUid:(NSNumber *)uid
 {
     _uid = uid;
-    self = [super initWithStyle:style];
+    self = [super init];
     if (self) {
+        self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [self.tableView setDataSource:self];
+        [self.tableView setDelegate:self];
+        [self.view addSubview:self.tableView];
         self.refreshControl = [[UIRefreshControl alloc] init];
         [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
@@ -241,6 +245,10 @@
 
 - (void)dealloc
 {
+    if (!self.needlessCancel) {
+        [WLHUDView hiddenHud];
+        [WLHttpTool cancelAllRequestHttpTool];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -451,11 +459,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // 清除内存中的图片缓存
     SDWebImageManager *mgr = [SDWebImageManager sharedManager];
     [mgr cancelAll];
     [mgr.imageCache clearMemory];
-    // Dispose of any resources that can be recreated.
 }
-
 @end

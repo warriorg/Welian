@@ -150,7 +150,7 @@
                                                          authViewStyle:SSAuthViewStyleFullScreenPopup
                                                           viewDelegate:nil
                                                authManagerViewDelegate:nil];
-    [WLHUDView showHUDWithStr:@"授权中..." dim:NO];
+    [WLHUDView showHUDWithStr:@"授权中..." dim:YES];
 
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
                       authOptions:authOptions

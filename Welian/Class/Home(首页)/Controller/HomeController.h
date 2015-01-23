@@ -6,12 +6,14 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "BasicPlainTableViewController.h"
+#import "BasicViewController.h"
 
-@interface HomeController : BasicPlainTableViewController
+@interface HomeController : BasicViewController
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UITableView *tableView;
 //* 有uid时按uid查 （0）为自己   不传uid 首页所有  *//
-- (instancetype)initWithStyle:(UITableViewStyle)style anduid:(NSNumber *)uid;
+- (instancetype)initWithUid:(NSNumber *)uid;
 
 - (void)beginPullDownRefreshing;
 
