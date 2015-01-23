@@ -1045,6 +1045,16 @@
     } withHUD:YES andDim:NO];
 }
 
+#pragma mark - 创建活动报名订单
++ (void)createTicketOrderParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"ticketOrder",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
 
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock

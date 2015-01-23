@@ -145,15 +145,45 @@
 }
 
 //进入订单页面
-- (void)toOrderVC:(NSArray *)infos
+- (void)toOrderVC:(CDVInvokedUrlCommand *)command
 {
-    DLog(@"showEntry -----> %@",infos[0]);
-    //活动页面，进行phoneGap页面加载
-    ActivityOrderViewController *activityOrderVC = [[ActivityOrderViewController alloc] init];
-    activityOrderVC.orderInfo = infos[1];
-    activityOrderVC.wwwFolderName = @"www";
-    activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@?t=%@",infos[0],[NSString getNowTimestamp]];
-    [self.navigationController pushViewController:activityOrderVC animated:YES];
+    DLog(@"toOrderVC -----> %@",command.arguments[0]);
+    [self createActivityOrderWithType:2 command:command];
+}
+
+//普通活动报名
+- (void)entry:(CDVInvokedUrlCommand *)command
+{
+    DLog(@"entry -----> %@",command);
+    [self createActivityOrderWithType:1 command:command];
+}
+
+- (void)createActivityOrderWithType:(NSInteger)type command:(CDVInvokedUrlCommand *)command
+{
+    NSDictionary *param = [NSDictionary dictionary];
+    if (type == 1) {
+        //普通活动
+        param = @{@"activeid":command.arguments[0]};
+    }else{
+        //需要支付的活动
+        param = @{@"activeid":command.arguments[0],
+                  @"ticket":command.arguments[1]};
+    }
+    [WLHttpTool createTicketOrderParameterDic:param
+                                      success:^(id JSON) {
+                                          if (type != 1) {
+                                              //活动页面，进行phoneGap页面加载
+                                              ActivityOrderViewController *activityOrderVC = [[ActivityOrderViewController alloc] init];
+                                              activityOrderVC.orderInfo = command.arguments[1];
+                                              activityOrderVC.wwwFolderName = @"www";
+                                              activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@?t=%@",command.arguments[0],[NSString getNowTimestamp]];
+                                              [self.navigationController pushViewController:activityOrderVC animated:YES];
+                                          }else{
+                                              [self send:command backInfo:@"1"];
+                                          }
+                                      } fail:^(NSError *error) {
+                                          [WLHUDView showSuccessHUD:error.description];
+                                      }];
 }
 
 //微信支付
@@ -213,7 +243,7 @@
     order.productName = @""; //商品标题
     order.productDescription = @""; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格
-    order.notifyURL =  @"http://www.xxx.com"; //回调URL
+    order.notifyURL = @"http://test.welian.com:8080/alipay/notify"; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

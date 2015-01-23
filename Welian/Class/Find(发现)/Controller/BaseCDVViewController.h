@@ -22,12 +22,19 @@
 - (void)showEntry:(NSArray *)infos;
 
 //进入订单页面
-- (void)toOrderVC:(NSArray *)infos;
+- (void)toOrderVC:(CDVInvokedUrlCommand *)command;
 
 //微信支付
 - (void)wechatPay:(NSArray *)infos;
 
 //可以调用分享
 - (void)canShareWithInfo:(NSDictionary *)dict;
+
+//普通活动报名
+- (void)entry:(CDVInvokedUrlCommand *)command;
+
+
+//发送回复
+- (void)send:(CDVInvokedUrlCommand *)command backInfo:(NSString *)backInfo;
 
 @end

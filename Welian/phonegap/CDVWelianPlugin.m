@@ -159,7 +159,18 @@
 {
     DLog(@"goToOrder : %@",command.arguments);
     BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
-    [activityVC toOrderVC:command.arguments];
+    [activityVC toOrderVC:command];
+}
+
+/**
+ * 普通活动报名
+ * @param aid 活动id
+ */
+- (void)entry:(CDVInvokedUrlCommand *)command
+{
+    DLog(@"entry : %@",command.arguments);
+    BaseCDVViewController *activityVC = (BaseCDVViewController *)self.viewController;
+    [activityVC entry:command];
 }
 
 /**

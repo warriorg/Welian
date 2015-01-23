@@ -61,6 +61,11 @@
  */
 - (void)goToOrder:(CDVInvokedUrlCommand *)command;
 /**
+ * 普通活动报名
+ * @param aid 活动id
+ */
+- (void)entry:(CDVInvokedUrlCommand *)command;
+/**
  * 微信支付
  * @param money
  * @param callbackContext

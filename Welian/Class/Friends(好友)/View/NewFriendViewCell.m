@@ -113,7 +113,7 @@
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _nFriendUser.name;
-    _messageLabel.text = _nFriendUser.msg;
+    _messageLabel.text = [_nFriendUser.msg deleteTopAndBottomKonggeAndHuiche];
     //是否是认证投资人
     _iconImageView.hidden = _nFriendUser.investorauth.integerValue == 1 ? NO : YES;
     

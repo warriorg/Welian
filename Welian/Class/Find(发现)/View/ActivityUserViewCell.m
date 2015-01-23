@@ -68,6 +68,26 @@
         _wxBtn.hidden = YES;
         _operateBtn.hidden = friendship.integerValue != 1 ? NO : YES;
     }
+    //等待验证
+    if(friendship.integerValue == 4){
+        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+        [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
+        [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+        _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        _operateBtn.layer.borderWidth = 0;
+    }else{
+        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
+        [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
+        [_operateBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+        [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+        _operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
+        _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
+        _operateBtn.layer.borderColor = RGB(72.f, 130.f, 193.f).CGColor;
+        _operateBtn.layer.borderWidth = 1.f;
+        _operateBtn.layer.cornerRadius = 5.f;
+        _operateBtn.layer.masksToBounds = YES;
+    }
 }
 
 - (void)layoutSubviews
@@ -152,17 +172,6 @@
     
     //操作按钮
     UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
-    [operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
-    [operateBtn setTitle:@"添加好友" forState:UIControlStateNormal];
-    [operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
-    operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
-    operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
-    operateBtn.layer.borderColor = RGB(72.f, 130.f, 193.f).CGColor;
-    operateBtn.layer.borderWidth = 1.f;
-    operateBtn.layer.cornerRadius = 5.f;
-    operateBtn.layer.masksToBounds = YES;
-    [operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;
     
