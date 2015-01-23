@@ -340,6 +340,8 @@ BMKMapManager* _mapManager;
     NSString *type = [dataDic objectForKey:@"type"];
     NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    //判断当前是否已经是好友
+    NewFriendUser *newFriendUser = [loginUser getNewFriendUserWithUid:newfrendM.uid];
     if ([type isEqualToString:@"friendAdd"]) {
         // 别人同意添加我为好友，直接加入好友列表，并改变新的好友里状态为已添加
         [newfrendM setIsAgree:@(1)];
@@ -395,17 +397,17 @@ BMKMapManager* _mapManager;
             }
         }
         
-        //判断当前是否已经是好友
-        NewFriendUser *newFriendUser = [loginUser getNewFriendUserWithUid:newfrendM.uid];
         if (!newFriendUser) {
             //不是好友，添加角标
-            
-            NSInteger badge = [[LogInUser getCurrentLoginUser].newfriendbadge integerValue];
+            NSInteger badge = [loginUser.newfriendbadge integerValue];
             badge++;
             [LogInUser setUserNewfriendbadge:@(badge)];
 //            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
             //刷新好友页面角标
             [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+        }else{
+            //新的好友里面已经存在
+            newfrendM .operateType = newFriendUser.operateType;
         }
     }
     

@@ -213,7 +213,7 @@
     order.productName = @""; //商品标题
     order.productDescription = @""; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格
-    order.notifyURL =  @"http://www.xxx.com"; //回调URL
+    order.notifyURL = @"http://test.welian.com:8080/alipay/notify"; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

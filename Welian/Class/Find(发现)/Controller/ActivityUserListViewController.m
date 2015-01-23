@@ -10,6 +10,7 @@
 #import "MJRefresh.h"
 #import "ActivityUserViewCell.h"
 #import "UserInfoBasicVC.h"
+#import "NotstringView.h"
 
 @interface ActivityUserListViewController ()
 
@@ -19,6 +20,9 @@
 @property (assign,nonatomic) NSInteger pageIndex;
 @property (assign,nonatomic) NSInteger pageSize;
 @property (assign,nonatomic) NSInteger allPages;
+@property (assign,nonatomic) NSInteger totalNum;
+
+@property (strong,nonatomic) NotstringView *noDataNotView;//提醒
 
 @end
 
@@ -28,6 +32,15 @@
 {
     _activeId = nil;
     _datasource = nil;
+    _noDataNotView = nil;
+}
+
+- (NotstringView *)noDataNotView
+{
+    if (!_noDataNotView) {
+        _noDataNotView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitleStr:@"该活动暂无报名人员！"];
+    }
+    return _noDataNotView;
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style activeInfo:(NSArray *)activeInfo
@@ -37,7 +50,8 @@
         self.pageIndex = 0;
         self.pageSize = 15;
         self.activeId = activeInfo[0];
-        self.allPages = ceilf([activeInfo[1] integerValue] / _pageSize);
+        self.totalNum = [activeInfo[1] integerValue];
+        self.allPages = ceilf(_totalNum / _pageSize);
         self.datasource = [NSMutableArray array];
         self.title = [NSString stringWithFormat:@"报名列表(%@人)",activeInfo[1]];
     }
@@ -49,6 +63,11 @@
     // Do any additional setup after loading the view.
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    if (_totalNum == 0) {
+        [self.tableView addSubview:self.noDataNotView];
+        [self.tableView sendSubviewToBack:self.noDataNotView];
+    }
     
     //加载数据
     [self initData];
@@ -134,10 +153,12 @@
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
                                           [self.tableView footerEndRefreshing];
-                                          if ([JSON count] > 0) {
-                                              [self.datasource addObjectsFromArray:JSON];
+                                          NSInteger count = [JSON[@"count"] integerValue];
+                                          NSArray *records = JSON[@"records"];
+                                          if (count > 0) {
+                                              [self.datasource addObjectsFromArray:records];
+                                              [self.tableView reloadData];
                                           }
-                                          [self.tableView reloadData];
                                       } fail:^(NSError *error) {
                                           //隐藏加载更多动画
                                           [self.tableView footerEndRefreshing];
@@ -150,8 +171,11 @@
 {
     if (_pageIndex < _allPages) {
         _pageIndex ++;
+        [self initData];
+    }else{
+        //隐藏加载更多动画
+        [self.tableView footerEndRefreshing];
     }
-    [self initData];
 }
 
 - (void)addFriendWithIndex:(NSIndexPath *)indexPath
