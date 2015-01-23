@@ -17,7 +17,6 @@
     
     M80AttributedLabel *_feedLabel;
     UIImageView *_feedimageview;
-    
 }
 
 @end
