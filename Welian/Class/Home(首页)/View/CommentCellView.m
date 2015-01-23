@@ -21,6 +21,8 @@
     M80AttributedLabel *fourLabel;
     M80AttributedLabel *fiveLabel;
     M80AttributedLabel *moreLabel;
+    
+    NSDictionary *_emjoDic;
 }
 @end
 
@@ -38,6 +40,10 @@
         fiveLabel = [self newHBVLabel];
         moreLabel = [self newHBVLabel];
         [moreLabel setTextAlignment:kCTTextAlignmentCenter];
+        // 1.获得路径
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"expressionImage_custom" withExtension:@"plist"];
+        // 2.读取数据
+        _emjoDic = [NSDictionary dictionaryWithContentsOfURL:url];
     }
     return self;
 }
@@ -55,15 +61,8 @@
             [nameArray addObject:commMode.touser.name];
         }
         if (i==0) {
-            [oneLabel setFrame:commenFrame.oneLabelFrame];
-            [oneLabel setText:commenFrame.oneLabelStr];
             
-            for (NSString *name in nameArray) {
-                NSRange range = [commenFrame.oneLabelStr  rangeOfString:name];
-                [oneLabel addCustomLink:[NSValue valueWithRange:range]
-                                 forRange:range
-                                linkColor:WLRGB(52, 116, 186)];
-            }
+            [self setLabelEmjoWith:oneLabel nameArray:nameArray comentStr:commenFrame.oneLabelStr labelFrame:commenFrame.oneLabelFrame];
             
             [twoLabel setHidden:YES];
             [threeLabel setHidden:YES];
@@ -72,51 +71,17 @@
             [moreLabel setHidden:YES];
         }else if (i==1){
             [twoLabel setHidden:NO];
-            [twoLabel setFrame:commenFrame.twoLabelFrame];
-            [twoLabel setText:commenFrame.twoLabelStr];
-            for (NSString *name in nameArray) {
-                
-                NSRange range = [commenFrame.twoLabelStr rangeOfString:name];
-                [twoLabel addCustomLink:[NSValue valueWithRange:range]
-                               forRange:range
-                              linkColor:WLRGB(52, 116, 186)];
-            }
-            
+            [self setLabelEmjoWith:twoLabel nameArray:nameArray comentStr:commenFrame.twoLabelStr labelFrame:commenFrame.twoLabelFrame];
         }else if (i==2){
             [threeLabel setHidden:NO];
-            [threeLabel setFrame:commenFrame.threeLabelFrame];
-            [threeLabel setText:commenFrame.threeLabelStr];
-            for (NSString *name in nameArray) {
-                
-                NSRange range = [commenFrame.threeLabelStr rangeOfString:name];
-                [threeLabel addCustomLink:[NSValue valueWithRange:range]
-                               forRange:range
-                              linkColor:WLRGB(52, 116, 186)];
-            }
-
+            [self setLabelEmjoWith:threeLabel nameArray:nameArray comentStr:commenFrame.threeLabelStr labelFrame:commenFrame.threeLabelFrame];
             
         }else if (i==3){
             [fourLabel setHidden:NO];
-            [fourLabel setFrame:commenFrame.fourLabelFrame];
-            [fourLabel setText:commenFrame.fourLabelStr];
-            for (NSString *name in nameArray) {
-                NSRange range = [commenFrame.fourLabelStr rangeOfString:name];
-                [fourLabel addCustomLink:[NSValue valueWithRange:range]
-                                 forRange:range
-                                linkColor:WLRGB(52, 116, 186)];
-            }
-            
+            [self setLabelEmjoWith:fourLabel nameArray:nameArray comentStr:commenFrame.fourLabelStr labelFrame:commenFrame.fourLabelFrame];
         }else if (i==4){
             [fiveLabel setHidden:NO];
-            [fiveLabel setFrame:commenFrame.fiveLabelFrame];
-            [fiveLabel setText:commenFrame.fiveLabelStr];
-            for (NSString *name in nameArray) {
-                NSRange range = [commenFrame.fiveLabelStr rangeOfString:name];
-                [fiveLabel addCustomLink:[NSValue valueWithRange:range]
-                                forRange:range
-                               linkColor:WLRGB(52, 116, 186)];
-            }
-            
+            [self setLabelEmjoWith:fiveLabel nameArray:nameArray comentStr:commenFrame.fiveLabelStr labelFrame:commenFrame.fiveLabelFrame];
         }
     }
     if (commenFrame.statusM.commentcount>5) {
@@ -126,6 +91,61 @@
         NSRange range = [commenFrame.moreLabelStr rangeOfString:commenFrame.moreLabelStr];
         [moreLabel addCustomLink:[NSValue valueWithRange:range] forRange:range linkColor:WLRGB(52, 116, 186)];
     }
+}
+
+- (void)setLabelEmjoWith:(M80AttributedLabel *)Mlabel nameArray:(NSMutableArray *)nameArray comentStr:(NSString *)comentStr labelFrame:(CGRect)labelFrame
+{
+    [Mlabel setText:nil];
+    [Mlabel setFrame:labelFrame];
+    
+    for (NSString *name in nameArray) {
+        NSRange range = [comentStr  rangeOfString:name];
+        [Mlabel addCustomLink:[NSValue valueWithRange:range]
+                       forRange:range
+                      linkColor:WLRGB(52, 116, 186)];
+    }
+    
+    NSString *text = comentStr;
+    // 利用正则表达式找出文本内所有的表情名，也就是中括号里面的内容
+    NSArray *emotes = [self match:text withRegex:@"(?<=\\[).*?(?=\\])"];
+    
+    // 在字符串内前后分别添加]和[，是为了方便找出表情两边的内容
+    text = [NSString stringWithFormat:@"]%@[", text];
+    // 如有换行，下面的正则表达式无法查出正确的内容（求高手帮忙写个咯），因此先把换行符转义了
+    text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];
+    // 找出表情两边的内容
+    NSArray *texts  = [self match:text withRegex:@"(?<=\\]).*?(?=\\[)"];
+    
+    for (NSUInteger i = 0; i < [texts count]; i++) {
+        NSString *s = [texts objectAtIndex:i];
+        // 根据上面的转义替换成换行符，这样绘制的时候就能换行了
+        s = [s stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
+        [Mlabel appendText:s];
+        if (i < [texts count] - 1) {
+            NSString *str = [NSString stringWithFormat:@"[%@]",emotes[i]];
+            [Mlabel appendImage:[UIImage imageNamed:[_emjoDic objectForKey:str]]
+                          maxSize:CGSizeMake(20, 20)
+                           margin:UIEdgeInsetsZero
+                        alignment:M80ImageAlignmentBottom];
+        }
+    }
+}
+
+
+- (NSArray *)match:(NSString *)string withRegex:(NSString *)regex {
+    NSError *error;
+    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:regex
+                                                                                       options:NSRegularExpressionCaseInsensitive
+                                                                                         error:&error];
+    NSArray *matchResults = [regularExpression matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+    NSString *tmpStr = @"";
+    NSMutableArray *matchs = [NSMutableArray array];
+    for (NSTextCheckingResult *match in matchResults) {
+        NSRange matchRange = [match range];
+        tmpStr = [string substringWithRange:matchRange];
+        [matchs addObject:tmpStr];
+    }
+    return matchs;
 }
 
 
@@ -201,9 +221,10 @@
 {
     M80AttributedLabel *HBlabel = [[M80AttributedLabel alloc] init];
     [HBlabel setTextColor:[UIColor colorWithWhite:0.15 alpha:1.0]];
-    HBlabel.font = WLFONT(13);
+    HBlabel.font = WLFONT(14);
     [HBlabel setUnderLineForLink:NO];
     [HBlabel setDelegate:self];
+    [HBlabel setLineSpacing:1];
     HBlabel.backgroundColor = [UIColor clearColor];
     [self addSubview:HBlabel];
     return HBlabel;

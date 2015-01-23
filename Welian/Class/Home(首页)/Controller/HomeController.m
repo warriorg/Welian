@@ -245,10 +245,10 @@
 
 - (void)dealloc
 {
-    if (!self.needlessCancel) {
-        [WLHUDView hiddenHud];
-        [WLHttpTool cancelAllRequestHttpTool];
-    }
+//    if (!self.needlessCancel) {
+//        [WLHUDView hiddenHud];
+//        [WLHttpTool cancelAllRequestHttpTool];
+//    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
