@@ -379,6 +379,8 @@
         // 3、初始化显示图片的控件
         if (!_bubblePhotoImageView) {
             WLBubblePhotoImageView *bubblePhotoImageView = [[WLBubblePhotoImageView alloc] initWithFrame:CGRectZero];
+//            bubblePhotoImageView.contentMode = UIViewContentModeScaleToFill;
+//            bubblePhotoImageView.clipsToBounds = YES;
             [self addSubview:bubblePhotoImageView];
             _bubblePhotoImageView = bubblePhotoImageView;
 //            [bubblePhotoImageView setDebug:YES];
