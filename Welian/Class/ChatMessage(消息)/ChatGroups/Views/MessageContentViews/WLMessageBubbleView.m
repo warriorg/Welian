@@ -92,8 +92,8 @@
 }
 
 + (CGSize)neededSizeForPhoto:(UIImage *)photo {
-    // 这里需要缩放后的size
-    CGSize photoSize = [self fitsize:photo.size];//CGSizeMake(120, 120);
+    // 这里需要缩放后的size[self fitsize:photo.size];//
+    CGSize photoSize = [self fitsize:photo.size];// CGSizeMake(120, 120);
     return photoSize;
 }
 

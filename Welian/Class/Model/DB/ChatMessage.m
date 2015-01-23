@@ -23,6 +23,7 @@
 @dynamic bubbleMessageType;
 @dynamic thumbnailUrl;
 @dynamic originPhotoUrl;
+@dynamic photoImage;
 @dynamic videoPath;
 @dynamic videoUrl;
 @dynamic videoConverPhoto;
@@ -46,6 +47,7 @@
     chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     switch (wlMessage.messageMediaType) {
         case WLBubbleMessageMediaTypePhoto:
+            chatMsg.message = @"[图片]";
             chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
             chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
             break;
@@ -57,6 +59,7 @@
     chatMsg.timestamp = wlMessage.timestamp;
     chatMsg.avatorUrl = wlMessage.avatorUrl;
     chatMsg.isRead = @(wlMessage.isRead);
+    chatMsg.photoImage = UIImageJPEGRepresentation(wlMessage.photo, 1);
     chatMsg.sendStatus = @(wlMessage.sended.intValue);
     chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
     chatMsg.videoPath = wlMessage.videoPath;
@@ -129,16 +132,20 @@
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
+    NSString *msg = dict[@"msg"];
     switch (type) {
         case WLBubbleMessageMediaTypeActivity:
         case WLBubbleMessageMediaTypeText:
             //文本
-            chatMsg.message = dict[@"msg"];
+            chatMsg.message = msg;
             break;
         case WLBubbleMessageMediaTypePhoto://照片
             chatMsg.message = @"[图片]";
             chatMsg.messageType = @(type);
             chatMsg.messageType = @(WLBubbleMessageMediaTypePhoto);
+            chatMsg.thumbnailUrl = msg;
+            chatMsg.originPhotoUrl = msg;
+            chatMsg.photoImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:msg]];
             break;
         case WLBubbleMessageMediaTypeVoice:
             chatMsg.message = @"[语音]";
@@ -164,8 +171,6 @@
     chatMsg.isRead = @(NO);
     chatMsg.sendStatus = @(1);
     chatMsg.bubbleMessageType = @(WLBubbleMessageTypeReceiving);//接受的数据
-//    chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
-//    chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
 //    chatMsg.videoPath = wlMessage.videoPath;
 //    chatMsg.videoUrl = wlMessage.videoUrl;
     //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;

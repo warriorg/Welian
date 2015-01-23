@@ -120,7 +120,6 @@
 {
     NSDictionary *fromuser = dict[@"fromuser"];
     LogInUser *loginUser = [LogInUser getLogInUserWithUid:dict[@"uid"]];
-    
     MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:fromuser[@"uid"]];
     if (!myFriend) {
         myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];

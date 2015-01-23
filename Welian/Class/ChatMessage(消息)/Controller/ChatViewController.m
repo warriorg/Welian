@@ -12,6 +12,10 @@
 #import "FriendsUserModel.h"
 #import "TOWebViewController.h"
 #import "ActivityDetailViewController.h"
+#import "WLDisplayMediaViewController.h"
+#import "WLPhotoView.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -92,6 +96,21 @@
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
+                    break;
+                case WLBubbleMessageMediaTypePhoto:
+                {
+                    //照片
+                    message = [[WLMessage alloc] initWithPhoto:[UIImage imageWithData:chatMessage.photoImage]
+                                                  thumbnailUrl:chatMessage.thumbnailUrl
+                                                originPhotoUrl:chatMessage.originPhotoUrl
+                                                        sender:chatMessage.sender
+                                                     timestamp:chatMessage.timestamp];
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    message.msgId = chatMessage.msgId.stringValue;
+                }
                     break;
                 default:
                     break;
@@ -245,12 +264,27 @@
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
             message.uid = _friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
+            //在底部添加消息
+            [self addMessage:message needSend:NO];
             break;
-            
+        case WLBubbleMessageMediaTypePhoto:
+        {
+            //照片
+            message = [[WLMessage alloc] initWithPhoto:[UIImage imageWithData:chatMessage.photoImage]
+                                          thumbnailUrl:chatMessage.thumbnailUrl
+                                        originPhotoUrl:chatMessage.originPhotoUrl
+                                                sender:chatMessage.sender
+                                             timestamp:chatMessage.timestamp];
+            message.avatorUrl = chatMessage.avatorUrl;
+            message.sended = chatMessage.sendStatus.stringValue;
+            message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+            message.uid = _friendUser.uid.stringValue;
+            message.msgId = chatMessage.msgId.stringValue;
+        }
+            break;
         default:
             break;
     }
-    
     //在底部添加消息
     [self addMessage:message needSend:NO];
 }
@@ -309,7 +343,7 @@
         case WLBubbleMessageMediaTypePhoto:
         {
             NSString *avatarStr = [UIImageJPEGRepresentation(message.photo, 0.05) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            param = @{@"type":@(message.messageMediaType),@"msg":avatarStr,@"touser":message.uid,@"title":@"png"};
+            param = @{@"type":@(message.messageMediaType),@"msg":avatarStr,@"touser":message.uid,@"title":@"jpg"};
         }
             break;
         case WLBubbleMessageMediaTypeVoice:
@@ -627,7 +661,7 @@
     [_localMessages addObject:chatMessage];
     
     [self addMessage:photoMessage needSend:YES];
-//    [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
+    [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
 }
 
 /**
@@ -917,6 +951,53 @@
 //        }];
 //    }
 //}
+
+/**
+ *  点击多媒体消息的时候统一触发这个回调
+ *
+ *  @param message   被操作的目标消息Model
+ *  @param indexPath 该目标消息在哪个IndexPath里面
+ *  @param messageTableViewCell 目标消息在该Cell上
+ */
+- (void)multiMediaMessageDidSelectedOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(WLMessageTableViewCell *)messageTableViewCell
+{
+    switch (message.messageMediaType) {
+        case WLBubbleMessageMediaTypeVideo:
+        case WLBubbleMessageMediaTypePhoto:
+        {
+            // 1.封装图片数据
+            NSArray *photoData = [self.messages bk_select:^BOOL(id obj) {
+                return [obj messageMediaType] == WLBubbleMessageMediaTypePhoto;
+            }];
+            NSInteger selectIndex = [photoData indexOfObject:message];
+            NSMutableArray *photos = [NSMutableArray arrayWithCapacity:photoData.count];
+            for (int i = 0; i<photoData.count; i++) {
+                WLMessage *wlMessage = photoData[i];
+//                WLPhotoView *photoView = [[WLPhotoView alloc] init];
+                MJPhoto *photo = [[MJPhoto alloc] init];
+                photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
+//                photo.srcImageView = photoView; // 来源于哪个UIImageView
+                photo.image = wlMessage.photo;
+                [photos addObject:photo];
+            }
+            
+            // 2.显示相册
+            MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+            browser.currentPhotoIndex = selectIndex; // 弹出相册时显示的第一张图片是？
+            browser.photos = photos; // 设置所有的图片
+            [browser show];
+//
+//            
+//            DLog(@"message ----> photo");
+//            WLDisplayMediaViewController *messageDisplayTextView = [[WLDisplayMediaViewController alloc] init];
+//            messageDisplayTextView.message = message;
+//            [self.navigationController pushViewController:messageDisplayTextView animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 
 /**

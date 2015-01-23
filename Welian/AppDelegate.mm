@@ -27,6 +27,7 @@
 #import "MyFriendUser.h"
 #import "NeedAddUser.h"
 #import <ShareSDK/ShareSDK.h>
+#import <AlipaySDK/AlipaySDK.h>
 #import "LoginGuideController.h"
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
@@ -418,6 +419,13 @@ BMKMapManager* _mapManager;
 // 接受聊天消息
 - (void)getIMGTMessage:(NSDictionary *)dataDic
 {
+    NSDictionary *fromuser = dataDic[@"fromuser"];
+    LogInUser *loginUser = [LogInUser getLogInUserWithUid:fromuser[@"uid"]];
+    //如果本地数据库没有当前登陆用户，不处理
+    if (loginUser == nil) {
+        return;
+    }
+    
     //添加数据
     [ChatMessage createReciveMessageWithDict:dataDic];
     
@@ -507,6 +515,33 @@ BMKMapManager* _mapManager;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
 //    return [[ShareEngine sharedShareEngine] handleOpenURL:url];
+    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic) {
+             NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
+             if (resultStatus == 9000) {
+                 //支付成功
+                 
+             }
+             DLog(@"支付结果 result = %@", resultDic);
+         }];
+        return YES;
+    }
+    
+    if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
+            if (resultStatus == 9000) {
+                //支付成功
+                
+            }
+            DLog(@"支付结果 result = %@", resultDic);
+        }];
+        return YES;
+    }
+    
     return [ShareSDK handleOpenURL:url
                  sourceApplication:sourceApplication
                         annotation:annotation

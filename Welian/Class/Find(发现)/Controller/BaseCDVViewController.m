@@ -72,7 +72,7 @@
 }
 
 //微信支付
-- (void)wechatPay
+- (void)wechatPay:(NSArray *)infos
 {
     
 }

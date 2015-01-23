@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSNumber * bubbleMessageType;
 @property (nonatomic, retain) NSString * thumbnailUrl;
 @property (nonatomic, retain) NSString * originPhotoUrl;
+@property (nonatomic, retain) NSData * photoImage;//照片
 @property (nonatomic, retain) NSString * videoPath;
 @property (nonatomic, retain) NSString * videoUrl;
 @property (nonatomic, retain) NSString * videoConverPhoto;
