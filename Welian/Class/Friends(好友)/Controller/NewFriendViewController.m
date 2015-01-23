@@ -135,7 +135,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 {
     NewFriendUser *friendM = _datasource[indexPath.row];
     //删除本地数据库数据
-    [friendM delete];
+    [friendM MR_deleteEntity];
     [_datasource removeObjectAtIndex:indexPath.row];
     //移除tableView中的数据
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];

@@ -313,7 +313,7 @@ static NSString *itemscellid = @"itemscellid";
         [arryM addObject:@{@"item":item.item}];
     }
     [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
-        [item delete];
+        [item MR_deleteEntity];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
     } fail:^(NSError *error) {
         

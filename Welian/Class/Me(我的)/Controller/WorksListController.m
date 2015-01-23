@@ -273,7 +273,7 @@ static NSString *cellid = @"workscellid";
         SchoolModel *scmode = self.dataArray[indexPath.section];
         [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":scmode.usid} success:^(id JSON) {
             // 删除数据库数据
-            [scmode delete];
+            [scmode MR_deleteEntity];
             [self.dataArray removeObjectAtIndex:indexPath.section];
             if (self.dataArray.count==0) {
                 [self.tableView addSubview:self.nolistView];
@@ -289,7 +289,7 @@ static NSString *cellid = @"workscellid";
         CompanyModel *commode = self.dataArray[indexPath.section];
         [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":commode.ucid} success:^(id JSON) {
             // 删除数据库数据
-            [commode delete];
+            [commode MR_deleteEntity];
             //
             [self.dataArray removeObjectAtIndex:indexPath.section];
             if (self.dataArray.count==0) {
