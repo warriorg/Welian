@@ -59,6 +59,8 @@
 	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
 	<key>ShareSDKAppKey</key>

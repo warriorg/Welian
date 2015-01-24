@@ -111,14 +111,14 @@
         [_beginTextF setInputView:self.datePick];
         [_beginTextF setDelegate:self];
         [_beginTextF setInputAccessoryView:self.oneinputToolView];
-        if (_wlUserLoadType ==1) {
-            if (_schoolM.startyear) {
-                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.startyear,_schoolM.startmonth]];
-            }
-        }else if (_wlUserLoadType ==2){
-            if (_companyM.startyear) {
-                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.startyear,_companyM.startmonth]];
-            }
+    }
+    if (_wlUserLoadType ==1) {
+        if (_schoolM.startyear) {
+            [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.startyear,_schoolM.startmonth]];
+        }
+    }else if (_wlUserLoadType ==2){
+        if (_companyM.startyear) {
+            [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.startyear,_companyM.startmonth]];
         }
     }
     return _beginTextF;
@@ -134,20 +134,21 @@
         [_endTextF setTintColor:KBasesColor];
         [_endTextF setInputView:self.datePick];
         [_endTextF setInputAccessoryView:self.inputToolView];
-        if (_wlUserLoadType ==1) {
-            if (_schoolM.endyear.integerValue==-1) {
-                [_endTextF setText:@"至今"];
-            }else if (_schoolM.endyear) {
-                [_beginTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.endyear,_schoolM.endmonth]];
-            }
-        }else if (_wlUserLoadType ==2){
-            if (_companyM.endyear.integerValue==-1) {
-                [_endTextF setText:@"至今"];
-            }else if (_companyM.endyear) {
-                [_endTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.endyear,_companyM.endmonth]];
-            }
+    }
+    if (_wlUserLoadType ==1) {
+        if (_schoolM.endyear.integerValue==-1) {
+            [_endTextF setText:@"至今"];
+        }else if (_schoolM.endyear) {
+            [_endTextF setText:[NSString stringWithFormat:@"%@年%@月",_schoolM.endyear,_schoolM.endmonth]];
+        }
+    }else if (_wlUserLoadType ==2){
+        if (_companyM.endyear.integerValue==-1) {
+            [_endTextF setText:@"至今"];
+        }else if (_companyM.endyear) {
+            [_endTextF setText:[NSString stringWithFormat:@"%@年%@月",_companyM.endyear,_companyM.endmonth]];
         }
     }
+
     return _endTextF;
 }
 
@@ -243,7 +244,6 @@
         }else if(wlUserLoadType ==1){
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的母校"]];
             self.dataArray = @[@[@"院校名称",@"专业"],@[@"入学时间",@"毕业时间"]];
-//            _schoolM = [[ISchoolResult alloc] init];
         }
     }
     return self;
@@ -261,10 +261,13 @@
     if (_wlUserLoadType==1) {
 
         if (_schoolM.schoolname.length&&_schoolM.startyear&&_schoolM.endyear&&_schoolM.startmonth&&_schoolM.endmonth) {
+            [_schoolM setSchoolid:nil];
+            [_schoolM setSpecialtyid:nil];
             NSDictionary *daDic = [_schoolM keyValues];
             
             [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
-                [_schoolM setUsid:@([[JSON objectForKey:@"usid"] integerValue])];
+//                [_schoolM setUsid:@([[JSON objectForKey:@"usid"] integerValue])];
+                [_schoolM setKeyValues:JSON];
                 [SchoolModel createCompanyModel:_schoolM];
                 [WLHUDView showSuccessHUD:@"保存成功！"];
                 [self dismissVC];
@@ -276,6 +279,8 @@
         }
     }else if (_wlUserLoadType == 2){
         if (_companyM.companyname.length&&_companyM.startyear&&_companyM.endyear&&_companyM.startmonth&&_companyM.endmonth&&_companyM.jobname.length) {
+            [_companyM setCompanyid:nil];
+            [_companyM setJobid:nil];
             NSDictionary *datDic = [_companyM keyValues];
             [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
                 [_companyM setUcid:@([[JSON objectForKey:@"ucid"] integerValue])];
@@ -296,11 +301,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-// self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //数据模型初始化
     if (_wlUserLoadType == 1){
         if (!_schoolM) {
@@ -356,18 +357,15 @@
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             if (indexPath.row==0) {
+                [self.beginTextF removeFromSuperview];
+                [self.endTextF removeFromSuperview];
                 [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                if (!self.beginTextF.superview) {
-                    [cell.contentView addSubview:self.beginTextF];
-                }
+                [cell.contentView addSubview:self.beginTextF];
 
             }else if (indexPath.row==1){
-
+                [self.endTextF removeFromSuperview];
                 [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                if (!self.endTextF.superview) {
-                    
-                    [cell.contentView addSubview:self.endTextF];
-                }
+                [cell.contentView addSubview:self.endTextF];
             }
         }
     }else if (_wlUserLoadType ==2){

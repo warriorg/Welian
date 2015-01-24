@@ -248,7 +248,7 @@
             } else if (indexPath.row==4){
                LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
                 controller=locontroller;
-                [locontroller setDelegate:self];
+                [locontroller setLocationDelegate:self];
                 [locontroller setMeinfoVC:self];
             
             } else if (indexPath.row==5){

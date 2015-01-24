@@ -11,7 +11,6 @@
 #import "MeSttingCell.h"
 #import "MeInfoController.h"
 #import "SettingController.h"
-#import "MyLocationController.h"
 #import "HomeController.h"
 #import "InvestCerVC.h"
 #import "BadgeBaseCell.h"

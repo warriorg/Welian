@@ -1,22 +1,28 @@
 //
-//  LocationController.h
+//  LocationTool.h
 //  Welian
 //
-//  Created by dong on 14-9-23.
-//  Copyright (c) 2014年 chuansongmen. All rights reserved.
+//  Created by dong on 15/1/24.
+//  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "BMKLocationService.h"
 #import "BMKGeometry.h"
 #import "BMKGeocodeSearchOption.h"
 #import "BMKGeocodeSearch.h"
+#import "Singleton.h"
 
-@interface LocationController : UITableViewController
+typedef void(^BKLocationBlock)(BMKUserLocation *userLocation);
+
+@interface LocationTool : NSObject
+single_interface(LocationTool)
 
 @property (nonatomic, strong) BMKLocationService *locService;
 @property (nonatomic, strong) BMKReverseGeoCodeOption *reverseGeoCodeSearchOption;
 @property (nonatomic, strong) BMKGeoCodeSearch *geoSearch;
+
+@property (nonatomic, copy) BKLocationBlock userLocationBlock;
 
 // 开始定位
 - (void)statLocationMy;
@@ -28,6 +34,7 @@
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation;
 
 //接收反向地理编码结果
--(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error;
+//-(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error;
 
 @end
+

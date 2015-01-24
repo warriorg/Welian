@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "CityLocationController.h"
+#import "LocationTool.h"
 
 @interface LocationprovinceController ()
 {
@@ -55,7 +56,10 @@
     [super viewDidLoad];
     [self.tableView setSectionFooterHeight:0.0];
     [self.tableView setSectionHeaderHeight:35.0];
-    [self statLocationMy];
+    [[LocationTool sharedLocationTool] statLocationMy];
+    [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
+        [self didUpdateUserLocation:userLocation];
+    };
     [self loadDatadb];
 }
 
@@ -114,7 +118,6 @@
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
     DLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-    [self stopLocationMy];
 
     [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
         MKPlacemark *placemark = placemarks[0];
@@ -146,9 +149,6 @@
 
             }
         }
-
-        
-
     }];
     
 }
@@ -195,10 +195,15 @@
         cell = [tableView dequeueReusableCellWithIdentifier:indefid];
         if (nil == cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indefid];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
-
+        
         NSDictionary *dic = _provinArray[indexPath.row];
+        NSArray *citya = [_cityArrayDic objectForKey:[dic objectForKey:@"pid"]];
+        if (citya.count) {
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }else{
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
         [cell.textLabel setText:[dic objectForKey:@"name"]];
     }
     return cell;
@@ -219,21 +224,17 @@
         [self.navigationController pushViewController:cityVC animated:YES];
     }else if (indexPath.section==0){
         if (_locationStr) {            
-            if ([_delegate respondsToSelector:@selector(locationProvinController:withLocationDic:)]) {
-                [_delegate locationProvinController:self withLocationDic:locWithDic];
+            if ([_locationDelegate respondsToSelector:@selector(locationProvinController:withLocationDic:)]) {
+                [_locationDelegate locationProvinController:self withLocationDic:locWithDic];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
     }
 }
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
-
-
 
 @end

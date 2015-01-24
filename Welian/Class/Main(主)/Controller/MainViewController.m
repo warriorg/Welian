@@ -16,6 +16,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "ChatMessageController.h"
 #import "LogInUser.h"
+#import "LocationTool.h"
 
 @interface NavTitleView : UIView
 {
@@ -271,7 +272,14 @@ single_implementation(MainViewController)
     selectItem = homeItem;
     [self updataItembadge];
     [self updateChatMessageBadge:nil];
+    
+    // 定位
+    [[LocationTool sharedLocationTool] statLocationMy];
+    [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
+        
+    };
 }
+
 
 - (void)newFriendPuthMessga
 {

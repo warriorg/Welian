@@ -22,7 +22,6 @@
 // 查询所有数据并返回
 + (NSArray *)allSchoolModels
 {
-//    return [[SchoolModel queryInManagedObjectContext:MOC] results];
     return [SchoolModel MR_findAll];
 }
 

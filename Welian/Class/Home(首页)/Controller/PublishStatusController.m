@@ -10,7 +10,6 @@
 #import "CTAssetsPageViewController.h"
 #import "CTAssetsPickerController.h"
 #import "PictureCell.h"
-#import "MyLocationController.h"
 #import "PublishModel.h"
 #import "IWTextView.h"
 #import "ZBMessageManagerFaceView.h"
@@ -581,25 +580,25 @@ static NSString *picCellid = @"PicCellID";
     return (picker.selectedAssets.count < 9 && asset.defaultRepresentation != nil);
 }
 
-#pragma mark - 添加位置
-- (void)addUserLocation:(UIButton*)but
-{
-    MyLocationController *myLocationVC = [[MyLocationController alloc] initWithLocationBlock:^(BMKPoiInfo *infoPoi) {
-        
-        [but setTitle:infoPoi.name forState:UIControlStateNormal];
-        [but sizeToFit];
-        if ([infoPoi.name isEqualToString:@"不显示"]) {
-            
-        }else {
-            
-            [self.publishM setAddress:infoPoi.name];
-            [self.publishM setX:[NSString stringWithFormat:@"%f",infoPoi.pt.latitude]];
-            [self.publishM setY:[NSString stringWithFormat:@"%f",infoPoi.pt.longitude]];
-        }
-        
-    }];
-    [self.navigationController pushViewController:myLocationVC animated:YES];
-}
+//#pragma mark - 添加位置
+//- (void)addUserLocation:(UIButton*)but
+//{
+//    MyLocationController *myLocationVC = [[MyLocationController alloc] initWithLocationBlock:^(BMKPoiInfo *infoPoi) {
+//        
+//        [but setTitle:infoPoi.name forState:UIControlStateNormal];
+//        [but sizeToFit];
+//        if ([infoPoi.name isEqualToString:@"不显示"]) {
+//            
+//        }else {
+//            
+//            [self.publishM setAddress:infoPoi.name];
+//            [self.publishM setX:[NSString stringWithFormat:@"%f",infoPoi.pt.latitude]];
+//            [self.publishM setY:[NSString stringWithFormat:@"%f",infoPoi.pt.longitude]];
+//        }
+//        
+//    }];
+//    [self.navigationController pushViewController:myLocationVC animated:YES];
+//}
 
 #pragma mark - 和谁在一起
 - (void)getTogether:(UIButton *)button
