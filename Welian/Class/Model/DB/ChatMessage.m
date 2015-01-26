@@ -47,9 +47,15 @@
     chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
     switch (wlMessage.messageMediaType) {
         case WLBubbleMessageMediaTypePhoto:
+        {
+            //保存到本地  图片名称
+//            chatMsg.photoImage = UIImageJPEGRepresentation(wlMessage.photo, 1);
+            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
+            NSString *path = [ResManager saveImage:wlMessage.photo ToFolder:friendUser.uid.stringValue WithName:imageName];
             chatMsg.message = @"[图片]";
-            chatMsg.thumbnailUrl = wlMessage.thumbnailUrl;
+            chatMsg.thumbnailUrl = path;
             chatMsg.originPhotoUrl = wlMessage.originPhotoUrl;
+        }
             break;
         default:
             chatMsg.message = wlMessage.text;
@@ -59,7 +65,6 @@
     chatMsg.timestamp = wlMessage.timestamp;
     chatMsg.avatorUrl = wlMessage.avatorUrl;
     chatMsg.isRead = @(wlMessage.isRead);
-    chatMsg.photoImage = UIImageJPEGRepresentation(wlMessage.photo, 1);
     chatMsg.sendStatus = @(wlMessage.sended.intValue);
     chatMsg.bubbleMessageType = @(wlMessage.bubbleMessageType);
     chatMsg.videoPath = wlMessage.videoPath;
@@ -143,7 +148,6 @@
             chatMsg.message = @"[图片]";
             chatMsg.messageType = @(type);
             chatMsg.messageType = @(WLBubbleMessageMediaTypePhoto);
-            chatMsg.thumbnailUrl = msg;
             chatMsg.originPhotoUrl = msg;
             chatMsg.photoImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:msg]];
             break;
@@ -201,10 +205,29 @@
     //更新好友的聊天时间
     [friendUser updateLastChatTime:chatMsg.timestamp];
     
-    //更新总的聊天消息数量
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
-    //调用获取收到新消息，刷新正在聊天的列表
-    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+    if(type == WLBubbleMessageMediaTypePhoto){
+        //下载图片
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:chatMsg.originPhotoUrl]
+                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                           
+                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                           //保存到本地  图片名称
+                                                           NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
+                                                           NSString *path = [ResManager saveImage:image ToFolder:friendUser.uid.stringValue WithName:imageName];
+                                                           chatMsg.thumbnailUrl = path;
+                                                           
+                                                           //更新总的聊天消息数量
+                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+                                                           //调用获取收到新消息，刷新正在聊天的列表
+                                                           [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+                                                       }];
+    }else{
+        //更新总的聊天消息数量
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+        //调用获取收到新消息，刷新正在聊天的列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+    }
 }
 
 //创建特殊自定义聊天类型

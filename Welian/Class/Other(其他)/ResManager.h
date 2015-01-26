@@ -10,6 +10,10 @@
 
 @interface ResManager : NSObject
 
+#pragma mark - 自定义操作
+//保存图片到本地路径，返回路径
++ (NSString *)saveImage:(UIImage *)image ToFolder:(NSString *)toFolder WithName:(NSString *)imageName;
+
 #pragma mark - 根据路径取图片
 + (UIImage *)imageWithPath:(NSString *)path left:(NSInteger)left top:(NSInteger)top;
 + (UIImage *)imageWithPath:(NSString *)path;

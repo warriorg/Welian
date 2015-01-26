@@ -237,12 +237,16 @@
 
 - (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count
 {
-    
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:self.managedObjectContext] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
-    //返回的数量 限制
-    [[query offset:(int)offset] limit:(int)count];
-//    DLog(@"message--- %d",[[query results] count]);
-    return query.results;
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    NSFetchRequest *request = [ChatMessage MR_requestAllWithPredicate:pre inContext:self.managedObjectContext];
+    [request setFetchOffset:offset];
+    [request setFetchLimit:count];
+    return [ChatMessage MR_executeFetchRequest:request inContext:self.managedObjectContext];
+//    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:self.managedObjectContext] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+//    //返回的数量 限制
+//    [[query offset:(int)offset] limit:(int)count];
+////    DLog(@"message--- %d",[[query results] count]);
+//    return query.results;
 }
 
 

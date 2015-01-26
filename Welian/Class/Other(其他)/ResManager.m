@@ -12,6 +12,31 @@
 
 @implementation ResManager
 
+#pragma mark - 自定义操作
+//保存图片到本地路径
++ (NSString *)saveImage:(UIImage *)image ToFolder:(NSString *)toFolder WithName:(NSString *)imageName
+{
+    //保存到本地
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    NSString *folder = [[ResManager userResourcePath] stringByAppendingPathComponent:toFolder];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folder]) {
+        NSLog(@"创建home cover 目录!");
+        [[NSFileManager defaultManager] createDirectoryAtPath:folder
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:nil];
+    }
+    //保持图片到本地
+    NSString *fullPathToFile = [folder stringByAppendingPathComponent:imageName];
+    //如果本地存在同名文件删除s
+    if ([ResManager fileExistByPath:fullPathToFile]) {
+        [ResManager fileDelete:fullPathToFile];
+    }
+    // 写入本地
+    [imageData writeToFile:fullPathToFile atomically:YES];
+    return [NSString stringWithFormat:@"%@/%@",toFolder,imageName];
+}
+
 #pragma mark - 根据路径取图片
 + (UIImage *)imageWithPath:(NSString *)path left:(NSInteger)left top:(NSInteger)top
 {

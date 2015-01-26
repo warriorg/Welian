@@ -14,7 +14,7 @@
 @interface ChatMessageController ()
 
 @property (nonatomic, strong) NSArray *datasource;
-@property (strong, nonatomic) NotstringView *notHasDataView;//无消息提醒
+@property (nonatomic, strong) NotstringView *notHasDataView;//无消息提醒
 
 @end
 
@@ -42,6 +42,8 @@
         
         //如果是从好友列表进入聊天，首页变换
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
+        
+        self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     }
     return self;
 }
@@ -56,8 +58,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //隐藏分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
         [_notHasDataView removeFromSuperview];
