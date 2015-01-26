@@ -20,6 +20,9 @@
 - (void)dealloc
 {
     _orderInfo = nil;
+    _ticketDetail = nil;
+    _ticketTitle = nil;
+    _payInfo = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -73,12 +76,10 @@
     /*=======================需要填写商户app申请的===================================*/
     /*============================================================================*/
     //如果partner和seller数据存于其他位置,请改写下面两行代码
-    //    let partner: String = NSBundle.mainBundle().objectForInfoDictionaryKey("Partner") as String
-    //    let seller: String = NSBundle.mainBundle().objectForInfoDictionaryKey("Seller") as String
     
-    NSString *partner = PartnerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
-    NSString *seller = SellerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
-    NSString *privateKey = PartnerPrivKey;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
+    NSString *partner = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
+    NSString *seller = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
+    NSString *privateKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
     /*============================================================================*/
     /*============================================================================*/
     /*============================================================================*/
@@ -103,10 +104,10 @@
     order.partner = partner;
     order.seller = seller;
     order.tradeNO = _payInfo[@"orderid"]; //订单ID（由商家自行制定）
-    order.productName = @"测试"; //商品标题
-    order.productDescription = @"活动信息"; //商品描述
-    order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格
-    order.notifyURL = @"http://test.welian.com:8080/alipay/notify"; //回调URL
+    order.productName = _ticketTitle; //商品标题
+    order.productDescription = _ticketDetail; //商品描述
+    order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格 [_payInfo[@"amount"] floatValue]
+    order.notifyURL = kAlipayNotifyURL; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";
@@ -136,6 +137,10 @@
             if (resultStatus == 9000) {
                 //支付成功
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+            }else{
+                if ([resultDic[@"memo"] length] > 0) {
+                    [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                }
             }
             DLog(@"支付结果 result = %@", resultDic);
         }];
@@ -149,7 +154,15 @@
     [WLHttpTool updateTicketOrderStatusParameterDic:param
                                             success:^(id JSON) {
                                                 [WLHUDView hiddenHud];
-                                                [UIAlertView showWithTitle:@"系统提示" message:@"恭喜您，活动报名成功！"];
+                                                //刷新详情页面
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedReloadWebInfo" object:nil];
+                                                [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                                                                               message:@"恭喜您，活动报名成功！"
+                                                                     cancelButtonTitle:@"确定"
+                                                                     otherButtonTitles:nil
+                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                                                   [self.navigationController popViewControllerAnimated:YES];
+                                                                               }];
                                             } fail:^(NSError *error) {
                                                 [UIAlertView showWithTitle:@"系统提示" message:@"订单状态修改失败，请电话联系客服确认订单状态"];
                                             }];

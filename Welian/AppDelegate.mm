@@ -526,6 +526,10 @@ BMKMapManager* _mapManager;
              if (resultStatus == 9000) {
                  //支付成功
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+             }else{
+                 if ([resultDic[@"memo"] length] > 0) {
+                     [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                 }
              }
              DLog(@"支付结果 result = %@", resultDic);
          }];
@@ -538,6 +542,10 @@ BMKMapManager* _mapManager;
             if (resultStatus == 9000) {
                 //支付成功
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+            }else{
+                if ([resultDic[@"memo"] length] > 0) {
+                    [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                }
             }
             DLog(@"支付结果 result = %@", resultDic);
         }];

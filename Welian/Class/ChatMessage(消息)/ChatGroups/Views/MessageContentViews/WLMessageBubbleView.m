@@ -19,8 +19,8 @@
 
 #define kWLArrowMarginWidth 14
 
-#define PHOTO_MAX_SIZE_WIDTH 100.f
-#define PHOTO_MAX_SIZE_HEIGHT 150.f
+#define PHOTO_MAX_SIZE_WIDTH ([[UIScreen mainScreen] bounds].size.width / 3)
+#define PHOTO_MAX_SIZE_HEIGHT ([[UIScreen mainScreen] bounds].size.height / 3.5)
 
 @interface WLMessageBubbleView ()
 
@@ -57,8 +57,13 @@
     CGFloat wscale = thisSize.width/PHOTO_MAX_SIZE_WIDTH;
     CGFloat hscale = thisSize.height/PHOTO_MAX_SIZE_HEIGHT;
     CGFloat scale = (wscale>hscale) ? wscale:hscale;
-    CGSize newSize = CGSizeMake(thisSize.width/scale, thisSize.height/scale);
-    return newSize;
+    if ((thisSize.height / scale) > PHOTO_MAX_SIZE_HEIGHT) {
+        //长图
+        return CGSizeMake(PHOTO_MAX_SIZE_WIDTH, PHOTO_MAX_SIZE_HEIGHT);
+    }else{
+        CGSize newSize = CGSizeMake(thisSize.width/scale, thisSize.height/scale);
+        return newSize;
+    }
 }
 
 + (CGFloat)neededWidthForText:(NSString *)text {
@@ -379,8 +384,6 @@
         // 3、初始化显示图片的控件
         if (!_bubblePhotoImageView) {
             WLBubblePhotoImageView *bubblePhotoImageView = [[WLBubblePhotoImageView alloc] initWithFrame:CGRectZero];
-//            bubblePhotoImageView.contentMode = UIViewContentModeScaleToFill;
-//            bubblePhotoImageView.clipsToBounds = YES;
             [self addSubview:bubblePhotoImageView];
             _bubblePhotoImageView = bubblePhotoImageView;
 //            [bubblePhotoImageView setDebug:YES];
