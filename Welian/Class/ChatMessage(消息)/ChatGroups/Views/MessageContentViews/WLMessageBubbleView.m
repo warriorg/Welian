@@ -179,7 +179,7 @@
 #pragma mark - Life cycle
 
 - (void)configureCellWithMessage:(id <WLMessageModel>)message {
-    _message = message;
+    self.message = message;
     
     [self configureBubbleImageView:message];
     

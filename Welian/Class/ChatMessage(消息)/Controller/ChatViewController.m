@@ -912,6 +912,9 @@
         case WLBubbleMessageMediaTypeVideo:
         case WLBubbleMessageMediaTypePhoto:
         {
+            //键盘控制
+            [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
+            
             // 1.封装图片数据
             NSArray *photoData = [self.messages bk_select:^BOOL(id obj) {
                 return [obj messageMediaType] == WLBubbleMessageMediaTypePhoto;
