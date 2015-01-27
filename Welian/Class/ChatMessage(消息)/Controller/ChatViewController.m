@@ -724,7 +724,21 @@
             message.sender = chatMessage.sender;
             message.timestamp = chatMessage.timestamp;
             break;
-            
+        case WLBubbleMessageMediaTypePhoto:
+        {
+            //照片
+            message = [[WLMessage alloc] initWithPhoto:[ResManager imageWithPath:chatMessage.thumbnailUrl]
+                                          thumbnailUrl:chatMessage.thumbnailUrl
+                                        originPhotoUrl:chatMessage.originPhotoUrl
+                                                sender:chatMessage.sender
+                                             timestamp:chatMessage.timestamp];
+            message.avatorUrl = chatMessage.avatorUrl;
+            message.sended = chatMessage.sendStatus.stringValue;
+            message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+            message.uid = _friendUser.uid.stringValue;
+            message.msgId = chatMessage.msgId.stringValue;
+        }
+            break;
         default:
             break;
     }
