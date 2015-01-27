@@ -447,9 +447,11 @@ BMKMapManager* _mapManager;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DLog(@"应用程序将要进入非活动状态，即将进入后台");
+    LogInUser *user = [LogInUser getCurrentLoginUser];
+    if (user) {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = user.newfriendbadge.integerValue+user.homemessagebadge.integerValue+[user allUnReadChatMessageNum];
+    }
 
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [LogInUser getCurrentLoginUser].newfriendbadge.integerValue+[LogInUser getCurrentLoginUser].homemessagebadge.integerValue;
-    
     //隐藏活动中的键盘,防止重新进入程序 uitextfiled 偏移问题
     [[[application keyWindow].rootViewController.view findFirstResponder] resignFirstResponder];
 }
@@ -480,9 +482,6 @@ BMKMapManager* _mapManager;
         _updataalert =  [[UIAlertView alloc] initWithTitle:@"更新提示" message:_msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
         [_updataalert show];
     }
-
-    //角标设置为0
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -490,8 +489,10 @@ BMKMapManager* _mapManager;
     //数据库操作
     [MagicalRecord cleanUp];
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [LogInUser getCurrentLoginUser].newfriendbadge.integerValue+[LogInUser getCurrentLoginUser].homemessagebadge.integerValue;
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    LogInUser *user = [LogInUser getCurrentLoginUser];
+    if (user) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = user.newfriendbadge.integerValue+user.homemessagebadge.integerValue+[user allUnReadChatMessageNum];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url

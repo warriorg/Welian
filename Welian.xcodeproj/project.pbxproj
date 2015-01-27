@@ -4076,6 +4076,10 @@
 		F59E761F1A411E4C0028FBAF /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
 		F59E76201A411E4C0028FBAF /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
 		F5A3F8F61A41855900F06DDD /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
+		F5B5E8D11A77838E00BEDB92 /* MsgPlaySound.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */; };
+		F5B5E8D21A77838E00BEDB92 /* MsgPlaySound.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */; };
+		F5B5E8D31A77838E00BEDB92 /* MsgPlaySound.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */; };
+		F5B5E8D41A77838E00BEDB92 /* MsgPlaySound.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */; };
 		F5B5FE2B1A59490C007FE11B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5FE2A1A59490C007FE11B /* libicucore.dylib */; };
 		F5B5FE2D1A59491C007FE11B /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5FE2C1A59491C007FE11B /* libz.1.2.5.dylib */; };
 		F5B5FE531A5949DD007FE11B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5FE2A1A59490C007FE11B /* libicucore.dylib */; };
@@ -5584,6 +5588,8 @@
 		F5B123E819E7EECC002B9E58 /* AuthTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthTypeView.xib; sourceTree = "<group>"; };
 		F5B123EC19E81875002B9E58 /* LocationprovinceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationprovinceController.h; sourceTree = "<group>"; };
 		F5B123ED19E81875002B9E58 /* LocationprovinceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationprovinceController.m; sourceTree = "<group>"; };
+		F5B5E8CF1A77838E00BEDB92 /* MsgPlaySound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgPlaySound.h; sourceTree = "<group>"; };
+		F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MsgPlaySound.m; sourceTree = "<group>"; };
 		F5B5FE2A1A59490C007FE11B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F5B5FE2C1A59491C007FE11B /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		F5B5FE5A1A596D4A007FE11B /* WeChatConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WeChatConnection.framework; sourceTree = "<group>"; };
@@ -5900,6 +5906,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49C7D7D1A70D42700F2AEC5 /* AudioToolbox.framework in Frameworks */,
 				A49C7D6C1A70D42700F2AEC5 /* MapKit.framework in Frameworks */,
 				A49C803B1A71041000F2AEC5 /* AlipaySDK.framework in Frameworks */,
 				A49C80431A71041000F2AEC5 /* libssl.a in Frameworks */,
@@ -5919,7 +5926,6 @@
 				A49C7D7A1A70D42700F2AEC5 /* WeChatConnection.framework in Frameworks */,
 				A49C7D7B1A70D42700F2AEC5 /* AddressBook.framework in Frameworks */,
 				A49C7D7C1A70D42700F2AEC5 /* AddressBookUI.framework in Frameworks */,
-				A49C7D7D1A70D42700F2AEC5 /* AudioToolbox.framework in Frameworks */,
 				A49C7D7E1A70D42700F2AEC5 /* AVFoundation.framework in Frameworks */,
 				A49C7D7F1A70D42700F2AEC5 /* CoreLocation.framework in Frameworks */,
 				A49C7D801A70D42700F2AEC5 /* MediaPlayer.framework in Frameworks */,
@@ -8678,6 +8684,8 @@
 				F5C2D11B19F9FCCD000610A1 /* WLDataDBTool.m */,
 				F5353E6E1A73AB8600515BDD /* LocationTool.h */,
 				F5353E6F1A73AB8600515BDD /* LocationTool.m */,
+				F5B5E8CF1A77838E00BEDB92 /* MsgPlaySound.h */,
+				F5B5E8D01A77838E00BEDB92 /* MsgPlaySound.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -11849,6 +11857,7 @@
 				A49C7D2A1A70D42700F2AEC5 /* MJMethod.m in Sources */,
 				A49C7D2B1A70D42700F2AEC5 /* NewFriendViewCell.m in Sources */,
 				A49C7D2C1A70D42700F2AEC5 /* IIMeInvestAuthModel.m in Sources */,
+				F5B5E8D41A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				A49C7D2D1A70D42700F2AEC5 /* IInvestIndustryModel.m in Sources */,
 				A49C7D2E1A70D42700F2AEC5 /* InvestReqstModel.m in Sources */,
 				A49C7D2F1A70D42700F2AEC5 /* FriendsFriendUser.m in Sources */,
@@ -12293,6 +12302,7 @@
 				F53DC3851A49192600F5F712 /* MJMethod.m in Sources */,
 				A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F5C7796C1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
+				F5B5E8D31A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				F534DB561A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F53DC3861A49192600F5F712 /* InvestReqstModel.m in Sources */,
 				F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
@@ -12737,6 +12747,7 @@
 				F5664A4B1A2AFD56008A5830 /* WeixinTimelineActivity.m in Sources */,
 				A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F59E75FA1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
+				F5B5E8D11A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				A4C140A11A4BEA8500C9BAB5 /* WLMessageTextView.m in Sources */,
 				A4C140BD1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
 				F5664A4C1A2AFD56008A5830 /* CTAssetsSupplementaryView.m in Sources */,
@@ -13181,6 +13192,7 @@
 				F5664D081A2AFDD5008A5830 /* MJMethod.m in Sources */,
 				A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */,
 				F5C7796B1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
+				F5B5E8D21A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				F534DB551A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
 				F5664D091A2AFDD5008A5830 /* InvestReqstModel.m in Sources */,
 				F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
