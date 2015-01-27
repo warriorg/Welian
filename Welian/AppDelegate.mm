@@ -380,6 +380,15 @@ BMKMapManager* _mapManager;
         //别人请求加我为好友
         //操作类型0：添加 1：接受  2:已添加 3：待验证
 //        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
+        if (!newFriendUser) {
+            //不是好友，添加角标
+            NSInteger badge = [loginUser.newfriendbadge integerValue];
+            if (!badge) {
+                [LogInUser setUserNewfriendbadge:@(1)];
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+            }
+        }
+
         if ([type isEqualToString:@"friendRequest"]) {
             //如果是好友，设置为已添加
             [newfrendM setOperateType:@(1)];
@@ -393,15 +402,6 @@ BMKMapManager* _mapManager;
             newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         }
         
-        if (!(newFriendUser.operateType.integerValue==2)) {
-            //不是好友，添加角标
-            NSInteger badge = [loginUser.newfriendbadge integerValue];
-            if (!badge) {
-                badge++;
-                [LogInUser setUserNewfriendbadge:@(badge)];
-                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-            }
-        }
     }
     [NewFriendUser createNewFriendUserModel:newfrendM];
     
