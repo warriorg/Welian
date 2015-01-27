@@ -10,10 +10,11 @@
 
 // 每行有4个
 #define kWLShareMenuPageControlHeight 30
-#define kWLShareMenuPerRowItemCount 3
+#define kWLShareMenuPerRowItemCount 2
 #define kWLShareMenuPerColum 2
 
-#define kMarginLeft 39.f
+//#define kMarginLeft 39.f  //默认为一行3个的左右两边的距离
+#define kMarginLeft ([[UIScreen mainScreen] bounds].size.width / 5)
 
 @interface XHShareMenuItemView : UIView
 

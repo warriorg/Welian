@@ -37,43 +37,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//- (WLMessage *)getTextMessageWithBubbleMessageType:(WLBubbleMessageType)bubbleMessageType {
-//    WLMessage *textMessage = [[WLMessage alloc] initWithText:@"Call Me 15915895880. 这是华捷微信，为什么模仿这个页面效果呢？希望微信团队能看到我们在努力，请微信团队给个机会，让我好好的努力靠近大神，希望自己也能发亮，好像有点过分的希望了，如果大家喜欢这个开源库，请大家帮帮忙支持这个开源库吧！我是Jack，叫华仔也行，曾宪华就是我啦！" sender:[LogInUser getCurrentLoginUser].name timestamp:[NSDate distantPast]];
-//    textMessage.avator = [UIImage imageNamed:@"user_small"];
-//    textMessage.sended = @"1";
-//    textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;// @"http://www.pailixiu.com/jack/meIcon@2x.png";
-//    textMessage.bubbleMessageType = bubbleMessageType;
-//    
-//    return textMessage;
-//}
-
-- (NSMutableArray *)getTestMessages {
-    NSMutableArray *messages = [[NSMutableArray alloc] init];
-    
-    for (NSInteger i = 0; i < 10; i ++) {
-//        [messages addObject:[self getPhotoMessageWithBubbleMessageType:(i % 5) ? WLBubbleMessageTypeSending : WLBubbleMessageTypeReceiving]];
-        
-//        [messages addObject:[self getVideoMessageWithBubbleMessageType:(i % 6) ? XHBubbleMessageTypeSending : XHBubbleMessageTypeReceiving]];
-//        
-//        [messages addObject:[self getVoiceMessageWithBubbleMessageType:(i % 4) ? XHBubbleMessageTypeSending : XHBubbleMessageTypeReceiving]];
-//        
-//        [messages addObject:[self getEmotionMessageWithBubbleMessageType:(i % 2) ? XHBubbleMessageTypeSending : XHBubbleMessageTypeReceiving]];
-//        
-//        [messages addObject:[self getGeolocationsMessageWithBubbleMessageType:(i % 7) ? XHBubbleMessageTypeSending : XHBubbleMessageTypeReceiving]];
-//        
-//        [messages addObject:[self getTextMessageWithBubbleMessageType:(i % 2) ? WLBubbleMessageTypeSending : WLBubbleMessageTypeReceiving]];
-    }
-    return messages;
-}
-
 - (void)loadDemoDataSource {
-    //更新当前未查看消息数量
-    [_friendUser updateAllMessageReadStatus];
-    NSArray *localMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];//[_friendUser allChatMessages];
+    //获取数据
+    NSArray *localMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
     self.localMessages = [NSMutableArray arrayWithArray:localMessages];
     
     WEAKSELF
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [self exChangeMessageDataSourceQueue:^{
         NSMutableArray *messages = [NSMutableArray array];
         for (ChatMessage *chatMessage in localMessages) {
             WLMessage *message = nil;
@@ -100,7 +70,7 @@
                 case WLBubbleMessageMediaTypePhoto:
                 {
                     //照片
-                    message = [[WLMessage alloc] initWithPhoto:[UIImage imageWithData:chatMessage.photoImage]
+                    message = [[WLMessage alloc] initWithPhoto:[ResManager imageWithPath:chatMessage.thumbnailUrl]
                                                   thumbnailUrl:chatMessage.thumbnailUrl
                                                 originPhotoUrl:chatMessage.originPhotoUrl
                                                         sender:chatMessage.sender
@@ -121,14 +91,15 @@
             }
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
             [weakSelf.messageTableView reloadData];
+            [weakSelf scrollToBottomAnimated:NO];
+            
             //重新发送
             [self loadReSendMsg];
-            [weakSelf scrollToBottomAnimated:NO];
-        });
-    });
+        }];
+    }];
 }
 
 //重新发送所有待发送的消息
@@ -159,38 +130,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     //取消接口调用
-    [WLHttpTool cancelAllRequestHttpTool];
-    
-//    //自定义返回按钮
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItemClicked:)];
-//    [self.navigationItem setLeftBarButtonItem:backItem];
-//    
-//    //开启iOS7的滑动返回效果
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        //只有在二级页面生效
-//        if ([self.navigationController.viewControllers count] > 1) {
-//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-//        }
-//    }
+//    [WLHttpTool cancelAllRequestHttpTool];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //代理置空，否则会闪退
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-//    }
-}
-
-- (void)backItemClicked:(UIBarButtonItem *)item
-{
-    DLog(@"backItemClicked ");
-//    if(_isFromUserInfo){
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }else{
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)viewDidLoad {
@@ -204,6 +149,9 @@
     
     //设置聊天布局
     [self setNormalInfo];
+    
+    //更新当前未查看消息数量
+    [_friendUser updateUnReadMessageNumber:@(0)];
     
     //初始化数据查询
     self.count = 15;
@@ -244,7 +192,8 @@
 - (void)receiveNewChatMessage:(NSNotification *)notification
 {
     //更新当前未查看消息数量
-    [_friendUser updateAllMessageReadStatus];
+    [_friendUser updateUnReadMessageNumber:@(0)];
+    
     NSString *msgId = [[notification userInfo] objectForKey:@"msgId"];
     
     ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:msgId];
@@ -264,13 +213,11 @@
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
             message.uid = _friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
-            //在底部添加消息
-            [self addMessage:message needSend:NO];
             break;
         case WLBubbleMessageMediaTypePhoto:
         {
             //照片
-            message = [[WLMessage alloc] initWithPhoto:[UIImage imageWithData:chatMessage.photoImage]
+            message = [[WLMessage alloc] initWithPhoto:[ResManager imageWithPath:chatMessage.thumbnailUrl]
                                           thumbnailUrl:chatMessage.thumbnailUrl
                                         originPhotoUrl:chatMessage.originPhotoUrl
                                                 sender:chatMessage.sender
@@ -312,14 +259,14 @@
 }
 
 - (void)addMessage:(WLMessage *)addedMessage needSend:(BOOL)needSend{
-    NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
-    [messages addObject:addedMessage];
-    
-    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-    [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
-    
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
+        NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+        [messages addObject:addedMessage];
+        
+        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
+        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+        
         if (needSend) {
             //发送消息
             [self sendMessage:addedMessage withIndexPath:indexPaths];
@@ -656,7 +603,7 @@
     //本地聊天数据库添加
     ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:photoMessage FriendUser:_friendUser];
     photoMessage.msgId = chatMessage.msgId.stringValue;
-    
+    photoMessage.thumbnailUrl = chatMessage.thumbnailUrl;
     //添加数据
     [_localMessages addObject:chatMessage];
     
@@ -965,6 +912,9 @@
         case WLBubbleMessageMediaTypeVideo:
         case WLBubbleMessageMediaTypePhoto:
         {
+            //键盘控制
+            [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
+            
             // 1.封装图片数据
             NSArray *photoData = [self.messages bk_select:^BOOL(id obj) {
                 return [obj messageMediaType] == WLBubbleMessageMediaTypePhoto;
@@ -977,7 +927,7 @@
                 MJPhoto *photo = [[MJPhoto alloc] init];
                 photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
 //                photo.srcImageView = photoView; // 来源于哪个UIImageView
-                photo.image = wlMessage.photo;
+                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 [photos addObject:photo];
             }
             

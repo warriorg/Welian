@@ -31,6 +31,7 @@
 {
     _shareFriend = nil;
     _shareFriendCircle = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //- (instancetype)initWithShareDic:(NSDictionary *)dict{
@@ -58,8 +59,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"活动详情";
-    
-    
+    //监听活动详情刷新
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadWebInfo) name:@"NeedReloadWebInfo" object:nil];
+}
+
+- (void)reloadWebInfo
+{
+    [self.webView reload];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,7 +159,7 @@
 {
      DLog(@"entry -----> %@",command);
     [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
-                                   message:@"确认是否报名？"
+                                   message:@"确认是否报名参加当前活动？"
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@[@"报名"]
                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -170,22 +176,27 @@
     NSArray *infos = command.arguments;
     NSDictionary *param = [NSDictionary dictionary];
     
-//    {"total":{"count":2,"money":376},
-//        "list":[{"tid":"40","name":"普通票","price":"88","remain":"100","intro":"不含餐费","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":1,"$$hashKey":"object:5"}
-//                ,{"tid":"41","name":"VIP票","price":"288","remain":"50","intro":"包含油费、餐费等","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":1,"$$hashKey":"object:6"}]
-//    }
-    
-//    {"total":{"count":4,"money":752},"list":[{"tid":"42","name":"普通票","price":"88","remain":"100","intro":"不含餐费","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":2,"$$hashKey":"object:5"},{"tid":"43","name":"VIP票","price":"288","remain":"100","intro":"含所有费用","start_time":"2015-01-31 13:00:00","end_time":"2015-01-31 16:00:00","num":2,"$$hashKey":"object:6"}]}
-    
+    NSString *activieId = infos[0];
+    NSDictionary *activityInfo = nil;
+    NSMutableString *detailInfo = [NSMutableString string];
     if (type == 1) {
         //普通活动
-        param = @{@"activeid":@([infos[0] integerValue])};
+        param = @{@"activeid":@([activieId integerValue])};
     }else{
-//        NSArray *list = [infos[1] objectForKey:@"list"];
+        activityInfo = [infos[1] JSONValue];
+        NSArray *ticks = activityInfo[@"list"];
+        NSMutableArray *ticketsinfo = [NSMutableArray array];
+        for (int i = 0; i < ticks.count; i++) {
+            NSDictionary *ticket = ticks[i];
+            if (i > 0) {
+                [detailInfo appendString:@"|"];
+            }
+            [detailInfo appendString:[NSString stringWithFormat:@"%@共%@张",ticket[@"name"],ticket[@"num"]]];
+            [ticketsinfo addObject:@{@"ticketid":@([ticket[@"tid"] integerValue]),@"count":@([ticket[@"num"] integerValue])}];
+        }
         //需要支付的活动
-        param = @{@"activeid":@([infos[0] integerValue]),
-                  @"ticket":@[@{@"ticketid":@(44),@"count":@(1)},
-                              @{@"ticketid":@(45),@"count":@(1)}]};
+        param = @{@"activeid":@([activieId integerValue]),
+                  @"ticket":ticketsinfo};
     }
     [WLHttpTool createTicketOrderParameterDic:param
                                       success:^(id JSON) {
@@ -198,7 +209,9 @@
                                           if (type != 1) {
                                               //活动页面，进行phoneGap页面加载
                                               ActivityOrderViewController *activityOrderVC = [[ActivityOrderViewController alloc] init];
-                                              activityOrderVC.orderInfo = command.arguments[1];
+                                              activityOrderVC.orderInfo = infos[1];
+                                              activityOrderVC.ticketTitle = activityInfo[@"title"];
+                                              activityOrderVC.ticketDetail = detailInfo;
                                               activityOrderVC.payInfo = JSON;
                                               activityOrderVC.wwwFolderName = @"www";
                                               activityOrderVC.startPage = [NSString stringWithFormat:@"activity_order.html?%@?t=%@",command.arguments[0],[NSString getNowTimestamp]];

@@ -52,7 +52,9 @@
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _activityUserData[@"name"];
     
-    _messageLabel.text = [NSString stringWithFormat:@"%@ %@",_activityUserData[@"company"],_activityUserData[@"position"]];
+    NSString *company = _activityUserData[@"company"] == nil ? @"" : _activityUserData[@"company"];
+    NSString *position = _activityUserData[@"position"] == nil ? @"" : _activityUserData[@"position"];
+    _messageLabel.text = [NSString stringWithFormat:@"%@%@",company,(company.length > 0 ? [NSString stringWithFormat:@" %@",position] : position)];
     _messageLabel.numberOfLines = 1;
     
     //是否是认证投资人
@@ -76,17 +78,21 @@
         _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         _operateBtn.layer.borderWidth = 0;
     }else{
-        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
-        [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
-        [_operateBtn setTitle:@"添加好友" forState:UIControlStateNormal];
-        [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
-        _operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
-        _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
-        _operateBtn.layer.borderColor = RGB(72.f, 130.f, 193.f).CGColor;
-        _operateBtn.layer.borderWidth = 1.f;
-        _operateBtn.layer.cornerRadius = 5.f;
-        _operateBtn.layer.masksToBounds = YES;
+        if (friendship.integerValue == -1) {
+            _operateBtn.hidden = YES;
+        }else{
+            _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
+            [_operateBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+            _operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
+            _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
+            _operateBtn.layer.borderColor = RGB(72.f, 130.f, 193.f).CGColor;
+            _operateBtn.layer.borderWidth = 1.f;
+            _operateBtn.layer.cornerRadius = 5.f;
+            _operateBtn.layer.masksToBounds = YES;
+        }
     }
 }
 

@@ -128,6 +128,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 //正式环境
 #define WLHttpServer  @"http://www.welian.com:8080"
 
+//支付宝回调地址
+#define kAlipayNotifyURL @"http://test.welian.com:8080/alipay/notify"
+
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"
 

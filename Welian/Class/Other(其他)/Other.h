@@ -37,5 +37,8 @@
 #import <BlocksKit/BlocksKit.h>
 #import <BlocksKit/BlocksKit+UIKit.h>
 
+#pragma mark - Project
+#import "ResManager.h"
+
 
 #endif

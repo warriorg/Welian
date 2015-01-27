@@ -14,7 +14,7 @@
 @interface ChatMessageController ()
 
 @property (nonatomic, strong) NSArray *datasource;
-@property (strong, nonatomic) NotstringView *notHasDataView;//无消息提醒
+@property (nonatomic, strong) NotstringView *notHasDataView;//无消息提醒
 
 @end
 
@@ -39,9 +39,13 @@
     if (self) {
         //添加聊天用户改变监听
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+        //添加聊天消息数量改变监听
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatMsgNumChanged" object:nil];
         
         //如果是从好友列表进入聊天，首页变换
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
+        
+        self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     }
     return self;
 }
@@ -56,8 +60,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //隐藏分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
         [_notHasDataView removeFromSuperview];
@@ -133,7 +135,12 @@
         [friendUser updateIsChatStatus:NO];
         
         //更新当前聊天的所有消息为已读状态
-        [friendUser updateAllMessageReadStatus];
+//        [friendUser updateAllMessageReadStatus];
+        [friendUser updateUnReadMessageNumber:@(0)];
+        
+        //更新首页角标
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+        
         //刷新列表
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
         [self.tableView reloadData];
