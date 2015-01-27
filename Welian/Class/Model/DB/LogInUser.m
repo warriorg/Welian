@@ -456,7 +456,7 @@
 {
     NSInteger allCount = 0;
     for (MyFriendUser *friendUser in self.rsMyFriends.allObjects) {
-        allCount += [friendUser unReadChatMessageNum];
+        allCount += friendUser.unReadChatMsg.integerValue;//[friendUser unReadChatMessageNum];
     }
     return allCount;
 }

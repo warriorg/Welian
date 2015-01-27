@@ -62,7 +62,8 @@
     
     _nickNameLabel.text = _myFriendUser.name;
     
-    NSInteger unRead = [_myFriendUser unReadChatMessageNum];
+    //未读取消息数量
+    NSInteger unRead = _myFriendUser.unReadChatMsg.integerValue;
     //是否隐藏
     _numBtn.hidden = unRead <= 0 ? YES : NO;
     if (unRead < 100) {

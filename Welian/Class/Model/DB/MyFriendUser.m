@@ -17,6 +17,7 @@
 
 @dynamic status;
 @dynamic isChatNow;
+@dynamic unReadChatMsg;
 @dynamic lastChatTime;
 @dynamic rsChatMessages;
 @dynamic rsLogInUser;
@@ -45,6 +46,7 @@
     myFriend.investorauth = userInfoM.investorauth;
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
+    myFriend.unReadChatMsg = @(0);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -77,6 +79,7 @@
     myFriend.investorauth = userInfoM.investorauth;
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
+    myFriend.unReadChatMsg = @(0);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -108,6 +111,7 @@
     myFriend.investorauth = newFriendUser.investorauth;
     myFriend.startupauth = newFriendUser.startupauth;
     myFriend.company = newFriendUser.company;
+    myFriend.unReadChatMsg = @(0);
     //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -147,6 +151,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
+//更新未读消息的数量
+- (void)updateUnReadMessageNumber:(NSNumber *)num
+{
+    self.unReadChatMsg = num;
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
+    //更新总的聊天消息数量
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+}
+
 //更新所有未读消息为读取状态
 - (void)updateAllMessageReadStatus
 {
@@ -158,8 +172,6 @@
         [chatMsg updateReadStatus:YES];
     }
     
-    //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
     //更新总的聊天消息数量
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
 }

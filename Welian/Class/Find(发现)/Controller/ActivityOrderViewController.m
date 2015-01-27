@@ -106,7 +106,7 @@
     order.tradeNO = _payInfo[@"orderid"]; //订单ID（由商家自行制定）
     order.productName = _ticketTitle; //商品标题
     order.productDescription = _ticketDetail; //商品描述
-    order.amount = [NSString stringWithFormat:@"%.2f",0.01]; //商品价格 [_payInfo[@"amount"] floatValue]
+    order.amount = [NSString stringWithFormat:@"%.2f",[_payInfo[@"amount"] floatValue]]; //商品价格
     order.notifyURL = kAlipayNotifyURL; //回调URL
     
     order.service = @"mobile.securitypay.pay";

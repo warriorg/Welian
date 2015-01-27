@@ -39,6 +39,8 @@
     if (self) {
         //添加聊天用户改变监听
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+        //添加聊天消息数量改变监听
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatMsgNumChanged" object:nil];
         
         //如果是从好友列表进入聊天，首页变换
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];

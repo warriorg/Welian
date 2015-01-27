@@ -369,11 +369,11 @@ BMKMapManager* _mapManager;
         ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
         textMessage.msgId = chatMessage.msgId.stringValue;
         
+        //更新聊天消息数量
+        [friendUser updateUnReadMessageNumber:@(friendUser.unReadChatMsg.integerValue + 1)];
+        
         //更新好友列表
         [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
-        //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-        
     }else{
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友

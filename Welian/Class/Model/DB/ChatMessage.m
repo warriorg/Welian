@@ -78,6 +78,7 @@
     chatMsg.sender = wlMessage.sender;
 //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
+    friendUser.unReadChatMsg = @(0);
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -186,6 +187,8 @@
     chatMsg.sender = friendUser.name;
 //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
+    //更新未读消息数量
+    friendUser.unReadChatMsg = @(friendUser.unReadChatMsg.integerValue + 1);
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -258,6 +261,7 @@
     chatMsg.sender = wlMessage.sender;
 //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
+    friendUser.unReadChatMsg = @(0);
     
     //是否显示时间戳
     if (lastChatMsg) {

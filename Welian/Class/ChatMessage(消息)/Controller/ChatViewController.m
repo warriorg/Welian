@@ -151,7 +151,7 @@
     [self setNormalInfo];
     
     //更新当前未查看消息数量
-    [_friendUser updateAllMessageReadStatus];
+    [_friendUser updateUnReadMessageNumber:@(0)];
     
     //初始化数据查询
     self.count = 15;
@@ -192,7 +192,8 @@
 - (void)receiveNewChatMessage:(NSNotification *)notification
 {
     //更新当前未查看消息数量
-    [_friendUser updateAllMessageReadStatus];
+    [_friendUser updateUnReadMessageNumber:@(0)];
+    
     NSString *msgId = [[notification userInfo] objectForKey:@"msgId"];
     
     ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:msgId];
@@ -212,8 +213,6 @@
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
             message.uid = _friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
-            //在底部添加消息
-            [self addMessage:message needSend:NO];
             break;
         case WLBubbleMessageMediaTypePhoto:
         {
@@ -260,14 +259,14 @@
 }
 
 - (void)addMessage:(WLMessage *)addedMessage needSend:(BOOL)needSend{
-    NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
-    [messages addObject:addedMessage];
-    
-    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-    [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
-    
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
+        NSMutableArray *messages = [NSMutableArray arrayWithArray:self.messages];
+        [messages addObject:addedMessage];
+        
+        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
+        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+        
         if (needSend) {
             //发送消息
             [self sendMessage:addedMessage withIndexPath:indexPaths];
