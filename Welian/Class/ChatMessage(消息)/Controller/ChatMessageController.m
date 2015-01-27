@@ -135,7 +135,12 @@
         [friendUser updateIsChatStatus:NO];
         
         //更新当前聊天的所有消息为已读状态
-        [friendUser updateAllMessageReadStatus];
+//        [friendUser updateAllMessageReadStatus];
+        [friendUser updateUnReadMessageNumber:@(0)];
+        
+        //更新首页角标
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+        
         //刷新列表
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
         [self.tableView reloadData];
