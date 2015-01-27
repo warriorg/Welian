@@ -58,9 +58,9 @@ static HttpTool *engine;
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:1 userInfo:nil]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
-        }else if ([[dic objectForKey:@"state"] integerValue]==-1){
+        }else if ([[dic objectForKey:@"state"] integerValue]==-1){// 系统错误
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-1 userInfo:nil]);
-        }else if ([[dic objectForKey:@"state"] integerValue]==-2){
+        }else if ([[dic objectForKey:@"state"] integerValue]==-2){// 微信没登陆过
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:-2 userInfo:[dic objectForKey:@"data"]]);
         }
         

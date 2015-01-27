@@ -31,13 +31,17 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!_urlArray) {
-        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
-            _urlArray = [NSArray arrayWithArray:JSON];
-        } fail:^(NSError *error) {
-            
-        }];
+    [[MainViewController sharedMainViewController] loadNewStustupdata];
+    if (self.tableView) {
+        [self.tableView reloadData];
     }
+//    if (!_urlArray) {
+//        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
+//            _urlArray = [NSArray arrayWithArray:JSON];
+//        } fail:^(NSError *error) {
+//            
+//        }];
+//    }
 }
 
 
@@ -45,14 +49,14 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 {
     [super viewDidLoad];
     [KNSNotification addObserver:self selector:@selector(reloadNewactivit) name:KNewactivitNotif object:nil];
-    if (!_urlArray) {
-        
-        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
-            _urlArray = [NSArray arrayWithArray:JSON];
-        } fail:^(NSError *error) {
-            
-        }];
-    }
+//    if (!_urlArray) {
+//        
+//        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
+//            _urlArray = [NSArray arrayWithArray:JSON];
+//        } fail:^(NSError *error) {
+//            
+//        }];
+//    }
     
     // 加载数据
     [self loadDatalist];

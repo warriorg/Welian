@@ -16,5 +16,4 @@ single_interface(MainViewController)
 - (void)updataItembadge;
 
 - (void)loadNewStustupdata;
-
 @end

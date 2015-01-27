@@ -13,6 +13,7 @@
 #import "InvestorUserM.h"
 #import "UserInfoBasicVC.h"
 #import "InvestorUser.h"
+#import "UIImage+ImageEffects.h"
 
 @interface InvestorUsersListController () <UISearchBarDelegate,UISearchDisplayDelegate>
 {
@@ -102,6 +103,7 @@ static NSString *identifier = @"investorcellid";
     self.searchBar = [[UISearchBar alloc] init];
     [self.searchBar setDelegate:self];
     [self.searchBar setSearchBarStyle:UISearchBarStyleProminent];
+    [self.searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
     self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     [self.searchDisplayVC setDelegate:self];
     [self.searchDisplayVC setSearchResultsDataSource:self];

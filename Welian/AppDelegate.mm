@@ -46,6 +46,7 @@ single_implementation(AppDelegate)
 BMKMapManager* _mapManager;
 
 
+
 - (void)registerRemoteNotification
 {
 #ifdef __IPHONE_8_0
@@ -378,43 +379,32 @@ BMKMapManager* _mapManager;
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友
         //操作类型0：添加 1：接受  2:已添加 3：待验证
-        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
+//        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
         if ([type isEqualToString:@"friendRequest"]) {
             //如果是好友，设置为已添加
-            if (myFriendUser) {
-                [newfrendM setOperateType:@(2)];
-            }else{
-                [newfrendM setOperateType:@(1)];
-            }
+            [newfrendM setOperateType:@(1)];
         }
         //推荐的
         if([type isEqualToString:@"friendCommand"]){
-            if (myFriendUser) {
-                [newfrendM setOperateType:@(2)];
-            }else{
-                [newfrendM setOperateType:@(0)];
-            }
+            [newfrendM setOperateType:@(0)];
+        }
+        if (!newfrendM.created) {
+            //创建的时间
+            newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         }
         
-        if (!newFriendUser) {
+        if (!(newFriendUser.operateType.integerValue==2)) {
             //不是好友，添加角标
             NSInteger badge = [loginUser.newfriendbadge integerValue];
-            badge++;
-            [LogInUser setUserNewfriendbadge:@(badge)];
-//            [UserDefaults setObject:[NSString stringWithFormat:@"%d",badge] forKey:KFriendbadge];
-            //刷新好友页面角标
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
-        }else{
-            //新的好友里面已经存在
-            newfrendM .operateType = newFriendUser.operateType;
+            if (!badge) {
+                badge++;
+                [LogInUser setUserNewfriendbadge:@(badge)];
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+            }
         }
     }
-    
-    if (!newfrendM.created) {
-        //创建的时间
-        newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    }
     [NewFriendUser createNewFriendUserModel:newfrendM];
+    
 }
 
 
@@ -457,9 +447,8 @@ BMKMapManager* _mapManager;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DLog(@"应用程序将要进入非活动状态，即将进入后台");
-    if (!([LogInUser getCurrentLoginUser].newfriendbadge.integerValue||[LogInUser getCurrentLoginUser].homemessagebadge.integerValue)) {
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    }
+
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [LogInUser getCurrentLoginUser].newfriendbadge.integerValue+[LogInUser getCurrentLoginUser].homemessagebadge.integerValue;
     
     //隐藏活动中的键盘,防止重新进入程序 uitextfiled 偏移问题
     [[[application keyWindow].rootViewController.view findFirstResponder] resignFirstResponder];
@@ -493,7 +482,7 @@ BMKMapManager* _mapManager;
     }
 
     //角标设置为0
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -501,9 +490,7 @@ BMKMapManager* _mapManager;
     //数据库操作
     [MagicalRecord cleanUp];
     
-    if (!([LogInUser getCurrentLoginUser].newfriendbadge.integerValue||[LogInUser getCurrentLoginUser].homemessagebadge.integerValue)) {
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    }
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [LogInUser getCurrentLoginUser].newfriendbadge.integerValue+[LogInUser getCurrentLoginUser].homemessagebadge.integerValue;
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

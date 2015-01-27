@@ -200,6 +200,7 @@ static NSString *fridcellid = @"fridcellid";
         }else {
             
             [UserDefaults setObject:@"0" forKey:KAddressBook];
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
             [WLHttpTool uploadPhonebook2ParameterDic:[NSMutableArray array] success:^(id JSON) {
                 NSArray *array = JSON;
                 for (NSDictionary *dic  in array) {

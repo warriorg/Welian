@@ -153,7 +153,9 @@
         }
 
     } fail:^(NSError *error) {
-        
+        if (error.code==1) {
+            [WLHUDView showErrorHUD:error.domain];
+        }
     } isHUD:YES];
 }
 

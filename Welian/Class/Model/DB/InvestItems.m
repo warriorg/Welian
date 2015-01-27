@@ -30,7 +30,6 @@
     if (investItemM.time) {
         investitem.time = investItemM.time;
     }
-    
     [loginUser addRsInvestItemsObject:investitem];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
 //    investitem.rsLogInUser = [LogInUser getCurrentLoginUser];

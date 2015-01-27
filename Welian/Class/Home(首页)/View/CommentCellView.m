@@ -12,6 +12,7 @@
 #import "UserInfoBasicVC.h"
 #import "WLStatusM.h"
 #import "CommentInfoController.h"
+#import "TOWebViewController.h"
 
 @interface CommentCellView() <M80AttributedLabelDelegate>
 {
@@ -151,70 +152,80 @@
 
 - (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
 {
-    NSRange range = [linkData rangeValue];
-     NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
-    WLBasicTrends *usmode;
-    if (label == oneLabel) {
-        CommentMode *commMode = commentDataArray[0];
-        NSString *linkedString = [_commenFrame.oneLabelStr substringWithRange:range];
-        if ([linkedString isEqualToString:commMode.user.name]) {
-            usmode = commMode.user;
-        }else if ([linkedString isEqualToString:commMode.touser.name]){
-            usmode = commMode.touser;
+    if ([linkData isKindOfClass:[NSString class]]) {
+        //普通链接
+        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:linkData];
+        [webVC setShowActionButton:NO];
+        webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+        [self.commentVC.navigationController pushViewController:webVC animated:YES];
+    
+    }else {
+        NSRange range = [linkData rangeValue];
+        NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
+        WLBasicTrends *usmode;
+        if (label == oneLabel) {
+            CommentMode *commMode = commentDataArray[0];
+            NSString *linkedString = [_commenFrame.oneLabelStr substringWithRange:range];
+            if ([linkedString isEqualToString:commMode.user.name]) {
+                usmode = commMode.user;
+            }else if ([linkedString isEqualToString:commMode.touser.name]){
+                usmode = commMode.touser;
+            }
+        }else if(label == twoLabel){
+            CommentMode *commMode = commentDataArray[1];
+            NSString *linkedString = [_commenFrame.twoLabelStr substringWithRange:range];
+            if ([linkedString isEqualToString:commMode.user.name]) {
+                usmode = commMode.user;
+            }else if ([linkedString isEqualToString:commMode.touser.name]){
+                usmode = commMode.touser;
+            }
+            
+        }else if (label == threeLabel){
+            CommentMode *commMode = commentDataArray[2];
+            NSString *linkedString = [_commenFrame.threeLabelStr substringWithRange:range];
+            if ([linkedString isEqualToString:commMode.user.name]) {
+                usmode = commMode.user;
+            }else if ([linkedString isEqualToString:commMode.touser.name]){
+                usmode = commMode.touser;
+            }
+            
+        }else if (label == fourLabel){
+            CommentMode *commMode = commentDataArray[3];
+            NSString *linkedString = [_commenFrame.fourLabelStr substringWithRange:range];
+            if ([linkedString isEqualToString:commMode.user.name]) {
+                usmode = commMode.user;
+            }else if ([linkedString isEqualToString:commMode.touser.name]){
+                usmode = commMode.touser;
+            }
+            
+        }else if (label == fiveLabel){
+            CommentMode *commMode = commentDataArray[4];
+            NSString *linkedString = [_commenFrame.fiveLabelStr substringWithRange:range];
+            if ([linkedString isEqualToString:commMode.user.name]) {
+                usmode = commMode.user;
+            }else if ([linkedString isEqualToString:commMode.touser.name]){
+                usmode = commMode.touser;
+            }
+            
+        }else if (label == moreLabel){
+            CommentInfoController *commentInfoVC = [[CommentInfoController alloc] init];
+            [commentInfoVC setStatusM:_commenFrame.statusM];
+            [self.commentVC.navigationController pushViewController:commentInfoVC animated:YES];
+            
         }
-    }else if(label == twoLabel){
-        CommentMode *commMode = commentDataArray[1];
-        NSString *linkedString = [_commenFrame.twoLabelStr substringWithRange:range];
-        if ([linkedString isEqualToString:commMode.user.name]) {
-            usmode = commMode.user;
-        }else if ([linkedString isEqualToString:commMode.touser.name]){
-            usmode = commMode.touser;
-        }
-
-    }else if (label == threeLabel){
-        CommentMode *commMode = commentDataArray[2];
-        NSString *linkedString = [_commenFrame.threeLabelStr substringWithRange:range];
-        if ([linkedString isEqualToString:commMode.user.name]) {
-            usmode = commMode.user;
-        }else if ([linkedString isEqualToString:commMode.touser.name]){
-            usmode = commMode.touser;
-        }
-
-    }else if (label == fourLabel){
-        CommentMode *commMode = commentDataArray[3];
-        NSString *linkedString = [_commenFrame.fourLabelStr substringWithRange:range];
-        if ([linkedString isEqualToString:commMode.user.name]) {
-            usmode = commMode.user;
-        }else if ([linkedString isEqualToString:commMode.touser.name]){
-            usmode = commMode.touser;
-        }
-
-    }else if (label == fiveLabel){
-        CommentMode *commMode = commentDataArray[4];
-        NSString *linkedString = [_commenFrame.fiveLabelStr substringWithRange:range];
-        if ([linkedString isEqualToString:commMode.user.name]) {
-            usmode = commMode.user;
-        }else if ([linkedString isEqualToString:commMode.touser.name]){
-            usmode = commMode.touser;
-        }
-
-    }else if (label == moreLabel){
-        CommentInfoController *commentInfoVC = [[CommentInfoController alloc] init];
-        [commentInfoVC setStatusM:_commenFrame.statusM];
-        [self.commentVC.navigationController pushViewController:commentInfoVC animated:YES];
         
+        if (!usmode)  return;
+        UserInfoModel *userModel = [[UserInfoModel alloc] init];
+        [userModel setUid:usmode.uid];
+        [userModel setAvatar:usmode.avatar];
+        [userModel setName:usmode.name];
+        [userModel setPosition:usmode.position];
+        [userModel setCompany:usmode.company];
+        
+        UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
+        [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
     }
     
-    if (!usmode)  return;
-    UserInfoModel *userModel = [[UserInfoModel alloc] init];
-    [userModel setUid:usmode.uid];
-    [userModel setAvatar:usmode.avatar];
-    [userModel setName:usmode.name];
-    [userModel setPosition:usmode.position];
-    [userModel setCompany:usmode.company];
-
-    UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
-    [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
 }
 
 - (M80AttributedLabel *)newHBVLabel

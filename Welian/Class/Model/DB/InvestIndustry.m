@@ -29,8 +29,6 @@
     
     [loginUser addRsInvestIndustrysObject:investitem];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
-//    investitem.rsLogInUser = [LogInUser getCurrentLoginUser];
-//    [MOC save];
     return investitem;
 }
 
