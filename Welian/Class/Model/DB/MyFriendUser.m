@@ -17,6 +17,7 @@
 
 @dynamic status;
 @dynamic isChatNow;
+@dynamic unReadChatMsg;
 @dynamic lastChatTime;
 @dynamic rsChatMessages;
 @dynamic rsLogInUser;
@@ -45,6 +46,7 @@
     myFriend.investorauth = userInfoM.investorauth;
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
+    myFriend.unReadChatMsg = @(0);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -77,6 +79,7 @@
     myFriend.investorauth = userInfoM.investorauth;
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
+    myFriend.unReadChatMsg = @(0);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -108,6 +111,7 @@
     myFriend.investorauth = newFriendUser.investorauth;
     myFriend.startupauth = newFriendUser.startupauth;
     myFriend.company = newFriendUser.company;
+    myFriend.unReadChatMsg = @(0);
     //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -147,6 +151,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
+//更新未读消息的数量
+- (void)updateUnReadMessageNumber:(NSNumber *)num
+{
+    self.unReadChatMsg = num;
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
+    //更新总的聊天消息数量
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+}
+
 //更新所有未读消息为读取状态
 - (void)updateAllMessageReadStatus
 {
@@ -158,8 +172,6 @@
         [chatMsg updateReadStatus:YES];
     }
     
-    //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
     //更新总的聊天消息数量
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
 }
@@ -237,12 +249,16 @@
 
 - (NSArray *)getChatMessagesWithOffset:(NSInteger)offset count:(NSInteger)count
 {
-    
-    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:self.managedObjectContext] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
-    //返回的数量 限制
-    [[query offset:(int)offset] limit:(int)count];
-//    DLog(@"message--- %d",[[query results] count]);
-    return query.results;
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser",self];
+    NSFetchRequest *request = [ChatMessage MR_requestAllWithPredicate:pre inContext:self.managedObjectContext];
+    [request setFetchOffset:offset];
+    [request setFetchLimit:count];
+    return [ChatMessage MR_executeFetchRequest:request inContext:self.managedObjectContext];
+//    DKManagedObjectQuery *query = [[[ChatMessage queryInManagedObjectContext:self.managedObjectContext] where:@"rsMyFriendUser" equals:self] orderBy:@"timestamp" ascending:YES];
+//    //返回的数量 限制
+//    [[query offset:(int)offset] limit:(int)count];
+////    DLog(@"message--- %d",[[query results] count]);
+//    return query.results;
 }
 
 

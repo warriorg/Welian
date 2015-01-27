@@ -62,7 +62,8 @@
     
     _nickNameLabel.text = _myFriendUser.name;
     
-    NSInteger unRead = [_myFriendUser unReadChatMessageNum];
+    //未读取消息数量
+    NSInteger unRead = _myFriendUser.unReadChatMsg.integerValue;
     //是否隐藏
     _numBtn.hidden = unRead <= 0 ? YES : NO;
     if (unRead < 100) {
@@ -79,15 +80,17 @@
     NSString *typeName = @"";
     if (chatMessage.sendStatus.intValue == 0) {
         typeName = @"circle_chatlist_sending";
+        _messageSendTypeImageView.image = [UIImage imageNamed:typeName];
         _messageSendTypeImageView.hidden = NO;
     }else if (chatMessage.sendStatus.intValue == 2){
         typeName = @"circle_chatlist_sendfailed";
         _messageSendTypeImageView.hidden = NO;
+        _messageSendTypeImageView.image = [UIImage imageNamed:typeName];
     }else{
-        typeName = @"";
         _messageSendTypeImageView.hidden = YES;
+        _messageSendTypeImageView.image = nil;
     }
-    _messageSendTypeImageView.image = [UIImage imageNamed:typeName];
+    
     //消息内容
     _messageLabel.text = chatMessage.message;
 }

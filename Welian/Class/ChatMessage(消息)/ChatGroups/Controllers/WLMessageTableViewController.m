@@ -164,6 +164,8 @@ static CGPoint  delayOffset = {0.0};
             break;
         }
         case WLBubbleMessageMediaTypePhoto: {
+            //隐藏键盘
+            [self layoutOtherMenuViewHiden:YES];
             break;
         }
         case WLBubbleMessageMediaTypeVideo: {

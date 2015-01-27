@@ -160,6 +160,7 @@
                                           NSInteger count = [JSON[@"count"] integerValue];
                                           NSArray *records = JSON[@"records"];
                                           if (count > 0) {
+                                              [_noDataNotView removeFromSuperview];
                                               [self.datasource addObjectsFromArray:records];
                                               [self.tableView reloadData];
                                           }

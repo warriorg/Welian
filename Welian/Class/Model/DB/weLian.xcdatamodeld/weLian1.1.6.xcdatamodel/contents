@@ -119,6 +119,7 @@
         <attribute name="isChatNow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastChatTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="unReadChatMsg" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="rsChatMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatMessage" inverseName="rsMyFriendUser" inverseEntity="ChatMessage" syncable="YES"/>
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsMyFriends" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
@@ -161,8 +162,8 @@
         <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="103"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
-        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="418"/>
-        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="120"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="420"/>
+        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>

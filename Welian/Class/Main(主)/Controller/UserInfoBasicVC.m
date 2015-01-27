@@ -200,13 +200,12 @@ static NSString *staurCellid = @"staurCellid";
             [needAddUser updateFriendShip:2];
         }
         
-        //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-        
         //                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
 //        [MOC save];
-        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
         
+        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+        //聊天状态发送改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
         [self.navigationController popViewControllerAnimated:YES];
         [WLHUDView showSuccessHUD:@"删除成功！"];

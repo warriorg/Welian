@@ -115,6 +115,14 @@
 		A437CEF51A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
 		A437CEF61A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
 		A437CEF71A541BF300B54E68 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
+		A44779E11A7632A60085AE3C /* ResManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E01A7632A60085AE3C /* ResManager.m */; };
+		A44779E21A7632A60085AE3C /* ResManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E01A7632A60085AE3C /* ResManager.m */; };
+		A44779E31A7632A60085AE3C /* ResManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E01A7632A60085AE3C /* ResManager.m */; };
+		A44779E41A7632A60085AE3C /* ResManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E01A7632A60085AE3C /* ResManager.m */; };
+		A44779E71A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
+		A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
+		A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
+		A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
 		A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
 		A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
 		A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
@@ -4282,6 +4290,10 @@
 		A437CEEA1A53D53100B54E68 /* circle_chatlist_sending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_chatlist_sending@2x.png"; sourceTree = "<group>"; };
 		A437CEF31A541BF300B54E68 /* WLMessageSpecialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMessageSpecialView.h; sourceTree = "<group>"; };
 		A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMessageSpecialView.m; sourceTree = "<group>"; };
+		A44779DF1A7632A60085AE3C /* ResManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResManager.h; sourceTree = "<group>"; };
+		A44779E01A7632A60085AE3C /* ResManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResManager.m; sourceTree = "<group>"; };
+		A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DoNotBackup.h"; sourceTree = "<group>"; };
+		A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DoNotBackup.m"; sourceTree = "<group>"; };
 		A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.2.xcdatamodel; sourceTree = "<group>"; };
 		A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
 		A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
@@ -6092,6 +6104,8 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */,
+				A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */,
 				A4210C851A5FB07D003AA6A3 /* NSError+Extend.h */,
 				A4210C861A5FB07D003AA6A3 /* NSError+Extend.m */,
 				A4210C871A5FB07D003AA6A3 /* UIAlertView+Extend.h */,
@@ -6195,6 +6209,8 @@
 				F5188AA719CECCB000FE9273 /* WLHttpTool.m */,
 				F520ED8819CFC1B000E753E4 /* WLHUDView.h */,
 				F520ED8919CFC1B000E753E4 /* WLHUDView.m */,
+				A44779DF1A7632A60085AE3C /* ResManager.h */,
+				A44779E01A7632A60085AE3C /* ResManager.m */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -11772,6 +11788,7 @@
 				A49C7CF21A70D42700F2AEC5 /* WLMessageBubbleFactory.m in Sources */,
 				A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A49C7CF41A70D42700F2AEC5 /* SELineLayout.m in Sources */,
+				A44779E41A7632A60085AE3C /* ResManager.m in Sources */,
 				A49C7CF51A70D42700F2AEC5 /* DockItem.m in Sources */,
 				A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */,
 				A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */,
@@ -11817,6 +11834,7 @@
 				A49C7D1C1A70D42700F2AEC5 /* DKManagedObjectQuery.m in Sources */,
 				A49C7D1D1A70D42700F2AEC5 /* CTAssetsViewControllerTransition.m in Sources */,
 				A49C7D1E1A70D42700F2AEC5 /* ChatMessageController.m in Sources */,
+				A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A49C7D1F1A70D42700F2AEC5 /* NewFriendViewController.m in Sources */,
 				A49C7D201A70D42700F2AEC5 /* SWTableViewCell.m in Sources */,
 				A49C7D211A70D42700F2AEC5 /* AFSecurityPolicy.m in Sources */,
@@ -12214,6 +12232,7 @@
 				A4C140911A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m in Sources */,
 				F53DC3621A49192600F5F712 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A4C141431A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
+				A44779E31A7632A60085AE3C /* ResManager.m in Sources */,
 				F53DC3631A49192600F5F712 /* DockItem.m in Sources */,
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -12259,6 +12278,7 @@
 				F53DC37B1A49192600F5F712 /* DKManagedObjectQuery.m in Sources */,
 				F53DC37C1A49192600F5F712 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F53DC37D1A49192600F5F712 /* SWTableViewCell.m in Sources */,
 				F53DC37E1A49192600F5F712 /* AFSecurityPolicy.m in Sources */,
@@ -12656,6 +12676,7 @@
 				F5664A2A1A2AFD56008A5830 /* HanyuPinyinOutputFormat.m in Sources */,
 				F5664A2B1A2AFD56008A5830 /* AFHTTPRequestOperationManager.m in Sources */,
 				F5664A2C1A2AFD56008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
+				A44779E11A7632A60085AE3C /* ResManager.m in Sources */,
 				F5664A2D1A2AFD56008A5830 /* DockItem.m in Sources */,
 				A4C141531A4BEF5700C9BAB5 /* SETextInput.m in Sources */,
 				A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -12701,6 +12722,7 @@
 				A4C141171A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
 				A4C141711A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
 				F5664A431A2AFD56008A5830 /* CommentHeadView.m in Sources */,
+				A44779E71A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664A441A2AFD56008A5830 /* main.m in Sources */,
 				F5664A451A2AFD56008A5830 /* AFURLRequestSerialization.m in Sources */,
@@ -13098,6 +13120,7 @@
 				A4C140901A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m in Sources */,
 				F5664CE61A2AFDD5008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A4C141421A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
+				A44779E21A7632A60085AE3C /* ResManager.m in Sources */,
 				F5664CE71A2AFDD5008A5830 /* DockItem.m in Sources */,
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -13143,6 +13166,7 @@
 				F59E75FB1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				F5664D001A2AFDD5008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664D011A2AFDD5008A5830 /* SWTableViewCell.m in Sources */,
 				F5664D021A2AFDD5008A5830 /* AFSecurityPolicy.m in Sources */,

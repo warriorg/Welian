@@ -370,11 +370,11 @@ BMKMapManager* _mapManager;
         ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
         textMessage.msgId = chatMessage.msgId.stringValue;
         
+        //更新聊天消息数量
+        [friendUser updateUnReadMessageNumber:@(friendUser.unReadChatMsg.integerValue + 1)];
+        
         //更新好友列表
         [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
-        //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-        
     }else{
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友
@@ -411,8 +411,8 @@ BMKMapManager* _mapManager;
 // 接受聊天消息
 - (void)getIMGTMessage:(NSDictionary *)dataDic
 {
-    NSDictionary *fromuser = dataDic[@"fromuser"];
-    LogInUser *loginUser = [LogInUser getLogInUserWithUid:fromuser[@"uid"]];
+    NSNumber *toUser = dataDic[@"uid"];
+    LogInUser *loginUser = [LogInUser getLogInUserWithUid:toUser];
     //如果本地数据库没有当前登陆用户，不处理
     if (loginUser == nil) {
         return;
@@ -513,6 +513,10 @@ BMKMapManager* _mapManager;
              if (resultStatus == 9000) {
                  //支付成功
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+             }else{
+                 if ([resultDic[@"memo"] length] > 0) {
+                     [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                 }
              }
              DLog(@"支付结果 result = %@", resultDic);
          }];
@@ -525,6 +529,10 @@ BMKMapManager* _mapManager;
             if (resultStatus == 9000) {
                 //支付成功
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+            }else{
+                if ([resultDic[@"memo"] length] > 0) {
+                    [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                }
             }
             DLog(@"支付结果 result = %@", resultDic);
         }];
