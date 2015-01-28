@@ -208,7 +208,10 @@
         NSDictionary *dataDic = JSON;
         if (dataDic) {
             UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-            
+            [mode setName:_nameTF.text];
+            [mode setMobile:_phoneTF.text];
+            [mode setCompany:_companyTF.text];
+            [mode setPosition:_postTF.text];
             //记录最后一次登陆的手机号
             SaveLoginMobile(mode.mobile);
             

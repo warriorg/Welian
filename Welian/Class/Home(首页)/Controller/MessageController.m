@@ -115,7 +115,6 @@
                     [_messageDataArray addObject:messageFrameM];
                 }
             }
-            [MOC save];
             [self.tableView setTableFooterView:self.footButton];
         }
     
