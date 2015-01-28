@@ -104,7 +104,6 @@ single_implementation(MainViewController)
 
 - (void)loadNewStustupdata
 {
-//    [homeVC.navigationItem setTitleView:self.navTitleView];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
