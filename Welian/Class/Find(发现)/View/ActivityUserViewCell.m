@@ -54,7 +54,7 @@
     
     NSString *company = _activityUserData[@"company"] == nil ? @"" : _activityUserData[@"company"];
     NSString *position = _activityUserData[@"position"] == nil ? @"" : _activityUserData[@"position"];
-    _messageLabel.text = [NSString stringWithFormat:@"%@%@",company,(company.length > 0 ? [NSString stringWithFormat:@" %@",position] : position)];
+    _messageLabel.text = [NSString stringWithFormat:@"%@%@",(company.length > 0 ? [NSString stringWithFormat:@" %@",position] : position),company];
     _messageLabel.numberOfLines = 1;
     
     //是否是认证投资人
@@ -73,6 +73,7 @@
     //等待验证
     if(friendship.integerValue == 4){
         _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+        [_operateBtn setImage:nil forState:UIControlStateNormal];
         [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
         [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
         _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
