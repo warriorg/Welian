@@ -245,10 +245,6 @@
 
 - (void)dealloc
 {
-//    if (!self.needlessCancel) {
-//        [WLHUDView hiddenHud];
-//        [WLHttpTool cancelAllRequestHttpTool];
-//    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -313,15 +309,11 @@
     [self.navigationController.tabBarItem setBadgeValue:nil];
 }
 
-
 #pragma mark - 发表状态
 - (void)publishStatus
 {
-        
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
-    
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
-        
     }];
 }
 
