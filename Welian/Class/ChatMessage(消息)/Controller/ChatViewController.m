@@ -941,7 +941,7 @@
                 MJPhoto *photo = [[MJPhoto alloc] init];
                 photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
                 photo.srcImageView = photoView; // 来源于哪个UIImageView
-                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+//                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 [photos addObject:photo];
             }
             
