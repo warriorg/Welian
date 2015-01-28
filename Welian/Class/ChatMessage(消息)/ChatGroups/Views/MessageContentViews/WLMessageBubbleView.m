@@ -56,8 +56,8 @@
         return CGSizeMake(0, 0);
     CGFloat wscale = thisSize.width/PHOTO_MAX_SIZE_WIDTH;
     CGFloat hscale = thisSize.height/PHOTO_MAX_SIZE_HEIGHT;
-    CGFloat scale = (wscale>hscale) ? wscale:hscale;
-    if ((thisSize.height / scale) > PHOTO_MAX_SIZE_HEIGHT) {
+    CGFloat scale = (wscale > hscale) ? wscale:hscale;
+    if ((thisSize.height / wscale) > PHOTO_MAX_SIZE_HEIGHT) {
         //长图
         return CGSizeMake(PHOTO_MAX_SIZE_WIDTH, PHOTO_MAX_SIZE_HEIGHT);
     }else{
