@@ -126,10 +126,38 @@
      type = IM;
      }
      */
-    
     MyFriendUser *friendUser = [MyFriendUser createMyFriendFromReceive:dict];
+    NSInteger type = [dict[@"type"] integerValue];
+    NSString *msg = dict[@"msg"];
+    
+    if(type == WLBubbleMessageMediaTypePhoto){
+        //下载图片
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:msg]
+                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                           
+                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                           if (finished) {
+                                                               //保存到本地  图片名称
+                                                               NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
+                                                               //保存图片
+                                                               NSString *path = [ResManager saveImage:image ToFolder:friendUser.uid.stringValue WithName:imageName];
+                                                               [self createReciveMessageWithDict:dict ImagePath:path FriendUser:friendUser];
+                                                           }else{
+                                                               DLog(@"获取图片消息，下载图片失败");
+                                                               return ;
+                                                           }
+                                                       }];
+    }else{
+        [self createReciveMessageWithDict:dict ImagePath:nil FriendUser:friendUser];
+    }
+}
+
++ (void)createReciveMessageWithDict:(NSDictionary *)dict ImagePath:(NSString *)imagePath FriendUser:(MyFriendUser *)friendUser
+{
     NSString *created = dict[@"created"];
     NSInteger type = [dict[@"type"] integerValue];
+    NSString *msg = dict[@"msg"];
     
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
@@ -138,7 +166,6 @@
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
-    NSString *msg = dict[@"msg"];
     switch (type) {
         case WLBubbleMessageMediaTypeActivity:
         case WLBubbleMessageMediaTypeText:
@@ -150,7 +177,7 @@
             chatMsg.messageType = @(type);
             chatMsg.messageType = @(WLBubbleMessageMediaTypePhoto);
             chatMsg.originPhotoUrl = msg;
-            chatMsg.photoImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:msg]];
+            chatMsg.photoImage = nil;
             break;
         case WLBubbleMessageMediaTypeVoice:
             chatMsg.message = @"[语音]";
@@ -176,16 +203,16 @@
     chatMsg.isRead = @(NO);
     chatMsg.sendStatus = @(1);
     chatMsg.bubbleMessageType = @(WLBubbleMessageTypeReceiving);//接受的数据
-//    chatMsg.videoPath = wlMessage.videoPath;
-//    chatMsg.videoUrl = wlMessage.videoUrl;
+    //    chatMsg.videoPath = wlMessage.videoPath;
+    //    chatMsg.videoUrl = wlMessage.videoUrl;
     //    chatMsg.videoConverPhoto = wlMessage.videoConverPhoto;
-//    chatMsg.voicePath = wlMessage.voicePath;
-//    chatMsg.voiceUrl = wlMessage.voiceUrl;
-//    chatMsg.geolocations = wlMessage.geolocations;
-//    chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
-//    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
+    //    chatMsg.voicePath = wlMessage.voicePath;
+    //    chatMsg.voiceUrl = wlMessage.voiceUrl;
+    //    chatMsg.geolocations = wlMessage.geolocations;
+    //    chatMsg.latitude = @(wlMessage.location.coordinate.latitude);
+    //    chatMsg.longitude = @(wlMessage.location.coordinate.longitude);
     chatMsg.sender = friendUser.name;
-//    chatMsg.rsMyFriendUser = friendUser;
+    //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
     //更新未读消息数量
     friendUser.unReadChatMsg = @(friendUser.unReadChatMsg.integerValue + 1);
@@ -202,35 +229,15 @@
         chatMsg.showTimeStamp = @(YES);
     }
     
-//    [MOC save];
     [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新好友的聊天时间
     [friendUser updateLastChatTime:chatMsg.timestamp];
     
-    if(type == WLBubbleMessageMediaTypePhoto){
-        //下载图片
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:chatMsg.originPhotoUrl]
-                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
-                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                           
-                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                           //保存到本地  图片名称
-                                                           NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
-                                                           NSString *path = [ResManager saveImage:image ToFolder:friendUser.uid.stringValue WithName:imageName];
-                                                           chatMsg.thumbnailUrl = path;
-                                                           
-                                                           //更新总的聊天消息数量
-                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
-                                                           //调用获取收到新消息，刷新正在聊天的列表
-                                                           [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
-                                                       }];
-    }else{
-        //更新总的聊天消息数量
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
-        //调用获取收到新消息，刷新正在聊天的列表
-        [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
-    }
+    //更新总的聊天消息数量
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    //调用获取收到新消息，刷新正在聊天的列表
+    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
 }
 
 //创建特殊自定义聊天类型
