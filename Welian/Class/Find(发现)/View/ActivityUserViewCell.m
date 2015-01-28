@@ -54,7 +54,7 @@
     
     NSString *company = _activityUserData[@"company"] == nil ? @"" : _activityUserData[@"company"];
     NSString *position = _activityUserData[@"position"] == nil ? @"" : _activityUserData[@"position"];
-    _messageLabel.text = [NSString stringWithFormat:@"%@%@",(company.length > 0 ? [NSString stringWithFormat:@" %@",position] : position),company];
+    _messageLabel.text = [NSString stringWithFormat:@"%@%@",position,(position.length > 0 ? [NSString stringWithFormat:@" %@",company] : company)];
     _messageLabel.numberOfLines = 1;
     
     //是否是认证投资人
