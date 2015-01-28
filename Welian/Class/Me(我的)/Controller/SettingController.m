@@ -13,8 +13,9 @@
 #import "AboutViewController.h"
 #import "LoginViewController.h"
 #import "LoginGuideController.h"
+#import <StoreKit/StoreKit.h>
 
-@interface SettingController () <UIActionSheetDelegate>
+@interface SettingController () <UIActionSheetDelegate,SKStoreProductViewControllerDelegate>
 {
     NSArray *_data;
     NSString *_upURL;
@@ -162,7 +163,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (indexPath.section==1&&indexPath.row==0){
         AboutViewController *aboutVC = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
@@ -191,6 +191,33 @@
     }
 }
 
+
+#pragma mark - AppStore更新
+- (void)appStoreUpdata
+{
+    SKStoreProductViewController *sKStoreProductViewController = [[SKStoreProductViewController alloc] init];
+    [sKStoreProductViewController setDelegate:self];
+    [sKStoreProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:@"944154493"} completionBlock:^(BOOL result, NSError *error) {
+        if (result) {
+            
+            [self presentViewController:sKStoreProductViewController
+                               animated:YES
+                             completion:nil];
+        }
+        else{
+            NSLog(@"%@",error);
+        }
+    
+    }];
+}
+
+#pragma mark - SKStoreProductViewControllerDelegate
+//对视图消失的处理
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    
+    [viewController dismissViewControllerAnimated:YES
+                                       completion:nil];
+}
 
 
 @end
