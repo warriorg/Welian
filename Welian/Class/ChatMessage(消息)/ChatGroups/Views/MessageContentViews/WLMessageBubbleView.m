@@ -20,7 +20,7 @@
 #define kWLArrowMarginWidth 14
 
 #define PHOTO_MAX_SIZE_WIDTH ([[UIScreen mainScreen] bounds].size.width / 3)
-#define PHOTO_MAX_SIZE_HEIGHT ([[UIScreen mainScreen] bounds].size.height / 4)
+#define PHOTO_MAX_SIZE_HEIGHT ([[UIScreen mainScreen] bounds].size.height / 3.5)
 
 @interface WLMessageBubbleView ()
 

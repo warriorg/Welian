@@ -937,10 +937,10 @@
             NSMutableArray *photos = [NSMutableArray arrayWithCapacity:photoData.count];
             for (int i = 0; i<photoData.count; i++) {
                 WLMessage *wlMessage = photoData[i];
-//                WLPhotoView *photoView = [[WLPhotoView alloc] init];
+                WLPhotoView *photoView = [[WLPhotoView alloc] init];
                 MJPhoto *photo = [[MJPhoto alloc] init];
                 photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
-//                photo.srcImageView = photoView; // 来源于哪个UIImageView
+                photo.srcImageView = photoView; // 来源于哪个UIImageView
                 photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 [photos addObject:photo];
             }
