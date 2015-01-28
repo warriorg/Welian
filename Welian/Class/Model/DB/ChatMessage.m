@@ -176,7 +176,8 @@
             chatMsg.message = @"[图片]";
             chatMsg.messageType = @(type);
             chatMsg.messageType = @(WLBubbleMessageMediaTypePhoto);
-            chatMsg.originPhotoUrl = msg;
+            chatMsg.thumbnailUrl = imagePath;
+            chatMsg.originPhotoUrl = [msg stringByReplacingOccurrencesOfString:@"_x" withString:@""];
             chatMsg.photoImage = nil;
             break;
         case WLBubbleMessageMediaTypeVoice:
