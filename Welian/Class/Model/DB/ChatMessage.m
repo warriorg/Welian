@@ -132,7 +132,7 @@
     
     if(type == WLBubbleMessageMediaTypePhoto){
         //下载图片
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[msg stringByReplacingOccurrencesOfString:@"_x" withString:@""]]
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:msg]
                                                         options:SDWebImageRetryFailed|SDWebImageLowPriority
                                                        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                            
