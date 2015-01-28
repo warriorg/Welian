@@ -938,10 +938,16 @@
             for (int i = 0; i<photoData.count; i++) {
                 WLMessage *wlMessage = photoData[i];
                 WLPhotoView *photoView = [[WLPhotoView alloc] init];
+                MJPhoto *photo1 = [[MJPhoto alloc] init];
+                photo1.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+                
                 MJPhoto *photo = [[MJPhoto alloc] init];
+                if( message.bubbleMessageType == WLBubbleMessageTypeSending){
+                    photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+                }
                 photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
                 photo.srcImageView = photoView; // 来源于哪个UIImageView
-                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+//                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 [photos addObject:photo];
             }
             

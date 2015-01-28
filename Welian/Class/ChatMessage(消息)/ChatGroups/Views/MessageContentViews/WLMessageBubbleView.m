@@ -301,10 +301,10 @@
 //            _displayTextView.textColor = [UIColor redColor];
             break;
         case WLBubbleMessageMediaTypePhoto:
-            [_bubblePhotoImageView configureMessagePhoto:message.photo thumbnailUrl:message.originPhotoUrl originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
+            [_bubblePhotoImageView configureMessagePhoto:message.photo thumbnailUrl:nil originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
             break;
         case WLBubbleMessageMediaTypeVideo:
-            [_bubblePhotoImageView configureMessagePhoto:message.videoConverPhoto thumbnailUrl:message.thumbnailUrl originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
+            [_bubblePhotoImageView configureMessagePhoto:message.videoConverPhoto thumbnailUrl:nil originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
             break;
         case WLBubbleMessageMediaTypeVoice:
             break;
