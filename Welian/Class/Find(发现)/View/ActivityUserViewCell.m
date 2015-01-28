@@ -172,7 +172,7 @@
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = [UIColor lightGrayColor];
-    messageLabel.font = [UIFont systemFontOfSize:14.f];
+    messageLabel.font = [UIFont systemFontOfSize:12.f];
     messageLabel.numberOfLines = 0.f;
     [self addSubview:messageLabel];
     self.messageLabel = messageLabel;
