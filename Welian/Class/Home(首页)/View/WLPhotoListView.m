@@ -47,7 +47,6 @@
         // 2.1.取出对应位置的子控件
         WLPhotoView *photoView = self.subviews[i];
         if (picCount == 1) {
-            [photoView setContentMode:UIViewContentModeTopLeft];
             photoView.contentMode = UIViewContentModeScaleAspectFit;
             photoView.clipsToBounds = NO;
         } else { // 多张
