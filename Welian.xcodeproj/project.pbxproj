@@ -4340,7 +4340,7 @@
 		A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodGroup.m; sourceTree = "<group>"; };
 		A48CA69C1A4D044B009EBD04 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
 		A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
-		A49C7FC11A70D42700F2AEC5 /* weLianAppDis copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weLianAppDis copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A49C7FC11A70D42700F2AEC5 /* weLianAppDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianAppDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A49C7FC31A70D63C00F2AEC5 /* weLianAppDev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "weLianAppDev-Info.plist"; sourceTree = "<group>"; };
 		A49C7FC81A70EA0B00F2AEC5 /* weLian1.1.6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.6.xcdatamodel; sourceTree = "<group>"; };
 		A49C7FC91A70F07B00F2AEC5 /* WLDisplayMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDisplayMediaViewController.h; sourceTree = "<group>"; };
@@ -8308,7 +8308,7 @@
 				F5664C321A2AFD56008A5830 /* weLianDev.app */,
 				F5664EEC1A2AFDD5008A5830 /* weLianDis.app */,
 				F53DC5871A49192600F5F712 /* weLianAppDis.app */,
-				A49C7FC11A70D42700F2AEC5 /* weLianAppDis copy.app */,
+				A49C7FC11A70D42700F2AEC5 /* weLianAppDev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -9080,7 +9080,7 @@
 			);
 			name = weLianAppDev;
 			productName = Welian;
-			productReference = A49C7FC11A70D42700F2AEC5 /* weLianAppDis copy.app */;
+			productReference = A49C7FC11A70D42700F2AEC5 /* weLianAppDev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F53DC2991A49192600F5F712 /* weLianAppDis */ = {
@@ -13407,7 +13407,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianAppDis copy";
+				PRODUCT_NAME = weLianAppDev;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -13455,7 +13455,7 @@
 					"-Obj-C",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "weLianAppDis copy";
+				PRODUCT_NAME = weLianAppDev;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
