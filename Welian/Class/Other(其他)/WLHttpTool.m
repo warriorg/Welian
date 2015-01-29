@@ -177,12 +177,15 @@
 + (void)saveProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     NSDictionary *dic = @{@"type":@"saveProfile",@"data":parameterDic};
-    
+    BOOL ishud = YES;
+    if ([parameterDic objectForKey:@"x"]) {
+        ishud = NO;
+    }
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
-    } withHUD:YES andDim:NO];
+    } withHUD:ishud andDim:NO];
 }
 
 #pragma mark - 修改用户头像

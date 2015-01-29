@@ -70,7 +70,7 @@ BMKMapManager* _mapManager;
 {
     //数据库操作
     [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelVerbose];
-    [MagicalRecord setupAutoMigratingCoreDataStack];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"weLianAppDis.sqlite"];
     
     // 版本更新
     [self detectionUpdataVersionDic];
