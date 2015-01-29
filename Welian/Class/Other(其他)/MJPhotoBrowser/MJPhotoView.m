@@ -66,7 +66,7 @@
     
         [self showImage];
     }
-    
+    DLog(@"select photo:%f ,y:%f,w:%f,h:%f",photo.imageCurrentRect.origin.x,photo.imageCurrentRect.origin.y,photo.imageCurrentRect.size.width,photo.imageCurrentRect.size.height);
 }
 
 #pragma mark 显示图片
@@ -109,13 +109,19 @@
         __weak MJPhotoView *photoView = self;
         __weak MJPhotoLoadingView *loading = _photoLoadingView;
         
+        
         [_imageView sd_setImageWithPreviousCachedImageWithURL:_photo.url andPlaceholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             if (receivedSize > kMinProgress) {
-                    loading.progress = (float)receivedSize/expectedSize;
-                }
-
+                loading.progress = (float)receivedSize/expectedSize;
+            }
+            
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [photoView photoDidFinishLoadWithImage:image];
+            //url等于空，直接显示缩略图
+            if(_photo.url == nil){
+                [photoView photoDidFinishLoadWithImage:_photo.srcImageView.image];
+            }else{
+                [photoView photoDidFinishLoadWithImage:image];
+            }
         }];
     }
 }
@@ -190,7 +196,14 @@
     
     if (_photo.firstShow) { // 第一次显示的图片
         _photo.firstShow = NO; // 已经显示过了
-        _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
+        if (_photo.hasNoImageView) {
+            //如果未设置启动的位置，默认给出中心位置
+            _imageView.frame = _photo.imageCurrentRect;//CGRectMake((boundsWidth - 100) / 2.f,(boundsHeight - 200) / 2.f, 100, 200);
+        }else{
+            _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
+        }
+        DLog(@"_imageView.frame:x:%f ,y:%f,w:%f,h:%f",_imageView.frame.origin.x,_imageView.frame.origin.y,_imageView.frame.size.width,_imageView.frame.size.height);
+        DLog(@"_photo:%f ,y:%f,w:%f,h:%f",_photo.imageCurrentRect.origin.x,_photo.imageCurrentRect.origin.y,_photo.imageCurrentRect.size.width,_photo.imageCurrentRect.size.height);
         
         [UIView animateWithDuration:0.3 animations:^{
             _imageView.frame = imageFrame;
@@ -234,7 +247,21 @@
     }
     
     [UIView animateWithDuration:duration + 0.1 animations:^{
-        _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
+        
+        if (_photo.hasNoImageView) {
+            DLog(@"_photo:%f ,y:%f,w:%f,h:%f",_photo.imageCurrentRect.origin.x,_photo.imageCurrentRect.origin.y,_photo.imageCurrentRect.size.width,_photo.imageCurrentRect.size.height);
+            //如果未设置启动的位置，默认给出中心位置
+            if(_photo.imageCurrentRect.origin.y <= 0 || _photo.imageCurrentRect.origin.y > self.bounds.size.height - 64.f){
+                //如果不在当前屏幕中显示
+                _imageView.frame = CGRectMake((self.bounds.size.width - 100) / 2.f,(self.bounds.size.height - 200) / 2.f, 100, 200);
+                _imageView.alpha = .5f;
+            }else{
+                //在当前屏幕中，直接返回到设置的图片的大小
+                _imageView.frame = _photo.imageCurrentRect;
+            }
+        }else{
+            _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
+        }
         
         // gif图片仅显示第0张
         if (_imageView.image.images) {

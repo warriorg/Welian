@@ -165,7 +165,7 @@ static CGPoint  delayOffset = {0.0};
         }
         case WLBubbleMessageMediaTypePhoto: {
             //隐藏键盘
-            [self layoutOtherMenuViewHiden:YES];
+//            [self layoutOtherMenuViewHiden:YES];
             break;
         }
         case WLBubbleMessageMediaTypeVideo: {
@@ -867,8 +867,9 @@ static CGPoint  delayOffset = {0.0};
 //发送照片
 - (void)didSendMessageWithPhoto:(UIImage *)photo {
     DLog(@"send photo : %@", photo);
+    //iOS程序中使用系统相机拍照和从相册选取图片，直接上传后在非mac系统下看到的图片会发生旋转的现象，那是因为我们没有通过图片的旋转属性修改图片倒置的。
     if ([self.delegate respondsToSelector:@selector(didSendPhoto:fromSender:onDate:)]) {
-        [self.delegate didSendPhoto:photo fromSender:self.messageSender onDate:[NSDate date]];
+        [self.delegate didSendPhoto:[photo fixOrientation] fromSender:self.messageSender onDate:[NSDate date]];
     }
 }
 

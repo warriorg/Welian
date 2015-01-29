@@ -11,6 +11,9 @@
 @property (nonatomic, strong) UIImage *image; // 完整的图片
 
 @property (nonatomic, strong) UIImageView *srcImageView; // 来源view
+@property (nonatomic, assign) BOOL hasNoImageView; // 设置没有来源的
+@property (nonatomic, assign) CGRect imageCurrentRect;//图片在当前频幕的位置
+
 @property (nonatomic, strong, readonly) UIImage *placeholder;
 @property (nonatomic, strong, readonly) UIImage *capture;
 

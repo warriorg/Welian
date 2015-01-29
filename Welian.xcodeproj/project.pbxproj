@@ -141,6 +141,10 @@
 		A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
+		A4670A801A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
+		A4670A811A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
+		A4670A821A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
+		A4670A831A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4776AC71A4428390022E211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4776AC81A4428430022E211 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -4310,6 +4314,8 @@
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
+		A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		A47C5F521A5E663100E63737 /* AddFriendTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTypeListViewController.h; sourceTree = "<group>"; };
@@ -6113,6 +6119,8 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */,
+				A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */,
 				A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */,
 				A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */,
 				A4210C851A5FB07D003AA6A3 /* NSError+Extend.h */,
@@ -11863,6 +11871,7 @@
 				A49C7D2C1A70D42700F2AEC5 /* IIMeInvestAuthModel.m in Sources */,
 				F5B5E8D41A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				A49C7D2D1A70D42700F2AEC5 /* IInvestIndustryModel.m in Sources */,
+				A4670A831A79D38800490E40 /* UIImage+FixOrientation.m in Sources */,
 				A49C7D2E1A70D42700F2AEC5 /* InvestReqstModel.m in Sources */,
 				A49C7D2F1A70D42700F2AEC5 /* FriendsFriendUser.m in Sources */,
 				A49C7D301A70D42700F2AEC5 /* InfoUserHaderCell.m in Sources */,
@@ -12308,6 +12317,7 @@
 				F5C7796C1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
 				F5B5E8D31A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				F534DB561A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
+				A4670A821A79D38800490E40 /* UIImage+FixOrientation.m in Sources */,
 				F53DC3861A49192600F5F712 /* InvestReqstModel.m in Sources */,
 				F53D4E3F1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F53DC3871A49192600F5F712 /* InfoUserHaderCell.m in Sources */,
@@ -12753,6 +12763,7 @@
 				F59E75FA1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				F5B5E8D11A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				A4C140A11A4BEA8500C9BAB5 /* WLMessageTextView.m in Sources */,
+				A4670A801A79D38800490E40 /* UIImage+FixOrientation.m in Sources */,
 				A4C140BD1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
 				F5664A4C1A2AFD56008A5830 /* CTAssetsSupplementaryView.m in Sources */,
 				F5664A4D1A2AFD56008A5830 /* AddFriendsController.m in Sources */,
@@ -13198,6 +13209,7 @@
 				F5C7796B1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
 				F5B5E8D21A77838E00BEDB92 /* MsgPlaySound.m in Sources */,
 				F534DB551A51086B00B6A725 /* IInvestIndustryModel.m in Sources */,
+				A4670A811A79D38800490E40 /* UIImage+FixOrientation.m in Sources */,
 				F5664D091A2AFDD5008A5830 /* InvestReqstModel.m in Sources */,
 				F53D4E3E1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F5664D0A1A2AFDD5008A5830 /* InfoUserHaderCell.m in Sources */,

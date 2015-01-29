@@ -927,7 +927,7 @@
         case WLBubbleMessageMediaTypePhoto:
         {
             //键盘控制
-            [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
+//            [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
             
             // 1.封装图片数据
             NSArray *photoData = [self.messages bk_select:^BOOL(id obj) {
@@ -937,17 +937,20 @@
             NSMutableArray *photos = [NSMutableArray arrayWithCapacity:photoData.count];
             for (int i = 0; i<photoData.count; i++) {
                 WLMessage *wlMessage = photoData[i];
+                NSInteger index = [self.messages indexOfObject:wlMessage];
                 WLPhotoView *photoView = [[WLPhotoView alloc] init];
-                MJPhoto *photo1 = [[MJPhoto alloc] init];
-                photo1.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+                photoView.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 
                 MJPhoto *photo = [[MJPhoto alloc] init];
                 if( message.bubbleMessageType == WLBubbleMessageTypeSending){
                     photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+                }else{
+                    photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
                 }
-                photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
                 photo.srcImageView = photoView; // 来源于哪个UIImageView
-//                photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
+                photo.hasNoImageView = YES;
+                WLMessageTableViewCell *cell = (WLMessageTableViewCell *)[self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+                photo.imageCurrentRect = [cell.messageBubbleView.bubblePhotoImageView convertRect:cell.messageBubbleView.bubblePhotoImageView.bounds toView:self.view];
                 [photos addObject:photo];
             }
             

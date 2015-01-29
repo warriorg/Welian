@@ -26,7 +26,7 @@
 #import "CALayer+XibConfiguration.h"
 #import "UIAlertView+Extend.h"
 #import "NSError+Extend.h"
-
+#import "UIImage+FixOrientation.h"
 
 #pragma mark - Other
 #import "ACETelPrompt.h"

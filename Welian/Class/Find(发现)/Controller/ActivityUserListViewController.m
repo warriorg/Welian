@@ -47,11 +47,11 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.pageIndex = 0;
+        self.pageIndex = 1;
         self.pageSize = 15;
         self.activeId = activeInfo[0];
         self.totalNum = [activeInfo[1] integerValue];
-        self.allPages = ceilf(_totalNum / _pageSize);
+        self.allPages = ceil((float)_totalNum/(float)_pageSize);
         self.datasource = [NSMutableArray array];
         self.title = [NSString stringWithFormat:@"报名列表(%@人)",activeInfo[1]];
     }
@@ -180,6 +180,7 @@
     }else{
         //隐藏加载更多动画
         [self.tableView footerEndRefreshing];
+        [self.tableView setFooterHidden:YES];
     }
 }
 

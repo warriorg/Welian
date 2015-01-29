@@ -100,7 +100,7 @@ static NSString *identifier = @"investorcellid";
 
 // 加载更多
 - (void)loadMoreDataArray
-{
+{   
     [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
         
         FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
