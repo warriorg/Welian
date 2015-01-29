@@ -31,6 +31,8 @@
 #import "LoginGuideController.h"
 #import "MsgPlaySound.h"
 
+#define kStoreName @"weLianAppDis.sqlite"
+
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     MainViewController *mainVC;
@@ -66,11 +68,40 @@ BMKMapManager* _mapManager;
 #endif
 }
 
+- (NSString *)applicationDocumentsDirectory {
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
+//设置数据库转移
+- (void)copyDefaultStoreIfNecessary
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *storeURL = [NSPersistentStore MR_urlForStoreName:kStoreName];
+    
+    // If the expected store doesn't exist, copy the default store.
+    if (![fileManager fileExistsAtPath:[storeURL path]])
+    {
+        NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:[kStoreName stringByDeletingPathExtension] ofType:[kStoreName pathExtension]];
+        if (defaultStorePath)
+        {
+            NSError *error;
+            BOOL success = [fileManager copyItemAtPath:defaultStorePath toPath:[storeURL path] error:&error];
+            if (!success)
+            {
+                NSLog(@"Failed to install default recipe store");
+            }
+        }
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //数据库操作
+    [self copyDefaultStoreIfNecessary];
     [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelVerbose];
-    [MagicalRecord setupAutoMigratingCoreDataStack];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kStoreName];
+//    [MOC save];
     
     // 版本更新
     [self detectionUpdataVersionDic];
