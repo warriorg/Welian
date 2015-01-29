@@ -207,6 +207,10 @@
 
 - (void)startCompile:(WLBasicTrends *)touser
 {
+    if (!touser) {
+        [_commentTextView setPlaceholder:@"写评论..."];
+        return;
+    }
     [_commentTextView becomeFirstResponder];
     [_commentTextView setPlaceholder:[NSString stringWithFormat:@"回复%@:",touser.name]];
 }

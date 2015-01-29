@@ -349,6 +349,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.messageView dismissKeyBoard];
+    [self.messageView startCompile:nil];
+    _selecCommFrame = nil;
 }
 
 - (void)hiddenRefresh
