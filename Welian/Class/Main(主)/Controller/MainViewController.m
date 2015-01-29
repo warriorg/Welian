@@ -101,7 +101,6 @@ single_implementation(MainViewController)
     return _navTitleView;
 }
 
-
 - (void)loadNewStustupdata
 {
     LogInUser *mode = [LogInUser getCurrentLoginUser];

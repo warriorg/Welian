@@ -188,9 +188,8 @@ static NSString *staurCellid = @"staurCellid";
         NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
         if (newFuser) {
             //删除好友请求数据
-            //                    [newFuser delete];
             //更新好友请求列表数据为 添加
-            [newFuser updateOperateType:0];
+            [newFuser updateOperateType:1];
             //                    [[LogInUser getCurrentLoginUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
         }
         //更新本地添加好友数据库
@@ -263,6 +262,7 @@ static NSString *staurCellid = @"staurCellid";
                         [self.tableView setTableFooterView:self.sendView];
                     }
                 }else {
+                    [[mode getMyfriendUserWithUid:_userMode.uid] MR_deleteEntity];
                     [self.tableView setTableFooterView:self.addFriendView];
                 }
             }
