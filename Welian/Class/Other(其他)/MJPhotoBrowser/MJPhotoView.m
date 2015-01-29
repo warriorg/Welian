@@ -247,11 +247,11 @@
     }
     
     [UIView animateWithDuration:duration + 0.1 animations:^{
-        
         if (_photo.hasNoImageView) {
             DLog(@"_photo:%f ,y:%f,w:%f,h:%f",_photo.imageCurrentRect.origin.x,_photo.imageCurrentRect.origin.y,_photo.imageCurrentRect.size.width,_photo.imageCurrentRect.size.height);
             //如果未设置启动的位置，默认给出中心位置
-            if(_photo.imageCurrentRect.origin.y <= 0 || _photo.imageCurrentRect.origin.y > self.bounds.size.height - 64.f){
+
+            if(CGRectGetMaxY(_photo.imageCurrentRect) <= 0 || _photo.imageCurrentRect.origin.y > self.bounds.size.height - 64.f){
                 //如果不在当前屏幕中显示
                 _imageView.frame = CGRectMake((self.bounds.size.width - 100) / 2.f,(self.bounds.size.height - 200) / 2.f, 100, 200);
                 _imageView.alpha = .5f;
