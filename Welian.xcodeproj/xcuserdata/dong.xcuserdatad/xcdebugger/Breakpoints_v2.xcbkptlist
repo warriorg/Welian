@@ -67,7 +67,7 @@
                   symbolName = "-[WorksListController loadDataArray]"
                   moduleName = "weLianAppDis copy"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444142952.040935"
+                  timestampString = "444208073.316765"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -81,7 +81,7 @@
                   symbolName = "__36-[WorksListController loadDataArray]_block_invoke"
                   moduleName = "weLianAppDis copy"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444142952.041072"
+                  timestampString = "444208073.316898"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -120,22 +120,6 @@
             startingLineNumber = "30"
             endingLineNumber = "30"
             landmarkName = "+createInvestStages:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Other(&#x5176;&#x4ed6;)/MagicalRecord/Core/MagicalRecord.m"
-            timestampString = "444142951.616924"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "+defaultStoreName"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -1910,7 +1910,6 @@
 		F51BA44F1A444DA2009E5CDF /* tabbar_me_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA43C1A444DA2009E5CDF /* tabbar_me_prompt@2x.png */; };
 		F51BA4501A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA43D1A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png */; };
 		F51BA4511A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA43D1A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png */; };
-		F527AFA41A78B280006B661E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F527AFA31A78B280006B661E /* StoreKit.framework */; };
 		F52ECBD21A64CD86006E1CF0 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F52ECBD11A64CD86006E1CF0 /* searchbar_bg@2x.png */; };
 		F52ECBD31A64CD86006E1CF0 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F52ECBD11A64CD86006E1CF0 /* searchbar_bg@2x.png */; };
 		F52ECBD41A64CD86006E1CF0 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F52ECBD11A64CD86006E1CF0 /* searchbar_bg@2x.png */; };
@@ -5119,7 +5118,6 @@
 		F5239B9819F684BF00D9E696 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		F5239B9919F684BF00D9E696 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		F5239B9A19F684BF00D9E696 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
-		F527AFA31A78B280006B661E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F52ECBD11A64CD86006E1CF0 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar_bg@2x.png"; sourceTree = "<group>"; };
 		F52F966C1A56EA0A00BAA77B /* InvestInfoListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestInfoListVC.h; sourceTree = "<group>"; };
 		F52F966D1A56EA0A00BAA77B /* InvestInfoListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestInfoListVC.m; sourceTree = "<group>"; };
@@ -6059,7 +6057,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F527AFA41A78B280006B661E /* StoreKit.framework in Frameworks */,
 				A49C80411A71041000F2AEC5 /* libssl.a in Frameworks */,
 				A45065531A5BD45B0057F8AA /* MapKit.framework in Frameworks */,
 				F5664D371A2AFDD5008A5830 /* SystemConfiguration.framework in Frameworks */,
@@ -8319,7 +8316,6 @@
 		F5CE85FC19BFF2AB00A9D14C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F527AFA31A78B280006B661E /* StoreKit.framework */,
 				F5B5FE2C1A59491C007FE11B /* libz.1.2.5.dylib */,
 				F5B5FE2A1A59490C007FE11B /* libicucore.dylib */,
 				A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */,
@@ -9178,6 +9174,11 @@
 					};
 					F5664C341A2AFDD5008A5830 = {
 						DevelopmentTeam = SYMR4TKBFN;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					F5CE861419BFF2AB00A9D14C = {
 						TestTargetID = F5CE85F919BFF2AB00A9D14C;
