@@ -11,7 +11,7 @@
 #define kLogoWidth 40.f
 #define kMarginLeft 15.f
 #define kMarginTop 10.f
-#define kButtonWidth 75.f
+#define kButtonWidth 50.f
 #define kButtonHeight 30.f
 
 #define BtnTianJiaColor RGB(247.f, 247.f, 247.f)
@@ -66,15 +66,19 @@
         //微信用户
         _wxBtn.hidden = NO;
         _operateBtn.hidden = YES;
+        [_wxBtn setTitle:@"微信用户" forState:UIControlStateNormal];
+        [_wxBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     }else{
-        _wxBtn.hidden = YES;
+        [_wxBtn setTitle:@"微链好友" forState:UIControlStateNormal];
+        [_wxBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+        _wxBtn.hidden = friendship.integerValue == 1 ? NO : YES;
         _operateBtn.hidden = friendship.integerValue != 1 ? NO : YES;
     }
     //等待验证
     if(friendship.integerValue == 4){
         _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
         [_operateBtn setImage:nil forState:UIControlStateNormal];
-        [_operateBtn setTitle:@"等待验证" forState:UIControlStateNormal];
+        [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
         [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
         _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         _operateBtn.layer.borderWidth = 0;
@@ -85,7 +89,7 @@
             _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
             [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
-            [_operateBtn setTitle:@"添加好友" forState:UIControlStateNormal];
+            [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
             [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
             _operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
             _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
@@ -186,8 +190,6 @@
     UIButton *wxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     wxBtn.backgroundColor = RGB(248.f, 248.f, 248.f);
     wxBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
-    [wxBtn setTitle:@"微信用户" forState:UIControlStateNormal];
-    [wxBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     wxBtn.layer.cornerRadius = 10.f;
     wxBtn.layer.masksToBounds = YES;
     wxBtn.hidden = YES;
