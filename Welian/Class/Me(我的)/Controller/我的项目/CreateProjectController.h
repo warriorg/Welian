@@ -10,4 +10,6 @@
 
 @interface CreateProjectController : BasicViewController
 
+- (instancetype)initIsEdit:(BOOL)isEdit;
+
 @end

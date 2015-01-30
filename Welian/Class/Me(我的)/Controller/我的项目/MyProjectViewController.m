@@ -23,14 +23,14 @@
 - (HMSegmentedControl *)segmentedControl
 {
     if (_segmentedControl == nil) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SuperSize.width, 40)];
+        _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SuperSize.width, 50)];
         _segmentedControl.sectionTitles = @[@"我收藏的", @"我创建的"];
         _segmentedControl.selectedTextColor = KBasesColor;
         _segmentedControl.selectionIndicatorColor = KBasesColor;
         _segmentedControl.selectionIndicatorHeight = 2;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        UIView *lieView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, SuperSize.width, 0.5)];
+        UIView *lieView = [[UIView alloc] initWithFrame:CGRectMake(0, 49.5, SuperSize.width, 0.5)];
         [lieView setBackgroundColor:[UIColor lightGrayColor]];
         [_segmentedControl addSubview:lieView];
     }
@@ -40,7 +40,7 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40+64, SuperSize.width, SuperSize.height-40-64)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50+64, SuperSize.width, SuperSize.height-40-64)];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
     }

@@ -153,12 +153,15 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         }
     }else if (indexPath.section==2){
         if (indexPath.row==0) {
-            controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
-            [controller setTitle:@"我是投资人"];
-            // 取消我是投资人角标
-            [LogInUser setUserIsinvestorbadge:NO];
-            [[MainViewController sharedMainViewController] loadNewStustupdata];
-            [self reloadInvestorstate];
+            controller = [[MyProjectViewController alloc] init];
+            [controller setTitle:@"我的项目"];
+            
+//            controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
+//            [controller setTitle:@"我是投资人"];
+//            // 取消我是投资人角标
+//            [LogInUser setUserIsinvestorbadge:NO];
+//            [[MainViewController sharedMainViewController] loadNewStustupdata];
+//            [self reloadInvestorstate];
         }else if (indexPath.row==1){
             controller = [[MyProjectViewController alloc] init];
             [controller setTitle:@"我的项目"];

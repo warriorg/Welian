@@ -10,13 +10,24 @@
 
 @interface CreateProjectController ()
 
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation CreateProjectController
 
+- (instancetype)initIsEdit:(BOOL)isEdit
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setTitle:@"项目简介"];
 }
 
 - (void)didReceiveMemoryWarning {
