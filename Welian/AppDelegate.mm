@@ -101,7 +101,6 @@ BMKMapManager* _mapManager;
     [self copyDefaultStoreIfNecessary];
     [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelVerbose];
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kStoreName];
-//    [MOC save];
     
     // 版本更新
     [self detectionUpdataVersionDic];

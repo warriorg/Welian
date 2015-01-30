@@ -67,7 +67,7 @@
                   symbolName = "-[WorksListController loadDataArray]"
                   moduleName = "weLianAppDis copy"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444208073.316765"
+                  timestampString = "444215673.044351"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -81,7 +81,7 @@
                   symbolName = "__36-[WorksListController loadDataArray]_block_invoke"
                   moduleName = "weLianAppDis copy"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444208073.316898"
+                  timestampString = "444215673.044713"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -97,13 +97,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/LocationprovinceController.m"
-            timestampString = "443955545.326767"
+            filePath = "Welian/Class/Model/DB/InvestStages.m"
+            timestampString = "444027184.958402"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "-didUpdateUserLocation:"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "+createInvestStages:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -113,13 +113,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Model/DB/InvestStages.m"
-            timestampString = "444027184.958402"
+            filePath = "Welian/Class/Other(&#x5176;&#x4ed6;)/MagicalRecord/Core/MagicalRecord.m"
+            timestampString = "444211510.080987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "+createInvestStages:"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "+defaultStoreName"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Welian/Class/Other(&#x5176;&#x4ed6;)/MagicalRecord/Core/MagicalRecord.m"
+            timestampString = "444211511.282365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "+defaultStoreName"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Welian/Class/Other(&#x5176;&#x4ed6;)/CoreDataComment/CoreData/e0571CoreDataManager.m"
+            timestampString = "444212475.152647"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "-bundleName"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Welian/Class/Home(&#x9996;&#x9875;)/View/FeedAndZanView.m"
+            timestampString = "444216891.999057"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-setFeedAndZanFrame:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

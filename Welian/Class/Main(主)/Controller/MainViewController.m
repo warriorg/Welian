@@ -274,7 +274,15 @@ single_implementation(MainViewController)
     // 定位
     [[LocationTool sharedLocationTool] statLocationMy];
     [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
+        CLLocationCoordinate2D coord2D = userLocation.location.coordinate;
+        NSString *x = [NSString stringWithFormat:@"%f",coord2D.latitude];
+        NSString *y = [NSString stringWithFormat:@"%f",coord2D.longitude];
         
+        [WLHttpTool saveProfileParameterDic:@{@"x":x,@"y":y} success:^(id JSON) {
+            
+        } fail:^(NSError *error) {
+            
+        }];
     };
 }
 
