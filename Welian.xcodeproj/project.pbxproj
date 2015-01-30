@@ -1886,10 +1886,6 @@
 		F51A9AC61A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
 		F51A9AC71A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
 		F51A9AC81A6E474C00918025 /* homeCellbackground_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */; };
-		F51A9AD71A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
-		F51A9AD81A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
-		F51A9AD91A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
-		F51A9ADA1A720DAC00918025 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51A9AD61A720DAC00918025 /* YMReplyInputView.m */; };
 		F51BA43E1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA43F1A444DA2009E5CDF /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
 		F51BA4401A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4351A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png */; };
@@ -4144,6 +4140,18 @@
 		F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
 		F5D075451A45956200D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
 		F5D075481A45956C00D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
+		F5E13A371A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
+		F5E13A381A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
+		F5E13A391A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
+		F5E13A3A1A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
+		F5E13A3E1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */; };
+		F5E13A3F1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */; };
+		F5E13A401A7B45EF001BB786 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */; };
+		F5E13A411A7B45EF001BB786 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */; };
+		F5E13A441A7B5329001BB786 /* CreateProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A431A7B5329001BB786 /* CreateProjectController.m */; };
+		F5E13A451A7B5329001BB786 /* CreateProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A431A7B5329001BB786 /* CreateProjectController.m */; };
+		F5E13A461A7B5329001BB786 /* CreateProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A431A7B5329001BB786 /* CreateProjectController.m */; };
+		F5E13A471A7B5329001BB786 /* CreateProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A431A7B5329001BB786 /* CreateProjectController.m */; };
 		F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
 		F5E380B51A41B1680084F7F3 /* WorkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E380B31A41B1680084F7F3 /* WorkListCell.m */; };
 		F5E380B61A41B1680084F7F3 /* WorkListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E380B31A41B1680084F7F3 /* WorkListCell.m */; };
@@ -4843,8 +4851,6 @@
 		F5188ACA19CF017600FE9273 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		F51A9AC11A6E474C00918025 /* homeCellbackground_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeCellbackground_highlight@2x.png"; sourceTree = "<group>"; };
 		F51A9AC21A6E474C00918025 /* homeCellbackground_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeCellbackground_normal@2x.png"; sourceTree = "<group>"; };
-		F51A9AD51A720DAC00918025 /* YMReplyInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMReplyInputView.h; sourceTree = "<group>"; };
-		F51A9AD61A720DAC00918025 /* YMReplyInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMReplyInputView.m; sourceTree = "<group>"; };
 		F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_circle_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA4351A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_circle_selected_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA4361A444DA2009E5CDF /* tabbar_discovery_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_discovery_prompt@2x.png"; sourceTree = "<group>"; };
@@ -5782,6 +5788,12 @@
 		F5D356831A260F75005EF094 /* M80AttributedLabelURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M80AttributedLabelURL.m; sourceTree = "<group>"; };
 		F5D356841A260F75005EF094 /* NSMutableAttributedString+M80.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+M80.h"; sourceTree = "<group>"; };
 		F5D356851A260F75005EF094 /* NSMutableAttributedString+M80.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+M80.m"; sourceTree = "<group>"; };
+		F5E13A351A7B3062001BB786 /* MyProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProjectViewController.h; sourceTree = "<group>"; };
+		F5E13A361A7B3062001BB786 /* MyProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProjectViewController.m; sourceTree = "<group>"; };
+		F5E13A3C1A7B45EF001BB786 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		F5E13A421A7B5329001BB786 /* CreateProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectController.h; sourceTree = "<group>"; };
+		F5E13A431A7B5329001BB786 /* CreateProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProjectController.m; sourceTree = "<group>"; };
 		F5E380B21A41B1680084F7F3 /* WorkListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkListCell.h; sourceTree = "<group>"; };
 		F5E380B31A41B1680084F7F3 /* WorkListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkListCell.m; sourceTree = "<group>"; };
 		F5E380B41A41B1680084F7F3 /* WorkListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkListCell.xib; sourceTree = "<group>"; };
@@ -8599,8 +8611,6 @@
 		F5CE863819BFF44100A9D14C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F51A9AD51A720DAC00918025 /* YMReplyInputView.h */,
-				F51A9AD61A720DAC00918025 /* YMReplyInputView.m */,
 				F5F3C86219D292BC00110C07 /* IWTextView.h */,
 				F5F3C86319D292BC00110C07 /* IWTextView.m */,
 				F520EDC219CFF94200E753E4 /* PictureCell.h */,
@@ -8711,6 +8721,7 @@
 		F5CE863E19BFF44100A9D14C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F5E13A341A7B2AD0001BB786 /* 我的项目 */,
 				F534DACD1A4E8FA700B6A725 /* 投资人认证 */,
 				F56254F019C01C1800809D0B /* MeViewController.h */,
 				F56254F119C01C1800809D0B /* MeViewController.m */,
@@ -8788,6 +8799,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				F5E13A3B1A7B45EF001BB786 /* HMSegmentedControl */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				A49C7FCF1A71040F00F2AEC5 /* alipay */,
 				A4A2EA9C1A6CF7C8006ADA55 /* MagicalRecord */,
@@ -8962,6 +8974,26 @@
 				F5D356851A260F75005EF094 /* NSMutableAttributedString+M80.m */,
 			);
 			path = M80AttributedLabel;
+			sourceTree = "<group>";
+		};
+		F5E13A341A7B2AD0001BB786 /* 我的项目 */ = {
+			isa = PBXGroup;
+			children = (
+				F5E13A351A7B3062001BB786 /* MyProjectViewController.h */,
+				F5E13A361A7B3062001BB786 /* MyProjectViewController.m */,
+				F5E13A421A7B5329001BB786 /* CreateProjectController.h */,
+				F5E13A431A7B5329001BB786 /* CreateProjectController.m */,
+			);
+			path = "我的项目";
+			sourceTree = "<group>";
+		};
+		F5E13A3B1A7B45EF001BB786 /* HMSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				F5E13A3C1A7B45EF001BB786 /* HMSegmentedControl.h */,
+				F5E13A3D1A7B45EF001BB786 /* HMSegmentedControl.m */,
+			);
+			path = HMSegmentedControl;
 			sourceTree = "<group>";
 		};
 		F5EE25E41A131E5500B0E836 /* iconx6 */ = {
@@ -11616,6 +11648,7 @@
 				A49C7C331A70D42700F2AEC5 /* InvestInfoListVC.m in Sources */,
 				A49C7C341A70D42700F2AEC5 /* NSPersistentStore+MagicalRecord.m in Sources */,
 				A49C7C351A70D42700F2AEC5 /* AFURLSessionManager.m in Sources */,
+				F5E13A3A1A7B3062001BB786 /* MyProjectViewController.m in Sources */,
 				A49C7C361A70D42700F2AEC5 /* UIView+XHBadgeView.m in Sources */,
 				A49C7C371A70D42700F2AEC5 /* SchoolCompanyDate.m in Sources */,
 				A49C7C381A70D42700F2AEC5 /* weLian.xcdatamodeld in Sources */,
@@ -11645,6 +11678,7 @@
 				A49C80531A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				A49C7C501A70D42700F2AEC5 /* WLHUDView.m in Sources */,
 				A49C7C511A70D42700F2AEC5 /* ZBExpressionSectionBar.m in Sources */,
+				F5E13A471A7B5329001BB786 /* CreateProjectController.m in Sources */,
 				A49C7C521A70D42700F2AEC5 /* SWLongPressGestureRecognizer.m in Sources */,
 				A49C7C531A70D42700F2AEC5 /* WLMessageTableView.m in Sources */,
 				A49C7C541A70D42700F2AEC5 /* NSString+MD5.m in Sources */,
@@ -11745,6 +11779,7 @@
 				A49C7CB21A70D42700F2AEC5 /* MeInfoController.m in Sources */,
 				A49C7CB31A70D42700F2AEC5 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				A49C7CB41A70D42700F2AEC5 /* WLCellHead.m in Sources */,
+				F5E13A411A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A49C7CB51A70D42700F2AEC5 /* ACETelPrompt.m in Sources */,
 				A49C7CB61A70D42700F2AEC5 /* TOWebViewController.m in Sources */,
 				A49C7CB71A70D42700F2AEC5 /* NSArray+ArrayQuery.m in Sources */,
@@ -11918,7 +11953,6 @@
 				A49C7D571A70D42700F2AEC5 /* WLTogetherUser.m in Sources */,
 				A49C7D581A70D42700F2AEC5 /* NoListView.m in Sources */,
 				A49C7D591A70D42700F2AEC5 /* WLMessageAvatorFactory.m in Sources */,
-				F51A9ADA1A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				A49C7D5A1A70D42700F2AEC5 /* CTAssetsPickerController.m in Sources */,
 				A49C7D5B1A70D42700F2AEC5 /* UserInfoTool.m in Sources */,
 				A49C7D5C1A70D42700F2AEC5 /* XHOperationNetworkKit.m in Sources */,
@@ -12062,6 +12096,7 @@
 				F52F96701A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				A4A2EB141A6CF7C8006ADA55 /* NSPersistentStore+MagicalRecord.m in Sources */,
 				F53DC2E51A49192600F5F712 /* AFURLSessionManager.m in Sources */,
+				F5E13A391A7B3062001BB786 /* MyProjectViewController.m in Sources */,
 				A4C140881A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				F53DC2E61A49192600F5F712 /* SchoolCompanyDate.m in Sources */,
 				F53DC2E71A49192600F5F712 /* weLian.xcdatamodeld in Sources */,
@@ -12091,6 +12126,7 @@
 				A49C80521A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				F53DC2F41A49192600F5F712 /* WLHUDView.m in Sources */,
 				F53DC2F51A49192600F5F712 /* ZBExpressionSectionBar.m in Sources */,
+				F5E13A461A7B5329001BB786 /* CreateProjectController.m in Sources */,
 				F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C1409A1A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F53DC2F81A49192600F5F712 /* NSString+MD5.m in Sources */,
@@ -12191,6 +12227,7 @@
 				F53DC3311A49192600F5F712 /* MeInfoController.m in Sources */,
 				F53DC3321A49192600F5F712 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				F53DC3331A49192600F5F712 /* WLCellHead.m in Sources */,
+				F5E13A401A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3E1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F53DC3341A49192600F5F712 /* TOWebViewController.m in Sources */,
 				F53DC3351A49192600F5F712 /* NSArray+ArrayQuery.m in Sources */,
@@ -12364,7 +12401,6 @@
 				F53DC39C1A49192600F5F712 /* WLTogetherUser.m in Sources */,
 				F53DC39D1A49192600F5F712 /* NoListView.m in Sources */,
 				A4C1417E1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
-				F51A9AD91A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F53DC39F1A49192600F5F712 /* CTAssetsPickerController.m in Sources */,
 				F53DC3A01A49192600F5F712 /* UserInfoTool.m in Sources */,
 				A4C140BF1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
@@ -12508,6 +12544,7 @@
 				F52F966E1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				A4A2EB121A6CF7C8006ADA55 /* NSPersistentStore+MagicalRecord.m in Sources */,
 				F53D4E501A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				F5E13A371A7B3062001BB786 /* MyProjectViewController.m in Sources */,
 				F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */,
 				F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */,
 				F56649BE1A2AFD56008A5830 /* AFURLSessionManager.m in Sources */,
@@ -12537,6 +12574,7 @@
 				A49C80501A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				A4F647A41A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				F56649D11A2AFD56008A5830 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				F5E13A441A7B5329001BB786 /* CreateProjectController.m in Sources */,
 				F56649D21A2AFD56008A5830 /* MJType.m in Sources */,
 				F56649D31A2AFD56008A5830 /* CTAssetScrollView.m in Sources */,
 				F56649D41A2AFD56008A5830 /* UIWebView+AFNetworking.m in Sources */,
@@ -12637,6 +12675,7 @@
 				F5664A041A2AFD56008A5830 /* SWCellScrollView.m in Sources */,
 				A4C1410E1A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
 				A4C1411D1A4BEF5700C9BAB5 /* MultiSelectedPanel.m in Sources */,
+				F5E13A3E1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3C1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664A061A2AFD56008A5830 /* AFURLResponseSerialization.m in Sources */,
@@ -12810,7 +12849,6 @@
 				A4C140771A4BEA8500C9BAB5 /* UIImage+RoundedCorner.m in Sources */,
 				A4C140981A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F5664A651A2AFD56008A5830 /* CTAssetsPickerController.m in Sources */,
-				F51A9AD71A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F5664A661A2AFD56008A5830 /* UserInfoTool.m in Sources */,
 				A4C141261A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F5664A671A2AFD56008A5830 /* pinyin.c in Sources */,
@@ -12954,6 +12992,7 @@
 				F52F966F1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				A4A2EB131A6CF7C8006ADA55 /* NSPersistentStore+MagicalRecord.m in Sources */,
 				F5664C781A2AFDD5008A5830 /* AFURLSessionManager.m in Sources */,
+				F5E13A381A7B3062001BB786 /* MyProjectViewController.m in Sources */,
 				A4C140871A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				F59E76101A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
 				F59E760C1A405D170028FBAF /* weLian.xcdatamodeld in Sources */,
@@ -12983,6 +13022,7 @@
 				A49C80511A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				F5664C871A2AFDD5008A5830 /* WLHUDView.m in Sources */,
 				F5664C881A2AFDD5008A5830 /* ZBExpressionSectionBar.m in Sources */,
+				F5E13A451A7B5329001BB786 /* CreateProjectController.m in Sources */,
 				F5664C891A2AFDD5008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C140991A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F5664C8A1A2AFDD5008A5830 /* NSString+MD5.m in Sources */,
@@ -13083,6 +13123,7 @@
 				F5664CB91A2AFDD5008A5830 /* MeInfoController.m in Sources */,
 				F5664CBA1A2AFDD5008A5830 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				F5664CBB1A2AFDD5008A5830 /* WLCellHead.m in Sources */,
+				F5E13A3F1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3D1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
 				F5664CBC1A2AFDD5008A5830 /* TOWebViewController.m in Sources */,
 				F59E76011A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
@@ -13256,7 +13297,6 @@
 				F5664D1C1A2AFDD5008A5830 /* WLTogetherUser.m in Sources */,
 				F5664D1D1A2AFDD5008A5830 /* NoListView.m in Sources */,
 				A4C1417D1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
-				F51A9AD81A720DAC00918025 /* YMReplyInputView.m in Sources */,
 				F5664D1F1A2AFDD5008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664D201A2AFDD5008A5830 /* UserInfoTool.m in Sources */,
 				A4C140BE1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,

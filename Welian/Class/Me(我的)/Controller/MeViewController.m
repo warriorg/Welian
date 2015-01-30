@@ -15,6 +15,7 @@
 #import "InvestCerVC.h"
 #import "BadgeBaseCell.h"
 #import "MainViewController.h"
+#import "MyProjectViewController.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -151,13 +152,18 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
         }
     }else if (indexPath.section==2){
-        controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
-        [controller setTitle:@"我是投资人"];
-        
-        // 取消我是投资人角标
-        [LogInUser setUserIsinvestorbadge:NO];
-        [[MainViewController sharedMainViewController] loadNewStustupdata];
-        [self reloadInvestorstate];
+        if (indexPath.row==0) {
+            controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
+            [controller setTitle:@"我是投资人"];
+            // 取消我是投资人角标
+            [LogInUser setUserIsinvestorbadge:NO];
+            [[MainViewController sharedMainViewController] loadNewStustupdata];
+            [self reloadInvestorstate];
+        }else if (indexPath.row==1){
+            controller = [[MyProjectViewController alloc] init];
+            [controller setTitle:@"我的项目"];
+            
+        }
         
     }else if (indexPath.section == 3){
         controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];

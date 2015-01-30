@@ -157,7 +157,7 @@ static NSString *identifier = @"investorcellid";
     
     [cell.nameLabel setText:invesM.name];
     [cell.infoLabel setText:[NSString stringWithFormat:@"%@  %@",invesM.position,invesM.company]];
-    [cell.caseLabel setText:[NSString stringWithFormat:@"投资案例:%@",invesM.items?invesM.items:@"暂无"]];
+    [cell.caseLabel setText:[NSString stringWithFormat:@"投资案例:%@",invesM.items.length?invesM.items:@"暂无"]];
     if (invesM.investorauth.integerValue==1) {
         [cell.investorauthImage setHidden:NO];
     }else{
