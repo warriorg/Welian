@@ -183,7 +183,9 @@ static NSString * const reuseIdentifier = @"Cell";
                 [InvestStages createInvestStages:stageM];
             }
         }
-        self.investBlock();
+        if (self.investBlock) {
+            self.investBlock();
+        }
         [self.navigationController popViewControllerAnimated:YES];
     } fail:^(NSError *error) {
         

@@ -23,7 +23,6 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         [_tableView setDelegate: self];
         [_tableView setDataSource:self];
-        [self.view addSubview:_tableView];
     }
     return _tableView;
 }
@@ -32,10 +31,11 @@
 {
     self = [super init];
     if (self) {
-        if (!isEdit) {
-            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+//        if (!isEdit) {
+            [self.view addSubview:_tableView];
+//            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(financingProject)];
-        }
+//        }
     }
     return self;
 }

@@ -31,10 +31,10 @@
 {
     self = [super init];
     if (self) {
-        if (!isEdit) {
+//        if (!isEdit) {
             [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
-        }
+//        }
     }
     return self;
 }
