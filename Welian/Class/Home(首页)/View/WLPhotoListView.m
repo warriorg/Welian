@@ -13,6 +13,8 @@
 #import "MJPhoto.h"
 #import "WLPhoto.h"
 
+#define kMarginLeft 15.f
+
 @implementation WLPhotoListView
 
 - (id)initWithFrame:(CGRect)frame
@@ -85,13 +87,16 @@
             // 第几行
             int row = i / maxColPerRow;
             
+            CGFloat windowWidth = [UIScreen mainScreen].bounds.size.width;
+            CGFloat photoWidth = _needAutoSize ? (windowWidth - kMarginLeft * 2.f - IWPhotoMargin * 2) / 3 : IWPhotoWH;
+            CGFloat photoHeight = _needAutoSize ? photoWidth : IWPhotoWH;
             
             // x 取决于 列
-            CGFloat photoX = col * (IWPhotoWH + IWPhotoMargin);
+            CGFloat photoX = col * (photoWidth + IWPhotoMargin);
             // y 取决于 行
-            CGFloat photoY = row * (IWPhotoWH + IWPhotoMargin);
+            CGFloat photoY = row * (photoHeight + IWPhotoMargin);
             
-            photoView.frame = CGRectMake(photoX, photoY, IWPhotoWH, IWPhotoWH);
+            photoView.frame = CGRectMake(photoX, photoY, photoWidth, photoHeight);
             
             
         } else { // 没有可以展示的图片
@@ -154,7 +159,7 @@
     return CGSizeMake(w, h);
 }
 
-+ (CGSize)photoListSizeWithCount:(NSArray *)count
++ (CGSize)photoListSizeWithCount:(NSArray *)count needAutoSize:(BOOL)needAutoSize
 {
     // 1.只有1张图片
     if (count.count == 1) {
@@ -198,8 +203,10 @@
     // 行数 = (总个数 + 每行最多显示数 - 1) / 每行最多显示数
     int rowCount = (count.count + maxColPerRow - 1) / maxColPerRow;
     
-    CGFloat photoListW = colCount * IWPhotoWH + (colCount - 1) * IWPhotoMargin;
-    CGFloat photoListH = rowCount * IWPhotoWH + (rowCount - 1) * IWPhotoMargin;
+    CGFloat photoWidth = needAutoSize ? ([UIScreen mainScreen].bounds.size.width - kMarginLeft * 2.f) / colCount : IWPhotoWH;
+    CGFloat photoHeight = needAutoSize ? photoWidth : IWPhotoWH;
+    CGFloat photoListW = colCount * photoWidth + (colCount - 1) * IWPhotoMargin;
+    CGFloat photoListH = rowCount * photoHeight + (rowCount - 1) * IWPhotoMargin;
     
     return CGSizeMake(photoListW, photoListH);
 }

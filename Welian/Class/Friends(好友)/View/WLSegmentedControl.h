@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) NSArray *bridges;
 
-- (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges;
+- (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges isHorizontal:(BOOL)isHorizontal;
 
 //提供方法改变 index
 //- (void)changeSegmentedControlWithIndex:(NSInteger)index;

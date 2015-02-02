@@ -62,7 +62,7 @@
         CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + 5;
         
         // 根据图片数量计算相册的尺寸
-        CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos];
+        CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos needAutoSize:NO];
         
         _photoListViewF = (CGRect){{photoListX, photoListY}, photoListSize};
 
