@@ -1935,6 +1935,14 @@
 		F53356381A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F533563A1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
 		F533563B1A38291B000A15AC /* SigninPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53356391A38291B000A15AC /* SigninPlist.plist */; };
+		F533BD901A7B7C340057A229 /* MemberProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD8F1A7B7C340057A229 /* MemberProjectController.m */; };
+		F533BD911A7B7C340057A229 /* MemberProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD8F1A7B7C340057A229 /* MemberProjectController.m */; };
+		F533BD921A7B7C340057A229 /* MemberProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD8F1A7B7C340057A229 /* MemberProjectController.m */; };
+		F533BD931A7B7C340057A229 /* MemberProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD8F1A7B7C340057A229 /* MemberProjectController.m */; };
+		F533BD961A7B82810057A229 /* FinancingProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD951A7B82810057A229 /* FinancingProjectController.m */; };
+		F533BD971A7B82810057A229 /* FinancingProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD951A7B82810057A229 /* FinancingProjectController.m */; };
+		F533BD981A7B82810057A229 /* FinancingProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD951A7B82810057A229 /* FinancingProjectController.m */; };
+		F533BD991A7B82810057A229 /* FinancingProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = F533BD951A7B82810057A229 /* FinancingProjectController.m */; };
 		F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
 		F534DAD71A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
 		F534DAD81A4E929500B6A725 /* InvestCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F534DAD41A4E929500B6A725 /* InvestCardCell.m */; };
@@ -5307,6 +5315,10 @@
 		F53356331A370EEC000A15AC /* osusume_friend_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add@2x.png"; sourceTree = "<group>"; };
 		F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "osusume_friend_add_already@2x.png"; sourceTree = "<group>"; };
 		F53356391A38291B000A15AC /* SigninPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SigninPlist.plist; sourceTree = "<group>"; };
+		F533BD8E1A7B7C340057A229 /* MemberProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberProjectController.h; sourceTree = "<group>"; };
+		F533BD8F1A7B7C340057A229 /* MemberProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberProjectController.m; sourceTree = "<group>"; };
+		F533BD941A7B82810057A229 /* FinancingProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinancingProjectController.h; sourceTree = "<group>"; };
+		F533BD951A7B82810057A229 /* FinancingProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinancingProjectController.m; sourceTree = "<group>"; };
 		F534DAD31A4E929500B6A725 /* InvestCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestCardCell.h; sourceTree = "<group>"; };
 		F534DAD41A4E929500B6A725 /* InvestCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestCardCell.m; sourceTree = "<group>"; };
 		F534DAD51A4E929500B6A725 /* InvestCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvestCardCell.xib; sourceTree = "<group>"; };
@@ -7765,6 +7777,13 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		F533BD9A1A7B97590057A229 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F534DACD1A4E8FA700B6A725 /* 投资人认证 */ = {
 			isa = PBXGroup;
 			children = (
@@ -8979,10 +8998,15 @@
 		F5E13A341A7B2AD0001BB786 /* 我的项目 */ = {
 			isa = PBXGroup;
 			children = (
+				F533BD9A1A7B97590057A229 /* View */,
 				F5E13A351A7B3062001BB786 /* MyProjectViewController.h */,
 				F5E13A361A7B3062001BB786 /* MyProjectViewController.m */,
 				F5E13A421A7B5329001BB786 /* CreateProjectController.h */,
 				F5E13A431A7B5329001BB786 /* CreateProjectController.m */,
+				F533BD8E1A7B7C340057A229 /* MemberProjectController.h */,
+				F533BD8F1A7B7C340057A229 /* MemberProjectController.m */,
+				F533BD941A7B82810057A229 /* FinancingProjectController.h */,
+				F533BD951A7B82810057A229 /* FinancingProjectController.m */,
 			);
 			path = "我的项目";
 			sourceTree = "<group>";
@@ -11580,6 +11604,7 @@
 				A49C804F1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				A49C7BF11A70D42700F2AEC5 /* MBProgressHUD.m in Sources */,
 				A49C7BF21A70D42700F2AEC5 /* MJMember.m in Sources */,
+				F533BD931A7B7C340057A229 /* MemberProjectController.m in Sources */,
 				A49C7BF31A70D42700F2AEC5 /* WorksListController.m in Sources */,
 				A49C7BF41A70D42700F2AEC5 /* SettingController.m in Sources */,
 				A49C7BF51A70D42700F2AEC5 /* InvestCollectionVC.m in Sources */,
@@ -11952,6 +11977,7 @@
 				A49C7D561A70D42700F2AEC5 /* MJTypeEncoding.m in Sources */,
 				A49C7D571A70D42700F2AEC5 /* WLTogetherUser.m in Sources */,
 				A49C7D581A70D42700F2AEC5 /* NoListView.m in Sources */,
+				F533BD991A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A49C7D591A70D42700F2AEC5 /* WLMessageAvatorFactory.m in Sources */,
 				A49C7D5A1A70D42700F2AEC5 /* CTAssetsPickerController.m in Sources */,
 				A49C7D5B1A70D42700F2AEC5 /* UserInfoTool.m in Sources */,
@@ -12028,6 +12054,7 @@
 				A49C804E1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				F53DC2BB1A49192600F5F712 /* MBProgressHUD.m in Sources */,
 				F53DC2BC1A49192600F5F712 /* MJMember.m in Sources */,
+				F533BD921A7B7C340057A229 /* MemberProjectController.m in Sources */,
 				F53DC2BD1A49192600F5F712 /* WorksListController.m in Sources */,
 				F53DC2BE1A49192600F5F712 /* SettingController.m in Sources */,
 				F534DAE41A4EAA5800B6A725 /* InvestCollectionVC.m in Sources */,
@@ -12400,6 +12427,7 @@
 				F53DC39B1A49192600F5F712 /* MJTypeEncoding.m in Sources */,
 				F53DC39C1A49192600F5F712 /* WLTogetherUser.m in Sources */,
 				F53DC39D1A49192600F5F712 /* NoListView.m in Sources */,
+				F533BD981A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A4C1417E1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
 				F53DC39F1A49192600F5F712 /* CTAssetsPickerController.m in Sources */,
 				F53DC3A01A49192600F5F712 /* UserInfoTool.m in Sources */,
@@ -12476,6 +12504,7 @@
 				A49C804C1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				A4C141231A4BEF5700C9BAB5 /* MultiSelectItem.m in Sources */,
 				F56649961A2AFD56008A5830 /* MBProgressHUD.m in Sources */,
+				F533BD901A7B7C340057A229 /* MemberProjectController.m in Sources */,
 				F56649971A2AFD56008A5830 /* MJMember.m in Sources */,
 				F56649981A2AFD56008A5830 /* WorksListController.m in Sources */,
 				F56649991A2AFD56008A5830 /* SettingController.m in Sources */,
@@ -12848,6 +12877,7 @@
 				F534DAE21A4EAA5800B6A725 /* InvestCollectionVC.m in Sources */,
 				A4C140771A4BEA8500C9BAB5 /* UIImage+RoundedCorner.m in Sources */,
 				A4C140981A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
+				F533BD961A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				F5664A651A2AFD56008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664A661A2AFD56008A5830 /* UserInfoTool.m in Sources */,
 				A4C141261A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
@@ -12924,6 +12954,7 @@
 				A49C804D1A71041000F2AEC5 /* DataSigner.m in Sources */,
 				F5664C501A2AFDD5008A5830 /* MBProgressHUD.m in Sources */,
 				F5664C511A2AFDD5008A5830 /* MJMember.m in Sources */,
+				F533BD911A7B7C340057A229 /* MemberProjectController.m in Sources */,
 				F5664C521A2AFDD5008A5830 /* WorksListController.m in Sources */,
 				F5664C531A2AFDD5008A5830 /* SettingController.m in Sources */,
 				F534DAE31A4EAA5800B6A725 /* InvestCollectionVC.m in Sources */,
@@ -13296,6 +13327,7 @@
 				F5664D1B1A2AFDD5008A5830 /* MJTypeEncoding.m in Sources */,
 				F5664D1C1A2AFDD5008A5830 /* WLTogetherUser.m in Sources */,
 				F5664D1D1A2AFDD5008A5830 /* NoListView.m in Sources */,
+				F533BD971A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A4C1417D1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
 				F5664D1F1A2AFDD5008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664D201A2AFDD5008A5830 /* UserInfoTool.m in Sources */,

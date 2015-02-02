@@ -1,28 +1,28 @@
 //
-//  CreateProjectController.m
+//  MemberProjectController.m
 //  Welian
 //
 //  Created by dong on 15/1/30.
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import "CreateProjectController.h"
 #import "MemberProjectController.h"
+#import "FinancingProjectController.h"
 
-@interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource>
+@interface MemberProjectController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
 
-@implementation CreateProjectController
+@implementation MemberProjectController
 
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        [_tableView setDelegate: self];
         [_tableView setDataSource:self];
-        [_tableView setDelegate:self];
         [self.view addSubview:_tableView];
     }
     return _tableView;
@@ -34,18 +34,17 @@
     if (self) {
         if (!isEdit) {
             [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(financingProject)];
         }
-        
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"项目简介"];
+    [self setTitle:@"选择团队成员"];
+    // Do any additional setup after loading the view.
 }
-
 
 #pragma mark - tableView代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -64,14 +63,12 @@
     return cell;
 }
 
-
-#pragma mark - 下一步团队成员
-- (void)addMemberProject
+#pragma mrak - 下一步融资
+- (void)financingProject
 {
-    MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO];
-    [self.navigationController pushViewController:memberVC animated:YES];
+    FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO];
+    [self.navigationController pushViewController:financingVC animated:YES];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
