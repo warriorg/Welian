@@ -78,9 +78,6 @@ static NSString *picCellid = @"PicCellID";
     [self.navigationItem setTitle:@"发布动态"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmPublish)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPublish)];
-//    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    //    self.backGScroll = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    //    [self.view addSubview:self.backGScroll];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -146,7 +143,6 @@ static NSString *picCellid = @"PicCellID";
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         [layout setSectionInset:UIEdgeInsetsMake(10, 15, 10, 15)];
         [layout setMinimumLineSpacing:10.0];
-        //    [layout setHeaderReferenceSize:CGSizeMake(self.view.bounds.size.width, 34)];
         
         self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.textView.frame)-INPUT_HEIGHT-10) collectionViewLayout:layout];
         //    [self.collectionView setContentInset:UIEdgeInsetsMake(120, 0, 0, 0)];
@@ -302,7 +298,6 @@ static NSString *picCellid = @"PicCellID";
 
 
 #pragma mark - CollectionView代理
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (self.assets.count>0&&self.assets.count<9) {
@@ -413,8 +408,6 @@ static NSString *picCellid = @"PicCellID";
     NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
     
     if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
-        
-       
             // 保存图片到相册，调用的相关方法，查看是否保存成功
             [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
                [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
@@ -425,7 +418,6 @@ static NSString *picCellid = @"PicCellID";
 
                    }];
                    
-
                } failureBlock:^(NSError *error) {
                    
                }];
@@ -518,7 +510,6 @@ static NSString *picCellid = @"PicCellID";
 }
 
 #pragma mark - Assets Picker Delegate
-
 - (BOOL)assetsPickerController:(CTAssetsPickerController *)picker isDefaultAssetsGroup:(ALAssetsGroup *)group
 {
     return ([[group valueForProperty:ALAssetsGroupPropertyType] integerValue] == ALAssetsGroupSavedPhotos);

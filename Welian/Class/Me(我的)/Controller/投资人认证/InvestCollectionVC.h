@@ -16,6 +16,7 @@ typedef void (^InvestBlock)(void);
 
 @property (nonatomic, copy) InvestBlock investBlock;
 
+// 1 投资领域  2投资阶段
 - (instancetype)initWithType:(NSInteger)type;
 
 @end

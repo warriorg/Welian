@@ -2681,6 +2681,74 @@
 		F53DC57F1A49192600F5F712 /* Expression_78@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5324E3519EC122200A1D066 /* Expression_78@2x.png */; };
 		F53DC5811A49192600F5F712 /* home_picture_add_ok_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098C19C2E3F2009DB1B2 /* home_picture_add_ok_bg@2x.png */; };
 		F53DC5821A49192600F5F712 /* Expression_26@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5324DFC19EC122100A1D066 /* Expression_26@2x.png */; };
+		F55078781A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */; };
+		F55078791A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */; };
+		F550787A1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */; };
+		F550787B1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */; };
+		F550787E1A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */; };
+		F550787F1A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */; };
+		F55078801A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */; };
+		F55078811A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */; };
+		F55078A71A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */; };
+		F55078A81A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */; };
+		F55078A91A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */; };
+		F55078AA1A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */; };
+		F55078AB1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */; };
+		F55078AC1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */; };
+		F55078AD1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */; };
+		F55078AE1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */; };
+		F55078AF1A7F5BE9009CE4F7 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = F550788E1A7F5BE9009CE4F7 /* JKAssets.m */; };
+		F55078B01A7F5BE9009CE4F7 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = F550788E1A7F5BE9009CE4F7 /* JKAssets.m */; };
+		F55078B11A7F5BE9009CE4F7 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = F550788E1A7F5BE9009CE4F7 /* JKAssets.m */; };
+		F55078B21A7F5BE9009CE4F7 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = F550788E1A7F5BE9009CE4F7 /* JKAssets.m */; };
+		F55078B31A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */; };
+		F55078B41A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */; };
+		F55078B51A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */; };
+		F55078B61A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */; };
+		F55078B71A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */; };
+		F55078B81A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */; };
+		F55078B91A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */; };
+		F55078BA1A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */; };
+		F55078BB1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */; };
+		F55078BC1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */; };
+		F55078BD1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */; };
+		F55078BE1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */; };
+		F55078BF1A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */; };
+		F55078C01A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */; };
+		F55078C11A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */; };
+		F55078C21A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */; };
+		F55078C31A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */; };
+		F55078C41A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */; };
+		F55078C51A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */; };
+		F55078C61A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */; };
+		F55078C71A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */; };
+		F55078C81A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */; };
+		F55078C91A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */; };
+		F55078CA1A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */; };
+		F55078CB1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */; };
+		F55078CC1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */; };
+		F55078CD1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */; };
+		F55078CE1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */; };
+		F55078CF1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */; };
+		F55078D01A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */; };
+		F55078D11A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */; };
+		F55078D21A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */; };
+		F55078D31A7F5BE9009CE4F7 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */; };
+		F55078D41A7F5BE9009CE4F7 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */; };
+		F55078D51A7F5BE9009CE4F7 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */; };
+		F55078D61A7F5BE9009CE4F7 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */; };
+		F55078D71A7F5BE9009CE4F7 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A21A7F5BE9009CE4F7 /* JKUtil.m */; };
+		F55078D81A7F5BE9009CE4F7 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A21A7F5BE9009CE4F7 /* JKUtil.m */; };
+		F55078D91A7F5BE9009CE4F7 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A21A7F5BE9009CE4F7 /* JKUtil.m */; };
+		F55078DA1A7F5BE9009CE4F7 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A21A7F5BE9009CE4F7 /* JKUtil.m */; };
+		F55078DB1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */; };
+		F55078DC1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */; };
+		F55078DD1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */; };
+		F55078DE1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */; };
+		F55078DF1A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
+		F55078E01A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
+		F55078E11A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
+		F55078E21A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
 		F55772801A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
 		F55772811A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
 		F55772821A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
@@ -5401,6 +5469,39 @@
 		F5477B0B19D148F100CF89FE /* PublishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishModel.m; sourceTree = "<group>"; };
 		F5477B0D19D1895400CF89FE /* WLBasicTrends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLBasicTrends.h; sourceTree = "<group>"; };
 		F5477B0E19D1895400CF89FE /* WLBasicTrends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLBasicTrends.m; sourceTree = "<group>"; };
+		F55078761A7F1B2C009CE4F7 /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
+		F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
+		F550787C1A7F2BE0009CE4F7 /* CreateProjectFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectFootView.h; sourceTree = "<group>"; };
+		F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProjectFootView.m; sourceTree = "<group>"; };
+		F55078891A7F5BE9009CE4F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JKImagePickerController.strings; sourceTree = "<group>"; };
+		F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPicker.xcassets; sourceTree = "<group>"; };
+		F550788B1A7F5BE9009CE4F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/JKImagePickerController.strings"; sourceTree = "<group>"; };
+		F550788D1A7F5BE9009CE4F7 /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
+		F550788E1A7F5BE9009CE4F7 /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
+		F550788F1A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsCollectionFooterView.h; sourceTree = "<group>"; };
+		F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsCollectionFooterView.m; sourceTree = "<group>"; };
+		F55078911A7F5BE9009CE4F7 /* JKAssetsGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupCell.h; sourceTree = "<group>"; };
+		F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupCell.m; sourceTree = "<group>"; };
+		F55078931A7F5BE9009CE4F7 /* JKAssetsGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupsView.h; sourceTree = "<group>"; };
+		F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupsView.m; sourceTree = "<group>"; };
+		F55078951A7F5BE9009CE4F7 /* JKAssetsThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsThumbnailView.h; sourceTree = "<group>"; };
+		F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsThumbnailView.m; sourceTree = "<group>"; };
+		F55078971A7F5BE9009CE4F7 /* JKAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsViewCell.h; sourceTree = "<group>"; };
+		F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsViewCell.m; sourceTree = "<group>"; };
+		F55078991A7F5BE9009CE4F7 /* JKImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKImagePickerController.h; sourceTree = "<group>"; };
+		F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKImagePickerController.m; sourceTree = "<group>"; };
+		F550789B1A7F5BE9009CE4F7 /* JKPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowser.h; sourceTree = "<group>"; };
+		F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowser.m; sourceTree = "<group>"; };
+		F550789D1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowserCell.h; sourceTree = "<group>"; };
+		F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowserCell.m; sourceTree = "<group>"; };
+		F550789F1A7F5BE9009CE4F7 /* JKPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPromptView.h; sourceTree = "<group>"; };
+		F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPromptView.m; sourceTree = "<group>"; };
+		F55078A11A7F5BE9009CE4F7 /* JKUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUtil.h; sourceTree = "<group>"; };
+		F55078A21A7F5BE9009CE4F7 /* JKUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUtil.m; sourceTree = "<group>"; };
+		F55078A31A7F5BE9009CE4F7 /* PhotoAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoAlbumManager.h; sourceTree = "<group>"; };
+		F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumManager.m; sourceTree = "<group>"; };
+		F55078A51A7F5BE9009CE4F7 /* UIView+JKPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JKPicker.h"; sourceTree = "<group>"; };
+		F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JKPicker.m"; sourceTree = "<group>"; };
 		F551B8141A08EE4C0036EA48 /* home_repost_welian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_repost_welian@2x.png"; sourceTree = "<group>"; };
 		F557727F1A5A612400693279 /* me_mycard_tou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou@2x.png"; sourceTree = "<group>"; };
 		F55772831A5A696800693279 /* me_mycard_tou_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou_big@2x.png"; sourceTree = "<group>"; };
@@ -7780,6 +7881,10 @@
 		F533BD9A1A7B97590057A229 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F55078761A7F1B2C009CE4F7 /* TextFieldCell.h */,
+				F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */,
+				F550787C1A7F2BE0009CE4F7 /* CreateProjectFootView.h */,
+				F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7833,6 +7938,57 @@
 				A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		F55078861A7F5BE9009CE4F7 /* JKImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				F55078871A7F5BE9009CE4F7 /* Assets */,
+				F550788C1A7F5BE9009CE4F7 /* Classes */,
+			);
+			path = JKImagePicker;
+			sourceTree = "<group>";
+		};
+		F55078871A7F5BE9009CE4F7 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */,
+				F550788A1A7F5BE9009CE4F7 /* ImagesPicker.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		F550788C1A7F5BE9009CE4F7 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F550788D1A7F5BE9009CE4F7 /* JKAssets.h */,
+				F550788E1A7F5BE9009CE4F7 /* JKAssets.m */,
+				F550788F1A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.h */,
+				F55078901A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m */,
+				F55078911A7F5BE9009CE4F7 /* JKAssetsGroupCell.h */,
+				F55078921A7F5BE9009CE4F7 /* JKAssetsGroupCell.m */,
+				F55078931A7F5BE9009CE4F7 /* JKAssetsGroupsView.h */,
+				F55078941A7F5BE9009CE4F7 /* JKAssetsGroupsView.m */,
+				F55078951A7F5BE9009CE4F7 /* JKAssetsThumbnailView.h */,
+				F55078961A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m */,
+				F55078971A7F5BE9009CE4F7 /* JKAssetsViewCell.h */,
+				F55078981A7F5BE9009CE4F7 /* JKAssetsViewCell.m */,
+				F55078991A7F5BE9009CE4F7 /* JKImagePickerController.h */,
+				F550789A1A7F5BE9009CE4F7 /* JKImagePickerController.m */,
+				F550789B1A7F5BE9009CE4F7 /* JKPhotoBrowser.h */,
+				F550789C1A7F5BE9009CE4F7 /* JKPhotoBrowser.m */,
+				F550789D1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.h */,
+				F550789E1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m */,
+				F550789F1A7F5BE9009CE4F7 /* JKPromptView.h */,
+				F55078A01A7F5BE9009CE4F7 /* JKPromptView.m */,
+				F55078A11A7F5BE9009CE4F7 /* JKUtil.h */,
+				F55078A21A7F5BE9009CE4F7 /* JKUtil.m */,
+				F55078A31A7F5BE9009CE4F7 /* PhotoAlbumManager.h */,
+				F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */,
+				F55078A51A7F5BE9009CE4F7 /* UIView+JKPicker.h */,
+				F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		F557729B1A5AA3E200693279 /* 登录images */ = {
@@ -8818,6 +8974,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				F55078861A7F5BE9009CE4F7 /* JKImagePicker */,
 				F5E13A3B1A7B45EF001BB786 /* HMSegmentedControl */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				A49C7FCF1A71040F00F2AEC5 /* alipay */,
@@ -9614,6 +9771,7 @@
 				A49C7ED31A70D42700F2AEC5 /* StaurCell.xib in Resources */,
 				A49C7ED41A70D42700F2AEC5 /* Icon-40@3x.png in Resources */,
 				A49C7ED51A70D42700F2AEC5 /* avator@2x.png in Resources */,
+				F55078AA1A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */,
 				A49C7ED61A70D42700F2AEC5 /* tabbar_chat_selected@2x.png in Resources */,
 				A49C7ED71A70D42700F2AEC5 /* common_card_background@2x.png in Resources */,
 				A49C7ED81A70D42700F2AEC5 /* home_new_picture@2x.png in Resources */,
@@ -9838,6 +9996,7 @@
 				A49C7FB31A70D42700F2AEC5 /* me_circle_chat_keybroad@2x.png in Resources */,
 				A49C7FB41A70D42700F2AEC5 /* remind_big_nostring@2x.png in Resources */,
 				A49C7FB51A70D42700F2AEC5 /* sns_icon_25@2x.png in Resources */,
+				F55078AE1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */,
 				A49C7FB61A70D42700F2AEC5 /* Expression_100@2x.png in Resources */,
 				A49C7FB71A70D42700F2AEC5 /* sns_icon_30@2x.png in Resources */,
 				A49C7FB81A70D42700F2AEC5 /* home_detail_user_small@2x.png in Resources */,
@@ -10177,6 +10336,7 @@
 				F53DC4C41A49192600F5F712 /* StaurCell.xib in Resources */,
 				F53DC4C61A49192600F5F712 /* Icon-40@3x.png in Resources */,
 				A4C143691A4C0A6B00C9BAB5 /* avator@2x.png in Resources */,
+				F55078A91A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */,
 				F5C778CE1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */,
 				F53DC4C71A49192600F5F712 /* common_card_background@2x.png in Resources */,
 				F53DC4C81A49192600F5F712 /* home_new_picture@2x.png in Resources */,
@@ -10401,6 +10561,7 @@
 				F53DC5741A49192600F5F712 /* me_circle_chat_keybroad@2x.png in Resources */,
 				F53DC5751A49192600F5F712 /* remind_big_nostring@2x.png in Resources */,
 				F53DC5761A49192600F5F712 /* sns_icon_25@2x.png in Resources */,
+				F55078AD1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */,
 				F53DC5771A49192600F5F712 /* Expression_100@2x.png in Resources */,
 				F53DC5781A49192600F5F712 /* sns_icon_30@2x.png in Resources */,
 				F53DC57A1A49192600F5F712 /* home_detail_user_small@2x.png in Resources */,
@@ -10740,6 +10901,7 @@
 				F569A8191A31B36D00B677B0 /* me_mywriten_repeat@2x.png in Resources */,
 				A4C1439D1A4C0A6B00C9BAB5 /* Fav_Cell_Loc@2x.png in Resources */,
 				F5664B7C1A2AFD56008A5830 /* Icon-40@3x.png in Resources */,
+				F55078A71A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */,
 				A4C143761A4C0A6B00C9BAB5 /* section0_emotion12@2x.png in Resources */,
 				F55773221A5AB04200693279 /* login_guide3@2x.png in Resources */,
 				F51BA4501A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png in Resources */,
@@ -10964,6 +11126,7 @@
 				A4C1442D1A4C0A6B00C9BAB5 /* MultiSelectedPanelBkg@2x.png in Resources */,
 				F5664C251A2AFD56008A5830 /* home_detail_user_small@2x.png in Resources */,
 				F5664C271A2AFD56008A5830 /* Expression_103@2x.png in Resources */,
+				F55078AB1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */,
 				F5664C291A2AFD56008A5830 /* me_circle_chat_camera@2x.png in Resources */,
 				A4C144211A4C0A6B00C9BAB5 /* CellGraySelected@2x.png in Resources */,
 				F5664C2A1A2AFD56008A5830 /* Expression_78@2x.png in Resources */,
@@ -11303,6 +11466,7 @@
 				F5664E331A2AFDD5008A5830 /* StaurCell.xib in Resources */,
 				F5664E361A2AFDD5008A5830 /* Icon-40@3x.png in Resources */,
 				A4C143681A4C0A6B00C9BAB5 /* avator@2x.png in Resources */,
+				F55078A81A7F5BE9009CE4F7 /* JKImagePickerController.strings in Resources */,
 				F5C778CD1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */,
 				F5664E371A2AFDD5008A5830 /* common_card_background@2x.png in Resources */,
 				F5664E381A2AFDD5008A5830 /* home_new_picture@2x.png in Resources */,
@@ -11527,6 +11691,7 @@
 				F5664EDA1A2AFDD5008A5830 /* me_circle_chat_keybroad@2x.png in Resources */,
 				F5E69B341A42AF21001B19E5 /* remind_big_nostring@2x.png in Resources */,
 				F5664EDB1A2AFDD5008A5830 /* sns_icon_25@2x.png in Resources */,
+				F55078AC1A7F5BE9009CE4F7 /* ImagesPicker.xcassets in Resources */,
 				F5664EDC1A2AFDD5008A5830 /* Expression_100@2x.png in Resources */,
 				F5664EDD1A2AFDD5008A5830 /* sns_icon_30@2x.png in Resources */,
 				F5664EDF1A2AFDD5008A5830 /* home_detail_user_small@2x.png in Resources */,
@@ -11560,6 +11725,7 @@
 				A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */,
 				A49C7BC71A70D42700F2AEC5 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A49C7BC81A70D42700F2AEC5 /* FriendsNewCell.m in Sources */,
+				F55078D61A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				A49C7BC91A70D42700F2AEC5 /* MLLetterIndexNavigationView.m in Sources */,
 				A49C7BCA1A70D42700F2AEC5 /* MJPhotoToolbar.m in Sources */,
 				A49C7BCB1A70D42700F2AEC5 /* e0571CoreDataManager.m in Sources */,
@@ -11710,6 +11876,7 @@
 				A49C7C551A70D42700F2AEC5 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A49C7C561A70D42700F2AEC5 /* MagicalRecord+iCloud.m in Sources */,
 				A49C7C571A70D42700F2AEC5 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				F55078B21A7F5BE9009CE4F7 /* JKAssets.m in Sources */,
 				A49C7C581A70D42700F2AEC5 /* MJType.m in Sources */,
 				A49C7C591A70D42700F2AEC5 /* XHZoomingImageView.m in Sources */,
 				A49C7C5A1A70D42700F2AEC5 /* CTAssetScrollView.m in Sources */,
@@ -11747,6 +11914,7 @@
 				A49C7C7A1A70D42700F2AEC5 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				A49C7C7B1A70D42700F2AEC5 /* WLDataDBTool.m in Sources */,
 				A49C7C7C1A70D42700F2AEC5 /* FriendsFriendController.m in Sources */,
+				F55078BA1A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
 				A49C7C7D1A70D42700F2AEC5 /* WeixinActivity.m in Sources */,
 				A49C7C7E1A70D42700F2AEC5 /* MagicalRecord+Setup.m in Sources */,
 				A49C7C7F1A70D42700F2AEC5 /* NSObject+MJMember.m in Sources */,
@@ -11795,6 +11963,7 @@
 				A49C7CA91A70D42700F2AEC5 /* InvestorUserM.m in Sources */,
 				A49C7CAA1A70D42700F2AEC5 /* WLMessageTableViewCell.m in Sources */,
 				A49C7CAB1A70D42700F2AEC5 /* UIView+Extend.m in Sources */,
+				F55078811A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
 				A49C7CAC1A70D42700F2AEC5 /* UIImageView+MJWebCache.m in Sources */,
 				A49C7CAD1A70D42700F2AEC5 /* WLShareMenuView.m in Sources */,
 				A49C7CAE1A70D42700F2AEC5 /* UIImage+Alpha.m in Sources */,
@@ -11827,6 +11996,7 @@
 				A49C7CC81A70D42700F2AEC5 /* UserInfoController.m in Sources */,
 				A49C7CC91A70D42700F2AEC5 /* UIImageView+AFNetworking.m in Sources */,
 				A49C7CCA1A70D42700F2AEC5 /* ChatMessageViewCell.m in Sources */,
+				F55078C21A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */,
 				A49C7CCB1A70D42700F2AEC5 /* CommentCellFrame.m in Sources */,
 				A49C7CCC1A70D42700F2AEC5 /* AFHTTPRequestOperation.m in Sources */,
 				A49C7CCD1A70D42700F2AEC5 /* TQRichTextEmojiRun.m in Sources */,
@@ -11846,6 +12016,7 @@
 				A49C7CDB1A70D42700F2AEC5 /* SDWebImageCompat.m in Sources */,
 				A49C7CDC1A70D42700F2AEC5 /* FMDatabase.m in Sources */,
 				A49C7CDD1A70D42700F2AEC5 /* PublishModel.m in Sources */,
+				F55078CE1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */,
 				A49C7CDE1A70D42700F2AEC5 /* FriendsAddressBook.m in Sources */,
 				A49C7CDF1A70D42700F2AEC5 /* ChineseToPinyinResource.m in Sources */,
 				A49C7CE01A70D42700F2AEC5 /* WLContentCellFrame.m in Sources */,
@@ -11858,8 +12029,10 @@
 				A49C7CE71A70D42700F2AEC5 /* WLUserStatusesResult.m in Sources */,
 				A49C7CE81A70D42700F2AEC5 /* SDWebImageManager+MJ.m in Sources */,
 				A49C7CE91A70D42700F2AEC5 /* LoginGuideController.m in Sources */,
+				F55078E21A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				A49C7CEA1A70D42700F2AEC5 /* SDWebImageManager.m in Sources */,
 				A49C7CEB1A70D42700F2AEC5 /* AFURLConnectionOperation.m in Sources */,
+				F55078D21A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				A49C7CEC1A70D42700F2AEC5 /* DaiDodgeKeyboardObjects.m in Sources */,
 				A49C7CED1A70D42700F2AEC5 /* WLShareMenuItem.m in Sources */,
 				A49C7CEE1A70D42700F2AEC5 /* WithOb.m in Sources */,
@@ -11870,9 +12043,11 @@
 				A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A49C7CF41A70D42700F2AEC5 /* SELineLayout.m in Sources */,
 				A44779E41A7632A60085AE3C /* ResManager.m in Sources */,
+				F55078C61A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
 				A49C7CF51A70D42700F2AEC5 /* DockItem.m in Sources */,
 				A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */,
 				A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */,
+				F55078BE1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
@@ -11883,6 +12058,7 @@
 				A49C7CFD1A70D42700F2AEC5 /* DTTimePeriodCollection.m in Sources */,
 				A49C7CFE1A70D42700F2AEC5 /* CALayer+XibConfiguration.m in Sources */,
 				A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */,
+				F55078B61A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				A49C7D001A70D42700F2AEC5 /* TOActivitySafari.m in Sources */,
 				A49C7D011A70D42700F2AEC5 /* LXActivity.m in Sources */,
 				A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */,
@@ -11893,6 +12069,7 @@
 				A49C7D071A70D42700F2AEC5 /* ForwardPublishView.m in Sources */,
 				A49C80631A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				A49C7D081A70D42700F2AEC5 /* NSString+PinYin4Cocoa.m in Sources */,
+				F55078DE1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				A49C7D091A70D42700F2AEC5 /* InvestCollectionCell.m in Sources */,
 				A49C7D0A1A70D42700F2AEC5 /* FriendsFriendModel.m in Sources */,
 				A49C7D0B1A70D42700F2AEC5 /* SignInPhoneController.m in Sources */,
@@ -11904,6 +12081,7 @@
 				A49C7D111A70D42700F2AEC5 /* NSNumber+MagicalDataImport.m in Sources */,
 				A49C7D121A70D42700F2AEC5 /* WLBaseTableViewCell.m in Sources */,
 				A49C7D131A70D42700F2AEC5 /* DaiDodgeKeyboard+Animation.m in Sources */,
+				F550787B1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				A49C7D141A70D42700F2AEC5 /* WLStatusM.m in Sources */,
 				A49C7D151A70D42700F2AEC5 /* ALAsset+assetType.m in Sources */,
 				A49C7D161A70D42700F2AEC5 /* MeinfoCell.m in Sources */,
@@ -11915,6 +12093,7 @@
 				A49C7D1C1A70D42700F2AEC5 /* DKManagedObjectQuery.m in Sources */,
 				A49C7D1D1A70D42700F2AEC5 /* CTAssetsViewControllerTransition.m in Sources */,
 				A49C7D1E1A70D42700F2AEC5 /* ChatMessageController.m in Sources */,
+				F55078CA1A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
 				A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A49C7D1F1A70D42700F2AEC5 /* NewFriendViewController.m in Sources */,
 				A49C7D201A70D42700F2AEC5 /* SWTableViewCell.m in Sources */,
@@ -11939,6 +12118,7 @@
 				A49C7D311A70D42700F2AEC5 /* MessageHomeModel.m in Sources */,
 				A49C7D321A70D42700F2AEC5 /* ActivityMapViewController.m in Sources */,
 				A49C7D331A70D42700F2AEC5 /* IInvestStageModel.m in Sources */,
+				F55078DA1A7F5BE9009CE4F7 /* JKUtil.m in Sources */,
 				A49C7D341A70D42700F2AEC5 /* LoginPhoneVC.m in Sources */,
 				A49C7D351A70D42700F2AEC5 /* WLPhotographyHelper.m in Sources */,
 				A49C7D361A70D42700F2AEC5 /* TOActivityChrome.m in Sources */,
@@ -12010,6 +12190,7 @@
 				A41CE1AE1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F53DC2A01A49192600F5F712 /* FriendsNewCell.m in Sources */,
+				F55078D51A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				A4C1411C1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
 				F53DC2A11A49192600F5F712 /* MJPhotoToolbar.m in Sources */,
 				F53DC2A21A49192600F5F712 /* e0571CoreDataManager.m in Sources */,
@@ -12160,6 +12341,7 @@
 				F53DC2F91A49192600F5F712 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A4A2EB201A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				F53DC2FA1A49192600F5F712 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				F55078B11A7F5BE9009CE4F7 /* JKAssets.m in Sources */,
 				F53DC2FB1A49192600F5F712 /* MJType.m in Sources */,
 				A4C141701A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F53DC2FC1A49192600F5F712 /* CTAssetScrollView.m in Sources */,
@@ -12197,6 +12379,7 @@
 				A4A2EB111A6CF7C8006ADA55 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				F53DC3111A49192600F5F712 /* WLDataDBTool.m in Sources */,
 				F53DC3121A49192600F5F712 /* FriendsFriendController.m in Sources */,
+				F55078B91A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
 				F53DC3131A49192600F5F712 /* WeixinActivity.m in Sources */,
 				A4A2EB261A6CF7C8006ADA55 /* MagicalRecord+Setup.m in Sources */,
 				F53DC3141A49192600F5F712 /* NSObject+MJMember.m in Sources */,
@@ -12245,6 +12428,7 @@
 				F53DC32C1A49192600F5F712 /* InvestorUserM.m in Sources */,
 				A4C1409D1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
 				F53DC32D1A49192600F5F712 /* UIView+Extend.m in Sources */,
+				F55078801A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
 				F53DC32E1A49192600F5F712 /* UIImageView+MJWebCache.m in Sources */,
 				A41CE1B41A6F81DB004F17E7 /* WLShareMenuView.m in Sources */,
 				A4C140731A4BEA8500C9BAB5 /* UIImage+Alpha.m in Sources */,
@@ -12277,6 +12461,7 @@
 				F53DC3431A49192600F5F712 /* UserInfoController.m in Sources */,
 				F53DC3441A49192600F5F712 /* UIImageView+AFNetworking.m in Sources */,
 				A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
+				F55078C11A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */,
 				F53DC3451A49192600F5F712 /* CommentCellFrame.m in Sources */,
 				F53DC3461A49192600F5F712 /* AFHTTPRequestOperation.m in Sources */,
 				F53DC3471A49192600F5F712 /* TQRichTextEmojiRun.m in Sources */,
@@ -12296,6 +12481,7 @@
 				F53DC3511A49192600F5F712 /* SDWebImageCompat.m in Sources */,
 				F53DC3521A49192600F5F712 /* FMDatabase.m in Sources */,
 				F53DC3531A49192600F5F712 /* PublishModel.m in Sources */,
+				F55078CD1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */,
 				F53DC3541A49192600F5F712 /* FriendsAddressBook.m in Sources */,
 				F53DC3551A49192600F5F712 /* ChineseToPinyinResource.m in Sources */,
 				F53DC3561A49192600F5F712 /* WLContentCellFrame.m in Sources */,
@@ -12308,8 +12494,10 @@
 				F53DC35A1A49192600F5F712 /* WLUserStatusesResult.m in Sources */,
 				F53DC35B1A49192600F5F712 /* SDWebImageManager+MJ.m in Sources */,
 				F557728C1A5A790300693279 /* LoginGuideController.m in Sources */,
+				F55078E11A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F53DC35C1A49192600F5F712 /* SDWebImageManager.m in Sources */,
 				F53DC35D1A49192600F5F712 /* AFURLConnectionOperation.m in Sources */,
+				F55078D11A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A21A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				A41CE1B91A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
 				F53DC35E1A49192600F5F712 /* WithOb.m in Sources */,
@@ -12320,9 +12508,11 @@
 				F53DC3621A49192600F5F712 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A4C141431A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
 				A44779E31A7632A60085AE3C /* ResManager.m in Sources */,
+				F55078C51A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
 				F53DC3631A49192600F5F712 /* DockItem.m in Sources */,
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
+				F55078BD1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
@@ -12333,6 +12523,7 @@
 				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F58CA9801A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
+				F55078B51A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */,
 				F53DC3681A49192600F5F712 /* LXActivity.m in Sources */,
 				F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */,
@@ -12343,6 +12534,7 @@
 				F53DC36E1A49192600F5F712 /* ForwardPublishView.m in Sources */,
 				A49C80621A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F53DC36F1A49192600F5F712 /* NSString+PinYin4Cocoa.m in Sources */,
+				F55078DD1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				F534DAEA1A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F53DC3701A49192600F5F712 /* FriendsFriendModel.m in Sources */,
 				F53DC3711A49192600F5F712 /* SignInPhoneController.m in Sources */,
@@ -12354,6 +12546,7 @@
 				A4A2EAE71A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F58CA99C1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
+				F550787A1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F53DC3751A49192600F5F712 /* WLStatusM.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
@@ -12365,6 +12558,7 @@
 				F53DC37B1A49192600F5F712 /* DKManagedObjectQuery.m in Sources */,
 				F53DC37C1A49192600F5F712 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				F55078C91A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
 				A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F53DC37D1A49192600F5F712 /* SWTableViewCell.m in Sources */,
@@ -12389,6 +12583,7 @@
 				F53DC3881A49192600F5F712 /* MessageHomeModel.m in Sources */,
 				A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F534DB511A51082F00B6A725 /* IInvestStageModel.m in Sources */,
+				F55078D91A7F5BE9009CE4F7 /* JKUtil.m in Sources */,
 				F53DC3891A49192600F5F712 /* LoginPhoneVC.m in Sources */,
 				A41CE1E31A6FA5E7004F17E7 /* WLPhotographyHelper.m in Sources */,
 				F53DC38A1A49192600F5F712 /* TOActivityChrome.m in Sources */,
@@ -12460,6 +12655,7 @@
 				A41CE1AC1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */,
 				F566497F1A2AFD56008A5830 /* MJPhotoToolbar.m in Sources */,
+				F55078D31A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				A4C141591A4BEF5700C9BAB5 /* SETextMagnifierCaret.m in Sources */,
 				F59E76171A4071330028FBAF /* SchoolModel.m in Sources */,
 				F56649801A2AFD56008A5830 /* UIImage+TOWebViewControllerIcons.m in Sources */,
@@ -12610,6 +12806,7 @@
 				A4C1406E1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EB1E1A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				F53D4E381A4AABE800CA06C8 /* LogInUser.m in Sources */,
+				F55078AF1A7F5BE9009CE4F7 /* JKAssets.m in Sources */,
 				A4C140651A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
 				10389B571A3EC46D001A785C /* UIView+Size.m in Sources */,
@@ -12647,6 +12844,7 @@
 				A4A2EB0F1A6CF7C8006ADA55 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				F56649EA1A2AFD56008A5830 /* YTKKeyValueStore.m in Sources */,
 				F56649EB1A2AFD56008A5830 /* WLPhotoView.m in Sources */,
+				F55078B71A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
 				F56649EC1A2AFD56008A5830 /* UIView+MJExtension.m in Sources */,
 				A4A2EB241A6CF7C8006ADA55 /* MagicalRecord+Setup.m in Sources */,
 				F56649ED1A2AFD56008A5830 /* ALAsset+isEqual.m in Sources */,
@@ -12695,6 +12893,7 @@
 				A4C140681A4BEA8500C9BAB5 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				F59E75F81A4059D00028FBAF /* DKArrayQuery.m in Sources */,
 				A4C1416E1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
+				F550787E1A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
 				F5664A011A2AFD56008A5830 /* WLCellHead.m in Sources */,
 				A41CE1B21A6F81DB004F17E7 /* WLShareMenuView.m in Sources */,
 				F5664A021A2AFD56008A5830 /* TOWebViewController.m in Sources */,
@@ -12727,6 +12926,7 @@
 				F5664A111A2AFD56008A5830 /* AFHTTPRequestOperation.m in Sources */,
 				F5664A121A2AFD56008A5830 /* TQRichTextEmojiRun.m in Sources */,
 				A4C140831A4BEA8500C9BAB5 /* UIScrollView+XHkeyboardControl.m in Sources */,
+				F55078BF1A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */,
 				F5664A131A2AFD56008A5830 /* UIView+WebCacheOperation.m in Sources */,
 				A4C1412C1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				F5664A141A2AFD56008A5830 /* UIProgressView+AFNetworking.m in Sources */,
@@ -12746,6 +12946,7 @@
 				A4C144681A4C271900C9BAB5 /* WLBubblePhotoImageView.m in Sources */,
 				F59E761F1A411E4C0028FBAF /* ICompanyResult.m in Sources */,
 				F5664A201A2AFD56008A5830 /* WLContentCellFrame.m in Sources */,
+				F55078CB1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */,
 				A4F646D81A43CE46002E66FC /* ActivityViewController.m in Sources */,
 				A4C1417C1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
 				F5664A211A2AFD56008A5830 /* CityLocationController.m in Sources */,
@@ -12758,8 +12959,10 @@
 				F5664A251A2AFD56008A5830 /* SDWebImageManager+MJ.m in Sources */,
 				A4C140801A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F557728A1A5A790300693279 /* LoginGuideController.m in Sources */,
+				F55078DF1A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F5C7796F1A5392E10098BC29 /* InvestCerVC.m in Sources */,
 				F5664A261A2AFD56008A5830 /* SDWebImageManager.m in Sources */,
+				F55078CF1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A01A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				A41CE1B71A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
 				F5A3F8F61A41855900F06DDD /* ISchoolResult.m in Sources */,
@@ -12770,9 +12973,11 @@
 				F5664A2B1A2AFD56008A5830 /* AFHTTPRequestOperationManager.m in Sources */,
 				F5664A2C1A2AFD56008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A44779E11A7632A60085AE3C /* ResManager.m in Sources */,
+				F55078C31A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
 				F5664A2D1A2AFD56008A5830 /* DockItem.m in Sources */,
 				A4C141531A4BEF5700C9BAB5 /* SETextInput.m in Sources */,
 				A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
+				F55078BB1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
@@ -12783,6 +12988,7 @@
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
 				F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F58CA97E1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
+				F55078B31A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				A4C141441A4BEF5700C9BAB5 /* SELinkText.m in Sources */,
 				F5664A311A2AFD56008A5830 /* TOActivitySafari.m in Sources */,
 				A4C141681A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
@@ -12793,6 +12999,7 @@
 				F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */,
 				A49C80601A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */,
+				F55078DB1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */,
 				F5664A361A2AFD56008A5830 /* UIScrollView+MJExtension.m in Sources */,
 				F5664A381A2AFD56008A5830 /* MJPhotoBrowser.m in Sources */,
@@ -12804,6 +13011,7 @@
 				A4A2EAE51A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
 				F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
+				F55078781A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F5664A3D1A2AFD56008A5830 /* MyFriendsController.m in Sources */,
 				F5664A3E1A2AFD56008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
@@ -12815,6 +13023,7 @@
 				A4C141171A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
 				A4C141711A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
 				F5664A431A2AFD56008A5830 /* CommentHeadView.m in Sources */,
+				F55078C71A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
 				A44779E71A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664A441A2AFD56008A5830 /* main.m in Sources */,
@@ -12839,6 +13048,7 @@
 				F5664A4E1A2AFD56008A5830 /* MJMethod.m in Sources */,
 				A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F5664A4F1A2AFD56008A5830 /* InvestReqstModel.m in Sources */,
+				F55078D71A7F5BE9009CE4F7 /* JKUtil.m in Sources */,
 				F5664A501A2AFD56008A5830 /* InfoUserHaderCell.m in Sources */,
 				A41CE1E11A6FA5E7004F17E7 /* WLPhotographyHelper.m in Sources */,
 				F534DB5A1A5119A000B6A725 /* InvestIndustry.m in Sources */,
@@ -12910,6 +13120,7 @@
 				A41CE1AD1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F5664C381A2AFDD5008A5830 /* FriendsNewCell.m in Sources */,
+				F55078D41A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				A4C1411B1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
 				F5664C391A2AFDD5008A5830 /* MJPhotoToolbar.m in Sources */,
 				F59E75F31A4059D00028FBAF /* e0571CoreDataManager.m in Sources */,
@@ -13060,6 +13271,7 @@
 				F59E76031A4059D00028FBAF /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A4A2EB1F1A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				F5664C8B1A2AFDD5008A5830 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				F55078B01A7F5BE9009CE4F7 /* JKAssets.m in Sources */,
 				F5664C8C1A2AFDD5008A5830 /* MJType.m in Sources */,
 				A4C1416F1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F5664C8D1A2AFDD5008A5830 /* CTAssetScrollView.m in Sources */,
@@ -13097,6 +13309,7 @@
 				A4A2EB101A6CF7C8006ADA55 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				F5664CA01A2AFDD5008A5830 /* WLDataDBTool.m in Sources */,
 				F5664CA11A2AFDD5008A5830 /* FriendsFriendController.m in Sources */,
+				F55078B81A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
 				F5664CA21A2AFDD5008A5830 /* WeixinActivity.m in Sources */,
 				A4A2EB251A6CF7C8006ADA55 /* MagicalRecord+Setup.m in Sources */,
 				F5664CA31A2AFDD5008A5830 /* NSObject+MJMember.m in Sources */,
@@ -13145,6 +13358,7 @@
 				F5664CB51A2AFDD5008A5830 /* InvestorUserM.m in Sources */,
 				A4C1409C1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
 				10389B601A3EC789001A785C /* UIView+Extend.m in Sources */,
+				F550787F1A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
 				F5664CB61A2AFDD5008A5830 /* UIImageView+MJWebCache.m in Sources */,
 				A41CE1B31A6F81DB004F17E7 /* WLShareMenuView.m in Sources */,
 				A4C140721A4BEA8500C9BAB5 /* UIImage+Alpha.m in Sources */,
@@ -13177,6 +13391,7 @@
 				F5664CC81A2AFDD5008A5830 /* UserInfoController.m in Sources */,
 				F5664CC91A2AFDD5008A5830 /* UIImageView+AFNetworking.m in Sources */,
 				A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
+				F55078C01A7F5BE9009CE4F7 /* JKAssetsThumbnailView.m in Sources */,
 				F5664CCA1A2AFDD5008A5830 /* CommentCellFrame.m in Sources */,
 				F5664CCB1A2AFDD5008A5830 /* AFHTTPRequestOperation.m in Sources */,
 				F5664CCC1A2AFDD5008A5830 /* TQRichTextEmojiRun.m in Sources */,
@@ -13196,6 +13411,7 @@
 				F5664CD51A2AFDD5008A5830 /* SDWebImageCompat.m in Sources */,
 				F5664CD61A2AFDD5008A5830 /* FMDatabase.m in Sources */,
 				F5664CD71A2AFDD5008A5830 /* PublishModel.m in Sources */,
+				F55078CC1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */,
 				F5664CD81A2AFDD5008A5830 /* FriendsAddressBook.m in Sources */,
 				F5664CD91A2AFDD5008A5830 /* ChineseToPinyinResource.m in Sources */,
 				F5664CDA1A2AFDD5008A5830 /* WLContentCellFrame.m in Sources */,
@@ -13208,8 +13424,10 @@
 				F5664CDE1A2AFDD5008A5830 /* WLUserStatusesResult.m in Sources */,
 				F5664CDF1A2AFDD5008A5830 /* SDWebImageManager+MJ.m in Sources */,
 				F557728B1A5A790300693279 /* LoginGuideController.m in Sources */,
+				F55078E01A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F5664CE01A2AFDD5008A5830 /* SDWebImageManager.m in Sources */,
 				F5664CE11A2AFDD5008A5830 /* AFURLConnectionOperation.m in Sources */,
+				F55078D01A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A11A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				A41CE1B81A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
 				F5664CE21A2AFDD5008A5830 /* WithOb.m in Sources */,
@@ -13220,9 +13438,11 @@
 				F5664CE61A2AFDD5008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A4C141421A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
 				A44779E21A7632A60085AE3C /* ResManager.m in Sources */,
+				F55078C41A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
 				F5664CE71A2AFDD5008A5830 /* DockItem.m in Sources */,
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
+				F55078BC1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
@@ -13233,6 +13453,7 @@
 				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F58CA97F1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
+				F55078B41A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */,
 				F5664CEC1A2AFDD5008A5830 /* LXActivity.m in Sources */,
 				F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */,
@@ -13243,6 +13464,7 @@
 				F5664CF31A2AFDD5008A5830 /* ForwardPublishView.m in Sources */,
 				A49C80611A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664CF41A2AFDD5008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
+				F55078DC1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				F534DAE91A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F5664CF51A2AFDD5008A5830 /* FriendsFriendModel.m in Sources */,
 				F5664CF61A2AFDD5008A5830 /* SignInPhoneController.m in Sources */,
@@ -13254,6 +13476,7 @@
 				A4A2EAE61A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				F58CA99B1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
+				F55078791A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F5664CFA1A2AFDD5008A5830 /* WLStatusM.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
@@ -13265,6 +13488,7 @@
 				F59E75FB1A4059D00028FBAF /* DKManagedObjectQuery.m in Sources */,
 				F5664D001A2AFDD5008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
+				F55078C81A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
 				A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				F5664D011A2AFDD5008A5830 /* SWTableViewCell.m in Sources */,
@@ -13289,6 +13513,7 @@
 				F5664D0B1A2AFDD5008A5830 /* MessageHomeModel.m in Sources */,
 				A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */,
 				F534DB501A51082F00B6A725 /* IInvestStageModel.m in Sources */,
+				F55078D81A7F5BE9009CE4F7 /* JKUtil.m in Sources */,
 				F5664D0C1A2AFDD5008A5830 /* LoginPhoneVC.m in Sources */,
 				A41CE1E21A6FA5E7004F17E7 /* WLPhotographyHelper.m in Sources */,
 				F5664D0D1A2AFDD5008A5830 /* TOActivityChrome.m in Sources */,
@@ -13405,6 +13630,15 @@
 				F51FBA2519EF723A00D85D7F /* zh-Hant */,
 			);
 			name = TOWebViewControllerLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		F55078881A7F5BE9009CE4F7 /* JKImagePickerController.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F55078891A7F5BE9009CE4F7 /* en */,
+				F550788B1A7F5BE9009CE4F7 /* zh-Hans */,
+			);
+			name = JKImagePickerController.strings;
 			sourceTree = "<group>";
 		};
 		F5B5FE5D1A596D4A007FE11B /* ShareSDKLocalizable.strings */ = {

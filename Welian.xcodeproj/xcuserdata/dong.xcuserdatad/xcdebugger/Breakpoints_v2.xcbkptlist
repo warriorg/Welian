@@ -65,9 +65,9 @@
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "-[WorksListController loadDataArray]"
-                  moduleName = "weLianAppDis copy"
+                  moduleName = "weLianAppDev"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444215673.044351"
+                  timestampString = "444558226.37456"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -79,9 +79,9 @@
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__36-[WorksListController loadDataArray]_block_invoke"
-                  moduleName = "weLianAppDis copy"
+                  moduleName = "weLianAppDev"
                   urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Me(%E6%88%91%E7%9A%84)/Controller/WorksListController.m"
-                  timestampString = "444215673.044713"
+                  timestampString = "444558226.374705"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "86"
@@ -152,22 +152,6 @@
             startingLineNumber = "250"
             endingLineNumber = "250"
             landmarkName = "-bundleName"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Home(&#x9996;&#x9875;)/View/FeedAndZanView.m"
-            timestampString = "444216891.999057"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "-setFeedAndZanFrame:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

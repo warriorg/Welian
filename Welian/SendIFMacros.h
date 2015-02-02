@@ -182,7 +182,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define kFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"userInfo.data"]
 
 
-#define SuperSize self.view.bounds.size
+#define SuperSize [UIScreen mainScreen].bounds.size
 #define INPUT_HEIGHT 44.0f
 
 

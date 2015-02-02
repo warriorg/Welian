@@ -72,7 +72,7 @@
 #pragma mark - 创建新项目
 - (void)createNewProject
 {
-    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:NO];
+    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:YES];
     [self.navigationController pushViewController:createProjectVC animated:YES];
 }
 
