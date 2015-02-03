@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *array4Btn;
 @property (strong, nonatomic) NSArray *titles;
 @property (strong, nonatomic) NSArray *images;
+@property (assign, nonatomic) BOOL isHorizontal;//横向排列
 //@property (assign, nonatomic) UIButton *selectBtn;
 
 
@@ -48,7 +49,7 @@
     _bridges = nil;
 }
 
-- (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges
+- (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges isHorizontal:(BOOL)isHorizontal
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -57,6 +58,7 @@
         self.titles = titles;
         self.images = images;
         self.bridges = bridges;
+        self.isHorizontal = isHorizontal;
         
         [self setup];
     }
@@ -93,17 +95,27 @@
         UIView *view = [self viewWithTag:Define_View_Tag + i];
         view.frame = CGRectMake(i*width4btn, .0f, width4btn, self.height);
         
-        //添加内容
-        UILabel *titleLabel = (UILabel *)[view viewWithTag:Define_Label_Tag + i];
-        [titleLabel sizeToFit];
-        titleLabel.centerX = view.width / 2.f;
-        titleLabel.bottom = view.height - kMarginBottom;
-        
         //添加图片
         UIImageView *iconImage = (UIImageView *)[view viewWithTag:Define_Image_Tag + i];
         [iconImage sizeToFit];
-        iconImage.centerX = view.width / 2.f;
-        iconImage.centerY = kMarginTop + (titleLabel.top - kMarginTop - kMarginBottom) / 2.f;
+        if (_isHorizontal) {
+            iconImage.left = 25.f;
+            iconImage.centerY = view.height / 2.f;
+        }else{
+            iconImage.centerX = view.width / 2.f;
+            iconImage.top = kMarginBottom;
+        }
+        
+        //添加内容
+        UILabel *titleLabel = (UILabel *)[view viewWithTag:Define_Label_Tag + i];
+        [titleLabel sizeToFit];
+        if (_isHorizontal) {
+            titleLabel.left = iconImage.right + kMarginBottom;
+            titleLabel.centerY = view.height / 2.f;
+        }else{
+            titleLabel.centerX = view.width / 2.f;
+            titleLabel.top = iconImage.bottom + kMarginBottom;
+        }
         
         //角标按钮
         UIButton *numBtn = (UIButton *)[view viewWithTag:Define_Bridge_Tag + i];

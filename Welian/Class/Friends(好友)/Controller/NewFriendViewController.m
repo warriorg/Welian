@@ -60,7 +60,7 @@ static NSString *cellIdentifier = @"frnewCellid";
     NSArray *btnImages = @[[UIImage imageNamed:@"me_myfriend_phone_logo"],
                            [UIImage imageNamed:@"me_myfriend_wechat_logo"]];
     
-    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0.f, 0.f, self.view.width, 82.f) Titles:@[@"手机联系人",@"微信好友"] Images:btnImages Bridges:@[@"0",@"0"]];
+    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0.f, 0.f, self.view.width, 82.f) Titles:@[@"手机联系人",@"微信好友"] Images:btnImages Bridges:@[@"0",@"0"] isHorizontal:NO];
     segementedControl.delegate = self;
     self.tableView.tableHeaderView = segementedControl;
     

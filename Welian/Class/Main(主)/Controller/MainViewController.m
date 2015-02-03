@@ -263,8 +263,8 @@ single_implementation(MainViewController)
     [meNav setDelegate:self];
     [meVC.navigationItem setTitle:@"我"];
     [meNav setTabBarItem:meItem];
-    
-    [self setViewControllers:@[homeNav,friendsNav, chatMeeageNav,findNav,meNav]];
+    //设置底部导航
+    [self setViewControllers:@[homeNav,findNav,chatMeeageNav,friendsNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 
     selectItem = homeItem;

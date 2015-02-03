@@ -14,6 +14,7 @@
 #import "ActivityViewController.h"
 #import "BadgeBaseCell.h"
 #import "MainViewController.h"
+#import "ProjectListViewController.h"
 
 
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
@@ -161,25 +162,38 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
         [investorListVC setTitle:@"投资人"];
         [self.navigationController pushViewController:investorListVC animated:YES];
     }else{
-        
-        if (indexPath.row == 0) {
-            // 观点  虎嗅网
-            TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
-            webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
-            [self.navigationController pushViewController:webVC animated:YES];
-        }else if (indexPath.row == 1){
-            
-            //活动页面，进行phoneGap页面加载
-            ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
-            activityVC.wwwFolderName = @"www";
-            activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
-            [self.navigationController pushViewController:activityVC animated:YES];
-            // 取消新活动角标
-            [LogInUser setUserIsactivebadge:NO];
-            [[MainViewController sharedMainViewController] loadNewStustupdata];
-            [self reloadNewactivit];
-//            [self presentViewController:activityVC animated:YES completion:nil];
+        switch (indexPath.row) {
+            case 0:
+            {
+                // 观点  虎嗅网
+                TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
+                webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                [self.navigationController pushViewController:webVC animated:YES];
+            }
+                break;
+            case 1:
+            {
+                //活动页面，进行phoneGap页面加载
+                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+                [[NSURLCache sharedURLCache] removeAllCachedResponses];
+                activityVC.wwwFolderName = @"www";
+                activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
+                [self.navigationController pushViewController:activityVC animated:YES];
+                // 取消新活动角标
+                [LogInUser setUserIsactivebadge:NO];
+                [[MainViewController sharedMainViewController] loadNewStustupdata];
+                [self reloadNewactivit];
+            }
+                break;
+            case 2:
+            {
+                //项目
+                ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
+                [self.navigationController pushViewController:projectListVC animated:YES];
+            }
+                break;
+            default:
+                break;
         }
     }
     

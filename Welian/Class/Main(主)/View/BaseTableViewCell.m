@@ -20,6 +20,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        //选择的背景
+//        UIView *select_bg = [[UIView alloc] initWithFrame:CGRectZero];
+//        select_bg.backgroundColor = [UIColor colorWithWhite:0 alpha:.2f];
+//        self.selectedBackgroundView = select_bg;
         
         //cell下面的分割线
         UIView *bottomLineView = [[UIView alloc] init];
