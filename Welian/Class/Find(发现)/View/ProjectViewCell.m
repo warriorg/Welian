@@ -36,16 +36,16 @@
     return self;
 }
 
-- (void)setProjectInfo:(NSDictionary *)projectInfo
+- (void)setProjectInfo:(IProjectInfo *)projectInfo
 {
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
     //@"zhan":@"100",@"name":@"快推",@"info":@"全球领先移动招聘平台",@"status":@"正在融资"
-    _praiseNumLabel.text = _projectInfo[@"zhan"];
-    _nameLabel.text = _projectInfo[@"name"];
-    _msgLabel.text = _projectInfo[@"info"];
-    _statusLabel.text = _projectInfo[@"status"];
+    _praiseNumLabel.text = _projectInfo.zancount.stringValue;
+    _nameLabel.text = _projectInfo.name;
+    _msgLabel.text = _projectInfo.intro;
+    _statusLabel.text = _projectInfo.status.boolValue ? @"正在融资" : @"暂未融资";
 }
 
 - (void)layoutSubviews

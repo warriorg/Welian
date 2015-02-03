@@ -41,6 +41,15 @@
 }
 
 //日期转换
+- (NSDate *)dateFromShortString
+{
+    NSString *string = self;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:string];
+    return date;
+}
+
 - (NSDate *)dateFromString
 {
     NSString *string = self;
@@ -50,7 +59,7 @@
     return date;
 }
 
-- (NSDate *)dateFromShortString
+- (NSDate *)dateFromNormalString
 {
     NSString *string = self;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

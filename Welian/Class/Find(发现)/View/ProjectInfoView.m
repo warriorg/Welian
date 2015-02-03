@@ -7,6 +7,7 @@
 //
 
 #import "ProjectInfoView.h"
+#import "WLMessageAvatorFactory.h"
 
 #define kMarginLeft 15.f
 #define kMarginTop 15.f
@@ -34,6 +35,7 @@
 - (void)dealloc
 {
     _infoBlock = nil;
+    _projectInfo = nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -43,6 +45,42 @@
         [self setup];
     }
     return self;
+}
+
+- (void)setProjectInfo:(IProjectDetailInfo *)projectInfo
+{
+    [super willChangeValueForKey:@"projectInfo"];
+    _projectInfo = projectInfo;
+    [super didChangeValueForKey:@"projectInfo"];
+    _praiseNumLabel.text = _projectInfo.zancount.stringValue;
+    _nameLabel.text = _projectInfo.name;
+    _msgLabel.text = _projectInfo.des;
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (_projectInfo.industrys.count > 0) {
+        [types appendString:[_projectInfo.industrys[0] industryname]];
+        if(_projectInfo.industrys.count > 1){
+            for (int i = 1; i < _projectInfo.industrys.count;i++) {
+                IInvestIndustryModel *industry = _projectInfo.industrys[i];
+                [types appendString:@" | "];
+                [types appendString:industry.industryname];
+            }
+        }
+    }else{
+       [types appendString:@"暂无"];
+    }
+    _typeLabel.text = types;
+    
+    if (_projectInfo.user.avatar.length > 0) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectInfo.user.avatar]
+                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                           
+                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                           [_logoBtn setImage:[WLMessageAvatorFactory avatarImageNamed:image messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+//                                                           [_logoBtn setImage:image forState:UIControlStateNormal];
+                                                       }];
+    }
 }
 
 - (void)layoutSubviews
@@ -110,7 +148,7 @@
     praiseNumLabel.minimumScaleFactor = 0.8f;
     praiseNumLabel.adjustsFontSizeToFitWidth = YES;
     praiseNumLabel.textAlignment = NSTextAlignmentCenter;
-    praiseNumLabel.text = @"100";
+    praiseNumLabel.text = @"0";
     [praiseView addSubview:praiseNumLabel];
     self.praiseNumLabel = praiseNumLabel;
     
@@ -119,7 +157,6 @@
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.font = [UIFont boldSystemFontOfSize:16.f];
     nameLabel.textColor = RGB(51.f, 51.f, 51.f);
-    nameLabel.text = @"微链";
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -128,7 +165,6 @@
     msgLabel.backgroundColor = [UIColor clearColor];
     msgLabel.font = [UIFont systemFontOfSize:14.f];
     msgLabel.textColor = RGB(125.f, 125.f, 125.f);
-    msgLabel.text = @"专注于互联网创业的社交平台";
     [self addSubview:msgLabel];
     self.msgLabel = msgLabel;
     
@@ -138,7 +174,6 @@
     typeLabel.textColor = RGB(173.f, 173.f, 173.f);
     typeLabel.font = [UIFont systemFontOfSize:12.f];
     typeLabel.textAlignment = NSTextAlignmentCenter;
-    typeLabel.text = @"移动互联 | 社交";
     [self addSubview:typeLabel];
     self.typeLabel = typeLabel;
     

@@ -18,4 +18,5 @@
 
     #import "SendIFMacros.h"
     #import "Other.h"
+    #import "Model.h"
 #endif
