@@ -90,7 +90,7 @@ static NSString *projectcellid = @"projectcellid";
         [self.view addSubview:self.tableView];
         [self.tableView setTableFooterView:self.footView];
 //        if (!isEdit) {
-            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+//            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
 //        }
         
@@ -133,17 +133,7 @@ static NSString *projectcellid = @"projectcellid";
         cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         [cell.textField setDelegate:self];
     }
-    if (indexPath.section==0&&indexPath.row==0) {
-        [cell.textLabel setText:@"项目名称"];
-        [cell.textField setPlaceholder:@"10字之内（必填）"];
-        
-    }else if (indexPath.section ==0&&indexPath.row==1){
-        [cell.textLabel setText:@"一句话介绍"];
-        [cell.textField setPlaceholder:@"50字之内（必填）"];
-    }else if (indexPath.section==1&&indexPath.row==0){
-        [cell.textLabel setText:@"项目网址"];
-        [cell.textField setPlaceholder:@"255字之内（选填）"];
-    }else if (indexPath.section ==1&&indexPath.row==1){
+    if (indexPath.section==1&&indexPath.row==1) {
         [cell.textLabel setText:@"项目领域"];
         [cell.textField setPlaceholder:@"请选择（必填）"];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -152,7 +142,22 @@ static NSString *projectcellid = @"projectcellid";
             [self.navigationController pushViewController:invesVC animated:YES];
             return NO;
         }];
+    }else{
+        [cell.textField setBk_shouldBeginEditingBlock:nil];
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        if (indexPath.section==0&&indexPath.row==0) {
+            [cell.textLabel setText:@"项目名称"];
+            [cell.textField setPlaceholder:@"10字之内（必填）"];
+            
+        }else if (indexPath.section ==0&&indexPath.row==1){
+            [cell.textLabel setText:@"一句话介绍"];
+            [cell.textField setPlaceholder:@"50字之内（必填）"];
+        }else if (indexPath.section==1&&indexPath.row==0){
+            [cell.textLabel setText:@"项目网址"];
+            [cell.textField setPlaceholder:@"255字之内（选填）"];
+        }
     }
+    
     return cell;
 }
 
