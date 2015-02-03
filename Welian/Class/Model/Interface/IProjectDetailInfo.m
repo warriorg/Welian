@@ -20,7 +20,7 @@
     self.photos = [IPhotoInfo objectsWithInfo:self.photos];
     self.industrys = [IInvestIndustryModel objectsWithInfo:self.industrys];
     self.comments = [ICommentInfo objectsWithInfo:self.comments];
-    self.zanusers = [IUserInfo objectsWithInfo:self.zanusers];
+    self.zanusers = [IBaseUserM objectsWithInfo:self.zanusers];
 }
 
 @end

@@ -181,6 +181,7 @@
     UIButton *logoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     logoBtn.backgroundColor = [UIColor clearColor];
     [logoBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"user_small"]];
+    [logoBtn addTarget:self action:@selector(logoBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:logoBtn];
     self.logoBtn = logoBtn;
     
@@ -207,6 +208,13 @@
 {
     if (_infoBlock) {
         _infoBlock();
+    }
+}
+
+- (void)logoBtnClicked:(UIButton *)sender
+{
+    if (_userShowBlock) {
+        _userShowBlock();
     }
 }
 

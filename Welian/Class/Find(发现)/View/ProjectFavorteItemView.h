@@ -11,5 +11,6 @@
 @interface ProjectFavorteItemView : UICollectionViewCell
 
 @property (assign,nonatomic) UIImageView *logoImageView;
+@property (assign,nonatomic) UILabel *numLabel;
 
 @end

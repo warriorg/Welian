@@ -1940,6 +1940,10 @@
 		A4C770F91A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
 		A4C770FA1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
 		A4C770FB1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
+		A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C770FF1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C771001A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C771011A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
 		A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
@@ -4942,6 +4946,8 @@
 		A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhotoInfo.m; sourceTree = "<group>"; };
 		A4C770F61A80BC9A005ABC7F /* ProjectFavorteItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFavorteItemView.h; sourceTree = "<group>"; };
 		A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFavorteItemView.m; sourceTree = "<group>"; };
+		A4C770FC1A80E3AB005ABC7F /* ProjectUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectUserListViewController.h; sourceTree = "<group>"; };
+		A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectUserListViewController.m; sourceTree = "<group>"; };
 		A4C8E9451A4ACA1A003A5A72 /* ChatMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageViewCell.h; sourceTree = "<group>"; };
 		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
 		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
@@ -6501,6 +6507,8 @@
 				A47F1B1A1A7F215E00CB4D9F /* ProjectListViewController.m */,
 				A4743EAD1A7F7BCE00645998 /* ProjectDetailsViewController.h */,
 				A4743EAE1A7F7BCE00645998 /* ProjectDetailsViewController.m */,
+				A4C770FC1A80E3AB005ABC7F /* ProjectUserListViewController.h */,
+				A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -11947,6 +11955,7 @@
 				A49C7BD91A70D42700F2AEC5 /* TQRichTextImageRun.m in Sources */,
 				A49C7BDA1A70D42700F2AEC5 /* M80AttributedLabelURL.m in Sources */,
 				A49C7BDB1A70D42700F2AEC5 /* SDWebImageDecoder.m in Sources */,
+				A4C771011A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A49C7BDC1A70D42700F2AEC5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F51A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A49C7BDE1A70D42700F2AEC5 /* BaseCDVViewController.m in Sources */,
@@ -12425,6 +12434,7 @@
 				F53DC2AB1A49192600F5F712 /* TQRichTextImageRun.m in Sources */,
 				F53DC2AC1A49192600F5F712 /* M80AttributedLabelURL.m in Sources */,
 				F53DC2AD1A49192600F5F712 /* SDWebImageDecoder.m in Sources */,
+				A4C771001A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A4C142EE1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F41A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F71A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
@@ -12903,6 +12913,7 @@
 				A4C140921A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
 				F56649891A2AFD56008A5830 /* M80AttributedLabelURL.m in Sources */,
 				F566498A1A2AFD56008A5830 /* SDWebImageDecoder.m in Sources */,
+				A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				F566498C1A2AFD56008A5830 /* AFNetworkReachabilityManager.m in Sources */,
 				A4C770F21A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F51A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
@@ -13381,6 +13392,7 @@
 				F5664C421A2AFDD5008A5830 /* TQRichTextImageRun.m in Sources */,
 				F5664C431A2AFDD5008A5830 /* M80AttributedLabelURL.m in Sources */,
 				F5664C441A2AFDD5008A5830 /* SDWebImageDecoder.m in Sources */,
+				A4C770FF1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A4C142ED1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F31A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F61A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
