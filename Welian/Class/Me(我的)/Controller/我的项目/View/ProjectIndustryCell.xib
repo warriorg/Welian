@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProjectIndustryCell" id="gTV-IL-0wX" customClass="ProjectIndustryCell">
+            <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSv-v4-wWh">
+                        <rect key="frame" x="15" y="17" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="1XY-PH-ZXY"/>
+                            <constraint firstAttribute="width" constant="15" id="qhW-w4-zH7"/>
+                        </constraints>
+                        <state key="normal" image="investor_attestation_to_select.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" image="investor_attestation_selected.png"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移动互联网" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEt-Td-CLz">
+                        <rect key="frame" x="38" y="14" width="114" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="91v-go-8Mb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="SSv-v4-wWh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="6Ho-dd-QUL"/>
+                <constraint firstItem="BEt-Td-CLz" firstAttribute="leading" secondItem="SSv-v4-wWh" secondAttribute="trailing" constant="8" id="E1L-96-KHK"/>
+                <constraint firstAttribute="trailing" secondItem="BEt-Td-CLz" secondAttribute="trailing" constant="8" id="Gdh-2b-rox"/>
+                <constraint firstAttribute="centerY" secondItem="BEt-Td-CLz" secondAttribute="centerY" id="Vus-Da-Vzn"/>
+                <constraint firstAttribute="centerY" secondItem="SSv-v4-wWh" secondAttribute="centerY" id="imL-9Z-s8m"/>
+            </constraints>
+            <size key="customSize" width="171" height="60"/>
+            <connections>
+                <outlet property="selectBut" destination="SSv-v4-wWh" id="LRU-iO-rgT"/>
+                <outlet property="titLabel" destination="BEt-Td-CLz" id="Vl6-AW-ujo"/>
+            </connections>
+            <point key="canvasLocation" x="172" y="255"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="investor_attestation_selected.png" width="15" height="15"/>
+        <image name="investor_attestation_to_select.png" width="16" height="16"/>
+    </resources>
+</document>

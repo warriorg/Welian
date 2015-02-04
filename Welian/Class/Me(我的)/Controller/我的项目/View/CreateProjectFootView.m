@@ -20,7 +20,7 @@
         _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 160)];
         [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
         [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-        [self.textView setFont:[UIFont systemFontOfSize:17]];
+        [self.textView setFont:[UIFont systemFontOfSize:16]];
         [self addSubview:_textView];
         // 选择照片
         UIImage *butImage = [UIImage imageNamed:@"home_new_picture"];

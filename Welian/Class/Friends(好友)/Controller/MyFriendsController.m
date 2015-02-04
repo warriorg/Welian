@@ -65,7 +65,6 @@ static NSString *fridcellid = @"fridcellid";
         self.allArray = [JSON objectForKey:@"array"];
         _count= [[JSON objectForKey:@"count"] integerValue];
         if (self.allArray.count) {
-            
             [self.tableView reloadData];
         }
     } fail:^(NSError *error) {

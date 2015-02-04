@@ -20,7 +20,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _placeholderColor = [UIColor grayColor];
+        _placeholderColor = [UIColor lightGrayColor];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
     }
@@ -100,7 +100,12 @@
     rect.origin.y = paddingY;
     rect.size.height -= 2 * paddingY;
     rect.size.width -= 2 * paddingX;
-    
+//    NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
+//    NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
+//    [attrstr addAttributes:attrsDic range:NSMakeRange(6, length)];
+//    
+//    [headerLabel setAttributedText:attrstr];
+//    [_placeholder drawInRect:rect withAttributes:nil];
     [_placeholder drawInRect:rect withFont:self.font lineBreakMode:NSLineBreakByWordWrapping];
 }
 

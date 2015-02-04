@@ -7,8 +7,11 @@
 //
 
 #import "BasicViewController.h"
+#import "CreateProjectModel.h"
 
 @interface CreateProjectController : BasicViewController
+
+@property (nonatomic, strong) CreateProjectModel *projectModel;
 
 - (instancetype)initIsEdit:(BOOL)isEdit;
 
