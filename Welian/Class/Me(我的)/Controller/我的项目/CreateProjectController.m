@@ -17,6 +17,7 @@
 #import "CTAssetsPageViewController.h"
 #import "JKPhotoBrowser.h"
 #import "CTAssetsPickerController.h"
+#import "CollectionViewController.h"
 
 @interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate>
 {
@@ -101,6 +102,7 @@ static NSString *projectcellid = @"projectcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"项目简介"];
+    [self.footView.textView setText:self.projectModel.des];
 }
 
 
@@ -138,7 +140,11 @@ static NSString *projectcellid = @"projectcellid";
         [cell.textField setPlaceholder:@"请选择（必填）"];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell.textField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
-            InvestCollectionVC *invesVC = [[InvestCollectionVC alloc] initWithType:1];
+            UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
+            [flowLayout setMinimumLineSpacing:1];
+            [flowLayout setMinimumInteritemSpacing:0.5];
+            [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
+            CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:1];
             [self.navigationController pushViewController:invesVC animated:YES];
             return NO;
         }];
@@ -148,13 +154,15 @@ static NSString *projectcellid = @"projectcellid";
         if (indexPath.section==0&&indexPath.row==0) {
             [cell.textLabel setText:@"项目名称"];
             [cell.textField setPlaceholder:@"10字之内（必填）"];
-            
+            [cell.textField setText:self.projectModel.name];
         }else if (indexPath.section ==0&&indexPath.row==1){
             [cell.textLabel setText:@"一句话介绍"];
             [cell.textField setPlaceholder:@"50字之内（必填）"];
+            [cell.textField setText:self.projectModel.intro];
         }else if (indexPath.section==1&&indexPath.row==0){
             [cell.textLabel setText:@"项目网址"];
             [cell.textField setPlaceholder:@"255字之内（选填）"];
+            [cell.textField setText:self.projectModel.website];
         }
     }
     

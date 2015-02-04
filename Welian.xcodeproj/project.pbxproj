@@ -2845,6 +2845,30 @@
 		F55078E01A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
 		F55078E11A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
 		F55078E21A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */; };
+		F55078ED1A80BA62009CE4F7 /* FinancingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078EC1A80BA62009CE4F7 /* FinancingCell.m */; };
+		F55078EE1A80BA62009CE4F7 /* FinancingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078EC1A80BA62009CE4F7 /* FinancingCell.m */; };
+		F55078EF1A80BA62009CE4F7 /* FinancingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078EC1A80BA62009CE4F7 /* FinancingCell.m */; };
+		F55078F01A80BA62009CE4F7 /* FinancingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078EC1A80BA62009CE4F7 /* FinancingCell.m */; };
+		F55078F41A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */; };
+		F55078F51A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */; };
+		F55078F61A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */; };
+		F55078F71A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */; };
+		F55078FA1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */; };
+		F55078FB1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */; };
+		F55078FC1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */; };
+		F55078FD1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */; };
+		F55079001A80E672009CE4F7 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078FF1A80E672009CE4F7 /* CollectionViewController.m */; };
+		F55079011A80E672009CE4F7 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078FF1A80E672009CE4F7 /* CollectionViewController.m */; };
+		F55079021A80E672009CE4F7 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078FF1A80E672009CE4F7 /* CollectionViewController.m */; };
+		F55079031A80E672009CE4F7 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55078FF1A80E672009CE4F7 /* CollectionViewController.m */; };
+		F55079071A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */; };
+		F55079081A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */; };
+		F55079091A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */; };
+		F550790A1A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */; };
+		F550790B1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */; };
+		F550790C1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */; };
+		F550790D1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */; };
+		F550790E1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */; };
 		F55772801A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
 		F55772811A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
 		F55772821A5A612400693279 /* me_mycard_tou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F557727F1A5A612400693279 /* me_mycard_tou@2x.png */; };
@@ -5637,6 +5661,17 @@
 		F55078A41A7F5BE9009CE4F7 /* PhotoAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumManager.m; sourceTree = "<group>"; };
 		F55078A51A7F5BE9009CE4F7 /* UIView+JKPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JKPicker.h"; sourceTree = "<group>"; };
 		F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JKPicker.m"; sourceTree = "<group>"; };
+		F55078EB1A80BA62009CE4F7 /* FinancingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinancingCell.h; path = ../FinancingCell.h; sourceTree = "<group>"; };
+		F55078EC1A80BA62009CE4F7 /* FinancingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FinancingCell.m; path = ../FinancingCell.m; sourceTree = "<group>"; };
+		F55078F21A80C70C009CE4F7 /* ProjectBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectBaseModel.h; sourceTree = "<group>"; };
+		F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectBaseModel.m; sourceTree = "<group>"; };
+		F55078F81A80C77B009CE4F7 /* CreateProjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectModel.h; sourceTree = "<group>"; };
+		F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProjectModel.m; sourceTree = "<group>"; };
+		F55078FE1A80E672009CE4F7 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		F55078FF1A80E672009CE4F7 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		F55079041A80EA16009CE4F7 /* ProjectIndustryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectIndustryCell.h; sourceTree = "<group>"; };
+		F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectIndustryCell.m; sourceTree = "<group>"; };
+		F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectIndustryCell.xib; sourceTree = "<group>"; };
 		F551B8141A08EE4C0036EA48 /* home_repost_welian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_repost_welian@2x.png"; sourceTree = "<group>"; };
 		F557727F1A5A612400693279 /* me_mycard_tou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou@2x.png"; sourceTree = "<group>"; };
 		F55772831A5A696800693279 /* me_mycard_tou_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou_big@2x.png"; sourceTree = "<group>"; };
@@ -8072,10 +8107,15 @@
 		F533BD9A1A7B97590057A229 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F55078EB1A80BA62009CE4F7 /* FinancingCell.h */,
+				F55078EC1A80BA62009CE4F7 /* FinancingCell.m */,
 				F55078761A7F1B2C009CE4F7 /* TextFieldCell.h */,
 				F55078771A7F1B2C009CE4F7 /* TextFieldCell.m */,
 				F550787C1A7F2BE0009CE4F7 /* CreateProjectFootView.h */,
 				F550787D1A7F2BE0009CE4F7 /* CreateProjectFootView.m */,
+				F55079041A80EA16009CE4F7 /* ProjectIndustryCell.h */,
+				F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */,
+				F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8180,6 +8220,17 @@
 				F55078A61A7F5BE9009CE4F7 /* UIView+JKPicker.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		F55078F11A80C592009CE4F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F55078F21A80C70C009CE4F7 /* ProjectBaseModel.h */,
+				F55078F31A80C70C009CE4F7 /* ProjectBaseModel.m */,
+				F55078F81A80C77B009CE4F7 /* CreateProjectModel.h */,
+				F55078F91A80C77B009CE4F7 /* CreateProjectModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F557729B1A5AA3E200693279 /* 登录images */ = {
@@ -9345,6 +9396,7 @@
 		F5E13A341A7B2AD0001BB786 /* 我的项目 */ = {
 			isa = PBXGroup;
 			children = (
+				F55078F11A80C592009CE4F7 /* Model */,
 				F533BD9A1A7B97590057A229 /* View */,
 				F5E13A351A7B3062001BB786 /* MyProjectViewController.h */,
 				F5E13A361A7B3062001BB786 /* MyProjectViewController.m */,
@@ -9354,6 +9406,8 @@
 				F533BD8F1A7B7C340057A229 /* MemberProjectController.m */,
 				F533BD941A7B82810057A229 /* FinancingProjectController.h */,
 				F533BD951A7B82810057A229 /* FinancingProjectController.m */,
+				F55078FE1A80E672009CE4F7 /* CollectionViewController.h */,
+				F55078FF1A80E672009CE4F7 /* CollectionViewController.m */,
 			);
 			path = "我的项目";
 			sourceTree = "<group>";
@@ -9833,6 +9887,7 @@
 				A49C7E521A70D42700F2AEC5 /* RecordingSignal008@2x.png in Resources */,
 				A49C7E531A70D42700F2AEC5 /* login_my_button@2x.png in Resources */,
 				A49C7E541A70D42700F2AEC5 /* greenbutton@2x.png in Resources */,
+				F550790E1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				A49C7E551A70D42700F2AEC5 /* investor_attestation_to_select@2x.png in Resources */,
 				A49C7FC71A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				A49C7E561A70D42700F2AEC5 /* me_mywriten_good_pre@2x.png in Resources */,
@@ -10408,6 +10463,7 @@
 				A4C144651A4C0A6B00C9BAB5 /* RecordingSignal008@2x.png in Resources */,
 				F55772DB1A5AA3E200693279 /* login_my_button@2x.png in Resources */,
 				F53DC45A1A49192600F5F712 /* greenbutton@2x.png in Resources */,
+				F550790D1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F534DAF81A4F07FA00B6A725 /* investor_attestation_to_select@2x.png in Resources */,
 				A49C7FC61A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F53DC45B1A49192600F5F712 /* me_mywriten_good_pre@2x.png in Resources */,
@@ -10983,6 +11039,7 @@
 				F5664B151A2AFD56008A5830 /* greenbutton@2x.png in Resources */,
 				F5664B161A2AFD56008A5830 /* me_mywriten_good_pre@2x.png in Resources */,
 				F5664B1A1A2AFD56008A5830 /* home_new_upload_picture_add@2x.png in Resources */,
+				F550790B1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F58CA95D1A5BF3AE00988A61 /* leida2@2x.png in Resources */,
 				A49C7FC41A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664B1C1A2AFD56008A5830 /* home_label_point@2x.png in Resources */,
@@ -11558,6 +11615,7 @@
 				A4C144641A4C0A6B00C9BAB5 /* RecordingSignal008@2x.png in Resources */,
 				F55772DA1A5AA3E200693279 /* login_my_button@2x.png in Resources */,
 				F5664DCF1A2AFDD5008A5830 /* greenbutton@2x.png in Resources */,
+				F550790C1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F534DAF71A4F07FA00B6A725 /* investor_attestation_to_select@2x.png in Resources */,
 				A49C7FC51A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664DD01A2AFDD5008A5830 /* me_mywriten_good_pre@2x.png in Resources */,
@@ -12057,6 +12115,7 @@
 				A49C7C211A70D42700F2AEC5 /* SECompatibility.m in Sources */,
 				A49C7C221A70D42700F2AEC5 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				A49C7C231A70D42700F2AEC5 /* WorkListCell.m in Sources */,
+				F55078F71A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				A49C7C241A70D42700F2AEC5 /* NSData+MD5Digest.m in Sources */,
 				A49C7C251A70D42700F2AEC5 /* UIImage+Utility.m in Sources */,
 				A49C7C261A70D42700F2AEC5 /* SELinkText.m in Sources */,
@@ -12213,9 +12272,11 @@
 				A49C7CB11A70D42700F2AEC5 /* CommentCellView.m in Sources */,
 				A49C7CB21A70D42700F2AEC5 /* MeInfoController.m in Sources */,
 				A49C7CB31A70D42700F2AEC5 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				F55079031A80E672009CE4F7 /* CollectionViewController.m in Sources */,
 				A49C7CB41A70D42700F2AEC5 /* WLCellHead.m in Sources */,
 				F5E13A411A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A49C7CB51A70D42700F2AEC5 /* ACETelPrompt.m in Sources */,
+				F55078FD1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				A49C7CB61A70D42700F2AEC5 /* TOWebViewController.m in Sources */,
 				A49C7CB71A70D42700F2AEC5 /* NSArray+ArrayQuery.m in Sources */,
 				A49C7CB81A70D42700F2AEC5 /* NSManagedObject+e0571.m in Sources */,
@@ -12241,6 +12302,7 @@
 				A49C7CCB1A70D42700F2AEC5 /* CommentCellFrame.m in Sources */,
 				A49C7CCC1A70D42700F2AEC5 /* AFHTTPRequestOperation.m in Sources */,
 				A49C7CCD1A70D42700F2AEC5 /* TQRichTextEmojiRun.m in Sources */,
+				F55078F01A80BA62009CE4F7 /* FinancingCell.m in Sources */,
 				A49C7CCE1A70D42700F2AEC5 /* UIView+WebCacheOperation.m in Sources */,
 				A49C7CCF1A70D42700F2AEC5 /* UIProgressView+AFNetworking.m in Sources */,
 				A49C7CD01A70D42700F2AEC5 /* ListdaController.m in Sources */,
@@ -12392,6 +12454,7 @@
 				A49C7D4D1A70D42700F2AEC5 /* BSearchFriendsController.m in Sources */,
 				A49C7D4E1A70D42700F2AEC5 /* MagicalRecord+Options.m in Sources */,
 				A49C7D4F1A70D42700F2AEC5 /* XHImageViewer.m in Sources */,
+				F550790A1A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */,
 				A49C7D501A70D42700F2AEC5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				A49C7D511A70D42700F2AEC5 /* DKPredicate.m in Sources */,
 				A49C7D521A70D42700F2AEC5 /* UIColor+_6jinzhi.m in Sources */,
@@ -12536,6 +12599,7 @@
 				A4C1413D1A4BEF5700C9BAB5 /* SECompatibility.m in Sources */,
 				F53DC2DA1A49192600F5F712 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				F53DC2DB1A49192600F5F712 /* WorkListCell.m in Sources */,
+				F55078F61A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				F53DC2DC1A49192600F5F712 /* NSData+MD5Digest.m in Sources */,
 				A4C1407C1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				A4C141461A4BEF5700C9BAB5 /* SELinkText.m in Sources */,
@@ -12692,9 +12756,11 @@
 				F53DC3301A49192600F5F712 /* CommentCellView.m in Sources */,
 				F53DC3311A49192600F5F712 /* MeInfoController.m in Sources */,
 				F53DC3321A49192600F5F712 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				F55079021A80E672009CE4F7 /* CollectionViewController.m in Sources */,
 				F53DC3331A49192600F5F712 /* WLCellHead.m in Sources */,
 				F5E13A401A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3E1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
+				F55078FC1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F53DC3341A49192600F5F712 /* TOWebViewController.m in Sources */,
 				F53DC3351A49192600F5F712 /* NSArray+ArrayQuery.m in Sources */,
 				F53DC3361A49192600F5F712 /* NSManagedObject+e0571.m in Sources */,
@@ -12720,6 +12786,7 @@
 				F53DC3451A49192600F5F712 /* CommentCellFrame.m in Sources */,
 				F53DC3461A49192600F5F712 /* AFHTTPRequestOperation.m in Sources */,
 				F53DC3471A49192600F5F712 /* TQRichTextEmojiRun.m in Sources */,
+				F55078EF1A80BA62009CE4F7 /* FinancingCell.m in Sources */,
 				F53DC3481A49192600F5F712 /* UIView+WebCacheOperation.m in Sources */,
 				F53DC3491A49192600F5F712 /* UIProgressView+AFNetworking.m in Sources */,
 				F53DC34B1A49192600F5F712 /* ListdaController.m in Sources */,
@@ -12871,6 +12938,7 @@
 				F58CA9531A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
 				A4A2EB231A6CF7C8006ADA55 /* MagicalRecord+Options.m in Sources */,
 				A4C1416A1A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
+				F55079091A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */,
 				A4C141281A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F53DC3961A49192600F5F712 /* DKPredicate.m in Sources */,
 				F53DC3971A49192600F5F712 /* UIColor+_6jinzhi.m in Sources */,
@@ -13015,6 +13083,7 @@
 				F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
 				F56649B31A2AFD56008A5830 /* CommentHeadFrame.m in Sources */,
 				A4C141741A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
+				F55078F41A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				A4C144741A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
 				A48CA6B01A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F56649B41A2AFD56008A5830 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
@@ -13171,9 +13240,11 @@
 				A4C8E94C1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
 				F5664A041A2AFD56008A5830 /* SWCellScrollView.m in Sources */,
 				A4C1410E1A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
+				F55079001A80E672009CE4F7 /* CollectionViewController.m in Sources */,
 				A4C1411D1A4BEF5700C9BAB5 /* MultiSelectedPanel.m in Sources */,
 				F5E13A3E1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3C1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
+				F55078FA1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664A061A2AFD56008A5830 /* AFURLResponseSerialization.m in Sources */,
 				F5664A071A2AFD56008A5830 /* WLStatusFrame.m in Sources */,
@@ -13199,6 +13270,7 @@
 				F5664A131A2AFD56008A5830 /* UIView+WebCacheOperation.m in Sources */,
 				A4C1412C1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.m in Sources */,
 				F5664A141A2AFD56008A5830 /* UIProgressView+AFNetworking.m in Sources */,
+				F55078ED1A80BA62009CE4F7 /* FinancingCell.m in Sources */,
 				F59E75F21A4059D00028FBAF /* e0571CoreDataManager.m in Sources */,
 				F5664A161A2AFD56008A5830 /* ListdaController.m in Sources */,
 				F5664A171A2AFD56008A5830 /* PeopleAddressBook.m in Sources */,
@@ -13350,6 +13422,7 @@
 				F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
 				A4A2EB211A6CF7C8006ADA55 /* MagicalRecord+Options.m in Sources */,
 				F5664A5F1A2AFD56008A5830 /* PinyinFormatter.m in Sources */,
+				F55079071A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */,
 				F5664A601A2AFD56008A5830 /* StaurCell.m in Sources */,
 				F5664A611A2AFD56008A5830 /* MJTypeEncoding.m in Sources */,
 				F5664A621A2AFD56008A5830 /* WLTogetherUser.m in Sources */,
@@ -13494,6 +13567,7 @@
 				A4C1413C1A4BEF5700C9BAB5 /* SECompatibility.m in Sources */,
 				F5664C6E1A2AFDD5008A5830 /* NSDateFormatter+timeIntervalFormatter.m in Sources */,
 				F5E380B61A41B1680084F7F3 /* WorkListCell.m in Sources */,
+				F55078F51A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				F5664C6F1A2AFDD5008A5830 /* NSData+MD5Digest.m in Sources */,
 				A4C1407B1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				A4C141451A4BEF5700C9BAB5 /* SELinkText.m in Sources */,
@@ -13650,9 +13724,11 @@
 				F5664CB81A2AFDD5008A5830 /* CommentCellView.m in Sources */,
 				F5664CB91A2AFDD5008A5830 /* MeInfoController.m in Sources */,
 				F5664CBA1A2AFDD5008A5830 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				F55079011A80E672009CE4F7 /* CollectionViewController.m in Sources */,
 				F5664CBB1A2AFDD5008A5830 /* WLCellHead.m in Sources */,
 				F5E13A3F1A7B45EF001BB786 /* HMSegmentedControl.m in Sources */,
 				A4C60B3D1A590F9100F1F965 /* ACETelPrompt.m in Sources */,
+				F55078FB1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F5664CBC1A2AFDD5008A5830 /* TOWebViewController.m in Sources */,
 				F59E76011A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
 				F59E75F51A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
@@ -13678,6 +13754,7 @@
 				F5664CCA1A2AFDD5008A5830 /* CommentCellFrame.m in Sources */,
 				F5664CCB1A2AFDD5008A5830 /* AFHTTPRequestOperation.m in Sources */,
 				F5664CCC1A2AFDD5008A5830 /* TQRichTextEmojiRun.m in Sources */,
+				F55078EE1A80BA62009CE4F7 /* FinancingCell.m in Sources */,
 				F5664CCD1A2AFDD5008A5830 /* UIView+WebCacheOperation.m in Sources */,
 				F5664CCE1A2AFDD5008A5830 /* UIProgressView+AFNetworking.m in Sources */,
 				F5664CD01A2AFDD5008A5830 /* ListdaController.m in Sources */,
@@ -13829,6 +13906,7 @@
 				F58CA9521A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
 				A4A2EB221A6CF7C8006ADA55 /* MagicalRecord+Options.m in Sources */,
 				A4C141691A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
+				F55079081A80EA16009CE4F7 /* ProjectIndustryCell.m in Sources */,
 				A4C141271A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F59E75FD1A4059D00028FBAF /* DKPredicate.m in Sources */,
 				F5B88FE21A35793200290B4F /* UIColor+_6jinzhi.m in Sources */,

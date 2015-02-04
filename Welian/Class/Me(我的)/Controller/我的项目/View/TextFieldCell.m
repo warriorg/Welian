@@ -15,7 +15,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _textField = [[UITextField alloc] initWithFrame:CGRectMake(120, 0, self.bounds.size.width-120, self.bounds.size.height)];
+        [_textField setFont:WLFONT(16)];
         [_textField setClearButtonMode:UITextFieldViewModeWhileEditing];
+        [_textField setRightViewMode:UITextFieldViewModeAlways];
+        UILabel *rightLabel = [[UILabel alloc] init];
+        [rightLabel setTextAlignment:NSTextAlignmentCenter];
+        [rightLabel setTextColor:[UIColor grayColor]];
+        [_textField setRightView:rightLabel];
         [self.contentView addSubview:_textField];
     }
     return self;

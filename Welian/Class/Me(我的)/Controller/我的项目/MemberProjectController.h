@@ -9,6 +9,7 @@
 #import "BasicViewController.h"
 
 @interface MemberProjectController : BasicViewController
+@property (nonatomic, strong) NSMutableArray *selectArray;
 
 - (instancetype)initIsEdit:(BOOL)isEdit;
 

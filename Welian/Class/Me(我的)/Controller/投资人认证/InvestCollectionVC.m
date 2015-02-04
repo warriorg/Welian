@@ -98,11 +98,10 @@ static NSString * const reuseIdentifier = @"Cell";
         // 注册cell
         [self.collectionView registerNib:[UINib nibWithNibName:@"InvestCollectionCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
         if (type==1) { // 投资领域
+            [self setTitle:@"投资领域"];
             YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:KInvestIndustryTableName fromTable:KInvestIndustryTableName];
             NSArray *itemArray = item.itemObject;
             [self jiexidata:itemArray];
-            
-            [self setTitle:@"投资领域"];
             [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
                 [self jiexidata:JSON];
                 [self.collectionView reloadData];
