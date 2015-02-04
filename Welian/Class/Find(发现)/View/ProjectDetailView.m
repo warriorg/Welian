@@ -97,12 +97,8 @@
     //计算第二个label的高度
     CGSize size2 = images.count > 0 ? [WLPhotoListView photoListSizeWithCount:images needAutoSize:YES] : CGSizeMake(maxWidth, 0);
     
-    float height = size1.height + size2.height + (images.count > 0 ? kMarginLeft + kMarginEdge : 0);
-    if (height > 50) {
-        return height;
-    }else{
-        return 50;
-    }
+    float height = size1.height + size2.height + kMarginLeft + kMarginEdge;
+    return height;
 }
 
 @end

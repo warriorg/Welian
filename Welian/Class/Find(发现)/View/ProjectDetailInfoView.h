@@ -12,6 +12,7 @@ typedef void(^ProjectDetailInfoClosedBlock)(void);
 
 @interface ProjectDetailInfoView : UIView
 
+@property (strong,nonatomic) IProjectDetailInfo *projectInfo;
 @property (strong,nonatomic) ProjectDetailInfoClosedBlock closeBlock;
 
 @end

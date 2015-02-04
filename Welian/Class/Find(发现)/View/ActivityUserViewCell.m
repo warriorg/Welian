@@ -40,6 +40,28 @@
     return self;
 }
 
+- (void)setBaseUser:(IBaseUserM *)baseUser
+{
+    [super willChangeValueForKey:@"baseUser"];
+    _baseUser = baseUser;
+    [super didChangeValueForKey:@"baseUser"];
+    
+    [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_baseUser.avatar]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
+                               options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    _nameLabel.text = _baseUser.name;
+    
+    NSString *company = _baseUser.company.length < 1 ? @"" : _baseUser.company;
+    NSString *position = _baseUser.position.length < 1 ? @"" : _baseUser.position;
+    _messageLabel.text = [NSString stringWithFormat:@"%@%@",position,(position.length > 0 ? [NSString stringWithFormat:@" %@",company] : company)];
+    _messageLabel.numberOfLines = 1;
+    
+    //是否是认证投资人
+    _iconImageView.hidden = [_activityUserData[@"investorauth"] integerValue] == 1 ? NO : YES;
+    _wxBtn.hidden = YES;
+    _operateBtn.hidden = YES;
+}
+
 //报名列表的字典用户
 - (void)setActivityUserData:(NSDictionary *)activityUserData
 {
