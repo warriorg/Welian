@@ -45,7 +45,22 @@
     _praiseNumLabel.text = _projectInfo.zancount.stringValue;
     _nameLabel.text = _projectInfo.name;
     _msgLabel.text = _projectInfo.intro;
-    _statusLabel.text = _projectInfo.status.boolValue ? @"正在融资" : @"暂未融资";
+    //status 1 正在融资，0不融资
+    NSString *status = @"";
+    switch (_projectInfo.status.integerValue) {
+        case 0:
+            status = @"暂未融资";
+            _statusLabel.hidden = YES;
+            break;
+        case 1:
+            status = @"正在融资";
+            _statusLabel.hidden = NO;
+            break;
+        default:
+            _statusLabel.hidden = NO;
+            break;
+    }
+    _statusLabel.text = status;
 }
 
 - (void)layoutSubviews

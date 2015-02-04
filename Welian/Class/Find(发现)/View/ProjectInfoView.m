@@ -71,6 +71,13 @@
     }
     _typeLabel.text = types;
     
+    //status 1 正在融资，0不融资
+    if (_projectInfo.status.integerValue == 0) {
+        _statusBtn.hidden = YES;
+    }else{
+        _statusBtn.hidden = NO;
+    }
+    
     if (_projectInfo.user.avatar.length > 0) {
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectInfo.user.avatar]
                                                         options:SDWebImageRetryFailed|SDWebImageLowPriority

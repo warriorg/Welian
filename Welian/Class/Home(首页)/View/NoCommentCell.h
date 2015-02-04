@@ -10,4 +10,6 @@
 
 @interface NoCommentCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *msgLabel;
+
 @end
