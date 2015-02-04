@@ -43,6 +43,23 @@
     return self;
 }
 
+- (void)setProjectInfo:(IProjectDetailInfo *)projectInfo
+{
+    [super willChangeValueForKey:@"projectInfo"];
+    _projectInfo = projectInfo;
+    [super didChangeValueForKey:@"projectInfo"];
+    _stempLabel.text = [_projectInfo displayStage];
+    _moneyLabel.text = [NSString stringWithFormat:@"%d万人民币",_projectInfo.amount.intValue];
+    [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:_projectInfo.amount.stringValue]];
+    _stockLabel.text = [NSString stringWithFormat:@"%d%%",_projectInfo.share.integerValue];
+    float valuationInfo = _projectInfo.amount.floatValue/_projectInfo.share.floatValue * 100;
+    _valuationsLabel.text = [NSString stringWithFormat:@"投后估值为%.0f万",valuationInfo];
+    [_valuationsLabel setAttributedText:[self getAttributedInfoString:_valuationsLabel.text searchStr:[NSString stringWithFormat:@"%.0f",valuationInfo]]];
+    _aboutTextView.text = _projectInfo.financing.length > 0 ? _projectInfo.financing : @"暂无说明";
+    
+    [self setNeedsLayout];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -143,7 +160,7 @@
     moneyTitleLabel.backgroundColor = [UIColor clearColor];
     moneyTitleLabel.font = [UIFont systemFontOfSize:16.f];
     moneyTitleLabel.textColor = titleColor;
-    moneyTitleLabel.text = @"融资阶段";
+    moneyTitleLabel.text = @"融资金额";
     [contentView addSubview:moneyTitleLabel];
     self.moneyTitleLabel = moneyTitleLabel;
     

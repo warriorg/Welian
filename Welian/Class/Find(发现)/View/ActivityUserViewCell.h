@@ -18,4 +18,6 @@ typedef void(^addFriendOperateBlock)(NSIndexPath *indexPath);
 //报名列表的字典用户
 @property (strong, nonatomic) NSDictionary *activityUserData;
 
+@property (strong, nonatomic) IBaseUserM *baseUser;
+
 @end

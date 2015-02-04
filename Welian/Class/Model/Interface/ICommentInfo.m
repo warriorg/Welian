@@ -10,4 +10,9 @@
 
 @implementation ICommentInfo
 
+- (void)customOperation:(NSDictionary *)dict
+{
+    self.user = [IBaseUserM objectWithDict:dict[@"user"]];
+}
+
 @end

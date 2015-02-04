@@ -16,17 +16,25 @@
 @property (nonatomic,strong) NSString *intro;
 @property (nonatomic,strong) NSString *des;
 @property (nonatomic,strong) NSString *website;
-@property (nonatomic,strong) NSNumber *zancount;
-@property (nonatomic,strong) NSNumber *commentcount;
-@property (nonatomic,strong) NSNumber *isZan;
+@property (nonatomic,strong) NSNumber *zancount;//赞数
+@property (nonatomic,strong) NSNumber *commentcount;//评论数
+@property (nonatomic,strong) NSNumber *membercount;//团队成员个数
+@property (nonatomic,strong) NSNumber *isZan;//0 没赞过，1赞过
+@property (nonatomic,strong) NSNumber *isFavorite;//0 没收藏，1收藏
 @property (nonatomic,strong) NSString *date;
 @property (nonatomic,strong) NSNumber *status;
-@property (nonatomic,strong) NSNumber *memebercount;
+@property (nonatomic,strong) NSNumber *amount;//融资额度
+@property (nonatomic,strong) NSNumber *stage;//融资阶段 0:种子轮投资  1:天使轮投资  2:pre-A轮投资 3:A轮投资 4:B轮投资  5:C轮投资
+@property (nonatomic,strong) NSNumber *share;//出让股份
+@property (nonatomic,strong) NSString *financing;//融资说明
 @property (nonatomic,strong) IBaseUserM *user;
 @property (nonatomic,strong) NSArray *photos;
 @property (nonatomic,strong) NSArray *industrys;
 @property (nonatomic,strong) NSArray *comments;
 @property (nonatomic,strong) NSArray *zanusers;
+
+//融资阶段
+- (NSString *)displayStage;
 
 @end
 /*

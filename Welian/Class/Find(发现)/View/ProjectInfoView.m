@@ -54,7 +54,7 @@
     [super didChangeValueForKey:@"projectInfo"];
     _praiseNumLabel.text = _projectInfo.zancount.stringValue;
     _nameLabel.text = _projectInfo.name;
-    _msgLabel.text = _projectInfo.des;
+    _msgLabel.text = _projectInfo.intro;
     //类型
     NSMutableString *types = [NSMutableString string];
     if (_projectInfo.industrys.count > 0) {
@@ -116,7 +116,7 @@
     _nameLabel.top = _praiseView.top + 5.f;
     
     [_msgLabel sizeToFit];
-    _nameLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
+    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
     _msgLabel.left = _nameLabel.left;
     _msgLabel.bottom = _praiseView.bottom;
     
