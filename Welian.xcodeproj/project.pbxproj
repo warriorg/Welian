@@ -4304,6 +4304,14 @@
 		F5B88FE21A35793200290B4F /* UIColor+_6jinzhi.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B88FE01A35793200290B4F /* UIColor+_6jinzhi.m */; };
 		F5B88FE51A35A4D600290B4F /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B88FE41A35A4D600290B4F /* FeedAndZanModel.m */; };
 		F5B88FE61A35A4D600290B4F /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B88FE41A35A4D600290B4F /* FeedAndZanModel.m */; };
+		F5C566891A821BAB002AF408 /* HeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C566881A821BAB002AF408 /* HeaderLabel.m */; };
+		F5C5668A1A821BAB002AF408 /* HeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C566881A821BAB002AF408 /* HeaderLabel.m */; };
+		F5C5668B1A821BAB002AF408 /* HeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C566881A821BAB002AF408 /* HeaderLabel.m */; };
+		F5C5668C1A821BAB002AF408 /* HeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C566881A821BAB002AF408 /* HeaderLabel.m */; };
+		F5C5668E1A821BD8002AF408 /* HeaderLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */; };
+		F5C5668F1A821BD9002AF408 /* HeaderLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */; };
+		F5C566901A821BD9002AF408 /* HeaderLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */; };
+		F5C566911A821BD9002AF408 /* HeaderLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */; };
 		F5C778CC1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5C778CA1A52B6990098BC29 /* tabbar_chat_selected@2x.png */; };
 		F5C778CD1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5C778CA1A52B6990098BC29 /* tabbar_chat_selected@2x.png */; };
 		F5C778CE1A52B6990098BC29 /* tabbar_chat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5C778CA1A52B6990098BC29 /* tabbar_chat_selected@2x.png */; };
@@ -6001,6 +6009,9 @@
 		F5C2D11E19FA4E0D000610A1 /* AddWXFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWXFriendCell.m; sourceTree = "<group>"; };
 		F5C2D11F19FA4E0D000610A1 /* AddWXFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddWXFriendCell.xib; sourceTree = "<group>"; };
 		F5C2D13C19FA8B94000610A1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F5C566871A821BAB002AF408 /* HeaderLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderLabel.h; sourceTree = "<group>"; };
+		F5C566881A821BAB002AF408 /* HeaderLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderLabel.m; sourceTree = "<group>"; };
+		F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderLabel.xib; sourceTree = "<group>"; };
 		F5C677DC19D3BACE003987CC /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
 		F5C677DD19D3BACE003987CC /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
 		F5C677DE19D3BACE003987CC /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
@@ -8116,6 +8127,9 @@
 				F55079041A80EA16009CE4F7 /* ProjectIndustryCell.h */,
 				F55079051A80EA16009CE4F7 /* ProjectIndustryCell.m */,
 				F55079061A80EA16009CE4F7 /* ProjectIndustryCell.xib */,
+				F5C566871A821BAB002AF408 /* HeaderLabel.h */,
+				F5C566881A821BAB002AF408 /* HeaderLabel.m */,
+				F5C5668D1A821BD8002AF408 /* HeaderLabel.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9892,6 +9906,7 @@
 				A49C7FC71A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				A49C7E561A70D42700F2AEC5 /* me_mywriten_good_pre@2x.png in Resources */,
 				A49C7E571A70D42700F2AEC5 /* login_chacha@2x.png in Resources */,
+				F5C566911A821BD9002AF408 /* HeaderLabel.xib in Resources */,
 				A49C7E581A70D42700F2AEC5 /* chat_to_send@2x_highlight.png in Resources */,
 				A49C7E591A70D42700F2AEC5 /* home_new_upload_picture_add@2x.png in Resources */,
 				A49C7E5A1A70D42700F2AEC5 /* home_label_point@2x.png in Resources */,
@@ -10468,6 +10483,7 @@
 				A49C7FC61A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F53DC45B1A49192600F5F712 /* me_mywriten_good_pre@2x.png in Resources */,
 				F55772C61A5AA3E200693279 /* login_chacha@2x.png in Resources */,
+				F5C566901A821BD9002AF408 /* HeaderLabel.xib in Resources */,
 				A4C144881A4C3EC600C9BAB5 /* chat_to_send@2x_highlight.png in Resources */,
 				F53DC45E1A49192600F5F712 /* home_new_upload_picture_add@2x.png in Resources */,
 				F53DC4601A49192600F5F712 /* home_label_point@2x.png in Resources */,
@@ -11044,6 +11060,7 @@
 				A49C7FC41A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664B1C1A2AFD56008A5830 /* home_label_point@2x.png in Resources */,
 				F5664B1D1A2AFD56008A5830 /* Expression_39@2x.png in Resources */,
+				F5C5668E1A821BD8002AF408 /* HeaderLabel.xib in Resources */,
 				F5664B1E1A2AFD56008A5830 /* remind_big_logo@2x.png in Resources */,
 				F5664B1F1A2AFD56008A5830 /* home_grc_background@2x.png in Resources */,
 				F55772EB1A5AA3E200693279 /* login_password@2x.png in Resources */,
@@ -11620,6 +11637,7 @@
 				A49C7FC51A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664DD01A2AFDD5008A5830 /* me_mywriten_good_pre@2x.png in Resources */,
 				F55772C51A5AA3E200693279 /* login_chacha@2x.png in Resources */,
+				F5C5668F1A821BD9002AF408 /* HeaderLabel.xib in Resources */,
 				A4C144871A4C3EC600C9BAB5 /* chat_to_send@2x_highlight.png in Resources */,
 				F5664DD41A2AFDD5008A5830 /* home_new_upload_picture_add@2x.png in Resources */,
 				F5664DD61A2AFDD5008A5830 /* home_label_point@2x.png in Resources */,
@@ -12279,6 +12297,7 @@
 				F55078FD1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				A49C7CB61A70D42700F2AEC5 /* TOWebViewController.m in Sources */,
 				A49C7CB71A70D42700F2AEC5 /* NSArray+ArrayQuery.m in Sources */,
+				F5C5668C1A821BAB002AF408 /* HeaderLabel.m in Sources */,
 				A49C7CB81A70D42700F2AEC5 /* NSManagedObject+e0571.m in Sources */,
 				A49C7CB91A70D42700F2AEC5 /* InvestorUserCell.m in Sources */,
 				A49C7CBA1A70D42700F2AEC5 /* SWCellScrollView.m in Sources */,
@@ -12763,6 +12782,7 @@
 				F55078FC1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F53DC3341A49192600F5F712 /* TOWebViewController.m in Sources */,
 				F53DC3351A49192600F5F712 /* NSArray+ArrayQuery.m in Sources */,
+				F5C5668B1A821BAB002AF408 /* HeaderLabel.m in Sources */,
 				F53DC3361A49192600F5F712 /* NSManagedObject+e0571.m in Sources */,
 				F53DC3371A49192600F5F712 /* InvestorUserCell.m in Sources */,
 				F53DC3381A49192600F5F712 /* SWCellScrollView.m in Sources */,
@@ -13247,6 +13267,7 @@
 				F55078FA1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F534DAD61A4E929500B6A725 /* InvestCardCell.m in Sources */,
 				F5664A061A2AFD56008A5830 /* AFURLResponseSerialization.m in Sources */,
+				F5C566891A821BAB002AF408 /* HeaderLabel.m in Sources */,
 				F5664A071A2AFD56008A5830 /* WLStatusFrame.m in Sources */,
 				F5664A081A2AFD56008A5830 /* CTAssetsGroupViewCell.m in Sources */,
 				F5664A091A2AFD56008A5830 /* WLContentCellView.m in Sources */,
@@ -13731,6 +13752,7 @@
 				F55078FB1A80C77B009CE4F7 /* CreateProjectModel.m in Sources */,
 				F5664CBC1A2AFDD5008A5830 /* TOWebViewController.m in Sources */,
 				F59E76011A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
+				F5C5668A1A821BAB002AF408 /* HeaderLabel.m in Sources */,
 				F59E75F51A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
 				F5664CBD1A2AFDD5008A5830 /* InvestorUserCell.m in Sources */,
 				F5664CBE1A2AFDD5008A5830 /* SWCellScrollView.m in Sources */,

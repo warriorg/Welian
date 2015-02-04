@@ -52,7 +52,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"选择团队成员"];
+    [self setTitle:@"团队成员"];
     self.selectArray = [NSMutableArray array];
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         self.allArray = [JSON objectForKey:@"array"];
