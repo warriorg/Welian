@@ -237,6 +237,15 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 删除项目赞
 + (void)deleteProjectZanParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 添加项目成员
++ (void)addProjectMembersParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 删除项目成员
++ (void)deleteProjectMemberParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 取项目成员
++ (void)getProjectMembersParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;

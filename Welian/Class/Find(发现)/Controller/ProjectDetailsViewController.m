@@ -88,17 +88,19 @@ static NSString *noCommentCell = @"NoCommentCell";
     //设置底部操作栏
     UIToolbar *operateToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, tableView.bottom, self.view.width, 44.0f)];
     //点赞
-    self.zanBtn = [self getBtnWithTitle:@"点赞" image:[UIImage imageNamed:@"me_mywriten_good"]];
-    [_zanBtn addTarget:self action:@selector(zanBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *zanBarItem = [[UIBarButtonItem alloc] initWithCustomView:_zanBtn];
+    UIButton *zanBtn = [self getBtnWithTitle:@"点赞" image:[UIImage imageNamed:@"me_mywriten_good"]];
+    [zanBtn addTarget:self action:@selector(zanBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *zanBarItem = [[UIBarButtonItem alloc] initWithCustomView:zanBtn];
+    self.zanBtn = zanBtn;
     
     //空白 评论 me_mywriten_comment@2x
     UIBarButtonItem *zhongBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                   target:self action:nil];
     //收藏
-    self.favorteBtn = [self getBtnWithTitle:@"收藏" image:[UIImage imageNamed:@"me_mywriten_shoucang"]];
-    [_favorteBtn addTarget:self action:@selector(favorteBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *favorteBarItem = [[UIBarButtonItem alloc] initWithCustomView:_favorteBtn];
+    UIButton *favorteBtn = [self getBtnWithTitle:@"收藏" image:[UIImage imageNamed:@"me_mywriten_shoucang"]];
+    [favorteBtn addTarget:self action:@selector(favorteBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *favorteBarItem = [[UIBarButtonItem alloc] initWithCustomView:favorteBtn];
+    self.favorteBtn = favorteBtn;
     
     operateToolBar.items = @[zanBarItem,zhongBarItem,favorteBarItem];
     [self.view addSubview:operateToolBar];
@@ -161,7 +163,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    titleLabel.text = section == 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论 (%d)",32];
+    titleLabel.text = section == 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论 (%d)",_detailInfo.commentcount.intValue];
     [titleLabel sizeToFit];
     titleLabel.left = 15.f;
     titleLabel.centerY = headerView.height / 2.f;
@@ -173,18 +175,27 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        //赞过的人
-        static NSString *cellIdentifier = @"Project_Favorte_View_Cell";
-        ProjectFavorteViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[ProjectFavorteViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        if (_detailInfo.zancount.intValue < 1) {
+            //无
+            NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+            cell.msgLabel.text = @"还没有点赞的人~";
+            cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+            cell.layer.borderWidths = @"{0,0,0.5,0}";
+            return cell;
+        }else{
+            //赞过的人
+            static NSString *cellIdentifier = @"Project_Favorte_View_Cell";
+            ProjectFavorteViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[ProjectFavorteViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            }
+            cell.projectInfo = _detailInfo;
+            WEAKSELF;
+            [cell setBlock:^(NSIndexPath *indexPath){
+                [weakSelf selectZanUserWithIndex:indexPath];
+            }];
+            return cell;
         }
-        cell.projectInfo = _detailInfo;
-        WEAKSELF;
-        [cell setBlock:^(NSIndexPath *indexPath){
-            [weakSelf selectZanUserWithIndex:indexPath];
-        }];
-        return cell;
     }else{
         //评论列表
         if (_datasource.count > 0) {
@@ -200,6 +211,8 @@ static NSString *noCommentCell = @"NoCommentCell";
             return cell;
         }else{
             NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+            cell.msgLabel.text = @"还没有评论哦~";
+            cell.layer.borderColorFromUIColor = [UIColor clearColor];
             return cell;
         }
     }
@@ -242,6 +255,9 @@ static NSString *noCommentCell = @"NoCommentCell";
         case 0:
         {
             //项目网站
+            if (_detailInfo.website.length > 0) {
+                
+            }
             TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
             webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
             [self.navigationController pushViewController:webVC animated:YES];
@@ -249,8 +265,13 @@ static NSString *noCommentCell = @"NoCommentCell";
             break;
         case 1:
         {
+            //项目成员
+            if (_detailInfo.memebercount.integerValue > 0) {
+                
+            }
             ProjectUserListViewController *projectUserListVC = [[ProjectUserListViewController alloc] init];
             projectUserListVC.infoType = UserInfoTypeProjectGroup;
+            projectUserListVC.projectDetailInfo = _detailInfo;
             [self.navigationController pushViewController:projectUserListVC animated:YES];
         }
             break;
@@ -285,7 +306,10 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)shareBtnClicked
 {
-    NSArray *buttons = @[@"编辑项目信息",@"设置团队成员",@"设置融资信息"];
+    NSArray *buttons = [NSArray array];
+    if ([LogInUser getCurrentLoginUser].uid.integerValue == _detailInfo.user.uid.integerValue) {
+        buttons = @[@"编辑项目信息",@"设置团队成员",@"设置融资信息"];
+    }
     LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:@[@"微信好友",@"微信朋友圈"] withShareButtonImagesName:@[@"home_repost_wechat",@"home_repost_friendcirle"]];
     [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
 }
@@ -297,11 +321,11 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)zanBtnClicked:(UIButton *)sender
 {
-    if (!_detailInfo.iszan.boolValue) {
+    if (!_detailInfo.isZan.boolValue) {
         //赞
         [WLHttpTool zanProjectParameterDic:@{@"pid":_detailInfo.pid}
                                    success:^(id JSON) {
-                                       _detailInfo.iszan = @(1);
+                                       _detailInfo.isZan = @(1);
                                        [self checkZanStatus];
                                    } fail:^(NSError *error) {
                                        [UIAlertView showWithError:error];
@@ -310,7 +334,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         //取消赞
         [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_detailInfo.pid}
                                          success:^(id JSON) {
-                                             _detailInfo.iszan = @(0);
+                                             _detailInfo.isZan = @(0);
                                              [self checkZanStatus];
                                          } fail:^(NSError *error) {
                                              [UIAlertView showWithError:error];
@@ -321,7 +345,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)checkZanStatus
 {
-    if (_detailInfo.iszan.boolValue) {
+    if (_detailInfo.isZan.boolValue) {
         [_zanBtn setTitle:@"取消赞" forState:UIControlStateNormal];
         [_zanBtn setImage:[UIImage imageNamed:@"good_small"] forState:UIControlStateNormal];
     }else{
@@ -346,17 +370,22 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)showProjectInfo
 {
-    [UIAlertView bk_showAlertViewWithTitle:nil
-                                   message:@"您还不是认证投资人，无法查看融资信息"
-                         cancelButtonTitle:@"取消"
-                         otherButtonTitles:@[@"去认证"]
-                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                       if (buttonIndex == 0) {
-                                           return ;
-                                       }else{
-                                           [self openProjectDetailInfoView];
-                                       }
-                                   }];
+    //认证投资人
+    if ([LogInUser getCurrentLoginUser].isinvestorbadge.boolValue) {
+        [self openProjectDetailInfoView];
+    }else{
+        [UIAlertView bk_showAlertViewWithTitle:nil
+                                       message:@"您还不是认证投资人，无法查看融资信息"
+                             cancelButtonTitle:@"取消"
+                             otherButtonTitles:@[@"去认证"]
+                                       handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                           if (buttonIndex == 0) {
+                                               return ;
+                                           }else{
+                                               [self openProjectDetailInfoView];
+                                           }
+                                       }];
+    }
 }
 
 //关闭项目详情
@@ -404,7 +433,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     projectDetailView.projectInfo = _detailInfo;
     
     //操作栏
-    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_detailInfo.memebercount intValue]]] Images:@[[UIImage imageNamed:@"discovery_xiangmu_detail_link"],[UIImage imageNamed:@"discovery_xiangmu_detail_member"]] Bridges:nil isHorizontal:YES];
+    NSString *linkImage = _detailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
+    NSString *memeberImage = _detailInfo.memebercount.integerValue > 0 ? @"discovery_xiangmu_detail_member" : @"discovery_xiangmu_detail_nomember";
+    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_detailInfo.memebercount intValue]]] Images:@[[UIImage imageNamed:linkImage],[UIImage imageNamed:memeberImage]] Bridges:nil isHorizontal:YES];
     segementedControl.delegate = self;
     //设置底部边框线
     segementedControl.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);
@@ -434,6 +465,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         //进入赞列表
         ProjectUserListViewController *projectUserListVC = [[ProjectUserListViewController alloc] init];
         projectUserListVC.infoType = UserInfoTypeProjectZan;
+        projectUserListVC.projectDetailInfo = _detailInfo;
         [self.navigationController pushViewController:projectUserListVC animated:YES];
     }else{
         //点击点赞的人，进入

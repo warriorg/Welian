@@ -16,6 +16,12 @@
 
 @implementation ProjectUserListViewController
 
+- (void)dealloc
+{
+    _datasource = nil;
+    _projectDetailInfo = nil;
+}
+
 - (NSString *)title
 {
     switch (_infoType) {
@@ -48,6 +54,17 @@
     
     //上提加载更多
 //    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    
+    switch (_infoType) {
+        case UserInfoTypeProjectGroup:
+            [self initGroupUserData];
+            break;
+        case UserInfoTypeProjectZan:
+            [self initZanUserData];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Table view data source
@@ -97,7 +114,7 @@
 //取赞的用户列表
 - (void)initZanUserData
 {
-    [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":@(1)}
+    [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(1),@"size":@(20)}
                                        success:^(id JSON) {
                                            
                                        } fail:^(NSError *error) {
@@ -108,7 +125,12 @@
 //取团队成员的用户列表
 - (void)initGroupUserData
 {
-//    [WLHttpTool getpro]
+    [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(1),@"size":@(20)}
+                                      success:^(id JSON) {
+                                          
+                                      } fail:^(NSError *error) {
+                                          [UIAlertView showWithError:error];
+                                      }];
 }
 
 @end

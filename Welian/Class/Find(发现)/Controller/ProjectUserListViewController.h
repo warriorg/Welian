@@ -16,5 +16,6 @@ typedef enum{
 @interface ProjectUserListViewController : BasicPlainTableViewController
 
 @property (assign,nonatomic) UserInfoType infoType;
+@property (strong,nonatomic) IProjectDetailInfo *projectDetailInfo;
 
 @end
