@@ -10,6 +10,8 @@
 
 @interface ProjectDetailView : UIView
 
+@property (strong,nonatomic) IProjectDetailInfo *projectInfo;
+
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images;
 
 @end

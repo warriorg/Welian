@@ -10,6 +10,6 @@
 
 @interface ProjectViewCell : BaseTableViewCell
 
-@property (strong,nonatomic) NSDictionary *projectInfo;
+@property (strong,nonatomic) IProjectInfo *projectInfo;
 
 @end

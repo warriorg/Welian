@@ -199,7 +199,7 @@
         default:
             break;
     }
-    chatMsg.timestamp = [created dateFromShortString];
+    chatMsg.timestamp = [created dateFromNormalString];
     chatMsg.avatorUrl = friendUser.avatar;
     chatMsg.isRead = @(NO);
     chatMsg.sendStatus = @(1);
@@ -325,7 +325,7 @@
 //更新发送的消息的服务器时间
 - (void)updateTimeStampFromServer:(NSString *)time
 {
-    self.timestamp = [time dateFromShortString];
+    self.timestamp = [time dateFromNormalString];
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 //    [MOC save];
 }

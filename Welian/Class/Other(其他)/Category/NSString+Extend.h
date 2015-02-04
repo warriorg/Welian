@@ -16,8 +16,9 @@
 - (id)JSONValue;
 
 //日期转换
-- (NSDate *)dateFromString;
 - (NSDate *)dateFromShortString;
+- (NSDate *)dateFromString;
+- (NSDate *)dateFromNormalString;
 
 //去除两端空格
 - (NSString *)deleteTopAndBottomKongge;

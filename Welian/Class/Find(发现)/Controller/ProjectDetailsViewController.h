@@ -10,4 +10,6 @@
 
 @interface ProjectDetailsViewController : BasicViewController
 
+- (instancetype)initWithProjectInfo:(IProjectInfo *)projectInfo;
+
 @end

@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^ProjectInfoClickedBlock)(void);
+typedef void(^ProjectShowUserClickedBlock)(void);
 
 @interface ProjectInfoView : UIView
 
+@property (strong,nonatomic) IProjectDetailInfo *projectInfo;
 @property (strong,nonatomic) ProjectInfoClickedBlock infoBlock;
+@property (strong,nonatomic) ProjectShowUserClickedBlock userShowBlock;
 
 @end

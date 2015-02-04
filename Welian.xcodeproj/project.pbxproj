@@ -1916,6 +1916,34 @@
 		A4C770CE1A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C770CC1A806A82005ABC7F /* discovery_xiangmu@2x.png */; };
 		A4C770CF1A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C770CC1A806A82005ABC7F /* discovery_xiangmu@2x.png */; };
 		A4C770D01A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C770CC1A806A82005ABC7F /* discovery_xiangmu@2x.png */; };
+		A4C770DA1A8079A1005ABC7F /* IProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770D91A8079A1005ABC7F /* IProjectInfo.m */; };
+		A4C770DB1A8079A1005ABC7F /* IProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770D91A8079A1005ABC7F /* IProjectInfo.m */; };
+		A4C770DC1A8079A1005ABC7F /* IProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770D91A8079A1005ABC7F /* IProjectInfo.m */; };
+		A4C770DD1A8079A1005ABC7F /* IProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770D91A8079A1005ABC7F /* IProjectInfo.m */; };
+		A4C770E01A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */; };
+		A4C770E11A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */; };
+		A4C770E21A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */; };
+		A4C770E31A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */; };
+		A4C770E61A80A3D1005ABC7F /* IUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770E51A80A3D1005ABC7F /* IUserInfo.m */; };
+		A4C770E71A80A3D1005ABC7F /* IUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770E51A80A3D1005ABC7F /* IUserInfo.m */; };
+		A4C770E81A80A3D1005ABC7F /* IUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770E51A80A3D1005ABC7F /* IUserInfo.m */; };
+		A4C770E91A80A3D1005ABC7F /* IUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770E51A80A3D1005ABC7F /* IUserInfo.m */; };
+		A4C770EC1A80A516005ABC7F /* ICommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770EB1A80A515005ABC7F /* ICommentInfo.m */; };
+		A4C770ED1A80A516005ABC7F /* ICommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770EB1A80A515005ABC7F /* ICommentInfo.m */; };
+		A4C770EE1A80A516005ABC7F /* ICommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770EB1A80A515005ABC7F /* ICommentInfo.m */; };
+		A4C770EF1A80A516005ABC7F /* ICommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770EB1A80A515005ABC7F /* ICommentInfo.m */; };
+		A4C770F21A80A5B3005ABC7F /* IPhotoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */; };
+		A4C770F31A80A5B3005ABC7F /* IPhotoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */; };
+		A4C770F41A80A5B3005ABC7F /* IPhotoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */; };
+		A4C770F51A80A5B3005ABC7F /* IPhotoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */; };
+		A4C770F81A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
+		A4C770F91A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
+		A4C770FA1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
+		A4C770FB1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */; };
+		A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C770FF1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C771001A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
+		A4C771011A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */; };
 		A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9481A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
 		A4C8E9491A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */; };
@@ -4929,6 +4957,21 @@
 		A4C770C21A806A5D005ABC7F /* discovery_rongzi_chacha@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_rongzi_chacha@2x.png"; sourceTree = "<group>"; };
 		A4C770C71A806A6D005ABC7F /* discovery_rongzi_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_rongzi_right@2x.png"; sourceTree = "<group>"; };
 		A4C770CC1A806A82005ABC7F /* discovery_xiangmu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_xiangmu@2x.png"; sourceTree = "<group>"; };
+		A4C770D71A8078E8005ABC7F /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		A4C770D81A8079A1005ABC7F /* IProjectInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProjectInfo.h; sourceTree = "<group>"; };
+		A4C770D91A8079A1005ABC7F /* IProjectInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IProjectInfo.m; sourceTree = "<group>"; };
+		A4C770DE1A80A1E0005ABC7F /* IProjectDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProjectDetailInfo.h; sourceTree = "<group>"; };
+		A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IProjectDetailInfo.m; sourceTree = "<group>"; };
+		A4C770E41A80A3D1005ABC7F /* IUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUserInfo.h; sourceTree = "<group>"; };
+		A4C770E51A80A3D1005ABC7F /* IUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IUserInfo.m; sourceTree = "<group>"; };
+		A4C770EA1A80A515005ABC7F /* ICommentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICommentInfo.h; sourceTree = "<group>"; };
+		A4C770EB1A80A515005ABC7F /* ICommentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICommentInfo.m; sourceTree = "<group>"; };
+		A4C770F01A80A5B3005ABC7F /* IPhotoInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhotoInfo.h; sourceTree = "<group>"; };
+		A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhotoInfo.m; sourceTree = "<group>"; };
+		A4C770F61A80BC9A005ABC7F /* ProjectFavorteItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectFavorteItemView.h; sourceTree = "<group>"; };
+		A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectFavorteItemView.m; sourceTree = "<group>"; };
+		A4C770FC1A80E3AB005ABC7F /* ProjectUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectUserListViewController.h; sourceTree = "<group>"; };
+		A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectUserListViewController.m; sourceTree = "<group>"; };
 		A4C8E9451A4ACA1A003A5A72 /* ChatMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageViewCell.h; sourceTree = "<group>"; };
 		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
 		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
@@ -6499,6 +6542,8 @@
 				A47F1B1A1A7F215E00CB4D9F /* ProjectListViewController.m */,
 				A4743EAD1A7F7BCE00645998 /* ProjectDetailsViewController.h */,
 				A4743EAE1A7F7BCE00645998 /* ProjectDetailsViewController.m */,
+				A4C770FC1A80E3AB005ABC7F /* ProjectUserListViewController.h */,
+				A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -7628,6 +7673,8 @@
 				A4743E941A7F619D00645998 /* ProjectDetailView.m */,
 				A4743EB31A7F896E00645998 /* ProjectFavorteViewCell.h */,
 				A4743EB41A7F896E00645998 /* ProjectFavorteViewCell.m */,
+				A4C770F61A80BC9A005ABC7F /* ProjectFavorteItemView.h */,
+				A4C770F71A80BC9A005ABC7F /* ProjectFavorteItemView.m */,
 				A4743EB91A7F979E00645998 /* ProjectDetailInfoView.h */,
 				A4743EBA1A7F979E00645998 /* ProjectDetailInfoView.m */,
 			);
@@ -8373,6 +8420,7 @@
 			children = (
 				F59E76071A405CE70028FBAF /* DB */,
 				F59E76081A405CE70028FBAF /* Interface */,
+				A4C770D71A8078E8005ABC7F /* Model.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -8440,6 +8488,16 @@
 				F534DB531A51086B00B6A725 /* IInvestIndustryModel.m */,
 				F5C779721A53935F0098BC29 /* InvestItemM.h */,
 				F5C779731A53935F0098BC29 /* InvestItemM.m */,
+				A4C770D81A8079A1005ABC7F /* IProjectInfo.h */,
+				A4C770D91A8079A1005ABC7F /* IProjectInfo.m */,
+				A4C770DE1A80A1E0005ABC7F /* IProjectDetailInfo.h */,
+				A4C770DF1A80A1E0005ABC7F /* IProjectDetailInfo.m */,
+				A4C770E41A80A3D1005ABC7F /* IUserInfo.h */,
+				A4C770E51A80A3D1005ABC7F /* IUserInfo.m */,
+				A4C770EA1A80A515005ABC7F /* ICommentInfo.h */,
+				A4C770EB1A80A515005ABC7F /* ICommentInfo.m */,
+				A4C770F01A80A5B3005ABC7F /* IPhotoInfo.h */,
+				A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -11955,7 +12013,9 @@
 				A49C7BD91A70D42700F2AEC5 /* TQRichTextImageRun.m in Sources */,
 				A49C7BDA1A70D42700F2AEC5 /* M80AttributedLabelURL.m in Sources */,
 				A49C7BDB1A70D42700F2AEC5 /* SDWebImageDecoder.m in Sources */,
+				A4C771011A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A49C7BDC1A70D42700F2AEC5 /* WLMessageBubbleView.m in Sources */,
+				A4C770F51A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A49C7BDE1A70D42700F2AEC5 /* BaseCDVViewController.m in Sources */,
 				A49C7BDF1A70D42700F2AEC5 /* AFNetworkReachabilityManager.m in Sources */,
 				A49C7BE01A70D42700F2AEC5 /* TQRichTextBaseRun.m in Sources */,
@@ -11979,6 +12039,7 @@
 				A49C7BEF1A70D42700F2AEC5 /* LoginUserModel.m in Sources */,
 				A49C7BF01A70D42700F2AEC5 /* FindViewController.m in Sources */,
 				A49C804F1A71041000F2AEC5 /* DataSigner.m in Sources */,
+				A4C770DD1A8079A1005ABC7F /* IProjectInfo.m in Sources */,
 				A49C7BF11A70D42700F2AEC5 /* MBProgressHUD.m in Sources */,
 				A49C7BF21A70D42700F2AEC5 /* MJMember.m in Sources */,
 				F533BD931A7B7C340057A229 /* MemberProjectController.m in Sources */,
@@ -11999,6 +12060,7 @@
 				A49C7C011A70D42700F2AEC5 /* SWUtilityButtonView.m in Sources */,
 				A49C7C021A70D42700F2AEC5 /* ActivityEntryViewController.m in Sources */,
 				A49C7C031A70D42700F2AEC5 /* ALAsset+accessibilityLabel.m in Sources */,
+				A4C770E31A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A49C7C041A70D42700F2AEC5 /* MagicalRecord+ErrorHandling.m in Sources */,
 				A49C7C051A70D42700F2AEC5 /* CTAssetsViewController.m in Sources */,
 				A49C7C061A70D42700F2AEC5 /* ALAssetsGroup+isEqual.m in Sources */,
@@ -12025,6 +12087,7 @@
 				A49C7C1A1A70D42700F2AEC5 /* SETextAttachment.m in Sources */,
 				A49C7C1B1A70D42700F2AEC5 /* MyFriendUser.m in Sources */,
 				A49C7C1C1A70D42700F2AEC5 /* HomeView.m in Sources */,
+				A4C770EF1A80A516005ABC7F /* ICommentInfo.m in Sources */,
 				A49C7C1D1A70D42700F2AEC5 /* IBaseUserM.m in Sources */,
 				A49C7C1E1A70D42700F2AEC5 /* LocationprovinceController.m in Sources */,
 				A49C7C1F1A70D42700F2AEC5 /* UIView+Convenience.m in Sources */,
@@ -12097,6 +12160,7 @@
 				A49C7C5B1A70D42700F2AEC5 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				A49C7C5C1A70D42700F2AEC5 /* UIWebView+AFNetworking.m in Sources */,
 				A49C7C5D1A70D42700F2AEC5 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				A4C770E91A80A3D1005ABC7F /* IUserInfo.m in Sources */,
 				A49C7C5E1A70D42700F2AEC5 /* DaiDodgeKeyboard.m in Sources */,
 				A49C7C5F1A70D42700F2AEC5 /* ChatViewController.m in Sources */,
 				A49C7C601A70D42700F2AEC5 /* SETextEditingCaret.m in Sources */,
@@ -12245,6 +12309,7 @@
 				A49C7CE41A70D42700F2AEC5 /* NSString+XHMD5.m in Sources */,
 				A49C7CE51A70D42700F2AEC5 /* SESelectionGrabber.m in Sources */,
 				A49C7CE61A70D42700F2AEC5 /* MessageController.m in Sources */,
+				A4C770FB1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				A49C7CE71A70D42700F2AEC5 /* WLUserStatusesResult.m in Sources */,
 				A49C7CE81A70D42700F2AEC5 /* SDWebImageManager+MJ.m in Sources */,
 				A49C7CE91A70D42700F2AEC5 /* LoginGuideController.m in Sources */,
@@ -12432,7 +12497,9 @@
 				F53DC2AB1A49192600F5F712 /* TQRichTextImageRun.m in Sources */,
 				F53DC2AC1A49192600F5F712 /* M80AttributedLabelURL.m in Sources */,
 				F53DC2AD1A49192600F5F712 /* SDWebImageDecoder.m in Sources */,
+				A4C771001A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A4C142EE1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
+				A4C770F41A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F71A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F53DC2AF1A49192600F5F712 /* AFNetworkReachabilityManager.m in Sources */,
 				F53DC2B01A49192600F5F712 /* TQRichTextBaseRun.m in Sources */,
@@ -12456,6 +12523,7 @@
 				F53D4E571A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F53DC2BA1A49192600F5F712 /* FindViewController.m in Sources */,
 				A49C804E1A71041000F2AEC5 /* DataSigner.m in Sources */,
+				A4C770DC1A8079A1005ABC7F /* IProjectInfo.m in Sources */,
 				F53DC2BB1A49192600F5F712 /* MBProgressHUD.m in Sources */,
 				F53DC2BC1A49192600F5F712 /* MJMember.m in Sources */,
 				F533BD921A7B7C340057A229 /* MemberProjectController.m in Sources */,
@@ -12476,6 +12544,7 @@
 				F53DC2C51A49192600F5F712 /* SWUtilityButtonView.m in Sources */,
 				A45065471A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F53DC2C61A49192600F5F712 /* ALAsset+accessibilityLabel.m in Sources */,
+				A4C770E21A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1D1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
 				F53DC2C71A49192600F5F712 /* CTAssetsViewController.m in Sources */,
 				F53DC2C81A49192600F5F712 /* ALAssetsGroup+isEqual.m in Sources */,
@@ -12502,6 +12571,7 @@
 				A4C1414C1A4BEF5700C9BAB5 /* SETextAttachment.m in Sources */,
 				F53D4E351A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F53DC2D71A49192600F5F712 /* HomeView.m in Sources */,
+				A4C770EE1A80A516005ABC7F /* ICommentInfo.m in Sources */,
 				F562728D1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F53DC2D81A49192600F5F712 /* LocationprovinceController.m in Sources */,
 				A4C141371A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
@@ -12574,6 +12644,7 @@
 				A4A2EB081A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				F53DC2FD1A49192600F5F712 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9991A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				A4C770E81A80A3D1005ABC7F /* IUserInfo.m in Sources */,
 				F58CA99F1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				A4C140011A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				A4C1414F1A4BEF5700C9BAB5 /* SETextEditingCaret.m in Sources */,
@@ -12722,6 +12793,7 @@
 				A4C1406D1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
 				A4C141491A4BEF5700C9BAB5 /* SESelectionGrabber.m in Sources */,
 				F53DC3591A49192600F5F712 /* MessageController.m in Sources */,
+				A4C770FA1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F53DC35A1A49192600F5F712 /* WLUserStatusesResult.m in Sources */,
 				F53DC35B1A49192600F5F712 /* SDWebImageManager+MJ.m in Sources */,
 				F557728C1A5A790300693279 /* LoginGuideController.m in Sources */,
@@ -12909,7 +12981,9 @@
 				A4C140921A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
 				F56649891A2AFD56008A5830 /* M80AttributedLabelURL.m in Sources */,
 				F566498A1A2AFD56008A5830 /* SDWebImageDecoder.m in Sources */,
+				A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				F566498C1A2AFD56008A5830 /* AFNetworkReachabilityManager.m in Sources */,
+				A4C770F21A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F51A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F566498D1A2AFD56008A5830 /* TQRichTextBaseRun.m in Sources */,
 				F566498E1A2AFD56008A5830 /* AddImageCollectionCell.m in Sources */,
@@ -12933,6 +13007,7 @@
 				F56649941A2AFD56008A5830 /* MLEmojiLabel.m in Sources */,
 				F56649951A2AFD56008A5830 /* FindViewController.m in Sources */,
 				A49C804C1A71041000F2AEC5 /* DataSigner.m in Sources */,
+				A4C770DA1A8079A1005ABC7F /* IProjectInfo.m in Sources */,
 				A4C141231A4BEF5700C9BAB5 /* MultiSelectItem.m in Sources */,
 				F56649961A2AFD56008A5830 /* MBProgressHUD.m in Sources */,
 				F533BD901A7B7C340057A229 /* MemberProjectController.m in Sources */,
@@ -12953,6 +13028,7 @@
 				F56649A11A2AFD56008A5830 /* CTAssetsViewController.m in Sources */,
 				A45065451A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F56649A21A2AFD56008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
+				A4C770E01A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1B1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
 				A4C13FFF1A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
@@ -12979,6 +13055,7 @@
 				A4C141111A4BEF5700C9BAB5 /* FLAnimatedImageView.m in Sources */,
 				F56649AE1A2AFD56008A5830 /* IconTableViewCell.m in Sources */,
 				F56649AF1A2AFD56008A5830 /* CTAssetsPageViewController.m in Sources */,
+				A4C770EC1A80A516005ABC7F /* ICommentInfo.m in Sources */,
 				A48CA6A11A4D044B009EBD04 /* DTError.m in Sources */,
 				F56649B01A2AFD56008A5830 /* UserInfoBasicVC.m in Sources */,
 				F56649B11A2AFD56008A5830 /* HomeView.m in Sources */,
@@ -13051,6 +13128,7 @@
 				A4A2EB061A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				F59E76041A4059D00028FBAF /* IFBase.m in Sources */,
 				F58CA9971A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				A4C770E61A80A3D1005ABC7F /* IUserInfo.m in Sources */,
 				F58CA99D1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				F56649D61A2AFD56008A5830 /* UIAlertView+AFNetworking.m in Sources */,
 				F56649D71A2AFD56008A5830 /* UIImage+MultiFormat.m in Sources */,
@@ -13199,6 +13277,7 @@
 				A4C1413B1A4BEF5700C9BAB5 /* SECompatibility.m in Sources */,
 				F5664A231A2AFD56008A5830 /* MessageController.m in Sources */,
 				F5664A241A2AFD56008A5830 /* WLUserStatusesResult.m in Sources */,
+				A4C770F81A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F5664A251A2AFD56008A5830 /* SDWebImageManager+MJ.m in Sources */,
 				A4C140801A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F557728A1A5A790300693279 /* LoginGuideController.m in Sources */,
@@ -13386,7 +13465,9 @@
 				F5664C421A2AFDD5008A5830 /* TQRichTextImageRun.m in Sources */,
 				F5664C431A2AFDD5008A5830 /* M80AttributedLabelURL.m in Sources */,
 				F5664C441A2AFDD5008A5830 /* SDWebImageDecoder.m in Sources */,
+				A4C770FF1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				A4C142ED1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
+				A4C770F31A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A40355F61A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F5664C461A2AFDD5008A5830 /* AFNetworkReachabilityManager.m in Sources */,
 				F5664C471A2AFDD5008A5830 /* TQRichTextBaseRun.m in Sources */,
@@ -13410,6 +13491,7 @@
 				F53D4E561A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */,
 				A49C804D1A71041000F2AEC5 /* DataSigner.m in Sources */,
+				A4C770DB1A8079A1005ABC7F /* IProjectInfo.m in Sources */,
 				F5664C501A2AFDD5008A5830 /* MBProgressHUD.m in Sources */,
 				F5664C511A2AFDD5008A5830 /* MJMember.m in Sources */,
 				F533BD911A7B7C340057A229 /* MemberProjectController.m in Sources */,
@@ -13430,6 +13512,7 @@
 				F5664C591A2AFDD5008A5830 /* SWUtilityButtonView.m in Sources */,
 				A45065461A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F5664C5A1A2AFDD5008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
+				A4C770E11A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1C1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
 				F5664C5B1A2AFDD5008A5830 /* CTAssetsViewController.m in Sources */,
 				F5664C5C1A2AFDD5008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
@@ -13456,6 +13539,7 @@
 				A4C1414B1A4BEF5700C9BAB5 /* SETextAttachment.m in Sources */,
 				F53D4E341A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664C6B1A2AFDD5008A5830 /* HomeView.m in Sources */,
+				A4C770ED1A80A516005ABC7F /* ICommentInfo.m in Sources */,
 				F562728C1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F5664C6C1A2AFDD5008A5830 /* LocationprovinceController.m in Sources */,
 				A4C141361A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
@@ -13528,6 +13612,7 @@
 				A4A2EB071A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				F5664C8E1A2AFDD5008A5830 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9981A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
+				A4C770E71A80A3D1005ABC7F /* IUserInfo.m in Sources */,
 				F58CA99E1A5D4F9100988A61 /* DaiDodgeKeyboard.m in Sources */,
 				A4C140001A4BC0AD00C9BAB5 /* ChatViewController.m in Sources */,
 				A4C1414E1A4BEF5700C9BAB5 /* SETextEditingCaret.m in Sources */,
@@ -13676,6 +13761,7 @@
 				A4C1406C1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
 				A4C141481A4BEF5700C9BAB5 /* SESelectionGrabber.m in Sources */,
 				F5664CDD1A2AFDD5008A5830 /* MessageController.m in Sources */,
+				A4C770F91A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F5664CDE1A2AFDD5008A5830 /* WLUserStatusesResult.m in Sources */,
 				F5664CDF1A2AFDD5008A5830 /* SDWebImageManager+MJ.m in Sources */,
 				F557728B1A5A790300693279 /* LoginGuideController.m in Sources */,

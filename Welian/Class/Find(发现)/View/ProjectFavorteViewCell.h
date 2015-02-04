@@ -8,6 +8,11 @@
 
 #import "BaseTableViewCell.h"
 
+typedef void(^ProjectFavorteClickedBlock)(NSIndexPath *indexPath);
+
 @interface ProjectFavorteViewCell : BaseTableViewCell
+
+@property (strong,nonatomic) IProjectDetailInfo *projectInfo;
+@property (strong,nonatomic) ProjectFavorteClickedBlock block;
 
 @end
