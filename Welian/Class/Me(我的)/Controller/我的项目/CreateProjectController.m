@@ -19,7 +19,7 @@
 #import "CTAssetsPickerController.h"
 #import "CollectionViewController.h"
 
-@interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate>
+@interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
 {
     ALAssetsLibrary *_alassets;
 }
@@ -38,6 +38,7 @@ static NSString *projectcellid = @"projectcellid";
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         [_tableView setDataSource:self];
+        [_tableView setSectionHeaderHeight:0.1];
         [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
         [_tableView setDelegate:self];
     }
@@ -50,6 +51,7 @@ static NSString *projectcellid = @"projectcellid";
         _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 250)];
         [_footView.titLabel setText:@"项目描述"];
         [_footView.textView setPlaceholder:@"200字之内"];
+        [_footView.textView setDelegate:self];
         [_footView.photBut addTarget:self action:@selector(selectPhotosBut) forControlEvents:UIControlEventTouchUpInside];
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
@@ -78,6 +80,12 @@ static NSString *projectcellid = @"projectcellid";
     return _footView;
 }
 
+#pragma mark - textView代理
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    [self.projectModel setDes:textView.text];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -103,6 +111,9 @@ static NSString *projectcellid = @"projectcellid";
     [super viewDidLoad];
     [self setTitle:@"项目简介"];
     [self.footView.textView setText:self.projectModel.des];
+    if (!self.projectModel) {
+        self.projectModel = [[CreateProjectModel alloc] init];
+    }
 }
 
 
@@ -133,6 +144,7 @@ static NSString *projectcellid = @"projectcellid";
     TextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell.textField setDelegate:self];
     }
     if (indexPath.section==1&&indexPath.row==1) {
@@ -155,14 +167,23 @@ static NSString *projectcellid = @"projectcellid";
             [cell.textLabel setText:@"项目名称"];
             [cell.textField setPlaceholder:@"10字之内（必填）"];
             [cell.textField setText:self.projectModel.name];
+            [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
+                [self.projectModel setName:textField.text];
+            }];
         }else if (indexPath.section ==0&&indexPath.row==1){
             [cell.textLabel setText:@"一句话介绍"];
             [cell.textField setPlaceholder:@"50字之内（必填）"];
             [cell.textField setText:self.projectModel.intro];
+            [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
+                [self.projectModel setIntro:textField.text];
+            }];
         }else if (indexPath.section==1&&indexPath.row==0){
             [cell.textLabel setText:@"项目网址"];
             [cell.textField setPlaceholder:@"255字之内（选填）"];
             [cell.textField setText:self.projectModel.website];
+            [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
+                [self.projectModel setWebsite:textField.text];
+            }];
         }
     }
     
