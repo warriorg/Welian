@@ -13,7 +13,7 @@
 
 @interface ProjectUserListViewController ()
 
-@property (strong,nonatomic) NSArray *datasource;
+@property (strong,nonatomic) NSMutableArray *datasource;
 @property (assign,nonatomic) NSInteger pageIndex;
 @property (assign,nonatomic) NSInteger pageSize;
 
@@ -90,7 +90,12 @@
     if (!cell) {
         cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    cell.indexPath = indexPath;
     cell.baseUser = _datasource[indexPath.row];
+    WEAKSELF
+    [cell setAddFriendBlock:^(NSIndexPath *indexPath){
+        [weakSelf addFriendWithIndex:indexPath];
+    }];
     return cell;
 }
 
@@ -99,9 +104,24 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //点击点赞的人，进入
     IBaseUserM *user = _datasource[indexPath.row];
-    //系统联系人
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
-    [self.navigationController pushViewController:userInfoVC animated:YES];
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    //    NSString *friendship = info[@"friendship"];
+    if(user.uid != nil){
+        //系统联系人
+        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
+        //添加好友成功
+        [userInfoVC setAddFriendBlock:^(){
+            
+            IBaseUserM *newUser = _datasource[indexPath.row];
+            newUser.friendship = @(4);
+            
+            //改变数组，刷新列表
+            [self.datasource replaceObjectAtIndex:indexPath.row withObject:newUser];
+            //刷新列表
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -172,7 +192,7 @@
                                            //隐藏加载更多动画
                                            [self.tableView footerEndRefreshing];
                                            
-                                           self.datasource = [IBaseUserM objectsWithInfo:JSON];
+                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                            [self.tableView reloadData];
                                        } fail:^(NSError *error) {
                                            [UIAlertView showWithError:error];
@@ -187,11 +207,43 @@
                                           //隐藏加载更多动画
                                           [self.tableView footerEndRefreshing];
                                           
-                                          self.datasource = [IBaseUserM objectsWithInfo:JSON];
+                                          self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];
                                       } fail:^(NSError *error) {
                                           [UIAlertView showWithError:error];
                                       }];
+}
+
+- (void)addFriendWithIndex:(NSIndexPath *)indexPath
+{
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    IBaseUserM *userInfo = _datasource[indexPath.row];
+    if(userInfo.uid != nil && userInfo.friendship.integerValue != 1){
+        //添加
+        DLog(@"添加好友");
+        //添加好友，发送添加成功，状态变成待验证
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",userInfo.name]];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
+        [alert bk_addButtonWithTitle:@"取消" handler:nil];
+        [alert bk_addButtonWithTitle:@"发送" handler:^{
+            //发送好友请求
+            [WLHttpTool requestFriendParameterDic:@{@"fid":userInfo.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                IBaseUserM *newUser = _datasource[indexPath.row];
+                newUser.friendship = @(4);
+                
+                //改变数组，刷新列表
+                [self.datasource replaceObjectAtIndex:indexPath.row withObject:newUser];
+                //刷新列表
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } fail:^(NSError *error) {
+                
+            }];
+        }];
+        [alert show];
+    }
 }
 
 @end

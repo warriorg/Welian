@@ -13,6 +13,7 @@
 - (void)customOperation:(NSDictionary *)dict
 {
     self.user = [IBaseUserM objectWithDict:dict[@"user"]];
+    self.touser = [IBaseUserM objectWithDict:dict[@"touser"]];
 }
 
 @end

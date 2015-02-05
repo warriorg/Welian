@@ -42,7 +42,7 @@
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
     //@"zhan":@"100",@"name":@"快推",@"info":@"全球领先移动招聘平台",@"status":@"正在融资"
-    _praiseNumLabel.text = _projectInfo.zancount.stringValue;
+    _praiseNumLabel.text = [_projectInfo displayZancountInfo];
     _nameLabel.text = _projectInfo.name;
     _msgLabel.text = _projectInfo.intro;
     //status 1 正在融资，0不融资

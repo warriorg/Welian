@@ -176,6 +176,10 @@
 		A47BA6681A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47BA6621A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png */; };
 		A47BA6691A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47BA6621A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png */; };
 		A47BA66A1A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A47BA6621A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png */; };
+		A47BC7351A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */; };
+		A47BC7361A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */; };
+		A47BC7371A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */; };
+		A47BC7381A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */; };
 		A47C5F4E1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
 		A47C5F4F1A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
 		A47C5F501A5E1E9400E63737 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */; };
@@ -4537,6 +4541,8 @@
 		A4743EBA1A7F979E00645998 /* ProjectDetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailInfoView.m; sourceTree = "<group>"; };
 		A47BA6611A81C1020000EC48 /* discovery_xiangmu_detail_nolink@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_xiangmu_detail_nolink@2x.png"; sourceTree = "<group>"; };
 		A47BA6621A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_xiangmu_detail_nomember@2x.png"; sourceTree = "<group>"; };
+		A47BC7331A8359F400A720F4 /* ProjcetDetailImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjcetDetailImageViewCell.h; sourceTree = "<group>"; };
+		A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjcetDetailImageViewCell.m; sourceTree = "<group>"; };
 		A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		A47C5F4D1A5E1E9400E63737 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 		A47C5F521A5E663100E63737 /* AddFriendTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendTypeListViewController.h; sourceTree = "<group>"; };
@@ -7694,6 +7700,8 @@
 				A47F1B351A7F54E300CB4D9F /* ProjectInfoView.m */,
 				A4743E931A7F619D00645998 /* ProjectDetailView.h */,
 				A4743E941A7F619D00645998 /* ProjectDetailView.m */,
+				A47BC7331A8359F400A720F4 /* ProjcetDetailImageViewCell.h */,
+				A47BC7341A8359F400A720F4 /* ProjcetDetailImageViewCell.m */,
 				A4743EB31A7F896E00645998 /* ProjectFavorteViewCell.h */,
 				A4743EB41A7F896E00645998 /* ProjectFavorteViewCell.m */,
 				A4C770F61A80BC9A005ABC7F /* ProjectFavorteItemView.h */,
@@ -12488,6 +12496,7 @@
 				A49C7D5A1A70D42700F2AEC5 /* CTAssetsPickerController.m in Sources */,
 				A49C7D5B1A70D42700F2AEC5 /* UserInfoTool.m in Sources */,
 				A49C7D5C1A70D42700F2AEC5 /* XHOperationNetworkKit.m in Sources */,
+				A47BC7381A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */,
 				A49C7D5D1A70D42700F2AEC5 /* pinyin.c in Sources */,
 				A49C7D5E1A70D42700F2AEC5 /* WLMessageInputView.m in Sources */,
 				A49C7D5F1A70D42700F2AEC5 /* AddWXFriendCell.m in Sources */,
@@ -12973,6 +12982,7 @@
 				F53DC39F1A49192600F5F712 /* CTAssetsPickerController.m in Sources */,
 				F53DC3A01A49192600F5F712 /* UserInfoTool.m in Sources */,
 				A4C140BF1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
+				A47BC7371A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */,
 				F53DC3A11A49192600F5F712 /* pinyin.c in Sources */,
 				A4C140A01A4BEA8500C9BAB5 /* WLMessageInputView.m in Sources */,
 				F53DC3A21A49192600F5F712 /* AddWXFriendCell.m in Sources */,
@@ -13458,6 +13468,7 @@
 				F5664A661A2AFD56008A5830 /* UserInfoTool.m in Sources */,
 				A4C141261A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F5664A671A2AFD56008A5830 /* pinyin.c in Sources */,
+				A47BC7351A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */,
 				A4C140BA1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
 				F5664A681A2AFD56008A5830 /* AddWXFriendCell.m in Sources */,
 				F5664A691A2AFD56008A5830 /* UIImage+ImageEffects.m in Sources */,
@@ -13943,6 +13954,7 @@
 				F5664D1F1A2AFDD5008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664D201A2AFDD5008A5830 /* UserInfoTool.m in Sources */,
 				A4C140BE1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
+				A47BC7361A8359F400A720F4 /* ProjcetDetailImageViewCell.m in Sources */,
 				F5664D211A2AFDD5008A5830 /* pinyin.c in Sources */,
 				A4C1409F1A4BEA8500C9BAB5 /* WLMessageInputView.m in Sources */,
 				F5664D221A2AFDD5008A5830 /* AddWXFriendCell.m in Sources */,

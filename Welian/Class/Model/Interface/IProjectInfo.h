@@ -20,6 +20,9 @@
 @property (nonatomic,strong) NSString *date;
 @property (nonatomic,strong) NSNumber *status;
 
+//赞的数量
+- (NSString *)displayZancountInfo;
+
 @end
 /*
  "pid":10056, //项目id

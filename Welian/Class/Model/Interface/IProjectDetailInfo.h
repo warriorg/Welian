@@ -35,6 +35,8 @@
 
 //融资阶段
 - (NSString *)displayStage;
+//赞的数量
+- (NSString *)displayZancountInfo;
 
 @end
 /*

@@ -20,6 +20,12 @@
 #import "ProjectUserListViewController.h"
 #import "TOWebViewController.h"
 #import "MessageKeyboardView.h"
+#import "MJRefresh.h"
+
+//#import "WLPhotoView.h"
+//#import "WLPhoto.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
 
 #define kHeaderHeight 133.f
 #define kHeaderHeight2 93.f
@@ -40,8 +46,13 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 @property (assign,nonatomic) UIButton *favorteBtn;
 @property (assign,nonatomic) UIButton *zanBtn;
+@property (strong,nonatomic) NSIndexPath *selectIndex;
+@property (strong,nonatomic) UITapGestureRecognizer *tapGesture;
 
 @property (strong,nonatomic) MessageKeyboardView *messageView;
+
+@property (assign,nonatomic) NSInteger pageIndex;
+@property (assign,nonatomic) NSInteger pageSize;
 
 @end
 
@@ -54,6 +65,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     _detailInfo = nil;
     _selecCommFrame = nil;
     _messageView = nil;
+    _selectIndex = nil;
+    _tapGesture = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
 }
 
 - (NSString *)title
@@ -61,13 +75,45 @@ static NSString *noCommentCell = @"NoCommentCell";
     return @"详情";
 }
 
+- (UITapGestureRecognizer *)tapGesture
+{
+    if (!_tapGesture) {
+        //添加屏幕点击事件
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+            //隐藏键盘
+            [self.messageView dismissKeyBoard];
+            [self.messageView startCompile:nil];
+        }];
+        self.tapGesture = tap;
+    }
+    return _tapGesture;
+}
+
 - (instancetype)initWithProjectInfo:(IProjectInfo *)projectInfo
 {
     self = [super init];
     if (self) {
         self.projectInfo = projectInfo;
+        self.pageIndex = 1;
+        self.pageSize = 10;
     }
     return self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //删除键盘监听
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //键盘监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -88,39 +134,50 @@ static NSString *noCommentCell = @"NoCommentCell";
     //回复输入栏
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, tableView.bottom, self.view.width, toolBarHeight) andSuperView:self.view withMessageBlock:^(NSString *comment) {
         
-        //        NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-        //
-        //        [reqstDicM setObject:@(self.statusM.topid) forKey:@"fid"];
-        //        if (self.statusM.topid==0) {
-        //            [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
-        //        }
-        //        [reqstDicM setObject:comment forKey:@"comment"];
-        //
-        //        if (_selecCommFrame) {
-        //            [reqstDicM setObject:_selecCommFrame.commentM.user.uid forKey:@"touid"];
-        //        }
-        //
-        //        [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
-        //
-        //            self.statusM.commentcount++;
-        //            [self loadNewCommentListData];
-        //        } fail:^(NSError *error) {
-        //            
-        //        }];
-        
         //评论,
         NSDictionary *params = [NSDictionary dictionary];
         //回复某个人的评论
+        CommentMode *commentM = [[CommentMode alloc] init];
+        commentM.comment = comment;
+        commentM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         if (_selecCommFrame) {
             params = @{@"pid":_projectInfo.pid,@"touid":_selecCommFrame.commentM.user.uid,@"comment":comment};
+            
+            WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+            touser.avatar = _selecCommFrame.commentM.user.avatar;
+            touser.company = _selecCommFrame.commentM.user.company;
+            touser.investorauth = _selecCommFrame.commentM.user.investorauth;
+            touser.name = _selecCommFrame.commentM.user.name;
+            touser.position = _selecCommFrame.commentM.user.position;
+            touser.uid = _selecCommFrame.commentM.user.uid;
+            commentM.touser = touser;
         }else{
             params = @{@"pid":_projectInfo.pid,@"comment":comment};
         }
+        
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        WLBasicTrends *user = [[WLBasicTrends alloc] init];
+        user.avatar = loginUser.avatar;
+        user.company = loginUser.company;
+        user.investorauth = loginUser.investorauth.intValue;
+        user.name = loginUser.name;
+        user.position = loginUser.position;
+        user.uid = loginUser.uid;
+        commentM.user = user;
+        
         [WLHttpTool commentProjectParameterDic:params
                                        success:^(id JSON) {
+                                           commentM.fcid = JSON[@"pcid"];
                                            
+                                           CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+                                           [commentFrame setCommentM:commentM];
+                                           [_datasource insertObject:commentFrame atIndex:0];
+                                           
+                                           //刷新列表
+                                           _detailInfo.commentcount = @(_detailInfo.commentcount.integerValue + 1);
+                                           [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                                        } fail:^(NSError *error) {
-                                           [UIAlertView showWithError:error];
+                                           [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
                                        }];
         
     }];
@@ -160,7 +217,11 @@ static NSString *noCommentCell = @"NoCommentCell";
         [weakSelf closeProjectDetailInfoView];
     }];
     
+    //获取数据
     [self initData];
+    
+    //上提加载更多
+    [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
 }
 
 //获取按钮对象
@@ -252,11 +313,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         //评论列表
         if (_datasource.count > 0) {
             CommentCell *cell = [CommentCell cellWithTableView:tableView];
-            
-//            CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
-//            CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-//            [commentFrame setCommentM:commentM];
-            
+            cell.showBottomLine = YES;
             // 传递的模型：文字数据 + 子控件frame数据
             cell.commentCellFrame = _datasource[indexPath.row];
             cell.commentVC = self;
@@ -273,37 +330,29 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    self.selectIndex = indexPath;
     
-//    [tableView  scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-    self.selecCommFrame = _datasource[indexPath.row];
+    CommentCellFrame *selecCommFrame = _datasource[indexPath.row];
     
     UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-    if (_selecCommFrame.commentM.user.uid.integerValue == [LogInUser getCurrentLoginUser].uid.integerValue) {
+    if (selecCommFrame.commentM.user.uid.integerValue == [LogInUser getCurrentLoginUser].uid.integerValue) {
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
-//            [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":selecCommFrame.commentM.fcid} success:^(id JSON) {
-//                [_datasource removeObject:selecCommFrame];
-//                NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_datasource.count];
-//                for (CommentCellFrame *comCellF in _dataArrayM) {
-//                    [_datasource addObject:comCellF.commentM];
-//                }
-//                [self.statusM setCommentsArray:commentAM];
-//                self.statusM.commentcount--;
-//                [self updataCommentBlock];
-//                _selecCommFrame = nil;
-//                [self.tableView reloadData];
-//                
-//                self.commentHeadView;
-//                
-//            } fail:^(NSError *error) {
-//                
-//            }];
-//            
+            [WLHttpTool deleteProjectCommentParameterDic:@{@"pcid":selecCommFrame.commentM.fcid}
+                                                 success:^(id JSON) {
+                                                     //删除当前对象
+                                                     [_datasource removeObject:selecCommFrame];
+                                                     
+                                                     //刷新列表
+                                                     _detailInfo.commentcount = @(_detailInfo.commentcount.integerValue - 1);
+                                                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+                                                 } fail:^(NSError *error) {
+                                                     [UIAlertView showWithTitle:@"系统提示" message:@"删除失败，请重试！"];
+                                                 }];
         }];
     }else{
         [sheet bk_addButtonWithTitle:@"回复" handler:^{
+            self.selecCommFrame = selecCommFrame;
             [self.messageView startCompile:_selecCommFrame.commentM.user];
-//            [self.messageView.commentTextView becomeFirstResponder];
         }];
     }
     [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
@@ -330,7 +379,11 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (indexPath.section == 0) {
         return 40.f;
     }
-    return 60;
+    if (_datasource.count > 0) {
+        return [_datasource[indexPath.row] cellHeight];
+    }else{
+        return 60.f;
+    }
 }
 
 #pragma mark - WLSegmentedControlDelegate
@@ -405,23 +458,59 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)zanBtnClicked:(UIButton *)sender
 {
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_detailInfo.zanusers];
     if (!_detailInfo.isZan.boolValue) {
         //赞
         [WLHttpTool zanProjectParameterDic:@{@"pid":_detailInfo.pid}
                                    success:^(id JSON) {
                                        _detailInfo.isZan = @(1);
+                                       _detailInfo.zancount = @(_detailInfo.zancount.integerValue + 1);
+                                       
+                                       IBaseUserM *zanUser = [[IBaseUserM alloc] init];
+                                       zanUser.avatar = loginUser.avatar;
+                                       zanUser.name = loginUser.name;
+                                       zanUser.uid = loginUser.uid;
+                                       zanUser.position = loginUser.position;
+                                       zanUser.company = loginUser.company;
+                                       zanUser.investorauth = loginUser.investorauth;
+                                       //插入
+                                       [zanUsers insertObject:zanUser atIndex:0];
+                                       _detailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                       
+                                       //刷新
+                                       [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                       
                                        [self checkZanStatus];
+                                       
+                                       [self updateUI];
                                    } fail:^(NSError *error) {
-                                       [UIAlertView showWithError:error];
+                                       [UIAlertView showWithTitle:@"系统提示" message:@"点赞失败，请重试！"];
                                    }];
     }else{
         //取消赞
         [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_detailInfo.pid}
                                          success:^(id JSON) {
                                              _detailInfo.isZan = @(0);
+                                             _detailInfo.zancount = @(_detailInfo.zancount.integerValue - 1);
+                                             
+                                             IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
+                                                 return [obj uid].integerValue == loginUser.uid.integerValue;
+                                             }];
+                                             if (zanUser) {
+                                                 [zanUsers removeObject:zanUser];
+                                                 
+                                                 _detailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                                 
+                                                 //刷新
+                                                 [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                             }
+                                             
                                              [self checkZanStatus];
+                                             
+                                             [self updateUI];
                                          } fail:^(NSError *error) {
-                                             [UIAlertView showWithError:error];
+                                             [UIAlertView showWithTitle:@"系统提示" message:@"取消赞失败，请重试！"];
                                          }];
     }
     
@@ -434,7 +523,8 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)commentBtnClicked:(UIButton *)sender
 {
-//    [self.messageView startCompile:nil];
+    _selecCommFrame = nil;
+    _selectIndex = nil;
     [self.messageView.commentTextView becomeFirstResponder];
 }
 
@@ -452,7 +542,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                   _detailInfo.isFavorite = @(0);
                                                   [self checkFavorteStatus];
                                               } fail:^(NSError *error) {
-                                                  [UIAlertView showWithError:error];
+                                                  [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
                                               }];
     }else{
         //收藏项目
@@ -461,7 +551,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                             _detailInfo.isFavorite = @(1);
                                             [self checkFavorteStatus];
                                         } fail:^(NSError *error) {
-                                            [UIAlertView showWithError:error];
+                                            [UIAlertView showWithTitle:@"系统提示" message:@"收藏项目失败，请重试！"];
                                         }];
     }
     
@@ -539,14 +629,26 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              commentM.fcid = commentInfo.pcid;
                                              commentM.comment = commentInfo.comment;
                                              commentM.created = commentInfo.created;
-                                             WLBasicTrends *user = [[WLBasicTrends alloc] init];
-                                             user.avatar = commentInfo.user.avatar;
-                                             user.company = commentInfo.user.company;
-                                             user.investorauth = commentInfo.user.investorauth.integerValue;
-                                             user.name = commentInfo.user.name;
-                                             user.position = commentInfo.user.position;
-                                             user.uid = commentInfo.user.uid;
-                                             commentM.user = user;
+                                             if (commentInfo.user.uid) {
+                                                 WLBasicTrends *user = [[WLBasicTrends alloc] init];
+                                                 user.avatar = commentInfo.user.avatar;
+                                                 user.company = commentInfo.user.company;
+                                                 user.investorauth = commentInfo.user.investorauth.intValue;
+                                                 user.name = commentInfo.user.name;
+                                                 user.position = commentInfo.user.position;
+                                                 user.uid = commentInfo.user.uid;
+                                                 commentM.user = user;
+                                             }
+                                             if (commentInfo.touser.uid) {
+                                                 WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+                                                 touser.avatar = commentInfo.touser.avatar;
+                                                 touser.company = commentInfo.touser.company;
+                                                 touser.investorauth = commentInfo.touser.investorauth.intValue;
+                                                 touser.name = commentInfo.touser.name;
+                                                 touser.position = commentInfo.touser.position;
+                                                 touser.uid = commentInfo.touser.uid;
+                                                 commentM.touser = touser;
+                                             }
                                              
                                              CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
                                              [commentFrame setCommentM:commentM];
@@ -558,11 +660,19 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          [self updateUI];
                                          [_tableView reloadData];
                                      } fail:^(NSError *error) {
-                                         [UIAlertView showWithError:error];
+                                         [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
                                      }];
 }
 
 - (void)updateUI{
+//    NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < 4; i++) {
+//        IPhotoInfo *photoInfo = [[IPhotoInfo alloc] init];
+//        photoInfo.photo = @"http://img.welian.com/1422523516797-200-92_x.jpg";
+//        [photos addObject:photoInfo];
+//    }
+//    _detailInfo.photos = [NSArray arrayWithArray:photos];
+//    _detailInfo.zancount = @(147100);
     //设置头部内容
     CGFloat detailHeight = [ProjectDetailView configureWithInfo:_detailInfo.des Images:_detailInfo.photos];
     CGFloat projectInfoViewHeight = _projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
@@ -582,6 +692,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoView.bottom, self.view.width, detailHeight)];
     projectDetailView.projectInfo = _detailInfo;
+    [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,WLPhotoView *imageView){
+        [weakSelf showDetailImagesWithIndex:indexPath imageView:imageView];
+    }];
     
     //操作栏
     NSString *linkImage = _detailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
@@ -611,6 +724,23 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
+//展示项目图片
+- (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath imageView:(WLPhotoView *)photoView
+{
+    NSMutableArray *photos = [NSMutableArray array];
+    for (int i = 0; i< _detailInfo.photos.count; i++) {
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:[_detailInfo.photos[i] photo]];
+        photo.srcImageView = photoView; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = indexPath.row; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
+
 //选择点赞的列表
 - (void)selectZanUserWithIndex:(NSIndexPath *)indexPath
 {
@@ -627,18 +757,129 @@ static NSString *noCommentCell = @"NoCommentCell";
         IBaseUserM *user = _detailInfo.zanusers[indexPath.row];
         //系统联系人
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
-        //添加好友成功
-//        [userInfoVC setAddFriendBlock:^(){
-//            NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
-//            //重置好友关系
-//            [infoDic setValue:@"4" forKey:@"friendship"];
-//            //改变数组，刷新列表
-//            [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
-//            //刷新列表
-//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//        }];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
+}
+
+//加载更多评论
+- (void)loadMoreCommentData
+{
+    if (_datasource.count < _detailInfo.commentcount.integerValue) {
+        _pageIndex++;
+        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_detailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+                                           success:^(id JSON) {
+                                               //隐藏加载更多动画
+                                               [self.tableView footerEndRefreshing];
+                                               
+                                               if (JSON) {
+                                                   NSArray *comments = [ICommentInfo objectsWithInfo:JSON];
+                                                   
+                                                   for (ICommentInfo *commentInfo in comments) {
+                                                       CommentMode *commentM = [[CommentMode alloc] init];
+                                                       commentM.fcid = commentInfo.pcid;
+                                                       commentM.comment = commentInfo.comment;
+                                                       commentM.created = commentInfo.created;
+                                                       if (commentInfo.user.uid) {
+                                                           WLBasicTrends *user = [[WLBasicTrends alloc] init];
+                                                           user.avatar = commentInfo.user.avatar;
+                                                           user.company = commentInfo.user.company;
+                                                           user.investorauth = commentInfo.user.investorauth.intValue;
+                                                           user.name = commentInfo.user.name;
+                                                           user.position = commentInfo.user.position;
+                                                           user.uid = commentInfo.user.uid;
+                                                           commentM.user = user;
+                                                       }
+                                                       if (commentInfo.touser.uid) {
+                                                           WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+                                                           touser.avatar = commentInfo.touser.avatar;
+                                                           touser.company = commentInfo.touser.company;
+                                                           touser.investorauth = commentInfo.touser.investorauth.intValue;
+                                                           touser.name = commentInfo.touser.name;
+                                                           touser.position = commentInfo.touser.position;
+                                                           touser.uid = commentInfo.touser.uid;
+                                                           commentM.touser = touser;
+                                                       }
+                                                       
+                                                       CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+                                                       [commentFrame setCommentM:commentM];
+                                                       
+                                                       [_datasource addObject:commentFrame];
+                                                   }
+                                                   //刷新列表
+                                                   [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                               }
+                                           } fail:^(NSError *error) {
+                                               
+                                           }];
+    }else{
+        //隐藏加载更多动画
+        [self.tableView footerEndRefreshing];
+        [self.tableView setFooterHidden:YES];
+    }
+}
+
+//键盘监听 改变
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    /*
+     Reduce the size of the text view so that it's not obscured by the keyboard.
+     Animate the resize so that it's in sync with the appearance of the keyboard.
+     */
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the origin of the keyboard when it's displayed.
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    CGFloat keyboardTop = keyboardRect.origin.y;
+    CGRect newTextViewFrame = self.view.bounds;
+    newTextViewFrame.size.height = keyboardTop - self.view.bounds.origin.y - toolBarHeight;
+    
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    _tableView.frame = newTextViewFrame;
+//    [_tableView setDebug:YES];
+    [UIView commitAnimations];
+    
+    //设置
+    if (_selectIndex) {
+        [_tableView scrollToRowAtIndexPath:_selectIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }else{
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+    //添加手势
+    [_tableView addGestureRecognizer:self.tapGesture];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    //    textView.frame = self.view.bounds;
+    _tableView.frame = Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight);
+    [UIView commitAnimations];
+    //处理
+    _selectIndex = nil;
+    [_tableView removeGestureRecognizer:self.tapGesture];
 }
 
 @end

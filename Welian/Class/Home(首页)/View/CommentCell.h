@@ -26,4 +26,6 @@
 
 @property (nonatomic, weak) UIViewController *commentVC;
 
+@property (nonatomic, assign) BOOL showBottomLine;//是否显示下面的线
+
 @end

@@ -78,14 +78,14 @@
 {
     ProjectFavorteItemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectFavrteViewCell" forIndexPath:indexPath];
 //    [cell setDebug:YES];
-    if (indexPath.row == _projectInfo.zanusers.count) {
-        cell.logoImageView.image = nil;
-        cell.numLabel.text = _projectInfo.zancount.stringValue;
-        cell.numLabel.hidden = NO;
-    }else{
+    if (indexPath.row < _projectInfo.zanusers.count) {
         IBaseUserM *user = _projectInfo.zanusers[indexPath.row];
-        cell.numLabel.hidden = YES;
+        cell.numLabel.text = @"";
         [cell.logoImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    }else{
+        cell.numLabel.text = [_projectInfo displayZancountInfo];
+        cell.logoImageView.image = nil;
+        [cell setNeedsDisplay];
     }
     return cell;
 }

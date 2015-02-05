@@ -1124,7 +1124,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 项目点赞

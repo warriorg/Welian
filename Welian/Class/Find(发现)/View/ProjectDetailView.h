@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WLPhotoView.h"
+
+typedef void(^ProjectDetailImageClickedBlock)(NSIndexPath *indexPath,WLPhotoView *imageView);
 
 @interface ProjectDetailView : UIView
 
 @property (strong,nonatomic) IProjectDetailInfo *projectInfo;
+@property (strong,nonatomic) ProjectDetailImageClickedBlock imageClickedBlock;
 
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images;
 

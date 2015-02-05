@@ -49,11 +49,11 @@
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
     _stempLabel.text = [_projectInfo displayStage];
-    _moneyLabel.text = [NSString stringWithFormat:@"%d万人民币",_projectInfo.amount.intValue];
+    _moneyLabel.text = [NSString stringWithFormat:@"%d万RMB",_projectInfo.amount.intValue];
     [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:_projectInfo.amount.stringValue]];
-    _stockLabel.text = [NSString stringWithFormat:@"%d%%",_projectInfo.share.integerValue];
+    _stockLabel.text = [NSString stringWithFormat:@"%@%%",_projectInfo.share];
     float valuationInfo = _projectInfo.amount.floatValue/_projectInfo.share.floatValue * 100;
-    _valuationsLabel.text = [NSString stringWithFormat:@"投后估值为%.0f万",valuationInfo];
+    _valuationsLabel.text = [NSString stringWithFormat:@"%.0f万RMB",valuationInfo];
     [_valuationsLabel setAttributedText:[self getAttributedInfoString:_valuationsLabel.text searchStr:[NSString stringWithFormat:@"%.0f",valuationInfo]]];
     _aboutTextView.text = _projectInfo.financing.length > 0 ? _projectInfo.financing : @"暂无说明";
     
@@ -168,7 +168,7 @@
     moneyLabel.backgroundColor = [UIColor clearColor];
     moneyLabel.font = stempTitleLabel.font;
     moneyLabel.textColor = infoColor;
-    moneyLabel.text = @"50万人民币";
+    moneyLabel.text = @"50万RMB";
     [moneyLabel setAttributedText:[self getAttributedInfoString:moneyLabel.text searchStr:@"50"]];
     [contentView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
@@ -202,8 +202,8 @@
     UILabel *valuationsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     valuationsLabel.backgroundColor = [UIColor clearColor];
     valuationsLabel.font = stempTitleLabel.font;
-    valuationsLabel.textColor = RGB(173.f, 173.f, 173.f);
-    valuationsLabel.text = @"投后估值为1000万";
+    valuationsLabel.textColor = infoColor;
+    valuationsLabel.text = @"1000万RMB";
     [valuationsLabel setAttributedText:[self getAttributedInfoString:valuationsLabel.text searchStr:@"1000"]];
     [contentView addSubview:valuationsLabel];
     self.valuationsLabel = valuationsLabel;
@@ -220,7 +220,7 @@
     UITextView *aboutTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     aboutTextView.backgroundColor = [UIColor clearColor];
     aboutTextView.textColor = infoColor;
-    aboutTextView.font = [UIFont systemFontOfSize:16.f];
+    aboutTextView.font = [UIFont systemFontOfSize:14.f];
     aboutTextView.text = @"杭州传送门网络科技有限公司成立于2014年8月，旗下产品“微链”专注于为互联网创业提供社交服务，并基于社交关系衍生出系统性的创业服务解决方案。公司的主要创始人均具有丰富的创业、投资及媒体从业经验。公司扎根于中国互联网重镇杭州，深刻意识到互联网对中国未来的巨大影响，并全力投身其中。这是创业最好的年代，抓住机遇吧，创业者们！微链是一款专注于互联网创业的社交产品，致力于通过人与人的连接让创业变得更加简单有趣，与互联网创业有关的伙伴们可以在微链上享受自由且专注的交流。微链的团队在互联网创业和投资领域有很深的积累，团队聚集了一批心怀梦想、坚信创业必将改变中国的年轻人。在创立一个月之内，微链已经获得了投资界的青睐并顺利拿到了风险投资。这是一个属于创业者的时代，在我们的理解中，创业是一种态度，创始人、投资人、已经和正要加入创业企业的人才，都是创业者。对你而言，最重要的，是找到他们，并且连接他们。我们认为，移动互联网的时代里，单打独斗那不叫创业，圈子将产生巨大的力量。微链正是这样一款产品，帮助你连接他人，与圈子一起创业。";
     aboutTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [contentView addSubview:aboutTextView];

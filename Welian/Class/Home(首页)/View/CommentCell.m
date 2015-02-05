@@ -22,6 +22,8 @@
     UILabel *_timeLabel;
     /** 内容 */
     MLEmojiLabel *_contentLabel;
+    //最下面的线
+    UIView *_bottomLineView;
 }
 
 @end
@@ -93,6 +95,11 @@
     // 自动换行
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_contentLabel];
+    
+    //cell下面的分割线
+    _bottomLineView = [[UIView alloc] init];
+    _bottomLineView.backgroundColor = RGB(231.f, 231.f, 231.f);
+    [self.contentView addSubview:_bottomLineView];
 }
 
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
@@ -138,6 +145,11 @@
         labelstr = [NSString stringWithFormat:@"回复 %@：%@",commentM.touser.name,commentM.comment];
     }
     _contentLabel.text = labelstr;
+ 
+    if (_showBottomLine) {
+        //最下面的线
+        _bottomLineView.frame = CGRectMake(_nameLabel.left, commentCellFrame.cellHeight - 0.8, self.width - _nameLabel.left, 0.8);
+    }
 }
 
 @end

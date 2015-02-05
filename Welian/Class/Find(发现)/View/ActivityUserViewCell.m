@@ -58,8 +58,44 @@
     
     //是否是认证投资人
     _iconImageView.hidden = [_activityUserData[@"investorauth"] integerValue] == 1 ? NO : YES;
-    _wxBtn.hidden = YES;
-    _operateBtn.hidden = YES;
+   
+    if (_baseUser.uid == nil) {
+        //微信用户
+        _wxBtn.hidden = NO;
+        _operateBtn.hidden = YES;
+        [_wxBtn setTitle:@"微信用户" forState:UIControlStateNormal];
+        [_wxBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }else{
+        [_wxBtn setTitle:@"微链好友" forState:UIControlStateNormal];
+        [_wxBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+        _wxBtn.hidden = _baseUser.friendship.integerValue == 1 ? NO : YES;
+        _operateBtn.hidden = _baseUser.friendship.integerValue != 1 ? NO : YES;
+    }
+    //等待验证
+    if(_baseUser.friendship.integerValue == 4){
+        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+        [_operateBtn setImage:nil forState:UIControlStateNormal];
+        [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
+        [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+        _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        _operateBtn.layer.borderWidth = 0;
+    }else{
+        if (_baseUser.friendship.integerValue == -1) {
+            _operateBtn.hidden = YES;
+        }else{
+            _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
+            [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
+            _operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 0, 0);
+            _operateBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 0);
+            _operateBtn.layer.borderColor = RGB(72.f, 130.f, 193.f).CGColor;
+            _operateBtn.layer.borderWidth = 1.f;
+            _operateBtn.layer.cornerRadius = 5.f;
+            _operateBtn.layer.masksToBounds = YES;
+        }
+    }
 }
 
 //报名列表的字典用户

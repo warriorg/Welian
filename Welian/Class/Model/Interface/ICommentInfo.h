@@ -15,6 +15,7 @@
 @property (nonatomic,strong) NSString *comment;
 @property (nonatomic,strong) NSString *created;
 @property (nonatomic,strong) IBaseUserM *user;
+@property (nonatomic,strong) IBaseUserM *touser;
 
 @end
 

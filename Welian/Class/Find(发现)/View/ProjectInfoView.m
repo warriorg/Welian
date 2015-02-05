@@ -52,7 +52,7 @@
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
-    _praiseNumLabel.text = _projectInfo.zancount.stringValue;
+    _praiseNumLabel.text = [_projectInfo displayZancountInfo];
     _nameLabel.text = _projectInfo.name;
     _msgLabel.text = _projectInfo.intro;
     //类型

@@ -73,6 +73,7 @@
     [self initData];
     
     //上提加载更多
+    [self.tableView addHeaderWithTarget:self action:@selector(loadReflshData)];
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
 }
 
@@ -150,6 +151,14 @@
     
 }
 
+//下拉刷新数据
+- (void)loadReflshData
+{
+    self.pageIndex = 1;
+    self.allDataSource = [NSMutableArray array];
+    [self initData];
+}
+
 //加载更多数据
 - (void)loadMoreDataArray
 {
@@ -172,6 +181,7 @@
     [WLHttpTool getProjectsParameterDic:params
                                 success:^(id JSON) {
                                     //隐藏加载更多动画
+                                    [self.tableView headerEndRefreshing];
                                     [self.tableView footerEndRefreshing];
                                     
                                     if (JSON) {
