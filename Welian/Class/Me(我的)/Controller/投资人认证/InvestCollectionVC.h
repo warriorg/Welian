@@ -11,7 +11,6 @@
 
 typedef void (^InvestBlock)(void);
 
-
 @interface InvestCollectionVC : BasicViewController
 
 @property (nonatomic, copy) InvestBlock investBlock;

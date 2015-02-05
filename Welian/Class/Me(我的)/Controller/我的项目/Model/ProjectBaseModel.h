@@ -19,4 +19,6 @@
 //**项目领域*//
 @property (nonatomic, strong) NSArray *industry;
 
+@property (nonatomic, strong) NSArray *industryName;
+
 @end

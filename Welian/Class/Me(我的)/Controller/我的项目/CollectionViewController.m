@@ -15,6 +15,7 @@
 {
     NSMutableArray *_alldataArray;
     NSInteger _type;
+    CreateProjectModel *_projectModel;
 }
 @end
 
@@ -25,24 +26,40 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 - (void)jiexidata:(NSArray *)dataarray
 {
     [_alldataArray removeAllObjects];
-    IInvestIndustryModel *industA = [[IInvestIndustryModel alloc] init];
-    [industA setIndustryid:@(-1)];
-    [industA setIndustryname:@"不限"];
-    [_alldataArray insertObject:industA atIndex:0];
-    for (NSDictionary *indDic in dataarray) {
+    NSMutableArray *allArray = [NSMutableArray arrayWithArray:dataarray];
+    [allArray insertObject:@{@"id":@(-1),@"name":@"不限"} atIndex:0];
+    BOOL isAll = NO;
+    for (NSDictionary *indDic in allArray) {
         IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
         [indust setIndustryid:[indDic objectForKey:@"id"]];
         [indust setIndustryname:[indDic objectForKey:@"name"]];
+        if (_projectModel.industry.count) {
+            NSString *buxianname = _projectModel.industryName[0];
+            if ([buxianname isEqualToString:@"不限"]) {
+                isAll = YES;
+            }else{
+                for (NSString *nameStr in _projectModel.industryName) {
+                    if ([nameStr isEqualToString:[indDic objectForKey:@"name"]]) {
+                        [indust setIsSelect:YES];
+                    }
+                }
+            }
+            if (isAll) {
+                [indust setIsSelect:YES];
+            }
+        }
+        
         [_alldataArray addObject:indust];
     }
     [self.collectionView reloadData];
 }
 
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type withData:(CreateProjectModel *)projectModel
 {
    self = [super initWithCollectionViewLayout:layout];
     if (self) {
         _type = type;
+        _projectModel = projectModel;
         [self setTitle:@"项目领域"];
         _alldataArray = [NSMutableArray array];
         if (type==1) {
@@ -64,6 +81,11 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
                 IInvestStageModel *stageM = [[IInvestStageModel alloc] init];
                 [stageM setStage:[stageDic objectForKey:@"stage"]];
                 [stageM setStagename:[stageDic objectForKey:@"stagename"]];
+                for (NSDictionary *selectDic in projectModel.industry) {
+                    if ([selectDic[@"stagename"] isEqualToString:[stageDic objectForKey:@"stagename"]]) {
+                        [stageM setIsSelect:YES];
+                    }
+                }
                 [_alldataArray addObject:stageM];
             }
             [self.collectionView reloadData];
@@ -82,11 +104,6 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     self.collectionView.alwaysBounceVertical = YES;
     [self.collectionView setBackgroundColor:WLLineColor];
     [self.collectionView registerNib:[UINib nibWithNibName:@"ProjectIndustryCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
-}
-
-- (void)saveData
-{
-    
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -164,9 +181,42 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
         [stageM setIsSelect:cell.selectBut.selected];
         [_alldataArray replaceObjectAtIndex:indexPath.row withObject:stageM];
     }
-    
-    
     return YES;
+}
+
+#pragma mark - 保存数据并返回
+- (void)saveData
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"isSelect == 1"];
+    NSMutableArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
+    NSMutableArray *saveidArray = [NSMutableArray array];
+    NSMutableArray *saveNameArray = [NSMutableArray array];
+    if (_type==1) {
+        for (IInvestIndustryModel *industM in arrayPre) {
+            if ([industM.industryname isEqualToString:@"不限"]) {
+                [saveidArray addObject:@{@"industryid":industM.industryid}];
+                [saveNameArray addObject:industM.industryname];
+                if (self.investBlock) {
+                    self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }else{
+                [saveidArray addObject:@{@"industryid":industM.industryid}];
+                [saveNameArray addObject:industM.industryname];
+            }
+        }
+    }else if (_type ==2){
+        for (IInvestStageModel *stageM in arrayPre) {
+            [saveidArray addObject:@{@"stage":stageM.stage}];
+            [saveNameArray addObject:stageM.stagename];
+        }
+    }
+    if (self.investBlock) {
+        self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    DLog(@"%@",arrayPre);
 }
 
 - (void)didReceiveMemoryWarning {

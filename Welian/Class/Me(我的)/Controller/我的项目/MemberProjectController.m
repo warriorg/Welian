@@ -11,7 +11,9 @@
 #import "FriendCell.h"
 
 @interface MemberProjectController () <UITableViewDataSource, UITableViewDelegate>
-
+{
+    CreateProjectModel *_projectModel;
+}
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *allArray;
 @end
@@ -28,17 +30,15 @@ static NSString *fridcellid = @"fridcellid";
         [_tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
         [_tableView setSectionFooterHeight:0.01];
         [_tableView setEditing:YES];
-        
-//        _tableView selectRowAtIndexPath:<#(NSIndexPath *)#> animated:<#(BOOL)#> scrollPosition:<#(UITableViewScrollPosition)#>
-//        [_tableView setSectionHeaderHeight:20];
     }
     return _tableView;
 }
 
-- (instancetype)initIsEdit:(BOOL)isEdit
+- (instancetype)initIsEdit:(BOOL)isEdit withData:(CreateProjectModel *)projectModel
 {
     self = [super init];
     if (self) {
+        _projectModel = projectModel;
         [self.view addSubview:self.tableView];
         if (!isEdit) {
             [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
@@ -57,17 +57,17 @@ static NSString *fridcellid = @"fridcellid";
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         self.allArray = [JSON objectForKey:@"array"];
         [self.tableView reloadData];
+        
+        // 默认选中自己
         NSIndexPath *ip=[NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView selectRowAtIndexPath:ip animated:YES scrollPosition:UITableViewScrollPositionBottom];
         [self.selectArray addObject:[LogInUser getCurrentLoginUser]];
     } fail:^(NSError *error) {
         
     }];
-    // Do any additional setup after loading the view.
 }
 
 #pragma mark - tableView代理
-
 - (NSArray*)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     NSMutableArray *arrayM = [NSMutableArray arrayWithCapacity:self.allArray.count];
@@ -115,7 +115,6 @@ static NSString *fridcellid = @"fridcellid";
     FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
     if (indexPath.section==0) {
         
-//        [fcell setSelected:YES animated:YES];
         [fcell setUserMode:[LogInUser getCurrentLoginUser]];
     }else{
         NSDictionary *usersDic = self.allArray[indexPath.section-1];
@@ -133,15 +132,6 @@ static NSString *fridcellid = @"fridcellid";
     return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
     
 }
-
-//对编辑的状态下提交的事件响应
-//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSLog(@"commond eidting style ");
-//    if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-//    }
-//}
 
 //添加一项
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -173,6 +163,8 @@ static NSString *fridcellid = @"fridcellid";
 #pragma mrak - 下一步融资
 - (void)financingProject
 {
+    DLog(@"%@",self.selectArray);
+    return;
     FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO];
     [self.navigationController pushViewController:financingVC animated:YES];
 }

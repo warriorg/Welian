@@ -203,7 +203,7 @@ static NSString *financingCellid = @"financingCellid";
                 [flowLayout setMinimumLineSpacing:1];
                 [flowLayout setMinimumInteritemSpacing:0.5];
                 [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
-                CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:2];
+                CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:2 withData:self.projectModel];
                 [self.navigationController pushViewController:invesVC animated:YES];
                 return NO;
             }];
