@@ -17,6 +17,6 @@
 // 图片
 @property (nonatomic, strong) NSArray *photos;
 // 成员
-@property (nonatomic, strong) NSArray *userArray;
+@property (nonatomic, strong) NSArray *members;
 
 @end

@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreateProjectModel.h"
+//         self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+typedef void(^CollectionBlock)(NSDictionary *investDic);
 
 @interface CollectionViewController : UICollectionViewController
 
+@property (nonatomic, copy) CollectionBlock investBlock;
 // 1 投资领域  2投资阶段
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type;
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type withData:(CreateProjectModel*)projectModel;
 
 @end

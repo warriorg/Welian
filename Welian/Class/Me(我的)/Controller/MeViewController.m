@@ -145,23 +145,16 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         if (indexPath.row==0) {
             controller = [[HomeController alloc] initWithUid:@(0)];
             [controller setTitle:@"我的动态"];
-
-        }else if (indexPath.row ==1){
-//            controller = [[HomeController alloc] initWithStyle:UITableViewStylePlain anduid:@(0)];
-//            [controller setTitle:@"我的动态"];
-
         }
     }else if (indexPath.section==2){
         if (indexPath.row==0) {
-            controller = [[MyProjectViewController alloc] init];
-            [controller setTitle:@"我的项目"];
             
-//            controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
-//            [controller setTitle:@"我是投资人"];
-//            // 取消我是投资人角标
-//            [LogInUser setUserIsinvestorbadge:NO];
-//            [[MainViewController sharedMainViewController] loadNewStustupdata];
-//            [self reloadInvestorstate];
+            controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
+            [controller setTitle:@"我是投资人"];
+            // 取消我是投资人角标
+            [LogInUser setUserIsinvestorbadge:NO];
+            [[MainViewController sharedMainViewController] loadNewStustupdata];
+            [self reloadInvestorstate];
         }else if (indexPath.row==1){
             controller = [[MyProjectViewController alloc] init];
             [controller setTitle:@"我的项目"];
