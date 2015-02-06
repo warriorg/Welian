@@ -15,5 +15,6 @@ typedef void (^ProjectFavoriteBlock)(void);
 @property (nonatomic, strong) ProjectFavoriteBlock favoriteBlock;
 
 - (instancetype)initWithProjectInfo:(IProjectInfo *)projectInfo;
+- (instancetype)initWithProjectPid:(NSNumber *)projectPid;
 
 @end

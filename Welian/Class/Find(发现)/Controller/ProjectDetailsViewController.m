@@ -42,6 +42,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSMutableArray *datasource;
+@property (strong,nonatomic) NSNumber *projectPid;
 @property (strong,nonatomic) IProjectInfo *projectInfo;
 @property (assign,nonatomic) ProjectDetailInfoView *projectDetailInfoView;
 
@@ -65,6 +66,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)dealloc
 {
+    _projectPid = nil;
     _datasource = nil;
     _projectInfo = nil;
     _detailInfo = nil;
@@ -98,6 +100,17 @@ static NSString *noCommentCell = @"NoCommentCell";
     self = [super init];
     if (self) {
         self.projectInfo = projectInfo;
+        self.pageIndex = 1;
+        self.pageSize = 10;
+    }
+    return self;
+}
+
+- (instancetype)initWithProjectPid:(NSNumber *)projectPid
+{
+    self = [super init];
+    if (self) {
+        self.projectPid = projectPid;
         self.pageIndex = 1;
         self.pageSize = 10;
     }
@@ -450,29 +463,31 @@ static NSString *noCommentCell = @"NoCommentCell";
 //分享
 - (void)shareInfoWithType:(NSInteger)type
 {
+    NSString *desc = [NSString stringWithFormat:@"%@\n%@",_detailInfo.name,_detailInfo.intro];
+    UIImage *shareImage = [UIImage imageNamed:@"discovery_xiangmu"];
+    NSString *link = _detailInfo.shareurl.length == 0 ? @"http://www.welian.com/" : _detailInfo.shareurl;
+    NSString *title = @"";
     WeiboType wxType = weChat;
     switch (type) {
         case 1:
+            title = @"推荐一个好项目";
             wxType = weChat;
             break;
         case 2:
+            title = [NSString stringWithFormat:@"%@ | %@",_detailInfo.name,_detailInfo.intro];
             wxType = weChatFriend;
             break;
         default:
             break;
     }
     
-    NSString *desc = @"desc";
-    NSURL *imgUrl = [NSURL URLWithString:@"img"];
-    NSString *link = @"link";
-    NSString *title = @"title";
-    
-    [WLHUDView showHUDWithStr:@"" dim:NO];
-    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
-        [WLHUDView hiddenHud];
-        DLog(@"shareFriendImage---->>>%@",image);
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:wxType];
-    }];
+    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:wxType];
+//    [WLHUDView showHUDWithStr:@"" dim:NO];
+//    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+//        [WLHUDView hiddenHud];
+//        DLog(@"shareFriendImage---->>>%@",image);
+//        
+//    }];
 }
 
 #pragma mark - Private
@@ -659,7 +674,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //获取详情信息
 - (void)initData{
-    [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectInfo.pid}
+    NSNumber *pid = _projectInfo ? _projectInfo.pid : _projectPid;
+    [WLHttpTool getProjectDetailParameterDic:@{@"pid":pid}
                                      success:^(id JSON) {
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
                                          self.detailInfo = detailInfo;
@@ -732,6 +748,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         [weakSelf showProjectUserInfo];
     }];
     
+    //项目详情
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoView.bottom, self.view.width, detailHeight)];
     projectDetailView.projectInfo = _detailInfo;
     [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,WLPhotoView *imageView){

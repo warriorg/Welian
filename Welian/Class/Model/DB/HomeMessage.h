@@ -29,6 +29,9 @@
 //创建新收据
 + (HomeMessage *)createHomeMessageModel:(MessageHomeModel *)userInfoM;
 
+//创建项目推送数据
++ (HomeMessage *)createHomeMessageProjectModel:(NSDictionary *)dict;
+
 // //通过commentid查询
 //+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
 //

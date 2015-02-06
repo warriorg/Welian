@@ -81,7 +81,7 @@
     //项目信息
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     infoLabel.backgroundColor = [UIColor clearColor];
-    infoLabel.font = [UIFont systemFontOfSize:16.f];
+    infoLabel.font = [UIFont systemFontOfSize:14.f];
     infoLabel.textColor = [UIColor blackColor];
 //    infoLabel.text = @"互联网创业，就是要开放协作。微链专注于互联网创业社交，链接创业者及创业者的朋友，让创业成为一种生活方式。";
     infoLabel.numberOfLines = 0;
@@ -148,12 +148,12 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft * 2.f;
     //计算第一个label的高度
-    CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     //计算第二个label的高度
 //    CGSize size2 = images.count > 0 ? [WLPhotoListView photoListSizeWithCount:images needAutoSize:YES] : CGSizeMake(maxWidth, 0);
     CGSize size2 = images.count > 0 ? CGSizeMake(kItemWidth, kItemWidth) : CGSizeMake(maxWidth, 0);
     
-    float height = size1.height + size2.height + kMarginLeft * 2.f + (images.count > 0 ? kMarginEdge : 0);
+    float height = size1.height + size2.height + (info.length > 0 ? kMarginLeft * 2.f : 0) + (images.count > 0 ? kMarginEdge : 0);
     return height;
 }
 

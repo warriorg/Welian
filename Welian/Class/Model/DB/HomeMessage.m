@@ -53,6 +53,40 @@
     return homeMessage;
 }
 
+//创建项目推送数据
++ (HomeMessage *)createHomeMessageProjectModel:(NSDictionary *)dict
+{
+    /*
+     "type":1,//1 赞，0评论
+     "msg": "好好学习，天天向上",
+     "uid": 115,
+     "name": "马良",
+     "avatar": "http://img.welian.com/12123123.jpg",
+     "projectid":10078,
+     "projectintro":"创业者社交平台",//项目介绍
+     ”projectname“:"微链"
+     */
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    HomeMessage *homeMessage = [HomeMessage MR_createEntityInContext:loginUser.managedObjectContext];
+//    homeMessage.commentid = messageM.commentid;
+    homeMessage.isLook = @(NO);
+    homeMessage.avatar = dict[@"avatar"];
+    homeMessage.name = dict[@"name"];
+    homeMessage.uid = @([dict[@"uid"] integerValue]);
+    homeMessage.feedcontent = dict[@"projectintro"];
+    homeMessage.feedid = dict[@"projectid"];
+//    homeMessage.feedpic = messageM.feedpic;
+    homeMessage.msg = dict[@"msg"];
+    homeMessage.type = [dict[@"type"] integerValue] == 0 ? @"projectComment" : @"projectCommentZan";
+    homeMessage.created = dict[@"created"];
+    
+    [loginUser addRsHomeMessagesObject:homeMessage];
+    [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
+    return homeMessage;
+    
+}
+
 //// 获取未读消息
 //+ (NSArray *)getIsLookNotMessages
 //{
