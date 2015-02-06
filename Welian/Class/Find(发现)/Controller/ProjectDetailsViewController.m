@@ -434,15 +434,15 @@ static NSString *noCommentCell = @"NoCommentCell";
         [self shareInfoWithType:2];
     }
     if ([imageIndex isEqualToString:@"设置融资信息"]) {
-        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES];
+        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:self.detailInfo];
         [self.navigationController pushViewController:financingProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"设置团队成员"]) {
-        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:nil];
+        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:self.detailInfo];
         [self.navigationController pushViewController:memberProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"编辑项目信息"]) {
-        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES];
+        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:self.detailInfo];
         [self.navigationController pushViewController:createProjcetVC animated:YES];
     }
 }
@@ -613,6 +613,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (_detailInfo.isFavorite.boolValue) {
         [_favorteBtn setTitle:@"已收藏" forState:UIControlStateNormal];
         [_favorteBtn setImage:[UIImage imageNamed:@"me_mywriten_shoucang_pre"] forState:UIControlStateNormal];
+        if (self.favoriteBlock) {
+            self.favoriteBlock();
+        }
     }else{
         [_favorteBtn setTitle:@"收藏" forState:UIControlStateNormal];
         [_favorteBtn setImage:[UIImage imageNamed:@"me_mywriten_shoucang"] forState:UIControlStateNormal];

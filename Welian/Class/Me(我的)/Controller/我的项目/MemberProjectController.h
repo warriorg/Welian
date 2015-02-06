@@ -7,11 +7,10 @@
 //
 
 #import "BasicViewController.h"
-#import "CreateProjectModel.h"
 
 @interface MemberProjectController : BasicViewController
 @property (nonatomic, strong) NSMutableArray *selectArray;
 
-- (instancetype)initIsEdit:(BOOL)isEdit withData:(CreateProjectModel *)projectModel;
+- (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel;
 
 @end

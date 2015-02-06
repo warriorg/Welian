@@ -22,21 +22,30 @@
 @property (nonatomic,strong) NSNumber *isZan;//0 没赞过，1赞过
 @property (nonatomic,strong) NSNumber *isFavorite;//0 没收藏，1收藏
 @property (nonatomic,strong) NSString *date;
-@property (nonatomic,strong) NSNumber *status;
+@property (nonatomic,strong) NSNumber *status; //1 正在融资，0不融资
 @property (nonatomic,strong) NSNumber *amount;//融资额度
 @property (nonatomic,strong) NSNumber *stage;//融资阶段 0:种子轮投资  1:天使轮投资  2:pre-A轮投资 3:A轮投资 4:B轮投资  5:C轮投资
 @property (nonatomic,strong) NSNumber *share;//出让股份
 @property (nonatomic,strong) NSString *financing;//融资说明
 @property (nonatomic,strong) IBaseUserM *user;
+// 图片
 @property (nonatomic,strong) NSArray *photos;
+// 领域
 @property (nonatomic,strong) NSArray *industrys;
+// 评论
 @property (nonatomic,strong) NSArray *comments;
+// 赞
 @property (nonatomic,strong) NSArray *zanusers;
 
 //融资阶段
 - (NSString *)displayStage;
 //赞的数量
 - (NSString *)displayZancountInfo;
+
+// 取领域id
+- (NSArray *)getindustrysID;
+// 取领域name
+- (NSArray *)getindustrysName;
 
 @end
 /*

@@ -15,7 +15,7 @@
 {
     NSMutableArray *_alldataArray;
     NSInteger _type;
-    CreateProjectModel *_projectModel;
+    IProjectDetailInfo *_projectModel;
 }
 @end
 
@@ -33,12 +33,12 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
         IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
         [indust setIndustryid:[indDic objectForKey:@"id"]];
         [indust setIndustryname:[indDic objectForKey:@"name"]];
-        if (_projectModel.industry.count) {
-            NSString *buxianname = _projectModel.industryName[0];
+        if (_projectModel.industrys.count) {
+            NSString *buxianname = [_projectModel getindustrysName][0];
             if ([buxianname isEqualToString:@"不限"]) {
                 isAll = YES;
             }else{
-                for (NSString *nameStr in _projectModel.industryName) {
+                for (NSString *nameStr in [_projectModel getindustrysName]) {
                     if ([nameStr isEqualToString:[indDic objectForKey:@"name"]]) {
                         [indust setIsSelect:YES];
                     }
@@ -54,7 +54,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     [self.collectionView reloadData];
 }
 
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type withData:(CreateProjectModel *)projectModel
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout withType:(NSInteger)type withData:(IProjectDetailInfo *)projectModel
 {
    self = [super initWithCollectionViewLayout:layout];
     if (self) {
@@ -81,7 +81,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
                 IInvestStageModel *stageM = [[IInvestStageModel alloc] init];
                 [stageM setStage:[stageDic objectForKey:@"stage"]];
                 [stageM setStagename:[stageDic objectForKey:@"stagename"]];
-                for (NSDictionary *selectDic in projectModel.industry) {
+                for (NSDictionary *selectDic in projectModel.industrys) {
                     if ([selectDic[@"stagename"] isEqualToString:[stageDic objectForKey:@"stagename"]]) {
                         [stageM setIsSelect:YES];
                     }
@@ -190,31 +190,19 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"isSelect == 1"];
     NSMutableArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
     
-    NSMutableArray *saveidArray = [NSMutableArray array];
-    NSMutableArray *saveNameArray = [NSMutableArray array];
     if (_type==1) {
         for (IInvestIndustryModel *industM in arrayPre) {
             if ([industM.industryname isEqualToString:@"不限"]) {
-                [saveidArray addObject:@{@"industryid":industM.industryid}];
-                [saveNameArray addObject:industM.industryname];
                 if (self.investBlock) {
-                    self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+                    self.investBlock(@[industM]);
                 }
                 [self.navigationController popViewControllerAnimated:YES];
                 return;
-            }else{
-                [saveidArray addObject:@{@"industryid":industM.industryid}];
-                [saveNameArray addObject:industM.industryname];
             }
-        }
-    }else if (_type ==2){
-        for (IInvestStageModel *stageM in arrayPre) {
-            [saveidArray addObject:@{@"stage":stageM.stage}];
-            [saveNameArray addObject:stageM.stagename];
         }
     }
     if (self.investBlock) {
-        self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+        self.investBlock(arrayPre);
     }
     [self.navigationController popViewControllerAnimated:YES];
     DLog(@"%@",arrayPre);

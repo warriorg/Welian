@@ -268,6 +268,14 @@
     }
     if (projectInfo) {
         ProjectDetailsViewController *projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
+        projectDetailVC.favoriteBlock = ^(){
+            if (self.segmentedControl.selectedSegmentIndex==0) {
+                [self.collectDataArray removeObject:projectInfo];
+            }else if (self.segmentedControl.selectedSegmentIndex==1){
+                [self.createDataArray removeObject:projectInfo];
+            }
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        };
         [self.navigationController pushViewController:projectDetailVC animated:YES];
     }
 }
@@ -289,7 +297,7 @@
 #pragma mark - 创建新项目
 - (void)createNewProject
 {
-    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:YES];
+    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:YES withData:nil];
     [self.navigationController pushViewController:createProjectVC animated:YES];
 }
 

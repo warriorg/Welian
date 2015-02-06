@@ -12,7 +12,7 @@
 
 @interface MemberProjectController () <UITableViewDataSource, UITableViewDelegate>
 {
-    CreateProjectModel *_projectModel;
+    IProjectDetailInfo *_projectModel;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *allArray;
@@ -34,7 +34,7 @@ static NSString *fridcellid = @"fridcellid";
     return _tableView;
 }
 
-- (instancetype)initIsEdit:(BOOL)isEdit withData:(CreateProjectModel *)projectModel
+- (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
     if (self) {
@@ -163,22 +163,20 @@ static NSString *fridcellid = @"fridcellid";
 #pragma mrak - 下一步融资
 - (void)financingProject
 {
-//    NSMutableDictionary *ProjectMemberDic = [NSMutableDictionary dictionary];
-//    [ProjectMemberDic setObject:_projectModel.pid forKey:@"pid"];
-//    NSMutableArray *members = [NSMutableArray array];
-//    for (FriendsUserModel *friendM in self.selectArray) {
-//        [members addObject:@{@"uid":friendM.uid,@"note":@"ceo"}];
-//    }
-//    [ProjectMemberDic setObject:members forKey:@"members"];
-//    [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
-//        
-//    } fail:^(NSError *error) {
-//        
-//    }];
-//    DLog(@"%@",self.selectArray);
-    FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO];
-    [self.navigationController pushViewController:financingVC animated:YES];
-    return;
+    NSMutableDictionary *ProjectMemberDic = [NSMutableDictionary dictionary];
+    [ProjectMemberDic setObject:_projectModel.pid forKey:@"pid"];
+    NSMutableArray *members = [NSMutableArray array];
+    for (FriendsUserModel *friendM in self.selectArray) {
+        [members addObject:@{@"uid":friendM.uid}];
+    }
+    [ProjectMemberDic setObject:members forKey:@"members"];
+    [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
+        FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO withData:_projectModel];
+        [self.navigationController pushViewController:financingVC animated:YES];
+    } fail:^(NSError *error) {
+        
+    }];
+    DLog(@"%@",self.selectArray);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -163,7 +163,7 @@
  */
 - (void)createProject
 {
-    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:NO];
+    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:NO withData:nil];
     [self.navigationController pushViewController:createProjectVC animated:YES];
 }
 

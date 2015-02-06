@@ -66,4 +66,23 @@
     }
 }
 
+// 取领域id
+- (NSArray *)getindustrysID
+{
+    NSMutableArray *industIDArray = [NSMutableArray array];
+    for (IInvestIndustryModel *industM in self.industrys) {
+        [industIDArray addObject:industM.industryid];
+    }
+    return industIDArray;
+}
+// 取领域name
+- (NSArray *)getindustrysName
+{
+    NSMutableArray *industIDArray = [NSMutableArray array];
+    for (IInvestIndustryModel *industM in self.industrys) {
+        [industIDArray addObject:industM.industryname];
+    }
+    return industIDArray;
+}
+
 @end

@@ -18,10 +18,12 @@
 #import "JKPhotoBrowser.h"
 #import "CTAssetsPickerController.h"
 #import "CollectionViewController.h"
+#import "MJExtension.h"
 
 @interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
 {
     ALAssetsLibrary *_alassets;
+    IProjectDetailInfo *_projectModel;
 }
 // 图片数组
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
@@ -83,7 +85,7 @@ static NSString *projectcellid = @"projectcellid";
 #pragma mark - textView代理
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    [self.projectModel setDes:textView.text];
+    [_projectModel setDes:textView.text];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,10 +94,15 @@ static NSString *projectcellid = @"projectcellid";
     [DaiDodgeKeyboard addRegisterTheViewNeedDodgeKeyboard:self.view];
 }
 
-- (instancetype)initIsEdit:(BOOL)isEdit
+- (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
     if (self) {
+        if (projectModel) {
+            _projectModel = projectModel;
+        }else{
+            _projectModel = [[IProjectDetailInfo alloc] init];
+        }
         [self.view addSubview:self.tableView];
         [self.tableView setTableFooterView:self.footView];
 //        if (!isEdit) {
@@ -110,10 +117,7 @@ static NSString *projectcellid = @"projectcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"项目简介"];
-    [self.footView.textView setText:self.projectModel.des];
-    if (!self.projectModel) {
-        self.projectModel = [[CreateProjectModel alloc] init];
-    }
+    [self.footView.textView setText:_projectModel.des];
 }
 
 
@@ -151,7 +155,7 @@ static NSString *projectcellid = @"projectcellid";
     if (indexPath.section==1&&indexPath.row==1) {
         [cell.textLabel setText:@"项目领域"];
         [cell.textField setPlaceholder:@"请选择（必填）"];
-        [cell.textField setText:[self.projectModel.industryName componentsJoinedByString:@","]];
+        [cell.textField setText:[[_projectModel getindustrysName] componentsJoinedByString:@","]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         __weak TextFieldCell *weakcell = cell;
         [cell.textField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
@@ -159,11 +163,10 @@ static NSString *projectcellid = @"projectcellid";
             [flowLayout setMinimumLineSpacing:1];
             [flowLayout setMinimumInteritemSpacing:0.5];
             [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
-            CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:1 withData:self.projectModel];
-            invesVC.investBlock = ^(NSDictionary *investDic){
-                [weakSelf.projectModel setIndustry:[investDic objectForKey:@"id"]];
-                [weakSelf.projectModel setIndustryName:[investDic objectForKey:@"name"]];
-                [weakcell.textField setText:[weakSelf.projectModel.industryName componentsJoinedByString:@","]];
+            CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:1 withData:_projectModel];
+            invesVC.investBlock = ^(NSArray *investDic){
+                [_projectModel setIndustrys:investDic];
+                [weakcell.textField setText:[[_projectModel getindustrysName] componentsJoinedByString:@","]];
             };
             [weakSelf.navigationController pushViewController:invesVC animated:YES];
             return NO;
@@ -174,23 +177,23 @@ static NSString *projectcellid = @"projectcellid";
         if (indexPath.section==0&&indexPath.row==0) {
             [cell.textLabel setText:@"项目名称"];
             [cell.textField setPlaceholder:@"10字之内（必填）"];
-            [cell.textField setText:self.projectModel.name];
+            [cell.textField setText:_projectModel.name];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
-                [weakSelf.projectModel setName:textField.text];
+                [_projectModel setName:textField.text];
             }];
         }else if (indexPath.section ==0&&indexPath.row==1){
             [cell.textLabel setText:@"一句话介绍"];
             [cell.textField setPlaceholder:@"50字之内（必填）"];
-            [cell.textField setText:self.projectModel.intro];
+            [cell.textField setText:_projectModel.intro];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
-                [weakSelf.projectModel setIntro:textField.text];
+                [_projectModel setIntro:textField.text];
             }];
         }else if (indexPath.section==1&&indexPath.row==0){
             [cell.textLabel setText:@"项目网址"];
             [cell.textField setPlaceholder:@"255字之内（选填）"];
-            [cell.textField setText:self.projectModel.website];
+            [cell.textField setText:_projectModel.website];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
-                [weakSelf.projectModel setWebsite:textField.text];
+                [_projectModel setWebsite:textField.text];
             }];
         }
     }
@@ -364,61 +367,64 @@ static NSString *projectcellid = @"projectcellid";
 #pragma mark - 创建项目并 下一步团队成员
 - (void)addMemberProject
 {
-    MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectModel];
-    [self.navigationController pushViewController:memberVC animated:YES];
-    return;
+
     [self.view.findFirstResponder resignFirstResponder];
-    if (!self.projectModel.name.length) {
+    if (!_projectModel.name.length) {
         [WLHUDView showErrorHUD:@"请填写项目名称"];
         return;
     }
-    if (self.projectModel.name.length>10) {
+    if (_projectModel.name.length>10) {
         [WLHUDView showErrorHUD:@"项目名称最长允许10个字"];
         return;
     }
-    if (!self.projectModel.intro.length) {
+    if (!_projectModel.intro.length) {
         [WLHUDView showErrorHUD:@"请填写一句话介绍"];
         return;
     }
-    if (self.projectModel.intro.length>50) {
+    if (_projectModel.intro.length>50) {
         [WLHUDView showErrorHUD:@"一句话介绍最长允许50个字"];
         return;
     }
-    if (!self.projectModel.industry.count) {
+    if (!_projectModel.industrys.count) {
         [WLHUDView showErrorHUD:@"请设置项目领域"];
         return;
     }
-    if (self.projectModel.website&&self.projectModel.website.length>255) {
+    if (_projectModel.website&&_projectModel.website.length>255) {
         [WLHUDView showErrorHUD:@""];
         return;
     }
-    if (self.projectModel.des.length>200) {
+    if (_projectModel.des.length>200) {
         [WLHUDView showErrorHUD:@""];
         return;
     }
     NSMutableDictionary *saveProjectDic = [NSMutableDictionary dictionary];
-    if (self.projectModel.pid) {
-        [saveProjectDic setObject:self.projectModel.pid forKey:@"pid"];
+    if (_projectModel.pid) {
+        [saveProjectDic setObject:_projectModel.pid forKey:@"pid"];
     }else{
         [saveProjectDic setObject:@(0) forKey:@"pid"];
     }
-    [saveProjectDic setObject:self.projectModel.name forKey:@"name"];
-    [saveProjectDic setObject:self.projectModel.intro forKey:@"intro"];
-    [saveProjectDic setObject:self.projectModel.industry forKey:@"industry"];
-    if (self.projectModel.des.length) {
-        [saveProjectDic setObject:self.projectModel.des forKey:@"description"];
+    [saveProjectDic setObject:_projectModel.name forKey:@"name"];
+    [saveProjectDic setObject:_projectModel.intro forKey:@"intro"];
+    NSMutableArray *industy = [NSMutableArray array];
+    for (IInvestIndustryModel *indusM in _projectModel.industrys) {
+        [industy addObject:@{@"industryid":indusM.industryid}];
     }
-    if (self.projectModel.website.length) {
-        [saveProjectDic setObject:self.projectModel.website forKey:@"website"];
+    [saveProjectDic setObject:industy forKey:@"industrys"];
+    
+    if (_projectModel.des.length) {
+        [saveProjectDic setObject:_projectModel.des forKey:@"description"];
     }
-    if (self.projectModel.photos.count) {
-        [saveProjectDic setObject:self.projectModel.photos forKey:@"photos"];
+    if (_projectModel.website.length) {
+        [saveProjectDic setObject:_projectModel.website forKey:@"website"];
+    }
+    if (_projectModel.photos.count) {
+        [saveProjectDic setObject:_projectModel.photos forKey:@"photos"];
     }
     [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
-        DLog(@"%@",JSON);
         if (JSON) {
-            [self.projectModel setPid:[JSON objectForKey:@"pid"]];
-            
+            [_projectModel setPid:[JSON objectForKey:@"pid"]];
+            MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:_projectModel];
+            [self.navigationController pushViewController:memberVC animated:YES];
         }
     } fail:^(NSError *error) {
         

@@ -17,7 +17,7 @@
 @interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource>
 {
     // 是否融资
-    BOOL isFinancing;
+    IProjectDetailInfo *_projectModel;
 }
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -51,12 +51,12 @@ static NSString *financingCellid = @"financingCellid";
     [DaiDodgeKeyboard removeRegisterTheViewNeedDodgeKeyboard];
 }
 
-- (instancetype)initIsEdit:(BOOL)isEdit
+- (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
     if (self) {
+        _projectModel = projectModel;
         [self.view addSubview:self.tableView];
-        isFinancing = YES;
 //        if (!isEdit) {
 //            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
@@ -85,7 +85,7 @@ static NSString *financingCellid = @"financingCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section==0&&!isFinancing) {
+    if (section==0&&![_projectModel.status integerValue]) {
         return 150;
     }else if (section==2){
         NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
@@ -108,7 +108,7 @@ static NSString *financingCellid = @"financingCellid";
 {
     HeaderLabel *footerLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
     if (section==0) {
-        if (!isFinancing) {
+        if (!_projectModel.status.integerValue) {
             [footerLabel.titLabel setText:KFooterText];
         }else{
             return nil;
@@ -123,7 +123,7 @@ static NSString *financingCellid = @"financingCellid";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (isFinancing) {
+    if (_projectModel.status.integerValue) {
         return 3;
     }else{
         return 1;
@@ -174,12 +174,12 @@ static NSString *financingCellid = @"financingCellid";
             [cell.contentView addSubview:segment];
             [segment bk_addEventHandler:^(id sender) {
                 UISegmentedControl *control = (UISegmentedControl *)sender;
-                isFinancing = !control.selectedSegmentIndex;
+                _projectModel.status = @(!control.selectedSegmentIndex);
                 [self.tableView reloadData];
             } forControlEvents:UIControlEventValueChanged];
         }
         UISegmentedControl *segmet = (UISegmentedControl *)[cell.contentView viewWithTag:2048];
-        [segmet setSelectedSegmentIndex:!isFinancing];
+        [segmet setSelectedSegmentIndex:![_projectModel.status integerValue]];
         return cell;
 
     }else if (indexPath.section==1){
@@ -198,7 +198,7 @@ static NSString *financingCellid = @"financingCellid";
                 [flowLayout setMinimumLineSpacing:1];
                 [flowLayout setMinimumInteritemSpacing:0.5];
                 [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
-                CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:2 withData:self.projectModel];
+                CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:2 withData:_projectModel];
                 [self.navigationController pushViewController:invesVC animated:YES];
                 return NO;
             }];
@@ -207,7 +207,11 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textLabel setText:@"融资金额"];
             [cell.textField setPlaceholder:nil];
             [cell.textField setKeyboardType:UIKeyboardTypeNumberPad];
+            [cell.textField setText:_projectModel.amount.stringValue];
             [cell.textField setBk_shouldBeginEditingBlock:nil];
+            [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
+                [_projectModel setAmount:@(textField.text.integerValue)];
+            }];
            UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"万(CNY)　"];
             [rightL sizeToFit];
@@ -216,7 +220,11 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textLabel setText:@"出让股份"];
             [cell.textField setKeyboardType:UIKeyboardTypeNumberPad];
             [cell.textField setPlaceholder:nil];
+            [cell.textField setText:_projectModel.share.stringValue];
             [cell.textField setBk_shouldBeginEditingBlock:nil];
+            [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
+                [_projectModel setShare:@(textField.text.integerValue)];
+            }];
             UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"%(0~100)　"];
             [rightL sizeToFit];
@@ -231,16 +239,45 @@ static NSString *financingCellid = @"financingCellid";
         }
         [cell.titLabel setText:@"融资说明"];
         [cell.textView setPlaceholder:@"200字之内"];
+        [cell.textView setText:_projectModel.financing];
         return cell;
     }
     return nil;
 }
 
 
-
 #pragma mark - 完成
 - (void)finishPorject
 {
+    NSMutableDictionary *finishDic = [NSMutableDictionary dictionary];
+    [finishDic setObject:_projectModel.pid forKey:@"pid"];
+    [finishDic setObject:_projectModel.status forKey:@"status"];
+    if (_projectModel.status.integerValue) {
+        if (_projectModel.stage) {
+            
+        }else{
+        
+        }
+        if (_projectModel.amount.integerValue>=1) {
+            
+        }else{
+            [WLHUDView showErrorHUD:@""];
+        }
+        if (_projectModel.share.integerValue>=1&&_projectModel.share.integerValue<=100) {
+            
+        }else{
+            [WLHUDView showErrorHUD:@""];
+        }
+        if (_projectModel.financing.length) {
+            [finishDic setObject:_projectModel.financing forKey:@"financing"];
+        }
+    }else{
+        [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
+            
+        } fail:^(NSError *error) {
+            
+        }];
+    }
     
 }
 

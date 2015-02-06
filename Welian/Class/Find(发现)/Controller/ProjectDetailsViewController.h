@@ -8,7 +8,11 @@
 
 #import "BasicViewController.h"
 
+typedef void (^ProjectFavoriteBlock)(void);
+
 @interface ProjectDetailsViewController : BasicViewController
+
+@property (nonatomic, strong) ProjectFavoriteBlock favoriteBlock;
 
 - (instancetype)initWithProjectInfo:(IProjectInfo *)projectInfo;
 
