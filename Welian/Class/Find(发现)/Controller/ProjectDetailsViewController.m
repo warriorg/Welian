@@ -7,23 +7,27 @@
 //
 
 #import "ProjectDetailsViewController.h"
+#import "ProjectUserListViewController.h"
+#import "CreateProjectController.h"
+#import "MemberProjectController.h"
+#import "TOWebViewController.h"
+#import "FinancingProjectController.h"
+
 #import "ProjectInfoView.h"
 #import "ProjectDetailView.h"
 #import "WLSegmentedControl.h"
 #import "CommentCell.h"
 #import "NoCommentCell.h"
 #import "ProjectFavorteViewCell.h"
-#import "ShareEngine.h"
-#import "LXActivity.h"
 #import "ProjectDetailInfoView.h"
 #import "UserInfoBasicVC.h"
-#import "ProjectUserListViewController.h"
-#import "TOWebViewController.h"
 #import "MessageKeyboardView.h"
 #import "MJRefresh.h"
-
-//#import "WLPhotoView.h"
-//#import "WLPhoto.h"
+//分享
+#import "ShareEngine.h"
+#import "LXActivity.h"
+#import "SEImageCache.h"
+//图片展示
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
 
@@ -49,7 +53,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 @property (strong,nonatomic) NSIndexPath *selectIndex;
 @property (strong,nonatomic) UITapGestureRecognizer *tapGesture;
 
-@property (strong,nonatomic) MessageKeyboardView *messageView;
+@property (strong,nonatomic) MessageKeyboardView *messageView;//下方的键盘输入栏目
+@property (assign,nonatomic) UIToolbar *operateToolBar;//下方的操作栏
 
 @property (assign,nonatomic) NSInteger pageIndex;
 @property (assign,nonatomic) NSInteger pageSize;
@@ -81,8 +86,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         //添加屏幕点击事件
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             //隐藏键盘
-            [self.messageView dismissKeyBoard];
-            [self.messageView startCompile:nil];
+            [self hideKeyBoard];
         }];
         self.tapGesture = tap;
     }
@@ -206,6 +210,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     operateToolBar.items = @[zanBarItem,spacer,commentBarItem,spacer,favorteBarItem];
     [self.view addSubview:operateToolBar];
+    self.operateToolBar = operateToolBar;
     
     //项目详细信息
     ProjectDetailInfoView *projectDetailInfoView = [[ProjectDetailInfoView alloc] initWithFrame:self.navigationController.view.frame];
@@ -240,8 +245,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.messageView dismissKeyBoard];
-    [self.messageView startCompile:nil];
+    //隐藏键盘
+    [self hideKeyBoard];
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -417,24 +422,57 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
 }
 
+#pragma mark - LXActivityDelegate
 - (void)didClickOnImageIndex:(NSString *)imageIndex
 {
     DLog(@"选择的项目：%@",imageIndex);
+    
     if ([imageIndex isEqualToString:@"微信好友"]) {
-        
+        [self shareInfoWithType:1];
     }
     if ([imageIndex isEqualToString:@"微信朋友圈"]) {
-        
+        [self shareInfoWithType:2];
     }
     if ([imageIndex isEqualToString:@"设置融资信息"]) {
-        
+        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES];
+        [self.navigationController pushViewController:financingProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"设置团队成员"]) {
-        
+        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:nil];
+        [self.navigationController pushViewController:memberProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"编辑项目信息"]) {
-        
+        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES];
+        [self.navigationController pushViewController:createProjcetVC animated:YES];
     }
+}
+
+//分享
+- (void)shareInfoWithType:(NSInteger)type
+{
+    WeiboType wxType = weChat;
+    switch (type) {
+        case 1:
+            wxType = weChat;
+            break;
+        case 2:
+            wxType = weChatFriend;
+            break;
+        default:
+            break;
+    }
+    
+    NSString *desc = @"desc";
+    NSURL *imgUrl = [NSURL URLWithString:@"img"];
+    NSString *link = @"link";
+    NSString *title = @"title";
+    
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        DLog(@"shareFriendImage---->>>%@",image);
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:wxType];
+    }];
 }
 
 #pragma mark - Private
@@ -616,6 +654,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     _projectDetailInfoView.hidden = NO;
 }
 
+//获取详情信息
 - (void)initData{
     [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectInfo.pid}
                                      success:^(id JSON) {
@@ -675,7 +714,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 //    _detailInfo.zancount = @(147100);
     //设置头部内容
     CGFloat detailHeight = [ProjectDetailView configureWithInfo:_detailInfo.des Images:_detailInfo.photos];
-    CGFloat projectInfoViewHeight = _projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
+    CGFloat projectInfoViewHeight = [ProjectInfoView configureWithInfo:_detailInfo];//_projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width,projectInfoViewHeight + detailHeight + kSegementedControlHeight)];
     ProjectInfoView *projectInfoView = [[ProjectInfoView alloc] initWithFrame:Rect(0, 0, self.view.width,projectInfoViewHeight)];
     projectInfoView.projectInfo = _detailInfo;
@@ -818,6 +857,22 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
 }
 
+//隐藏键盘
+- (void)hideKeyBoard
+{
+    //处理
+    _selectIndex = nil;
+    
+    //取消手势
+    [_tableView removeGestureRecognizer:self.tapGesture];
+    
+    //显示下方的操作栏
+    _operateToolBar.hidden = NO;
+    
+    [self.messageView dismissKeyBoard];
+    [self.messageView startCompile:nil];
+}
+
 //键盘监听 改变
 - (void)keyboardWillShow:(NSNotification *)notification {
     
@@ -858,12 +913,12 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
     //添加手势
     [_tableView addGestureRecognizer:self.tapGesture];
+    //隐藏下方的操作栏
+    _operateToolBar.hidden = YES;
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    
     NSDictionary* userInfo = [notification userInfo];
-    
     /*
      Restore the size of the text view (fill self's view).
      Animate the resize so that it's in sync with the disappearance of the keyboard.
@@ -877,9 +932,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     //    textView.frame = self.view.bounds;
     _tableView.frame = Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight);
     [UIView commitAnimations];
-    //处理
-    _selectIndex = nil;
-    [_tableView removeGestureRecognizer:self.tapGesture];
 }
 
 @end

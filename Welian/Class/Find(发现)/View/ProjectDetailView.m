@@ -28,6 +28,7 @@
 
 - (void)dealloc
 {
+    _datasource = nil;
     _projectInfo = nil;
     _imageClickedBlock = nil;
 }

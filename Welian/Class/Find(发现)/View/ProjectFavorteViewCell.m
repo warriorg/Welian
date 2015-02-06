@@ -21,6 +21,12 @@
 
 @implementation ProjectFavorteViewCell
 
+- (void)dealloc
+{
+    _projectInfo = nil;
+    _block = nil;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -77,7 +83,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ProjectFavorteItemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectFavrteViewCell" forIndexPath:indexPath];
-//    [cell setDebug:YES];
+    
     if (indexPath.row < _projectInfo.zanusers.count) {
         IBaseUserM *user = _projectInfo.zanusers[indexPath.row];
         cell.numLabel.text = @"";
@@ -85,7 +91,6 @@
     }else{
         cell.numLabel.text = [_projectInfo displayZancountInfo];
         cell.logoImageView.image = nil;
-        [cell setNeedsDisplay];
     }
     return cell;
 }

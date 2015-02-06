@@ -110,9 +110,11 @@ single_implementation(MainViewController)
             NSNumber *count = [JSON objectForKey:@"count"];
             NSNumber *activecount = [JSON objectForKey:@"activecount"];
             NSNumber *investorcount = [JSON objectForKey:@"investorcount"];
+            NSNumber *projectcount = [JSON objectForKey:@"projectcount"];
             [LogInUser setUserNewstustcount:count];
             [LogInUser setUserActivecount:activecount];
             [LogInUser setUserInvestorcount:investorcount];
+            [LogInUser setUserProjectcount:projectcount];
             [self updataItembadge];
         } fail:^(NSError *error) {
             

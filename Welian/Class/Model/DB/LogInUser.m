@@ -32,6 +32,8 @@
 @dynamic newstustcount;
 @dynamic homemessagebadge;
 @dynamic investorcount;
+@dynamic projectcount;
+@dynamic isprojectbadge;
 @dynamic isactivebadge;
 @dynamic isinvestorbadge;
 @dynamic newfriendbadge;
@@ -159,6 +161,12 @@
 //    [[LogInUser getNowLogInUser] setInvestorcount:investorcount];
 //    [MOC save];
 }
++ (void)setUserProjectcount:(NSNumber *)projectcount
+{
+    LogInUser *loginUser = [self getCurrentLoginUser];
+    loginUser.projectcount = projectcount;
+    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
+}
 + (void)setUserActivecount:(NSNumber *)activecount
 {
     LogInUser *loginUser = [self getCurrentLoginUser];
@@ -185,6 +193,12 @@
     
 //    [[LogInUser getNowLogInUser] setIsinvestorbadge:@(isinvestorbadge)];
 //    [MOC save];
+}
++ (void)setUserIsProjectBadge:(BOOL)isprojectbadge
+{
+    LogInUser *loginUser = [self getCurrentLoginUser];
+    loginUser.isprojectbadge = @(isprojectbadge);
+    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
 }
 + (void)setUserNewfriendbadge:(NSNumber *)newfriendbadge
 {

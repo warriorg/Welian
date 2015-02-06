@@ -50,6 +50,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 {
     [super viewDidLoad];
     [KNSNotification addObserver:self selector:@selector(reloadNewactivit) name:KNewactivitNotif object:nil];
+    [KNSNotification addObserver:self selector:@selector(reloadProject) name:KProjectstateNotif object:nil];
 //    if (!_urlArray) {
 //        
 //        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
@@ -71,6 +72,11 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 - (void)reloadNewactivit
 {
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+}
+//刷新项目的角标
+- (void)reloadProject
+{
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - 加载数据
@@ -129,12 +135,27 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     if (indexPath.section==0) {
-        if (indexPath.row==1) {
-            if (meinfo.activecount.integerValue) {
-                [cell.deputLabel setHidden:NO];
-                [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
+        switch (indexPath.row) {
+            case 1:
+            {
+                if (meinfo.activecount.integerValue) {
+                    [cell.deputLabel setHidden:NO];
+                    [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
+                }
+                [cell.badgeImage setHidden:!meinfo.isactivebadge.boolValue];
             }
-            [cell.badgeImage setHidden:!meinfo.isactivebadge.boolValue];
+                break;
+            case 2:
+            {
+                if (meinfo.projectcount.integerValue) {
+                    [cell.deputLabel setHidden:NO];
+                    [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个创业项目",meinfo.projectcount]];
+                }
+                [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
+            }
+                break;
+            default:
+                break;
         }
     }else if (indexPath.section==1){
         if (meinfo.investorcount.integerValue) {

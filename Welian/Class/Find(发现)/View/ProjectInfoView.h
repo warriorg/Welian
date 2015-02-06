@@ -17,4 +17,7 @@ typedef void(^ProjectShowUserClickedBlock)(void);
 @property (strong,nonatomic) ProjectInfoClickedBlock infoBlock;
 @property (strong,nonatomic) ProjectShowUserClickedBlock userShowBlock;
 
+//获取页面的高度
++ (CGFloat)configureWithInfo:(IProjectDetailInfo *)detailInfo;
+
 @end

@@ -150,6 +150,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 投资人状态通知
 #define KInvestorstateNotif @"KInvestorstateNotif"
 
+// 项目通知
+#define KProjectstateNotif @"ProjectstateNotif"
+
 // 首页消息提示个数
 //#define KMessagebadge @"KMessagebadge"
 

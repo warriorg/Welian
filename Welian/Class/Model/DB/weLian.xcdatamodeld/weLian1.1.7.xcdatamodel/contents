@@ -98,9 +98,11 @@
         <attribute name="isactivebadge" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isinvestorbadge" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isNow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isprojectbadge" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="newfriendbadge" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="newstustcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="openid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sessionid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unionid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
@@ -162,7 +164,7 @@
         <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="103"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
-        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="420"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="448"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>

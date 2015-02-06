@@ -11,9 +11,12 @@
 
 #define kMarginLeft 15.f
 #define kMarginTop 15.f
-#define kMarginEdge 10.f
+#define kMarginLeftEdge 10.f
+#define kMarginEdge 5.f
 
 #define kLogoWidth 33.f
+#define kZanWidth 31.f
+#define kBtnHeight 25.f
 
 @interface ProjectInfoView ()
 
@@ -36,6 +39,7 @@
 {
     _infoBlock = nil;
     _projectInfo = nil;
+    _userShowBlock = nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -93,7 +97,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _praiseView.size = CGSizeMake(31.f, 46.f);
+    _praiseView.size = CGSizeMake(kZanWidth, 46.f);
     _praiseView.top = kMarginTop;
     _praiseView.left = kMarginLeft;
     
@@ -111,20 +115,21 @@
     _logoBtn.right = self.width - kMarginLeft;
     
     [_nameLabel sizeToFit];
-    _nameLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
-    _nameLabel.left = _praiseView.right + kMarginEdge;
-    _nameLabel.top = _praiseView.top + 5.f;
+    _nameLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge;
+    _nameLabel.left = _praiseView.right + kMarginLeft;
+    _nameLabel.top = _praiseView.top + kMarginEdge;
     
+    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge;
     [_msgLabel sizeToFit];
-    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
+//    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
     _msgLabel.left = _nameLabel.left;
-    _msgLabel.bottom = _praiseView.bottom;
+    _msgLabel.top = _nameLabel.bottom + kMarginEdge;
     
     [_typeLabel sizeToFit];
     _typeLabel.top = _msgLabel.bottom + kMarginEdge;
     _typeLabel.left = _msgLabel.left;
     
-    _statusBtn.size = CGSizeMake(88.5f, 25.f);
+    _statusBtn.size = CGSizeMake(88.5f, kBtnHeight);
     _statusBtn.top = _typeLabel.bottom + kMarginEdge;
     _statusBtn.left = _nameLabel.left;
 }
@@ -172,6 +177,7 @@
     msgLabel.backgroundColor = [UIColor clearColor];
     msgLabel.font = [UIFont systemFontOfSize:14.f];
     msgLabel.textColor = RGB(125.f, 125.f, 125.f);
+    msgLabel.numberOfLines = 0;
     [self addSubview:msgLabel];
     self.msgLabel = msgLabel;
     
@@ -223,6 +229,36 @@
     if (_userShowBlock) {
         _userShowBlock();
     }
+}
+
+//获取页面的高度
++ (CGFloat)configureWithInfo:(IProjectDetailInfo *)detailInfo
+{
+    CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
+    CGSize nameSize = [detailInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize msgSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (detailInfo.industrys.count > 0) {
+        [types appendString:[detailInfo.industrys[0] industryname]];
+        if(detailInfo.industrys.count > 1){
+            for (int i = 1; i < detailInfo.industrys.count;i++) {
+                IInvestIndustryModel *industry = detailInfo.industrys[i];
+                [types appendString:@" | "];
+                [types appendString:industry.industryname];
+            }
+        }
+    }else{
+        [types appendString:@"暂无"];
+    }
+    msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
+    CGSize typeSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    
+     //status 1 正在融资，0不融资
+    CGFloat btnHeight = detailInfo.status.integerValue != 0 ? kBtnHeight : 0;
+   
+    CGFloat viewHeight = kMarginTop + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
+    return viewHeight;
 }
 
 @end
