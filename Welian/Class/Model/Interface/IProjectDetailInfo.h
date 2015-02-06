@@ -32,6 +32,7 @@
 @property (nonatomic,strong) NSArray *industrys;
 @property (nonatomic,strong) NSArray *comments;
 @property (nonatomic,strong) NSArray *zanusers;
+@property (nonatomic,strong) NSString *shareurl;//分享的链接
 
 //融资阶段
 - (NSString *)displayStage;

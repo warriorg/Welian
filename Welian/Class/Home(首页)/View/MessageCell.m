@@ -132,7 +132,7 @@
     
     [_nameLabel setFrame:messageFrameModel.nameLabelF];
     [_nameLabel setText:messageDataM.name];
-    if ([messageDataM.type isEqualToString:@"feedComment"]) {
+    if ([messageDataM.type isEqualToString:@"feedComment"] || [messageDataM.type isEqualToString:@"projectComment"]) {
         [_zanfeedImage setHidden:YES];
         [_commentLabel setHidden:NO];
         _commentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -145,8 +145,7 @@
         [_zanfeedImage setHidden:NO];
         
         [_zanfeedImage setFrame:messageFrameModel.zanfeedImageF];
-        
-        if ([messageDataM.type isEqualToString:@"feedZan"]){
+        if ([messageDataM.type isEqualToString:@"feedZan"] || [messageDataM.type isEqualToString:@"projectCommentZan"]){
             [_zanfeedImage setImage:[UIImage imageNamed:@"good_small"]];
             
         }else if ([messageDataM.type isEqualToString:@"feedForward"]){

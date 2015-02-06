@@ -27,6 +27,12 @@
     _block = nil;
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    _projectInfo = nil;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -84,13 +90,16 @@
 {
     ProjectFavorteItemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectFavrteViewCell" forIndexPath:indexPath];
     
+    cell.numLabel.text = [_projectInfo displayZancountInfo];
     if (indexPath.row < _projectInfo.zanusers.count) {
         IBaseUserM *user = _projectInfo.zanusers[indexPath.row];
-        cell.numLabel.text = @"";
+        cell.numLabel.hidden = YES;
+        cell.logoImageView.hidden = NO;
         [cell.logoImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     }else{
-        cell.numLabel.text = [_projectInfo displayZancountInfo];
+        cell.numLabel.hidden = NO;
         cell.logoImageView.image = nil;
+        cell.logoImageView.hidden = YES;
     }
     return cell;
 }

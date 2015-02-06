@@ -29,20 +29,21 @@
     _logoImageView.frame = self.bounds;
     
     [_numLabel sizeToFit];
-    _numLabel.width = _logoImageView.width - 4.f;
-    _numLabel.centerX = _logoImageView.width / 2.f;
-    _numLabel.centerY = _logoImageView.height / 2.f;
+    _numLabel.width = self.width - 4.f;
+    _numLabel.centerX = self.width / 2.f;
+    _numLabel.centerY = self.height / 2.f;
 }
 
 #pragma mark - Private
 - (void)setup
 {
+    self.layer.cornerRadius = 15;
+    self.layer.masksToBounds = YES;
+    self.backgroundColor = [UIColor lightGrayColor];
+    
     UIImageView *logoImageView = [[UIImageView alloc] init];
     logoImageView.backgroundColor = [UIColor clearColor];
-    logoImageView.layer.cornerRadius = 15;
-    logoImageView.layer.masksToBounds = YES;
-    logoImageView.backgroundColor = [UIColor lightGrayColor];
-    [self addSubview:logoImageView];
+    [self.contentView addSubview:logoImageView];
     self.logoImageView = logoImageView;
     
     UILabel *numLabel = [[UILabel alloc] init];
@@ -52,7 +53,7 @@
     numLabel.minimumScaleFactor = 0.6f;
     numLabel.textColor = [UIColor whiteColor];
     numLabel.textAlignment = NSTextAlignmentCenter;
-    [logoImageView addSubview:numLabel];
+    [self.contentView addSubview:numLabel];
     self.numLabel = numLabel;
 }
 

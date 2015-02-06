@@ -16,6 +16,7 @@
 #import "NotstringView.h"
 #import "UIImage+ImageEffects.h"
 #import "HomeMessage.h"
+#import "ProjectDetailsViewController.h"
 
 @interface MessageController ()
 {
@@ -184,14 +185,21 @@
     
     MessageFrameModel *messageFrameModel = _messageDataArray[indexPath.row];
     HomeMessage *messagedata = messageFrameModel.messageDataM;
-    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",messagedata.feedid] fromTable:KWLStutarDataTableName];
-    
-    WLStatusM *statusM = [WLStatusM objectWithKeyValues:item.itemObject];
-    [statusM setFid:[messagedata.feedid intValue]];
-    [statusM setTopid:[messagedata.feedid intValue]];
-    CommentInfoController *commentVC = [[CommentInfoController alloc] init];
-    [commentVC setStatusM:statusM];
-    [self.navigationController pushViewController:commentVC animated:YES];
+    if ([messagedata.type isEqualToString:@"projectComment"]||[messagedata.type isEqualToString:@"projectCommentZan"]) {
+        //进入项目详情
+        ProjectDetailsViewController *projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectPid:messagedata.feedid];
+        [self.navigationController pushViewController:projectDetailVC animated:YES];
+    }else{
+        //动态详情
+        YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:[NSString stringWithFormat:@"%@",messagedata.feedid] fromTable:KWLStutarDataTableName];
+        
+        WLStatusM *statusM = [WLStatusM objectWithKeyValues:item.itemObject];
+        [statusM setFid:[messagedata.feedid intValue]];
+        [statusM setTopid:[messagedata.feedid intValue]];
+        CommentInfoController *commentVC = [[CommentInfoController alloc] init];
+        [commentVC setStatusM:statusM];
+        [self.navigationController pushViewController:commentVC animated:YES];
+    }
 }
 
 @end
