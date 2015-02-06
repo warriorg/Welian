@@ -124,6 +124,10 @@
 @property (nonatomic, retain) NSNumber * investorcount;
 // 是否有新的活动
 @property (nonatomic, retain) NSNumber * isactivebadge;
+// 所有的项目个数
+@property (nonatomic, retain) NSNumber * projectcount;
+// 是否有新的项目
+@property (nonatomic, retain) NSNumber * isprojectbadge;
 // 投资人认证状态更新
 @property (nonatomic, retain) NSNumber * isinvestorbadge;
 // 新好友请求个数
@@ -135,9 +139,11 @@
 + (void)setUserNewstustcount:(NSNumber *)newstustcount;
 + (void)setUserHomemessagebadge:(NSNumber *)homemessagebadge;
 + (void)setUserInvestorcount:(NSNumber *)investorcount;
++ (void)setUserProjectcount:(NSNumber *)projectcount;
 + (void)setUserActivecount:(NSNumber *)activecount;
 + (void)setUserIsactivebadge:(BOOL)isactivebadge;
 + (void)setUserIsinvestorbadge:(BOOL)isinvestorbadge;
++ (void)setUserIsProjectBadge:(BOOL)isprojectbadge;
 + (void)setUserNewfriendbadge:(NSNumber *)newfriendbadge;
 
 

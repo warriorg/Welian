@@ -359,6 +359,12 @@ BMKMapManager* _mapManager;
         [LogInUser setUserinvestorauth:[dataDic objectForKey:@"state"]];
         [LogInUser setUserIsinvestorbadge:YES];
         [KNSNotification postNotificationName:KInvestorstateNotif object:self];
+    }else if ([type isEqualToString:@"projectComment"]){  // 项目评论
+        [LogInUser setUserIsProjectBadge:YES];
+        [KNSNotification postNotificationName:KProjectstateNotif object:self];
+    }else if ([type isEqualToString:@"projectZan"]){  // 项目赞
+        [LogInUser setUserIsProjectBadge:YES];
+        [KNSNotification postNotificationName:KProjectstateNotif object:self];
     }
 }
 

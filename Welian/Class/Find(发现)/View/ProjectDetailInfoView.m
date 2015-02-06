@@ -34,6 +34,12 @@
 
 @implementation ProjectDetailInfoView
 
+- (void)dealloc
+{
+    _projectInfo = nil;
+    _closeBlock = nil;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

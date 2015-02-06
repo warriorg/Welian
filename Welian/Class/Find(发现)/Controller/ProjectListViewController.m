@@ -8,6 +8,7 @@
 
 #import "ProjectListViewController.h"
 #import "ProjectDetailsViewController.h"
+#import "CreateProjectController.h"
 #import "ProjectViewCell.h"
 #import "NotstringView.h"
 #import "MJRefresh.h"
@@ -88,15 +89,29 @@
     return [_datasource[section] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30.f)];
+    headerView.backgroundColor = RGB(236.f, 238.f, 241.f);
+    
     NSString *titile = _headDatasource[section];
     if ([[_headDatasource[section] dateFromShortString] isToday]) {
         titile = @"今天";
     }else if([[_headDatasource[section] dateFromShortString] isYesterday]){
         titile = @"昨天";
     }
-    return titile;
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = RGB(125.f, 125.f, 125.f);
+    titleLabel.font = [UIFont systemFontOfSize:14.f];
+    titleLabel.text = titile;
+    [titleLabel sizeToFit];
+    titleLabel.left = 15.f;
+    titleLabel.centerY = headerView.height / 2.f;
+    [headerView addSubview:titleLabel];
+    
+    return headerView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,7 +163,8 @@
  */
 - (void)createProject
 {
-    
+    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:NO];
+    [self.navigationController pushViewController:createProjectVC animated:YES];
 }
 
 //下拉刷新数据
