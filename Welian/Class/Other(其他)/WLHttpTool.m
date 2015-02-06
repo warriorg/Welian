@@ -1086,6 +1086,10 @@
 + (void)getProjectsParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     //"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
+    NSString *type = @"loadProjects";
+    if (![parameterDic objectForKey:@"uid"]) {
+        
+    }
     NSDictionary *dic = @{@"type":@"loadProjects",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock(JSON);
@@ -1212,7 +1216,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 收藏项目

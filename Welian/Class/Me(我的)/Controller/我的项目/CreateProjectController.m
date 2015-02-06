@@ -364,6 +364,9 @@ static NSString *projectcellid = @"projectcellid";
 #pragma mark - 创建项目并 下一步团队成员
 - (void)addMemberProject
 {
+    MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectModel];
+    [self.navigationController pushViewController:memberVC animated:YES];
+    return;
     [self.view.findFirstResponder resignFirstResponder];
     if (!self.projectModel.name.length) {
         [WLHUDView showErrorHUD:@"请填写项目名称"];
@@ -415,8 +418,7 @@ static NSString *projectcellid = @"projectcellid";
         DLog(@"%@",JSON);
         if (JSON) {
             [self.projectModel setPid:[JSON objectForKey:@"pid"]];
-            MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectModel];
-            [self.navigationController pushViewController:memberVC animated:YES];
+            
         }
     } fail:^(NSError *error) {
         

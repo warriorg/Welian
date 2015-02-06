@@ -163,24 +163,27 @@ static NSString *fridcellid = @"fridcellid";
 #pragma mrak - 下一步融资
 - (void)financingProject
 {
-    DLog(@"%@",self.selectArray);
-    return;
+//    NSMutableDictionary *ProjectMemberDic = [NSMutableDictionary dictionary];
+//    [ProjectMemberDic setObject:_projectModel.pid forKey:@"pid"];
+//    NSMutableArray *members = [NSMutableArray array];
+//    for (FriendsUserModel *friendM in self.selectArray) {
+//        [members addObject:@{@"uid":friendM.uid,@"note":@"ceo"}];
+//    }
+//    [ProjectMemberDic setObject:members forKey:@"members"];
+//    [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
+//    DLog(@"%@",self.selectArray);
     FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO];
     [self.navigationController pushViewController:financingVC animated:YES];
+    return;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
