@@ -189,6 +189,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"isSelect == 1"];
     NSMutableArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
+    
     NSMutableArray *saveidArray = [NSMutableArray array];
     NSMutableArray *saveNameArray = [NSMutableArray array];
     if (_type==1) {

@@ -17,6 +17,7 @@
 @interface MyProjectViewController () <UITableViewDelegate,UITableViewDataSource>
 {
     NSInteger _pageIndex;
+    NSMutableDictionary *_getProjectDic;
 }
 @property (nonatomic, strong) NSMutableArray *collectDataArray;
 @property (nonatomic, strong) NSMutableArray *createDataArray;
@@ -61,7 +62,7 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50+64, SuperSize.width, SuperSize.height-40-64)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50+64, SuperSize.width, SuperSize.height-50-64)];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -74,6 +75,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _getProjectDic = [NSMutableDictionary dictionary];
     _selectIndex = 0;
     _pageIndex = 1;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewProject)];
@@ -104,81 +106,119 @@
 - (void)refreshdata
 {
     [self.refreshControl beginRefreshing];
-    NSInteger uid = 0;
-    if (self.segmentedControl.selectedSegmentIndex==0) {
-        uid = 0;
-    }else if (self.segmentedControl.selectedSegmentIndex ==1){
-        uid = -1;
-    }
     _pageIndex = 1;
-    // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-    [WLHttpTool getProjectsParameterDic:@{@"uid":@(uid),@"page":@(_pageIndex),@"size":@(KCellConut)} success:^(id JSON) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
-        if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-            if (JSON) {
-                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                [self.notstrView setHidden:projects.count];
-                if (self.segmentedControl.selectedSegmentIndex==0) {
+    [_getProjectDic removeAllObjects];
+    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
+    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
+    if (self.segmentedControl.selectedSegmentIndex==0) {
+        // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
+        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                if (JSON) {
+                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                    [self.notstrView setHidden:projects.count];
                     [self.collectDataArray removeAllObjects];
                     self.collectDataArray = nil;
                     self.collectDataArray = [NSMutableArray arrayWithArray:projects];
-                }else if (self.segmentedControl.selectedSegmentIndex==1){
+                    [self.tableView reloadData];
+                    if (projects.count != KCellConut) {
+                        [self.tableView setFooterHidden:YES];
+                    }else{
+                        [self.tableView setFooterHidden:NO];
+                        _pageIndex++;
+                    }
+                }
+            }
+            
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+        }];
+    }else if (self.segmentedControl.selectedSegmentIndex ==1){
+       [_getProjectDic setObject:@(-1) forKey:@"uid"];
+        // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
+        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                if (JSON) {
+                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                    [self.notstrView setHidden:projects.count];
                     [self.createDataArray removeAllObjects];
                     self.createDataArray = nil;
                     self.createDataArray = [NSMutableArray arrayWithArray:projects];
-                }
-                [self.tableView reloadData];
-                if (projects.count != KCellConut) {
-                    [self.tableView setFooterHidden:YES];
-                }else{
-                    [self.tableView setFooterHidden:NO];
-                    _pageIndex++;
+                    [self.tableView reloadData];
+                    if (projects.count != KCellConut) {
+                        [self.tableView setFooterHidden:YES];
+                    }else{
+                        [self.tableView setFooterHidden:NO];
+                        _pageIndex++;
+                    }
                 }
             }
-        }
-        
-    } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
-    }];
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+        }];
+    }
+    
+    
 }
 
 #pragma mark - 上拉加载更多
 - (void)laodMoreData
 {
-    NSInteger uid = 0;
+    [_getProjectDic removeAllObjects];
+    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
+    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
     if (self.segmentedControl.selectedSegmentIndex==0) {
-        uid = 0;
-    }else if (self.segmentedControl.selectedSegmentIndex ==1){
-        uid = -1;
-    }
-    // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-    [WLHttpTool getProjectsParameterDic:@{@"uid":@(uid),@"page":@(_pageIndex),@"size":@(KCellConut)} success:^(id JSON) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
-        if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-            if (JSON) {
-                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                if (self.segmentedControl.selectedSegmentIndex==0) {
+        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                if (JSON) {
+                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
                     [self.collectDataArray addObjectsFromArray:projects];
-                }else if (self.segmentedControl.selectedSegmentIndex==1){
-                    [self.createDataArray addObjectsFromArray:projects];
-                }
-                [self.tableView reloadData];
-                if (projects.count != KCellConut) {
-                    [self.tableView setFooterHidden:YES];
-                }else{
-                    [self.tableView setFooterHidden:NO];
-                    _pageIndex++;
+                    [self.tableView reloadData];
+                    if (projects.count != KCellConut) {
+                        [self.tableView setFooterHidden:YES];
+                    }else{
+                        [self.tableView setFooterHidden:NO];
+                        _pageIndex++;
+                    }
                 }
             }
-        }
-    } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
-    }];
-
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+        }];
+    }else if (self.segmentedControl.selectedSegmentIndex ==1){
+        [_getProjectDic setObject:@(-1) forKey:@"uid"];
+        // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
+        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                if (JSON) {
+                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                    [self.createDataArray addObjectsFromArray:projects];
+                    [self.tableView reloadData];
+                    if (projects.count != KCellConut) {
+                        [self.tableView setFooterHidden:YES];
+                    }else{
+                        [self.tableView setFooterHidden:NO];
+                        _pageIndex++;
+                    }
+                }
+            }
+        } fail:^(NSError *error) {
+            [self.refreshControl endRefreshing];
+            [self.tableView footerEndRefreshing];
+        }];
+    }
+    
 }
 
 #pragma mark - tableView代理

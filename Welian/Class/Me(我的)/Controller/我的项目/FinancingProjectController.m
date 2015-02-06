@@ -16,6 +16,7 @@
 
 @interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource>
 {
+    // 是否融资
     BOOL isFinancing;
 }
 @property (nonatomic, strong) UITableView *tableView;
@@ -77,7 +78,7 @@ static NSString *financingCellid = @"financingCellid";
         return 0.1;
     }else if (section==1){
         NSString *str = @"融资项目将会直接推送给243位认证投资人，非认证投资人无法看到融资信息。";
-        return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-40, 0)].height+20;
+        return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }
     return 0;
 }
@@ -87,7 +88,8 @@ static NSString *financingCellid = @"financingCellid";
     if (section==0&&!isFinancing) {
         return 150;
     }else if (section==2){
-        return 40;
+        NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
+        return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }
     return 0;
 }
@@ -104,26 +106,19 @@ static NSString *financingCellid = @"financingCellid";
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    HeaderLabel *footerLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
     if (section==0) {
         if (!isFinancing) {
-            HeaderLabel *footerLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
             [footerLabel.titLabel setText:KFooterText];
-            return footerLabel;
+        }else{
+            return nil;
         }
     }else if (section==1) {
-        HeaderLabel *footerLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
         [footerLabel.titLabel setText:@"投后估值为1000万"];
-        return footerLabel;
+    }else if (section ==2){
+        [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
     }
-    return nil;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    if (section ==2){
-        return @"　融资信息有效期为30天，30天之后将自动消失";
-    }
-    return nil;
+    return footerLabel;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -175,7 +170,7 @@ static NSString *financingCellid = @"financingCellid";
                                             forState:UIControlStateNormal];
             [segment setTintColor:KBasesColor];
             [segment setTag:2048];
-            [segment setFrame:CGRectMake(20, KTableRowH-35, SuperSize.width-40, 35)];
+            [segment setFrame:CGRectMake(15, KTableRowH-35, SuperSize.width-30, 35)];
             [cell.contentView addSubview:segment];
             [segment bk_addEventHandler:^(id sender) {
                 UISegmentedControl *control = (UISegmentedControl *)sender;

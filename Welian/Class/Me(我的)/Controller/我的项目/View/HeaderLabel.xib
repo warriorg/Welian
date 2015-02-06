@@ -11,8 +11,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvp-h9-ztP">
-                    <rect key="frame" x="20" y="10" width="280" height="30"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvp-h9-ztP">
+                    <rect key="frame" x="15" y="10" width="290" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     <nil key="highlightedColor"/>
@@ -20,11 +20,11 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Dvp-h9-ztP" firstAttribute="leading" secondItem="tNh-14-Jae" secondAttribute="leading" constant="20" id="3Lz-d6-QAf"/>
-                <constraint firstAttribute="trailing" secondItem="Dvp-h9-ztP" secondAttribute="trailing" constant="20" id="BrY-9V-2xZ"/>
+                <constraint firstItem="Dvp-h9-ztP" firstAttribute="leading" secondItem="tNh-14-Jae" secondAttribute="leading" constant="15" id="CDn-EQ-t9j"/>
                 <constraint firstAttribute="bottom" secondItem="Dvp-h9-ztP" secondAttribute="bottom" id="D2v-22-Tjz"/>
                 <constraint firstAttribute="centerX" secondItem="Dvp-h9-ztP" secondAttribute="centerX" id="RTi-la-NU4"/>
                 <constraint firstItem="Dvp-h9-ztP" firstAttribute="top" secondItem="tNh-14-Jae" secondAttribute="top" constant="10" id="X1i-Fm-zHz"/>
+                <constraint firstAttribute="trailing" secondItem="Dvp-h9-ztP" secondAttribute="trailing" constant="15" id="zT9-XS-Hbh"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
