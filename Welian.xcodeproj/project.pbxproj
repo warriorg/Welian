@@ -145,6 +145,18 @@
 		A4670A811A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A821A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A831A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
+		A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
+		A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
+		A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
+		A472DBE21A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
+		A472DBE51A85F0F3003EF296 /* ActivityListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */; };
+		A472DBE61A85F0F3003EF296 /* ActivityListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */; };
+		A472DBE71A85F0F3003EF296 /* ActivityListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */; };
+		A472DBE81A85F0F3003EF296 /* ActivityListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */; };
+		A472DBF11A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */; };
+		A472DBF21A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */; };
+		A472DBF31A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */; };
+		A472DBF41A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */; };
 		A4743E951A7F619D00645998 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4743E941A7F619D00645998 /* ProjectDetailView.m */; };
 		A4743E961A7F619D00645998 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4743E941A7F619D00645998 /* ProjectDetailView.m */; };
 		A4743E971A7F619D00645998 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4743E941A7F619D00645998 /* ProjectDetailView.m */; };
@@ -4532,6 +4544,12 @@
 		A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		A4715B211A84A2C3005DB2FC /* weLian1.1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.7.xcdatamodel; sourceTree = "<group>"; };
+		A472DBDD1A85EE2E003EF296 /* ActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewController.h; sourceTree = "<group>"; };
+		A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
+		A472DBE31A85F0F3003EF296 /* ActivityListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewCell.h; sourceTree = "<group>"; };
+		A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewCell.m; sourceTree = "<group>"; };
+		A472DBEF1A85F928003EF296 /* ActivityDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailInfoViewController.h; sourceTree = "<group>"; };
+		A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailInfoViewController.m; sourceTree = "<group>"; };
 		A4743E931A7F619D00645998 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		A4743E941A7F619D00645998 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
 		A4743EAD1A7F7BCE00645998 /* ProjectDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailsViewController.h; sourceTree = "<group>"; };
@@ -6547,6 +6565,10 @@
 			children = (
 				A4F646D61A43CE46002E66FC /* ActivityViewController.h */,
 				A4F646D71A43CE46002E66FC /* ActivityViewController.m */,
+				A472DBDD1A85EE2E003EF296 /* ActivityListViewController.h */,
+				A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */,
+				A472DBEF1A85F928003EF296 /* ActivityDetailInfoViewController.h */,
+				A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */,
 				A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */,
 				A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */,
 				A45065431A5BB4D70057F8AA /* ActivityEntryViewController.h */,
@@ -7693,6 +7715,8 @@
 				F51FBA3B19EFAC9A00D85D7F /* InvestorUserCell.h */,
 				F51FBA3C19EFAC9A00D85D7F /* InvestorUserCell.m */,
 				F51FBA3D19EFAC9A00D85D7F /* InvestorUserCell.xib */,
+				A472DBE31A85F0F3003EF296 /* ActivityListViewCell.h */,
+				A472DBE41A85F0F3003EF296 /* ActivityListViewCell.m */,
 				A41CE1AA1A6E4ED5004F17E7 /* ActivityUserViewCell.h */,
 				A41CE1AB1A6E4ED5004F17E7 /* ActivityUserViewCell.m */,
 				A47F1B241A7F2AF100CB4D9F /* ProjectViewCell.h */,
@@ -12196,6 +12220,7 @@
 				A49C7C521A70D42700F2AEC5 /* SWLongPressGestureRecognizer.m in Sources */,
 				A49C7C531A70D42700F2AEC5 /* WLMessageTableView.m in Sources */,
 				A49C7C541A70D42700F2AEC5 /* NSString+MD5.m in Sources */,
+				A472DBE81A85F0F3003EF296 /* ActivityListViewCell.m in Sources */,
 				A49C7C551A70D42700F2AEC5 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A49C7C561A70D42700F2AEC5 /* MagicalRecord+iCloud.m in Sources */,
 				A4743EB81A7F896E00645998 /* ProjectFavorteViewCell.m in Sources */,
@@ -12360,6 +12385,7 @@
 				A4C770FB1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				A49C7CE71A70D42700F2AEC5 /* WLUserStatusesResult.m in Sources */,
 				A49C7CE81A70D42700F2AEC5 /* SDWebImageManager+MJ.m in Sources */,
+				A472DBF41A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */,
 				A49C7CE91A70D42700F2AEC5 /* LoginGuideController.m in Sources */,
 				F55078E21A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				A49C7CEA1A70D42700F2AEC5 /* SDWebImageManager.m in Sources */,
@@ -12384,6 +12410,7 @@
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A49C7CFA1A70D42700F2AEC5 /* ActivityDetailViewController.m in Sources */,
+				A472DBE21A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				A49C7CFB1A70D42700F2AEC5 /* MessageFrameModel.m in Sources */,
 				A49C80571A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */,
@@ -12682,6 +12709,7 @@
 				F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C1409A1A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F53DC2F81A49192600F5F712 /* NSString+MD5.m in Sources */,
+				A472DBE71A85F0F3003EF296 /* ActivityListViewCell.m in Sources */,
 				F53DC2F91A49192600F5F712 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A4A2EB201A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				A4743EB71A7F896E00645998 /* ProjectFavorteViewCell.m in Sources */,
@@ -12846,6 +12874,7 @@
 				A4C770FA1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F53DC35A1A49192600F5F712 /* WLUserStatusesResult.m in Sources */,
 				F53DC35B1A49192600F5F712 /* SDWebImageManager+MJ.m in Sources */,
+				A472DBF31A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */,
 				F557728C1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F55078E11A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F53DC35C1A49192600F5F712 /* SDWebImageManager.m in Sources */,
@@ -12870,6 +12899,7 @@
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
+				A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */,
 				A49C80561A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
@@ -13168,6 +13198,7 @@
 				F56649D21A2AFD56008A5830 /* MJType.m in Sources */,
 				F56649D31A2AFD56008A5830 /* CTAssetScrollView.m in Sources */,
 				F56649D41A2AFD56008A5830 /* UIWebView+AFNetworking.m in Sources */,
+				A472DBE51A85F0F3003EF296 /* ActivityListViewCell.m in Sources */,
 				A4C1406E1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EB1E1A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				A4743EB51A7F896E00645998 /* ProjectFavorteViewCell.m in Sources */,
@@ -13332,6 +13363,7 @@
 				A4C770F81A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F5664A251A2AFD56008A5830 /* SDWebImageManager+MJ.m in Sources */,
 				A4C140801A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
+				A472DBF11A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */,
 				F557728A1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F55078DF1A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F5C7796F1A5392E10098BC29 /* InvestCerVC.m in Sources */,
@@ -13356,6 +13388,7 @@
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
+				A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */,
 				A49C80541A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F59E76001A4059D00028FBAF /* NSArray+ArrayQuery.m in Sources */,
@@ -13654,6 +13687,7 @@
 				F5664C891A2AFDD5008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C140991A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F5664C8A1A2AFDD5008A5830 /* NSString+MD5.m in Sources */,
+				A472DBE61A85F0F3003EF296 /* ActivityListViewCell.m in Sources */,
 				F59E76031A4059D00028FBAF /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A4A2EB1F1A6CF7C8006ADA55 /* MagicalRecord+iCloud.m in Sources */,
 				A4743EB61A7F896E00645998 /* ProjectFavorteViewCell.m in Sources */,
@@ -13818,6 +13852,7 @@
 				A4C770F91A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
 				F5664CDE1A2AFDD5008A5830 /* WLUserStatusesResult.m in Sources */,
 				F5664CDF1A2AFDD5008A5830 /* SDWebImageManager+MJ.m in Sources */,
+				A472DBF21A85F928003EF296 /* ActivityDetailInfoViewController.m in Sources */,
 				F557728B1A5A790300693279 /* LoginGuideController.m in Sources */,
 				F55078E01A7F5BE9009CE4F7 /* UIView+JKPicker.m in Sources */,
 				F5664CE01A2AFDD5008A5830 /* SDWebImageManager.m in Sources */,
@@ -13842,6 +13877,7 @@
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
+				A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */,
 				A49C80551A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,

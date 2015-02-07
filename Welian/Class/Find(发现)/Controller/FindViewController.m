@@ -12,6 +12,7 @@
 #import "TOWebViewController.h"
 #import "InvestorUsersListController.h"
 #import "ActivityViewController.h"
+#import "ActivityListViewController.h"
 #import "BadgeBaseCell.h"
 #import "MainViewController.h"
 #import "ProjectListViewController.h"
@@ -194,6 +195,9 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 break;
             case 1:
             {
+//                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
+//                [self.navigationController pushViewController:activityListVC animated:YES];
+                
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];
                 [[NSURLCache sharedURLCache] removeAllCachedResponses];
