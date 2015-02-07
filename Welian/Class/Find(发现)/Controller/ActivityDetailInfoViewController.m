@@ -38,9 +38,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    self.navigationController.navigationBar.tintColor = KBasesColor;
 //    self.navigationController.navigationBar.translucent = YES;
 //    self.navigationController.navigationBar.alpha = 0.5f;
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
@@ -164,7 +162,7 @@
     favoriteBtn.imageEdgeInsets = UIEdgeInsetsMake(0.f, -10.f, 0.f, 0.f);
     favoriteBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     favoriteBtn.layer.cornerRadius = 5.f;
-    favoriteBtn.layer.borderWidth = .5f;
+    favoriteBtn.layer.borderWidth = 1.f;
     favoriteBtn.layer.masksToBounds = YES;
     //    favoriteBtn.frame = CGRectMake(0.f, 0.f, self.view.width / 3.f, toolBarHeight);
     favoriteBtn.frame = CGRectMake(0.f, 10.f , (self.view.width - 20 * 2) / 2.f, toolBarHeight - 20.f);
