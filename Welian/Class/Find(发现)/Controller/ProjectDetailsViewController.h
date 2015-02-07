@@ -17,4 +17,6 @@ typedef void (^ProjectFavoriteBlock)(void);
 - (instancetype)initWithProjectInfo:(IProjectInfo *)projectInfo;
 - (instancetype)initWithProjectPid:(NSNumber *)projectPid;
 
+- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo;
+
 @end

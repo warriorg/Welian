@@ -73,6 +73,12 @@
     return _tableView;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self refreshdata];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _getProjectDic = [NSMutableDictionary dictionary];
@@ -83,16 +89,14 @@
     [self.view addSubview:self.tableView];
     __weak MyProjectViewController *weakVC = self;
     [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+        [weakVC.tableView reloadData];
+        [weakVC refreshdata];
         weakVC.selectIndex = index;
         if (index == 0) {
             [weakVC.notstrView setHidden:weakVC.collectDataArray.count];
             [weakVC.tableView reloadData];
         }else if (index == 1){
             [weakVC.notstrView setHidden:weakVC.createDataArray.count];
-            [weakVC.tableView reloadData];
-            if (!weakVC.createDataArray) {
-                [weakVC refreshdata];
-            }
         }
     }];
     
@@ -268,14 +272,14 @@
     }
     if (projectInfo) {
         ProjectDetailsViewController *projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
-        projectDetailVC.favoriteBlock = ^(){
-            if (self.segmentedControl.selectedSegmentIndex==0) {
-                [self.collectDataArray removeObject:projectInfo];
-            }else if (self.segmentedControl.selectedSegmentIndex==1){
-                [self.createDataArray removeObject:projectInfo];
-            }
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        };
+//        projectDetailVC.favoriteBlock = ^(){
+//            if (self.segmentedControl.selectedSegmentIndex==0) {
+//                [self.collectDataArray removeObject:projectInfo];
+//            }else if (self.segmentedControl.selectedSegmentIndex==1){
+//                [self.createDataArray removeObject:projectInfo];
+//            }
+//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        };
         [self.navigationController pushViewController:projectDetailVC animated:YES];
     }
 }
@@ -297,7 +301,7 @@
 #pragma mark - 创建新项目
 - (void)createNewProject
 {
-    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:YES withData:nil];
+    CreateProjectController *createProjectVC = [[CreateProjectController alloc] initIsEdit:NO withData:nil];
     [self.navigationController pushViewController:createProjectVC animated:YES];
 }
 

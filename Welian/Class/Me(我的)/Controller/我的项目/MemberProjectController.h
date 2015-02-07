@@ -8,8 +8,12 @@
 
 #import "BasicViewController.h"
 
+typedef void(^ProjectDataBlock)(IProjectDetailInfo *projectModel);
+
 @interface MemberProjectController : BasicViewController
 @property (nonatomic, strong) NSMutableArray *selectArray;
+
+@property (nonatomic, copy) ProjectDataBlock projectDataBlock;
 
 - (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel;
 

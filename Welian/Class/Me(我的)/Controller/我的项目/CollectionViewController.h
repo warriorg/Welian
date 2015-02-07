@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CreateProjectModel.h"
-//         self.investBlock(@{@"id":saveidArray,@"name":saveNameArray});
+
 typedef void(^CollectionBlock)(NSArray *investDic);
 
 @interface CollectionViewController : UICollectionViewController

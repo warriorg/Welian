@@ -76,17 +76,17 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
             NSURL *url = [[NSBundle mainBundle] URLForResource:@"InvestStagePlist" withExtension:@"plist"];
             // 2.读取数据
             NSArray *stageData = [NSArray arrayWithContentsOfURL:url];
-
             for (NSDictionary *stageDic in stageData) {
                 IInvestStageModel *stageM = [[IInvestStageModel alloc] init];
                 [stageM setStage:[stageDic objectForKey:@"stage"]];
                 [stageM setStagename:[stageDic objectForKey:@"stagename"]];
-                for (NSDictionary *selectDic in projectModel.industrys) {
-                    if ([selectDic[@"stagename"] isEqualToString:[stageDic objectForKey:@"stagename"]]) {
-                        [stageM setIsSelect:YES];
-                    }
-                }
                 [_alldataArray addObject:stageM];
+            }
+            if (projectModel.stage) {
+                NSInteger stage = projectModel.stage.integerValue;
+                IInvestStageModel *seleStageM = _alldataArray[stage];
+                [seleStageM setIsSelect:YES];
+                [_alldataArray replaceObjectAtIndex:stage withObject:seleStageM];
             }
             [self.collectionView reloadData];
 
@@ -137,8 +137,8 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectBut setSelected:!cell.selectBut.selected];
     if (_type ==1) {
+        [cell.selectBut setSelected:!cell.selectBut.selected];
         IInvestIndustryModel *model = _alldataArray[indexPath.row];
         if ([model.industryname isEqualToString:@"不限"]) {
             for (NSInteger i = 0; i<_alldataArray.count; i++) {
@@ -161,6 +161,20 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
         }
     }else if (_type ==2){
         IInvestStageModel *stageM = _alldataArray[indexPath.row];
+        if (!cell.selectBut.selected) {
+            for (NSInteger row = 0; row<_alldataArray.count; row++) {
+                IInvestStageModel *stageM = _alldataArray[row];
+                if (stageM.isSelect) {
+                    ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+                    [cell.selectBut setSelected:NO];
+                    [stageM setIsSelect:NO];
+                    [_alldataArray replaceObjectAtIndex:row withObject:stageM];
+                }
+            }
+        }else{
+        
+        }
+        [cell.selectBut setSelected:!cell.selectBut.selected];
         [stageM setIsSelect:cell.selectBut.selected];
         [_alldataArray replaceObjectAtIndex:indexPath.row withObject:stageM];
     }
@@ -171,15 +185,30 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectBut setSelected:!cell.selectBut.selected];
     if (_type ==1) {
+        [cell.selectBut setSelected:!cell.selectBut.selected];
         IInvestIndustryModel *model = _alldataArray[indexPath.row];
         [model setIsSelect:cell.selectBut.selected];
         [_alldataArray replaceObjectAtIndex:indexPath.row withObject:model];
     }else if (_type ==2){
         IInvestStageModel *stageM = _alldataArray[indexPath.row];
+        if (!cell.selectBut.selected) {
+            for (NSInteger row = 0; row<_alldataArray.count; row++) {
+                IInvestStageModel *stageM = _alldataArray[row];
+                if (stageM.isSelect) {
+                    ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+                    [cell.selectBut setSelected:NO];
+                    [stageM setIsSelect:NO];
+                    [_alldataArray replaceObjectAtIndex:row withObject:stageM];
+                }
+            }
+        }else{
+            
+        }
+        [cell.selectBut setSelected:!cell.selectBut.selected];
         [stageM setIsSelect:cell.selectBut.selected];
         [_alldataArray replaceObjectAtIndex:indexPath.row withObject:stageM];
+
     }
     return YES;
 }
@@ -200,6 +229,8 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
                 return;
             }
         }
+    }else if (_type==2){
+        
     }
     if (self.investBlock) {
         self.investBlock(arrayPre);

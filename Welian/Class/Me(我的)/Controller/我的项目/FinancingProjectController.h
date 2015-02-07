@@ -8,7 +8,10 @@
 
 #import "BasicViewController.h"
 
+typedef void(^ProjectDataBlock)(IProjectDetailInfo *projectModel);
 @interface FinancingProjectController : BasicViewController
+
+@property (nonatomic, copy) ProjectDataBlock projectDataBlock;
 
 - (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel;
 

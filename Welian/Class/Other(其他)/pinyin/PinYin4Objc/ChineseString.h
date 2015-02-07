@@ -11,7 +11,7 @@
 
 @interface ChineseString : NSObject
 
-@property (nonatomic, strong) FriendsUserModel *modeUser;
+@property (nonatomic, strong) IBaseUserM *modeUser;
 @property(nonatomic, copy)NSString *string;
 @property(nonatomic, copy)NSString *pinYin;
 

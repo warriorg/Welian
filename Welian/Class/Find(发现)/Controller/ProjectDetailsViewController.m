@@ -39,7 +39,9 @@
 static NSString *noCommentCell = @"NoCommentCell";
 
 @interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate>
-
+{
+    BOOL _isFinish;
+}
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSMutableArray *datasource;
 @property (strong,nonatomic) NSNumber *projectPid;
@@ -117,6 +119,17 @@ static NSString *noCommentCell = @"NoCommentCell";
     return self;
 }
 
+//
+- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo
+{
+    self = [super init];
+    if (self) {
+        self.detailInfo = detailInfo;
+        _isFinish = YES;
+    }
+    return self;
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -133,8 +146,19 @@ static NSString *noCommentCell = @"NoCommentCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+// 返回
+- (void)backItem
+{
+    if (_isFinish) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItem)];
     // Do any additional setup after loading the view.
     //添加分享按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
@@ -235,8 +259,13 @@ static NSString *noCommentCell = @"NoCommentCell";
         [weakSelf closeProjectDetailInfoView];
     }];
     
-    //获取数据
-    [self initData];
+    if (self.detailInfo) {
+        [self.tableView reloadData];
+        [self updateUI];
+    }else{
+        //获取数据
+        [self initData];
+    }
     
     //上提加载更多
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
@@ -446,16 +475,29 @@ static NSString *noCommentCell = @"NoCommentCell";
     if ([imageIndex isEqualToString:@"微信朋友圈"]) {
         [self shareInfoWithType:2];
     }
+    WEAKSELF
     if ([imageIndex isEqualToString:@"设置融资信息"]) {
         FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:self.detailInfo];
+        financingProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
+            weakSelf.detailInfo = projectModel;
+            [weakSelf updateUI];
+        };
         [self.navigationController pushViewController:financingProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"设置团队成员"]) {
         MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:self.detailInfo];
+        memberProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
+            weakSelf.detailInfo = projectModel;
+            [weakSelf updateUI];
+        };
         [self.navigationController pushViewController:memberProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"编辑项目信息"]) {
         CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:self.detailInfo];
+        createProjcetVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
+            weakSelf.detailInfo = projectModel;
+            [weakSelf updateUI];
+        };
         [self.navigationController pushViewController:createProjcetVC animated:YES];
     }
 }
@@ -594,6 +636,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                               success:^(id JSON) {
                                                   _detailInfo.isFavorite = @(0);
                                                   [self checkFavorteStatus];
+                                                  if (self.favoriteBlock) {
+                                                      self.favoriteBlock();
+                                                  }
                                               } fail:^(NSError *error) {
                                                   [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
                                               }];
@@ -628,9 +673,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (_detailInfo.isFavorite.boolValue) {
         [_favorteBtn setTitle:@"已收藏" forState:UIControlStateNormal];
         [_favorteBtn setImage:[UIImage imageNamed:@"me_mywriten_shoucang_pre"] forState:UIControlStateNormal];
-        if (self.favoriteBlock) {
-            self.favoriteBlock();
-        }
     }else{
         [_favorteBtn setTitle:@"收藏" forState:UIControlStateNormal];
         [_favorteBtn setImage:[UIImage imageNamed:@"me_mywriten_shoucang"] forState:UIControlStateNormal];

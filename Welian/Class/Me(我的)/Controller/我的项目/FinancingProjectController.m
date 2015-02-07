@@ -11,16 +11,20 @@
 #import "FinancingCell.h"
 #import "CollectionViewController.h"
 #import "HeaderLabel.h"
+#import "ProjectDetailsViewController.h"
+#import "IInvestStageModel.h"
 
 #define KFooterText @"如欲融资，重新填写融资信息即可"
 
 @interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource>
-{
-    // 是否融资
-    IProjectDetailInfo *_projectModel;
-}
-@property (nonatomic, strong) UITableView *tableView;
 
+@property (nonatomic, assign) NSInteger isFinancing;
+@property (nonatomic, strong) IProjectDetailInfo *projectModel;
+@property (nonatomic, assign) BOOL isEdit;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *stageData;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) CollectionViewController *invesVC;
 @end
 
 static NSString *textFieldCellid = @"textFieldCellid";
@@ -51,16 +55,43 @@ static NSString *financingCellid = @"financingCellid";
     [DaiDodgeKeyboard removeRegisterTheViewNeedDodgeKeyboard];
 }
 
+// 返回
+//- (void)backVC
+//{
+//    [self.navigationController popViewControllerAnimated:YES];
+//    _projectModel = nil;
+//    _isEdit = NO;
+//    _isFinancing = 0;
+//    _tableView = nil;
+//    _stageData = nil;
+//    self.view = nil;
+//}
+
 - (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
     if (self) {
-        _projectModel = projectModel;
-        [self.view addSubview:self.tableView];
-//        if (!isEdit) {
-//            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+        self.isEdit = isEdit;
+        self.projectModel = projectModel;
+//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backVC)];
+        if (!isEdit) {
+            self.isFinancing = 0;
+            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
-//        }
+        }else{
+            if (projectModel.status.integerValue) {
+                self.isFinancing = 0;
+            }else{
+                self.isFinancing = 1;
+            }
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
+        }
+        
+        // 1.获得路径
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"InvestStagePlist" withExtension:@"plist"];
+        // 2.读取数据
+        self.stageData = [NSArray arrayWithContentsOfURL:url];
+        [self.view addSubview:self.tableView];
     }
     return self;
 }
@@ -85,7 +116,8 @@ static NSString *financingCellid = @"financingCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section==0&&![_projectModel.status integerValue]) {
+    
+    if (section==0&&self.isFinancing) {
         return 150;
     }else if (section==2){
         NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
@@ -108,7 +140,7 @@ static NSString *financingCellid = @"financingCellid";
 {
     HeaderLabel *footerLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
     if (section==0) {
-        if (!_projectModel.status.integerValue) {
+        if (self.isFinancing) {
             [footerLabel.titLabel setText:KFooterText];
         }else{
             return nil;
@@ -123,7 +155,7 @@ static NSString *financingCellid = @"financingCellid";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (_projectModel.status.integerValue) {
+    if (!self.isFinancing) {
         return 3;
     }else{
         return 1;
@@ -155,6 +187,7 @@ static NSString *financingCellid = @"financingCellid";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WEAKSELF
     if (indexPath.section==0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Segmentedcellid"];
         if (cell == nil) {
@@ -174,12 +207,12 @@ static NSString *financingCellid = @"financingCellid";
             [cell.contentView addSubview:segment];
             [segment bk_addEventHandler:^(id sender) {
                 UISegmentedControl *control = (UISegmentedControl *)sender;
-                _projectModel.status = @(!control.selectedSegmentIndex);
-                [self.tableView reloadData];
+                weakSelf.isFinancing = control.selectedSegmentIndex;
+                [weakSelf.tableView reloadData];
             } forControlEvents:UIControlEventValueChanged];
         }
         UISegmentedControl *segmet = (UISegmentedControl *)[cell.contentView viewWithTag:2048];
-        [segmet setSelectedSegmentIndex:![_projectModel.status integerValue]];
+        [segmet setSelectedSegmentIndex:self.isFinancing];
         return cell;
 
     }else if (indexPath.section==1){
@@ -193,13 +226,25 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textLabel setText:@"融资阶段"];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             [cell.textField setPlaceholder:@"请选择"];
+            if (self.projectModel.stage) {
+                for (NSDictionary *stemDic in self.stageData) {
+                    if ([[stemDic objectForKey:@"stage"] integerValue]==self.projectModel.stage.integerValue) {
+                        [cell.textField setText:[stemDic objectForKey:@"stagename"]];
+                    }
+                }
+            }
             [cell.textField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
-                UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-                [flowLayout setMinimumLineSpacing:1];
-                [flowLayout setMinimumInteritemSpacing:0.5];
-                [flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
-                CollectionViewController *invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout withType:2 withData:_projectModel];
-                [self.navigationController pushViewController:invesVC animated:YES];
+                weakSelf.flowLayout = [[UICollectionViewFlowLayout alloc]init];
+                [weakSelf.flowLayout setMinimumLineSpacing:1];
+                [weakSelf.flowLayout setMinimumInteritemSpacing:0.5];
+                [weakSelf.flowLayout setItemSize:CGSizeMake([MainScreen bounds].size.width/2-0.5, 50)];
+                weakSelf.invesVC = [[CollectionViewController alloc] initWithCollectionViewLayout:weakSelf.flowLayout withType:2 withData:_projectModel];
+                weakSelf.invesVC.investBlock = ^(NSArray *investDic){
+                    IInvestStageModel *stageM = investDic[0];
+                    [weakSelf.projectModel setStage:stageM.stage];
+                    [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                };
+                [weakSelf.navigationController pushViewController:weakSelf.invesVC animated:YES];
                 return NO;
             }];
         }else if (indexPath.row==1) {
@@ -210,7 +255,7 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textField setText:_projectModel.amount.stringValue];
             [cell.textField setBk_shouldBeginEditingBlock:nil];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
-                [_projectModel setAmount:@(textField.text.integerValue)];
+                [weakSelf.projectModel setAmount:@(textField.text.integerValue)];
             }];
            UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"万(CNY)　"];
@@ -223,7 +268,7 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textField setText:_projectModel.share.stringValue];
             [cell.textField setBk_shouldBeginEditingBlock:nil];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
-                [_projectModel setShare:@(textField.text.integerValue)];
+                [weakSelf.projectModel setShare:@(textField.text.integerValue)];
             }];
             UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"%(0~100)　"];
@@ -238,8 +283,12 @@ static NSString *financingCellid = @"financingCellid";
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
         [cell.titLabel setText:@"融资说明"];
-        [cell.textView setPlaceholder:@"200字之内"];
-        [cell.textView setText:_projectModel.financing];
+        if (self.projectModel.financing.length) {
+            [cell.textView setText:self.projectModel.financing];
+            [cell.textView setPlaceholder:nil];
+        }else{
+            [cell.textView setPlaceholder:@"200字之内"];
+        }
         return cell;
     }
     return nil;
@@ -249,36 +298,57 @@ static NSString *financingCellid = @"financingCellid";
 #pragma mark - 完成
 - (void)finishPorject
 {
+    WEAKSELF
     NSMutableDictionary *finishDic = [NSMutableDictionary dictionary];
-    [finishDic setObject:_projectModel.pid forKey:@"pid"];
-    [finishDic setObject:_projectModel.status forKey:@"status"];
-    if (_projectModel.status.integerValue) {
-        if (_projectModel.stage) {
-            
-        }else{
-        
-        }
-        if (_projectModel.amount.integerValue>=1) {
-            
-        }else{
-            [WLHUDView showErrorHUD:@""];
-        }
-        if (_projectModel.share.integerValue>=1&&_projectModel.share.integerValue<=100) {
-            
-        }else{
-            [WLHUDView showErrorHUD:@""];
-        }
-        if (_projectModel.financing.length) {
-            [finishDic setObject:_projectModel.financing forKey:@"financing"];
-        }
+    [finishDic setObject:self.projectModel.pid forKey:@"pid"];
+    if (self.isFinancing) {
+        [finishDic setObject:@(0) forKey:@"status"];
+        [self.projectModel setStatus:@(0)];
     }else{
-        [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
-            
-        } fail:^(NSError *error) {
-            
-        }];
+        [finishDic setObject:@(1) forKey:@"status"];
+        [self.projectModel setStatus:@(1)];
     }
-    
+    if (!self.isFinancing) {
+        if (self.projectModel.stage) {
+            [finishDic setObject:self.projectModel.stage forKey:@"stage"];
+        }else{
+            [WLHUDView showErrorHUD:@""];
+            return;
+        }
+        if (self.projectModel.amount.integerValue>=1) {
+            [finishDic setObject:self.projectModel.amount forKey:@"amount"];
+        }else{
+            [WLHUDView showErrorHUD:@""];
+            return;
+        }
+        if (self.projectModel.share.integerValue>=1 && self.projectModel.share.integerValue<=100) {
+            [finishDic setObject:self.projectModel.share forKey:@"share"];
+        }else{
+            [WLHUDView showErrorHUD:@""];
+            return;
+        }
+        if (self.projectModel.financing.length) {
+            [finishDic setObject:self.projectModel.financing forKey:@"financing"];
+        }
+    }
+    [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
+        if (JSON) {
+            [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];
+            [weakSelf.projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+            if (weakSelf.isEdit) {
+                if (weakSelf.projectDataBlock) {
+                    weakSelf.projectDataBlock(weakSelf.projectModel);
+                }
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }else{
+                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.projectModel];
+                [weakSelf.navigationController pushViewController:projectVC animated:YES];
+            }
+        }
+
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

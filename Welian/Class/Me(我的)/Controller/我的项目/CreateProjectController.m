@@ -22,6 +22,7 @@
 
 @interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
 {
+    BOOL _isEdit;
     ALAssetsLibrary *_alassets;
     IProjectDetailInfo *_projectModel;
 }
@@ -52,7 +53,6 @@ static NSString *projectcellid = @"projectcellid";
     if (_footView == nil) {
         _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 250)];
         [_footView.titLabel setText:@"项目描述"];
-        [_footView.textView setPlaceholder:@"200字之内(选填)"];
         [_footView.textView setDelegate:self];
         [_footView.photBut addTarget:self action:@selector(selectPhotosBut) forControlEvents:UIControlEventTouchUpInside];
         
@@ -98,6 +98,7 @@ static NSString *projectcellid = @"projectcellid";
 {
     self = [super init];
     if (self) {
+        _isEdit = isEdit;
         if (projectModel) {
             _projectModel = projectModel;
         }else{
@@ -105,11 +106,12 @@ static NSString *projectcellid = @"projectcellid";
         }
         [self.view addSubview:self.tableView];
         [self.tableView setTableFooterView:self.footView];
-//        if (!isEdit) {
-//            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+        if (isEdit) {
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
+        }else{
+            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
-//        }
-        
+        }
     }
     return self;
 }
@@ -117,7 +119,12 @@ static NSString *projectcellid = @"projectcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"项目简介"];
-    [self.footView.textView setText:_projectModel.des];
+    if (_projectModel.des.length) {
+        [self.footView.textView setPlaceholder:nil];
+        [self.footView.textView setText:_projectModel.des];
+    }else{
+        [self.footView.textView setPlaceholder:@"200字之内(选填)"];
+    }
 }
 
 
@@ -423,8 +430,25 @@ static NSString *projectcellid = @"projectcellid";
     [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
         if (JSON) {
             [_projectModel setPid:[JSON objectForKey:@"pid"]];
-            MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:_projectModel];
-            [self.navigationController pushViewController:memberVC animated:YES];
+            [_projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+            if (_isEdit) {
+                if (self.projectDataBlock) {
+                    self.projectDataBlock(_projectModel);
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                IBaseUserM *meUserM = [[IBaseUserM alloc] init];
+                LogInUser *logUser = [LogInUser getCurrentLoginUser];
+                [meUserM setName:logUser.name];
+                [meUserM setUid:logUser.uid];
+                meUserM.friendship = logUser.friendship;
+                meUserM.avatar = logUser.avatar;
+                meUserM.company = logUser.company;
+                meUserM.position = logUser.position;
+                [_projectModel setUser:meUserM];
+                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:_projectModel];
+                [self.navigationController pushViewController:memberVC animated:YES];
+            }
         }
     } fail:^(NSError *error) {
         

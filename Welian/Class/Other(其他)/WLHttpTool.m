@@ -566,14 +566,9 @@
         chineseString.modeUser = mode;
         
         if(![chineseString.string isEqualToString:@""]){
-            NSString *pinYinResult = [NSString string];
-            for(int j = 0;j < chineseString.string.length; j++) {
-                NSString *singlePinyinLetter = [[NSString stringWithFormat:@"%c",
-                                                 pinyinFirstLetter([chineseString.string characterAtIndex:j])]uppercaseString];
-                
-                pinYinResult = [pinYinResult stringByAppendingString:singlePinyinLetter];
-            }
-            chineseString.pinYin = pinYinResult;
+            NSString *singlePinyinLetter = [[NSString stringWithFormat:@"%c",
+                                             pinyinFirstLetter([chineseString.string characterAtIndex:0])]uppercaseString];
+            chineseString.pinYin = singlePinyinLetter;
         } else {
             chineseString.pinYin = @"";
         }
