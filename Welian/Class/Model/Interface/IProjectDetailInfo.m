@@ -66,6 +66,26 @@
     }
 }
 
+//项目领域
+- (NSString *)displayIndustrys
+{
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (self.industrys.count > 0) {
+        [types appendString:[self.industrys[0] industryname]];
+        if(self.industrys.count > 1){
+            for (int i = 1; i < self.industrys.count;i++) {
+                IInvestIndustryModel *industry = self.industrys[i];
+                [types appendString:@" | "];
+                [types appendString:industry.industryname];
+            }
+        }
+    }else{
+        [types appendString:@"暂无"];
+    }
+    return types;
+}
+
 // 取领域id
 - (NSArray *)getindustrysID
 {

@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class LogInUser, IInvestIndustryModel;
+@class LogInUser, IInvestIndustryModel,ProjectDetailInfo;
 
 @interface InvestIndustry : NSManagedObject
 
 @property (nonatomic, retain) NSString * industryname;
 @property (nonatomic, retain) NSNumber * industryid;
 @property (nonatomic, retain) LogInUser *rsLogInUser;
+@property (nonatomic, retain) ProjectDetailInfo *rsProjectDetailInfo;
 
 //创建新收据
 + (InvestIndustry *)createInvestIndustry:(IInvestIndustryModel *)investIndustry;

@@ -18,6 +18,7 @@
         <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startupauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsBaseUser" inverseEntity="ProjectDetailInfo" syncable="YES"/>
     </entity>
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
         <attribute name="avatorUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,6 +74,7 @@
         <attribute name="industryid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="industryname" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsInvestIndustrys" inverseEntity="LogInUser" syncable="YES"/>
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsIndustrys" inverseEntity="ProjectDetailInfo" syncable="YES"/>
     </entity>
     <entity name="InvestItems" representedClassName="InvestItems" syncable="YES">
         <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
@@ -140,6 +142,46 @@
         <attribute name="pushType" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsNewFriends" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
+    <entity name="PhotoInfos" representedClassName="PhotoInfos" syncable="YES">
+        <attribute name="photo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsPhotoInfos" inverseEntity="ProjectDetailInfo" syncable="YES"/>
+    </entity>
+    <entity name="ProjectDetailInfo" representedClassName="ProjectDetailInfo" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="commentcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="financing" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isZan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="share" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsBaseUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BaseUser" inverseName="rsProjectDetailInfo" inverseEntity="BaseUser" syncable="YES"/>
+        <relationship name="rsIndustrys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestIndustry" inverseName="rsProjectDetailInfo" inverseEntity="InvestIndustry" syncable="YES"/>
+        <relationship name="rsPhotoInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoInfos" inverseName="rsProjectDetailInfo" inverseEntity="PhotoInfos" syncable="YES"/>
+    </entity>
+    <entity name="ProjectInfo" representedClassName="ProjectInfo" syncable="YES">
+        <attribute name="commentcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="industrys" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isZan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
         <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="endyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -155,12 +197,12 @@
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsSchools" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
+        <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="315"/>
         <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="390"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
         <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
-        <element name="InvestIndustry" positionX="-1332" positionY="-369" width="128" height="88"/>
+        <element name="InvestIndustry" positionX="-1332" positionY="-369" width="128" height="103"/>
         <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="103"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
@@ -168,7 +210,10 @@
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
+        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="343"/>
+        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="208"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
+        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="88"/>
     </elements>
 </model>

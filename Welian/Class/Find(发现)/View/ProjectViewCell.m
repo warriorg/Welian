@@ -36,7 +36,34 @@
     return self;
 }
 
-- (void)setProjectInfo:(IProjectInfo *)projectInfo
+- (void)setIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    [super willChangeValueForKey:@"iProjectInfo"];
+    _iProjectInfo = iProjectInfo;
+    [super didChangeValueForKey:@"iProjectInfo"];
+    //@"zhan":@"100",@"name":@"快推",@"info":@"全球领先移动招聘平台",@"status":@"正在融资"
+    _praiseNumLabel.text = [_iProjectInfo displayZancountInfo];
+    _nameLabel.text = _iProjectInfo.name;
+    _msgLabel.text = _iProjectInfo.intro;
+    //status 1 正在融资，0不融资
+    NSString *status = @"";
+    switch (_iProjectInfo.status.integerValue) {
+        case 0:
+            status = @"暂未融资";
+            _statusLabel.hidden = YES;
+            break;
+        case 1:
+            status = @"正在融资";
+            _statusLabel.hidden = NO;
+            break;
+        default:
+            _statusLabel.hidden = NO;
+            break;
+    }
+    _statusLabel.text = status;
+}
+
+- (void)setProjectInfo:(ProjectInfo *)projectInfo
 {
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;

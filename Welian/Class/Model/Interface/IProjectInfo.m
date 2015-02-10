@@ -7,12 +7,14 @@
 //
 
 #import "IProjectInfo.h"
+#import "IInvestIndustryModel.h"
 
 @implementation IProjectInfo
 
 - (void)customOperation:(NSDictionary *)dict
 {
     self.des = dict[@"description"];
+    self.industrys = [IInvestIndustryModel objectsWithInfo:self.industrys];
 }
 
 //赞的数量
@@ -27,6 +29,26 @@
             return [NSString stringWithFormat:@"%.1fw",self.zancount.floatValue / 10000];
         }
     }
+}
+
+//项目领域
+- (NSString *)displayIndustrys
+{
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (self.industrys.count > 0) {
+        [types appendString:[self.industrys[0] industryname]];
+        if(self.industrys.count > 1){
+            for (int i = 1; i < self.industrys.count;i++) {
+                IInvestIndustryModel *industry = self.industrys[i];
+                [types appendString:@" | "];
+                [types appendString:industry.industryname];
+            }
+        }
+    }else{
+        [types appendString:@"暂无"];
+    }
+    return types;
 }
 
 @end

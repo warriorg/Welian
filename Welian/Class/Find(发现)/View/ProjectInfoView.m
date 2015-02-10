@@ -39,6 +39,7 @@
 {
     _infoBlock = nil;
     _projectInfo = nil;
+    _projectDetailInfo = nil;
     _userShowBlock = nil;
 }
 
@@ -51,7 +52,7 @@
     return self;
 }
 
-- (void)setProjectInfo:(IProjectDetailInfo *)projectInfo
+- (void)setProjectInfo:(ProjectInfo *)projectInfo
 {
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;
@@ -59,13 +60,34 @@
     _praiseNumLabel.text = [_projectInfo displayZancountInfo];
     _nameLabel.text = _projectInfo.name;
     _msgLabel.text = _projectInfo.intro;
+    //项目领域
+    _typeLabel.text = _projectInfo.industrys;
+    
+    //status 1 正在融资，0不融资
+    if (_projectInfo.status.integerValue == 0) {
+        _statusBtn.hidden = YES;
+    }else{
+        _statusBtn.hidden = NO;
+    }
+    
+    [_logoBtn setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+}
+
+- (void)setProjectDetailInfo:(IProjectDetailInfo *)projectDetailInfo
+{
+    [super willChangeValueForKey:@"projectDetailInfo"];
+    _projectDetailInfo = projectDetailInfo;
+    [super didChangeValueForKey:@"projectDetailInfo"];
+    _praiseNumLabel.text = [_projectDetailInfo displayZancountInfo];
+    _nameLabel.text = _projectDetailInfo.name;
+    _msgLabel.text = _projectDetailInfo.intro;
     //类型
     NSMutableString *types = [NSMutableString string];
-    if (_projectInfo.industrys.count > 0) {
-        [types appendString:[_projectInfo.industrys[0] industryname]];
-        if(_projectInfo.industrys.count > 1){
-            for (int i = 1; i < _projectInfo.industrys.count;i++) {
-                IInvestIndustryModel *industry = _projectInfo.industrys[i];
+    if (_projectDetailInfo.industrys.count > 0) {
+        [types appendString:[_projectDetailInfo.industrys[0] industryname]];
+        if(_projectDetailInfo.industrys.count > 1){
+            for (int i = 1; i < _projectDetailInfo.industrys.count;i++) {
+                IInvestIndustryModel *industry = _projectDetailInfo.industrys[i];
                 [types appendString:@" | "];
                 [types appendString:industry.industryname];
             }
@@ -76,14 +98,14 @@
     _typeLabel.text = types;
     
     //status 1 正在融资，0不融资
-    if (_projectInfo.status.integerValue == 0) {
+    if (_projectDetailInfo.status.integerValue == 0) {
         _statusBtn.hidden = YES;
     }else{
         _statusBtn.hidden = NO;
     }
     
-    if (_projectInfo.user.avatar.length > 0) {
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectInfo.user.avatar]
+    if (_projectDetailInfo.user.avatar.length > 0) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectDetailInfo.user.avatar]
                                                         options:SDWebImageRetryFailed|SDWebImageLowPriority
                                                        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                            
@@ -252,12 +274,27 @@
         [types appendString:@"暂无"];
     }
     msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
-    CGSize typeSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize typeSize = [types calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
     
      //status 1 正在融资，0不融资
     CGFloat btnHeight = detailInfo.status.integerValue != 0 ? kBtnHeight : 0;
    
-    CGFloat viewHeight = kMarginTop + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
+    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
+    return viewHeight;
+}
+
++ (CGFloat)configureWithProjectInfo:(ProjectInfo *)projectInfo
+{
+    CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
+    CGSize nameSize = [projectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize msgSize = [projectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
+    CGSize typeSize = [projectInfo.industrys calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    
+    //status 1 正在融资，0不融资
+    CGFloat btnHeight = projectInfo.status.integerValue != 0 ? kBtnHeight : 0;
+    
+    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
     return viewHeight;
 }
 

@@ -42,6 +42,8 @@
 - (NSString *)displayStage;
 //赞的数量
 - (NSString *)displayZancountInfo;
+//项目领域
+- (NSString *)displayIndustrys;
 
 // 取领域id
 - (NSArray *)getindustrysID;

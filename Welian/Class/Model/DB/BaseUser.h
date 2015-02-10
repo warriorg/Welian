@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class ProjectDetailInfo;
 
 @interface BaseUser : NSManagedObject
 
@@ -29,5 +30,6 @@
 @property (nonatomic, retain) NSNumber * cityid;
 @property (nonatomic, retain) NSString * cityname;
 @property (nonatomic, retain) NSString * shareurl;
+@property (nonatomic, retain) ProjectDetailInfo *rsProjectDetailInfo;
 
 @end

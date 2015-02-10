@@ -28,5 +28,6 @@
 @dynamic cityid;
 @dynamic cityname;
 @dynamic shareurl;
+@dynamic rsProjectDetailInfo;
 
 @end

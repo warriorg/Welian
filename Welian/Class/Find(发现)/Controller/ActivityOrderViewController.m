@@ -77,9 +77,9 @@
     /*============================================================================*/
     //如果partner和seller数据存于其他位置,请改写下面两行代码
     
-    NSString *partner = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
-    NSString *seller = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
-    NSString *privateKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
+    NSString *partner = PartnerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
+    NSString *seller = SellerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
+    NSString *privateKey = PartnerPrivKey;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
     /*============================================================================*/
     /*============================================================================*/
     /*============================================================================*/
