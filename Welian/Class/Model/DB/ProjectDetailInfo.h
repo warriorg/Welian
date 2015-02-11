@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class BaseUser, InvestIndustry, PhotoInfos,IProjectDetailInfo;
+@class ProjectUser, InvestIndustry, PhotoInfos,IProjectDetailInfo;
 
 @interface ProjectDetailInfo : NSManagedObject
 
@@ -30,7 +30,7 @@
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSString * website;
 @property (nonatomic, retain) NSNumber * zancount;
-@property (nonatomic, retain) BaseUser *rsBaseUser;
+@property (nonatomic, retain) ProjectUser * rsProjectUser;
 @property (nonatomic, retain) NSSet *rsIndustrys;
 @property (nonatomic, retain) NSSet *rsPhotoInfos;
 

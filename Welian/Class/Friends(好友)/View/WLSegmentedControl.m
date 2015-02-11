@@ -18,6 +18,7 @@
 #define Define_Btn_Tag 1300
 #define Define_LineView_Tag 1400
 #define Define_Bridge_Tag 1500
+#define Define_SmallImage_Tag 1600
 
 #define kBadgeHeight 17.f
 #define kBadge2Width 24.f
@@ -79,6 +80,20 @@
     }
 }
 
+- (void)setShowSmallImage:(BOOL)showSmallImage
+{
+    [super willChangeValueForKey:@"showSmallImage"];
+    _showSmallImage = showSmallImage;
+    [super didChangeValueForKey:@"showSmallImage"];
+}
+
+- (void)setLineHeightAll:(BOOL)lineHeightAll
+{
+    [super willChangeValueForKey:@"lineHeightAll"];
+    _lineHeightAll = lineHeightAll;
+    [super didChangeValueForKey:@"lineHeightAll"];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -95,27 +110,40 @@
         UIView *view = [self viewWithTag:Define_View_Tag + i];
         view.frame = CGRectMake(i*width4btn, .0f, width4btn, self.height);
         
-        //添加图片
-        UIImageView *iconImage = (UIImageView *)[view viewWithTag:Define_Image_Tag + i];
-        [iconImage sizeToFit];
-        if (_isHorizontal) {
-            iconImage.left = 20.f;
-            iconImage.centerY = view.height / 2.f;
-        }else{
-            iconImage.centerX = view.width / 2.f;
-            iconImage.top = kMarginBottom;
-        }
-        
         //添加内容
         UILabel *titleLabel = (UILabel *)[view viewWithTag:Define_Label_Tag + i];
         [titleLabel sizeToFit];
-        if (_isHorizontal) {
-            titleLabel.left = iconImage.right + kMarginBottom;
-            titleLabel.centerY = view.height / 2.f;
+        
+        //添加图片
+        if (_images) {
+            UIImageView *iconImage = (UIImageView *)[view viewWithTag:Define_Image_Tag + i];
+            [iconImage sizeToFit];
+            if (_isHorizontal) {
+                iconImage.left = 20.f;
+                iconImage.centerY = view.height / 2.f;
+            }else{
+                iconImage.centerX = view.width / 2.f;
+                iconImage.top = kMarginBottom;
+            }
+            
+            if (_isHorizontal) {
+                titleLabel.left = iconImage.right + kMarginBottom;
+                titleLabel.centerY = view.height / 2.f;
+            }else{
+                titleLabel.centerX = view.width / 2.f;
+                titleLabel.top = iconImage.bottom + kMarginBottom;
+            }
         }else{
             titleLabel.centerX = view.width / 2.f;
-            titleLabel.top = iconImage.bottom + kMarginBottom;
+            titleLabel.centerY = view.height / 2.f;
         }
+        
+        //右下角图标
+        UIImageView *smallImage = (UIImageView *)[view viewWithTag:Define_SmallImage_Tag + i];
+        [smallImage sizeToFit];
+        smallImage.right = view.width - 3.f;
+        smallImage.bottom = view.height - 3.f;
+        smallImage.hidden = !_showSmallImage;
         
         //角标按钮
         UIButton *numBtn = (UIButton *)[view viewWithTag:Define_Bridge_Tag + i];
@@ -131,7 +159,7 @@
     //分割线
     for (int i = 1; i< [_titles count]; i++) {
         UIView *lineView = [self viewWithTag:Define_LineView_Tag + i];
-        lineView.frame = CGRectMake(i * width4btn - 1.f, 5.f, 1.f, self.height - 10);
+        lineView.frame = CGRectMake(i * width4btn - 1.f,_lineHeightAll ? 0 : 5.f, 1.f, _lineHeightAll ? self.height : self.height - 10);
     }
     
 //    UIView *view = [self viewWithTag:_selectBtn.tag];
@@ -158,16 +186,25 @@
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.font = [UIFont systemFontOfSize:14.f];
-        titleLabel.textColor = [UIColor grayColor];
+        titleLabel.textColor = RGB(155.f, 155.f, 155.f);
         titleLabel.text = _titles[i];
         titleLabel.tag = Define_Label_Tag + i;
         [view addSubview:titleLabel];
         
         //添加图片
-        UIImageView *iconImage = [[UIImageView alloc] initWithImage:_images[i]];
-        iconImage.backgroundColor = [UIColor clearColor];
-        iconImage.tag = Define_Image_Tag + i;
-        [view addSubview:iconImage];
+        if (_images) {
+            UIImageView *iconImage = [[UIImageView alloc] initWithImage:_images[i]];
+            iconImage.backgroundColor = [UIColor clearColor];
+            iconImage.tag = Define_Image_Tag + i;
+            [view addSubview:iconImage];
+        }
+        
+        //添加右下角小图片
+        UIImageView *smallImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_myactivity_time"]];
+        smallImage.backgroundColor = [UIColor clearColor];
+        smallImage.tag = Define_SmallImage_Tag + i;
+        smallImage.hidden = YES;
+        [view addSubview:smallImage];
         
         //添加角标
         UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];

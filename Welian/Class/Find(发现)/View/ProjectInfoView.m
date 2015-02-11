@@ -113,8 +113,8 @@
         _statusBtn.hidden = NO;
     }
     
-    if (_projectDetailInfo.rsBaseUser.avatar.length > 0) {
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectDetailInfo.rsBaseUser.avatar]
+    if (_projectDetailInfo.rsProjectUser.avatar.length > 0) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectDetailInfo.rsProjectUser.avatar]
                                                         options:SDWebImageRetryFailed|SDWebImageLowPriority
                                                        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                            

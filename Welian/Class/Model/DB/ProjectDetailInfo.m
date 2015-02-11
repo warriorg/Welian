@@ -31,7 +31,7 @@
 @dynamic status;
 @dynamic website;
 @dynamic zancount;
-@dynamic rsBaseUser;
+@dynamic rsProjectUser;
 @dynamic rsIndustrys;
 @dynamic rsPhotoInfos;
 
@@ -124,8 +124,9 @@
     detailInfo.website = iProjectDetailInfo.website;
     detailInfo.zancount = iProjectDetailInfo.zancount;
     //设置用户
-    BaseUser *baseUser = [BaseUser createWithIBaseUserM:iProjectDetailInfo.user];
-    detailInfo.rsBaseUser = baseUser;
+    ProjectUser *projectUser = [ProjectUser createWithIBaseUserM:iProjectDetailInfo.user];
+    detailInfo.rsProjectUser = projectUser;
+    
     //设置领域
     for (IInvestIndustryModel *investIndustryModel in iProjectDetailInfo.industrys) {
         InvestIndustry *investIndustry = [InvestIndustry createInvestIndustryWith:investIndustryModel];

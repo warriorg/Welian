@@ -18,7 +18,6 @@
         <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startupauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsBaseUser" inverseEntity="ProjectDetailInfo" syncable="YES"/>
     </entity>
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
         <attribute name="avatorUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -166,9 +165,9 @@
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="rsBaseUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BaseUser" inverseName="rsProjectDetailInfo" inverseEntity="BaseUser" syncable="YES"/>
         <relationship name="rsIndustrys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestIndustry" inverseName="rsProjectDetailInfo" inverseEntity="InvestIndustry" syncable="YES"/>
         <relationship name="rsPhotoInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoInfos" inverseName="rsProjectDetailInfo" inverseEntity="PhotoInfos" syncable="YES"/>
+        <relationship name="rsProjectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectUser" inverseName="rsProjectDetailInfo" inverseEntity="ProjectUser" syncable="YES"/>
     </entity>
     <entity name="ProjectInfo" representedClassName="ProjectInfo" syncable="YES">
         <attribute name="commentcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -185,6 +184,9 @@
         <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsProjectInfos" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
+    <entity name="ProjectUser" representedClassName="ProjectUser" parentEntity="BaseUser" syncable="YES">
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsProjectUser" inverseEntity="ProjectDetailInfo" syncable="YES"/>
+    </entity>
     <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
         <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="endyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -200,7 +202,7 @@
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsSchools" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="315"/>
+        <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
         <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="390"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
@@ -214,9 +216,10 @@
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
         <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="88"/>
-        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="345"/>
+        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="343"/>
         <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="238"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
+        <element name="ProjectUser" positionX="-1359" positionY="-396" width="128" height="58"/>
     </elements>
 </model>
