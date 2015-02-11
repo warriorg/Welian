@@ -33,7 +33,7 @@
         lastUpdateTimeLabel.backgroundColor = [UIColor clearColor];
         lastUpdateTimeLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_lastUpdateTimeLabel = lastUpdateTimeLabel];
-        
+        [_lastUpdateTimeLabel setHidden:YES];
         // 2.加载时间
         self.lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:MJRefreshHeaderTimeKey];
     }
