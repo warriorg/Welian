@@ -39,6 +39,7 @@
 {
     _infoBlock = nil;
     _projectInfo = nil;
+    _iProjectInfo = nil;
     _projectDetailInfo = nil;
     _userShowBlock = nil;
 }

@@ -27,6 +27,12 @@
 
 @implementation ProjectViewCell
 
+- (void)dealloc
+{
+    _projectInfo = nil;
+    _iProjectInfo = nil;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

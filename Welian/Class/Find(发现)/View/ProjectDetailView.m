@@ -30,6 +30,7 @@
 {
     _datasource = nil;
     _projectInfo = nil;
+    _iProjectInfo = nil;
     _projectDetailInfo = nil;
     _imageClickedBlock = nil;
 }
