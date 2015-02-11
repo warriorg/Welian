@@ -48,6 +48,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSMutableArray *datasource;//用于存储评论数组
 @property (strong,nonatomic) NSNumber *projectPid;
+@property (strong,nonatomic) IProjectInfo *iProjectInfo;
 @property (strong,nonatomic) ProjectInfo *projectInfo;
 @property (assign,nonatomic) ProjectDetailInfoView *projectDetailInfoView;
 
@@ -75,6 +76,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     _projectPid = nil;
     _datasource = nil;
     _projectInfo = nil;
+    _iProjectInfo = nil;
+    _iProjectDetailInfo = nil;
     _projectDetailInfo = nil;
     _selecCommFrame = nil;
     _messageView = nil;
@@ -101,6 +104,22 @@ static NSString *noCommentCell = @"NoCommentCell";
     return _tapGesture;
 }
 
+//通过I模型展示
+- (instancetype)initWithIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    self = [super init];
+    if (self) {
+        self.iProjectInfo = iProjectInfo;
+        self.pageIndex = 1;
+        self.pageSize = 10;
+        self.projectPid = _iProjectInfo.pid;
+        
+        //初始化页面数据
+        [self initUI];
+    }
+    return self;
+}
+
 - (instancetype)initWithProjectInfo:(ProjectInfo *)projectInfo
 {
     self = [super init];
@@ -108,6 +127,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         self.projectInfo = projectInfo;
         self.pageIndex = 1;
         self.pageSize = 10;
+        self.projectPid = _projectInfo.pid;
         
         //初始化页面数据
         [self initUI];
@@ -132,6 +152,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     self = [super init];
     if (self) {
         self.iProjectDetailInfo = detailInfo;
+        self.projectPid = _iProjectDetailInfo.pid;
         _isFinish = YES;
     }
     return self;
@@ -590,7 +611,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_iProjectDetailInfo.zanusers];
     if (!_projectDetailInfo.isZan.boolValue) {
         //赞
-        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectPid}
                                    success:^(id JSON) {
                                        _projectDetailInfo.isZan = @(1);
                                        _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue + 1);
@@ -617,7 +638,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                    }];
     }else{
         //取消赞
-        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectPid}
                                          success:^(id JSON) {
                                              _projectDetailInfo.isZan = @(0);
                                              _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue - 1);
@@ -665,7 +686,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_projectDetailInfo.isFavorite.boolValue) {
         //取消收藏
-        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectPid}
                                               success:^(id JSON) {
                                                   _projectDetailInfo.isFavorite = @(0);
                                                   [self checkFavorteStatus];
@@ -677,7 +698,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                               }];
     }else{
         //收藏项目
-        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectPid}
                                         success:^(id JSON) {
                                             _projectDetailInfo.isFavorite = @(1);
                                             [self checkFavorteStatus];
@@ -751,8 +772,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //获取详情信息
 - (void)initData{
-    NSNumber *pid = _projectInfo ? _projectInfo.pid : _projectPid;
-    [WLHttpTool getProjectDetailParameterDic:@{@"pid":pid}
+    [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
                                      success:^(id JSON) {
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
                                          self.iProjectDetailInfo = detailInfo;
@@ -804,18 +824,29 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)initUI
 {
     //设置头部内容
-    CGFloat detailHeight = [ProjectDetailView configureWithInfo:_projectInfo.des Images:nil];
-    CGFloat projectInfoViewHeight = [ProjectInfoView configureWithProjectInfo:_projectInfo];//_projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
+    CGFloat detailHeight = _projectInfo ? [ProjectDetailView configureWithInfo:_projectInfo.des Images:nil] : [ProjectDetailView configureWithInfo:_iProjectInfo.des Images:nil];
+    CGFloat projectInfoViewHeight =  _projectInfo ? [ProjectInfoView configureWithProjectInfo:_projectInfo] : [ProjectInfoView configureWithIProjectInfo:_iProjectInfo];
+    
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width,projectInfoViewHeight + detailHeight)];
     ProjectInfoView *projectInfoView = [[ProjectInfoView alloc] initWithFrame:Rect(0, 0, self.view.width,projectInfoViewHeight)];
-    projectInfoView.projectInfo = _projectInfo;
+    if (_projectInfo) {
+        projectInfoView.projectInfo = _projectInfo;
+    }
+    if (_iProjectInfo) {
+        projectInfoView.iProjectInfo = _iProjectInfo;
+    }
     //设置底部边框线
     projectInfoView.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);//RGB(173.f, 173.f, 173.f);
     projectInfoView.layer.borderWidths = @"{0,0,0.5,0}";
     
     //项目详情
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoViewHeight, self.view.width, detailHeight)];
-    projectDetailView.projectInfo = _projectInfo;
+    if (_projectInfo) {
+        projectDetailView.projectInfo = _projectInfo;
+    }
+    if (_iProjectInfo) {
+        projectDetailView.iProjectInfo = _iProjectInfo;
+    }
     
     [headView addSubview:projectInfoView];
     [headView addSubview:projectDetailView];
@@ -849,9 +880,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     }];
     
     //操作栏
-    NSString *linkImage = _iProjectDetailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
-    NSString *memeberImage = _iProjectDetailInfo.membercount.integerValue > 0 ? @"discovery_xiangmu_detail_member" : @"discovery_xiangmu_detail_nomember";
-    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_iProjectDetailInfo.membercount intValue]]] Images:@[[UIImage imageNamed:linkImage],[UIImage imageNamed:memeberImage]] Bridges:nil isHorizontal:YES];
+    NSString *linkImage = _projectDetailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
+    NSString *memeberImage = _projectDetailInfo.membercount.integerValue > 0 ? @"discovery_xiangmu_detail_member" : @"discovery_xiangmu_detail_nomember";
+    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_projectDetailInfo.membercount intValue]]] Images:@[[UIImage imageNamed:linkImage],[UIImage imageNamed:memeberImage]] Bridges:nil isHorizontal:YES];
     segementedControl.delegate = self;
     //设置底部边框线
     segementedControl.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);
@@ -918,7 +949,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_datasource.count < _projectDetailInfo.commentcount.integerValue) {
         _pageIndex++;
-        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                            success:^(id JSON) {
                                                //隐藏加载更多动画
                                                [self.tableView footerEndRefreshing];

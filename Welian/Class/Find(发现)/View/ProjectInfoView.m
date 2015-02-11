@@ -39,6 +39,7 @@
 {
     _infoBlock = nil;
     _projectInfo = nil;
+    _iProjectInfo = nil;
     _projectDetailInfo = nil;
     _userShowBlock = nil;
 }
@@ -50,6 +51,27 @@
         [self setup];
     }
     return self;
+}
+
+- (void)setIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    [super willChangeValueForKey:@"iProjectInfo"];
+    _iProjectInfo = iProjectInfo;
+    [super didChangeValueForKey:@"iProjectInfo"];
+    _praiseNumLabel.text = [_iProjectInfo displayZancountInfo];
+    _nameLabel.text = _iProjectInfo.name;
+    _msgLabel.text = _iProjectInfo.intro;
+    //项目领域
+    _typeLabel.text = [_iProjectInfo displayIndustrys];
+    
+    //status 1 正在融资，0不融资
+    if (_iProjectInfo.status.integerValue == 0) {
+        _statusBtn.hidden = YES;
+    }else{
+        _statusBtn.hidden = NO;
+    }
+    
+    [_logoBtn setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
 }
 
 - (void)setProjectInfo:(ProjectInfo *)projectInfo
@@ -267,6 +289,21 @@
     
     //status 1 正在融资，0不融资
     CGFloat btnHeight = projectInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
+    
+    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 2;
+    return viewHeight;
+}
+
++ (CGFloat)configureWithIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
+    CGSize nameSize = [iProjectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize msgSize = [iProjectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
+    CGSize typeSize = [[iProjectInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    
+    //status 1 正在融资，0不融资
+    CGFloat btnHeight = iProjectInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
     
     CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 2;
     return viewHeight;

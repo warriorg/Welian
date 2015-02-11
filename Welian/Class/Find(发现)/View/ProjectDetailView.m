@@ -30,6 +30,7 @@
 {
     _datasource = nil;
     _projectInfo = nil;
+    _iProjectInfo = nil;
     _projectDetailInfo = nil;
     _imageClickedBlock = nil;
 }
@@ -86,6 +87,15 @@
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
+    _infoLabel.text = _projectInfo.des;
+    _collectionView.hidden = YES;
+}
+
+- (void)setIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    [super willChangeValueForKey:@"iProjectInfo"];
+    _iProjectInfo = iProjectInfo;
+    [super didChangeValueForKey:@"iProjectInfo"];
     _infoLabel.text = _projectInfo.des;
     _collectionView.hidden = YES;
 }
