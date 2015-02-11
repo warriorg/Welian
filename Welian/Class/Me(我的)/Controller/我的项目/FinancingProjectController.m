@@ -343,10 +343,10 @@ static NSString *financingCellid = @"financingCellid";
                 [weakSelf.selfProjectM setShare:nil];
                 [weakSelf.selfProjectM setStage:nil];
             }
-            
+            ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
             if (weakSelf.isEdit) {
                 if (weakSelf.projectDataBlock) {
-                    weakSelf.projectDataBlock(weakSelf.selfProjectM);
+                    weakSelf.projectDataBlock(projectMR);
                 }
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }else{

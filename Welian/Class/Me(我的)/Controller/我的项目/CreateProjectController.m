@@ -334,10 +334,10 @@ static NSString *projectcellid = @"projectcellid";
 #pragma mark - CollectionView代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.assetsArray.count>0&&self.assetsArray.count<9) {
+    if (self.assetsArray.count>0&&self.assetsArray.count<=9) {
         return self.assetsArray.count+1;
     }
-    return self.assetsArray.count;
+    return 0;
 }
 
 
@@ -477,9 +477,20 @@ static NSString *projectcellid = @"projectcellid";
             [self.projectM setIndustrys:_projectModel.industrys];
             [self.projectM setShareurl:_projectModel.shareurl];
             
+            // 创建项目存数据库
+            IProjectInfo *iProjectinfo = [[IProjectInfo alloc] init];
+            [iProjectinfo setPid:_projectModel.pid];
+            [iProjectinfo setName:_projectModel.name];
+            [iProjectinfo setIntro:_projectModel.intro];
+            [iProjectinfo setDes:_projectModel.des];
+            [iProjectinfo setIndustrys:_projectModel.industrys];
+            [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
+            
             if (_isEdit) {
+                // 修改数据库数据
+               ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
                 if (self.projectDataBlock) {
-                    self.projectDataBlock(self.projectM);
+                    self.projectDataBlock(projectMR);
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
@@ -493,6 +504,8 @@ static NSString *projectcellid = @"projectcellid";
                 meUserM.position = logUser.position;
                 [_projectModel setUser:meUserM];
                 [self.projectM setUser:meUserM];
+                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                
                 MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
                 [self.navigationController pushViewController:memberVC animated:YES];
             }

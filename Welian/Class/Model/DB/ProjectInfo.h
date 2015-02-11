@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSNumber * status;//// 0 暂不融资   1正在融资
 @property (nonatomic, retain) NSNumber * zancount;//点赞数量
 
-@property (nonatomic, retain) NSNumber * type;//0：普通   1：自己  2：收藏
+@property (nonatomic, retain) NSNumber * type;//0：普通   1：收藏  2：创建
 @property (nonatomic, retain) LogInUser * rsLoginUser;
 
 //创建项目

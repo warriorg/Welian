@@ -532,24 +532,24 @@ static NSString *noCommentCell = @"NoCommentCell";
     WEAKSELF
     if ([imageIndex isEqualToString:@"设置融资信息"]) {
         FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        financingProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.iProjectDetailInfo = projectModel;
+        financingProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+            weakSelf.projectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:financingProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"设置团队成员"]) {
         MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        memberProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.iProjectDetailInfo = projectModel;
+        memberProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+            weakSelf.projectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:memberProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"编辑项目信息"]) {
         CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        createProjcetVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.iProjectDetailInfo = projectModel;
+        createProjcetVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+            weakSelf.projectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:createProjcetVC animated:YES];

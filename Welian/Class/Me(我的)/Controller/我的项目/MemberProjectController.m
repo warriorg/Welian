@@ -209,9 +209,10 @@ static NSString *fridcellid = @"fridcellid";
     [ProjectMemberDic setObject:members forKey:@"members"];
     [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
         [_projectModel setMembercount:@(self.selectArray.count)];
+       ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
         if (_isEdit) {
             if (self.projectDataBlock) {
-                self.projectDataBlock(_projectModel);
+                self.projectDataBlock(projectMR);
             }
             [self.navigationController popViewControllerAnimated:YES];
         }else{

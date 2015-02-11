@@ -8,7 +8,7 @@
 
 #import "BasicViewController.h"
 
-typedef void(^ProjectDataBlock)(IProjectDetailInfo *projectModel);
+typedef void(^ProjectDataBlock)(ProjectDetailInfo *projectModel);
 @interface FinancingProjectController : BasicViewController
 
 @property (nonatomic, copy) ProjectDataBlock projectDataBlock;
