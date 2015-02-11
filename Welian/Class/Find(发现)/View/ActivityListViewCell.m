@@ -8,8 +8,10 @@
 
 #import "ActivityListViewCell.h"
 
-#define kImageViewWidth 80.f
+#define kImageViewWidth 90.f
+#define kImageViewHeight 68.f
 #define kMarginLeft 15.f
+#define kMarginEdge 10.f
 
 @interface ActivityListViewCell ()
 
@@ -19,6 +21,7 @@
 @property (assign,nonatomic) UIButton *locationBtn;
 @property (assign,nonatomic) UILabel *statusLabel;
 @property (assign,nonatomic) UILabel *numLabel;
+@property (assign,nonatomic) UILabel *dateLabel;
 
 @end
 
@@ -42,12 +45,17 @@
     
     _titleLabel.width = self.contentView.width - _iconImageView.right - kMarginLeft *2.f;
     [_titleLabel sizeToFit];
-    _titleLabel.left = _iconImageView.right + kMarginLeft;
+    _titleLabel.left = _iconImageView.right + kMarginEdge;
     _titleLabel.top = _iconImageView.top;
     
     [_timeBtn sizeToFit];
+    _timeBtn.width = _timeBtn.width + 5.f;
     _timeBtn.left = _titleLabel.left;
     _timeBtn.bottom = _iconImageView.bottom;
+    
+    [_dateLabel sizeToFit];
+    _dateLabel.left = _timeBtn.right;
+    _dateLabel.centerY = _timeBtn.centerY;
     
     [_statusLabel sizeToFit];
     _statusLabel.right = self.contentView.width - kMarginLeft;
@@ -58,9 +66,9 @@
     _numLabel.centerY = _statusLabel.centerY;
     
     [_locationBtn sizeToFit];
-    _locationBtn.width = _numLabel.left - _timeBtn.right - kMarginLeft * 2.f;
-    _locationBtn.left = _timeBtn.right + kMarginLeft;
-    _locationBtn.centerY = _timeBtn.centerY;
+    _locationBtn.width = _numLabel.left - _dateLabel.right - kMarginEdge * 2.f;
+    _locationBtn.left = _dateLabel.right + kMarginEdge;
+    _locationBtn.centerY = _dateLabel.centerY;
 }
 
 #pragma mark - Private
@@ -76,7 +84,7 @@
     //标题
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.textColor = RGB(51.f, 51.f, 51.f);
+    titleLabel.textColor = kTitleNormalTextColor;
     titleLabel.font = [UIFont systemFontOfSize:16.f];
     titleLabel.text = @"杭州布鲁姆斯伯里沙龙（下午茶）";
     titleLabel.numberOfLines = 0;
@@ -86,28 +94,39 @@
     //时间
     UIButton *timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     timeBtn.backgroundColor = [UIColor clearColor];
-    timeBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    timeBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [timeBtn setTitle:@"6/18" forState:UIControlStateNormal];
-    [timeBtn setTitleColor:RGB(0.f, 93.f, 180.f) forState:UIControlStateNormal];
+    [timeBtn setTitleColor:KBlueTextColor forState:UIControlStateNormal];
     [timeBtn setImage:[UIImage imageNamed:@"me_myactivity_time"] forState:UIControlStateNormal];
+    timeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
     [self.contentView addSubview:timeBtn];
     self.timeBtn = timeBtn;
+    
+    //星期几
+    UILabel *dateLabel = [[UILabel alloc] init];
+    dateLabel.backgroundColor = [UIColor clearColor];
+    dateLabel.textColor = kNormalTextColor;
+    dateLabel.font = [UIFont systemFontOfSize:12.f];
+    dateLabel.text = @"周日";
+    [self.contentView addSubview:dateLabel];
+    self.dateLabel = dateLabel;
     
     //城市
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     locationBtn.backgroundColor = [UIColor clearColor];
-    locationBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    locationBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [locationBtn setTitle:@"上海" forState:UIControlStateNormal];
-    [locationBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [locationBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     [locationBtn setImage:[UIImage imageNamed:@"me_mycard_lacation"] forState:UIControlStateNormal];
     [self.contentView addSubview:locationBtn];
     self.locationBtn = locationBtn;
+//    [locationBtn setDebug:YES];
     
     //状态
     UILabel *statusLabel = [[UILabel alloc] init];
     statusLabel.backgroundColor = [UIColor clearColor];
-    statusLabel.textColor = [UIColor lightGrayColor];
-    statusLabel.font = [UIFont systemFontOfSize:14.f];
+    statusLabel.textColor = kNormalTextColor;
+    statusLabel.font = [UIFont systemFontOfSize:12.f];
     statusLabel.text = @"报名";
     [self.contentView addSubview:statusLabel];
     self.statusLabel = statusLabel;
@@ -115,8 +134,8 @@
     //人数
     UILabel *numLabel = [[UILabel alloc] init];
     numLabel.backgroundColor = [UIColor clearColor];
-    numLabel.textColor = RGB(0.f, 93.f, 180.f);
-    numLabel.font = [UIFont systemFontOfSize:14.f];
+    numLabel.textColor = KBlueTextColor;
+    numLabel.font = [UIFont systemFontOfSize:12.f];
     numLabel.text = @"10";
     [self.contentView addSubview:numLabel];
     self.numLabel = numLabel;

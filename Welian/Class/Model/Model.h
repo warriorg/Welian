@@ -14,6 +14,7 @@
 #import "PhotoInfos.h"
 #import "ProjectDetailInfo.h"
 #import "ProjectInfo.h"
+#import "ProjectUser.h"
 
 
 #pragma mark - Interface

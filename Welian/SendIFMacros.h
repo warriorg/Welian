@@ -248,6 +248,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 线条浅灰颜色
 #define WLLineColor WLRGB(232, 234, 239)
 
+//常用系统颜色
+#define kNormalTextColor RGB(173.f, 173.f, 173.f)
+#define kTitleNormalTextColor RGB(51.f, 51.f, 51.f)
+#define KBlueTextColor RGB(52.f, 116.f, 186.f)
+
 /*
  7.一条微博上的字体
  */

@@ -22,6 +22,9 @@
 
 @property (strong, nonatomic) NSArray *bridges;
 
+@property (assign, nonatomic) BOOL showSmallImage;//是否显示右下角图标
+@property (assign, nonatomic) BOOL lineHeightAll;//分割线高度等于当前View高度
+
 - (id)initWithFrame:(CGRect)frame Titles:(NSArray *)titles Images:(NSArray *)images Bridges:(NSArray *)bridges isHorizontal:(BOOL)isHorizontal;
 
 //提供方法改变 index
