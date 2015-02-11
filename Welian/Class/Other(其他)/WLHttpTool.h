@@ -255,6 +255,8 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 取消收藏项目
 + (void)deleteFavoriteProjectParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 检测项目是否有同名 
++ (void)checkProjectParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;

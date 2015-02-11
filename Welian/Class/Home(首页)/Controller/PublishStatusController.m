@@ -385,11 +385,6 @@ static NSString *picCellid = @"PicCellID";
         
     }else if (buttonIndex ==1){ // 从相册选择
         
-//        if (self.assets){
-//        
-//            self.assets = [NSMutableArray array];
-//        }
-        
         CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
         picker.assetsFilter         = [ALAssetsFilter allAssets];
         [picker setAssetsLibrary:_alassets];

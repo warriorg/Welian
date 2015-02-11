@@ -28,12 +28,14 @@
 #import "ISchoolResult.h"
 #import "MJExtension.h"
 #import "FriendsUserModel.h"
+#import "MyProjectViewController.h"
 
 @interface UserInfoBasicVC () <UIAlertViewDelegate,UIActionSheetDelegate>
 {
     IBaseUserM *_userMode;
     NSMutableDictionary *_dataDicM;
     NSMutableArray *_sameFriendArry;
+    NSString *_projectName;
 }
 
 @property (nonatomic,strong) UIView *addFriendView;
@@ -114,10 +116,6 @@ static NSString *staurCellid = @"staurCellid";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_userMode.uid.stringValue}];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
-//    MyFriendUser *user = [MyFriendUser getMyfriendUserWithUid:_userMode.uid];
-//    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
-//    chatVC.isFromUserInfo = YES;
-//    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (UIView*)addFriendView
@@ -142,7 +140,6 @@ static NSString *staurCellid = @"staurCellid";
 
 - (void)requestFriend
 {
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"好友验证" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -190,7 +187,6 @@ static NSString *staurCellid = @"staurCellid";
             //删除好友请求数据
             //更新好友请求列表数据为 添加
             [newFuser updateOperateType:1];
-            //                    [[LogInUser getCurrentLoginUser] removeRsNewFriendsObject:[NewFriendUser getNewFriendUserWithUid:_userMode.uid]];
         }
         //更新本地添加好友数据库
         NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];
@@ -198,9 +194,6 @@ static NSString *staurCellid = @"staurCellid";
             //更新未好友的好友
             [needAddUser updateFriendShip:2];
         }
-        
-        //                [[WLDataDBTool sharedService] deleteObjectById:[NSString stringWithFormat:@"%@",_userMode.uid] fromTable:KNewFriendsTableName];
-//        [MOC save];
         
         [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
         //聊天状态发送改变
@@ -225,7 +218,6 @@ static NSString *staurCellid = @"staurCellid";
         
         LogInUser *mode = [LogInUser getCurrentLoginUser];
         if (!([mode.uid integerValue]==[_userMode.uid integerValue])&&[usermode.friendship integerValue]==1) {
-            
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
         }
         YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLUserInfoTableName];
@@ -310,6 +302,8 @@ static NSString *staurCellid = @"staurCellid";
     NSDictionary *investor = [dataDic objectForKey:@"investor"];
     IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
     
+    // 我的项目
+    _projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
     // 创业者
     //        NSDictionary *startup = [dataDic objectForKey:@"startup"];
     
@@ -336,7 +330,7 @@ static NSString *staurCellid = @"staurCellid";
 {
     NSInteger i = 2;
     IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-    if (inve.items.count||inve.stages.count||inve.industry.count) {
+    if (inve.items.count||inve.stages.count||inve.industry.count||_projectName.length) {
         i+=1;
     }
     if (section == i) {
@@ -356,7 +350,7 @@ static NSString *staurCellid = @"staurCellid";
 {
     NSInteger n = 3;
     IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-    if (inve.items.count||inve.industry.count||inve.stages.count) {
+    if (inve.items.count||inve.industry.count||inve.stages.count||_projectName.length) {
         n+=1;
     }
     return n;
@@ -377,9 +371,16 @@ static NSString *staurCellid = @"staurCellid";
         }
         return a;
     }else if (section == 2){
-        return 2;
+        IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
+        if ((inve.items.count||inve.industry.count||inve.stages.count) && (_projectName.length)) {
+            return 2;
+        }else if (inve.items.count||inve.industry.count||inve.stages.count ||_projectName.length){
+            return 1;
+        }else{
+            return 2;
+        }
     }else if (section == 3){
-        return 1;
+        return 2;
     }
     return 0;
 }
@@ -436,6 +437,54 @@ static NSString *staurCellid = @"staurCellid";
             return staucell;
         }
     }else if (indexPath.section==2){
+        IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
+        if (inve.items.count||inve.industry.count||inve.stages.count || _projectName.length) {
+            if (inve.items.count||inve.industry.count||inve.stages.count) {
+                if (indexPath.row ==0) {
+                    [cell.textLabel setText:@"我是投资人"];
+                    NSMutableString *stagesStr = [NSMutableString string];
+                    NSArray *investIndustryarray = inve.items;
+                    for (InvestItemM *item in investIndustryarray) {
+                        [stagesStr appendFormat:@"%@  ",item.item];
+                    }
+                    [cell.detailTextLabel setText:stagesStr];
+                }
+                if (_projectName.length) {
+                    [cell.textLabel setText:@"我的项目"];
+                    [cell.detailTextLabel setText:_projectName];
+                }
+            }else if(_projectName.length){
+                if (indexPath.row==0) {
+                    [cell.textLabel setText:@"我的项目"];
+                    [cell.detailTextLabel setText:_projectName];
+                }
+            }
+            
+        }else{
+        
+            if (indexPath.row==0) {
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                [cell.textLabel setText:@"教育背景"];
+                
+                if (userschool.count) {
+                    SchoolModel *schoolM = userschool.firstObject;
+                    [cell.detailTextLabel setText:schoolM.schoolname];
+                }else{
+                    [cell.detailTextLabel setText:@"暂无"];
+                }
+                
+            }else if (indexPath.row==1){
+                [cell.textLabel setText:@"工作经历"];
+                if (usercompany.count) {
+                    CompanyModel *companM = usercompany.firstObject;
+                    [cell.detailTextLabel setText:companM.companyname];
+                }else{
+                    [cell.detailTextLabel setText:@"暂无"];
+                }
+            }
+        }
+
+    }else if (indexPath.section ==3){
         if (indexPath.row==0) {
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             [cell.textLabel setText:@"教育背景"];
@@ -445,7 +494,6 @@ static NSString *staurCellid = @"staurCellid";
                 [cell.detailTextLabel setText:schoolM.schoolname];
             }else{
                 [cell.detailTextLabel setText:@"暂无"];
-            
             }
             
         }else if (indexPath.row==1){
@@ -456,17 +504,6 @@ static NSString *staurCellid = @"staurCellid";
             }else{
                 [cell.detailTextLabel setText:@"暂无"];
             }
-        }
-    }else if (indexPath.section ==3){
-        IIMeInvestAuthModel *inve = [_dataDicM objectForKey:@"investor"];
-        if (inve.items.count||inve.industry.count||inve.stages.count) {
-            [cell.textLabel setText:@"我是投资人"];
-            NSMutableString *stagesStr = [NSMutableString string];
-            NSArray *investIndustryarray = inve.items;
-            for (InvestItemM *item in investIndustryarray) {
-                [stagesStr appendFormat:@"%@  ",item.item];
-            }
-            [cell.detailTextLabel setText:stagesStr];
         }
     }
     
@@ -499,7 +536,13 @@ static NSString *staurCellid = @"staurCellid";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *celltext = cell.textLabel.text;
-    if ([celltext isEqualToString:@"教育背景"]) {
+    if ([celltext isEqualToString:@"我的项目"]) {
+        
+        MyProjectViewController *projectVC = [[MyProjectViewController alloc] initWithUid:_userMode.uid];
+        [projectVC setTitle:@"我的项目"];
+        [self.navigationController pushViewController:projectVC animated:YES];
+        
+    }else if ([celltext isEqualToString:@"教育背景"]) {
         NSArray *userschool = [_dataDicM objectForKey:@"userschool"];
 
         ListdaController *schooL = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:userschool andType:@"1"];
@@ -516,7 +559,6 @@ static NSString *staurCellid = @"staurCellid";
         [investListVC setUserName:_userMode.name];
         IIMeInvestAuthModel *inves = [_dataDicM objectForKey:@"investor"];
         [investListVC setIimeInvestM:inves];
-//        ListdaController *investVC = [[ListdaController alloc] initWithStyle:UITableViewStyleGrouped WithList:inves.items andType:@"3"];
         [self.navigationController pushViewController:investListVC animated:YES];
     }else{
         if (indexPath.section==1) {

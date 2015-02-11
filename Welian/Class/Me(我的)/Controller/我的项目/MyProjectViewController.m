@@ -18,6 +18,7 @@
 {
     NSInteger _pageIndex;
     NSMutableDictionary *_getProjectDic;
+    NSNumber *_uid;
 }
 @property (nonatomic, strong) NSMutableArray *collectDataArray;
 @property (nonatomic, strong) NSMutableArray *createDataArray;
@@ -62,7 +63,11 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50+64, SuperSize.width, SuperSize.height-50-64)];
+        CGFloat Xh = 50+64;
+        if (_uid) {
+            Xh = 0;
+        }
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Xh, SuperSize.width, SuperSize.height-Xh)];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -79,27 +84,38 @@
     [self refreshdata];
 }
 
+- (instancetype)initWithUid:(NSNumber *)uid
+{
+   self = [super init];
+    if (self) {
+        _uid = uid;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _getProjectDic = [NSMutableDictionary dictionary];
     _selectIndex = 0;
     _pageIndex = 1;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewProject)];
-    [self.view addSubview:self.segmentedControl];
-    [self.view addSubview:self.tableView];
-    __weak MyProjectViewController *weakVC = self;
-    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        [weakVC.tableView reloadData];
-        [weakVC refreshdata];
-        weakVC.selectIndex = index;
-        if (index == 0) {
-            [weakVC.notstrView setHidden:weakVC.collectDataArray.count];
+    if (!_uid) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewProject)];
+        [self.view addSubview:self.segmentedControl];
+        __weak MyProjectViewController *weakVC = self;
+        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
             [weakVC.tableView reloadData];
-        }else if (index == 1){
-            [weakVC.notstrView setHidden:weakVC.createDataArray.count];
-        }
-    }];
+            [weakVC refreshdata];
+            weakVC.selectIndex = index;
+            if (index == 0) {
+                [weakVC.notstrView setHidden:weakVC.collectDataArray.count];
+                [weakVC.tableView reloadData];
+            }else if (index == 1){
+                [weakVC.notstrView setHidden:weakVC.createDataArray.count];
+            }
+        }];
+    }
     
+    [self.view addSubview:self.tableView];
     // 上拉加载更多
     [self.tableView addFooterWithTarget:self action:@selector(laodMoreData)];
     [self.tableView setFooterHidden:YES];
@@ -114,7 +130,11 @@
     [_getProjectDic removeAllObjects];
     [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
     [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
+
     if (self.segmentedControl.selectedSegmentIndex==0) {
+        if (_uid) {
+            [_getProjectDic setObject:_uid forKey:@"uid"];
+        }
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
         [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
@@ -177,7 +197,11 @@
     [_getProjectDic removeAllObjects];
     [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
     [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
+    
     if (self.segmentedControl.selectedSegmentIndex==0) {
+        if (_uid) {
+            [_getProjectDic setObject:_uid forKey:@"uid"];
+        }
         [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
             [self.tableView footerEndRefreshing];
@@ -272,31 +296,23 @@
     }
     if (projectInfo) {
         ProjectDetailsViewController *projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
-//        projectDetailVC.favoriteBlock = ^(){
-//            if (self.segmentedControl.selectedSegmentIndex==0) {
-//                [self.collectDataArray removeObject:projectInfo];
-//            }else if (self.segmentedControl.selectedSegmentIndex==1){
-//                [self.createDataArray removeObject:projectInfo];
-//            }
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//        };
         [self.navigationController pushViewController:projectDetailVC animated:YES];
     }
 }
-#pragma mark - 删除
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.segmentedControl.selectedSegmentIndex==0) {
-        IProjectInfo *projectInfo = self.collectDataArray[indexPath.row];
-        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":projectInfo.pid} success:^(id JSON) {
-            
-        } fail:^(NSError *error) {
-            
-        }];
-    }else if (self.segmentedControl.selectedSegmentIndex==1){
-        
-    }
-}
+//#pragma mark - 删除
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (self.segmentedControl.selectedSegmentIndex==0) {
+//        IProjectInfo *projectInfo = self.collectDataArray[indexPath.row];
+//        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":projectInfo.pid} success:^(id JSON) {
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
+//    }else if (self.segmentedControl.selectedSegmentIndex==1){
+//        
+//    }
+//}
 
 #pragma mark - 创建新项目
 - (void)createNewProject

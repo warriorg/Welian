@@ -30,6 +30,7 @@
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) CreateProjectFootView *footView;
+@property (nonatomic, strong) IProjectDetailInfo *projectM;
 
 @end
 
@@ -99,10 +100,17 @@ static NSString *projectcellid = @"projectcellid";
     self = [super init];
     if (self) {
         _isEdit = isEdit;
+        _projectModel = [[IProjectDetailInfo alloc] init];
+        self.projectM = [[IProjectDetailInfo alloc] init];
         if (projectModel) {
-            _projectModel = projectModel;
-        }else{
-            _projectModel = [[IProjectDetailInfo alloc] init];
+            [_projectModel setPid:projectModel.pid];
+            [_projectModel setName:projectModel.name];
+            [_projectModel setIntro:projectModel.intro];
+            [_projectModel setDes:projectModel.des];
+            [_projectModel setWebsite:projectModel.website];
+            [_projectModel setIndustrys:projectModel.industrys];
+            [_projectModel setPhotos:projectModel.photos];
+            self.projectM = projectModel;
         }
         [self.view addSubview:self.tableView];
         [self.tableView setTableFooterView:self.footView];
@@ -404,6 +412,24 @@ static NSString *projectcellid = @"projectcellid";
         [WLHUDView showErrorHUD:@""];
         return;
     }
+    
+    if (_projectModel.pid) {  // 修改项目
+        [self createProjectParameterDic];
+    }else{   // 新建项目
+        // 检测项目是否有同名
+        [WLHttpTool checkProjectParameterDic:@{@"name":_projectModel.name} success:^(id JSON) {
+            
+            [self createProjectParameterDic];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+    
+    
+}
+
+- (void)createProjectParameterDic
+{
     NSMutableDictionary *saveProjectDic = [NSMutableDictionary dictionary];
     if (_projectModel.pid) {
         [saveProjectDic setObject:_projectModel.pid forKey:@"pid"];
@@ -424,16 +450,36 @@ static NSString *projectcellid = @"projectcellid";
     if (_projectModel.website.length) {
         [saveProjectDic setObject:_projectModel.website forKey:@"website"];
     }
-    if (_projectModel.photos.count) {
-        [saveProjectDic setObject:_projectModel.photos forKey:@"photos"];
+    
+    if (self.assetsArray) {
+        NSMutableArray *photArray = [NSMutableArray array];
+        for (ALAsset *asset in self.assetsArray) {
+            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                                 scale:0.5
+                                           orientation:UIImageOrientationUp];
+            NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+            NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            
+            [photArray addObject:@{@"photo":imageStr,@"title":@"jpg"}];
+        }
+        [saveProjectDic setObject:photArray forKey:@"photos"];
     }
     [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
         if (JSON) {
             [_projectModel setPid:[JSON objectForKey:@"pid"]];
             [_projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+            
+            [self.projectM setPid:_projectModel.pid];
+            [self.projectM setName:_projectModel.name];
+            [self.projectM setIntro:_projectModel.intro];
+            [self.projectM setDes:_projectModel.des];
+            [self.projectM setWebsite:_projectModel.website];
+            [self.projectM setIndustrys:_projectModel.industrys];
+            [self.projectM setShareurl:_projectModel.shareurl];
+            
             if (_isEdit) {
                 if (self.projectDataBlock) {
-                    self.projectDataBlock(_projectModel);
+                    self.projectDataBlock(self.projectM);
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
@@ -446,7 +492,8 @@ static NSString *projectcellid = @"projectcellid";
                 meUserM.company = logUser.company;
                 meUserM.position = logUser.position;
                 [_projectModel setUser:meUserM];
-                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:_projectModel];
+                [self.projectM setUser:meUserM];
+                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
                 [self.navigationController pushViewController:memberVC animated:YES];
             }
         }

@@ -10,4 +10,6 @@
 
 @interface MyProjectViewController : BasicViewController
 
+- (instancetype)initWithUid:(NSNumber *)uid;
+
 @end

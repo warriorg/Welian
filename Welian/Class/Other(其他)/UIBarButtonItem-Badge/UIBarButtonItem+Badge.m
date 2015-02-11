@@ -30,7 +30,7 @@ NSString const *UIBarButtonItem_badgeValueKey = @"UIBarButtonItem_badgeValueKey"
 - (void)badgeInit
 {
     // Default design initialization
-    self.badgeBGColor   = [UIColor redColor];
+//    self.badgeBGColor   = WLRGB(248, 164, 20);
     self.badgeTextColor = [UIColor whiteColor];
     self.badgeFont      = [UIFont systemFontOfSize:11.0];
     self.badgePadding   = 2;
@@ -171,6 +171,7 @@ NSString const *UIBarButtonItem_badgeValueKey = @"UIBarButtonItem_badgeValueKey"
 }
 -(void)setBadgeBGColor:(UIColor *)badgeBGColor
 {
+
     objc_setAssociatedObject(self, &UIBarButtonItem_badgeBGColorKey, badgeBGColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (self.badge) {
         [self refreshBadge];
