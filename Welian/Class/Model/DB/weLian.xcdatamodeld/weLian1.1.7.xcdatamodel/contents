@@ -117,6 +117,7 @@
         <relationship name="rsMyFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MyFriendUser" inverseName="rsLogInUser" inverseEntity="MyFriendUser" syncable="YES"/>
         <relationship name="rsNeedAddUsers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NeedAddUser" inverseName="rsLoginUser" inverseEntity="NeedAddUser" syncable="YES"/>
         <relationship name="rsNewFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NewFriendUser" inverseName="rsLogInUser" inverseEntity="NewFriendUser" syncable="YES"/>
+        <relationship name="rsProjectInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProjectInfo" inverseName="rsLoginUser" inverseEntity="ProjectInfo" syncable="YES"/>
         <relationship name="rsSchools" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SchoolModel" inverseName="rsLogInUser" inverseEntity="SchoolModel" syncable="YES"/>
     </entity>
     <entity name="MyFriendUser" representedClassName="MyFriendUser" parentEntity="BaseUser" syncable="YES">
@@ -180,7 +181,9 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsProjectInfos" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
         <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -206,14 +209,14 @@
         <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="103"/>
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
-        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="448"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="463"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
-        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="343"/>
-        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="208"/>
+        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="88"/>
+        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="345"/>
+        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="238"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
-        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="88"/>
     </elements>
 </model>

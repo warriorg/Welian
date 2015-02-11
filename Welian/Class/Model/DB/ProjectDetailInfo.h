@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class BaseUser, InvestIndustry, PhotoInfos;
+@class BaseUser, InvestIndustry, PhotoInfos,IProjectDetailInfo;
 
 @interface ProjectDetailInfo : NSManagedObject
 
@@ -33,6 +33,21 @@
 @property (nonatomic, retain) BaseUser *rsBaseUser;
 @property (nonatomic, retain) NSSet *rsIndustrys;
 @property (nonatomic, retain) NSSet *rsPhotoInfos;
+
+//融资阶段
+- (NSString *)displayStage;
+//赞的数量
+- (NSString *)displayZancountInfo;
+//项目领域
+- (NSString *)displayIndustrys;
+
+
+//创建记录
++ (ProjectDetailInfo *)createWithIProjectDetailInfo:(IProjectDetailInfo *)iProjectDetailInfo;
+//获取指定pid的项目
++ (ProjectDetailInfo *)getProjectDetailInfoWithPid:(NSNumber *)pid;
+
+
 @end
 
 @interface ProjectDetailInfo (CoreDataGeneratedAccessors)

@@ -20,6 +20,8 @@
 
 //创建新收据
 + (InvestIndustry *)createInvestIndustry:(IInvestIndustryModel *)investIndustry;
+//创建普通领域
++ (InvestIndustry *)createInvestIndustryWith:(IInvestIndustryModel *)investIndustry;
 
 // //通过item查询
 //+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name;

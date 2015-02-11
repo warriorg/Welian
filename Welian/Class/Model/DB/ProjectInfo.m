@@ -22,11 +22,16 @@
 @dynamic pid;
 @dynamic status;
 @dynamic zancount;
+@dynamic type;
+@dynamic rsLoginUser;
 
 //创建项目
-+ (void)createProjectInfoWith:(IProjectInfo *)iProjectInfo
++ (void)createProjectInfoWith:(IProjectInfo *)iProjectInfo withType:(NSNumber *)type
 {
-    ProjectInfo *projectInfo = [ProjectInfo MR_createEntity];
+    ProjectInfo *projectInfo = [self getProjectInfoWithPid:iProjectInfo.pid Type:type];
+    if (!projectInfo) {
+        projectInfo = [ProjectInfo MR_createEntity];
+    }
     projectInfo.pid = iProjectInfo.pid;
     projectInfo.name = iProjectInfo.name;
     projectInfo.intro = iProjectInfo.intro;
@@ -38,23 +43,37 @@
     projectInfo.zancount = iProjectInfo.zancount;
     projectInfo.isZan = iProjectInfo.isZan;
     projectInfo.industrys = [iProjectInfo displayIndustrys];
-    
+    projectInfo.type = type;
+    if (type != 0) {
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        [loginUser addRsProjectInfosObject:projectInfo];
+    }
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-//删除所有的对象
-+ (void)deleteAllProjectInfo
+//获取项目
++ (ProjectInfo *)getProjectInfoWithPid:(NSNumber *)pid Type:(NSNumber *)type
 {
-    NSArray *all = [ProjectInfo MR_findAll];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"type",type,@"pid",pid];
+    ProjectInfo *projectInfo = [ProjectInfo MR_findFirstWithPredicate:pre];
+    return projectInfo;
+}
+
+//删除所有指定类型的对象
++ (void)deleteAllProjectInfoWithType:(NSNumber *)type
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"type",type];
+    NSArray *all = [ProjectInfo MR_findAllWithPredicate:pre];
     for (ProjectInfo *projectInfo in all) {
         [projectInfo MR_deleteEntity];
     }
 }
 
-//获取所有的排序后数据
-+ (NSArray *)allProjectInfos
+//获取所有的普通的项目排序后数据
++ (NSArray *)allNormalProjectInfos
 {
-    NSArray *all = [ProjectInfo MR_findAllSortedBy:@"date" ascending:NO];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"type",@(0)];
+    NSArray *all = [ProjectInfo MR_findAllSortedBy:@"date" ascending:NO withPredicate:pre];
     //添加数据
     NSMutableArray *headerKeys = [NSMutableArray array];
     NSMutableArray *arrayForArrays = [NSMutableArray array];
@@ -94,6 +113,15 @@
             return [NSString stringWithFormat:@"%.1fw",self.zancount.floatValue / 10000];
         }
     }
+}
+
+//获取自己的项目或者自己收藏的
++ (NSArray *)allMyProjectInfoWithType:(NSNumber *)type
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"type",type,@"rsLoginUser",loginUser];
+    NSArray *all = [ProjectInfo MR_findAllSortedBy:@"date" ascending:NO withPredicate:pre];
+    return all;
 }
 
 @end

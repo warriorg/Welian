@@ -73,7 +73,7 @@
     [_logoBtn setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
 }
 
-- (void)setProjectDetailInfo:(IProjectDetailInfo *)projectDetailInfo
+- (void)setProjectDetailInfo:(ProjectDetailInfo *)projectDetailInfo
 {
     [super willChangeValueForKey:@"projectDetailInfo"];
     _projectDetailInfo = projectDetailInfo;
@@ -82,20 +82,7 @@
     _nameLabel.text = _projectDetailInfo.name;
     _msgLabel.text = _projectDetailInfo.intro;
     //类型
-    NSMutableString *types = [NSMutableString string];
-    if (_projectDetailInfo.industrys.count > 0) {
-        [types appendString:[_projectDetailInfo.industrys[0] industryname]];
-        if(_projectDetailInfo.industrys.count > 1){
-            for (int i = 1; i < _projectDetailInfo.industrys.count;i++) {
-                IInvestIndustryModel *industry = _projectDetailInfo.industrys[i];
-                [types appendString:@" | "];
-                [types appendString:industry.industryname];
-            }
-        }
-    }else{
-       [types appendString:@"暂无"];
-    }
-    _typeLabel.text = types;
+    _typeLabel.text = [_projectDetailInfo displayIndustrys];
     
     //status 1 正在融资，0不融资
     if (_projectDetailInfo.status.integerValue == 0) {
@@ -104,8 +91,8 @@
         _statusBtn.hidden = NO;
     }
     
-    if (_projectDetailInfo.user.avatar.length > 0) {
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectDetailInfo.user.avatar]
+    if (_projectDetailInfo.rsBaseUser.avatar.length > 0) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_projectDetailInfo.rsBaseUser.avatar]
                                                         options:SDWebImageRetryFailed|SDWebImageLowPriority
                                                        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                            
@@ -254,32 +241,19 @@
 }
 
 //获取页面的高度
-+ (CGFloat)configureWithInfo:(IProjectDetailInfo *)detailInfo
++ (CGFloat)configureWithInfo:(ProjectDetailInfo *)detailInfo
 {
     CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
     CGSize nameSize = [detailInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
     CGSize msgSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    //类型
-    NSMutableString *types = [NSMutableString string];
-    if (detailInfo.industrys.count > 0) {
-        [types appendString:[detailInfo.industrys[0] industryname]];
-        if(detailInfo.industrys.count > 1){
-            for (int i = 1; i < detailInfo.industrys.count;i++) {
-                IInvestIndustryModel *industry = detailInfo.industrys[i];
-                [types appendString:@" | "];
-                [types appendString:industry.industryname];
-            }
-        }
-    }else{
-        [types appendString:@"暂无"];
-    }
     msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
-    CGSize typeSize = [types calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    //项目领域
+    CGSize typeSize = [[detailInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
     
      //status 1 正在融资，0不融资
-    CGFloat btnHeight = detailInfo.status.integerValue != 0 ? kBtnHeight : 0;
+    CGFloat btnHeight = detailInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
    
-    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
+    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 2;
     return viewHeight;
 }
 
@@ -292,9 +266,9 @@
     CGSize typeSize = [projectInfo.industrys calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
     
     //status 1 正在融资，0不融资
-    CGFloat btnHeight = projectInfo.status.integerValue != 0 ? kBtnHeight : 0;
+    CGFloat btnHeight = projectInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
     
-    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 4;
+    CGFloat viewHeight = kMarginTop * 2 + nameSize.height + msgSize.height + typeSize.height + btnHeight + kMarginEdge * 2;
     return viewHeight;
 }
 

@@ -33,6 +33,17 @@
     return investitem;
 }
 
+//创建普通领域
++ (InvestIndustry *)createInvestIndustryWith:(IInvestIndustryModel *)investIndustry
+{
+    InvestIndustry *investitem = [InvestIndustry MR_createEntity];
+    investitem.industryid = investIndustry.industryid;
+    investitem.industryname = investIndustry.industryname;
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    return investitem;
+}
+
 // //通过item查询
 //+ (InvestIndustry *)getInvestIndustryWithName:(NSString *)name
 //{

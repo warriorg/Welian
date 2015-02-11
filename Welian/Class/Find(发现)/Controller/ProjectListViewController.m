@@ -70,7 +70,7 @@
     //添加分享按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createProject)];
     
-    NSArray *sortedInfo = [ProjectInfo allProjectInfos];
+    NSArray *sortedInfo = [ProjectInfo allNormalProjectInfos];
     self.headDatasource = sortedInfo[0];
     self.datasource = sortedInfo[1];
     
@@ -207,14 +207,14 @@
                                     if (JSON) {
                                         if (_pageIndex == 1) {
                                             //第一页
-                                            [ProjectInfo deleteAllProjectInfo];
+                                            [ProjectInfo deleteAllProjectInfoWithType:@(0)];
                                         }
                                         NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
                                         for (IProjectInfo *iProjectInfo in projects) {
-                                            [ProjectInfo createProjectInfoWith:iProjectInfo];
+                                            [ProjectInfo createProjectInfoWith:iProjectInfo withType:@(0)];
                                         }
                                         
-                                        NSArray *sortedInfo = [ProjectInfo allProjectInfos];
+                                        NSArray *sortedInfo = [ProjectInfo allNormalProjectInfos];
                                         self.headDatasource = sortedInfo[0];
                                         self.datasource = sortedInfo[1];
                                         
