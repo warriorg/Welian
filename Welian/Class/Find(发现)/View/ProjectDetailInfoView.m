@@ -36,7 +36,7 @@
 
 - (void)dealloc
 {
-    _projectInfo = nil;
+    _projectDetailInfo = nil;
     _closeBlock = nil;
 }
 
@@ -49,19 +49,20 @@
     return self;
 }
 
-- (void)setProjectInfo:(IProjectDetailInfo *)projectInfo
+
+- (void)setProjectDetailInfo:(IProjectDetailInfo *)projectDetailInfo
 {
-    [super willChangeValueForKey:@"projectInfo"];
-    _projectInfo = projectInfo;
-    [super didChangeValueForKey:@"projectInfo"];
-    _stempLabel.text = [_projectInfo displayStage];
-    _moneyLabel.text = [NSString stringWithFormat:@"%d万RMB",_projectInfo.amount.intValue];
-    [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:_projectInfo.amount.stringValue]];
-    _stockLabel.text = [NSString stringWithFormat:@"%@%%",_projectInfo.share];
-    float valuationInfo = _projectInfo.amount.floatValue/_projectInfo.share.floatValue * 100;
+    [super willChangeValueForKey:@"projectDetailInfo"];
+    _projectDetailInfo = projectDetailInfo;
+    [super didChangeValueForKey:@"projectDetailInfo"];
+    _stempLabel.text = [_projectDetailInfo displayStage];
+    _moneyLabel.text = [NSString stringWithFormat:@"%d万RMB",_projectDetailInfo.amount.intValue];
+    [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:_projectDetailInfo.amount.stringValue]];
+    _stockLabel.text = [NSString stringWithFormat:@"%@%%",_projectDetailInfo.share];
+    float valuationInfo = _projectDetailInfo.amount.floatValue/_projectDetailInfo.share.floatValue * 100;
     _valuationsLabel.text = [NSString stringWithFormat:@"%.0f万RMB",valuationInfo];
     [_valuationsLabel setAttributedText:[self getAttributedInfoString:_valuationsLabel.text searchStr:[NSString stringWithFormat:@"%.0f",valuationInfo]]];
-    _aboutTextView.text = _projectInfo.financing.length > 0 ? _projectInfo.financing : @"暂无说明";
+    _aboutTextView.text = _projectDetailInfo.financing.length > 0 ? _projectDetailInfo.financing : @"暂无说明";
     
     [self setNeedsLayout];
 }

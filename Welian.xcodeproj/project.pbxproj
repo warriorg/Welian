@@ -1974,6 +1974,18 @@
 		A4C8E94C1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
+		A4EFA6C91A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
+		A4EFA6CA1A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
+		A4EFA6CB1A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
+		A4EFA6CC1A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
+		A4EFA6CF1A89E75D00CB5A4D /* PhotoInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */; };
+		A4EFA6D01A89E75D00CB5A4D /* PhotoInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */; };
+		A4EFA6D11A89E75D00CB5A4D /* PhotoInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */; };
+		A4EFA6D21A89E75D00CB5A4D /* PhotoInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */; };
+		A4EFA6D51A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */; };
+		A4EFA6D61A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */; };
+		A4EFA6D71A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */; };
+		A4EFA6D81A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */; };
 		A4F646AF1A43C287002E66FC /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		A4F646B11A43C290002E66FC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B01A43C290002E66FC /* CoreMedia.framework */; };
 		A4F646B31A43C29F002E66FC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */; };
@@ -5019,6 +5031,12 @@
 		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
 		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
 		A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
+		A4EFA6C71A89E75C00CB5A4D /* ProjectInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectInfo.h; sourceTree = "<group>"; };
+		A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectInfo.m; sourceTree = "<group>"; };
+		A4EFA6CD1A89E75D00CB5A4D /* PhotoInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoInfos.h; sourceTree = "<group>"; };
+		A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoInfos.m; sourceTree = "<group>"; };
+		A4EFA6D31A89E75D00CB5A4D /* ProjectDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailInfo.h; sourceTree = "<group>"; };
+		A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailInfo.m; sourceTree = "<group>"; };
 		A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A4F646B01A43C290002E66FC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A4F646B21A43C29F002E66FC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -8488,6 +8506,12 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				A4EFA6D31A89E75D00CB5A4D /* ProjectDetailInfo.h */,
+				A4EFA6D41A89E75D00CB5A4D /* ProjectDetailInfo.m */,
+				A4EFA6CD1A89E75D00CB5A4D /* PhotoInfos.h */,
+				A4EFA6CE1A89E75D00CB5A4D /* PhotoInfos.m */,
+				A4EFA6C71A89E75C00CB5A4D /* ProjectInfo.h */,
+				A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */,
 				A482A2451A5FD16F004AABE5 /* NeedAddUser.h */,
 				A482A2461A5FD16F004AABE5 /* NeedAddUser.m */,
 				F534DB621A5119A000B6A725 /* InvestItems.h */,
@@ -12337,6 +12361,7 @@
 				A49C7CBA1A70D42700F2AEC5 /* SWCellScrollView.m in Sources */,
 				A49C7CBB1A70D42700F2AEC5 /* AFURLResponseSerialization.m in Sources */,
 				A49C7CBC1A70D42700F2AEC5 /* WLMessage.m in Sources */,
+				A4EFA6D21A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				A49C7CBD1A70D42700F2AEC5 /* WLStatusFrame.m in Sources */,
 				A49C7CBE1A70D42700F2AEC5 /* CTAssetsGroupViewCell.m in Sources */,
 				A49C7CBF1A70D42700F2AEC5 /* WLContentCellView.m in Sources */,
@@ -12346,6 +12371,7 @@
 				A49C7CC31A70D42700F2AEC5 /* ChatMessage.m in Sources */,
 				A49C7CC41A70D42700F2AEC5 /* HaderInfoCell.m in Sources */,
 				A49C7CC51A70D42700F2AEC5 /* WLStatusDock.m in Sources */,
+				A4EFA6D81A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */,
 				A49C7CC61A70D42700F2AEC5 /* FeedAndZanCell.m in Sources */,
 				A49C7CC71A70D42700F2AEC5 /* CommentInfoController.m in Sources */,
 				A49C7CC81A70D42700F2AEC5 /* UserInfoController.m in Sources */,
@@ -12521,6 +12547,7 @@
 				A49C7D581A70D42700F2AEC5 /* NoListView.m in Sources */,
 				F533BD991A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A49C7D591A70D42700F2AEC5 /* WLMessageAvatorFactory.m in Sources */,
+				A4EFA6CC1A89E75C00CB5A4D /* ProjectInfo.m in Sources */,
 				A49C7D5A1A70D42700F2AEC5 /* CTAssetsPickerController.m in Sources */,
 				A49C7D5B1A70D42700F2AEC5 /* UserInfoTool.m in Sources */,
 				A49C7D5C1A70D42700F2AEC5 /* XHOperationNetworkKit.m in Sources */,
@@ -12826,6 +12853,7 @@
 				F53DC3381A49192600F5F712 /* SWCellScrollView.m in Sources */,
 				F53DC33A1A49192600F5F712 /* AFURLResponseSerialization.m in Sources */,
 				A4C140941A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
+				A4EFA6D11A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F53DC33B1A49192600F5F712 /* WLStatusFrame.m in Sources */,
 				F53DC33C1A49192600F5F712 /* CTAssetsGroupViewCell.m in Sources */,
 				F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */,
@@ -12835,6 +12863,7 @@
 				A4272FC91A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				F53DC33F1A49192600F5F712 /* HaderInfoCell.m in Sources */,
 				F53DC3401A49192600F5F712 /* WLStatusDock.m in Sources */,
+				A4EFA6D71A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */,
 				F53DC3411A49192600F5F712 /* FeedAndZanCell.m in Sources */,
 				F53DC3421A49192600F5F712 /* CommentInfoController.m in Sources */,
 				F53DC3431A49192600F5F712 /* UserInfoController.m in Sources */,
@@ -13010,6 +13039,7 @@
 				F53DC39D1A49192600F5F712 /* NoListView.m in Sources */,
 				F533BD981A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A4C1417E1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
+				A4EFA6CB1A89E75C00CB5A4D /* ProjectInfo.m in Sources */,
 				F53DC39F1A49192600F5F712 /* CTAssetsPickerController.m in Sources */,
 				F53DC3A01A49192600F5F712 /* UserInfoTool.m in Sources */,
 				A4C140BF1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,
@@ -13315,6 +13345,7 @@
 				F5664A091A2AFD56008A5830 /* WLContentCellView.m in Sources */,
 				F5664A0A1A2AFD56008A5830 /* HaderInfoCell.m in Sources */,
 				F5664A0B1A2AFD56008A5830 /* WLStatusDock.m in Sources */,
+				A4EFA6CF1A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				10389B5F1A3EC789001A785C /* UIView+Extend.m in Sources */,
 				A4C1406B1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
 				F59E75FE1A4059D00028FBAF /* DKPredicateBuilder.m in Sources */,
@@ -13324,6 +13355,7 @@
 				F59E75FC1A4059D00028FBAF /* DKPredicate.m in Sources */,
 				F5664A0E1A2AFD56008A5830 /* UserInfoController.m in Sources */,
 				F5664A0F1A2AFD56008A5830 /* UIImageView+AFNetworking.m in Sources */,
+				A4EFA6D51A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */,
 				A4C141471A4BEF5700C9BAB5 /* SESelectionGrabber.m in Sources */,
 				F5664A101A2AFD56008A5830 /* CommentCellFrame.m in Sources */,
 				F5664A111A2AFD56008A5830 /* AFHTTPRequestOperation.m in Sources */,
@@ -13499,6 +13531,7 @@
 				A4C140981A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F533BD961A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				F5664A651A2AFD56008A5830 /* CTAssetsPickerController.m in Sources */,
+				A4EFA6C91A89E75C00CB5A4D /* ProjectInfo.m in Sources */,
 				F5664A661A2AFD56008A5830 /* UserInfoTool.m in Sources */,
 				A4C141261A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.m in Sources */,
 				F5664A671A2AFD56008A5830 /* pinyin.c in Sources */,
@@ -13804,6 +13837,7 @@
 				F5664CBE1A2AFDD5008A5830 /* SWCellScrollView.m in Sources */,
 				F5664CC01A2AFDD5008A5830 /* AFURLResponseSerialization.m in Sources */,
 				A4C140931A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
+				A4EFA6D01A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F5664CC11A2AFDD5008A5830 /* WLStatusFrame.m in Sources */,
 				F5664CC21A2AFDD5008A5830 /* CTAssetsGroupViewCell.m in Sources */,
 				F5664CC31A2AFDD5008A5830 /* WLContentCellView.m in Sources */,
@@ -13813,6 +13847,7 @@
 				A4272FC81A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				F5664CC41A2AFDD5008A5830 /* HaderInfoCell.m in Sources */,
 				F5664CC51A2AFDD5008A5830 /* WLStatusDock.m in Sources */,
+				A4EFA6D61A89E75D00CB5A4D /* ProjectDetailInfo.m in Sources */,
 				F5664CC61A2AFDD5008A5830 /* FeedAndZanCell.m in Sources */,
 				F5664CC71A2AFDD5008A5830 /* CommentInfoController.m in Sources */,
 				F5664CC81A2AFDD5008A5830 /* UserInfoController.m in Sources */,
@@ -13988,6 +14023,7 @@
 				F5664D1D1A2AFDD5008A5830 /* NoListView.m in Sources */,
 				F533BD971A7B82810057A229 /* FinancingProjectController.m in Sources */,
 				A4C1417D1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
+				A4EFA6CA1A89E75C00CB5A4D /* ProjectInfo.m in Sources */,
 				F5664D1F1A2AFDD5008A5830 /* CTAssetsPickerController.m in Sources */,
 				F5664D201A2AFDD5008A5830 /* UserInfoTool.m in Sources */,
 				A4C140BE1A4BEF0E00C9BAB5 /* XHOperationNetworkKit.m in Sources */,

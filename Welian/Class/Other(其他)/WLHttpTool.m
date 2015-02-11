@@ -1101,7 +1101,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 取项目赞的用户列表

@@ -13,11 +13,13 @@ typedef void(^ProjectShowUserClickedBlock)(void);
 
 @interface ProjectInfoView : UIView
 
-@property (strong,nonatomic) IProjectDetailInfo *projectInfo;
+@property (strong,nonatomic) ProjectInfo *projectInfo;
+@property (strong,nonatomic) IProjectDetailInfo *projectDetailInfo;
 @property (strong,nonatomic) ProjectInfoClickedBlock infoBlock;
 @property (strong,nonatomic) ProjectShowUserClickedBlock userShowBlock;
 
 //获取页面的高度
 + (CGFloat)configureWithInfo:(IProjectDetailInfo *)detailInfo;
++ (CGFloat)configureWithProjectInfo:(ProjectInfo *)projectInfo;
 
 @end

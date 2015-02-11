@@ -10,6 +10,7 @@
 
 @interface ProjectViewCell : BaseTableViewCell
 
-@property (strong,nonatomic) IProjectInfo *projectInfo;
+@property (strong,nonatomic) IProjectInfo *iProjectInfo;
+@property (strong,nonatomic) ProjectInfo *projectInfo;
 
 @end

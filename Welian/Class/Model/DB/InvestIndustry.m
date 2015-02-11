@@ -15,6 +15,7 @@
 @dynamic industryname;
 @dynamic industryid;
 @dynamic rsLogInUser;
+@dynamic rsProjectDetailInfo;
 
 //创建新收据
 + (InvestIndustry *)createInvestIndustry:(IInvestIndustryModel *)investIndustry

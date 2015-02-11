@@ -30,6 +30,7 @@
 {
     _datasource = nil;
     _projectInfo = nil;
+    _projectDetailInfo = nil;
     _imageClickedBlock = nil;
 }
 
@@ -45,7 +46,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _infoLabel.width = self.width - kMarginLeft * 2.f;
+    _infoLabel.width = self.width - kMarginLeft;
     [_infoLabel sizeToFit];
     _infoLabel.top = kMarginLeft;
     _infoLabel.left = kMarginLeft;
@@ -53,31 +54,44 @@
     // 根据图片数量计算相册的尺寸
 //    CGSize photoListSize = _photoListView.photos.count > 0 ? [WLPhotoListView photoListSizeWithCount:_photoListView.photos needAutoSize:YES] : CGSizeMake(self.width, 0);
 //    _photoListView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectInfo.photos > 0 ? kMarginEdge : 0), photoListSize.width, photoListSize.height);
-    _collectionView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectInfo.photos > 0 ? kMarginEdge : 0), self.width - kMarginLeft , _projectInfo.photos.count > 0 ? kItemWidth : 0);
+    if (_projectDetailInfo) {
+        _collectionView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectDetailInfo.photos > 0 ? kMarginEdge : 0), self.width - kMarginLeft , _projectDetailInfo.photos.count > 0 ? kItemWidth : 0);
+    }
 }
 
-- (void)setProjectInfo:(IProjectDetailInfo *)projectInfo
+- (void)setProjectDetailInfo:(IProjectDetailInfo *)projectDetailInfo
+{
+    [super willChangeValueForKey:@"projectDetailInfo"];
+    _projectDetailInfo = projectDetailInfo;
+    [super didChangeValueForKey:@"projectDetailInfo"];
+    _infoLabel.text = _projectDetailInfo.des;
+    
+    NSMutableArray *photos = [NSMutableArray array];
+    if (_projectDetailInfo.photos > 0) {
+        for (int i = 0; i<_projectDetailInfo.photos.count; i++) {
+            WLPhoto *wlphoto = [[WLPhoto alloc] init];
+            wlphoto.url = [_projectDetailInfo.photos[i] photo];
+            [photos addObject:wlphoto];
+        }
+    }
+    self.datasource = photos;
+    _collectionView.hidden = NO;
+    //    _photoListView.photos = photos;
+    [_collectionView reloadData];
+}
+
+- (void)setProjectInfo:(ProjectInfo *)projectInfo
 {
     [super willChangeValueForKey:@"projectInfo"];
     _projectInfo = projectInfo;
     [super didChangeValueForKey:@"projectInfo"];
     _infoLabel.text = _projectInfo.des;
-    
-    NSMutableArray *photos = [NSMutableArray array];
-    if (_projectInfo.photos > 0) {
-        for (int i = 0; i<_projectInfo.photos.count; i++) {
-            WLPhoto *wlphoto = [[WLPhoto alloc] init];
-            wlphoto.url = [_projectInfo.photos[i] photo];
-            [photos addObject:wlphoto];
-        }
-    }
-    self.datasource = photos;
-//    _photoListView.photos = photos;
-    [_collectionView reloadData];
+    _collectionView.hidden = YES;
 }
 
 #pragma mark - Private
 - (void)setup{
+//    [self setDebug:YES];
     //项目信息
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     infoLabel.backgroundColor = [UIColor clearColor];
@@ -87,6 +101,7 @@
     infoLabel.numberOfLines = 0;
     [self addSubview:infoLabel];
     self.infoLabel = infoLabel;
+//    [infoLabel setDebug:YES];
     
     // 6.配图
 //    WLPhotoListView *photoListView = [[WLPhotoListView alloc] init];

@@ -56,7 +56,7 @@
     if (self) {
         self.allDataSource = [NSMutableArray array];
         self.pageIndex = 1;
-        self.pageSize = 20;
+        self.pageSize = KCellConut;
     }
     return self;
 }
@@ -69,6 +69,10 @@
     
     //添加分享按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createProject)];
+    
+    NSArray *sortedInfo = [ProjectInfo allProjectInfos];
+    self.headDatasource = sortedInfo[0];
+    self.datasource = sortedInfo[1];
     
     //加载数据
     [self initData];
@@ -130,7 +134,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    IProjectInfo *projectInfo = _datasource[indexPath.section][indexPath.row];
+    ProjectInfo *projectInfo = _datasource[indexPath.section][indexPath.row];
     if (projectInfo) {
         ProjectDetailsViewController *projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
         [self.navigationController pushViewController:projectDetailVC animated:YES];
@@ -201,35 +205,48 @@
                                     [self.tableView footerEndRefreshing];
                                     
                                     if (JSON) {
+                                        if (_pageIndex == 1) {
+                                            //第一页
+                                            [ProjectInfo deleteAllProjectInfo];
+                                        }
                                         NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                                        for (IProjectInfo *iProjectInfo in projects) {
+                                            [ProjectInfo createProjectInfoWith:iProjectInfo];
+                                        }
+                                        
+                                        NSArray *sortedInfo = [ProjectInfo allProjectInfos];
+                                        self.headDatasource = sortedInfo[0];
+                                        self.datasource = sortedInfo[1];
+                                        
                                         //添加数据
                                         [_allDataSource addObjectsFromArray:projects];
-                                        
-                                        NSMutableArray *headerKeys = [NSMutableArray array];
-                                        NSMutableArray *arrayForArrays = [NSMutableArray array];
-                                        NSMutableArray *tempFroGroup = nil;
-                                        BOOL checkValueAtIndex = NO;
-                                        for (int i = 0; i < _allDataSource.count; i++) {
-                                            IProjectInfo *iProject = projects[i];
-                                            //监测数组中是否包含该首字母，没有创建
-                                            if (![headerKeys containsObject:iProject.date]) {
-                                                [headerKeys addObject:iProject.date];
-                                                tempFroGroup = [NSMutableArray array];
-                                                checkValueAtIndex = NO;
-                                            }
-                                            
-                                            //有就把数据添加进去
-                                            if ([headerKeys containsObject:iProject.date]) {
-                                                [tempFroGroup addObject:iProject];
-                                                if (checkValueAtIndex == NO) {
-                                                    [arrayForArrays addObject:tempFroGroup];
-                                                    checkValueAtIndex = YES;
-                                                }
-                                            }
-                                        }
-                                        self.headDatasource = headerKeys;
-                                        self.datasource = arrayForArrays;
                                         [self.tableView reloadData];
+//
+//                                        NSMutableArray *headerKeys = [NSMutableArray array];
+//                                        NSMutableArray *arrayForArrays = [NSMutableArray array];
+//                                        NSMutableArray *tempFroGroup = nil;
+//                                        BOOL checkValueAtIndex = NO;
+//                                        for (int i = 0; i < _allDataSource.count; i++) {
+//                                            IProjectInfo *iProject = projects[i];
+//                                            //监测数组中是否包含当前日期，没有创建
+//                                            if (![headerKeys containsObject:iProject.date]) {
+//                                                [headerKeys addObject:iProject.date];
+//                                                tempFroGroup = [NSMutableArray array];
+//                                                checkValueAtIndex = NO;
+//                                            }
+//                                            
+//                                            //有就把数据添加进去
+//                                            if ([headerKeys containsObject:iProject.date]) {
+//                                                [tempFroGroup addObject:iProject];
+//                                                if (checkValueAtIndex == NO) {
+//                                                    [arrayForArrays addObject:tempFroGroup];
+//                                                    checkValueAtIndex = YES;
+//                                                }
+//                                            }
+//                                        }
+//                                        self.headDatasource = headerKeys;
+//                                        self.datasource = arrayForArrays;
+//                                        [self.tableView reloadData];
                                     }
                                     
                                     if(_allDataSource.count == 0){

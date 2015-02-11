@@ -10,6 +10,12 @@
 #define Welian_Model_h
 
 
+#pragma mark - DB
+#import "PhotoInfos.h"
+#import "ProjectDetailInfo.h"
+#import "ProjectInfo.h"
+
+
 #pragma mark - Interface
 #import "IBaseUserM.h"
 #import "IProjectInfo.h"
