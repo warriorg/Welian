@@ -31,6 +31,9 @@
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
 
+// 投资人
+#import "InvestCerVC.h"
+
 #define kHeaderHeight 133.f
 #define kHeaderHeight2 93.f
 #define kSegementedControlHeight 40.f
@@ -696,7 +699,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            if (buttonIndex == 0) {
                                                return ;
                                            }else{
-                                               [self openProjectDetailInfoView];
+                                               InvestCerVC *investVC = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
+                                               [investVC setTitle:@"我是投资人"];
+                                               [self.navigationController pushViewController:investVC animated:YES];
                                            }
                                        }];
     }

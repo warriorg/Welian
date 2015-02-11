@@ -10,6 +10,7 @@
 #import "FinancingProjectController.h"
 #import "FriendCell.h"
 #import "ChineseString.h"
+#import "UIBarButtonItem+Badge.h"
 
 @interface MemberProjectController () <UITableViewDataSource, UITableViewDelegate>
 {
@@ -37,6 +38,14 @@ static NSString *fridcellid = @"fridcellid";
     return _tableView;
 }
 
+- (void)reloadItemBadg
+{
+    NSNumber *badge = @(self.selectArray.count);
+    if (badge.integerValue>0) {
+        self.navigationItem.rightBarButtonItem.badgeValue = badge.stringValue;
+    }
+}
+
 - (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
@@ -44,14 +53,22 @@ static NSString *fridcellid = @"fridcellid";
         _isEdit = isEdit;
         _projectModel = projectModel;
         [self.view addSubview:self.tableView];
+        
+        //
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0,0,80, 35);
+        [button addTarget:self action:@selector(financingProject) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = navLeftButton;
+        self.navigationItem.rightBarButtonItem.badgeBGColor = WLRGB(248, 164, 20);
+        
         if (isEdit) {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(financingProject)];
+            [button setTitle:@"保存" forState:UIControlStateNormal];
         }else{
             [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(financingProject)];
+            [button setTitle:@"下一步" forState:UIControlStateNormal];
         }
-        
-        
     }
     return self;
 }
@@ -74,15 +91,16 @@ static NSString *fridcellid = @"fridcellid";
         [self.tableView reloadData];
         if (_isEdit) {
             [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectModel.pid} success:^(id JSON) {
-                self.selectArray = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+                NSArray *selectA = [IBaseUserM objectsWithInfo:JSON];
                 NSMutableArray *seleIndexPath = [NSMutableArray arrayWithCapacity:self.selectArray.count];
-                for (IBaseUserM *selectUserM in self.selectArray) {
+                for (IBaseUserM *selectUserM in selectA) {
                     for (NSInteger i = 0; i<self.allArray.count; i++) {
                         NSDictionary *userDic = self.allArray[i];
                         NSArray *userArray = [userDic objectForKey:@"userF"];
                         for (NSInteger j = 0; j<userArray.count; j++) {
                             IBaseUserM *IBuserM = userArray[j];
                             if ([selectUserM.uid.stringValue isEqualToString:IBuserM.uid.stringValue]) {
+                                [self.selectArray addObject:IBuserM];
                                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:j inSection:i];
                                 [seleIndexPath addObject:indexPath];
                             }
@@ -93,15 +111,16 @@ static NSString *fridcellid = @"fridcellid";
                 for (NSIndexPath *indexpath in seleIndexPath) {
                     [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionBottom];
                 }
+                [self reloadItemBadg];
             } fail:^(NSError *error) {
                 
             }];
-
         }else{
             // 默认选中自己
             NSIndexPath *ip=[NSIndexPath indexPathForRow:0 inSection:0];
             [self.tableView selectRowAtIndexPath:ip animated:YES scrollPosition:UITableViewScrollPositionBottom];
             [self.selectArray addObject:meUserM];
+            [self reloadItemBadg];
         }
     } fail:^(NSError *error) {
         
@@ -164,6 +183,7 @@ static NSString *fridcellid = @"fridcellid";
         NSArray *modear = usersDic[@"userF"];
         IBaseUserM *modeIM = modear[indexPath.row];
         [self.selectArray addObject:modeIM];
+        [self reloadItemBadg];
 }
 
 //取消一项
@@ -173,6 +193,7 @@ static NSString *fridcellid = @"fridcellid";
     NSArray *modear = usersDic[@"userF"];
     IBaseUserM *modeIM = modear[indexPath.row];
     [self.selectArray removeObject:modeIM];
+    [self reloadItemBadg];
 }
 
 
@@ -187,17 +208,16 @@ static NSString *fridcellid = @"fridcellid";
     }
     [ProjectMemberDic setObject:members forKey:@"members"];
     [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
+        [_projectModel setMembercount:@(self.selectArray.count)];
         if (_isEdit) {
             if (self.projectDataBlock) {
                 self.projectDataBlock(_projectModel);
             }
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            [_projectModel setMembercount:@(self.selectArray.count)];
             FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO withData:_projectModel];
             [self.navigationController pushViewController:financingVC animated:YES];
         }
-        
     } fail:^(NSError *error) {
         
     }];

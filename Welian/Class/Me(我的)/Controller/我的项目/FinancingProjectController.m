@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSArray *stageData;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) CollectionViewController *invesVC;
+@property (nonatomic, strong) IProjectDetailInfo *selfProjectM;
 @end
 
 static NSString *textFieldCellid = @"textFieldCellid";
@@ -55,25 +56,20 @@ static NSString *financingCellid = @"financingCellid";
     [DaiDodgeKeyboard removeRegisterTheViewNeedDodgeKeyboard];
 }
 
-// 返回
-//- (void)backVC
-//{
-//    [self.navigationController popViewControllerAnimated:YES];
-//    _projectModel = nil;
-//    _isEdit = NO;
-//    _isFinancing = 0;
-//    _tableView = nil;
-//    _stageData = nil;
-//    self.view = nil;
-//}
-
 - (instancetype)initIsEdit:(BOOL)isEdit withData:(IProjectDetailInfo *)projectModel
 {
     self = [super init];
     if (self) {
         self.isEdit = isEdit;
-        self.projectModel = projectModel;
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backVC)];
+        self.selfProjectM = projectModel;
+        
+        self.projectModel = [[IProjectDetailInfo alloc] init];
+        [self.projectModel setPid:projectModel.pid];
+        [self.projectModel setAmount:projectModel.amount];
+        [self.projectModel setShare:projectModel.share];
+        [self.projectModel setStage:projectModel.stage];
+        [self.projectModel setStatus:projectModel.status];
+        
         if (!isEdit) {
             self.isFinancing = 0;
             [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
@@ -273,7 +269,6 @@ static NSString *financingCellid = @"financingCellid";
             UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"%(0~100)　"];
             [rightL sizeToFit];
-            
         }
         return cell;
     }else if (indexPath.section == 2){
@@ -335,13 +330,27 @@ static NSString *financingCellid = @"financingCellid";
         if (JSON) {
             [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];
             [weakSelf.projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+            
+            [weakSelf.selfProjectM setPid:weakSelf.projectModel.pid];
+            [weakSelf.selfProjectM setShareurl:weakSelf.projectModel.shareurl];
+            [weakSelf.selfProjectM setStatus:weakSelf.projectModel.status];
+            if (weakSelf.projectModel.status.integerValue==1) {
+                [weakSelf.selfProjectM setAmount:weakSelf.projectModel.amount];
+                [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
+                [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
+            }else{
+                [weakSelf.selfProjectM setAmount:nil];
+                [weakSelf.selfProjectM setShare:nil];
+                [weakSelf.selfProjectM setStage:nil];
+            }
+            
             if (weakSelf.isEdit) {
                 if (weakSelf.projectDataBlock) {
-                    weakSelf.projectDataBlock(weakSelf.projectModel);
+                    weakSelf.projectDataBlock(weakSelf.selfProjectM);
                 }
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }else{
-                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.projectModel];
+                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM];
                 [weakSelf.navigationController pushViewController:projectVC animated:YES];
             }
         }

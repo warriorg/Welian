@@ -1236,6 +1236,17 @@
     } withHUD:YES andDim:NO];
 }
 
+#pragma mark - 检测项目是否有同名
++ (void)checkProjectParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"checkProject",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
