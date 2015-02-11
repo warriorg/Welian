@@ -13,6 +13,7 @@ typedef void(^ProjectDetailImageClickedBlock)(NSIndexPath *indexPath,WLPhotoView
 
 @interface ProjectDetailView : UIView
 
+@property (strong,nonatomic) IProjectInfo *iProjectInfo;
 @property (strong,nonatomic) ProjectInfo *projectInfo;
 @property (strong,nonatomic) ProjectDetailInfo *projectDetailInfo;
 @property (strong,nonatomic) ProjectDetailImageClickedBlock imageClickedBlock;

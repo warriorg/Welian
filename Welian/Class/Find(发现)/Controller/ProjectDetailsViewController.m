@@ -48,6 +48,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSMutableArray *datasource;//用于存储评论数组
 @property (strong,nonatomic) NSNumber *projectPid;
+@property (strong,nonatomic) IProjectInfo *iProjectInfo;
 @property (strong,nonatomic) ProjectInfo *projectInfo;
 @property (assign,nonatomic) ProjectDetailInfoView *projectDetailInfoView;
 
@@ -99,6 +100,21 @@ static NSString *noCommentCell = @"NoCommentCell";
         self.tapGesture = tap;
     }
     return _tapGesture;
+}
+
+//通过I模型展示
+- (instancetype)initWithIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    self = [super init];
+    if (self) {
+        self.iProjectInfo = iProjectInfo;
+        self.pageIndex = 1;
+        self.pageSize = 10;
+        
+        //初始化页面数据
+        [self initUI];
+    }
+    return self;
 }
 
 - (instancetype)initWithProjectInfo:(ProjectInfo *)projectInfo
@@ -804,18 +820,29 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)initUI
 {
     //设置头部内容
-    CGFloat detailHeight = [ProjectDetailView configureWithInfo:_projectInfo.des Images:nil];
-    CGFloat projectInfoViewHeight = [ProjectInfoView configureWithProjectInfo:_projectInfo];//_projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
+    CGFloat detailHeight = _projectInfo ? [ProjectDetailView configureWithInfo:_projectInfo.des Images:nil] : [ProjectDetailView configureWithInfo:_iProjectInfo.des Images:nil];
+    CGFloat projectInfoViewHeight =  _projectInfo ? [ProjectInfoView configureWithProjectInfo:_projectInfo] : [ProjectInfoView configureWithIProjectInfo:_iProjectInfo];
+    
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width,projectInfoViewHeight + detailHeight)];
     ProjectInfoView *projectInfoView = [[ProjectInfoView alloc] initWithFrame:Rect(0, 0, self.view.width,projectInfoViewHeight)];
-    projectInfoView.projectInfo = _projectInfo;
+    if (_projectInfo) {
+        projectInfoView.projectInfo = _projectInfo;
+    }
+    if (_iProjectInfo) {
+        projectInfoView.iProjectInfo = _iProjectInfo;
+    }
     //设置底部边框线
     projectInfoView.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);//RGB(173.f, 173.f, 173.f);
     projectInfoView.layer.borderWidths = @"{0,0,0.5,0}";
     
     //项目详情
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoViewHeight, self.view.width, detailHeight)];
-    projectDetailView.projectInfo = _projectInfo;
+    if (_projectInfo) {
+        projectDetailView.projectInfo = _projectInfo;
+    }
+    if (_iProjectInfo) {
+        projectDetailView.iProjectInfo = _iProjectInfo;
+    }
     
     [headView addSubview:projectInfoView];
     [headView addSubview:projectDetailView];

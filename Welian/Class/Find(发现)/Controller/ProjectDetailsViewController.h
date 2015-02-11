@@ -14,7 +14,11 @@ typedef void (^ProjectFavoriteBlock)(void);
 
 @property (nonatomic, strong) ProjectFavoriteBlock favoriteBlock;
 
+//通过I模型展示
+- (instancetype)initWithIProjectInfo:(IProjectInfo *)iProjectInfo;
+//通过数据库模型展示
 - (instancetype)initWithProjectInfo:(ProjectInfo *)projectInfo;
+//通过pid查询
 - (instancetype)initWithProjectPid:(NSNumber *)projectPid;
 
 - (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo;

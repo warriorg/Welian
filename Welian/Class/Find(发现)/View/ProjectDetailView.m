@@ -90,6 +90,15 @@
     _collectionView.hidden = YES;
 }
 
+- (void)setIProjectInfo:(IProjectInfo *)iProjectInfo
+{
+    [super willChangeValueForKey:@"iProjectInfo"];
+    _iProjectInfo = iProjectInfo;
+    [super didChangeValueForKey:@"iProjectInfo"];
+    _infoLabel.text = _projectInfo.des;
+    _collectionView.hidden = YES;
+}
+
 #pragma mark - Private
 - (void)setup{
 //    [self setDebug:YES];
