@@ -110,6 +110,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         self.iProjectInfo = iProjectInfo;
         self.pageIndex = 1;
         self.pageSize = 10;
+        self.projectPid = _iProjectInfo.pid;
         
         //初始化页面数据
         [self initUI];
@@ -124,6 +125,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         self.projectInfo = projectInfo;
         self.pageIndex = 1;
         self.pageSize = 10;
+        self.projectPid = _projectInfo.pid;
         
         //初始化页面数据
         [self initUI];
@@ -148,6 +150,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     self = [super init];
     if (self) {
         self.iProjectDetailInfo = detailInfo;
+        self.projectPid = _iProjectDetailInfo.pid;
         _isFinish = YES;
     }
     return self;
@@ -606,7 +609,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_iProjectDetailInfo.zanusers];
     if (!_projectDetailInfo.isZan.boolValue) {
         //赞
-        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectPid}
                                    success:^(id JSON) {
                                        _projectDetailInfo.isZan = @(1);
                                        _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue + 1);
@@ -633,7 +636,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                    }];
     }else{
         //取消赞
-        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectPid}
                                          success:^(id JSON) {
                                              _projectDetailInfo.isZan = @(0);
                                              _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue - 1);
@@ -681,7 +684,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_projectDetailInfo.isFavorite.boolValue) {
         //取消收藏
-        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectPid}
                                               success:^(id JSON) {
                                                   _projectDetailInfo.isFavorite = @(0);
                                                   [self checkFavorteStatus];
@@ -693,7 +696,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                               }];
     }else{
         //收藏项目
-        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectInfo.pid}
+        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectPid}
                                         success:^(id JSON) {
                                             _projectDetailInfo.isFavorite = @(1);
                                             [self checkFavorteStatus];
@@ -767,8 +770,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //获取详情信息
 - (void)initData{
-    NSNumber *pid = _projectInfo ? _projectInfo.pid : _projectPid;
-    [WLHttpTool getProjectDetailParameterDic:@{@"pid":pid}
+    [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
                                      success:^(id JSON) {
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
                                          self.iProjectDetailInfo = detailInfo;
@@ -945,7 +947,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_datasource.count < _projectDetailInfo.commentcount.integerValue) {
         _pageIndex++;
-        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                            success:^(id JSON) {
                                                //隐藏加载更多动画
                                                [self.tableView footerEndRefreshing];
