@@ -448,8 +448,7 @@ static NSString *staurCellid = @"staurCellid";
                         [stagesStr appendFormat:@"%@  ",item.item];
                     }
                     [cell.detailTextLabel setText:stagesStr];
-                }
-                if (_projectName.length) {
+                }else if (_projectName.length) {
                     [cell.textLabel setText:@"我的项目"];
                     [cell.detailTextLabel setText:_projectName];
                 }
