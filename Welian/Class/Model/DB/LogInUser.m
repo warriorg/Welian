@@ -49,6 +49,7 @@
 @dynamic rsInvestItems;
 @dynamic rsInvestStages;
 @dynamic rsNeedAddUsers;
+@dynamic rsProjectInfos;
 
 
 //获取当前登陆的账户

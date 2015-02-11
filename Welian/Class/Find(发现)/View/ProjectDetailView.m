@@ -55,11 +55,11 @@
 //    CGSize photoListSize = _photoListView.photos.count > 0 ? [WLPhotoListView photoListSizeWithCount:_photoListView.photos needAutoSize:YES] : CGSizeMake(self.width, 0);
 //    _photoListView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectInfo.photos > 0 ? kMarginEdge : 0), photoListSize.width, photoListSize.height);
     if (_projectDetailInfo) {
-        _collectionView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectDetailInfo.photos > 0 ? kMarginEdge : 0), self.width - kMarginLeft , _projectDetailInfo.photos.count > 0 ? kItemWidth : 0);
+        _collectionView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectDetailInfo.rsPhotoInfos.count > 0 ? kMarginEdge : 0), self.width - kMarginLeft , _projectDetailInfo.rsPhotoInfos.count > 0 ? kItemWidth : 0);
     }
 }
 
-- (void)setProjectDetailInfo:(IProjectDetailInfo *)projectDetailInfo
+- (void)setProjectDetailInfo:(ProjectDetailInfo *)projectDetailInfo
 {
     [super willChangeValueForKey:@"projectDetailInfo"];
     _projectDetailInfo = projectDetailInfo;
@@ -67,10 +67,11 @@
     _infoLabel.text = _projectDetailInfo.des;
     
     NSMutableArray *photos = [NSMutableArray array];
-    if (_projectDetailInfo.photos > 0) {
-        for (int i = 0; i<_projectDetailInfo.photos.count; i++) {
+    NSArray *photoInfos = _projectDetailInfo.rsPhotoInfos.allObjects;
+    if (photoInfos > 0) {
+        for (int i = 0; i< photoInfos.count; i++) {
             WLPhoto *wlphoto = [[WLPhoto alloc] init];
-            wlphoto.url = [_projectDetailInfo.photos[i] photo];
+            wlphoto.url = [photoInfos[i] photo];
             [photos addObject:wlphoto];
         }
     }
@@ -161,7 +162,7 @@
  */
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images
 {
-    float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft * 2.f;
+    float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft;
     //计算第一个label的高度
     CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     //计算第二个label的高度

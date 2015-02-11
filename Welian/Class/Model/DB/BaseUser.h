@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ProjectDetailInfo;
+@class ProjectDetailInfo,IBaseUserM;
 
 @interface BaseUser : NSManagedObject
 
@@ -31,5 +31,10 @@
 @property (nonatomic, retain) NSString * cityname;
 @property (nonatomic, retain) NSString * shareurl;
 @property (nonatomic, retain) ProjectDetailInfo *rsProjectDetailInfo;
+
+//创建对象
++ (BaseUser *)createWithIBaseUserM:(IBaseUserM *)iBaseUserM;
+//获取指定uid的对象
++ (BaseUser *)getBaseUserWith:(NSNumber *)uid;
 
 @end

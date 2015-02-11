@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ProjectDetailInfo;
+@class ProjectDetailInfo, IPhotoInfo;
 
 @interface PhotoInfos : NSManagedObject
 
 @property (nonatomic, retain) NSString * photo;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) ProjectDetailInfo *rsProjectDetailInfo;
+
+//创建照片信息
++ (PhotoInfos *)createWithPhoto:(IPhotoInfo *)iPhotoInfo;
 
 @end

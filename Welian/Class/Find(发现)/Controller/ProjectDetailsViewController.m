@@ -46,12 +46,13 @@ static NSString *noCommentCell = @"NoCommentCell";
     BOOL _isFinish;
 }
 @property (assign,nonatomic) UITableView *tableView;
-@property (strong,nonatomic) NSMutableArray *datasource;
+@property (strong,nonatomic) NSMutableArray *datasource;//用于存储评论数组
 @property (strong,nonatomic) NSNumber *projectPid;
 @property (strong,nonatomic) ProjectInfo *projectInfo;
 @property (assign,nonatomic) ProjectDetailInfoView *projectDetailInfoView;
 
-@property (strong,nonatomic) IProjectDetailInfo *projectDetailInfo;
+@property (strong,nonatomic) IProjectDetailInfo *iProjectDetailInfo;
+@property (strong,nonatomic) ProjectDetailInfo *projectDetailInfo;
 @property (strong,nonatomic) CommentCellFrame *selecCommFrame;
 
 @property (assign,nonatomic) UIButton *favorteBtn;
@@ -130,7 +131,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     self = [super init];
     if (self) {
-        self.projectDetailInfo = detailInfo;
+        self.iProjectDetailInfo = detailInfo;
         _isFinish = YES;
     }
     return self;
@@ -350,7 +351,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             if (!cell) {
                 cell = [[ProjectFavorteViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             }
-            cell.projectInfo = _projectDetailInfo;
+            cell.projectInfo = _iProjectDetailInfo;
             WEAKSELF;
             [cell setBlock:^(NSIndexPath *indexPath){
                 [weakSelf selectZanUserWithIndex:indexPath];
@@ -486,7 +487,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             if (_projectDetailInfo.membercount.integerValue > 0) {
                 ProjectUserListViewController *projectUserListVC = [[ProjectUserListViewController alloc] init];
                 projectUserListVC.infoType = UserInfoTypeProjectGroup;
-                projectUserListVC.projectDetailInfo = _projectDetailInfo;
+                projectUserListVC.projectDetailInfo = _iProjectDetailInfo;
                 [self.navigationController pushViewController:projectUserListVC animated:YES];
             }
         }
@@ -509,25 +510,25 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
     WEAKSELF
     if ([imageIndex isEqualToString:@"设置融资信息"]) {
-        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:self.projectDetailInfo];
+        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
         financingProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
+            weakSelf.iProjectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:financingProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"设置团队成员"]) {
-        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:self.projectDetailInfo];
+        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
         memberProjectVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
+            weakSelf.iProjectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:memberProjectVC animated:YES];
     }
     if ([imageIndex isEqualToString:@"编辑项目信息"]) {
-        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:self.projectDetailInfo];
+        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
         createProjcetVC.projectDataBlock = ^(IProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
+            weakSelf.iProjectDetailInfo = projectModel;
             [weakSelf updateUI];
         };
         [self.navigationController pushViewController:createProjcetVC animated:YES];
@@ -571,7 +572,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)shareBtnClicked
 {
     NSArray *buttons = [NSArray array];
-    if ([LogInUser getCurrentLoginUser].uid.integerValue == _projectDetailInfo.user.uid.integerValue) {
+    if ([LogInUser getCurrentLoginUser].uid.integerValue == _iProjectDetailInfo.user.uid.integerValue) {
         buttons = @[@"编辑项目信息",@"设置团队成员",@"设置融资信息"];
     }
     LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:@[@"微信好友",@"微信朋友圈"] withShareButtonImagesName:@[@"home_repost_wechat",@"home_repost_friendcirle"]];
@@ -586,7 +587,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)zanBtnClicked:(UIButton *)sender
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_projectDetailInfo.zanusers];
+    NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_iProjectDetailInfo.zanusers];
     if (!_projectDetailInfo.isZan.boolValue) {
         //赞
         [WLHttpTool zanProjectParameterDic:@{@"pid":_projectInfo.pid}
@@ -603,7 +604,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                        zanUser.investorauth = loginUser.investorauth;
                                        //插入
                                        [zanUsers insertObject:zanUser atIndex:0];
-                                       _projectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                       _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
                                        
                                        //刷新
                                        [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -627,7 +628,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              if (zanUser) {
                                                  [zanUsers removeObject:zanUser];
                                                  
-                                                 _projectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                                 _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
                                                  
                                                  //刷新
                                                  [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -744,7 +745,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)openProjectDetailInfoView
 {
-    _projectDetailInfoView.projectDetailInfo = _projectDetailInfo;
+    _projectDetailInfoView.projectDetailInfo = _iProjectDetailInfo;
     _projectDetailInfoView.hidden = NO;
 }
 
@@ -754,7 +755,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     [WLHttpTool getProjectDetailParameterDic:@{@"pid":pid}
                                      success:^(id JSON) {
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
-                                         self.projectDetailInfo = detailInfo;
+                                         self.iProjectDetailInfo = detailInfo;
+                                         self.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
                                          
                                          NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
                                          for (ICommentInfo *commentInfo in detailInfo.comments) {
@@ -823,7 +825,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 //更新也没展示
 - (void)updateUI{
     //设置头部内容
-    CGFloat detailHeight = [ProjectDetailView configureWithInfo:_projectDetailInfo.des Images:_projectDetailInfo.photos];
+    CGFloat detailHeight = [ProjectDetailView configureWithInfo:_projectDetailInfo.des Images:_projectDetailInfo.rsPhotoInfos.allObjects];
     CGFloat projectInfoViewHeight = [ProjectInfoView configureWithInfo:_projectDetailInfo];//_projectInfo.status.boolValue ? kHeaderHeight : kHeaderHeight2;
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width,projectInfoViewHeight + detailHeight + kSegementedControlHeight)];
     ProjectInfoView *projectInfoView = [[ProjectInfoView alloc] initWithFrame:Rect(0, 0, self.view.width,projectInfoViewHeight)];
@@ -847,9 +849,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     }];
     
     //操作栏
-    NSString *linkImage = _projectDetailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
-    NSString *memeberImage = _projectDetailInfo.membercount.integerValue > 0 ? @"discovery_xiangmu_detail_member" : @"discovery_xiangmu_detail_nomember";
-    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_projectDetailInfo.membercount intValue]]] Images:@[[UIImage imageNamed:linkImage],[UIImage imageNamed:memeberImage]] Bridges:nil isHorizontal:YES];
+    NSString *linkImage = _iProjectDetailInfo.website.length > 0 ? @"discovery_xiangmu_detail_link" : @"discovery_xiangmu_detail_nolink";
+    NSString *memeberImage = _iProjectDetailInfo.membercount.integerValue > 0 ? @"discovery_xiangmu_detail_member" : @"discovery_xiangmu_detail_nomember";
+    WLSegmentedControl *segementedControl = [[WLSegmentedControl alloc] initWithFrame:Rect(0,projectDetailView.bottom,self.view.width,kSegementedControlHeight) Titles:@[@"项目网址",[NSString stringWithFormat:@"团队成员(%d)",[_iProjectDetailInfo.membercount intValue]]] Images:@[[UIImage imageNamed:linkImage],[UIImage imageNamed:memeberImage]] Bridges:nil isHorizontal:YES];
     segementedControl.delegate = self;
     //设置底部边框线
     segementedControl.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);
@@ -870,7 +872,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)showProjectUserInfo
 {
     //系统联系人
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:_projectDetailInfo.user isAsk:NO];
+    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:_iProjectDetailInfo.user isAsk:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
@@ -878,9 +880,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath imageView:(WLPhotoView *)photoView
 {
     NSMutableArray *photos = [NSMutableArray array];
-    for (int i = 0; i< _projectDetailInfo.photos.count; i++) {
+    for (int i = 0; i< _projectDetailInfo.rsPhotoInfos.count; i++) {
         MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:[_projectDetailInfo.photos[i] photo]];
+        photo.url = [NSURL URLWithString:[_projectDetailInfo.rsPhotoInfos.allObjects[i] photo]];
         photo.srcImageView = photoView; // 来源于哪个UIImageView
         [photos addObject:photo];
     }
@@ -894,17 +896,17 @@ static NSString *noCommentCell = @"NoCommentCell";
 //选择点赞的列表
 - (void)selectZanUserWithIndex:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _projectDetailInfo.zanusers.count) {
+    if (indexPath.row == _iProjectDetailInfo.zanusers.count) {
         if (_projectDetailInfo.zancount.integerValue > 0) {
             //进入赞列表
             ProjectUserListViewController *projectUserListVC = [[ProjectUserListViewController alloc] init];
             projectUserListVC.infoType = UserInfoTypeProjectZan;
-            projectUserListVC.projectDetailInfo = _projectDetailInfo;
+            projectUserListVC.projectDetailInfo = _iProjectDetailInfo;
             [self.navigationController pushViewController:projectUserListVC animated:YES];
         }
     }else{
         //点击点赞的人，进入
-        IBaseUserM *user = _projectDetailInfo.zanusers[indexPath.row];
+        IBaseUserM *user = _iProjectDetailInfo.zanusers[indexPath.row];
         //系统联系人
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];

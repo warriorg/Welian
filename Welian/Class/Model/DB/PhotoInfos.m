@@ -16,4 +16,15 @@
 @dynamic title;
 @dynamic rsProjectDetailInfo;
 
+//创建照片信息
++ (PhotoInfos *)createWithPhoto:(IPhotoInfo *)iPhotoInfo
+{
+    PhotoInfos *photoInfo = [PhotoInfos MR_createEntity];
+    photoInfo.photo = iPhotoInfo.photo;
+    // 获得文件的扩展类型
+    photoInfo.title = [iPhotoInfo.photo pathExtension];
+    
+    return photoInfo;
+}
+
 @end

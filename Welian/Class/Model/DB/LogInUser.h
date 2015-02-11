@@ -11,7 +11,7 @@
 #import "BaseUser.h"
 #import "UserInfoModel.h"
 
-@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems, NeedAddUser;
+@class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems, NeedAddUser ,ProjectInfo;
 
 @interface LogInUser : BaseUser
 
@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSSet *rsInvestItems;
 @property (nonatomic, retain) NSSet *rsInvestIndustrys;
 @property (nonatomic, retain) NSSet *rsNeedAddUsers;
+@property (nonatomic, retain) NSSet *rsProjectInfos;
 
 
 //获取当前登陆的账户
@@ -223,5 +224,10 @@
 - (void)removeRsNeedAddUsersObject:(NeedAddUser *)value;
 - (void)addRsNeedAddUsers:(NSSet *)values;
 - (void)removeRsNeedAddUsers:(NSSet *)values;
+
+- (void)addRsProjectInfosObject:(ProjectInfo *)value;
+- (void)removeRsProjectInfosObject:(ProjectInfo *)value;
+- (void)addRsProjectInfos:(NSSet *)values;
+- (void)removeRsProjectInfos:(NSSet *)values;
 
 @end

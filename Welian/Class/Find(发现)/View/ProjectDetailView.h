@@ -14,7 +14,7 @@ typedef void(^ProjectDetailImageClickedBlock)(NSIndexPath *indexPath,WLPhotoView
 @interface ProjectDetailView : UIView
 
 @property (strong,nonatomic) ProjectInfo *projectInfo;
-@property (strong,nonatomic) IProjectDetailInfo *projectDetailInfo;
+@property (strong,nonatomic) ProjectDetailInfo *projectDetailInfo;
 @property (strong,nonatomic) ProjectDetailImageClickedBlock imageClickedBlock;
 
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images;
