@@ -83,7 +83,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _projectInfo.zanusers.count + 1;
+    if(_projectInfo.zanusers.count > 9){
+        return 10.f;
+    }else{
+        return _projectInfo.zanusers.count + 1;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -91,12 +95,13 @@
     ProjectFavorteItemView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectFavrteViewCell" forIndexPath:indexPath];
     
     cell.numLabel.text = [_projectInfo displayZancountInfo];
-    if (indexPath.row < _projectInfo.zanusers.count) {
+    if (indexPath.row < _projectInfo.zanusers.count && indexPath.row < 9) {
         IBaseUserM *user = _projectInfo.zanusers[indexPath.row];
         cell.numLabel.hidden = YES;
         cell.logoImageView.hidden = NO;
         [cell.logoImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     }else{
+        //最后一个现实总数量，如果大于9现实
         cell.numLabel.hidden = NO;
         cell.logoImageView.image = nil;
         cell.logoImageView.hidden = YES;
