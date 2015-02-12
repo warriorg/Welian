@@ -15,7 +15,7 @@
 {
     // 显示页码
     UILabel *_indexLabel;
-    UIButton *_saveImageBtn;
+    BOOL _isdelete;
 }
 @end
 
@@ -28,6 +28,10 @@
         // Initialization code
     }
     return self;
+}
+- (void)setIsDelete:(BOOL)isDelete
+{
+    _isDelete = isDelete;
 }
 
 - (void)setPhotos:(NSArray *)photos
@@ -44,16 +48,23 @@
         _indexLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:_indexLabel];
     }
-    
     // 保存图片按钮
     CGFloat btnWidth = self.bounds.size.height;
-    _saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _saveImageBtn.frame = CGRectMake(20, 0, btnWidth, btnWidth);
-    _saveImageBtn.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    [_saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
-    [_saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
-    [_saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_saveImageBtn];
+    self.saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.saveImageBtn.frame = CGRectMake(20, 0, btnWidth, btnWidth);
+    self.saveImageBtn.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [self addSubview:self.saveImageBtn];
+    
+    if (_isDelete) {
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
+    }else{
+        
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
+        [self.saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
 }
 
 - (void)saveImage

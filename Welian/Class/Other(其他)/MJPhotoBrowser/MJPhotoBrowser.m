@@ -23,8 +23,9 @@
 	NSMutableSet *_visiblePhotoViews;
     NSMutableSet *_reusablePhotoViews;
     
+    MJPhotoView *_selePhotoView;
     // 一开始的状态栏
-    BOOL _statusBarHiddenInited;
+//    BOOL _statusBarHiddenInited;
 }
 @end
 
@@ -33,7 +34,7 @@
 #pragma mark - Lifecycle
 - (void)loadView
 {
-    _statusBarHiddenInited = [UIApplication sharedApplication].isStatusBarHidden;
+//    _statusBarHiddenInited = [UIApplication sharedApplication].isStatusBarHidden;
     // 隐藏状态栏
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     self.view = [[UIView alloc] init];
@@ -70,6 +71,7 @@
     CGFloat barHeight = 44;
     CGFloat barY = self.view.frame.size.height - barHeight;
     _toolbar = [[MJPhotoToolbar alloc] init];
+    _toolbar.isDelete = self.isDelete;
     _toolbar.frame = CGRectMake(0, barY, self.view.frame.size.width, barHeight);
     _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     _toolbar.photos = _photos;
@@ -143,6 +145,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
@@ -190,6 +193,11 @@
     
 }
 
+- (void)handleSingleTap
+{
+    [_selePhotoView handleSingleTap:nil];
+}
+
 #pragma mark 显示一个图片view
 - (void)showPhotoViewAtIndex:(int)index
 {
@@ -197,6 +205,7 @@
     if (!photoView) { // 添加新的图片view
         photoView = [[MJPhotoView alloc] init];
         photoView.photoViewDelegate = self;
+        _selePhotoView = photoView;
     }
     
     // 调整当期页的frame

@@ -19,9 +19,11 @@
 
 // 工具条
 @property (nonatomic, strong) MJPhotoToolbar *toolbar;
-
+@property (nonatomic, assign) BOOL isDelete;
 // 显示
 - (void)show;
+
+- (void)handleSingleTap;
 @end
 
 @protocol MJPhotoBrowserDelegate <NSObject>
