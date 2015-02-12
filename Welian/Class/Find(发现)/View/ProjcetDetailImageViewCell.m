@@ -35,6 +35,9 @@
 //    logoImageView.backgroundColor = [UIColor lightGrayColor];
 //    [self addSubview:logoImageView];
     WLPhotoView *photoView = [[WLPhotoView alloc] init];
+    photoView.contentMode = UIViewContentModeScaleAspectFill;
+    // 超出边界范围的内容都裁剪
+    photoView.clipsToBounds = YES;
     [self addSubview:photoView];
     self.photoView = photoView;
 }

@@ -17,5 +17,8 @@
 
 - (void)dropShadowWithOpacity:(float)opacity;
 
+//获取按钮对象
++ (UIButton *)getBtnWithTitle:(NSString *)title image:(UIImage *)image;
+
 @end
 

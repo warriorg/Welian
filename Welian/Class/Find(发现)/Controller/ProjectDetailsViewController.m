@@ -615,6 +615,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                    success:^(id JSON) {
                                        _iProjectDetailInfo.iszan = @(1);
                                        _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue + 1);
+                                       [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
                                        
                                        IBaseUserM *zanUser = [[IBaseUserM alloc] init];
                                        zanUser.avatar = loginUser.avatar;
@@ -647,6 +648,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          success:^(id JSON) {
                                              _iProjectDetailInfo.iszan = @(0);
                                              _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue - 1);
+                                             [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
                                              
                                              IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
                                                  return [obj uid].integerValue == loginUser.uid.integerValue;
@@ -753,7 +755,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         [self openProjectDetailInfoView];
     }else{
         [UIAlertView bk_showAlertViewWithTitle:nil
-                                       message:@"您还不是认证投资人，无法查看融资信息"
+                                       message:@"您不是认证投资人，无法查看融资信息"
                              cancelButtonTitle:@"取消"
                              otherButtonTitles:@[@"去认证"]
                                        handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -885,8 +887,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     //项目详情
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoView.bottom, self.view.width, detailHeight)];
     projectDetailView.projectDetailInfo = _projectDetailInfo;
-    [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,WLPhotoView *imageView){
-        [weakSelf showDetailImagesWithIndex:indexPath imageView:imageView];
+    [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,NSArray *imageViews){
+        [weakSelf showDetailImagesWithIndex:indexPath ImageViews:imageViews];
     }];
     
     //操作栏
@@ -918,15 +920,19 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 //展示项目图片
-- (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath imageView:(WLPhotoView *)photoView
-{
+- (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath ImageViews:(NSArray *)imageViews{
     NSMutableArray *photos = [NSMutableArray array];
     for (int i = 0; i< _projectDetailInfo.rsPhotoInfos.count; i++) {
         MJPhoto *photo = [[MJPhoto alloc] init];
         photo.url = [NSURL URLWithString:[_projectDetailInfo.rsPhotoInfos.allObjects[i] photo]];
-        photo.srcImageView = photoView; // 来源于哪个UIImageView
+        photo.srcImageView = imageViews[i]; // 来源于哪个UIImageView
         [photos addObject:photo];
     }
+//    MJPhoto *photo = [[MJPhoto alloc] init];
+//    photo.url = [NSURL URLWithString:[[_projectDetailInfo.rsPhotoInfos.allObjects objectAtIndex:indexPath.row] photo]];
+//    photo.srcImageView = photoView; // 来源于哪个UIImageView
+//    [photos addObject:photo];
+
     // 2.显示相册
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     browser.currentPhotoIndex = indexPath.row; // 弹出相册时显示的第一张图片是？

@@ -46,19 +46,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f,ViewCtrlTopBarHeight, self.view.height, kHeaderHeight)];
-    headView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-    headView.layer.borderWidths = @"{0,0,0.6,0}";
-    [self.view addSubview:headView];
-    //操作栏
-    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height - 0.5) Titles:@[@"时间",@"地区"] Images:nil Bridges:nil isHorizontal:YES];
-    segmentedControl.showSmallImage = YES;
-    segmentedControl.lineHeightAll = YES;
-    segmentedControl.delegate = self;
-    [headView addSubview:segmentedControl];
-    self.segmentedControl = segmentedControl;
+    //tableview头部距离问题
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f,headView.bottom,self.view.width,self.view.height - headView.bottom)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f,ViewCtrlTopBarHeight + kHeaderHeight,self.view.width,self.view.height - ViewCtrlTopBarHeight - kHeaderHeight)];
     tableView.dataSource = self;
     tableView.delegate = self;
     //隐藏表格分割线
@@ -66,26 +59,39 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
-    ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, headView.bottom, self.view.width, tableView.height)];
+    ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     timeActivityTypeInfo.hidden = YES;
     timeActivityTypeInfo.datasource = @[@"全部",@"最近一周",@"本月",@"上月"];
     WEAKSELF
     [timeActivityTypeInfo setBlock:^(NSString *info){
-        [weakSelf.timeActivityTypeInfo dismissToLeft];
+        [weakSelf dismissTimeTypeInfo];
         weakSelf.segmentedControl.titles = @[info,@"地区"];
     }];
     [self.view addSubview:timeActivityTypeInfo];
     self.timeActivityTypeInfo = timeActivityTypeInfo;
     
-    ActivityTypeInfoView *cityActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, headView.bottom, self.view.width, tableView.height)];
+    ActivityTypeInfoView *cityActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     cityActivityTypeInfo.hidden = YES;
     cityActivityTypeInfo.datasource = @[@"全国",@"杭州",@"上海",@"北京",@"广州",@"深圳",@"武汉"];
     [cityActivityTypeInfo setBlock:^(NSString *info){
-        [weakSelf.cityActivityTypeInfo dismissToRight];
+        [weakSelf dismissCityTypeInfo];
         weakSelf.segmentedControl.titles = @[@"全国",info];
     }];
     [self.view addSubview:cityActivityTypeInfo];
     self.cityActivityTypeInfo = cityActivityTypeInfo;
+    
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f,ViewCtrlTopBarHeight, self.view.height, kHeaderHeight)];
+    headView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+    headView.layer.borderWidths = @"{0,0,0.6,0}";
+    [self.view addSubview:headView];
+    
+    //操作栏
+    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height - 0.5) Titles:@[@"时间",@"地区"] Images:nil Bridges:nil isHorizontal:YES];
+    segmentedControl.showSmallImage = YES;
+    segmentedControl.lineHeightAll = YES;
+    segmentedControl.delegate = self;
+    [headView addSubview:segmentedControl];
+    self.segmentedControl = segmentedControl;
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -167,23 +173,26 @@
 {
     switch (index) {
         case 0:
-            if (_cityActivityTypeInfo.hidden == NO){
-                [_cityActivityTypeInfo dismissToRight];
+        {
+            if (_cityActivityTypeInfo.hidden == NO) {
+                [_cityActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
             if (_timeActivityTypeInfo.hidden) {
-                [_timeActivityTypeInfo showInViewFromLeft:self.view];
+                [_timeActivityTypeInfo showInViewWithFrame:_tableView.frame];
             }else{
-                [_timeActivityTypeInfo dismissToLeft];
+                [_timeActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
+            
+        }
             break;
         case 1:
             if (_timeActivityTypeInfo.hidden == NO) {
-                [_timeActivityTypeInfo dismissToLeft];
+                [_timeActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
             if (_cityActivityTypeInfo.hidden) {
-                [_cityActivityTypeInfo showInViewFromRight:self.view];
+                [_cityActivityTypeInfo showInViewWithFrame:_tableView.frame];
             }else{
-                [_cityActivityTypeInfo dismissToRight];
+                [_cityActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
             break;
         default:
@@ -192,7 +201,71 @@
 }
 
 #pragma mark - Private
+- (void)showTimeTypeInfo
+{
+    _timeActivityTypeInfo.bottom = _tableView.top;
+    _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:.3f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         _timeActivityTypeInfo.top = _tableView.top;
+                         _timeActivityTypeInfo.hidden = NO;
+                         _timeActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+                     } completion:^(BOOL finished) {
+                         _timeActivityTypeInfo.hidden = NO;
+                         _timeActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+                         _timeActivityTypeInfo.top = _tableView.top;
+                     }];
+}
 
+- (void)dismissTimeTypeInfo
+{
+    [UIView animateWithDuration:.2f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         _timeActivityTypeInfo.bottom = _tableView.top;
+                         _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
+                     } completion:^(BOOL finished) {
+                         _timeActivityTypeInfo.hidden = YES;
+                         _timeActivityTypeInfo.bottom = _tableView.top;
+                         _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
+                     }];
+}
+
+- (void)showCityTypeInfo
+{
+    _cityActivityTypeInfo.bottom = _tableView.top;
+    _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:.3f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         _cityActivityTypeInfo.top = _tableView.top;
+                         _cityActivityTypeInfo.hidden = NO;
+                         _cityActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+                     } completion:^(BOOL finished) {
+                         _cityActivityTypeInfo.hidden = NO;
+                         _cityActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+                         _cityActivityTypeInfo.top = _tableView.top;
+                     }];
+}
+
+- (void)dismissCityTypeInfo
+{
+    [UIView animateWithDuration:.2f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         _cityActivityTypeInfo.bottom = _tableView.top;
+                         _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
+                     } completion:^(BOOL finished) {
+                         _cityActivityTypeInfo.hidden = YES;
+                         _cityActivityTypeInfo.bottom = _tableView.top;
+                         _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
+                     }];
+}
 
 
 @end

@@ -10,4 +10,6 @@
 
 @interface BaseTableViewCell : UITableViewCell
 
+@property (assign,nonatomic) BOOL hidBottomLine;//隐藏下划线
+
 @end

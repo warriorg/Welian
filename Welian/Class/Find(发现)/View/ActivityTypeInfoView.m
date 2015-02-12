@@ -15,6 +15,7 @@
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (assign,nonatomic) BOOL isFromLeft;
+@property (assign,nonatomic) CGRect showFrame;
 
 @end
 
@@ -65,7 +66,7 @@
         cell = [[ActivityTypeInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = _datasource[indexPath.row];
-    cell.detailTextLabel.text = @"GPRS定位";
+    cell.detailTextLabel.text = @"GPS定位";
     return cell;
 }
 
@@ -123,11 +124,12 @@
     self.tableView = tableView;
     
     UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
-        if (_isFromLeft) {
-            [self dismissToLeft];
-        }else{
-            [self dismissToRight];
-        }
+//        if (_isFromLeft) {
+//            [self dismissToLeft];
+//        }else{
+//            [self dismissToRight];
+//        }
+        [self dismissWithFrame:_showFrame];
     }];
     tap.delegate = self;
     [self addGestureRecognizer:tap];
@@ -185,6 +187,41 @@
                      } completion:^(BOOL finished) {
                          self.left = self.width;
                          self.hidden = YES;
+                     }];
+}
+
+//从上向下展示
+- (void)showInViewWithFrame:(CGRect)frame
+{
+    self.bottom = frame.origin.y;
+    self.showFrame = frame;
+    self.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:.3f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.top = frame.origin.y;
+                         self.hidden = NO;
+                         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+                     } completion:^(BOOL finished) {
+                         self.hidden = NO;
+                         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+                         self.top = frame.origin.y;
+                     }];
+}
+
+- (void)dismissWithFrame:(CGRect)frame
+{
+    [UIView animateWithDuration:.2f
+                          delay:.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.bottom = frame.origin.y;
+                         self.backgroundColor = [UIColor clearColor];
+                     } completion:^(BOOL finished) {
+                         self.hidden = YES;
+                         self.bottom = frame.origin.y;
+                         self.backgroundColor = [UIColor clearColor];
                      }];
 }
 

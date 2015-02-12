@@ -20,4 +20,7 @@ typedef void(^selectTypeInfoBlock)(NSString *info);
 - (void)showInViewFromRight:(UIView *)view;
 - (void)dismissToRight;
 
+- (void)showInViewWithFrame:(CGRect)frame;
+- (void)dismissWithFrame:(CGRect)frame;
+
 @end

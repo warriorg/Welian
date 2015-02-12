@@ -99,6 +99,14 @@
     return types;
 }
 
+//更新点赞数量
+- (ProjectDetailInfo *)updateZancount:(NSNumber *)zancount
+{
+    self.zancount = zancount;
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+    return self;
+}
+
 //创建记录
 + (ProjectDetailInfo *)createWithIProjectDetailInfo:(IProjectDetailInfo *)iProjectDetailInfo
 {
