@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * des;//描述
 @property (nonatomic, retain) NSString * industrys;//领域
 @property (nonatomic, retain) NSString * intro;//简介
-@property (nonatomic, retain) NSNumber * isZan;//是否点赞
+@property (nonatomic, retain) NSNumber * iszan;//是否点赞
 @property (nonatomic, retain) NSNumber * membercount;//成员数量
 @property (nonatomic, retain) NSString * name;//项目名称
 @property (nonatomic, retain) NSNumber * pid;//项目id

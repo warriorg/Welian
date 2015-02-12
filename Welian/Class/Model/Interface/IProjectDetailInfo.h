@@ -19,8 +19,8 @@
 @property (nonatomic,strong) NSNumber *zancount;//赞数
 @property (nonatomic,strong) NSNumber *commentcount;//评论数
 @property (nonatomic,strong) NSNumber *membercount;//团队成员个数
-@property (nonatomic,strong) NSNumber *isZan;//0 没赞过，1赞过
-@property (nonatomic,strong) NSNumber *isFavorite;//0 没收藏，1收藏
+@property (nonatomic,strong) NSNumber *iszan;//0 没赞过，1赞过
+@property (nonatomic,strong) NSNumber *isfavorite;//0 没收藏，1收藏
 @property (nonatomic,strong) NSString *date;
 @property (nonatomic,strong) NSNumber *status; //1 正在融资，0不融资
 @property (nonatomic,strong) NSNumber *amount;//融资额度

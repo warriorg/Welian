@@ -17,7 +17,7 @@
 @property (nonatomic,strong) NSNumber *zancount;
 @property (nonatomic,strong) NSNumber *commentcount;
 @property (nonatomic,strong) NSNumber *membercount;
-@property (nonatomic,strong) NSNumber *isZan;
+@property (nonatomic,strong) NSNumber *iszan;
 @property (nonatomic,strong) NSString *date;
 @property (nonatomic,strong) NSNumber *status;
 // 领域

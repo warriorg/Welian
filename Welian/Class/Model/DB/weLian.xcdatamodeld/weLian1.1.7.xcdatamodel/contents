@@ -155,8 +155,8 @@
         <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="financing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isZan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isfavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="iszan" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -176,7 +176,7 @@
         <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="industrys" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isZan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="iszan" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -217,8 +217,8 @@
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
         <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="103"/>
-        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="343"/>
-        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="238"/>
+        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="345"/>
+        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="240"/>
         <element name="ProjectUser" positionX="-1359" positionY="-396" width="128" height="58"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>

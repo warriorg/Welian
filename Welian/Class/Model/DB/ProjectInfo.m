@@ -16,7 +16,7 @@
 @dynamic des;
 @dynamic industrys;
 @dynamic intro;
-@dynamic isZan;
+@dynamic iszan;
 @dynamic membercount;
 @dynamic name;
 @dynamic pid;
@@ -41,7 +41,7 @@
     projectInfo.commentcount = iProjectInfo.commentcount;
     projectInfo.status = iProjectInfo.status;
     projectInfo.zancount = iProjectInfo.zancount;
-    projectInfo.isZan = iProjectInfo.isZan;
+    projectInfo.iszan = iProjectInfo.iszan;
     projectInfo.industrys = [iProjectInfo displayIndustrys];
     projectInfo.type = type;
     if (type != 0) {

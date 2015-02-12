@@ -21,6 +21,7 @@
 @property (assign, nonatomic) id<WLSegmentedControlDelegate>delegate;
 
 @property (strong, nonatomic) NSArray *bridges;
+@property (strong, nonatomic) NSArray *titles;
 
 @property (assign, nonatomic) BOOL showSmallImage;//是否显示右下角图标
 @property (assign, nonatomic) BOOL lineHeightAll;//分割线高度等于当前View高度

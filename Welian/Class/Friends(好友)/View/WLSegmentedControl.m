@@ -27,11 +27,10 @@
 
 @interface WLSegmentedControl ()
 
-@property (strong, nonatomic) UIScrollView *scrollView;
+//@property (strong, nonatomic) UIScrollView *scrollView;
 //@property (strong, nonatomic) UIView *bottomLineView;
 
 @property (strong, nonatomic) NSMutableArray *array4Btn;
-@property (strong, nonatomic) NSArray *titles;
 @property (strong, nonatomic) NSArray *images;
 @property (assign, nonatomic) BOOL isHorizontal;//横向排列
 //@property (assign, nonatomic) UIButton *selectBtn;
@@ -43,7 +42,7 @@
 
 - (void)dealloc
 {
-    _scrollView = nil;
+//    _scrollView = nil;
     _array4Btn = nil;
     _titles = nil;
     _images = nil;
@@ -80,18 +79,25 @@
     }
 }
 
+- (void)setTitles:(NSArray *)titles
+{
+    [super willChangeValueForKey:@"titles"];
+    _titles = titles;
+    [super didChangeValueForKey:@"titles"];
+    for (int i = 0; i<[_titles count]; i++) {
+        UILabel *titleLabel = (UILabel *)[self viewWithTag:Define_Label_Tag + i];
+        titleLabel.text = _titles[i];
+    }
+}
+
 - (void)setShowSmallImage:(BOOL)showSmallImage
 {
-    [super willChangeValueForKey:@"showSmallImage"];
     _showSmallImage = showSmallImage;
-    [super didChangeValueForKey:@"showSmallImage"];
 }
 
 - (void)setLineHeightAll:(BOOL)lineHeightAll
 {
-    [super willChangeValueForKey:@"lineHeightAll"];
     _lineHeightAll = lineHeightAll;
-    [super didChangeValueForKey:@"lineHeightAll"];
 }
 
 - (void)layoutSubviews
@@ -102,13 +108,14 @@
     if (width4btn < Min_Button_Width) {
         width4btn = Min_Button_Width;
     }
+    CGFloat viewHeight = self.height;
     
-    _scrollView.frame = CGRectMake(0, 0, self.width, self.height);
-    _scrollView.contentSize = CGSizeMake([_titles count] * width4btn, self.height);
+//    _scrollView.frame = CGRectMake(0, 0, self.width, viewHeight);
+//    _scrollView.contentSize = CGSizeMake([_titles count] * width4btn, _scrollView.height);
     
-    for (int i = 0; i< [_titles count]; i++) {
+    for (int i = 0; i < [_titles count]; i++) {
         UIView *view = [self viewWithTag:Define_View_Tag + i];
-        view.frame = CGRectMake(i*width4btn, .0f, width4btn, self.height);
+        view.frame = CGRectMake(i*width4btn, .0f, width4btn, viewHeight);
         
         //添加内容
         UILabel *titleLabel = (UILabel *)[view viewWithTag:Define_Label_Tag + i];
@@ -159,7 +166,7 @@
     //分割线
     for (int i = 1; i< [_titles count]; i++) {
         UIView *lineView = [self viewWithTag:Define_LineView_Tag + i];
-        lineView.frame = CGRectMake(i * width4btn - 1.f,_lineHeightAll ? 0 : 5.f, 1.f, _lineHeightAll ? self.height : self.height - 10);
+        lineView.frame = CGRectMake(i * width4btn - 1.f,_lineHeightAll ? 0 : 5.f, 1.f, _lineHeightAll ? viewHeight : viewHeight - 10);
     }
     
 //    UIView *view = [self viewWithTag:_selectBtn.tag];
@@ -171,10 +178,11 @@
 {
     _array4Btn = [[NSMutableArray alloc] initWithCapacity:[_titles count]];
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-    _scrollView.backgroundColor = self.backgroundColor;
-    _scrollView.userInteractionEnabled = YES;
-    _scrollView.showsHorizontalScrollIndicator = NO;
+//    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+//    _scrollView.backgroundColor = self.backgroundColor;
+//    _scrollView.userInteractionEnabled = YES;
+//    _scrollView.showsHorizontalScrollIndicator = NO;
+//    _scrollView.showsVerticalScrollIndicator = NO;
     
     for (int i = 0; i<[_titles count]; i++) {
         //添加展示的View
@@ -200,7 +208,7 @@
         }
         
         //添加右下角小图片
-        UIImageView *smallImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_myactivity_time"]];
+        UIImageView *smallImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"discovery_activity_list_ choose"]];
         smallImage.backgroundColor = [UIColor clearColor];
         smallImage.tag = Define_SmallImage_Tag + i;
         smallImage.hidden = YES;
@@ -231,7 +239,8 @@
         btn.tag = Define_Btn_Tag + i;
         [view addSubview:btn];
         [_array4Btn addObject:btn];
-        [_scrollView addSubview:view];
+//        [_scrollView addSubview:view];
+        [self addSubview:view];
         
         if (i == 0) {
             btn.selected = YES;
@@ -244,7 +253,8 @@
         UIView *lineView = [[UIView alloc] init];
         lineView.backgroundColor = RGB(229, 229, 229);
         lineView.tag = Define_LineView_Tag + i;
-        [_scrollView addSubview:lineView];
+//        [_scrollView addSubview:lineView];
+        [self addSubview:lineView];
     }
     
 
@@ -253,7 +263,7 @@
 //    _bottomLineView.backgroundColor = RGB(250, 204, 62);//UIColorFromRGBValue(0x454545);
 //    [_scrollView addSubview:_bottomLineView];
     
-    [self addSubview:_scrollView];
+//    [self addSubview:_scrollView];
 }
 
 - (void)segmentedControlChange:(UIButton *)btn

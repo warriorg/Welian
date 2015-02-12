@@ -16,6 +16,7 @@
 @interface ActivityListViewCell ()
 
 @property (assign,nonatomic) UIImageView *iconImageView;
+@property (assign,nonatomic) UIImageView *joinedImageView;
 @property (assign,nonatomic) UILabel *titleLabel;
 @property (assign,nonatomic) UIButton *timeBtn;
 @property (assign,nonatomic) UIButton *locationBtn;
@@ -43,7 +44,11 @@
     _iconImageView.left = kMarginLeft;
     _iconImageView.centerY = self.contentView.height / 2.f;
     
-    _titleLabel.width = self.contentView.width - _iconImageView.right - kMarginLeft *2.f;
+    [_joinedImageView sizeToFit];
+    _joinedImageView.right = self.contentView.width;
+    _joinedImageView.top = 0.f;
+    
+    _titleLabel.width = self.contentView.width - _iconImageView.right - kMarginEdge - (_joinedImageView.hidden == NO ? _joinedImageView.width : kMarginEdge);
     [_titleLabel sizeToFit];
     _titleLabel.left = _iconImageView.right + kMarginEdge;
     _titleLabel.top = _iconImageView.top;
@@ -81,15 +86,22 @@
     self.iconImageView = iconImageView;
     [iconImageView setDebug:YES];
     
+    //以报名标记
+    UIImageView *joinedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"discovery_activity_list_already"]];
+    joinedImageView.backgroundColor = [UIColor clearColor];
+    [self.contentView addSubview:joinedImageView];
+    self.joinedImageView = joinedImageView;
+    
     //标题
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = kTitleNormalTextColor;
     titleLabel.font = [UIFont systemFontOfSize:16.f];
-    titleLabel.text = @"杭州布鲁姆斯伯里沙龙（下午茶）";
-    titleLabel.numberOfLines = 0;
+    titleLabel.text = @"杭州布鲁姆斯伯里沙龙咯好哦好哦配合哦好累了据了解";
+    titleLabel.numberOfLines = 2;
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
+//    [titleLabel setDebug:YES];
     
     //时间
     UIButton *timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -97,7 +109,7 @@
     timeBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [timeBtn setTitle:@"6/18" forState:UIControlStateNormal];
     [timeBtn setTitleColor:KBlueTextColor forState:UIControlStateNormal];
-    [timeBtn setImage:[UIImage imageNamed:@"me_myactivity_time"] forState:UIControlStateNormal];
+    [timeBtn setImage:[UIImage imageNamed:@"discovery_activity_list_time"] forState:UIControlStateNormal];
     timeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
     [self.contentView addSubview:timeBtn];
     self.timeBtn = timeBtn;
@@ -117,7 +129,7 @@
     locationBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [locationBtn setTitle:@"上海" forState:UIControlStateNormal];
     [locationBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
-    [locationBtn setImage:[UIImage imageNamed:@"me_mycard_lacation"] forState:UIControlStateNormal];
+    [locationBtn setImage:[UIImage imageNamed:@"discovery_activity_list_place"] forState:UIControlStateNormal];
     [self.contentView addSubview:locationBtn];
     self.locationBtn = locationBtn;
 //    [locationBtn setDebug:YES];

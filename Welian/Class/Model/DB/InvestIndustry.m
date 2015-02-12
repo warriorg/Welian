@@ -38,7 +38,7 @@
 {
     InvestIndustry *investitem = [InvestIndustry MR_createEntity];
     investitem.industryid = investIndustry.industryid;
-    investitem.industryname = investIndustry.industryname;
+    investitem.industryname = [investIndustry.industryname deleteTopAndBottomKonggeAndHuiche];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     return investitem;
