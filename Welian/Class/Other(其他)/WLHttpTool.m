@@ -1266,7 +1266,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:NO];
+    } withHUD:YES andDim:YES];
 }
 
 #pragma mark - 解析短链接
