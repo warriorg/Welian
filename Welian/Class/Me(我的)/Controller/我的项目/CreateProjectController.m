@@ -384,13 +384,14 @@ static NSString *projectcellid = @"projectcellid";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
     // 2.显示相册
     NSMutableArray *photos = [NSMutableArray array];
+    MJPhoto *photo = [[MJPhoto alloc] init];
     if (indexPath.section==0) {
         if (_projectModel.photos.count) {
             seleSection = 0;
             IPhotoInfo *photoI = _projectModel.photos[indexPath.row];
-            MJPhoto *photo = [[MJPhoto alloc] init];
             [photo setUrl:[NSURL URLWithString:photoI.photo]];
             [photos addObject:photo];
             
@@ -398,7 +399,6 @@ static NSString *projectcellid = @"projectcellid";
             seleSection = 1;
 //            [self showCurrentPhotos:indexPath];
             ALAsset *asset = self.assetsArray[indexPath.row];
-            MJPhoto *photo = [[MJPhoto alloc] init];
             [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
             [photos addObject:photo];
         }
@@ -406,10 +406,10 @@ static NSString *projectcellid = @"projectcellid";
 //        [self showCurrentPhotos:indexPath];
         seleSection = 1;
         ALAsset *asset = self.assetsArray[indexPath.row];
-        MJPhoto *photo = [[MJPhoto alloc] init];
         [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
         [photos addObject:photo];
     }
+    [photo setSrcImageView:cell.picImageV];
     _row = indexPath.row;
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     [browser setIsDelete:YES];
@@ -437,11 +437,13 @@ static NSString *projectcellid = @"projectcellid";
 - (void)deletePhoto
 {
     if (seleSection) {  // 删除本地
-        [_browser handleSingleTap];
         [self.assetsArray removeObjectAtIndex:_row];
     }else{    // 删除网络
-        
+        NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
+        [photosM removeObjectAtIndex:_row];
+        [_projectModel setPhotos:photosM];
     }
+    [_browser handleSingleTap];
     [self.tableView setTableFooterView:self.footView];
     [self.footView.collectionView reloadData];
     DLog(@"%d",_browser.currentPhotoIndex);
