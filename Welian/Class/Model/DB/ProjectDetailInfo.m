@@ -20,8 +20,8 @@
 @dynamic des;
 @dynamic financing;
 @dynamic intro;
-@dynamic isFavorite;
-@dynamic isZan;
+@dynamic isfavorite;
+@dynamic iszan;
 @dynamic membercount;
 @dynamic name;
 @dynamic pid;
@@ -89,8 +89,7 @@
         if(industrys.count > 1){
             for (int i = 1; i < industrys.count;i++) {
                 IInvestIndustryModel *industry = industrys[i];
-                [types appendString:@" | "];
-                [types appendString:industry.industryname];
+                [types appendFormat:@" | %@",industry.industryname];
             }
         }
     }else{
@@ -112,8 +111,8 @@
     detailInfo.des = iProjectDetailInfo.des;
     detailInfo.financing = iProjectDetailInfo.financing;
     detailInfo.intro = iProjectDetailInfo.intro;
-    detailInfo.isFavorite = iProjectDetailInfo.isFavorite;
-    detailInfo.isZan = iProjectDetailInfo.isZan;
+    detailInfo.isfavorite = iProjectDetailInfo.isfavorite;
+    detailInfo.iszan = iProjectDetailInfo.iszan;
     detailInfo.membercount = iProjectDetailInfo.membercount;
     detailInfo.name = iProjectDetailInfo.name;
     detailInfo.pid = iProjectDetailInfo.pid;
@@ -128,9 +127,17 @@
     detailInfo.rsProjectUser = projectUser;
     
     //设置领域
+    if (detailInfo.rsIndustrys.count > 0) {
+        [detailInfo removeRsIndustrys:detailInfo.rsIndustrys];
+    }
     for (IInvestIndustryModel *investIndustryModel in iProjectDetailInfo.industrys) {
         InvestIndustry *investIndustry = [InvestIndustry createInvestIndustryWith:investIndustryModel];
         [detailInfo addRsIndustrysObject:investIndustry];
+    }
+    
+    //先删除
+    if (detailInfo.rsIndustrys.count > 0) {
+        [detailInfo removeRsPhotoInfos:detailInfo.rsPhotoInfos];
     }
     //设置照片信息
     for (IPhotoInfo *iPhotoInfo in iProjectDetailInfo.photos) {

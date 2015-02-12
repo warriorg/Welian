@@ -287,7 +287,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         [weakSelf closeProjectDetailInfoView];
     }];
     
-    if (self.projectDetailInfo) {
+    if (_projectDetailInfo) {
         [self.tableView reloadData];
         [self updateUI];
     }else{
@@ -323,14 +323,14 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    return _projectDetailInfo.zancount.integerValue < 1 ? 1 : 2;
+    return _iProjectDetailInfo.zancount.integerValue < 1 ? 1 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_projectDetailInfo.zancount.integerValue < 1) {
+    if (_iProjectDetailInfo.zancount.integerValue < 1) {
         //没有点赞的好友
-        return _datasource.count;
+        return _datasource.count ? : 1;
     }else{
         if (section == 0) {
             return 1;
@@ -338,7 +338,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             if (_datasource.count == 0) {
                 return 1;
             }else{
-                return _datasource.count;
+                return _datasource.count ? : 1;
             }
         }
 
@@ -353,7 +353,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    titleLabel.text = section == 0 && _projectDetailInfo.zancount.integerValue > 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论 (%d)",_projectDetailInfo.commentcount.intValue];
+    titleLabel.text = section == 0 && _iProjectDetailInfo.zancount.integerValue > 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论 (%d)",_iProjectDetailInfo.commentcount.intValue];
     [titleLabel sizeToFit];
     titleLabel.left = 15.f;
     titleLabel.centerY = headerView.height / 2.f;
@@ -364,7 +364,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_projectDetailInfo.zancount.intValue > 0) {
+    if (_iProjectDetailInfo.zancount.intValue > 0) {
         if(indexPath.section == 0){
             //赞过的人
             static NSString *cellIdentifier = @"Project_Favorte_View_Cell";
@@ -446,13 +446,13 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (_projectDetailInfo.zancount.intValue > 0) {
+    if (_iProjectDetailInfo.zancount.intValue > 0) {
         return kTableViewHeaderHeight;
     }else{
-        if (_projectDetailInfo.commentcount.integerValue > 0) {
+        if (_iProjectDetailInfo.commentcount.integerValue > 0) {
             return kTableViewHeaderHeight;
         }else{
-            return 0.01f;
+            return 0;
         }
     }
 }
@@ -469,7 +469,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_projectDetailInfo.zancount.intValue > 0) {
+    if (_iProjectDetailInfo.zancount.intValue > 0) {
         if (indexPath.section == 0) {
             return 40.f;
         }
@@ -609,12 +609,12 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_iProjectDetailInfo.zanusers];
-    if (!_projectDetailInfo.isZan.boolValue) {
+    if (!_iProjectDetailInfo.iszan.boolValue) {
         //赞
         [WLHttpTool zanProjectParameterDic:@{@"pid":_projectPid}
                                    success:^(id JSON) {
-                                       _projectDetailInfo.isZan = @(1);
-                                       _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue + 1);
+                                       _iProjectDetailInfo.iszan = @(1);
+                                       _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue + 1);
                                        
                                        IBaseUserM *zanUser = [[IBaseUserM alloc] init];
                                        zanUser.avatar = loginUser.avatar;
@@ -628,7 +628,12 @@ static NSString *noCommentCell = @"NoCommentCell";
                                        _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
                                        
                                        //刷新
-                                       [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                       if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+                                           //如果之前没有刷新整个table
+                                           [_tableView reloadData];
+                                       }else{
+                                           [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                       }
                                        
                                        [self checkZanStatus];
                                        
@@ -640,8 +645,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         //取消赞
         [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectPid}
                                          success:^(id JSON) {
-                                             _projectDetailInfo.isZan = @(0);
-                                             _projectDetailInfo.zancount = @(_projectDetailInfo.zancount.integerValue - 1);
+                                             _iProjectDetailInfo.iszan = @(0);
+                                             _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue - 1);
                                              
                                              IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
                                                  return [obj uid].integerValue == loginUser.uid.integerValue;
@@ -652,7 +657,12 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                  _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
                                                  
                                                  //刷新
-                                                 [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                                 if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+                                                     //如果之前没有刷新整个table
+                                                     [_tableView reloadData];
+                                                 }else{
+                                                     [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                                 }
                                              }
                                              
                                              [self checkZanStatus];
@@ -684,23 +694,23 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)favorteBtnClicked:(UIButton *)sender
 {
-    if (_projectDetailInfo.isFavorite.boolValue) {
+    if (_iProjectDetailInfo.isfavorite.boolValue) {
         //取消收藏
         [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectPid}
                                               success:^(id JSON) {
-                                                  _projectDetailInfo.isFavorite = @(0);
+                                                  _iProjectDetailInfo.isfavorite = @(0);
                                                   [self checkFavorteStatus];
                                                   if (self.favoriteBlock) {
                                                       self.favoriteBlock();
                                                   }
                                               } fail:^(NSError *error) {
                                                   [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
-                                              }];
+                                              }]; 
     }else{
         //收藏项目
         [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectPid}
                                         success:^(id JSON) {
-                                            _projectDetailInfo.isFavorite = @(1);
+                                            _iProjectDetailInfo.isfavorite = @(1);
                                             [self checkFavorteStatus];
                                         } fail:^(NSError *error) {
                                             [UIAlertView showWithTitle:@"系统提示" message:@"收藏项目失败，请重试！"];
@@ -712,7 +722,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 //检测是否点赞
 - (void)checkZanStatus
 {
-    if (_projectDetailInfo.isZan.boolValue) {
+    if (_iProjectDetailInfo.iszan.boolValue) {
         [_zanBtn setTitle:@"已赞" forState:UIControlStateNormal];
         [_zanBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
     }else{
@@ -724,7 +734,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 //检测是否收藏当前项目
 - (void)checkFavorteStatus
 {
-    if (_projectDetailInfo.isFavorite.boolValue) {
+    if (_iProjectDetailInfo.isfavorite.boolValue) {
         [_favorteBtn setTitle:@"已收藏" forState:UIControlStateNormal];
         [_favorteBtn setImage:[UIImage imageNamed:@"me_mywriten_shoucang_pre"] forState:UIControlStateNormal];
     }else{
@@ -812,9 +822,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              [dataAM addObject:commentFrame];
                                          }
                                          self.datasource = dataAM;
+                                         [_tableView reloadData];
                                          
                                          [self updateUI];
-                                         [_tableView reloadData];
                                      } fail:^(NSError *error) {
                                          [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
                                      }];

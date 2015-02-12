@@ -72,12 +72,11 @@
     //类型
     NSMutableString *types = [NSMutableString string];
     if (self.industrys.count > 0) {
-        [types appendString:[self.industrys[0] industryname]];
+        [types appendFormat:@"%@",[[self.industrys[0] industryname] deleteTopAndBottomKonggeAndHuiche]];
         if(self.industrys.count > 1){
             for (int i = 1; i < self.industrys.count;i++) {
                 IInvestIndustryModel *industry = self.industrys[i];
-                [types appendString:@" | "];
-                [types appendString:industry.industryname];
+                [types appendFormat:@" | %@",[industry.industryname deleteTopAndBottomKonggeAndHuiche]];
             }
         }
     }else{

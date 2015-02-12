@@ -19,8 +19,8 @@
 @property (nonatomic, retain) NSString * des;
 @property (nonatomic, retain) NSString * financing;
 @property (nonatomic, retain) NSString * intro;
-@property (nonatomic, retain) NSNumber * isFavorite;
-@property (nonatomic, retain) NSNumber * isZan;
+@property (nonatomic, retain) NSNumber * isfavorite;
+@property (nonatomic, retain) NSNumber * iszan;
 @property (nonatomic, retain) NSNumber * membercount;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * pid;

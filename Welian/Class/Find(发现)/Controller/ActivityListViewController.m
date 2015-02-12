@@ -10,6 +10,7 @@
 #import "ActivityDetailInfoViewController.h"
 #import "ActivityListViewCell.h"
 #import "WLSegmentedControl.h"
+#import "ActivityTypeInfoView.h"
 
 #define kHeaderHeight 43.f
 #define kTableViewCellHeight 98.f
@@ -17,7 +18,11 @@
 
 @interface ActivityListViewController ()<UITableViewDataSource,UITableViewDelegate,WLSegmentedControlDelegate>
 
+@property (assign,nonatomic) WLSegmentedControl *segmentedControl;
 @property (assign,nonatomic) UITableView *tableView;
+@property (strong,nonatomic) ActivityTypeInfoView *timeActivityTypeInfo;
+@property (strong,nonatomic) ActivityTypeInfoView *cityActivityTypeInfo;
+
 @property (strong,nonatomic) NSArray *datasource;
 
 @end
@@ -46,10 +51,12 @@
     headView.layer.borderWidths = @"{0,0,0.6,0}";
     [self.view addSubview:headView];
     //操作栏
-    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height) Titles:@[@"时间",@"地区"] Images:nil Bridges:nil isHorizontal:YES];
+    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height - 0.5) Titles:@[@"时间",@"地区"] Images:nil Bridges:nil isHorizontal:YES];
     segmentedControl.showSmallImage = YES;
     segmentedControl.lineHeightAll = YES;
+    segmentedControl.delegate = self;
     [headView addSubview:segmentedControl];
+    self.segmentedControl = segmentedControl;
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f,headView.bottom,self.view.width,self.view.height - headView.bottom)];
     tableView.dataSource = self;
@@ -59,6 +66,26 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
+    ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, headView.bottom, self.view.width, tableView.height)];
+    timeActivityTypeInfo.hidden = YES;
+    timeActivityTypeInfo.datasource = @[@"全部",@"最近一周",@"本月",@"上月"];
+    WEAKSELF
+    [timeActivityTypeInfo setBlock:^(NSString *info){
+        [weakSelf.timeActivityTypeInfo dismissToLeft];
+        weakSelf.segmentedControl.titles = @[info,@"地区"];
+    }];
+    [self.view addSubview:timeActivityTypeInfo];
+    self.timeActivityTypeInfo = timeActivityTypeInfo;
+    
+    ActivityTypeInfoView *cityActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, headView.bottom, self.view.width, tableView.height)];
+    cityActivityTypeInfo.hidden = YES;
+    cityActivityTypeInfo.datasource = @[@"全国",@"杭州",@"上海",@"北京",@"广州",@"深圳",@"武汉"];
+    [cityActivityTypeInfo setBlock:^(NSString *info){
+        [weakSelf.cityActivityTypeInfo dismissToRight];
+        weakSelf.segmentedControl.titles = @[@"全国",info];
+    }];
+    [self.view addSubview:cityActivityTypeInfo];
+    self.cityActivityTypeInfo = cityActivityTypeInfo;
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -138,10 +165,34 @@
 #pragma mark - WLSegmentedControlDelegate
 - (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
 {
-    
+    switch (index) {
+        case 0:
+            if (_cityActivityTypeInfo.hidden == NO){
+                [_cityActivityTypeInfo dismissToRight];
+            }
+            if (_timeActivityTypeInfo.hidden) {
+                [_timeActivityTypeInfo showInViewFromLeft:self.view];
+            }else{
+                [_timeActivityTypeInfo dismissToLeft];
+            }
+            break;
+        case 1:
+            if (_timeActivityTypeInfo.hidden == NO) {
+                [_timeActivityTypeInfo dismissToLeft];
+            }
+            if (_cityActivityTypeInfo.hidden) {
+                [_cityActivityTypeInfo showInViewFromRight:self.view];
+            }else{
+                [_cityActivityTypeInfo dismissToRight];
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Private
+
 
 
 @end
