@@ -258,6 +258,12 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 检测项目是否有同名 
 + (void)checkProjectParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
+#pragma mark - 添加项目图片
++ (void)saveProjectPicParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
+#pragma mark - 删除项目图片
++ (void)deleteProjectPicParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 

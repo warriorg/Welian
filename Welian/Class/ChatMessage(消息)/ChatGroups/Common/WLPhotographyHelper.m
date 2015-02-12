@@ -50,6 +50,8 @@
     }];
 }
 
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
     //重新设置状态栏颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

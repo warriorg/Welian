@@ -19,6 +19,7 @@
 @dynamic date;
 @dynamic des;
 @dynamic financing;
+@dynamic financingtime;
 @dynamic intro;
 @dynamic isfavorite;
 @dynamic iszan;
@@ -110,6 +111,7 @@
     detailInfo.date = iProjectDetailInfo.date;
     detailInfo.des = iProjectDetailInfo.des;
     detailInfo.financing = iProjectDetailInfo.financing;
+    detailInfo.financingtime = iProjectDetailInfo.financingtime;
     detailInfo.intro = iProjectDetailInfo.intro;
     detailInfo.isfavorite = iProjectDetailInfo.isfavorite;
     detailInfo.iszan = iProjectDetailInfo.iszan;
@@ -148,6 +150,8 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     return detailInfo;
 }
+
+
 
 //获取指定pid的项目
 + (ProjectDetailInfo *)getProjectDetailInfoWithPid:(NSNumber *)pid

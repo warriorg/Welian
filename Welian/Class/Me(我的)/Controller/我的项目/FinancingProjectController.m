@@ -13,6 +13,7 @@
 #import "HeaderLabel.h"
 #import "ProjectDetailsViewController.h"
 #import "IInvestStageModel.h"
+#import "CreateHeaderView.h"
 
 #define KFooterText @"如欲融资，重新填写融资信息即可"
 
@@ -72,7 +73,14 @@ static NSString *financingCellid = @"financingCellid";
         
         if (!isEdit) {
             self.isFinancing = 0;
-            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+            CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
+            if (Iphone6plus) {
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_three1242.png"]];
+            }else{
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_three640.png"]];
+            }
+            [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
+            [self.tableView setTableHeaderView:headerV];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
         }else{
             if (projectModel.status.integerValue) {
@@ -104,7 +112,7 @@ static NSString *financingCellid = @"financingCellid";
     if (section==0) {
         return 0.1;
     }else if (section==1){
-        NSString *str = @"融资项目将会直接推送给243位认证投资人，非认证投资人无法看到融资信息。";
+        NSString *str = @"融资项目将会直接推送给所有认证投资人，非认证投资人无法看到融资信息。";
         return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }
     return 0;
@@ -118,6 +126,8 @@ static NSString *financingCellid = @"financingCellid";
     }else if (section==2){
         NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
         return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
+    }else if (section==1){
+        return 30;
     }
     return 0;
 }
@@ -126,7 +136,7 @@ static NSString *financingCellid = @"financingCellid";
 {
     if (section==1) {
         HeaderLabel *headLabel = [[[NSBundle mainBundle]loadNibNamed:@"HeaderLabel" owner:nil options:nil] firstObject];
-        [headLabel.titLabel setText:@"融资项目将会直接推送给243位认证投资人，非认证投资人无法看到融资信息。"];
+        [headLabel.titLabel setText:@"融资项目将会直接推送给所有认证投资人，非认证投资人无法看到融资信息。"];
         return headLabel;
     }
     return nil;
@@ -142,7 +152,15 @@ static NSString *financingCellid = @"financingCellid";
             return nil;
         }
     }else if (section==1) {
-        [footerLabel.titLabel setText:@"投后估值为1000万"];
+         NSInteger a = _projectModel.amount.integerValue/_projectModel.share.integerValue*100;
+        NSString *headStr = [NSString stringWithFormat:@"投后估值为%d万",a];
+        NSInteger  length = [[NSString stringWithFormat:@"%d",a] length];
+        
+        NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
+        NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
+        [attrstr addAttributes:attrsDic range:NSMakeRange(5, length)];
+        
+        [footerLabel.titLabel setAttributedText:attrstr];
     }else if (section ==2){
         [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
     }
@@ -252,6 +270,9 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textField setBk_shouldBeginEditingBlock:nil];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
                 [weakSelf.projectModel setAmount:@(textField.text.integerValue)];
+                if (weakSelf.projectModel.amount.integerValue&&weakSelf.projectModel.share) {
+                    [weakSelf.tableView reloadData];
+                }
             }];
            UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"万(CNY)　"];
@@ -265,6 +286,9 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textField setBk_shouldBeginEditingBlock:nil];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
                 [weakSelf.projectModel setShare:@(textField.text.integerValue)];
+                if (weakSelf.projectModel.amount.integerValue&&weakSelf.projectModel.share) {
+                    [weakSelf.tableView reloadData];
+                }
             }];
             UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"%(0~100)　"];
@@ -338,12 +362,13 @@ static NSString *financingCellid = @"financingCellid";
                 [weakSelf.selfProjectM setAmount:weakSelf.projectModel.amount];
                 [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
                 [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
+                [weakSelf.selfProjectM setFinancing:weakSelf.projectModel.financing];
             }else{
                 [weakSelf.selfProjectM setAmount:nil];
                 [weakSelf.selfProjectM setShare:nil];
                 [weakSelf.selfProjectM setStage:nil];
             }
-            ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
+            ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:weakSelf.selfProjectM];
             if (weakSelf.isEdit) {
                 if (weakSelf.projectDataBlock) {
                     weakSelf.projectDataBlock(projectMR);

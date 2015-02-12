@@ -1247,6 +1247,28 @@
     } withHUD:YES andDim:NO];
 }
 
+#pragma mark - 添加项目图片
++ (void)saveProjectPicParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"saveProjectPic",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
+#pragma mark - 删除项目图片
++ (void)deleteProjectPicParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"deleteProjectPic",@"data":parameterDic};
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock(JSON);
+    } failure:^(NSError *error) {
+        failurBlock(error);
+    } withHUD:YES andDim:NO];
+}
+
 #pragma mark - 解析短链接
 + (void)getLongUrlFromShort:(NSString *)shortUrl success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {

@@ -21,6 +21,9 @@
 #import "MJExtension.h"
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
+#import "CreateHeaderView.h"
+#import "MJExtension.h"
+#import "WLPhotographyHelper.h"
 
 @interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
 {
@@ -36,10 +39,18 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) CreateProjectFootView *footView;
 @property (nonatomic, strong) IProjectDetailInfo *projectM;
+@property (nonatomic, strong) WLPhotographyHelper *photographyHelper;
 @end
 
 static NSString *projectcellid = @"projectcellid";
 @implementation CreateProjectController
+
+- (WLPhotographyHelper *)photographyHelper {
+    if (!_photographyHelper) {
+        _photographyHelper = [[WLPhotographyHelper alloc] init];
+    }
+    return _photographyHelper;
+}
 
 - (UITableView *)tableView
 {
@@ -66,14 +77,17 @@ static NSString *projectcellid = @"projectcellid";
         _footView.collectionView.delegate = self;
         _footView.collectionView.dataSource = self;
     }
-    NSInteger count = _projectModel.photos.count+self.assetsArray.count;
-    NSInteger rowCount = (count + 3 - 1) / 3;
+    NSInteger rowCount = 0;
     
+    NSInteger count = _projectModel.photos.count;
+    rowCount += (count + 3 - 1) / 3;
+    count = self.assetsArray.count;
+    rowCount += (count + 3 - 1) / 3;
     [_footView.collectionView setFrame:CGRectMake(0, CGRectGetMaxY(_footView.textView.frame), SuperSize.width, rowCount*((SuperSize.width-50)/3)+20)];
     
     [_footView.photBut setFrame:CGRectMake(15, CGRectGetMaxY(_footView.collectionView.frame)+20, 35, 35)];
     CGRect footFrame = _footView.frame;
-    if (count) {
+    if (_projectModel.photos.count+self.assetsArray.count) {
         footFrame.size.height = CGRectGetMaxY(_footView.photBut.frame)+20;
     }else{
         footFrame.size.height = 300;
@@ -113,10 +127,19 @@ static NSString *projectcellid = @"projectcellid";
         }
         [self.view addSubview:self.tableView];
         [self.tableView setTableFooterView:self.footView];
+        
         if (isEdit) {
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
         }else{
-            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+            CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
+            if (Iphone6plus) {
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_one1242.png"]];
+            }else{
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_one640.png"]];
+            }
+            
+            [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
+            [self.tableView setTableHeaderView:headerV];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
         }
     }
@@ -126,6 +149,8 @@ static NSString *projectcellid = @"projectcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"项目简介"];
+    self.assetsArray = [NSMutableArray array];
+    _alassets = [[ALAssetsLibrary alloc] init];
     if (_projectModel.des.length) {
         [self.footView.textView setPlaceholder:nil];
         [self.footView.textView setText:_projectModel.des];
@@ -212,7 +237,6 @@ static NSString *projectcellid = @"projectcellid";
             }];
         }
     }
-    
     return cell;
 }
 
@@ -220,12 +244,26 @@ static NSString *projectcellid = @"projectcellid";
 {
     UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [sheet bk_addButtonWithTitle:@"拍照" handler:^{
+        
+        
+        
         // 判断相机可以使用
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-            [self presentViewController:imagePicker animated:YES completion:^{
+            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:^(UIImage *image, NSDictionary *editingInfo) {
+                [WLHUDView showCustomHUD:@"正在加载" imageview:nil];
+                UIImage *edImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
+                NSDictionary *metaDic = [editingInfo objectForKey:UIImagePickerControllerMediaMetadata];
+                // 保存图片到相册，调用的相关方法，查看是否保存成功
+                [_alassets writeImageToSavedPhotosAlbum:edImage.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
+                    [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                        [self.assetsArray addObject:asset];
+                        [self.footView.collectionView reloadData];
+                        [self.tableView setTableFooterView:self.footView];
+                        [WLHUDView hiddenHud];
+                    } failureBlock:^(NSError *error) {
+                        [WLHUDView hiddenHud];
+                    }];
+                }];
             }];
         }else {
             [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
@@ -248,30 +286,29 @@ static NSString *projectcellid = @"projectcellid";
 }
 
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
-    
-    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
-
-        // 保存图片到相册，调用的相关方法，查看是否保存成功
-        [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
-            [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-                [self.assetsArray addObject:asset];
-                [self.footView.collectionView reloadData];
-                [picker dismissViewControllerAnimated:YES completion:^{
-                    
-                }];
-            } failureBlock:^(NSError *error) {
-                
-            }];
-            
-        }];
-    }
-}
-
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+//    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
+//    
+//    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
+//
+//        // 保存图片到相册，调用的相关方法，查看是否保存成功
+//        [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
+//            [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+//                [self.assetsArray addObject:asset];
+//                [self.footView.collectionView reloadData];
+//                [picker dismissViewControllerAnimated:YES completion:^{
+//                    
+//                }];
+//            } failureBlock:^(NSError *error) {
+//                
+//            }];
+//            
+//        }];
+//    }
+//}
 
 #pragma mark - Assets Picker Delegate
 - (BOOL)assetsPickerController:(CTAssetsPickerController *)picker isDefaultAssetsGroup:(ALAssetsGroup *)group
@@ -384,75 +421,76 @@ static NSString *projectcellid = @"projectcellid";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
     // 2.显示相册
-    NSMutableArray *photos = [NSMutableArray array];
     MJPhoto *photo = [[MJPhoto alloc] init];
     if (indexPath.section==0) {
         if (_projectModel.photos.count) {
             seleSection = 0;
             IPhotoInfo *photoI = _projectModel.photos[indexPath.row];
             [photo setUrl:[NSURL URLWithString:photoI.photo]];
-            [photos addObject:photo];
-            
         }else{
             seleSection = 1;
-//            [self showCurrentPhotos:indexPath];
             ALAsset *asset = self.assetsArray[indexPath.row];
-            [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
-            [photos addObject:photo];
+          UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                        scale:0.5
+                                  orientation:UIImageOrientationUp];
+            [photo setImage:image];
         }
     }else if(indexPath.section==1){
-//        [self showCurrentPhotos:indexPath];
         seleSection = 1;
         ALAsset *asset = self.assetsArray[indexPath.row];
-        [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
-        [photos addObject:photo];
+        UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                             scale:0.5
+                                       orientation:UIImageOrientationUp];
+        [photo setImage:image];
     }
-    [photo setSrcImageView:cell.picImageV];
+//    [photo setHasNoImageView:YES];
     _row = indexPath.row;
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     [browser setIsDelete:YES];
-//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
+    browser.photos = @[photo]; // 设置所有的图片
     [browser show];
     [browser.toolbar.saveImageBtn addTarget:self action:@selector(deletePhoto) forControlEvents:UIControlEventTouchUpInside];
     _browser= browser;
 }
 
-//#pragma mark - 显示本地图片
-//- (void)showCurrentPhotos:(NSIndexPath *)indexPath
-//{
-//    CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assetsArray picDatablock:^(NSMutableArray *picArray) {
-//        self.assetsArray = picArray;
-//        [self.tableView setTableFooterView:self.footView];
-//        [self.footView.collectionView reloadData];
-//    }];
-//    vc.pageIndex = indexPath.row;
-//
-//    [self.navigationController pushViewController:vc animated:YES];
-//}
-
 #pragma mark - 删除图片
 - (void)deletePhoto
 {
-    if (seleSection) {  // 删除本地
-        [self.assetsArray removeObjectAtIndex:_row];
-    }else{    // 删除网络
-        NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
-        [photosM removeObjectAtIndex:_row];
-        [_projectModel setPhotos:photosM];
-    }
-    [_browser handleSingleTap];
-    [self.tableView setTableFooterView:self.footView];
-    [self.footView.collectionView reloadData];
-    DLog(@"%d",_browser.currentPhotoIndex);
+    UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"确定删除？"];
+    [alert bk_addButtonWithTitle:@"取消" handler:nil];
+    [alert bk_addButtonWithTitle:@"确定" handler:^{
+        if (seleSection) {  // 删除本地
+            [self.assetsArray removeObjectAtIndex:_row];
+            [_browser handleSingleTap];
+            [self.tableView setTableFooterView:self.footView];
+            [self.footView.collectionView reloadData];
+            
+        }else{    // 删除网络
+            IPhotoInfo *photoI = _projectModel.photos[_row];
+            [WLHttpTool deleteProjectPicParameterDic:@{@"picid":photoI.picid} success:^(id JSON) {
+                NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
+                [photosM removeObjectAtIndex:_row];
+                [_projectModel setPhotos:photosM];
+                [self.projectM setPhotos:photosM];
+                // 修改数据库数据
+                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                [_browser handleSingleTap];
+                [self.tableView setTableFooterView:self.footView];
+                [self.footView.collectionView reloadData];
+            } fail:^(NSError *error) {
+                
+            }];
+        }
+
+    }];
+    [alert show];
 }
 
 #pragma mark - 创建项目并 下一步团队成员
 - (void)addMemberProject
 {
-
     [self.view.findFirstResponder resignFirstResponder];
     if (!_projectModel.name.length) {
         [WLHUDView showErrorHUD:@"请填写项目名称"];
@@ -493,8 +531,6 @@ static NSString *projectcellid = @"projectcellid";
             
         }];
     }
-    
-    
 }
 
 - (void)createProjectParameterDic
@@ -519,19 +555,11 @@ static NSString *projectcellid = @"projectcellid";
     if (_projectModel.website.length) {
         [saveProjectDic setObject:_projectModel.website forKey:@"website"];
     }
-    
-    if (self.assetsArray) {
-        NSMutableArray *photArray = [NSMutableArray array];
-        for (ALAsset *asset in self.assetsArray) {
-            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                                 scale:0.5
-                                           orientation:UIImageOrientationUp];
-            NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
-            NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            
-            [photArray addObject:@{@"photo":imageStr,@"title":@"jpg"}];
+    if (!_projectModel.photos.count) {
+        if (self.assetsArray.count) {
+            NSMutableArray *photArray = [self seleAssetsArray];
+            [saveProjectDic setObject:photArray forKey:@"photos"];
         }
-        [saveProjectDic setObject:photArray forKey:@"photos"];
     }
     [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
         if (JSON) {
@@ -555,34 +583,100 @@ static NSString *projectcellid = @"projectcellid";
             [iProjectinfo setIndustrys:_projectModel.industrys];
             [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
             
-            if (_isEdit) {
-                // 修改数据库数据
-               ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                if (self.projectDataBlock) {
-                    self.projectDataBlock(projectMR);
+            if (_projectModel.photos.count) {
+                if (self.assetsArray.count) {
+                    NSMutableArray *photDicArray = [self seleAssetsArray];
+                    [WLHttpTool saveProjectPicParameterDic:@{@"pid":_projectModel.pid,@"photos":photDicArray} success:^(id JSON) {
+                        NSMutableArray *photoArray = [NSMutableArray arrayWithArray:_projectModel.photos];
+                        for (NSDictionary *photoDic in JSON) {
+                            IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
+                            [photoArray addObject:photoI];
+                        }
+                        [_projectModel setPhotos:photoArray];
+                        [self.projectM setPhotos:photoArray];
+                        // 修改数据库数据
+                        ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                        if (self.projectDataBlock) {
+                            self.projectDataBlock(projectMR);
+                        }
+                        [self.assetsArray removeAllObjects];
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                }else{
+                    if (_isEdit) {
+                        // 修改数据库数据
+                        ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                        if (self.projectDataBlock) {
+                            self.projectDataBlock(projectMR);
+                        }
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
                 }
-                [self.navigationController popViewControllerAnimated:YES];
             }else{
-                IBaseUserM *meUserM = [[IBaseUserM alloc] init];
-                LogInUser *logUser = [LogInUser getCurrentLoginUser];
-                [meUserM setName:logUser.name];
-                [meUserM setUid:logUser.uid];
-                meUserM.friendship = logUser.friendship;
-                meUserM.avatar = logUser.avatar;
-                meUserM.company = logUser.company;
-                meUserM.position = logUser.position;
-                [_projectModel setUser:meUserM];
-                [self.projectM setUser:meUserM];
-                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                
-                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
-                [self.navigationController pushViewController:memberVC animated:YES];
+                if (_isEdit) {
+                    // 修改数据库数据
+                    ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                    if (self.projectDataBlock) {
+                        self.projectDataBlock(projectMR);
+                    }
+                    [self.assetsArray removeAllObjects];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                }else{
+                    
+                    NSArray *creatPhots = [JSON objectForKey:@"photos"];
+                    
+                    if (creatPhots.count) {
+                        NSMutableArray *photoArray = [NSMutableArray array];
+                        for (NSDictionary *photoDic in creatPhots) {
+                            IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
+                            [photoArray addObject:photoI];
+                        }
+                        [_projectModel setPhotos:photoArray];
+                        [self.projectM setPhotos:photoArray];
+                    }
+                    
+                    IBaseUserM *meUserM = [[IBaseUserM alloc] init];
+                    LogInUser *logUser = [LogInUser getCurrentLoginUser];
+                    [meUserM setName:logUser.name];
+                    [meUserM setUid:logUser.uid];
+                    meUserM.friendship = logUser.friendship;
+                    meUserM.avatar = logUser.avatar;
+                    meUserM.company = logUser.company;
+                    meUserM.position = logUser.position;
+                    [_projectModel setUser:meUserM];
+                    [self.projectM setUser:meUserM];
+                    [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                    MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
+                    [self.navigationController pushViewController:memberVC animated:YES];
+                    [self.assetsArray removeAllObjects];
+                    [self.tableView setTableFooterView:self.footView];
+                    [self.footView.collectionView reloadData];
+                }
             }
+            
         }
     } fail:^(NSError *error) {
         
     }];
 
+}
+
+- (NSMutableArray *)seleAssetsArray
+{
+    NSMutableArray *photArray = [NSMutableArray array];
+    for (ALAsset *asset in self.assetsArray) {
+        UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                             scale:0.5
+                                       orientation:UIImageOrientationUp];
+        NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+        NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [photArray addObject:@{@"photo":imageStr,@"title":@"jpg"}];
+    }
+    return photArray;
 }
 
 - (void)viewDidDisappear:(BOOL)animated

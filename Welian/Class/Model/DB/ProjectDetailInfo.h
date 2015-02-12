@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * date;
 @property (nonatomic, retain) NSString * des;
 @property (nonatomic, retain) NSString * financing;
+@property (nonatomic, retain) NSString *financingtime;
 @property (nonatomic, retain) NSString * intro;
 @property (nonatomic, retain) NSNumber * isfavorite;
 @property (nonatomic, retain) NSNumber * iszan;
@@ -40,7 +41,6 @@
 - (NSString *)displayZancountInfo;
 //项目领域
 - (NSString *)displayIndustrys;
-
 
 //创建记录
 + (ProjectDetailInfo *)createWithIProjectDetailInfo:(IProjectDetailInfo *)iProjectDetailInfo;

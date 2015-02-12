@@ -11,6 +11,7 @@
 #import "FriendCell.h"
 #import "ChineseString.h"
 #import "UIBarButtonItem+Badge.h"
+#import "CreateHeaderView.h"
 
 @interface MemberProjectController () <UITableViewDataSource, UITableViewDelegate>
 {
@@ -66,7 +67,14 @@ static NSString *fridcellid = @"fridcellid";
         if (isEdit) {
             [button setTitle:@"保存" forState:UIControlStateNormal];
         }else{
-            [self.tableView setTableHeaderView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 90)]];
+            CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
+            if (Iphone6plus) {
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_two1242.png"]];
+            }else{
+                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_two640.png"]];
+            }
+            [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
+            [self.tableView setTableHeaderView:headerV];
             [button setTitle:@"下一步" forState:UIControlStateNormal];
         }
     }

@@ -218,7 +218,10 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"isSelect == 1"];
     NSMutableArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
-    
+    if (!arrayPre.count) {
+        [WLHUDView showErrorHUD:@"请选择"];
+        return;
+    }
     if (_type==1) {
         for (IInvestIndustryModel *industM in arrayPre) {
             if ([industM.industryname isEqualToString:@"不限"]) {
