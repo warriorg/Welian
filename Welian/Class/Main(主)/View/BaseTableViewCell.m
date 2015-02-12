@@ -34,6 +34,12 @@
     return self;
 }
 
+- (void)setHidBottomLine:(BOOL)hidBottomLine
+{
+    _hidBottomLine = hidBottomLine;
+    _bottomLineView.hidden = hidBottomLine;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

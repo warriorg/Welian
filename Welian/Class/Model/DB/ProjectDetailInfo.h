@@ -40,7 +40,8 @@
 - (NSString *)displayZancountInfo;
 //项目领域
 - (NSString *)displayIndustrys;
-
+//更新点赞数量
+- (ProjectDetailInfo *)updateZancount:(NSNumber *)zancount;
 
 //创建记录
 + (ProjectDetailInfo *)createWithIProjectDetailInfo:(IProjectDetailInfo *)iProjectDetailInfo;

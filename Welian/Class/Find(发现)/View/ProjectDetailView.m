@@ -156,9 +156,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProjcetDetailImageViewCell *cell = (ProjcetDetailImageViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    ProjcetDetailImageViewCell *cell = (ProjcetDetailImageViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    NSMutableArray *imageViews = [NSMutableArray array];
+    for (int i = 0; i < _datasource.count; i++) {
+        ProjcetDetailImageViewCell *cell = (ProjcetDetailImageViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        [imageViews addObject:cell.photoView];
+    }
     if (_imageClickedBlock) {
-        _imageClickedBlock(indexPath,cell.photoView);
+        _imageClickedBlock(indexPath,imageViews);
     }
 }
 

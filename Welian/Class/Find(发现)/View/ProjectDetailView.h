@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WLPhotoView.h"
 
-typedef void(^ProjectDetailImageClickedBlock)(NSIndexPath *indexPath,WLPhotoView *imageView);
+typedef void(^ProjectDetailImageClickedBlock)(NSIndexPath *indexPath,NSArray *imageViews);
 
 @interface ProjectDetailView : UIView
 
