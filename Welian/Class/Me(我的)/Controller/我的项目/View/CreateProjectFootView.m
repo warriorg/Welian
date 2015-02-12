@@ -22,9 +22,18 @@
         [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
         [self.textView setFont:[UIFont systemFontOfSize:16]];
         [self addSubview:_textView];
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        [layout setSectionInset:UIEdgeInsetsMake(10, 10, 10, 10)];
+//        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        [_collectionView setScrollEnabled:NO];
+        [self addSubview:_collectionView];
+        
         // 选择照片
         UIImage *butImage = [UIImage imageNamed:@"home_new_picture"];
-        _photBut = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_textView.frame), butImage.size.width, butImage.size.height)];
+        _photBut = [[UIButton alloc] init];
         [_photBut setImage:butImage forState:UIControlStateNormal];
         [self addSubview:_photBut];
     }

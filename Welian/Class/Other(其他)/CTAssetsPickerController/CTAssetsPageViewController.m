@@ -266,7 +266,6 @@
 
 
 #pragma mark - CTAssetItemViewControllerDataSource
-
 - (ALAsset *)assetAtIndex:(NSUInteger)index;
 {
     return [self.assets objectAtIndex:index];

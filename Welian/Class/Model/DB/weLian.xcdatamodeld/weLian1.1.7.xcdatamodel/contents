@@ -144,6 +144,7 @@
     </entity>
     <entity name="PhotoInfos" representedClassName="PhotoInfos" syncable="YES">
         <attribute name="photo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsPhotoInfos" inverseEntity="ProjectDetailInfo" syncable="YES"/>
     </entity>
@@ -215,7 +216,7 @@
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
-        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="88"/>
+        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="343"/>
         <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="240"/>
         <element name="ProjectUser" positionX="-1359" positionY="-396" width="128" height="58"/>

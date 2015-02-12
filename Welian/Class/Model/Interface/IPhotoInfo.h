@@ -11,5 +11,6 @@
 @interface IPhotoInfo : IFBase
 
 @property (nonatomic,strong) NSString *photo;
+@property (nonatomic,strong) NSNumber *picid;
 
 @end

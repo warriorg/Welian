@@ -8,7 +8,7 @@
 
 #import "BasicViewController.h"
 
-typedef void(^ProjectDataBlock)(IProjectDetailInfo *projectModel);
+typedef void(^ProjectDataBlock)(ProjectDetailInfo *projectModel);
 
 @interface MemberProjectController : BasicViewController
 @property (nonatomic, strong) NSMutableArray *selectArray;

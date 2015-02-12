@@ -19,19 +19,23 @@
 #import "CTAssetsPickerController.h"
 #import "CollectionViewController.h"
 #import "MJExtension.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 
 @interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
 {
     BOOL _isEdit;
     ALAssetsLibrary *_alassets;
     IProjectDetailInfo *_projectModel;
+    MJPhotoBrowser *_browser;
+    NSInteger seleSection;
+    NSInteger _row;
 }
 // 图片数组
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) CreateProjectFootView *footView;
 @property (nonatomic, strong) IProjectDetailInfo *projectM;
-
 @end
 
 static NSString *projectcellid = @"projectcellid";
@@ -52,32 +56,27 @@ static NSString *projectcellid = @"projectcellid";
 - (CreateProjectFootView *)footView
 {
     if (_footView == nil) {
-        _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 250)];
+        _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 300)];
         [_footView.titLabel setText:@"项目描述"];
         [_footView.textView setDelegate:self];
         [_footView.photBut addTarget:self action:@selector(selectPhotosBut) forControlEvents:UIControlEventTouchUpInside];
         
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-        [layout setSectionInset:UIEdgeInsetsMake(10, 10, 20, 10)];
-        _footView.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_footView.textView.frame), SuperSize.width, self.assetsArray.count*50) collectionViewLayout:layout];
         // 注册cell
         [_footView.collectionView registerClass:[PictureCell class] forCellWithReuseIdentifier:projectcellid];
-        
         _footView.collectionView.delegate = self;
         _footView.collectionView.dataSource = self;
-        _footView.collectionView.backgroundColor = [UIColor whiteColor];
-        [_footView addSubview:_footView.collectionView];
     }
+    NSInteger count = _projectModel.photos.count+self.assetsArray.count;
+    NSInteger rowCount = (count + 3 - 1) / 3;
     
-    CGRect collfrme = _footView.collectionView.frame;
-    collfrme.size.height = self.assetsArray.count*50;
-    [_footView.collectionView setFrame:collfrme];
+    [_footView.collectionView setFrame:CGRectMake(0, CGRectGetMaxY(_footView.textView.frame), SuperSize.width, rowCount*((SuperSize.width-50)/3)+20)];
     
+    [_footView.photBut setFrame:CGRectMake(15, CGRectGetMaxY(_footView.collectionView.frame)+20, 35, 35)];
     CGRect footFrame = _footView.frame;
-    if (self.assetsArray.count) {
-        footFrame.size.height = CGRectGetMaxY(_footView.collectionView.frame);
+    if (count) {
+        footFrame.size.height = CGRectGetMaxY(_footView.photBut.frame)+20;
     }else{
-        footFrame.size.height = 250;
+        footFrame.size.height = 300;
     }
     [_footView setFrame:footFrame];
     return _footView;
@@ -133,6 +132,7 @@ static NSString *projectcellid = @"projectcellid";
     }else{
         [self.footView.textView setPlaceholder:@"200字之内(选填)"];
     }
+    
 }
 
 
@@ -303,7 +303,7 @@ static NSString *projectcellid = @"projectcellid";
 
 - (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldSelectAsset:(ALAsset *)asset
 {
-    if (picker.selectedAssets.count >= 9)
+    if (picker.selectedAssets.count >= 9-_projectModel.photos.count)
     {
         UIAlertView *alertView =
         [[UIAlertView alloc] initWithTitle:@"你最多只能选9张照片"
@@ -327,23 +327,38 @@ static NSString *projectcellid = @"projectcellid";
         [alertView show];
     }
     
-    return (picker.selectedAssets.count < 9 && asset.defaultRepresentation != nil);
+    return (picker.selectedAssets.count < 9-_projectModel.photos.count && asset.defaultRepresentation != nil);
 }
 
 
 #pragma mark - CollectionView代理
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    if (self.assetsArray.count&&_projectModel.photos.count) {
+        return 2;
+    }else if (self.assetsArray.count||_projectModel.photos.count){
+        return 1;
+    }
+    return 0;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.assetsArray.count>0&&self.assetsArray.count<9) {
-        return self.assetsArray.count+1;
+    if (section==0) {
+        if (_projectModel.photos.count) {
+            return _projectModel.photos.count;
+        }else{
+            return self.assetsArray.count;
+        }
+    }else if(section==1){
+        return self.assetsArray.count;
     }
-    return self.assetsArray.count;
+    return 0;
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
     return CGSizeMake((SuperSize.width-50)/3, (SuperSize.width-50)/3);
 }
 
@@ -351,33 +366,86 @@ static NSString *projectcellid = @"projectcellid";
 - (PictureCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PictureCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:projectcellid forIndexPath:indexPath];;
-    if (indexPath.row==0) {
-        [cell.picImageV setImage:[UIImage imageNamed:@"home_new_upload_picture_add"]];
-    }else{
-        ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row-1];
+    if (indexPath.section==0) {
+        if (_projectModel.photos.count) {
+            IPhotoInfo *photoUrl = _projectModel.photos[indexPath.row];
+            [cell.picImageV sd_setImageWithURL:[NSURL URLWithString:photoUrl.photo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        }else{
+            ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row];
+            [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+        }
+    }else if(indexPath.section==1){
+        ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row];
         [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
     }
-    
+
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0) {
-        [self selectPhotosBut];
-    }else{
-        CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assetsArray picDatablock:^(NSMutableArray *picArray) {
-            self.assetsArray = picArray;
-            [self.tableView setTableFooterView:self.footView];
-            [self.footView.collectionView reloadData];
-        }];
-        vc.pageIndex = indexPath.row-1;
-        
-        [self.navigationController pushViewController:vc animated:YES];
-
+    // 2.显示相册
+    NSMutableArray *photos = [NSMutableArray array];
+    if (indexPath.section==0) {
+        if (_projectModel.photos.count) {
+            seleSection = 0;
+            IPhotoInfo *photoI = _projectModel.photos[indexPath.row];
+            MJPhoto *photo = [[MJPhoto alloc] init];
+            [photo setUrl:[NSURL URLWithString:photoI.photo]];
+            [photos addObject:photo];
+            
+        }else{
+            seleSection = 1;
+//            [self showCurrentPhotos:indexPath];
+            ALAsset *asset = self.assetsArray[indexPath.row];
+            MJPhoto *photo = [[MJPhoto alloc] init];
+            [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
+            [photos addObject:photo];
+        }
+    }else if(indexPath.section==1){
+//        [self showCurrentPhotos:indexPath];
+        seleSection = 1;
+        ALAsset *asset = self.assetsArray[indexPath.row];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        [photo setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage]];
+        [photos addObject:photo];
     }
+    _row = indexPath.row;
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    [browser setIsDelete:YES];
+//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+    [browser.toolbar.saveImageBtn addTarget:self action:@selector(deletePhoto) forControlEvents:UIControlEventTouchUpInside];
+    _browser= browser;
 }
 
+//#pragma mark - 显示本地图片
+//- (void)showCurrentPhotos:(NSIndexPath *)indexPath
+//{
+//    CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assetsArray picDatablock:^(NSMutableArray *picArray) {
+//        self.assetsArray = picArray;
+//        [self.tableView setTableFooterView:self.footView];
+//        [self.footView.collectionView reloadData];
+//    }];
+//    vc.pageIndex = indexPath.row;
+//
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
+
+#pragma mark - 删除图片
+- (void)deletePhoto
+{
+    if (seleSection) {  // 删除本地
+        [_browser handleSingleTap];
+        [self.assetsArray removeObjectAtIndex:_row];
+    }else{    // 删除网络
+        
+    }
+    [self.tableView setTableFooterView:self.footView];
+    [self.footView.collectionView reloadData];
+    DLog(@"%d",_browser.currentPhotoIndex);
+}
 
 #pragma mark - 创建项目并 下一步团队成员
 - (void)addMemberProject
@@ -418,7 +486,6 @@ static NSString *projectcellid = @"projectcellid";
     }else{   // 新建项目
         // 检测项目是否有同名
         [WLHttpTool checkProjectParameterDic:@{@"name":_projectModel.name} success:^(id JSON) {
-            
             [self createProjectParameterDic];
         } fail:^(NSError *error) {
             
@@ -477,9 +544,20 @@ static NSString *projectcellid = @"projectcellid";
             [self.projectM setIndustrys:_projectModel.industrys];
             [self.projectM setShareurl:_projectModel.shareurl];
             
+            // 创建项目存数据库
+            IProjectInfo *iProjectinfo = [[IProjectInfo alloc] init];
+            [iProjectinfo setPid:_projectModel.pid];
+            [iProjectinfo setName:_projectModel.name];
+            [iProjectinfo setIntro:_projectModel.intro];
+            [iProjectinfo setDes:_projectModel.des];
+            [iProjectinfo setIndustrys:_projectModel.industrys];
+            [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
+            
             if (_isEdit) {
+                // 修改数据库数据
+               ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
                 if (self.projectDataBlock) {
-                    self.projectDataBlock(self.projectM);
+                    self.projectDataBlock(projectMR);
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
@@ -493,6 +571,8 @@ static NSString *projectcellid = @"projectcellid";
                 meUserM.position = logUser.position;
                 [_projectModel setUser:meUserM];
                 [self.projectM setUser:meUserM];
+                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                
                 MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
                 [self.navigationController pushViewController:memberVC animated:YES];
             }
