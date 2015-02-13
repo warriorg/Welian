@@ -14,9 +14,9 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(120, 0, self.bounds.size.width-120, self.bounds.size.height)];
-        [_textField setFont:WLFONT(16)];
-        [_textField setTextAlignment:NSTextAlignmentCenter];
+        _textField = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, self.bounds.size.width-120, self.bounds.size.height)];
+        [_textField setFont:WLFONT(15)];
+//        [_textField setTextAlignment:NSTextAlignmentCenter];
         [_textField setClearButtonMode:UITextFieldViewModeWhileEditing];
         [_textField setRightViewMode:UITextFieldViewModeAlways];
         UILabel *rightLabel = [[UILabel alloc] init];

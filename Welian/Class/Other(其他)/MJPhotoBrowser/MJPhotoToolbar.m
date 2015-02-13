@@ -51,17 +51,19 @@
     // 保存图片按钮
     CGFloat btnWidth = self.bounds.size.height;
     self.saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.saveImageBtn.frame = CGRectMake(20, 0, btnWidth, btnWidth);
+    self.saveImageBtn.frame = CGRectMake(20, 0, btnWidth-5, btnWidth-5);
     self.saveImageBtn.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [self.saveImageBtn setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
     [self addSubview:self.saveImageBtn];
     
+    
     if (_isDelete) {
-        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
-        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"home_new_upload_picture_enlarge_delete.png"] forState:UIControlStateNormal];
+//        [self.saveImageBtn setImage:[UIImage imageNamed:@"home_new_upload_picture_enlarge_delete.png"] forState:UIControlStateHighlighted];
     }else{
         
-        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
-        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
+        [self.saveImageBtn setImage:[UIImage imageNamed:@"home_picture_enlarge_download.png"] forState:UIControlStateNormal];
+//        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
         [self.saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     }
     

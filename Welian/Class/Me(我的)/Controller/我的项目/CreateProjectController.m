@@ -68,7 +68,7 @@ static NSString *projectcellid = @"projectcellid";
 - (CreateProjectFootView *)footView
 {
     if (_footView == nil) {
-        _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 300)];
+        _footView = [[CreateProjectFootView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 280)];
         [_footView.titLabel setText:@"项目描述"];
         [_footView.textView setDelegate:self];
         [_footView.photBut addTarget:self action:@selector(selectPhotosBut) forControlEvents:UIControlEventTouchUpInside];
@@ -84,14 +84,14 @@ static NSString *projectcellid = @"projectcellid";
     rowCount += (count + 3 - 1) / 3;
     count = self.assetsArray.count;
     rowCount += (count + 3 - 1) / 3;
-    [_footView.collectionView setFrame:CGRectMake(0, CGRectGetMaxY(_footView.textView.frame), SuperSize.width, rowCount*((SuperSize.width-50)/3)+20)];
+    [_footView.collectionView setFrame:CGRectMake(0, CGRectGetMaxY(_footView.textView.frame), SuperSize.width, rowCount*(10+(SuperSize.width-50)/3)+20)];
     
     [_footView.photBut setFrame:CGRectMake(15, CGRectGetMaxY(_footView.collectionView.frame)+20, 35, 35)];
     CGRect footFrame = _footView.frame;
     if (_projectModel.photos.count+self.assetsArray.count) {
         footFrame.size.height = CGRectGetMaxY(_footView.photBut.frame)+20;
     }else{
-        footFrame.size.height = 300;
+        footFrame.size.height = 280;
     }
     [_footView setFrame:footFrame];
     return _footView;
@@ -101,6 +101,16 @@ static NSString *projectcellid = @"projectcellid";
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [_projectModel setDes:textView.text];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self.footView.lentLabel setText:[NSString stringWithFormat:@"%d",textView.text.length]];
+    if (textView.text.length<=200) {
+        [self.footView.lentLabel setTextColor:WLRGB(125, 125, 125)];
+    }else{
+        [self.footView.lentLabel setTextColor:WLRGB(208, 2, 27)];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -192,6 +202,7 @@ static NSString *projectcellid = @"projectcellid";
         cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell.textField setDelegate:self];
+        [cell.textLabel setFont:WLFONT(15)];
     }
     if (indexPath.section==1&&indexPath.row==1) {
         [cell.textLabel setText:@"项目领域"];
@@ -217,21 +228,21 @@ static NSString *projectcellid = @"projectcellid";
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         if (indexPath.section==0&&indexPath.row==0) {
             [cell.textLabel setText:@"项目名称"];
-            [cell.textField setPlaceholder:@"10字之内（必填）"];
+            [cell.textField setPlaceholder:@"10字之内"];
             [cell.textField setText:_projectModel.name];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
                 [_projectModel setName:textField.text];
             }];
         }else if (indexPath.section ==0&&indexPath.row==1){
             [cell.textLabel setText:@"一句话介绍"];
-            [cell.textField setPlaceholder:@"50字之内（必填）"];
+            [cell.textField setPlaceholder:@"50字之内"];
             [cell.textField setText:_projectModel.intro];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
                 [_projectModel setIntro:textField.text];
             }];
         }else if (indexPath.section==1&&indexPath.row==0){
             [cell.textLabel setText:@"项目网址"];
-            [cell.textField setPlaceholder:@"255字之内（选填）"];
+            [cell.textField setPlaceholder:nil];
             [cell.textField setText:_projectModel.website];
             [cell.textField setBk_didEndEditingBlock:^(UITextField *textField) {
                 [_projectModel setWebsite:textField.text];
@@ -512,11 +523,11 @@ static NSString *projectcellid = @"projectcellid";
         return;
     }
     if (_projectModel.website&&_projectModel.website.length>255) {
-        [WLHUDView showErrorHUD:@""];
+        [WLHUDView showErrorHUD:@"网址过长，无法录入"];
         return;
     }
     if (_projectModel.des.length>200) {
-        [WLHUDView showErrorHUD:@""];
+        [WLHUDView showErrorHUD:@"项目描述内容200字内"];
         return;
     }
     

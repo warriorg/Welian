@@ -11,6 +11,7 @@
 
 @interface CreateProjectFootView : UIView
 
+@property (nonatomic, strong) UILabel *lentLabel;
 @property (nonatomic, strong) UILabel *titLabel;
 @property (nonatomic, strong) IWTextView *textView;
 @property (nonatomic, strong) UIButton *photBut;

@@ -11,6 +11,7 @@
 
 @interface FinancingCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *lentLabel;
 @property (nonatomic, strong) UILabel *titLabel;
 @property (nonatomic, strong) IWTextView *textView;
 

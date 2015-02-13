@@ -14,9 +14,13 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _lentLabel = [[UILabel alloc] initWithFrame:CGRectMake(SuperSize.width-50, 10, 50, 25)];
+        [_lentLabel setFont:WLFONT(15)];
+        [self.contentView addSubview:_lentLabel];
+        
         _titLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SuperSize.width-30, 25)];
         [self.contentView addSubview:_titLabel];
-        _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 160)];
+        _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 140)];
         [_textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
         [_textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
         [_textView setFont:[UIFont systemFontOfSize:16]];

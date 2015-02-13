@@ -18,7 +18,9 @@
 #define KFooterText @"如欲融资，重新填写融资信息即可"
 
 @interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
-
+{
+    FinancingCell *_financingcell;
+}
 @property (nonatomic, assign) NSInteger isFinancing;
 @property (nonatomic, strong) IProjectDetailInfo *projectModel;
 @property (nonatomic, assign) BOOL isEdit;
@@ -207,7 +209,7 @@ static NSString *financingCellid = @"financingCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==2) {
-        return 195;
+        return 175;
     }else{
         return KTableRowH;
     }
@@ -321,8 +323,9 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textView setText:self.projectModel.financing];
             [cell.textView setPlaceholder:nil];
         }else{
-            [cell.textView setPlaceholder:@"200字之内(选填)"];
+            [cell.textView setPlaceholder:@"200字之内"];
         }
+        _financingcell = cell;
         return cell;
     }
     return nil;
@@ -332,6 +335,16 @@ static NSString *financingCellid = @"financingCellid";
 {
     [self.projectModel setFinancing:textView.text];
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [_financingcell.lentLabel setText:[NSString stringWithFormat:@"%d",textView.text.length]];
+    if (textView.text.length<=200) {
+        [_financingcell.lentLabel setTextColor:WLRGB(125, 125, 125)];
+    }else{
+        [_financingcell.lentLabel setTextColor:WLRGB(208, 2, 27)];
+    }
 }
 
 
