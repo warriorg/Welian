@@ -652,6 +652,8 @@ static NSString *projectcellid = @"projectcellid";
                 [self.tableView setTableFooterView:self.footView];
                 [self.footView.collectionView reloadData];
             }
+            //通知刷新个人项目列表
+            [KNSNotification postNotificationName:KRefreshMyProjectNotif object:self];
         }
         
     } fail:^(NSError *error) {

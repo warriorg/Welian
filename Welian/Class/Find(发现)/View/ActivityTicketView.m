@@ -8,11 +8,14 @@
 
 #import "ActivityTicketView.h"
 #import "ActivityTicketViewCell.h"
+#import "ActivityLookTicketViewCell.h"
 
 #define toolBarHeight 50
 #define kMarginLeft 15.f
 #define kButtonHeight 35.f
 #define kTableViewCellHeight 60.f
+#define kLookTableViewCellHeight 69.f
+#define kMarginTop 20.f
 
 @interface ActivityTicketView ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
@@ -25,6 +28,12 @@
 
 @implementation ActivityTicketView
 
+- (void)dealloc
+{
+    _datasource = nil;
+    _buyTicketBlock = nil;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -32,6 +41,18 @@
         [self setup];
     }
     return self;
+}
+
+- (void)setIsBuyTicket:(BOOL)isBuyTicket
+{
+    [super willChangeValueForKey:@"isBuyTicket"];
+    _isBuyTicket = isBuyTicket;
+    [super didChangeValueForKey:@"isBuyTicket"];
+    if (_isBuyTicket) {
+        [_operateBtn setTitle:@"确认购票" forState:UIControlStateNormal];
+    }else{
+        [_operateBtn setTitle:@"取　消" forState:UIControlStateNormal];
+    }
 }
 
 - (void)layoutSubviews
@@ -45,7 +66,7 @@
     _operateBtn.centerX = _operateToolView.width / 2.f;
     _operateBtn.centerY = _operateToolView.height / 2.f;
     
-    _tableView.size = CGSizeMake(self.width, kTableViewCellHeight * _datasource.count);
+    _tableView.size = CGSizeMake(self.width,(_isBuyTicket ? kTableViewCellHeight : kLookTableViewCellHeight) * _datasource.count + (_isBuyTicket ? 0 : kMarginTop));
     _tableView.bottom = _operateToolView.top;
     _tableView.centerX = self.width / 2.f;
 }
@@ -66,7 +87,7 @@
     UIButton *operateBtn = [UIView getBtnWithTitle:@"确认购票" image:nil];
     operateBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
     [operateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [operateBtn addTarget:self action:@selector(favorteBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [operateToolView addSubview:operateBtn];
     self.operateBtn = operateBtn;
     
@@ -83,6 +104,17 @@
     }];
     tap.delegate = self;
     [self addGestureRecognizer:tap];
+}
+
+//操作按钮
+- (void)operateBtnClicked:(UIButton *)sender
+{
+    [self dismiss];
+    if (_isBuyTicket) {
+        if (_buyTicketBlock) {
+            _buyTicketBlock(@[@"",@"",@""]);
+        }
+    }
 }
 
 - (void)showInView
@@ -135,16 +167,30 @@
     return _datasource.count;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, kMarginTop)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    return headerView;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Activity_Ticket_View_Cell";
-    
-    ActivityTicketViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[ActivityTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    if (_isBuyTicket) {
+        ActivityTicketViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[ActivityTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        
+        return cell;
+    }else{
+        ActivityLookTicketViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[ActivityLookTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,7 +201,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0.01f;
+    if (_isBuyTicket) {
+        return 0;
+    }else{
+        return kMarginTop;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -165,12 +215,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kTableViewCellHeight;
+    if (_isBuyTicket) {
+        return kTableViewCellHeight;
+    }else{
+        return kLookTableViewCellHeight;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kTableViewCellHeight;
+    if (_isBuyTicket) {
+        return kTableViewCellHeight;
+    }else{
+        return kLookTableViewCellHeight;
+    }
 }
 
 @end

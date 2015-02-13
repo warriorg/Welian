@@ -31,6 +31,14 @@
 
 @implementation ActivityUserViewCell
 
+- (void)dealloc
+{
+    _addFriendBlock = nil;
+    _indexPath = nil;
+    _activityUserData = nil;
+    _baseUser = nil;
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

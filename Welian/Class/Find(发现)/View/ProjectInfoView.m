@@ -150,12 +150,13 @@
     _nameLabel.left = _praiseView.right + kMarginLeft;
     _nameLabel.top = _praiseView.top + kMarginEdge;
     
-    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge;
+    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge * 2.f;
     [_msgLabel sizeToFit];
 //    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
     _msgLabel.left = _nameLabel.left;
     _msgLabel.top = _nameLabel.bottom + kMarginEdge;
     
+    _typeLabel.width = self.width - _praiseView.right - kMarginLeftEdge - kMarginLeft;
     [_typeLabel sizeToFit];
     _typeLabel.top = _msgLabel.bottom + kMarginEdge;
     _typeLabel.left = _msgLabel.left;
@@ -218,6 +219,7 @@
     typeLabel.textColor = RGB(173.f, 173.f, 173.f);
     typeLabel.font = [UIFont systemFontOfSize:12.f];
     typeLabel.textAlignment = NSTextAlignmentCenter;
+    typeLabel.numberOfLines = 0;
     [self addSubview:typeLabel];
     self.typeLabel = typeLabel;
     
@@ -268,7 +270,7 @@
     CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
     CGSize nameSize = [detailInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
     CGSize msgSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
+    msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge + kMarginLeft;
     //项目领域
     CGSize typeSize = [[detailInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
     

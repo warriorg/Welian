@@ -7,6 +7,7 @@
 //
 
 #import "ActivityDetailInfoViewController.h"
+#import "ActivityOrderInfoViewController.h"
 #import "MessageKeyboardView.h"
 #import "ActivityCustomViewCell.h"
 #import "ActivityInfoViewCell.h"
@@ -30,6 +31,11 @@
 @end
 
 @implementation ActivityDetailInfoViewController
+
+- (void)dealloc
+{
+    _datasource = nil;
+}
 
 - (NSString *)title
 {
@@ -306,10 +312,23 @@
 - (void)joinBtnClicked:(UIButton *)sender
 {
     if (_activityTicketView.hidden) {
+        WEAKSELF
+        [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
+            [weakSelf buyTicketToOrderInfo];
+        }];
+        _activityTicketView.isBuyTicket = YES;
         [_activityTicketView showInView];
     }else{
         [_activityTicketView dismiss];
     }
+}
+
+//支付
+- (void)buyTicketToOrderInfo
+{
+    //进入订单页面
+    ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] init];
+    [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
 }
 
 @end

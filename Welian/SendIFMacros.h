@@ -153,6 +153,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 // 项目通知
 #define KProjectstateNotif @"ProjectstateNotif"
 
+//刷新个人项目列表
+#define KRefreshMyProjectNotif @"RefreshMyProjectNotif"
+
 // 首页消息提示个数
 //#define KMessagebadge @"KMessagebadge"
 

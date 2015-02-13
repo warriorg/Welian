@@ -34,6 +34,8 @@
 
 //删除所有指定类型的对象
 + (void)deleteAllProjectInfoWithType:(NSNumber *)type;
+//删除指定类型的单个对象
++ (void)deleteProjectInfoWithType:(NSNumber *)type Pid:(NSNumber *)pid;
 //获取所有的普通的项目排序后数据
 + (NSArray *)allNormalProjectInfos;
 //获取自己的项目或者自己收藏的
