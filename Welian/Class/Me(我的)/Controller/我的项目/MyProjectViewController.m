@@ -150,27 +150,25 @@
             [self.refreshControl endRefreshing];
             [self.tableView footerEndRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                if (JSON) {
-                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                    if (!_uid) {
-                        [ProjectInfo deleteAllProjectInfoWithType:@(1)];
-                        for (IProjectInfo *projectM in projects) {
-                            [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
-                        }
-                        [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(1)].count];
-                    }else{
-                        [self.notstrView setHidden:projects.count];
+                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                if (!_uid) {
+                    [ProjectInfo deleteAllProjectInfoWithType:@(1)];
+                    for (IProjectInfo *projectM in projects) {
+                        [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
                     }
-                    [self.collectDataArray removeAllObjects];
-                    self.collectDataArray = nil;
-                    self.collectDataArray = [NSMutableArray arrayWithArray:projects];
-                    [self.tableView reloadData];
-                    if (projects.count != KCellConut) {
-                        [self.tableView setFooterHidden:YES];
-                    }else{
-                        [self.tableView setFooterHidden:NO];
-                        _pageIndex++;
-                    }
+                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(1)].count];
+                }else{
+                    [self.notstrView setHidden:projects.count];
+                }
+                [self.collectDataArray removeAllObjects];
+                self.collectDataArray = nil;
+                self.collectDataArray = [NSMutableArray arrayWithArray:projects];
+                [self.tableView reloadData];
+                if (projects.count != KCellConut) {
+                    [self.tableView setFooterHidden:YES];
+                }else{
+                    [self.tableView setFooterHidden:NO];
+                    _pageIndex++;
                 }
             }
             
@@ -190,27 +188,25 @@
             [self.refreshControl endRefreshing];
             [self.tableView footerEndRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                if (JSON) {
-                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                    if (!_uid) {
-                        [ProjectInfo deleteAllProjectInfoWithType:@(2)];
-                        for (IProjectInfo *projectM in projects) {
-                            [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
-                        }
-                        [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(2)].count];
-                    }else {
-                        [self.notstrView setHidden:projects.count];
+                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+                if (!_uid) {
+                    [ProjectInfo deleteAllProjectInfoWithType:@(2)];
+                    for (IProjectInfo *projectM in projects) {
+                        [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
                     }
-                    [self.createDataArray removeAllObjects];
-                    self.createDataArray = nil;
-                    self.createDataArray = [NSMutableArray arrayWithArray:projects];
-                    [self.tableView reloadData];
-                    if (projects.count != KCellConut) {
-                        [self.tableView setFooterHidden:YES];
-                    }else{
-                        [self.tableView setFooterHidden:NO];
-                        _pageIndex++;
-                    }
+                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(2)].count];
+                }else {
+                    [self.notstrView setHidden:projects.count];
+                }
+                [self.createDataArray removeAllObjects];
+                self.createDataArray = nil;
+                self.createDataArray = [NSMutableArray arrayWithArray:projects];
+                [self.tableView reloadData];
+                if (projects.count != KCellConut) {
+                    [self.tableView setFooterHidden:YES];
+                }else{
+                    [self.tableView setFooterHidden:NO];
+                    _pageIndex++;
                 }
             }
         } fail:^(NSError *error) {
