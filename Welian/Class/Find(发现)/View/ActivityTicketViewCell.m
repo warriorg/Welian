@@ -100,6 +100,15 @@
     [operateView addSubview:ticketNumLabel];
     self.ticketNumLabel = ticketNumLabel;
     
+    //金额
+    UILabel *moneyLabel = [[UILabel alloc] init];
+    moneyLabel.backgroundColor = [UIColor clearColor];
+    moneyLabel.textColor = KBlueTextColor;
+    moneyLabel.font = [UIFont boldSystemFontOfSize:18.f];
+    moneyLabel.text = @"500元";
+    [self.contentView addSubview:moneyLabel];
+//    self.moneyLabel = moneyLabel;
+    
     //名称
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];

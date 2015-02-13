@@ -58,6 +58,9 @@
 //    _photoListView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectInfo.photos > 0 ? kMarginEdge : 0), photoListSize.width, photoListSize.height);
     if (_projectDetailInfo) {
         _collectionView.frame = CGRectMake(kMarginLeft, _infoLabel.bottom + (_projectDetailInfo.rsPhotoInfos.count > 0 ? kMarginEdge : 0), self.width - kMarginLeft , _projectDetailInfo.rsPhotoInfos.count > 0 ? kItemWidth : 0);
+        if (_projectDetailInfo.des.length == 0) {
+            _collectionView.centerY = self.height / 2.f;
+        }
     }
 }
 
