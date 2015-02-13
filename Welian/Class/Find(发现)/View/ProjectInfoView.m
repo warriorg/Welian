@@ -150,7 +150,7 @@
     _nameLabel.left = _praiseView.right + kMarginLeft;
     _nameLabel.top = _praiseView.top + kMarginEdge;
     
-    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge;
+    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginLeftEdge * 2.f;
     [_msgLabel sizeToFit];
 //    _msgLabel.width = _logoBtn.left - _praiseView.right - kMarginEdge;
     _msgLabel.left = _nameLabel.left;
