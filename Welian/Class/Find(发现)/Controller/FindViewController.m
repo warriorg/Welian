@@ -60,7 +60,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 //刷新项目的角标
 - (void)reloadProject
 {
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - 加载数据
