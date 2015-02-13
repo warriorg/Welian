@@ -219,9 +219,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBut];
     [backBut sizeToFit];
     
-    //添加分享按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight)];
     tableView.dataSource = self;
     tableView.delegate = self;
@@ -825,6 +822,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
                                          self.iProjectDetailInfo = detailInfo;
                                          self.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
+                                         
+                                         //添加分享按钮
+                                         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
                                          
                                          NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
                                          for (ICommentInfo *commentInfo in detailInfo.comments) {
