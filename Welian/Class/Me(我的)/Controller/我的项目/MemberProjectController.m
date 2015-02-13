@@ -44,6 +44,8 @@ static NSString *fridcellid = @"fridcellid";
     NSNumber *badge = @(self.selectArray.count);
     if (badge.integerValue>0) {
         self.navigationItem.rightBarButtonItem.badgeValue = badge.stringValue;
+    }else{
+        self.navigationItem.rightBarButtonItem.badgeValue = nil;
     }
 }
 
@@ -63,7 +65,6 @@ static NSString *fridcellid = @"fridcellid";
         UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.rightBarButtonItem = navLeftButton;
         self.navigationItem.rightBarButtonItem.badgeBGColor = WLRGB(248, 164, 20);
-        
         if (isEdit) {
             [button setTitle:@"保存" forState:UIControlStateNormal];
         }else{
@@ -164,11 +165,32 @@ static NSString *fridcellid = @"fridcellid";
     return [[userF objectForKey:@"userF"] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    NSDictionary *dick = self.allArray[section];
-    return [dick objectForKey:@"key"];
+    return 25;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 25)];
+    [headerView setBackgroundColor:WLRGB(231, 234, 238)];
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SuperSize.width-20, 25)];
+//    headerLabel setTextAlignment:<#(NSTextAlignment)#>
+    [headerLabel setBackgroundColor:[UIColor clearColor]];
+    [headerLabel setFont:WLFONT(15)];
+    [headerLabel setTextColor:WLRGB(125, 125, 125)];
+    NSDictionary *dick = self.allArray[section];
+    [headerLabel setText:[dick objectForKey:@"key"]];
+    [headerView addSubview:headerLabel];
+    
+    return headerView;
+}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    NSDictionary *dick = self.allArray[section];
+//    return [dick objectForKey:@"key"];
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

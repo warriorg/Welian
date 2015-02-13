@@ -134,15 +134,15 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
         }
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
+            [cell.deputLabel setHidden:!meinfo.isprojectbadge.boolValue];
+            [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
             if (meinfo.projectcount.integerValue) {
-                [cell.deputLabel setHidden:NO];
                 [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个创业项目",meinfo.projectcount]];
             }
-            [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
-            
         }else if (indexPath.row==1){
+            [cell.deputLabel setHidden:!meinfo.investorcount.boolValue];
+            [cell.badgeImage setHidden:YES];
             if (meinfo.investorcount.integerValue) {
-                [cell.deputLabel setHidden:NO];
                 [cell.deputLabel setText:[NSString stringWithFormat:@"%@位已认证投资人",meinfo.investorcount]];
             }
         }

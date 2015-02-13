@@ -18,7 +18,9 @@
 #define KFooterText @"如欲融资，重新填写融资信息即可"
 
 @interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
-
+{
+    FinancingCell *_financingcell;
+}
 @property (nonatomic, assign) NSInteger isFinancing;
 @property (nonatomic, strong) IProjectDetailInfo *projectModel;
 @property (nonatomic, assign) BOOL isEdit;
@@ -165,7 +167,14 @@ static NSString *financingCellid = @"financingCellid";
         [footerLabel.titLabel setAttributedText:attrstr];
     }else if (section ==2){
         if (_projectModel.financingtime.length) {
-            [footerLabel.titLabel setText:@"本次融资信息有效期截止2014-11-12"];
+            NSDate *date = [_projectModel.financingtime dateFromShortString];
+            NSString *after = [[date dateByAddingDays:30] formattedDateWithFormat:@"yyyy-MM-dd"];
+            NSString *headStr = [NSString stringWithFormat:@"本次融资信息有效期截止%@",after];
+            NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(208, 2, 27),NSFontAttributeName:WLFONT(16)};
+            NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
+            [attrstr addAttributes:attrsDic range:NSMakeRange(11, after.length)];
+            
+            [footerLabel.titLabel setAttributedText:attrstr];
         }else{
             [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
         }
@@ -200,7 +209,7 @@ static NSString *financingCellid = @"financingCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==2) {
-        return 195;
+        return 175;
     }else{
         return KTableRowH;
     }
@@ -314,8 +323,9 @@ static NSString *financingCellid = @"financingCellid";
             [cell.textView setText:self.projectModel.financing];
             [cell.textView setPlaceholder:nil];
         }else{
-            [cell.textView setPlaceholder:@"200字之内(选填)"];
+            [cell.textView setPlaceholder:@"200字之内"];
         }
+        _financingcell = cell;
         return cell;
     }
     return nil;
@@ -325,6 +335,16 @@ static NSString *financingCellid = @"financingCellid";
 {
     [self.projectModel setFinancing:textView.text];
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [_financingcell.lentLabel setText:[NSString stringWithFormat:@"%d",textView.text.length]];
+    if (textView.text.length<=200) {
+        [_financingcell.lentLabel setTextColor:WLRGB(125, 125, 125)];
+    }else{
+        [_financingcell.lentLabel setTextColor:WLRGB(208, 2, 27)];
+    }
 }
 
 
