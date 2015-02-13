@@ -29,6 +29,13 @@
 
 @implementation ActivityListViewController
 
+- (void)dealloc
+{
+    _datasource = nil;
+    _cityActivityTypeInfo = nil;
+    _timeActivityTypeInfo = nil;
+}
+
 - (NSString *)title
 {
     return @"活动";

@@ -67,6 +67,15 @@
     for (ProjectInfo *projectInfo in all) {
         [projectInfo MR_deleteEntity];
     }
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
+//删除指定类型的单个对象
++ (void)deleteProjectInfoWithType:(NSNumber *)type Pid:(NSNumber *)pid
+{
+    ProjectInfo *projectInfo = [self getProjectInfoWithPid:pid Type:type];
+    [projectInfo MR_deleteEntity];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 //获取所有的普通的项目排序后数据

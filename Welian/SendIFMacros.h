@@ -122,11 +122,11 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+//#define WLHttpServer  @"http://test.welian.com:8080"
 //本地调试
 //#define WLHttpServer  @"http://192.168.1.122:80"
 //正式环境
-//#define WLHttpServer  @"http://www.welian.com:8080"
+#define WLHttpServer  @"http://www.welian.com:8080"
 
 //支付宝回调地址
 //#define kAlipayNotifyURL @"http://test.welian.com:8080/alipay/notify"
@@ -152,6 +152,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 项目通知
 #define KProjectstateNotif @"ProjectstateNotif"
+
+//刷新个人项目列表
+#define KRefreshMyProjectNotif @"RefreshMyProjectNotif"
 
 // 首页消息提示个数
 //#define KMessagebadge @"KMessagebadge"

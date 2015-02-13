@@ -32,6 +32,11 @@
 
 @implementation MyProjectViewController
 
+- (void)dealloc
+{
+    [KNSNotification removeObserver:self];
+}
+
 - (NotstringView *)notstrView
 {
     if (!_notstrView) {
@@ -99,6 +104,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //监听项目刷新
+    [KNSNotification addObserver:self selector:@selector(refreshdata) name:KRefreshMyProjectNotif object:nil];
+    
     _getProjectDic = [NSMutableDictionary dictionary];
     _selectIndex = 1;
     _pageIndex = 1;
@@ -364,9 +372,31 @@
     }
     
 }
-//#pragma mark - 删除
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_uid == nil && _selectIndex == 1) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+#pragma mark - 删除
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                                   message:@"确认是否删除当前项目？"
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"删除"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                       if (buttonIndex == 0) {
+                                           return ;
+                                       }else{
+                                           //删除项目
+                                           [self deleteProjectWith:indexPath];
+                                       }
+                                   }];
 //    if (self.segmentedControl.selectedSegmentIndex==0) {
 //        IProjectInfo *projectInfo = self.collectDataArray[indexPath.row];
 //        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":projectInfo.pid} success:^(id JSON) {
@@ -377,7 +407,34 @@
 //    }else if (self.segmentedControl.selectedSegmentIndex==1){
 //        
 //    }
-//}
+}
+
+//删除项目
+- (void)deleteProjectWith:(NSIndexPath *)indexPath
+{
+    IProjectInfo *projectInfo = _createDataArray[indexPath.row];
+    [WLHttpTool deleteProjectParameterDic:@{@"pid":projectInfo.pid}
+                                  success:^(id JSON) {
+                                      //删除当前项目
+                                      [ProjectInfo deleteProjectInfoWithType:@(2) Pid:projectInfo.pid];
+                                      [self.createDataArray removeObjectAtIndex:indexPath.row];
+                                      [_tableView reloadData];
+                                      //检测是否提醒
+                                      [self checkHasData];
+                                  } fail:^(NSError *error) {
+                                      [WLHUDView showErrorHUD:error.description];
+                                  }];
+}
+
+//检测是否显示提醒
+- (void)checkHasData
+{
+    if (_uid == nil && _selectIndex == 1) {
+         [self.notstrView setHidden:_createDataArray.count];
+    }else {
+        [self.notstrView setHidden:_collectDataArray.count];
+    }
+}
 
 #pragma mark - 创建新项目
 - (void)createNewProject

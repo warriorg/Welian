@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ActivityBuyTicketBlock)(NSArray *ticekets);
+
 @interface ActivityTicketView : UIView
+
+@property (assign,nonatomic) BOOL isBuyTicket;
+@property (strong,nonatomic) ActivityBuyTicketBlock buyTicketBlock;
 
 - (void)showInView;
 - (void)dismiss;
