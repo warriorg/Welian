@@ -67,6 +67,7 @@
      ”projectname“:"微链"
      */
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    
     HomeMessage *homeMessage = [HomeMessage MR_createEntityInContext:loginUser.managedObjectContext];
 //    homeMessage.commentid = messageM.commentid;
     homeMessage.isLook = @(NO);

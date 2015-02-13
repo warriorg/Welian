@@ -784,7 +784,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     //认证投资人或者自己创建的项目可以查看融资信息
-    if (loginUser.isinvestorbadge.boolValue || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
+    if (loginUser.investorauth.boolValue || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
         [self openProjectDetailInfoView];
     }else{
         [UIAlertView bk_showAlertViewWithTitle:nil

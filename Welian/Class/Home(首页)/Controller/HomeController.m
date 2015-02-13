@@ -112,7 +112,6 @@
         [_dataArry removeAllObjects];
         
         for (NSDictionary *dic in jsonarray) {
-            
              WLStatusFrame *sf = [self dataFrameWith:dic];
             [_dataArry addObject:sf];
         }

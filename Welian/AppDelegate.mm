@@ -361,7 +361,6 @@ BMKMapManager* _mapManager;
         [KNSNotification postNotificationName:KInvestorstateNotif object:self];
     }else if ([type isEqualToString:@"projectComment"]){  // 项目评论
         [HomeMessage createHomeMessageProjectModel:dataDic];
-        
         //发现
         NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
         badge++;
