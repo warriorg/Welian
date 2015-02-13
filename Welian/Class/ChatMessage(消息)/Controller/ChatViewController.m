@@ -945,7 +945,11 @@
                 if( message.bubbleMessageType == WLBubbleMessageTypeSending){
                     photo.image = [ResManager imageWithPath:wlMessage.thumbnailUrl];
                 }else{
-                    photo.url = [NSURL URLWithString:wlMessage.originPhotoUrl]; // 图片路径
+                    //去除，现实高清图地址
+                    NSString *photoUrl = wlMessage.originPhotoUrl;
+                    photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+                    photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+                    photo.url = [NSURL URLWithString:photoUrl]; // 图片路径
                 }
                 photo.srcImageView = photoView; // 来源于哪个UIImageView
                 photo.hasNoImageView = YES;

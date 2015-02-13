@@ -28,6 +28,8 @@
 #pragma mark - Private
 - (void)setup
 {
+    self.layer.borderColor = RGB(229.f, 229.f, 229.f).CGColor;
+    self.layer.borderWidth = 0.5f;
 //    UIImageView *logoImageView = [[UIImageView alloc] init];
 //    logoImageView.backgroundColor = [UIColor clearColor];
 //    logoImageView.layer.cornerRadius = 15;

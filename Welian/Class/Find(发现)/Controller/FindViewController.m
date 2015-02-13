@@ -60,7 +60,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
 //刷新项目的角标
 - (void)reloadProject
 {
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - 加载数据
@@ -167,6 +167,10 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             //项目
             ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
             [self.navigationController pushViewController:projectListVC animated:YES];
+            // 取消新活动角标
+            [LogInUser setUserIsProjectBadge:NO];
+            [[MainViewController sharedMainViewController] loadNewStustupdata];
+            [self reloadProject];
         }else if (indexPath.row==1){
             InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
             [investorListVC setTitle:@"投资人"];
@@ -184,6 +188,10 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 break;
             case 1:
             {
+                //活动列表
+//                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
+//                [self.navigationController pushViewController:activityListVC animated:YES];
+                
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];
                 [[NSURLCache sharedURLCache] removeAllCachedResponses];
