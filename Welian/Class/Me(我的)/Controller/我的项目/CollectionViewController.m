@@ -60,9 +60,9 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     if (self) {
         _type = type;
         _projectModel = projectModel;
-        [self setTitle:@"项目领域"];
         _alldataArray = [NSMutableArray array];
         if (type==1) {
+            [self setTitle:@"项目领域"];
             YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:KInvestIndustryTableName fromTable:KInvestIndustryTableName];
             NSArray *itemArray = item.itemObject;
             [self jiexidata:itemArray];
@@ -72,8 +72,9 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
                 
             }];
         }else if (type==2){
+            [self setTitle:@"融资阶段"];
             // 1.获得路径
-            NSURL *url = [[NSBundle mainBundle] URLForResource:@"InvestStagePlist" withExtension:@"plist"];
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"FinancingStagePlist" withExtension:@"plist"];
             // 2.读取数据
             NSArray *stageData = [NSArray arrayWithContentsOfURL:url];
             for (NSDictionary *stageDic in stageData) {
