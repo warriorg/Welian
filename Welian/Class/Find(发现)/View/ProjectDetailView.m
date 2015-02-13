@@ -108,7 +108,7 @@
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     infoLabel.backgroundColor = [UIColor clearColor];
     infoLabel.font = [UIFont systemFontOfSize:14.f];
-    infoLabel.textColor = [UIColor blackColor];
+    infoLabel.textColor = RGB(125.f, 125.f, 125.f);
 //    infoLabel.text = @"互联网创业，就是要开放协作。微链专注于互联网创业社交，链接创业者及创业者的朋友，让创业成为一种生活方式。";
     infoLabel.numberOfLines = 0;
     [self addSubview:infoLabel];

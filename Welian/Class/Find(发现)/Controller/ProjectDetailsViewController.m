@@ -36,8 +36,8 @@
 
 #define kHeaderHeight 133.f
 #define kHeaderHeight2 93.f
-#define kSegementedControlHeight 40.f
-#define kTableViewHeaderHeight 30.f
+#define kSegementedControlHeight 50.f
+#define kTableViewHeaderHeight 40.f
 
 static NSString *noCommentCell = @"NoCommentCell";
 
@@ -979,7 +979,13 @@ static NSString *noCommentCell = @"NoCommentCell";
 //加载更多评论
 - (void)loadMoreCommentData
 {
-    if (_datasource.count < _projectDetailInfo.commentcount.integerValue) {
+    if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
+        //隐藏加载更多动画
+        [self.tableView footerEndRefreshing];
+        [self.tableView setFooterHidden:YES];
+        return;
+    }
+    if (_datasource.count < _iProjectDetailInfo.commentcount.integerValue) {
         _pageIndex++;
         [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                            success:^(id JSON) {
@@ -1026,10 +1032,6 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            } fail:^(NSError *error) {
                                                
                                            }];
-    }else{
-        //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
     }
 }
 

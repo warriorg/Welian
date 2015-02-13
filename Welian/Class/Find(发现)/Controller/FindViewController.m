@@ -167,6 +167,10 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             //项目
             ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
             [self.navigationController pushViewController:projectListVC animated:YES];
+            // 取消新活动角标
+            [LogInUser setUserIsProjectBadge:NO];
+            [[MainViewController sharedMainViewController] loadNewStustupdata];
+            [self reloadProject];
         }else if (indexPath.row==1){
             InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
             [investorListVC setTitle:@"投资人"];
