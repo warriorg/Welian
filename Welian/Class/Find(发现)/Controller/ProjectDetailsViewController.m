@@ -211,7 +211,13 @@ static NSString *noCommentCell = @"NoCommentCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //返回按钮
-     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backItem)];
+    UIButton *backBut = [[UIButton alloc] init];
+    [backBut setTitle:@"返回" forState:UIControlStateNormal];
+    [backBut setImage:[UIImage imageNamed:@"backItem"] forState:UIControlStateNormal];
+    [backBut addTarget:self action:@selector(backItem) forControlEvents:UIControlEventTouchUpInside];
+    [backBut setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBut];
+    [backBut sizeToFit];
     
     //添加分享按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
@@ -378,7 +384,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    titleLabel.text = section == 0 && _iProjectDetailInfo.zancount.integerValue > 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论 (%d)",_iProjectDetailInfo.commentcount.intValue];
+    titleLabel.text = section == 0 && _iProjectDetailInfo.zancount.integerValue > 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论（%d）",_iProjectDetailInfo.commentcount.intValue];
     [titleLabel sizeToFit];
     titleLabel.left = 15.f;
     titleLabel.centerY = headerView.height / 2.f;
@@ -414,6 +420,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                 return cell;
             }else{
                 NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+                [cell.msgLabel setFont:WLFONT(14)];
                 cell.msgLabel.text = @"还没有评论哦,赶快抢占沙发吧~";
                 cell.layer.borderColorFromUIColor = [UIColor clearColor];
                 return cell;
@@ -430,6 +437,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             return cell;
         }else{
             NoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:noCommentCell];
+            [cell.msgLabel setFont:WLFONT(14)];
             cell.msgLabel.text = @"还没有评论哦,赶快抢占沙发吧~";
             cell.layer.borderColorFromUIColor = [UIColor clearColor];
             return cell;
@@ -892,7 +900,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     [headView addSubview:projectDetailView];
     [_tableView setTableHeaderView:headView];
 }
-
 //更新也没展示
 - (void)updateUI{
     //设置头部内容

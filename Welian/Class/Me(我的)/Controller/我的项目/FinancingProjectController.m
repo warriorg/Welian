@@ -165,7 +165,14 @@ static NSString *financingCellid = @"financingCellid";
         [footerLabel.titLabel setAttributedText:attrstr];
     }else if (section ==2){
         if (_projectModel.financingtime.length) {
-            [footerLabel.titLabel setText:@"本次融资信息有效期截止2014-11-12"];
+            NSDate *date = [_projectModel.financingtime dateFromShortString];
+            NSString *after = [[date dateByAddingDays:30] formattedDateWithFormat:@"yyyy-MM-dd"];
+            NSString *headStr = [NSString stringWithFormat:@"本次融资信息有效期截止%@",after];
+            NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(208, 2, 27),NSFontAttributeName:WLFONT(16)};
+            NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
+            [attrstr addAttributes:attrsDic range:NSMakeRange(11, after.length)];
+            
+            [footerLabel.titLabel setAttributedText:attrstr];
         }else{
             [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
         }
