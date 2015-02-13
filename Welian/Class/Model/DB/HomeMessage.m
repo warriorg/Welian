@@ -74,7 +74,7 @@
     homeMessage.avatar = dict[@"avatar"];
     homeMessage.name = dict[@"name"];
     homeMessage.uid = @([dict[@"uid"] integerValue]);
-    homeMessage.feedcontent = dict[@"projectintro"];
+    homeMessage.feedcontent = [NSString stringWithFormat:@"%@:%@",dict[@"projectname"],dict[@"projectintro"]];
     homeMessage.feedid = dict[@"projectid"];
 //    homeMessage.feedpic = messageM.feedpic;
     homeMessage.msg = dict[@"msg"];

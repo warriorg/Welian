@@ -104,12 +104,11 @@
                 MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
                 [messageFrameM setMessageDataM:hoemM];
                 [_messageDataArray addObject:messageFrameM];
-                
             }
 
         }else{
             for (HomeMessage *homeM  in _allMessgeArray) {
-                if (!homeM.isLook) {
+                if (!homeM.isLook.boolValue) {
                     homeM.isLook = @(1);
                     MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
                     [messageFrameM setMessageDataM:homeM];

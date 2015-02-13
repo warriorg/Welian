@@ -134,7 +134,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
         }
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
-            [cell.deputLabel setHidden:!meinfo.isprojectbadge.boolValue];
+            [cell.deputLabel setHidden:!meinfo.projectcount.integerValue];
             [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
             if (meinfo.projectcount.integerValue) {
                 [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个创业项目",meinfo.projectcount]];

@@ -291,7 +291,7 @@ static NSString *financingCellid = @"financingCellid";
                 }
             }];
            UILabel *rightL = (UILabel *)cell.textField.rightView;
-            [rightL setText:@"万(CNY)　"];
+            [rightL setText:@"万(RMB)　"];
             [rightL sizeToFit];
         }else if (indexPath.row==2){
             [cell setAccessoryType:UITableViewCellAccessoryNone];
