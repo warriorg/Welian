@@ -49,6 +49,7 @@
         _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SuperSize.width, 50)];
         _segmentedControl.sectionTitles = @[@"我收藏的", @"我创建的"];
         _segmentedControl.selectedTextColor = KBasesColor;
+        [_segmentedControl setTextColor:kTitleNormalTextColor];
         _segmentedControl.selectionIndicatorColor = KBasesColor;
         _segmentedControl.selectionIndicatorHeight = 2;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
