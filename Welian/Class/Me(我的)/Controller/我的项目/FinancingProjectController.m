@@ -17,7 +17,7 @@
 
 #define KFooterText @"如欲融资，重新填写融资信息即可"
 
-@interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource>
+@interface FinancingProjectController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
 
 @property (nonatomic, assign) NSInteger isFinancing;
 @property (nonatomic, strong) IProjectDetailInfo *projectModel;
@@ -70,6 +70,8 @@ static NSString *financingCellid = @"financingCellid";
         [self.projectModel setShare:projectModel.share];
         [self.projectModel setStage:projectModel.stage];
         [self.projectModel setStatus:projectModel.status];
+        [self.projectModel setFinancing:projectModel.financing];
+        [self.projectModel setFinancingtime:projectModel.financingtime];
         
         if (!isEdit) {
             self.isFinancing = 0;
@@ -127,7 +129,7 @@ static NSString *financingCellid = @"financingCellid";
         NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
         return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }else if (section==1){
-        return 30;
+        return 25;
     }
     return 0;
 }
@@ -162,7 +164,12 @@ static NSString *financingCellid = @"financingCellid";
         
         [footerLabel.titLabel setAttributedText:attrstr];
     }else if (section ==2){
-        [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
+        if (_projectModel.financingtime.length) {
+            [footerLabel.titLabel setText:@"本次融资信息有效期截止2014-11-12"];
+        }else{
+            [footerLabel.titLabel setText:@"融资信息有效期为30天，30天之后将自动消失"];
+        }
+        
     }
     return footerLabel;
 }
@@ -300,23 +307,31 @@ static NSString *financingCellid = @"financingCellid";
         if (cell == nil) {
             cell = [[FinancingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:financingCellid];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell.textView setDelegate:self];
         }
         [cell.titLabel setText:@"融资说明"];
         if (self.projectModel.financing.length) {
             [cell.textView setText:self.projectModel.financing];
             [cell.textView setPlaceholder:nil];
         }else{
-            [cell.textView setPlaceholder:@"200字之内"];
+            [cell.textView setPlaceholder:@"200字之内(选填)"];
         }
         return cell;
     }
     return nil;
 }
 
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    [self.projectModel setFinancing:textView.text];
+    return YES;
+}
+
 
 #pragma mark - 完成
 - (void)finishPorject
 {
+    [self.view.findFirstResponder resignFirstResponder];
     WEAKSELF
     NSMutableDictionary *finishDic = [NSMutableDictionary dictionary];
     [finishDic setObject:self.projectModel.pid forKey:@"pid"];

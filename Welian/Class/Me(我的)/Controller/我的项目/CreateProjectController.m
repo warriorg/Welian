@@ -176,7 +176,7 @@ static NSString *projectcellid = @"projectcellid";
         case 1:
             return 2;
             break;
-    
+            
         default:
             break;
     }
@@ -245,8 +245,6 @@ static NSString *projectcellid = @"projectcellid";
     UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [sheet bk_addButtonWithTitle:@"拍照" handler:^{
         
-        
-        
         // 判断相机可以使用
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:^(UIImage *image, NSDictionary *editingInfo) {
@@ -280,7 +278,7 @@ static NSString *projectcellid = @"projectcellid";
         [self presentViewController:picker animated:YES completion:nil];
     }];
     [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
-
+    
     [sheet showInView:self.view];
     
 }
@@ -291,7 +289,7 @@ static NSString *projectcellid = @"projectcellid";
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 //    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 //    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
-//    
+//
 //    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
 //
 //        // 保存图片到相册，调用的相关方法，查看是否保存成功
@@ -300,12 +298,12 @@ static NSString *projectcellid = @"projectcellid";
 //                [self.assetsArray addObject:asset];
 //                [self.footView.collectionView reloadData];
 //                [picker dismissViewControllerAnimated:YES completion:^{
-//                    
+//
 //                }];
 //            } failureBlock:^(NSError *error) {
-//                
+//
 //            }];
-//            
+//
 //        }];
 //    }
 //}
@@ -415,13 +413,13 @@ static NSString *projectcellid = @"projectcellid";
         ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row];
         [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
     }
-
+    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    //    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
     // 2.显示相册
     MJPhoto *photo = [[MJPhoto alloc] init];
     if (indexPath.section==0) {
@@ -432,9 +430,9 @@ static NSString *projectcellid = @"projectcellid";
         }else{
             seleSection = 1;
             ALAsset *asset = self.assetsArray[indexPath.row];
-          UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                        scale:0.5
-                                  orientation:UIImageOrientationUp];
+            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
+                                                 scale:0.5
+                                           orientation:UIImageOrientationUp];
             [photo setImage:image];
         }
     }else if(indexPath.section==1){
@@ -445,7 +443,7 @@ static NSString *projectcellid = @"projectcellid";
                                        orientation:UIImageOrientationUp];
         [photo setImage:image];
     }
-//    [photo setHasNoImageView:YES];
+    //    [photo setHasNoImageView:YES];
     _row = indexPath.row;
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     [browser setIsDelete:YES];
@@ -466,7 +464,7 @@ static NSString *projectcellid = @"projectcellid";
             [_browser handleSingleTap];
             [self.tableView setTableFooterView:self.footView];
             [self.footView.collectionView reloadData];
-            
+
         }else{    // 删除网络
             IPhotoInfo *photoI = _projectModel.photos[_row];
             [WLHttpTool deleteProjectPicParameterDic:@{@"picid":photoI.picid} success:^(id JSON) {
@@ -483,7 +481,7 @@ static NSString *projectcellid = @"projectcellid";
                 
             }];
         }
-
+        
     }];
     [alert show];
 }
@@ -607,11 +605,6 @@ static NSString *projectcellid = @"projectcellid";
                     }];
                 }else{
                     if (_isEdit) {
-                        // 修改数据库数据
-                        ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                        if (self.projectDataBlock) {
-                            self.projectDataBlock(projectMR);
-                        }
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 }
@@ -662,7 +655,7 @@ static NSString *projectcellid = @"projectcellid";
     } fail:^(NSError *error) {
         
     }];
-
+    
 }
 
 - (NSMutableArray *)seleAssetsArray
@@ -691,13 +684,13 @@ static NSString *projectcellid = @"projectcellid";
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

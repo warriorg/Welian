@@ -17,9 +17,9 @@
         _titLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SuperSize.width-30, 25)];
         [self.contentView addSubview:_titLabel];
         _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 160)];
-        [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
-        [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-        [self.textView setFont:[UIFont systemFontOfSize:16]];
+        [_textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
+        [_textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+        [_textView setFont:[UIFont systemFontOfSize:16]];
         [self.contentView addSubview:_textView];
     }
     return self;
