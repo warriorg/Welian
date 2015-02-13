@@ -96,7 +96,7 @@ static NSString *financingCellid = @"financingCellid";
         }
         
         // 1.获得路径
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"InvestStagePlist" withExtension:@"plist"];
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"FinancingStagePlist" withExtension:@"plist"];
         // 2.读取数据
         self.stageData = [NSArray arrayWithContentsOfURL:url];
         [self.view addSubview:self.tableView];
