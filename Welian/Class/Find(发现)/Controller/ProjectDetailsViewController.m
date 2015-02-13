@@ -908,9 +908,11 @@ static NSString *noCommentCell = @"NoCommentCell";
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width,projectInfoViewHeight + detailHeight + kSegementedControlHeight)];
     ProjectInfoView *projectInfoView = [[ProjectInfoView alloc] initWithFrame:Rect(0, 0, self.view.width,projectInfoViewHeight)];
     projectInfoView.projectDetailInfo = _projectDetailInfo;
-    //设置底部边框线
-    projectInfoView.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);//RGB(173.f, 173.f, 173.f);
-    projectInfoView.layer.borderWidths = @"{0,0,0.5,0}";
+    if (_projectDetailInfo.des.length > 0 || _projectDetailInfo.rsPhotoInfos.count > 0) {
+        //设置底部边框线
+        projectInfoView.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);//RGB(173.f, 173.f, 173.f);
+        projectInfoView.layer.borderWidths = @"{0,0,0.5,0}";
+    }
     WEAKSELF;
     [projectInfoView setInfoBlock:^(void){
         [weakSelf showProjectInfo];

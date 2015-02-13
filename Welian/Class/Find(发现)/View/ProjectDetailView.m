@@ -197,15 +197,19 @@
  */
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images
 {
-    float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft;
-    //计算第一个label的高度
-    CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    //计算第二个label的高度
-//    CGSize size2 = images.count > 0 ? [WLPhotoListView photoListSizeWithCount:images needAutoSize:YES] : CGSizeMake(maxWidth, 0);
-    CGSize size2 = images.count > 0 ? CGSizeMake(kItemWidth, kItemWidth) : CGSizeMake(maxWidth, 0);
-    
-    float height = size1.height + size2.height + (info.length > 0 ? kMarginLeft * 2.f : 0) + (images.count > 0 ? kMarginEdge : 0);
-    return height;
+    if(info.length > 0 || images.count > 2){
+        float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft;
+        //计算第一个label的高度
+        CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+        //计算第二个label的高度
+        //    CGSize size2 = images.count > 0 ? [WLPhotoListView photoListSizeWithCount:images needAutoSize:YES] : CGSizeMake(maxWidth, 0);
+        CGSize size2 = images.count > 0 ? CGSizeMake(kItemWidth, kItemWidth) : CGSizeMake(maxWidth, 0);
+        
+        float height = size1.height + size2.height + (info.length > 0 ? kMarginLeft * 2.f : 0) + (images.count > 0 ? kMarginEdge : 0);
+        return height;
+    }else{
+        return 0.f;
+    }
 }
 
 @end
