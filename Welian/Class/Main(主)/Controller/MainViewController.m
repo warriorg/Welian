@@ -142,8 +142,8 @@ single_implementation(MainViewController)
             [homeItem setBadgeValue:badgeStr];
         }
     }
-    /// 有新的活动
-    if (meinfo.isactivebadge.boolValue) {
+    /// 有新的活动或者新的项目
+    if (meinfo.isactivebadge.boolValue || meinfo.isprojectbadge.boolValue) {
         [findItem setImage:[[UIImage imageNamed:@"tabbar_discovery_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [findItem setSelectedImage:[[UIImage imageNamed:@"tabbar_discovery_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }else{
@@ -204,6 +204,9 @@ single_implementation(MainViewController)
     
     // 我的认证投资人状态改变
     [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KInvestorstateNotif object:nil];
+    
+    // 新的项目提示
+    [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KProjectstateNotif object:nil];
     
     [[UITextField appearance] setTintColor:KBasesColor];
     [[UITextView appearance] setTintColor:KBasesColor];

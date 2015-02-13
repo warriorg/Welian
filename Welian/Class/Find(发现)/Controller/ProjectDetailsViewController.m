@@ -88,7 +88,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (NSString *)title
 {
-    return @"详情";
+    return @"项目详情";
 }
 
 - (UITapGestureRecognizer *)tapGesture
@@ -210,7 +210,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         commentM.comment = comment;
         commentM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
         if (_selecCommFrame) {
-            params = @{@"pid":_projectInfo.pid,@"touid":_selecCommFrame.commentM.user.uid,@"comment":comment};
+            params = @{@"pid":_projectPid,@"touid":_selecCommFrame.commentM.user.uid,@"comment":comment};
             
             WLBasicTrends *touser = [[WLBasicTrends alloc] init];
             touser.avatar = _selecCommFrame.commentM.user.avatar;
@@ -221,7 +221,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             touser.uid = _selecCommFrame.commentM.user.uid;
             commentM.touser = touser;
         }else{
-            params = @{@"pid":_projectInfo.pid,@"comment":comment};
+            params = @{@"pid":_projectPid,@"comment":comment};
         }
         
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
@@ -243,7 +243,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            [_datasource insertObject:commentFrame atIndex:0];
                                            
                                            //刷新列表
-                                           _projectDetailInfo.commentcount = @(_projectDetailInfo.commentcount.integerValue + 1);
+                                           _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
                                            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                                        } fail:^(NSError *error) {
                                            [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
@@ -428,7 +428,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                      [_datasource removeObject:selecCommFrame];
                                                      
                                                      //刷新列表
-                                                     _projectDetailInfo.commentcount = @(_projectDetailInfo.commentcount.integerValue - 1);
+                                                     _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue - 1);
+                                                     
+                                                     //刷新
                                                      [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
                                                  } fail:^(NSError *error) {
                                                      [UIAlertView showWithTitle:@"系统提示" message:@"删除失败，请重试！"];
@@ -750,8 +752,9 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)showProjectInfo
 {
-    //认证投资人
-    if ([LogInUser getCurrentLoginUser].isinvestorbadge.boolValue) {
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    //认证投资人或者自己创建的项目可以查看融资信息
+    if (loginUser.isinvestorbadge.boolValue || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
         [self openProjectDetailInfoView];
     }else{
         [UIAlertView bk_showAlertViewWithTitle:nil

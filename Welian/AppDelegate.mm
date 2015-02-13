@@ -365,11 +365,13 @@ BMKMapManager* _mapManager;
         //发现
         NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
         badge++;
+        //设置首页
         [LogInUser setUserHomemessagebadge:@(badge)];
         [KNSNotification postNotificationName:KMessageHomeNotif object:self];
-        //发现新的项目
-//        [LogInUser setUserIsProjectBadge:YES];
-//        [KNSNotification postNotificationName:KProjectstateNotif object:self];
+    }else if ([type isEqualToString:@"projectCommand"]){  // 新项目推荐
+        //设置有新的项目未查看
+        [LogInUser setUserIsProjectBadge:YES];
+        [KNSNotification postNotificationName:KProjectstateNotif object:self];
     }
 }
 
