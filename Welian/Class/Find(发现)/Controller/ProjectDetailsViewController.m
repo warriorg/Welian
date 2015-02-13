@@ -41,7 +41,7 @@
 
 static NSString *noCommentCell = @"NoCommentCell";
 
-@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate,UIGestureRecognizerDelegate>
+@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate>
 {
     BOOL _isFinish;
 }
@@ -165,10 +165,10 @@ static NSString *noCommentCell = @"NoCommentCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
-    //代理置空，否则会闪退 设置手势滑动返回
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
+//    //代理置空，否则会闪退 设置手势滑动返回
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -179,23 +179,23 @@ static NSString *noCommentCell = @"NoCommentCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    //开启iOS7的滑动返回效果
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        //只有在二级页面生效
-        if ([self.navigationController.viewControllers count] > 1) {
-            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-        }
-    }
-}
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    //开启滑动手势
-    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    //开启iOS7的滑动返回效果
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        //只有在二级页面生效
+//        if ([self.navigationController.viewControllers count] > 1) {
+//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//        }
+//    }
+//}
+//
+//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    //开启滑动手势
+//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }
+//}
 
 // 返回
 - (void)backItem
@@ -915,8 +915,8 @@ static NSString *noCommentCell = @"NoCommentCell";
     //项目详情
     ProjectDetailView *projectDetailView = [[ProjectDetailView alloc] initWithFrame:Rect(0, projectInfoView.bottom, self.view.width, detailHeight)];
     projectDetailView.projectDetailInfo = _projectDetailInfo;
-    [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,NSArray *imageViews){
-        [weakSelf showDetailImagesWithIndex:indexPath ImageViews:imageViews];
+    [projectDetailView setImageClickedBlock:^(NSIndexPath *indexPath,NSArray *photos){
+        [weakSelf showDetailImagesWithIndex:indexPath Photos:photos];
     }];
     
     //操作栏
@@ -948,19 +948,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 //展示项目图片
-- (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath ImageViews:(NSArray *)imageViews{
-    NSMutableArray *photos = [NSMutableArray array];
-    for (int i = 0; i< _projectDetailInfo.rsPhotoInfos.count; i++) {
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:[_projectDetailInfo.rsPhotoInfos.allObjects[i] photo]];
-        photo.srcImageView = imageViews[i]; // 来源于哪个UIImageView
-        [photos addObject:photo];
-    }
-//    MJPhoto *photo = [[MJPhoto alloc] init];
-//    photo.url = [NSURL URLWithString:[[_projectDetailInfo.rsPhotoInfos.allObjects objectAtIndex:indexPath.row] photo]];
-//    photo.srcImageView = photoView; // 来源于哪个UIImageView
-//    [photos addObject:photo];
-
+- (void)showDetailImagesWithIndex:(NSIndexPath *)indexPath Photos:(NSArray *)photos{
     // 2.显示相册
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     browser.currentPhotoIndex = indexPath.row; // 弹出相册时显示的第一张图片是？

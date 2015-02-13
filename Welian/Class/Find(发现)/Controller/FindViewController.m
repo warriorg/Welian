@@ -184,6 +184,10 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 break;
             case 1:
             {
+                //活动列表
+//                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
+//                [self.navigationController pushViewController:activityListVC animated:YES];
+                
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];
                 [[NSURLCache sharedURLCache] removeAllCachedResponses];

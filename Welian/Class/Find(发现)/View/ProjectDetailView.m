@@ -9,6 +9,7 @@
 #import "ProjectDetailView.h"
 //#import "WLPhotoListView.h"
 #import "WLPhoto.h"
+#import "MJPhoto.h"
 #import "ProjcetDetailImageViewCell.h"
 
 #define kMarginLeft 15.f
@@ -157,13 +158,29 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    ProjcetDetailImageViewCell *cell = (ProjcetDetailImageViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    NSMutableArray *imageViews = [NSMutableArray array];
+    NSMutableArray *photos = [NSMutableArray array];
     for (int i = 0; i < _datasource.count; i++) {
         ProjcetDetailImageViewCell *cell = (ProjcetDetailImageViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-        [imageViews addObject:cell.photoView];
+        
+        WLPhoto *wlPhoto = _datasource[i];
+        MJPhoto *mjPhoto = [[MJPhoto alloc] init];
+        if (cell) {
+            mjPhoto.srcImageView = cell.photoView; // 来源于哪个UIImageView
+        }else{
+            WLPhotoView *wlPhotoView = [[WLPhotoView alloc] init];
+            mjPhoto.srcImageView = wlPhotoView; // 来源于哪个UIImageView
+            mjPhoto.hasNoImageView = YES;
+        }
+        //去除，现实高清图地址
+        NSString *photoUrl = wlPhoto.url;
+        photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+        photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+        mjPhoto.url = [NSURL URLWithString:photoUrl]; // 图片路径
+        
+        [photos addObject:mjPhoto];
     }
     if (_imageClickedBlock) {
-        _imageClickedBlock(indexPath,imageViews);
+        _imageClickedBlock(indexPath,photos);
     }
 }
 
