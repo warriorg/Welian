@@ -20,10 +20,11 @@
         
         _titLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SuperSize.width-30, 25)];
         [self.contentView addSubview:_titLabel];
+        [_titLabel setFont:WLFONT(15)];
         _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 140)];
         [_textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
         [_textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-        [_textView setFont:[UIFont systemFontOfSize:16]];
+        [_textView setFont:[UIFont systemFontOfSize:15]];
         [self.contentView addSubview:_textView];
     }
     return self;

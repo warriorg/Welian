@@ -39,7 +39,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
                 isAll = YES;
             }else{
                 for (NSString *nameStr in [_projectModel getindustrysName]) {
-                    if ([nameStr isEqualToString:[indDic objectForKey:@"name"]]) {
+                    if ([[nameStr deleteTopAndBottomKonggeAndHuiche] isEqualToString:[indDic objectForKey:@"name"]]) {
                         [indust setIsSelect:YES];
                     }
                 }

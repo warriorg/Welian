@@ -16,7 +16,7 @@
     if (self) {
         [self setBackgroundColor:[UIColor whiteColor]];
         _titLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SuperSize.width-30, 25)];
-        [_titLabel setFont:WLFONT(16)];
+        [_titLabel setFont:WLFONT(15)];
         [self addSubview:_titLabel];
         
         _lentLabel = [[UILabel alloc] initWithFrame:CGRectMake(SuperSize.width-50, 10, 50, 25)];

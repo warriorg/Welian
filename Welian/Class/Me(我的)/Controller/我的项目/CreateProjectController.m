@@ -166,7 +166,7 @@ static NSString *projectcellid = @"projectcellid";
         [self.footView.textView setPlaceholder:nil];
         [self.footView.textView setText:_projectModel.des];
     }else{
-        [self.footView.textView setPlaceholder:@"200字之内(选填)"];
+        [self.footView.textView setPlaceholder:@"200字之内"];
     }
     
 }
@@ -206,7 +206,7 @@ static NSString *projectcellid = @"projectcellid";
     }
     if (indexPath.section==1&&indexPath.row==1) {
         [cell.textLabel setText:@"项目领域"];
-        [cell.textField setPlaceholder:@"请选择（必填）"];
+        [cell.textField setPlaceholder:@"请选择"];
         [cell.textField setText:[[_projectModel getindustrysName] componentsJoinedByString:@","]];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         __weak TextFieldCell *weakcell = cell;
