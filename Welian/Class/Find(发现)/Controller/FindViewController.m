@@ -17,7 +17,6 @@
 #import "MainViewController.h"
 #import "ProjectListViewController.h"
 
-
 @interface FindViewController () <UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_data;
@@ -37,13 +36,6 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     if (self.tableView) {
         [self.tableView reloadData];
     }
-//    if (!_urlArray) {
-//        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
-//            _urlArray = [NSArray arrayWithArray:JSON];
-//        } fail:^(NSError *error) {
-//            
-//        }];
-//    }
 }
 
 
@@ -52,15 +44,6 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     [super viewDidLoad];
     [KNSNotification addObserver:self selector:@selector(reloadNewactivit) name:KNewactivitNotif object:nil];
     [KNSNotification addObserver:self selector:@selector(reloadProject) name:KProjectstateNotif object:nil];
-//    if (!_urlArray) {
-//        
-//        [WLHttpTool loadFoundParameterDic:@{} success:^(id JSON) {
-//            _urlArray = [NSArray arrayWithArray:JSON];
-//        } fail:^(NSError *error) {
-//            
-//        }];
-//    }
-    
     // 加载数据
     [self loadDatalist];
     // 加载页面
@@ -146,22 +129,22 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 [cell.badgeImage setHidden:!meinfo.isactivebadge.boolValue];
             }
                 break;
-            case 2:
-            {
-                if (meinfo.projectcount.integerValue) {
-                    [cell.deputLabel setHidden:NO];
-                    [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个创业项目",meinfo.projectcount]];
-                }
-                [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
-            }
-                break;
             default:
                 break;
         }
     }else if (indexPath.section==1){
-        if (meinfo.investorcount.integerValue) {
-            [cell.deputLabel setHidden:NO];
-            [cell.deputLabel setText:[NSString stringWithFormat:@"%@位已认证投资人",meinfo.investorcount]];
+        if (indexPath.row==0) {
+            if (meinfo.projectcount.integerValue) {
+                [cell.deputLabel setHidden:NO];
+                [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个创业项目",meinfo.projectcount]];
+            }
+            [cell.badgeImage setHidden:!meinfo.isprojectbadge.boolValue];
+            
+        }else if (indexPath.row==1){
+            if (meinfo.investorcount.integerValue) {
+                [cell.deputLabel setHidden:NO];
+                [cell.deputLabel setText:[NSString stringWithFormat:@"%@位已认证投资人",meinfo.investorcount]];
+            }
         }
     }
     return cell;
@@ -180,9 +163,15 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
         }
     }
     if (indexPath.section==1) {
-        InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
-        [investorListVC setTitle:@"投资人"];
-        [self.navigationController pushViewController:investorListVC animated:YES];
+        if (indexPath.row==0) {
+            //项目
+            ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
+            [self.navigationController pushViewController:projectListVC animated:YES];
+        }else if (indexPath.row==1){
+            InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
+            [investorListVC setTitle:@"投资人"];
+            [self.navigationController pushViewController:investorListVC animated:YES];
+        }
     }else{
         switch (indexPath.row) {
             case 0:
@@ -195,9 +184,6 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 break;
             case 1:
             {
-//                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
-//                [self.navigationController pushViewController:activityListVC animated:YES];
-                
                 //活动页面，进行phoneGap页面加载
                 ActivityViewController *activityVC = [[ActivityViewController alloc] init];
                 [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -212,9 +198,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 break;
             case 2:
             {
-                //项目
-                ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
-                [self.navigationController pushViewController:projectListVC animated:YES];
+                
             }
                 break;
             default:

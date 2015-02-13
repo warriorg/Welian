@@ -19,19 +19,19 @@
 			<key>icon</key>
 			<string>discovery_calendar.png</string>
 		</dict>
-		<dict>
-			<key>row</key>
-			<string></string>
-			<key>name</key>
-			<string>项目</string>
-			<key>icon</key>
-			<string>discovery_xiangmu.png</string>
-		</dict>
 	</array>
 	<array>
+        <dict>
+            <key>row</key>
+            <string>0</string>
+            <key>name</key>
+            <string>项目</string>
+            <key>icon</key>
+            <string>discovery_xiangmu.png</string>
+        </dict>
 		<dict>
 			<key>row</key>
-			<string>0</string>
+			<string>1</string>
 			<key>name</key>
 			<string>投资人</string>
 			<key>icon</key>

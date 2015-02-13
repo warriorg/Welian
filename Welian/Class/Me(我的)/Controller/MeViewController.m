@@ -103,18 +103,24 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
         if (indexPath.section==2) {
             [cell.deputLabel setHidden:NO];
-            [cell.badgeImage setHidden:!mode.isinvestorbadge.boolValue];
-//            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
-            LogInUser *meinfo = [LogInUser getCurrentLoginUser];
-            if (meinfo.investorauth.integerValue==1) {
-                [cell.deputLabel setText:@"认证成功"];
-            }else if (meinfo.investorauth.integerValue ==-2){
-                [cell.deputLabel setText:@"正在审核"];
-            }else if (meinfo.investorauth.integerValue ==-1){
-                [cell.deputLabel setText:@"认证失败"];
-            }else{
+            [cell.badgeImage setHidden:YES];
+            if (indexPath.row==0) {
+                [cell.badgeImage setHidden:!mode.isinvestorbadge.boolValue];
+                //            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
+                LogInUser *meinfo = [LogInUser getCurrentLoginUser];
+                if (meinfo.investorauth.integerValue==1) {
+                    [cell.deputLabel setText:@"认证成功"];
+                }else if (meinfo.investorauth.integerValue ==-2){
+                    [cell.deputLabel setText:@"正在审核"];
+                }else if (meinfo.investorauth.integerValue ==-1){
+                    [cell.deputLabel setText:@"认证失败"];
+                }else{
+                    [cell.deputLabel setHidden:YES];
+                }
+            }else if (indexPath.row==1){
                 [cell.deputLabel setHidden:YES];
             }
+            
 
         }
         return cell;

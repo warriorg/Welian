@@ -490,7 +490,6 @@
     NSArray *myFriends = [loginUser getAllMyFriendUsers];
     if (isSQL) {
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
-        
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};
         [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
