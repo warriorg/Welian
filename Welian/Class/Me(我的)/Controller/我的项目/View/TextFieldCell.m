@@ -15,7 +15,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _textField = [[UITextField alloc] initWithFrame:CGRectMake(120, 0, self.bounds.size.width-120, self.bounds.size.height)];
-//        [_textField setTextColor:[UIColor darkGrayColor]];
         [_textField setFont:WLFONT(16)];
         [_textField setTextAlignment:NSTextAlignmentCenter];
         [_textField setClearButtonMode:UITextFieldViewModeWhileEditing];

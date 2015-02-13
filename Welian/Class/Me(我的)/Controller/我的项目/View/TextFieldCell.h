@@ -6,9 +6,10 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
-@interface TextFieldCell : UITableViewCell
+#import "BaseTableViewCell.h"
+
+@interface TextFieldCell : BaseTableViewCell
 
 @property (nonatomic, strong) UITextField *textField;
 

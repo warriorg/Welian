@@ -346,19 +346,33 @@ static NSString *financingCellid = @"financingCellid";
         if (self.projectModel.stage) {
             [finishDic setObject:self.projectModel.stage forKey:@"stage"];
         }else{
-            [WLHUDView showErrorHUD:@""];
+            [WLHUDView showErrorHUD:@"请设置融资阶段"];
             return;
         }
+        if (self.projectModel.amount) {
+            [finishDic setObject:self.projectModel.amount forKey:@"amount"];
+        }else{
+            [WLHUDView showErrorHUD:@"请填写融资金额"];
+            return;
+        }
+        
         if (self.projectModel.amount.integerValue>=1) {
             [finishDic setObject:self.projectModel.amount forKey:@"amount"];
         }else{
-            [WLHUDView showErrorHUD:@""];
+            [WLHUDView showErrorHUD:@"请正确填写融资金额"];
             return;
         }
+        if (self.projectModel.share) {
+            [finishDic setObject:self.projectModel.share forKey:@"share"];
+        }else{
+            [WLHUDView showErrorHUD:@"请填写出让股份"];
+            return;
+        }
+
         if (self.projectModel.share.integerValue>=1 && self.projectModel.share.integerValue<=100) {
             [finishDic setObject:self.projectModel.share forKey:@"share"];
         }else{
-            [WLHUDView showErrorHUD:@""];
+            [WLHUDView showErrorHUD:@"请正确填写出让股份"];
             return;
         }
         if (self.projectModel.financing.length) {
@@ -369,6 +383,7 @@ static NSString *financingCellid = @"financingCellid";
         if (JSON) {
             [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];
             [weakSelf.projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+            [weakSelf.projectModel setFinancingtime:[JSON objectForKey:@"financingtime"]];
             
             [weakSelf.selfProjectM setPid:weakSelf.projectModel.pid];
             [weakSelf.selfProjectM setShareurl:weakSelf.projectModel.shareurl];
@@ -378,10 +393,12 @@ static NSString *financingCellid = @"financingCellid";
                 [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
                 [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
                 [weakSelf.selfProjectM setFinancing:weakSelf.projectModel.financing];
+                [weakSelf.selfProjectM setFinancingtime:weakSelf.projectModel.financingtime];
             }else{
                 [weakSelf.selfProjectM setAmount:nil];
                 [weakSelf.selfProjectM setShare:nil];
                 [weakSelf.selfProjectM setStage:nil];
+                [weakSelf.selfProjectM setFinancingtime:nil];
             }
             ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:weakSelf.selfProjectM];
             if (weakSelf.isEdit) {
