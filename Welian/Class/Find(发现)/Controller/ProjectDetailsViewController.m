@@ -270,9 +270,15 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            [commentFrame setCommentM:commentM];
                                            [_datasource insertObject:commentFrame atIndex:0];
                                            
-                                           //刷新列表
                                            _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
-                                           [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           
+                                           //刷新
+                                           if (_iProjectDetailInfo.zancount.integerValue < 1) {
+                                               //如果之前没有刷新整个table
+                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                                           }else{
+                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           }
                                            
                                            //隐藏键盘
                                            [self hideKeyBoard];
