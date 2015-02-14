@@ -1080,7 +1080,7 @@
 + (void)getProjectsParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
     //"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-    NSString *type = @"loadProjects";
+//    NSString *type = @"loadProjects";
     if (![parameterDic objectForKey:@"uid"]) {
         
     }
@@ -1100,7 +1100,7 @@
         succeBlock(JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
-    } withHUD:YES andDim:YES];
+    } withHUD:YES andDim:NO];
 }
 
 #pragma mark - 取项目赞的用户列表

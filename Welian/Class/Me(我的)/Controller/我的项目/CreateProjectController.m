@@ -531,7 +531,7 @@ static NSString *projectcellid = @"projectcellid";
         return;
     }
     
-    if (_projectModel.pid) {  // 修改项目
+    if (_projectModel.pid || _isEdit) {  // 修改项目
         if (self.assetsArray.count) {
             NSMutableArray *photDicArray = [self seleAssetsArray];
             [WLHttpTool saveProjectPicParameterDic:@{@"pid":_projectModel.pid,@"photos":photDicArray} success:^(id JSON) {

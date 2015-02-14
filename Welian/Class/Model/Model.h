@@ -15,6 +15,8 @@
 #import "ProjectDetailInfo.h"
 #import "ProjectInfo.h"
 #import "ProjectUser.h"
+#import "MyFriendUser.h"
+#import "NewFriendUser.h"
 
 
 #pragma mark - Interface
@@ -25,5 +27,6 @@
 #import "IUserInfo.h"
 #import "ICommentInfo.h"
 #import "IPhotoInfo.h"
+#import "FriendsUserModel.h"
 
 #endif
