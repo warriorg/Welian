@@ -258,7 +258,7 @@
                                 } fail:^(NSError *error) {
                                     //隐藏加载更多动画
                                     [self.tableView footerEndRefreshing];
-                                    [UIAlertView showWithError:error];
+//                                    [UIAlertView showWithError:error];
                                 }];
 }
 
