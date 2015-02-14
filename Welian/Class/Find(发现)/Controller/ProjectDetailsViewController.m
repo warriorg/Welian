@@ -273,6 +273,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            //刷新列表
                                            _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
                                            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           
+                                           //隐藏键盘
+                                           [self hideKeyBoard];
                                        } fail:^(NSError *error) {
                                            [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
                                        }];
@@ -478,14 +481,24 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (_iProjectDetailInfo.zancount.intValue > 0) {
-        return kTableViewHeaderHeight;
-    }else{
+    if (section == 0) {
+        if (_iProjectDetailInfo.zancount.intValue > 0) {
+            return kTableViewHeaderHeight;
+        }else{
+            if (_iProjectDetailInfo.commentcount.integerValue > 0) {
+                return kTableViewHeaderHeight;
+            }else{
+                return 0;
+            }
+        }
+    }else if(section == 1){
         if (_iProjectDetailInfo.commentcount.integerValue > 0) {
             return kTableViewHeaderHeight;
         }else{
             return 0;
         }
+    }else{
+        return 0;
     }
 }
 

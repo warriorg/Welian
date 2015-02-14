@@ -360,7 +360,8 @@ BMKMapManager* _mapManager;
         [LogInUser setUserIsinvestorbadge:YES];
         [KNSNotification postNotificationName:KInvestorstateNotif object:self];
     }else if ([type isEqualToString:@"projectComment"]){  // 项目评论
-        [HomeMessage createHomeMessageProjectModel:dataDic];
+        NSDictionary *infoDic = [userInfo objectForKey:@"data"];
+        [HomeMessage createHomeMessageProjectModel:infoDic];
         //发现
         NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
         badge++;

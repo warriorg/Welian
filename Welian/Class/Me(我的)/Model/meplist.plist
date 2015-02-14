@@ -21,6 +21,14 @@
 			<key>icon</key>
 			<string>me_write.png</string>
 		</dict>
+		<dict>
+			<key>row</key>
+			<string>1</string>
+			<key>name</key>
+			<string>我的项目</string>
+			<key>icon</key>
+			<string>discovery_xiangmu.png</string>
+		</dict>
 	</array>
 	<array>
 		<dict>
@@ -30,14 +38,6 @@
 			<string>我是投资人</string>
 			<key>icon</key>
 			<string>me_yes.png</string>
-		</dict>
-		<dict>
-			<key>row</key>
-			<string>1</string>
-			<key>name</key>
-			<string>我的项目</string>
-			<key>icon</key>
-			<string>discovery_xiangmu.png</string>
 		</dict>
 	</array>
 	<array>

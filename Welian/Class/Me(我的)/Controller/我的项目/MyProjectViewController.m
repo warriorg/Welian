@@ -382,7 +382,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [UIAlertView bk_showAlertViewWithTitle:nil
-                                   message:@"确认是否删除当前项目？"
+                                   message:@"确认删除当前项目？"
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@[@"删除"]
                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
