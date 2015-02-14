@@ -135,46 +135,46 @@ static NSString *fridcellid = @"fridcellid";
         [WLHUDView showCustomHUD:@"加载好友..." imageview:nil];
     }
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-        NSArray *myFriends = [loginUser getAllMyFriendUsers];
+        LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
+        
+        NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+        NSArray  *json = [NSArray arrayWithArray:JSON];
+        //循环，删除本地数据库多余的缓存数据
+        for (int i = 0; i < [myFriends count]; i++){
+            MyFriendUser *myFriendUser = myFriends[i];
+            //判断返回的数组是否包含
+            BOOL isHave = [json bk_any:^BOOL(id obj) {
+                //判断是否包含对应的
+                return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
+            }];
+            if(!isHave){
+                //删除新的好友本地数据库
+                NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
+                if (newFuser) {
+                    //更新好友请求列表数据为 添加
+                    [newFuser updateOperateType:0];
+                }
+                
+                //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+                if(myFriendUser.uid.integerValue > 100){
+                    //不包含，删除当前数据
+                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+                }
+            }
+        }
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
             LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
             
-            NSArray  *json = [NSArray arrayWithArray:JSON];
-            //循环，删除本地数据库多余的缓存数据
-            for (int i = 0; i < [myFriends count]; i++){
-                MyFriendUser *myFriendUser = myFriends[i];
-                //判断返回的数组是否包含
-                BOOL isHave = [json bk_any:^BOOL(id obj) {
-                    //判断是否包含对应的
-                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
-                }];
-                if(!isHave){
-                    //删除新的好友本地数据库
-                    NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:myFriendUser.uid];
-                    if (newFuser) {
-                        //更新好友请求列表数据为 添加
-                        [newFuser updateOperateType:0];
-                    }
-                    
-                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
-                    if(myFriendUser.uid.integerValue > 100){
-                        //不包含，删除当前数据
-                        [myFriendUser MR_deleteEntityInContext:loginUser.managedObjectContext];
-                    }
-                }
-            }
             //循环添加数据库数据
             for (NSDictionary *modic in json) {
                 FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
                 
                 NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
-                MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:[loginUser managedObjectContext]];
-                
+                MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];
                 if (!myFriend) {
-                    myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
+                    myFriend = [MyFriendUser MR_createEntityInContext:localContext];
                 }
                 myFriend.uid = friendM.uid;
                 myFriend.mobile = friendM.mobile;
@@ -197,7 +197,7 @@ static NSString *fridcellid = @"fridcellid";
             }
             
         } completion:^(BOOL contextDidSave, NSError *error) {
-            NSArray *myFriends = [loginUser getAllMyFriendUsers];
+            NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
             NSDictionary *alldataDic =  @{@"count":@(myFriends.count),@"array":[WLHttpTool getChineseStringArr:myFriends]};
             [self.refreshControl endRefreshing];
             [WLHUDView hiddenHud];
