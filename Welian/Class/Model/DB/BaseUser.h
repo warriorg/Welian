@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSNumber * friendship;
-@property (nonatomic, retain) NSNumber * investorauth;
+@property (nonatomic, retain) NSNumber * investorauth;/**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
 @property (nonatomic, retain) NSString * inviteurl;
 @property (nonatomic, retain) NSString * mobile;
 @property (nonatomic, retain) NSNumber * startupauth;

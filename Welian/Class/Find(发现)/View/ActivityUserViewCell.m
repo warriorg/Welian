@@ -64,7 +64,7 @@
     _messageLabel.text = [NSString stringWithFormat:@"%@%@",position,(position.length > 0 ? [NSString stringWithFormat:@" %@",company] : company)];
     _messageLabel.numberOfLines = 1;
     
-    //是否是认证投资人
+    //是否是认证投资人 /**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
     _iconImageView.hidden = [_activityUserData[@"investorauth"] integerValue] == 1 ? NO : YES;
    
     if (_baseUser.uid == nil) {
@@ -123,7 +123,7 @@
     _messageLabel.text = [NSString stringWithFormat:@"%@%@",position,(position.length > 0 ? [NSString stringWithFormat:@" %@",company] : company)];
     _messageLabel.numberOfLines = 1;
     
-    //是否是认证投资人
+    //是否是认证投资人 /**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
     _iconImageView.hidden = [_activityUserData[@"investorauth"] integerValue] == 1 ? NO : YES;
     NSString *uid = _activityUserData[@"uid"];
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
