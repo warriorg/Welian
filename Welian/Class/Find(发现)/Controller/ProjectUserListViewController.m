@@ -195,7 +195,7 @@
                                            self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                            [self.tableView reloadData];
                                        } fail:^(NSError *error) {
-                                           [UIAlertView showWithError:error];
+//                                           [UIAlertView showWithError:error];
                                        }];
 }
 
@@ -210,7 +210,7 @@
                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];
                                       } fail:^(NSError *error) {
-                                          [UIAlertView showWithError:error];
+//                                          [UIAlertView showWithError:error];
                                       }];
 }
 

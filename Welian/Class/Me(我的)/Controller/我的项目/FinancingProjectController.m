@@ -251,6 +251,7 @@ static NSString *financingCellid = @"financingCellid";
         if (cell == nil) {
             cell = [[TextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:textFieldCellid];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell.textLabel setFont:WLFONT(15)];
         }
         if (indexPath.row==0) {
             [cell.textLabel setText:@"融资阶段"];

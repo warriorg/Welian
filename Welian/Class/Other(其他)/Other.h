@@ -28,6 +28,8 @@
 #import "NSError+Extend.h"
 #import "UIImage+FixOrientation.h"
 
+#import "NSObject+MJKeyValue.h"
+
 #pragma mark - Other
 #import "ACETelPrompt.h"
 #import "UIButton+WebCache.h"

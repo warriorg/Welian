@@ -197,7 +197,9 @@
  */
 + (CGFloat)configureWithInfo:(NSString *)info Images:(NSArray *)images
 {
-    if(info.length > 0 || images.count > 2){
+    if (info.length == 0 && images.count == 0) {
+        return 0;
+    }else{
         float maxWidth = [[UIScreen mainScreen] bounds].size.width  - kMarginLeft;
         //计算第一个label的高度
         CGSize size1 = [info calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
@@ -207,8 +209,6 @@
         
         float height = size1.height + size2.height + (info.length > 0 ? kMarginLeft * 2.f : 0) + (images.count > 0 ? kMarginEdge : 0);
         return height;
-    }else{
-        return 0.f;
     }
 }
 

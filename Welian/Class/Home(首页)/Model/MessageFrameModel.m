@@ -42,8 +42,7 @@
     CGFloat commentX = nameX;
     CGFloat commentY = CGRectGetMaxY(_nameLabelF)+5;
     CGFloat commentW = nameW;
-    if ([messageDataM.type isEqualToString:@"feedComment"]) {  // 评论
-        
+    if ([messageDataM.type isEqualToString:@"feedComment"] || [messageDataM.type isEqualToString:@"projectComment"]) {  // 评论
         MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
         [contLabel setText:messageDataM.msg];
         contLabel.numberOfLines = 0;

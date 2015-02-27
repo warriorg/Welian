@@ -270,9 +270,18 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            [commentFrame setCommentM:commentM];
                                            [_datasource insertObject:commentFrame atIndex:0];
                                            
-                                           //刷新列表
                                            _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
-                                           [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           
+                                           //刷新
+                                           if (_iProjectDetailInfo.zancount.integerValue < 1) {
+                                               //如果之前没有刷新整个table
+                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                                           }else{
+                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           }
+                                           
+                                           //隐藏键盘
+                                           [self hideKeyBoard];
                                        } fail:^(NSError *error) {
                                            [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
                                        }];
@@ -478,14 +487,24 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (_iProjectDetailInfo.zancount.intValue > 0) {
-        return kTableViewHeaderHeight;
-    }else{
+    if (section == 0) {
+        if (_iProjectDetailInfo.zancount.intValue > 0) {
+            return kTableViewHeaderHeight;
+        }else{
+            if (_iProjectDetailInfo.commentcount.integerValue > 0) {
+                return kTableViewHeaderHeight;
+            }else{
+                return 0;
+            }
+        }
+    }else if(section == 1){
         if (_iProjectDetailInfo.commentcount.integerValue > 0) {
             return kTableViewHeaderHeight;
         }else{
             return 0;
         }
+    }else{
+        return 0;
     }
 }
 
@@ -783,8 +802,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)showProjectInfo
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    //认证投资人或者自己创建的项目可以查看融资信息
-    if (loginUser.investorauth.boolValue || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
+    //认证投资人或者自己创建的项目可以查看融资信息  /**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
+    if (loginUser.investorauth.integerValue == 1 || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
         [self openProjectDetailInfoView];
     }else{
         [UIAlertView bk_showAlertViewWithTitle:nil
