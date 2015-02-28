@@ -24,6 +24,7 @@
     M80AttributedLabel *moreLabel;
     
     NSDictionary *_emjoDic;
+    NSInteger _selectL;
 }
 @end
 
@@ -130,6 +131,7 @@
                         alignment:M80ImageAlignmentBottom];
         }
     }
+    [Mlabel sizeToFit];
 }
 
 
@@ -228,6 +230,53 @@
     
 }
 
+#pragma mark - Copying Method
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL)becomeFirstResponder {
+    return [super becomeFirstResponder];
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    return (action == @selector(copyText:));
+}
+//针对于copy的实现
+-(void)copyText:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
+    CommentMode *commMode = commentDataArray[_selectL];
+    pboard.string = commMode.comment;
+}
+
+- (void)longPressGestureRecognizerHandle:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state != UIGestureRecognizerStateBegan || ![self becomeFirstResponder])
+        return;
+    
+    UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    [menu setMenuItems:@[copyItem]];
+    UIView *selectV = longPressGestureRecognizer.view;
+    CGRect targetRect = [self convertRect:selectV.frame
+                                 fromView:self];
+    [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
+    [menu setMenuVisible:YES animated:YES];
+    if (selectV == oneLabel) {
+        _selectL = 0;
+    }else if (selectV == twoLabel){
+        _selectL = 1;
+    }else if (selectV == threeLabel){
+        _selectL = 2;
+    }else if (selectV == fourLabel){
+        _selectL = 3;
+    }else if (selectV == fiveLabel){
+        _selectL = 4;
+    }
+}
+
+
 - (M80AttributedLabel *)newHBVLabel
 {
     M80AttributedLabel *HBlabel = [[M80AttributedLabel alloc] init];
@@ -238,6 +287,11 @@
     [HBlabel setLineSpacing:1];
     HBlabel.backgroundColor = [UIColor clearColor];
     [self addSubview:HBlabel];
+    // 长按手势 复制
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
+    [recognizer setMinimumPressDuration:0.4f];
+    [HBlabel addGestureRecognizer:recognizer];
+    
     return HBlabel;
 }
 
