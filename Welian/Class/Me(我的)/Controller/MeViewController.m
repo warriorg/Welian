@@ -16,6 +16,7 @@
 #import "BadgeBaseCell.h"
 #import "MainViewController.h"
 #import "MyProjectViewController.h"
+#import "MyActivityViewController.h"
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -148,13 +149,25 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         controller = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
         [controller setTitle:@"个人信息"];
     }else if (indexPath.section==1){
-        if (indexPath.row==0) {
-            controller = [[HomeController alloc] initWithUid:@(0)];
-            [controller setTitle:@"我的动态"];
-        }else if (indexPath.row==1){
-            controller = [[MyProjectViewController alloc] init];
-            [controller setTitle:@"我的项目"];
-            
+        switch (indexPath.row) {
+            case 1:
+            {
+                controller = [[MyProjectViewController alloc] init];
+                [controller setTitle:@"我的项目"];
+            }
+                break;
+            case 2:
+            {
+                //我的活动
+                controller = [[MyActivityViewController alloc] init];
+            }
+                break;
+            default:
+            {
+                controller = [[HomeController alloc] initWithUid:@(0)];
+                [controller setTitle:@"我的动态"];
+            }
+                break;
         }
     }else if (indexPath.section==2){
         if (indexPath.row==0) {

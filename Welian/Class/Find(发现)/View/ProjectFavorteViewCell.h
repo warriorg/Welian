@@ -8,7 +8,7 @@
 
 #import "BaseTableViewCell.h"
 
-typedef void(^ProjectFavorteClickedBlock)(NSIndexPath *indexPath);
+typedef void(^ProjectFavorteClickedBlock)(IBaseUserM *user,BOOL showList);
 
 @interface ProjectFavorteViewCell : BaseTableViewCell
 

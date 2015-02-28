@@ -193,6 +193,7 @@
             switch (indexPath.row) {
                 case 0:
                 {
+                    cell.showCustomInfo = NO;
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_time"];
                     cell.textLabel.text = @"2014/04/12 周六 13:30～17:00";
@@ -200,6 +201,7 @@
                     break;
                 case 1:
                 {
+                    cell.showCustomInfo = NO;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_place"];
                     cell.textLabel.text = @"上海黄浦区上海文化广场(上海市永嘉路28号)";
@@ -207,9 +209,11 @@
                     break;
                 case 2:
                 {
+                    cell.showCustomInfo = YES;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_people"];
-                    cell.textLabel.text = @"已报名2人/限额5人";
+                    cell.textLabel.text = @"已报名2";
+                    [cell.textLabel setAttributedText:[NSObject getAttributedInfoString:cell.textLabel.text searchStr:@"2" color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
                 }
                     break;
                 default:

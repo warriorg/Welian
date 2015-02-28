@@ -67,6 +67,10 @@
     //隐藏表格分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(loadReflshData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    
     //添加分享按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建项目" style:UIBarButtonItemStyleBordered target:self action:@selector(createProject)];
     
@@ -75,10 +79,10 @@
     self.datasource = sortedInfo[1];
     
     //加载数据
-    [self initData];
+    [self loadReflshData];
     
     //上提加载更多
-    [self.tableView addHeaderWithTarget:self action:@selector(loadReflshData)];
+//    [self.tableView addHeaderWithTarget:self action:@selector(loadReflshData)];
     [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
 }
 
@@ -174,6 +178,9 @@
 //下拉刷新数据
 - (void)loadReflshData
 {
+    //开始刷新动画
+    [self.refreshControl beginRefreshing];
+    
     self.pageIndex = 1;
     self.allDataSource = [NSMutableArray array];
     [self initData];
@@ -201,7 +208,8 @@
     [WLHttpTool getProjectsParameterDic:params
                                 success:^(id JSON) {
                                     //隐藏加载更多动画
-                                    [self.tableView headerEndRefreshing];
+                                    [self.refreshControl endRefreshing];
+//                                    [self.tableView headerEndRefreshing];
                                     [self.tableView footerEndRefreshing];
                                     
                                     if (JSON) {
@@ -256,6 +264,7 @@
                                         [_notView removeFromSuperview];
                                     }
                                 } fail:^(NSError *error) {
+                                    [self.refreshControl endRefreshing];
                                     //隐藏加载更多动画
                                     [self.tableView footerEndRefreshing];
 //                                    [UIAlertView showWithError:error];

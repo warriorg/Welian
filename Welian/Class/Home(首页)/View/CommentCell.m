@@ -148,7 +148,7 @@
  
     if (_showBottomLine) {
         //最下面的线
-        _bottomLineView.frame = CGRectMake(_nameLabel.left, commentCellFrame.cellHeight - 0.8, self.width - _nameLabel.left, 0.8);
+        _bottomLineView.frame = CGRectMake(_nameLabel.left, commentCellFrame.cellHeight - 0.8, SuperSize.width - _nameLabel.left, 0.8);
     }
 }
 

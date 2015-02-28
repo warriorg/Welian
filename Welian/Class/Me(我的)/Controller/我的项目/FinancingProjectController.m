@@ -428,7 +428,7 @@ static NSString *financingCellid = @"financingCellid";
                 }
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }else{
-                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM];
+                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM isFromCreate:YES];
                 [weakSelf.navigationController pushViewController:projectVC animated:YES];
             }
         }

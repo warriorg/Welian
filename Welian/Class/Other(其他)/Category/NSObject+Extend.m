@@ -53,4 +53,14 @@
     }
 }
 
+//设置特殊颜色
+- (NSMutableAttributedString *)getAttributedInfoString:(NSString *)str searchStr:(NSString *)searchStr color:(UIColor *)sColor font:(UIFont *)sFont
+{
+    NSDictionary *attrsDic = @{NSForegroundColorAttributeName:sColor,NSFontAttributeName:sFont};
+    NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:str];
+    NSRange searchRange = [str rangeOfString:searchStr options:NSCaseInsensitiveSearch];
+    [attrstr addAttributes:attrsDic range:searchRange];
+    return attrstr;
+}
+
 @end

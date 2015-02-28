@@ -267,6 +267,14 @@
 		A482A2471A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A482A2481A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A482A2491A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
+		A489E7B71AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
+		A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
+		A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
+		A489E7BA1AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
+		A489E7BE1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
+		A489E7BF1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
+		A489E7C01AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
+		A489E7C11AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -4739,6 +4747,10 @@
 		A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.4.xcdatamodel; sourceTree = "<group>"; };
 		A482A2451A5FD16F004AABE5 /* NeedAddUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedAddUser.h; sourceTree = "<group>"; };
 		A482A2461A5FD16F004AABE5 /* NeedAddUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedAddUser.m; sourceTree = "<group>"; };
+		A489E7B51AA198E400F7BE9F /* ActivityOrderInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderInfoViewCell.h; sourceTree = "<group>"; };
+		A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewCell.m; sourceTree = "<group>"; };
+		A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityViewController.h; sourceTree = "<group>"; };
+		A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyActivityViewController.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6796,6 +6808,8 @@
 				A4E731AE1A8CC94800980676 /* ActivityTicketViewCell.m */,
 				A46FAE4E1A8DDE00005EB34E /* ActivityLookTicketViewCell.h */,
 				A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */,
+				A489E7B51AA198E400F7BE9F /* ActivityOrderInfoViewCell.h */,
+				A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -6838,6 +6852,15 @@
 				A4C770FD1A80E3AB005ABC7F /* ProjectUserListViewController.m */,
 			);
 			name = Project;
+			sourceTree = "<group>";
+		};
+		A489E7BB1AA1A47B00F7BE9F /* 我的活动 */ = {
+			isa = PBXGroup;
+			children = (
+				A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */,
+				A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */,
+			);
+			name = "我的活动";
 			sourceTree = "<group>";
 		};
 		A48CA68E1A4D044B009EBD04 /* DateTools */ = {
@@ -9443,6 +9466,7 @@
 		F5CE863E19BFF44100A9D14C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A489E7BB1AA1A47B00F7BE9F /* 我的活动 */,
 				F5E13A341A7B2AD0001BB786 /* 我的项目 */,
 				F534DACD1A4E8FA700B6A725 /* 投资人认证 */,
 				F56254F019C01C1800809D0B /* MeViewController.h */,
@@ -12815,9 +12839,11 @@
 				A49C7D1D1A70D42700F2AEC5 /* CTAssetsViewControllerTransition.m in Sources */,
 				A49C7D1E1A70D42700F2AEC5 /* ChatMessageController.m in Sources */,
 				F55078CA1A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
+				A489E7BA1AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A49C7D1F1A70D42700F2AEC5 /* NewFriendViewController.m in Sources */,
 				A47F1B1E1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
+				A489E7C11AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				A49C7D201A70D42700F2AEC5 /* SWTableViewCell.m in Sources */,
 				A49C7D211A70D42700F2AEC5 /* AFSecurityPolicy.m in Sources */,
 				A49C7D221A70D42700F2AEC5 /* WLMessageVideoConverPhotoFactory.m in Sources */,
@@ -13317,9 +13343,11 @@
 				F53DC37C1A49192600F5F712 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F55078C91A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
+				A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				A47F1B1D1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
+				A489E7C01AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F53DC37D1A49192600F5F712 /* SWTableViewCell.m in Sources */,
 				F53DC37E1A49192600F5F712 /* AFSecurityPolicy.m in Sources */,
 				A41CE1ED1A6FA750004F17E7 /* WLMessageVideoConverPhotoFactory.m in Sources */,
@@ -13819,9 +13847,11 @@
 				A4C141711A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
 				F5664A431A2AFD56008A5830 /* CommentHeadView.m in Sources */,
 				F55078C71A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
+				A489E7B71AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779E71A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				A47F1B1B1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
+				A489E7BE1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F5664A441A2AFD56008A5830 /* main.m in Sources */,
 				F5664A451A2AFD56008A5830 /* AFURLRequestSerialization.m in Sources */,
 				A41CE1EB1A6FA750004F17E7 /* WLMessageVideoConverPhotoFactory.m in Sources */,
@@ -14321,9 +14351,11 @@
 				F5664D001A2AFDD5008A5830 /* CTAssetsViewControllerTransition.m in Sources */,
 				F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */,
 				F55078C81A7F5BE9009CE4F7 /* JKImagePickerController.m in Sources */,
+				A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				A47F1B1C1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
+				A489E7BF1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F5664D011A2AFDD5008A5830 /* SWTableViewCell.m in Sources */,
 				F5664D021A2AFDD5008A5830 /* AFSecurityPolicy.m in Sources */,
 				A41CE1EC1A6FA750004F17E7 /* WLMessageVideoConverPhotoFactory.m in Sources */,
