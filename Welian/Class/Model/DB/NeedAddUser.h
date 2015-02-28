@@ -21,7 +21,7 @@
 @property (nonatomic, retain) LogInUser * rsLoginUser;
 
 //创建需要添加的好友对象
-+ (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type;
+//+ (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type;
 
 //获取排序后的通讯录联系人
 + (NSMutableArray *)allNeedAddUsersWithType:(NSInteger)type;

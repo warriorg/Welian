@@ -284,7 +284,7 @@
 {
     //刷新动画
 //    [self refreshAnimation];
-    [self reloadUIData];
+//    [self reloadUIData];
     
     //调用接口
     if (_selectIndex == 0) {

@@ -62,6 +62,10 @@
     _contentLabel.textColor = WLRGB(51, 51, 51);
     _contentLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_contentLabel];
+    // 长按手势 复制
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
+    [recognizer setMinimumPressDuration:0.4f];
+    [_contentLabel addGestureRecognizer:recognizer];
     
     // 6.配图
     _photoListView = [[WLPhotoListView alloc] init];
@@ -75,6 +79,39 @@
     [_dock.repostBtn addTarget:self action:@selector(transmitButClick:event:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_dock];
 }
+
+#pragma mark - Copying Method
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL)becomeFirstResponder {
+    return [super becomeFirstResponder];
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    return (action == @selector(copyText:));
+}
+//针对于copy的实现
+-(void)copyText:(id)sender{
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    WLStatusM *status = _statusFrame.status;
+    pboard.string = status.content;
+}
+
+- (void)longPressGestureRecognizerHandle:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state != UIGestureRecognizerStateBegan || ![self becomeFirstResponder])
+        return;
+    UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    [menu setMenuItems:@[copyItem]];
+    CGRect targetRect = [self convertRect:_contentLabel.frame
+                                 fromView:self];
+    [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
+    [menu setMenuVisible:YES animated:YES];
+}
+
 
 - (void)setCommentFrame:(CommentHeadFrame *)commentFrame
 {

@@ -189,15 +189,15 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             case 1:
             {
                 //活动列表
-//                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
-//                [self.navigationController pushViewController:activityListVC animated:YES];
+                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
+                [self.navigationController pushViewController:activityListVC animated:YES];
                 
-                //活动页面，进行phoneGap页面加载
-                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-                [[NSURLCache sharedURLCache] removeAllCachedResponses];
-                activityVC.wwwFolderName = @"www";
-                activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
-                [self.navigationController pushViewController:activityVC animated:YES];
+//                //活动页面，进行phoneGap页面加载
+//                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
+//                [[NSURLCache sharedURLCache] removeAllCachedResponses];
+//                activityVC.wwwFolderName = @"www";
+//                activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
+//                [self.navigationController pushViewController:activityVC animated:YES];
                 // 取消新活动角标
                 [LogInUser setUserIsactivebadge:NO];
                 [[MainViewController sharedMainViewController] loadNewStustupdata];
