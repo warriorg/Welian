@@ -21,6 +21,6 @@ typedef void (^ProjectFavoriteBlock)(void);
 //通过pid查询
 - (instancetype)initWithProjectPid:(NSNumber *)projectPid;
 
-- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo;
+- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo isFromCreate:(BOOL)isFromCreate;
 
 @end

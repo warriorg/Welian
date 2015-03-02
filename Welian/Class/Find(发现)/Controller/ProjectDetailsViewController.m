@@ -41,7 +41,7 @@
 
 static NSString *noCommentCell = @"NoCommentCell";
 
-@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate>
+@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate,UIGestureRecognizerDelegate>
 {
     BOOL _isFinish;
 }
@@ -66,6 +66,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 @property (assign,nonatomic) NSInteger pageIndex;
 @property (assign,nonatomic) NSInteger pageSize;
+@property (assign,nonatomic) BOOL isFromCreate;//判断是否是从创建活动进入
 
 @end
 
@@ -147,13 +148,14 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 //
-- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo
+- (instancetype)initWithProjectDetailInfo:(IProjectDetailInfo *)detailInfo isFromCreate:(BOOL)isFromCreate
 {
     self = [super init];
     if (self) {
         self.iProjectDetailInfo = detailInfo;
         self.projectPid = _iProjectDetailInfo.pid;
         _isFinish = YES;
+        self.isFromCreate = isFromCreate;
     }
     return self;
 }
@@ -165,10 +167,12 @@ static NSString *noCommentCell = @"NoCommentCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
-//    //代理置空，否则会闪退 设置手势滑动返回
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-//    }
+    if (!_isFromCreate) {
+        //代理置空，否则会闪退 设置手势滑动返回
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -179,23 +183,29 @@ static NSString *noCommentCell = @"NoCommentCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    //开启iOS7的滑动返回效果
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        //只有在二级页面生效
-//        if ([self.navigationController.viewControllers count] > 1) {
-//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-//        }
-//    }
-//}
-//
-//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//    //开启滑动手势
-//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        navigationController.interactivePopGestureRecognizer.enabled = YES;
-//    }
-//}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_isFromCreate) {
+        //开启iOS7的滑动返回效果
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            //只有在二级页面生效
+            if ([self.navigationController.viewControllers count] > 1) {
+                self.navigationController.interactivePopGestureRecognizer.delegate = self;
+            }
+        }
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if (!_isFromCreate) {
+        if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            navigationController.interactivePopGestureRecognizer.enabled = YES;
+        }
+    }else{
+        navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
 
 // 返回
 - (void)backItem
@@ -411,8 +421,8 @@ static NSString *noCommentCell = @"NoCommentCell";
             }
             cell.projectInfo = _iProjectDetailInfo;
             WEAKSELF;
-            [cell setBlock:^(NSIndexPath *indexPath){
-                [weakSelf selectZanUserWithIndex:indexPath];
+            [cell setBlock:^(IBaseUserM *user,BOOL showList){
+                [weakSelf selectZanUserWithUser:user showList:showList];
             }];
             return cell;
         }else{
@@ -985,9 +995,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 //选择点赞的列表
-- (void)selectZanUserWithIndex:(NSIndexPath *)indexPath
+- (void)selectZanUserWithUser:(IBaseUserM *)user showList:(BOOL)showList
 {
-    if (indexPath.row == _iProjectDetailInfo.zanusers.count) {
+    if (showList) {
         if (_projectDetailInfo.zancount.integerValue > 0) {
             //进入赞列表
             ProjectUserListViewController *projectUserListVC = [[ProjectUserListViewController alloc] init];
@@ -997,7 +1007,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         }
     }else{
         //点击点赞的人，进入
-        IBaseUserM *user = _iProjectDetailInfo.zanusers[indexPath.row];
+//        IBaseUserM *user = _iProjectDetailInfo.zanusers[indexPath.row];
         //系统联系人
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];

@@ -16,4 +16,8 @@
 // 将JSON串转化为字典或者数组
 - (id)toArrayOrNSDictionary:(NSData *)jsonData;
 
+
+//设置特殊颜色
+- (NSMutableAttributedString *)getAttributedInfoString:(NSString *)str searchStr:(NSString *)searchStr color:(UIColor *)sColor font:(UIFont *)sFont;
+
 @end

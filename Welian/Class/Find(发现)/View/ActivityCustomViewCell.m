@@ -10,7 +10,7 @@
 
 @interface ActivityCustomViewCell ()
 
-@property (assign,nonatomic) UILabel *readyJoinLabel;
+//@property (assign,nonatomic) UILabel *readyJoinLabel;
 @property (assign,nonatomic) UILabel *totalLabel;
 
 @end
@@ -32,19 +32,28 @@
     // Configure the view for the selected state
 }
 
+- (void)setShowCustomInfo:(BOOL)showCustomInfo
+{
+    [super willChangeValueForKey:@"showCustomInfo"];
+    _showCustomInfo = showCustomInfo;
+    [super didChangeValueForKey:@"showCustomInfo"];
+//    _readyJoinLabel.hidden = !showCustomInfo;
+    _totalLabel.hidden = !showCustomInfo;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     [self.textLabel sizeToFit];
     self.textLabel.centerY = self.height / 2.f;
     
-    [_readyJoinLabel sizeToFit];
-    _readyJoinLabel.left = self.textLabel.right;
-    _readyJoinLabel.centerY = self.textLabel.centerY;
+//    [_readyJoinLabel sizeToFit];
+//    _readyJoinLabel.left = self.textLabel.left;
+//    _readyJoinLabel.centerY = self.textLabel.centerY;
     
     [_totalLabel sizeToFit];
-    _totalLabel.left = _readyJoinLabel.right;
-    _totalLabel.centerY = _readyJoinLabel.centerY;
+    _totalLabel.left = self.textLabel.right;
+    _totalLabel.centerY = self.textLabel.centerY;
 }
 
 #pragma mark - Private
@@ -56,14 +65,15 @@
     self.textLabel.numberOfLines = 0.f;
     
     //已报名人数
-    UILabel *readyJoinLabel = [[UILabel alloc] init];
-    readyJoinLabel.backgroundColor = [UIColor clearColor];
-    readyJoinLabel.textColor = KBlueTextColor;
-    readyJoinLabel.font = [UIFont systemFontOfSize:14.f];
-    readyJoinLabel.text = @"5";
-    readyJoinLabel.hidden = YES;
-    [self.contentView addSubview:readyJoinLabel];
-    self.readyJoinLabel = readyJoinLabel;
+//    UILabel *readyJoinLabel = [[UILabel alloc] init];
+//    readyJoinLabel.backgroundColor = [UIColor clearColor];
+//    readyJoinLabel.textColor = KBlueTextColor;
+//    readyJoinLabel.font = [UIFont systemFontOfSize:14.f];
+//    readyJoinLabel.text = @"已报名5";
+//    [readyJoinLabel setAttributedText:[self getAttributedInfoString:readyJoinLabel.text searchStr:@"5"]];
+//    readyJoinLabel.hidden = YES;
+//    [self.contentView addSubview:readyJoinLabel];
+//    self.readyJoinLabel = readyJoinLabel;
     
     //标题
     UILabel *totalLabel = [[UILabel alloc] init];
@@ -72,20 +82,10 @@
     totalLabel.font = [UIFont systemFontOfSize:14.f];
     totalLabel.text = @"人/限额10人";
     totalLabel.hidden = YES;
-    [totalLabel setAttributedText:[self getAttributedInfoString:totalLabel.text searchStr:@"10"]];
+    //设置特殊颜色
+    [totalLabel setAttributedText:[NSObject getAttributedInfoString:totalLabel.text searchStr:@"10" color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
     [self.contentView addSubview:totalLabel];
     self.totalLabel = totalLabel;
-}
-
-
-//设置特殊颜色
-- (NSMutableAttributedString *)getAttributedInfoString:(NSString *)str searchStr:(NSString *)searchStr
-{
-    NSDictionary *attrsDic = @{NSForegroundColorAttributeName:KBlueTextColor,NSFontAttributeName:WLFONT(14)};
-    NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:str];
-    NSRange searchRange = [str rangeOfString:searchStr options:NSCaseInsensitiveSearch];
-    [attrstr addAttributes:attrsDic range:searchRange];
-    return attrstr;
 }
 
 //返回cell的高度

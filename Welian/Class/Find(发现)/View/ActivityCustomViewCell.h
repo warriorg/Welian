@@ -10,7 +10,7 @@
 
 @interface ActivityCustomViewCell : UITableViewCell
 
-
+@property (assign,nonatomic) BOOL showCustomInfo;
 
 //返回cell的高度
 + (CGFloat)configureWithMsg:(NSString *)msg;

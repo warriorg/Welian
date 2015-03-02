@@ -72,7 +72,7 @@
     UIButton *detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     detailBtn.backgroundColor = [UIColor clearColor];
     detailBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-    [detailBtn setTitle:@"查看全部活动介绍" forState:UIControlStateNormal];
+    [detailBtn setTitle:@"查看活动详情" forState:UIControlStateNormal];
     [detailBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     [detailBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_more"] forState:UIControlStateNormal];
     detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,200,0,0);
