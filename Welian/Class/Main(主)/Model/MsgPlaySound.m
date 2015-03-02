@@ -11,12 +11,21 @@
 @implementation MsgPlaySound
 single_implementation(MsgPlaySound)
 
+// 振动加声音
+- (void)playSystemShakeAndSoundWithName:(NSString *)soundName
+{
+    [self playSystemShake];
+    [self playSystemSoundWithName:soundName];
+}
+
+// 振动
 - (void)playSystemShake
 {
     self.soundFileObject = kSystemSoundID_Vibrate;//震动
     [self play];
 }
 
+// 声音
 - (void)playSystemSoundWithName:(NSString *)soundName
 {
     NSString *path = [NSString stringWithFormat:@"/System/Library/Audio/UISounds/sms-received%@.caf",soundName];

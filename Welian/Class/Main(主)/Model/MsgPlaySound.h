@@ -18,6 +18,9 @@ single_interface(MsgPlaySound)
 //可以理解为音频文件的位置和目录
 @property (nonatomic, assign) CFURLRef soudnFileURLRef;
 
+// 振动加声音
+- (void)playSystemShakeAndSoundWithName:(NSString *)soundName;
+
 - (void)playSystemShake;//系统 震动
 - (void)playSystemSoundWithName:(NSString *)soundName;//初始化系统声音
 
