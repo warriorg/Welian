@@ -141,6 +141,8 @@
                 titleLabel.top = iconImage.bottom + kMarginBottom;
             }
         }else{
+            titleLabel.width = view.width;
+            titleLabel.textAlignment = NSTextAlignmentCenter;
             titleLabel.centerX = view.width / 2.f;
             titleLabel.centerY = view.height / 2.f;
         }

@@ -46,10 +46,10 @@
 {
     self = [super init];
     if (self) {
-        self.datasource = @[@{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)},
-                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)},
-                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)},
-                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)}];
+        self.datasource = @[@{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(0),@"uid":@(1000),@"friendship":@(1)},
+                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(0),@"uid":@(1000),@"friendship":@(1)},
+                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)},
+                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)}];
     }
     return self;
 }

@@ -8,6 +8,7 @@
 
 #import "ActivityTypeInfoView.h"
 #import "ActivityTypeInfoCell.h"
+#import "WLLocationHelper.h"
 
 #define kTableViewCellHeight 43.f
 
@@ -16,6 +17,8 @@
 @property (assign,nonatomic) UITableView *tableView;
 @property (assign,nonatomic) BOOL isFromLeft;
 @property (assign,nonatomic) CGRect showFrame;
+
+@property (nonatomic, strong) WLLocationHelper *locationHelper;
 
 @end
 
@@ -27,6 +30,13 @@
     _block = nil;
 }
 
+- (WLLocationHelper *)locationHelper {
+    if (!_locationHelper) {
+        _locationHelper = [[WLLocationHelper alloc] init];
+    }
+    return _locationHelper;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -34,6 +44,38 @@
         [self setup];
     }
     return self;
+}
+
+- (void)setNormalInfo:(NSString *)normalInfo
+{
+    [super willChangeValueForKey:@"normalInfo"];
+    _normalInfo = normalInfo;
+    [super didChangeValueForKey:@"normalInfo"];
+    NSInteger selectRow = [_datasource indexOfObject:_normalInfo];
+    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectRow inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
+    //获取地理位置信息
+    if (_showLocation) {
+        [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+            CLPlacemark *placemark = [placemarks lastObject];
+            if (placemark) {
+                NSDictionary *addressDictionary = placemark.addressDictionary;
+                NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+                NSString *geoLocations = [formattedAddressLines lastObject];
+                if (geoLocations) {
+                    //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+                    DLog(@"当前城市：%@",addressDictionary[@"City"]);
+                    NSMutableArray *all = [NSMutableArray arrayWithArray:_datasource];
+                    [all replaceObjectAtIndex:0 withObject:addressDictionary[@"City"]];
+                    self.datasource = [NSArray arrayWithArray:all];
+                    [_tableView reloadData];
+                    
+                    NSInteger selectRow = [_datasource indexOfObject:_normalInfo];
+                    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectRow inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+                }
+            }
+        }];
+    }
 }
 
 //- (void)setDatasource:(NSArray *)datasource
@@ -66,14 +108,24 @@
         cell = [[ActivityTypeInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = _datasource[indexPath.row];
-    cell.detailTextLabel.text = @"GPS定位";
+    if (_showLocation && indexPath.row == 0) {
+        cell.detailTextLabel.text = @"GPS定位";
+    }else{
+        cell.detailTextLabel.text = @"";
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(_showLocation){
+        if (indexPath.row == 0 && [_datasource[indexPath.row] isEqualToString:@"定位中..."]) {
+            return;
+        }
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (_block) {
+        [self dismissWithFrame:_showFrame];
         _block(_datasource[indexPath.row]);
     }
 }
