@@ -59,6 +59,18 @@
     [manager stopUpdatingLocation];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLGeocoder* geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:[locations objectAtIndex:0] completionHandler:
+     ^(NSArray* placemarks, NSError* error) {
+         if (self.didGetGeolocationsCompledBlock) {
+             self.didGetGeolocationsCompledBlock(placemarks);
+         }
+     }];
+    [manager stopUpdatingLocation];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     [manager stopUpdatingLocation];
 }

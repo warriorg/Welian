@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^selectTypeInfoBlock)(NSString *info);
+typedef void(^selectTypeInfoBlock)(NSDictionary *info);
 
 @interface ActivityTypeInfoView : UIView
 
 @property (strong,nonatomic) NSArray *datasource;
 @property (strong,nonatomic) selectTypeInfoBlock block;
-@property (strong,nonatomic) NSString *normalInfo;//现实当前选择的内容
+@property (strong,nonatomic) NSDictionary *normalInfo;//现实当前选择的内容
 @property (assign,nonatomic) BOOL showLocation;//显示当前定位城市
 
 - (void)showInViewFromLeft:(UIView *)view;

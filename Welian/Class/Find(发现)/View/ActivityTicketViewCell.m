@@ -39,6 +39,14 @@
     return self;
 }
 
+- (void)setIActivityTicket:(IActivityTicket *)iActivityTicket
+{
+    [super willChangeValueForKey:@"iActivityTicket"];
+    _iActivityTicket = iActivityTicket;
+    [super didChangeValueForKey:@"iActivityTicket"];
+    
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

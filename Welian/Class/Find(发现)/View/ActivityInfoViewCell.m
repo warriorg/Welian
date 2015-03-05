@@ -20,6 +20,11 @@
 
 @implementation ActivityInfoViewCell
 
+- (void)dealloc
+{
+    _block = nil;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -77,11 +82,17 @@
     [detailBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_more"] forState:UIControlStateNormal];
     detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,200,0,0);
     detailBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 0);
+    [detailBtn addTarget:self action:@selector(detailBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:detailBtn];
     self.detailBtn = detailBtn;
 }
 
-
+- (void)detailBtnClicked:(UIButton *)sender
+{
+    if (_block) {
+        _block();
+    }
+}
 
 //返回cell的高度
 + (CGFloat)configureWithTitle:(NSString *)title Msg:(NSString *)msg

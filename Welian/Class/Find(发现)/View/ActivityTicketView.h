@@ -13,6 +13,7 @@ typedef void(^ActivityBuyTicketBlock)(NSArray *ticekets);
 @interface ActivityTicketView : UIView
 
 @property (assign,nonatomic) BOOL isBuyTicket;
+@property (strong,nonatomic) NSArray *tickets;
 @property (strong,nonatomic) ActivityBuyTicketBlock buyTicketBlock;
 
 - (void)showInView;

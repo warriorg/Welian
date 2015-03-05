@@ -10,4 +10,6 @@
 
 @interface ActivityDetailInfoViewController : BasicViewController
 
+- (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo;
+
 @end

@@ -58,6 +58,21 @@
     return self;
 }
 
+- (instancetype)initWithStyle:(UITableViewStyle)style ActiveInfo:(ActivityInfo *)activeInfo
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        self.pageIndex = 1;
+        self.pageSize = 15;
+        self.activeId = activeInfo.activeid.stringValue;
+        self.totalNum = activeInfo.joined.integerValue;
+        self.allPages = ceil((float)_totalNum/(float)_pageSize);
+        self.datasource = [NSMutableArray array];
+        self.title = [NSString stringWithFormat:@"报名列表(%@人)",activeInfo.joined];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

@@ -12,4 +12,7 @@
 
 - (UIImage *)fixOrientation;
 
+//设置图片颜色
+- (UIImage *) partialImageWithPercentage:(float)percentage vertical:(BOOL)vertical grayscaleRest:(BOOL)grayscaleRest;
+
 @end

@@ -41,6 +41,11 @@
 + (BOOL)filesCopy:(NSString *)sName TargetName:(NSString *)tName;//复制文件
 
 
+//将彩色图片转化为黑色图片
++ (UIImage*)grayscale:(UIImage*)anImage type:(int)type;
+//把图片变成黑白色
++ (UIImage *)grayscaleImageForImage:(UIImage *)image;
+
 @end
 
 @interface UIImage (ResCache)

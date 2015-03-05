@@ -104,6 +104,9 @@
             _operateBtn.layer.masksToBounds = YES;
         }
     }
+    
+    //判断是否隐藏操作按钮
+     _operateBtn.hidden = _hidOperateBtn;
 }
 
 //报名列表的字典用户

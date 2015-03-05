@@ -10,4 +10,6 @@
 
 @interface ActivityLookTicketViewCell : UITableViewCell
 
+@property (strong,nonatomic) IActivityTicket *iActivityTicket;
+
 @end

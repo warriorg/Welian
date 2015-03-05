@@ -37,6 +37,44 @@
     return self;
 }
 
+- (void)setActivityInfo:(ActivityInfo *)activityInfo
+{
+    [super willChangeValueForKey:@"activityInfo"];
+    _activityInfo = activityInfo;
+    [super didChangeValueForKey:@"activityInfo"];
+    //设置图片
+    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo]
+                      placeholderImage:nil
+                               options:SDWebImageRetryFailed|SDWebImageLowPriority
+                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                 //黑白
+                                 if (_activityInfo.status.integerValue == 2) {
+                                     [_iconImageView setImage:[image partialImageWithPercentage:0 vertical:YES grayscaleRest:YES]];
+                                 }
+                             }];
+    
+    _joinedImageView.hidden = !_activityInfo.isjoined.boolValue;
+    _titleLabel.text = _activityInfo.name;
+    
+    //设置城市
+    [_locationBtn setTitle:(_activityInfo.city.length > 0 ? _activityInfo.city : @"未知") forState:UIControlStateNormal];
+    //设置日期
+    [_timeBtn setTitle:[[_activityInfo.startime dateFromNormalString] formattedDateWithFormat:@"MM/dd"] forState:UIControlStateNormal];
+    _dateLabel.text = [_activityInfo displayStartWeekDay];
+    if(_activityInfo.joined.integerValue == _activityInfo.limited.integerValue){
+        _numLabel.hidden = YES;
+        _statusLabel.text = @"已报满";
+    }else{
+        _statusLabel.text = @"报名";
+        _numLabel.hidden = NO;
+        _numLabel.text = _activityInfo.joined.stringValue;
+    }
+    
+    //设置字体颜色
+    [_timeBtn setTitleColor:(_activityInfo.status.integerValue == 2 ? kNormalTextColor : KBlueTextColor) forState:UIControlStateNormal];
+    _numLabel.textColor = _activityInfo.status.integerValue == 2 ? kNormalTextColor : KBlueTextColor;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -81,10 +119,10 @@
 {
     //图标
     UIImageView *iconImageView = [[UIImageView alloc] init];
-    iconImageView.backgroundColor = [UIColor clearColor];
+    iconImageView.backgroundColor = [UIColor lightGrayColor];
     [self.contentView addSubview:iconImageView];
     self.iconImageView = iconImageView;
-    [iconImageView setDebug:YES];
+//    [iconImageView setDebug:YES];
     
     //以报名标记
     UIImageView *joinedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"discovery_activity_list_already"]];

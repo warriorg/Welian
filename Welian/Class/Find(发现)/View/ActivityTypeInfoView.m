@@ -18,6 +18,9 @@
 @property (assign,nonatomic) BOOL isFromLeft;
 @property (assign,nonatomic) CGRect showFrame;
 
+@property (strong,nonatomic) NSArray *cityArrayDic;
+@property (strong,nonatomic) NSArray *provinceArrayDic;
+
 @property (nonatomic, strong) WLLocationHelper *locationHelper;
 
 @end
@@ -28,6 +31,8 @@
 {
     _datasource = nil;
     _block = nil;
+    _cityArrayDic = nil;
+    _provinceArrayDic = nil;
 }
 
 - (WLLocationHelper *)locationHelper {
@@ -46,7 +51,13 @@
     return self;
 }
 
-- (void)setNormalInfo:(NSString *)normalInfo
+// 筛选等级
+- (NSArray *)siftArray:(NSArray*)dicArray orderWithKey:(NSString *)key{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"name=%@",key];
+    return [dicArray filteredArrayUsingPredicate:pre];
+}
+
+- (void)setNormalInfo:(NSDictionary *)normalInfo
 {
     [super willChangeValueForKey:@"normalInfo"];
     _normalInfo = normalInfo;
@@ -64,9 +75,24 @@
                 NSString *geoLocations = [formattedAddressLines lastObject];
                 if (geoLocations) {
                     //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-                    DLog(@"当前城市：%@",addressDictionary[@"City"]);
+                    NSString *cityStr = addressDictionary[@"City"];
+                    NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+                    DLog(@"当前城市：%@",city);
                     NSMutableArray *all = [NSMutableArray arrayWithArray:_datasource];
-                    [all replaceObjectAtIndex:0 withObject:addressDictionary[@"City"]];
+                    //判断是否在城市列表中
+                    NSDictionary *locationCityDic = nil;
+                    NSArray *citys = [self siftArray:_cityArrayDic orderWithKey:city];
+                    if (citys.count == 0) {
+                        NSArray *provinces = [self siftArray:_provinceArrayDic orderWithKey:city];
+                        NSDictionary *dic = [provinces firstObject];
+                        locationCityDic = @{@"cityid":dic[@"pid"],@"name":dic[@"name"]};
+                    }else{
+                        NSDictionary *dic = [citys firstObject];
+                        locationCityDic = @{@"cityid":dic[@"cid"],@"name":dic[@"name"]};
+                    }
+                    
+                    [all replaceObjectAtIndex:0 withObject:locationCityDic];
+                    
                     self.datasource = [NSArray arrayWithArray:all];
                     [_tableView reloadData];
                     
@@ -107,7 +133,7 @@
     if (!cell) {
         cell = [[ActivityTypeInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = _datasource[indexPath.row];
+    cell.textLabel.text = [_datasource[indexPath.row] objectForKey:@"name"];
     if (_showLocation && indexPath.row == 0) {
         cell.detailTextLabel.text = @"GPS定位";
     }else{
@@ -119,7 +145,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(_showLocation){
-        if (indexPath.row == 0 && [_datasource[indexPath.row] isEqualToString:@"定位中..."]) {
+        if (indexPath.row == 0 && [[_datasource[indexPath.row] objectForKey:@"name"] isEqualToString:@"定位中..."]) {
             return;
         }
     }
@@ -185,6 +211,14 @@
     }];
     tap.delegate = self;
     [self addGestureRecognizer:tap];
+    
+    //获取城市列表
+    NSURL *cityurl =[[NSBundle mainBundle] URLForResource:@"citys" withExtension:@"plist"];
+    self.cityArrayDic = [NSArray arrayWithContentsOfURL:cityurl];
+    
+    //获取省列表
+    NSURL *provinceurl =[[NSBundle mainBundle] URLForResource:@"province" withExtension:@"plist"];
+    self.provinceArrayDic = [NSArray arrayWithContentsOfURL:provinceurl];
 }
 
 - (void)showInViewFromLeft:(UIView *)view

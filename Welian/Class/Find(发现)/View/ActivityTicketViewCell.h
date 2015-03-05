@@ -10,4 +10,6 @@
 
 @interface ActivityTicketViewCell : BaseTableViewCell
 
+@property (strong,nonatomic) IActivityTicket *iActivityTicket;
+
 @end

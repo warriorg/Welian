@@ -15,6 +15,8 @@ typedef void(^addFriendOperateBlock)(NSIndexPath *indexPath);
 @property (strong, nonatomic) addFriendOperateBlock addFriendBlock;
 
 @property (strong,nonatomic) NSIndexPath *indexPath;
+
+@property (assign,nonatomic) BOOL hidOperateBtn;//隐藏操作按钮
 //报名列表的字典用户
 @property (strong, nonatomic) NSDictionary *activityUserData;
 

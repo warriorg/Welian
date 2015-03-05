@@ -10,4 +10,6 @@
 
 @interface ActivityListViewCell : BaseTableViewCell
 
+@property (strong,nonatomic) ActivityInfo *activityInfo;
+
 @end
