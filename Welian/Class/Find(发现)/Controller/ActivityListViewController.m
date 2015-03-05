@@ -11,6 +11,8 @@
 #import "ActivityListViewCell.h"
 #import "WLSegmentedControl.h"
 #import "ActivityTypeInfoView.h"
+#import "NotstringView.h"
+#import "MJRefresh.h"
 
 #define kHeaderHeight 43.f
 #define kTableViewCellHeight 98.f
@@ -20,10 +22,18 @@
 
 @property (assign,nonatomic) WLSegmentedControl *segmentedControl;
 @property (assign,nonatomic) UITableView *tableView;
+@property (strong,nonatomic) UIRefreshControl *refreshControl;
 @property (strong,nonatomic) ActivityTypeInfoView *timeActivityTypeInfo;
 @property (strong,nonatomic) ActivityTypeInfoView *cityActivityTypeInfo;
 
 @property (strong,nonatomic) NSArray *datasource;
+
+@property (strong,nonatomic) NSDictionary *selectTimeType;
+@property (strong,nonatomic) NSDictionary *selectAddressType;
+@property (assign,nonatomic) NSInteger pageIndex;
+@property (assign,nonatomic) NSInteger pageSize;
+
+@property (strong, nonatomic) NotstringView *notView;
 
 @end
 
@@ -34,6 +44,17 @@
     _datasource = nil;
     _cityActivityTypeInfo = nil;
     _timeActivityTypeInfo = nil;
+    _selectTimeType = nil;
+    _selectAddressType = nil;
+    _refreshControl = nil;
+}
+
+- (NotstringView *)notView
+{
+    if (!_notView) {
+        _notView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitleStr:@"暂无活动"];
+    }
+    return _notView;
 }
 
 - (NSString *)title
@@ -45,7 +66,11 @@
 {
     self = [super init];
     if (self) {
-        self.datasource = @[@"",@"",@"",@""];
+//        self.datasource = [ActivityInfo allNormalActivityInfos];
+        self.selectTimeType = @{@"cityid":@"-1",@"name":@"全部"};
+        self.selectAddressType = @{@"cityid":@"0",@"name":@"全国"};
+        self.pageIndex = 1;
+        self.pageSize = KCellConut;
     }
     return self;
 }
@@ -59,30 +84,50 @@
     }
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f,ViewCtrlTopBarHeight + kHeaderHeight,self.view.width,self.view.height - ViewCtrlTopBarHeight - kHeaderHeight)];
+    tableView.backgroundColor = [UIColor whiteColor];
     tableView.dataSource = self;
     tableView.delegate = self;
     //隐藏表格分割线
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     self.tableView = tableView;
+//    [tableView setDebug:YES];
+    
+    //添加下来刷新
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(loadReflshData) forControlEvents:UIControlEventValueChanged];
+    [tableView addSubview:self.refreshControl];
     
     ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     timeActivityTypeInfo.hidden = YES;
-    timeActivityTypeInfo.datasource = @[@"全部",@"最近一周",@"本月",@"上月"];
+    timeActivityTypeInfo.datasource = @[@{@"cityid":@"-1",@"name":@"全部"}
+                                        ,@{@"cityid":@"0",@"name":@"今天"}
+                                        ,@{@"cityid":@"1",@"name":@"明天"}
+                                        ,@{@"cityid":@"7",@"name":@"最近一周"}
+                                        ,@{@"cityid":@"-2",@"name":@"周末"}];
     WEAKSELF
-    [timeActivityTypeInfo setBlock:^(NSString *info){
-        [weakSelf dismissTimeTypeInfo];
-        weakSelf.segmentedControl.titles = @[info,@"地区"];
+    [timeActivityTypeInfo setBlock:^(NSDictionary *info){
+//        [weakSelf dismissTimeTypeInfo];
+        weakSelf.selectTimeType = info;
+        weakSelf.segmentedControl.titles = @[_selectTimeType[@"name"],_selectAddressType[@"name"]];
+        [weakSelf loadReflshData];
     }];
     [self.view addSubview:timeActivityTypeInfo];
     self.timeActivityTypeInfo = timeActivityTypeInfo;
     
     ActivityTypeInfoView *cityActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     cityActivityTypeInfo.hidden = YES;
-    cityActivityTypeInfo.datasource = @[@"全国",@"杭州",@"上海",@"北京",@"广州",@"深圳",@"武汉"];
-    [cityActivityTypeInfo setBlock:^(NSString *info){
-        [weakSelf dismissCityTypeInfo];
-        weakSelf.segmentedControl.titles = @[@"全国",info];
+    cityActivityTypeInfo.showLocation = YES;//显示当前定位的城市
+    cityActivityTypeInfo.datasource = @[@{@"cityid":@"-1",@"name":@"定位中..."}
+                                        ,@{@"cityid":@"0",@"name":@"全国"}
+                                        ,@{@"cityid":@"179",@"name":@"杭州"}
+                                        ,@{@"cityid":@"289",@"name":@"上海"}
+                                        ,@{@"cityid":@"289",@"name":@"北京"}];
+    [cityActivityTypeInfo setBlock:^(NSDictionary *info){
+//        [weakSelf dismissCityTypeInfo];
+        weakSelf.selectAddressType = info;
+        weakSelf.segmentedControl.titles = @[_selectTimeType[@"name"],_selectAddressType[@"name"]];
+        [weakSelf loadReflshData];
     }];
     [self.view addSubview:cityActivityTypeInfo];
     self.cityActivityTypeInfo = cityActivityTypeInfo;
@@ -93,23 +138,30 @@
     [self.view addSubview:headView];
     
     //操作栏
-    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height - 0.5) Titles:@[@"时间",@"地区"] Images:nil Bridges:nil isHorizontal:YES];
+    WLSegmentedControl *segmentedControl = [[WLSegmentedControl alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.width, headView.height - 0.5) Titles:@[_selectTimeType[@"name"],_selectAddressType[@"name"]] Images:nil Bridges:nil isHorizontal:YES];
     segmentedControl.showSmallImage = YES;
     segmentedControl.lineHeightAll = YES;
     segmentedControl.delegate = self;
     [headView addSubview:segmentedControl];
     self.segmentedControl = segmentedControl;
+    
+    //初始化数据
+    [self loadReflshData];
+    
+    //上提加载更多
+    [_tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    [_tableView setFooterHidden:YES];
 }
 
 #pragma mark - UITableView Datasource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return _datasource.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _datasource.count;
+    return [_datasource[section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -141,13 +193,16 @@
         cell = [[ActivityListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 //    cell.projectInfo = _datasource[indexPath.section][indexPath.row];
+    if ([_datasource[indexPath.section] count] > 0) {
+        cell.activityInfo = _datasource[indexPath.section][indexPath.row];
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] init];
+    ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:_datasource[indexPath.section][indexPath.row]];
     [self.navigationController pushViewController:activityInfoVC animated:YES];
 }
 
@@ -156,7 +211,11 @@
     if (section == 0) {
         return 0.f;
     }else{
-        return kTableViewHeaderHeight;
+        if ([_datasource[section] count] > 0) {
+            return kTableViewHeaderHeight;
+        }else{
+            return 0.f;
+        }
     }
 }
 
@@ -185,6 +244,7 @@
                 [_cityActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
             if (_timeActivityTypeInfo.hidden) {
+                _timeActivityTypeInfo.normalInfo = _selectTimeType;
                 [_timeActivityTypeInfo showInViewWithFrame:_tableView.frame];
             }else{
                 [_timeActivityTypeInfo dismissWithFrame:_tableView.frame];
@@ -197,6 +257,7 @@
                 [_timeActivityTypeInfo dismissWithFrame:_tableView.frame];
             }
             if (_cityActivityTypeInfo.hidden) {
+                _cityActivityTypeInfo.normalInfo = _selectAddressType;
                 [_cityActivityTypeInfo showInViewWithFrame:_tableView.frame];
             }else{
                 [_cityActivityTypeInfo dismissWithFrame:_tableView.frame];
@@ -208,70 +269,69 @@
 }
 
 #pragma mark - Private
-- (void)showTimeTypeInfo
+- (void)initData
 {
-    _timeActivityTypeInfo.bottom = _tableView.top;
-    _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:.3f
-                          delay:.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         _timeActivityTypeInfo.top = _tableView.top;
-                         _timeActivityTypeInfo.hidden = NO;
-                         _timeActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-                     } completion:^(BOOL finished) {
-                         _timeActivityTypeInfo.hidden = NO;
-                         _timeActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-                         _timeActivityTypeInfo.top = _tableView.top;
-                     }];
+    NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),
+                             @"cityid":@([_selectAddressType[@"cityid"] integerValue]),
+                             @"page":@(_pageIndex),
+                             @"size":@(_pageSize)};
+    [WLHttpTool getActivitysParameterDic:params
+                                 success:^(id JSON) {
+                                     //隐藏加载更多动画
+                                     [self.refreshControl endRefreshing];
+                                     [_tableView footerEndRefreshing];
+                                     
+                                     DLog(@"---json:%@",JSON);
+                                     if (JSON) {
+                                         if (_pageIndex == 1) {
+                                             //第一页
+                                             [ActivityInfo deleteAllActivityInfoWithType:@(0)];
+                                         }
+                                         NSArray *activitys = [IActivityInfo objectsWithInfo:JSON];
+                                         for (IActivityInfo *iActivityInfo in activitys) {
+                                             [ActivityInfo createActivityInfoWith:iActivityInfo withType:@(0)];
+                                         }
+                                     }
+                                     //获取数据
+                                     self.datasource = [ActivityInfo allNormalActivityInfos];
+                                     [self.tableView reloadData];
+                                     
+                                     //设置是否可以下拉刷新
+                                     if ([JSON count] != KCellConut) {
+                                         [self.tableView setFooterHidden:YES];
+                                     }else{
+                                         [self.tableView setFooterHidden:NO];
+                                         _pageIndex++;
+                                     }
+                                     
+                                     if(_datasource.count == 0){
+                                         [_tableView addSubview:self.notView];
+                                         [_tableView sendSubviewToBack:self.notView];
+                                     }else{
+                                         [_notView removeFromSuperview];
+                                     }
+                                 } fail:^(NSError *error) {
+                                     [self.refreshControl endRefreshing];
+                                     //隐藏加载更多动画
+                                     [self.tableView footerEndRefreshing];
+                                     DLog(@"getActivitysParameterDic error:%@",error.description);
+                                 }];
 }
 
-- (void)dismissTimeTypeInfo
+//下拉刷新数据
+- (void)loadReflshData
 {
-    [UIView animateWithDuration:.2f
-                          delay:.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         _timeActivityTypeInfo.bottom = _tableView.top;
-                         _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
-                     } completion:^(BOOL finished) {
-                         _timeActivityTypeInfo.hidden = YES;
-                         _timeActivityTypeInfo.bottom = _tableView.top;
-                         _timeActivityTypeInfo.backgroundColor = [UIColor clearColor];
-                     }];
+    //开始刷新动画
+    [self.refreshControl beginRefreshing];
+    
+    self.pageIndex = 1;
+    [self initData];
 }
 
-- (void)showCityTypeInfo
+//加载更多数据
+- (void)loadMoreDataArray
 {
-    _cityActivityTypeInfo.bottom = _tableView.top;
-    _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:.3f
-                          delay:.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         _cityActivityTypeInfo.top = _tableView.top;
-                         _cityActivityTypeInfo.hidden = NO;
-                         _cityActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-                     } completion:^(BOOL finished) {
-                         _cityActivityTypeInfo.hidden = NO;
-                         _cityActivityTypeInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-                         _cityActivityTypeInfo.top = _tableView.top;
-                     }];
-}
-
-- (void)dismissCityTypeInfo
-{
-    [UIView animateWithDuration:.2f
-                          delay:.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         _cityActivityTypeInfo.bottom = _tableView.top;
-                         _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
-                     } completion:^(BOOL finished) {
-                         _cityActivityTypeInfo.hidden = YES;
-                         _cityActivityTypeInfo.bottom = _tableView.top;
-                         _cityActivityTypeInfo.backgroundColor = [UIColor clearColor];
-                     }];
+    [self initData];
 }
 
 

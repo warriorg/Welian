@@ -23,6 +23,18 @@
     return self;
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    if (selected) {
+        //    cell.projectInfo = _datasource[indexPath.section][indexPath.row];
+        UIImageView *accessoryImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_selected"]];
+        self.accessoryView = accessoryImageView;
+    }else{
+        self.accessoryView = nil;
+    }
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -32,13 +44,12 @@
 #pragma mark - Private
 - (void)setup
 {
+    //设置选择效果
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     self.textLabel.font = [UIFont systemFontOfSize:16.f];
     self.detailTextLabel.textColor = RGB(79.f, 192.f, 232.f);
     self.detailTextLabel.font = [UIFont systemFontOfSize:12.f];
-    
-    //    cell.projectInfo = _datasource[indexPath.section][indexPath.row];
-    UIImageView *accessoryImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_selected"]];
-    self.accessoryView = accessoryImageView;
 }
 
 @end

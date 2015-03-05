@@ -12,4 +12,6 @@
 
 - (instancetype)initWithStyle:(UITableViewStyle)style activeInfo:(NSArray *)activeInfo;
 
+- (instancetype)initWithStyle:(UITableViewStyle)style ActiveInfo:(ActivityInfo *)activeInfo;
+
 @end

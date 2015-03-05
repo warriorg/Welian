@@ -161,6 +161,10 @@
 		A46FAE611A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */; };
 		A46FAE621A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */; };
 		A46FAE631A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */; };
+		A4717C371AA7F8370054289D /* IActivityTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = A4717C361AA7F8370054289D /* IActivityTicket.m */; };
+		A4717C381AA7F8370054289D /* IActivityTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = A4717C361AA7F8370054289D /* IActivityTicket.m */; };
+		A4717C391AA7F8370054289D /* IActivityTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = A4717C361AA7F8370054289D /* IActivityTicket.m */; };
+		A4717C3A1AA7F8370054289D /* IActivityTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = A4717C361AA7F8370054289D /* IActivityTicket.m */; };
 		A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
 		A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
 		A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */; };
@@ -275,6 +279,18 @@
 		A489E7BF1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
 		A489E7C01AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
 		A489E7C11AA1A54400F7BE9F /* MyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */; };
+		A489E7C31AA5553E00F7BE9F /* citys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A489E7C21AA5553E00F7BE9F /* citys.plist */; };
+		A489E7C41AA5553E00F7BE9F /* citys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A489E7C21AA5553E00F7BE9F /* citys.plist */; };
+		A489E7C51AA5553E00F7BE9F /* citys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A489E7C21AA5553E00F7BE9F /* citys.plist */; };
+		A489E7C61AA5553E00F7BE9F /* citys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A489E7C21AA5553E00F7BE9F /* citys.plist */; };
+		A489E7C91AA587ED00F7BE9F /* IActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */; };
+		A489E7CA1AA587ED00F7BE9F /* IActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */; };
+		A489E7CB1AA587ED00F7BE9F /* IActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */; };
+		A489E7CC1AA587ED00F7BE9F /* IActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */; };
+		A489E7D01AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
+		A489E7D11AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
+		A489E7D21AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
+		A489E7D31AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -4442,6 +4458,8 @@
 		A46FAE5A1A8DE82A005EB34E /* ActivityOrderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewController.m; sourceTree = "<group>"; };
 		A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_pay_bg@2x.png"; sourceTree = "<group>"; };
 		A4715B211A84A2C3005DB2FC /* weLian1.1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.7.xcdatamodel; sourceTree = "<group>"; };
+		A4717C351AA7F8370054289D /* IActivityTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IActivityTicket.h; sourceTree = "<group>"; };
+		A4717C361AA7F8370054289D /* IActivityTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IActivityTicket.m; sourceTree = "<group>"; };
 		A472DBDD1A85EE2E003EF296 /* ActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewController.h; sourceTree = "<group>"; };
 		A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
 		A472DBE31A85F0F3003EF296 /* ActivityListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewCell.h; sourceTree = "<group>"; };
@@ -4491,6 +4509,12 @@
 		A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewCell.m; sourceTree = "<group>"; };
 		A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityViewController.h; sourceTree = "<group>"; };
 		A489E7BD1AA1A54400F7BE9F /* MyActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyActivityViewController.m; sourceTree = "<group>"; };
+		A489E7C21AA5553E00F7BE9F /* citys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citys.plist; sourceTree = "<group>"; };
+		A489E7C71AA587ED00F7BE9F /* IActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IActivityInfo.h; sourceTree = "<group>"; };
+		A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IActivityInfo.m; sourceTree = "<group>"; };
+		A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.8.xcdatamodel; sourceTree = "<group>"; };
+		A489E7CE1AA5980C00F7BE9F /* ActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityInfo.h; sourceTree = "<group>"; };
+		A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityInfo.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -8378,6 +8402,8 @@
 			isa = PBXGroup;
 			children = (
 				F59E76091A405D170028FBAF /* weLian.xcdatamodeld */,
+				A489E7CE1AA5980C00F7BE9F /* ActivityInfo.h */,
+				A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */,
 				A47D41D41A8B50320070BFD8 /* ProjectUser.h */,
 				A47D41D51A8B50320070BFD8 /* ProjectUser.m */,
 				A4EFA6D31A89E75D00CB5A4D /* ProjectDetailInfo.h */,
@@ -8455,6 +8481,10 @@
 				A4C770EB1A80A515005ABC7F /* ICommentInfo.m */,
 				A4C770F01A80A5B3005ABC7F /* IPhotoInfo.h */,
 				A4C770F11A80A5B3005ABC7F /* IPhotoInfo.m */,
+				A489E7C71AA587ED00F7BE9F /* IActivityInfo.h */,
+				A489E7C81AA587ED00F7BE9F /* IActivityInfo.m */,
+				A4717C351AA7F8370054289D /* IActivityTicket.h */,
+				A4717C361AA7F8370054289D /* IActivityTicket.m */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -9112,6 +9142,7 @@
 		F5CE863F19BFF44100A9D14C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A489E7C21AA5553E00F7BE9F /* citys.plist */,
 				F5A1A71219E9508E003773F1 /* city.plist */,
 				F5A1A71319E9508E003773F1 /* province.plist */,
 				F5A1A71019E918A5003773F1 /* city.db */,
@@ -9649,6 +9680,7 @@
 				A49C7D9A1A70D42700F2AEC5 /* home_repost_wechat@2x.png in Resources */,
 				A49C7D9B1A70D42700F2AEC5 /* icon_session-8@2x.png in Resources */,
 				A49C7D9C1A70D42700F2AEC5 /* home_picture_add_camera@2x.png in Resources */,
+				A489E7C61AA5553E00F7BE9F /* citys.plist in Resources */,
 				A49C7D9D1A70D42700F2AEC5 /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				A49C7D9E1A70D42700F2AEC5 /* tabbar_circle_selected_prompt@2x.png in Resources */,
 				A49C7D9F1A70D42700F2AEC5 /* weLianDev-Info.plist in Resources */,
@@ -10179,6 +10211,7 @@
 				F53DC3C91A49192600F5F712 /* home_repost_wechat@2x.png in Resources */,
 				F53DC3CA1A49192600F5F712 /* icon_session-8@2x.png in Resources */,
 				F53DC3CB1A49192600F5F712 /* home_picture_add_camera@2x.png in Resources */,
+				A489E7C51AA5553E00F7BE9F /* citys.plist in Resources */,
 				A4C143661A4C0A6B00C9BAB5 /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				F53DC3CC1A49192600F5F712 /* tabbar_circle_selected_prompt@2x.png in Resources */,
 				F5318F011A63E986009B6635 /* weLianDev-Info.plist in Resources */,
@@ -10708,6 +10741,7 @@
 				F5664A891A2AFD56008A5830 /* home_picture_add_camera@2x.png in Resources */,
 				F55772EE1A5AA3E200693279 /* login_phone@2x.png in Resources */,
 				A4C144A11A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
+				A489E7C31AA5553E00F7BE9F /* citys.plist in Resources */,
 				F5664A8B1A2AFD56008A5830 /* tabbar_circle@2x.png in Resources */,
 				F5664A8D1A2AFD56008A5830 /* Expression_14@2x.png in Resources */,
 				A4C1437F1A4C0A6B00C9BAB5 /* section0_emotion15@2x.png in Resources */,
@@ -11239,6 +11273,7 @@
 				F5664D411A2AFDD5008A5830 /* home_repost_wechat@2x.png in Resources */,
 				F5664D421A2AFDD5008A5830 /* icon_session-8@2x.png in Resources */,
 				F5664D431A2AFDD5008A5830 /* home_picture_add_camera@2x.png in Resources */,
+				A489E7C41AA5553E00F7BE9F /* citys.plist in Resources */,
 				A4C143651A4C0A6B00C9BAB5 /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				F51BA4411A444DA2009E5CDF /* tabbar_circle_selected_prompt@2x.png in Resources */,
 				F5318F001A63E986009B6635 /* weLianDev-Info.plist in Resources */,
@@ -11855,6 +11890,7 @@
 				A49C7C061A70D42700F2AEC5 /* ALAssetsGroup+isEqual.m in Sources */,
 				A49C7C071A70D42700F2AEC5 /* WLPhoto.m in Sources */,
 				A49C7C081A70D42700F2AEC5 /* FeedAndZanView.m in Sources */,
+				A489E7D31AA5980C00F7BE9F /* ActivityInfo.m in Sources */,
 				A49C7C091A70D42700F2AEC5 /* AppDelegate.mm in Sources */,
 				A4E731AC1A8CA99700980676 /* ActivityTicketView.m in Sources */,
 				A49C7C0A1A70D42700F2AEC5 /* TQRichTextView.m in Sources */,
@@ -11879,6 +11915,7 @@
 				A49C7C1B1A70D42700F2AEC5 /* MyFriendUser.m in Sources */,
 				A49C7C1C1A70D42700F2AEC5 /* HomeView.m in Sources */,
 				A4C770EF1A80A516005ABC7F /* ICommentInfo.m in Sources */,
+				A4717C3A1AA7F8370054289D /* IActivityTicket.m in Sources */,
 				A49C7C1D1A70D42700F2AEC5 /* IBaseUserM.m in Sources */,
 				A49C7C1E1A70D42700F2AEC5 /* LocationprovinceController.m in Sources */,
 				A49C7C1F1A70D42700F2AEC5 /* UIView+Convenience.m in Sources */,
@@ -12153,6 +12190,7 @@
 				A49C7D051A70D42700F2AEC5 /* UIScrollView+MJExtension.m in Sources */,
 				A49C7D061A70D42700F2AEC5 /* MJPhotoBrowser.m in Sources */,
 				A49C7D071A70D42700F2AEC5 /* ForwardPublishView.m in Sources */,
+				A489E7CC1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
 				A49C80631A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				A49C7D081A70D42700F2AEC5 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DE1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
@@ -12364,6 +12402,7 @@
 				F53DC2C81A49192600F5F712 /* ALAssetsGroup+isEqual.m in Sources */,
 				F53DC2C91A49192600F5F712 /* WLPhoto.m in Sources */,
 				F53DC2CA1A49192600F5F712 /* FeedAndZanView.m in Sources */,
+				A489E7D21AA5980C00F7BE9F /* ActivityInfo.m in Sources */,
 				F53DC2CB1A49192600F5F712 /* AppDelegate.mm in Sources */,
 				A4E731AB1A8CA99700980676 /* ActivityTicketView.m in Sources */,
 				F53DC2CC1A49192600F5F712 /* TQRichTextView.m in Sources */,
@@ -12388,6 +12427,7 @@
 				F53D4E351A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F53DC2D71A49192600F5F712 /* HomeView.m in Sources */,
 				A4C770EE1A80A516005ABC7F /* ICommentInfo.m in Sources */,
+				A4717C391AA7F8370054289D /* IActivityTicket.m in Sources */,
 				F562728D1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F53DC2D81A49192600F5F712 /* LocationprovinceController.m in Sources */,
 				A4C141371A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
@@ -12662,6 +12702,7 @@
 				F53DC36C1A49192600F5F712 /* UIScrollView+MJExtension.m in Sources */,
 				F53DC36D1A49192600F5F712 /* MJPhotoBrowser.m in Sources */,
 				F53DC36E1A49192600F5F712 /* ForwardPublishView.m in Sources */,
+				A489E7CB1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
 				A49C80621A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F53DC36F1A49192600F5F712 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DD1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
@@ -12873,6 +12914,7 @@
 				F53D4E471A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
 				F56649A31A2AFD56008A5830 /* WLPhoto.m in Sources */,
 				F56649A41A2AFD56008A5830 /* FeedAndZanView.m in Sources */,
+				A489E7D01AA5980C00F7BE9F /* ActivityInfo.m in Sources */,
 				F534DAFC1A4F1BB100B6A725 /* AddCaseCell.m in Sources */,
 				A4E731A91A8CA99700980676 /* ActivityTicketView.m in Sources */,
 				F56649A51A2AFD56008A5830 /* AppDelegate.mm in Sources */,
@@ -12897,6 +12939,7 @@
 				F56649AE1A2AFD56008A5830 /* IconTableViewCell.m in Sources */,
 				F56649AF1A2AFD56008A5830 /* CTAssetsPageViewController.m in Sources */,
 				A4C770EC1A80A516005ABC7F /* ICommentInfo.m in Sources */,
+				A4717C371AA7F8370054289D /* IActivityTicket.m in Sources */,
 				A48CA6A11A4D044B009EBD04 /* DTError.m in Sources */,
 				F56649B01A2AFD56008A5830 /* UserInfoBasicVC.m in Sources */,
 				F56649B11A2AFD56008A5830 /* HomeView.m in Sources */,
@@ -13171,6 +13214,7 @@
 				A48CA6A41A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A4C141321A4BEF5700C9BAB5 /* MultiSelectViewController.m in Sources */,
 				F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */,
+				A489E7C91AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
 				A49C80601A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F55078DB1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
@@ -13382,6 +13426,7 @@
 				F5664C5C1A2AFDD5008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
 				F5664C5D1A2AFDD5008A5830 /* WLPhoto.m in Sources */,
 				F5664C5E1A2AFDD5008A5830 /* FeedAndZanView.m in Sources */,
+				A489E7D11AA5980C00F7BE9F /* ActivityInfo.m in Sources */,
 				F5664C5F1A2AFDD5008A5830 /* AppDelegate.mm in Sources */,
 				A4E731AA1A8CA99700980676 /* ActivityTicketView.m in Sources */,
 				F5664C601A2AFDD5008A5830 /* TQRichTextView.m in Sources */,
@@ -13406,6 +13451,7 @@
 				F53D4E341A4AABE700CA06C8 /* MyFriendUser.m in Sources */,
 				F5664C6B1A2AFDD5008A5830 /* HomeView.m in Sources */,
 				A4C770ED1A80A516005ABC7F /* ICommentInfo.m in Sources */,
+				A4717C381AA7F8370054289D /* IActivityTicket.m in Sources */,
 				F562728C1A4C4FE9002A9B88 /* IBaseUserM.m in Sources */,
 				F5664C6C1A2AFDD5008A5830 /* LocationprovinceController.m in Sources */,
 				A4C141361A4BEF5700C9BAB5 /* UIView+Convenience.m in Sources */,
@@ -13680,6 +13726,7 @@
 				F5664CF01A2AFDD5008A5830 /* UIScrollView+MJExtension.m in Sources */,
 				F5664CF21A2AFDD5008A5830 /* MJPhotoBrowser.m in Sources */,
 				F5664CF31A2AFDD5008A5830 /* ForwardPublishView.m in Sources */,
+				A489E7CA1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
 				A49C80611A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664CF41A2AFDD5008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DC1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
@@ -14471,6 +14518,7 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */,
 				A4715B211A84A2C3005DB2FC /* weLian1.1.7.xcdatamodel */,
 				A49C7FC81A70EA0B00F2AEC5 /* weLian1.1.6.xcdatamodel */,
 				A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */,
@@ -14481,7 +14529,7 @@
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A4715B211A84A2C3005DB2FC /* weLian1.1.7.xcdatamodel */;
+			currentVersion = A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

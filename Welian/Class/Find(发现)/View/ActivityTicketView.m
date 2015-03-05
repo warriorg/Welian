@@ -53,6 +53,16 @@
     }else{
         [_operateBtn setTitle:@"取　消" forState:UIControlStateNormal];
     }
+    [self setNeedsLayout];
+}
+
+- (void)setTickets:(NSArray *)tickets
+{
+    [super willChangeValueForKey:@"tickets"];
+    _tickets = tickets;
+    [super didChangeValueForKey:@"tickets"];
+    self.datasource = _tickets;
+    [_tableView reloadData];
 }
 
 - (void)layoutSubviews
@@ -74,7 +84,7 @@
 #pragma mark - Private
 - (void)setup
 {
-    self.datasource = @[@"VIP门票",@"普通门票",@"免费门票"];
+//    self.datasource = @[@"VIP门票",@"普通门票",@"免费门票"];
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     
     //设置底部操作栏
@@ -176,15 +186,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Activity_Ticket_View_Cell";
     if (_isBuyTicket) {
+        static NSString *cellIdentifier = @"Activity_Ticket_View_Cell";
         ActivityTicketViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[ActivityTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
-        
+        cell.iActivityTicket = _datasource[indexPath.row];
         return cell;
     }else{
+        static NSString *cellIdentifier = @"Activity_Look_Ticket_View_Cell";
         ActivityLookTicketViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[ActivityLookTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];

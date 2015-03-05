@@ -119,7 +119,7 @@
                                                        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                            
                                                        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                           [_logoBtn setImage:[WLMessageAvatorFactory avatarImageNamed:image messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
+                                                           [_logoBtn setImage:image forState:UIControlStateNormal];
 //                                                           [_logoBtn setImage:image forState:UIControlStateNormal];
                                                        }];
     }
@@ -225,9 +225,11 @@
     
     //用户头像
     UIButton *logoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    logoBtn.backgroundColor = [UIColor clearColor];
     [logoBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"user_small"]];
     [logoBtn addTarget:self action:@selector(logoBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    logoBtn.layer.cornerRadius = 16;
+    logoBtn.layer.masksToBounds = YES;
+    logoBtn.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:logoBtn];
     self.logoBtn = logoBtn;
     

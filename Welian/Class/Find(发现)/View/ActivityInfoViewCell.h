@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ActivityDetailInfoBlock)(void);
+
 @interface ActivityInfoViewCell : UITableViewCell
+
+@property (strong,nonatomic) ActivityDetailInfoBlock block;
 
 
 //返回cell的高度
