@@ -22,7 +22,7 @@
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         // 2.文字大小
         self.titleLabel.font = [UIFont systemFontOfSize:14];
-        
+        self.titleLabel.numberOfLines = 0;
         // 3.图片的内容模式
         self.imageView.contentMode = UIViewContentModeCenter;
         

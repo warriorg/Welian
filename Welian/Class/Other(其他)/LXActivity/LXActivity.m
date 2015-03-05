@@ -13,9 +13,9 @@
 #define WINDOW_COLOR                            [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35]
 #define ACTIONSHEET_BACKGROUNDCOLOR              [UIColor whiteColor]
 #define ANIMATE_DURATION                        0.25f
-#define KBUTTONX                                50.0f
-#define KBUTTON_Width                           80.0f
-#define KBUTTON_High                            90.0f
+#define KBUTTONX                                20.0f
+#define KBUTTON_Width                           60.0f
+#define KBUTTON_High                            80.0f
 #define KTOP_High                               10.0f
 
 
@@ -70,9 +70,9 @@
 #pragma mark - Praviate method
 - (void)creatButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray WithTitle:(NSString *)title otherButtonTitles:(NSArray *)buttonsTitle
 {
-    CGFloat backGWidth = [UIScreen mainScreen].bounds.size.width-20;
+    CGFloat backGWidth = [UIScreen mainScreen].bounds.size.width;
     //生成LXActionSheetView
-    self.backGroundView = [[UIView alloc] initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height, backGWidth, 0)];
+    self.backGroundView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, backGWidth, 0)];
     self.backGroundView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.backGroundView];
     
@@ -80,8 +80,8 @@
     
     CGFloat gap = (self.backGroundView.bounds.size.width-(2*KBUTTONX) - (shareButtonImagesNameArray.count*KBUTTON_Width))/(shareButtonImagesNameArray.count-1);
     UIView *butBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, backGWidth, KBUTTON_High+2*KTOP_High)];
-    [butBackView.layer setMasksToBounds:YES];
-    [butBackView.layer setCornerRadius:8.0f];
+//    [butBackView.layer setMasksToBounds:YES];
+//    [butBackView.layer setCornerRadius:8.0f];
     [butBackView setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.99]];
     [self.backGroundView addSubview:butBackView];
     if (buttonsTitle.count) {
@@ -123,16 +123,16 @@
             [itmesView addSubview:shareButton];
         }
     }
-    [itmesView setFrame:CGRectMake(0, LXActivityHeight, backGWidth, KBUTTON_High+30)];
-    [butBackView setFrame:CGRectMake(0, 0, backGWidth, LXActivityHeight+KBUTTON_High+30)];
+    [itmesView setFrame:CGRectMake(0, LXActivityHeight, backGWidth, KBUTTON_High+50)];
+    [butBackView setFrame:CGRectMake(0, 0, backGWidth, LXActivityHeight+KBUTTON_High+50)];
     
     //再次计算加入shareButtons后LXActivity的高度
     
-    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, LXActivityHeight+KBUTTON_High+30+10, backGWidth, 44)];
+    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, LXActivityHeight+KBUTTON_High+30, backGWidth, 44)];
     [cancelButton setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.99]];
     [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelButton.layer setMasksToBounds:YES];
-    [cancelButton.layer setCornerRadius:8.0f];
+//    [cancelButton.layer setMasksToBounds:YES];
+//    [cancelButton.layer setCornerRadius:8.0f];
     [cancelButton setTitleColor:[UIColor colorWithRed:60.0/255 green:183.0/255 blue:226.0/255 alpha:1] forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(tappedCancel) forControlEvents:UIControlEventTouchUpInside];
     [self.backGroundView addSubview:cancelButton];
@@ -140,7 +140,7 @@
     LXActivityHeight = CGRectGetMaxY(cancelButton.frame);
     
     [UIView animateWithDuration:ANIMATE_DURATION animations:^{
-        [self.backGroundView setFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-LXActivityHeight-10, backGWidth, LXActivityHeight)];
+        [self.backGroundView setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-LXActivityHeight, backGWidth, LXActivityHeight)];
     } completion:^(BOOL finished) {
     }];
 }
@@ -158,7 +158,7 @@
 - (void)tappedCancel
 {
     [UIView animateWithDuration:ANIMATE_DURATION animations:^{
-        [self.backGroundView setFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width-20, 0)];
+        [self.backGroundView setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 0)];
         self.alpha = 0;
     } completion:^(BOOL finished) {
         if (finished) {

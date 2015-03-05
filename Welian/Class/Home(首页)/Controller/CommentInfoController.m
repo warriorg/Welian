@@ -21,6 +21,10 @@
 #import "LXActivity.h"
 #import "ShareEngine.h"
 #import "UIImageView+WebCache.h"
+#import "ListItem.h"
+#import "WLActivityView.h"
+#import "ShareFriendsController.h"
+#import "NavViewController.h"
 
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,LXActivityDelegate>
 {
@@ -48,7 +52,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (CommentHeadFrame*)commentHFrame
 {
     if (_commentHFrame == nil) {
-        _commentHFrame = [[CommentHeadFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
+        _commentHFrame = [[CommentHeadFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-8];
         if (!_feedAndZanFM) {
             _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width];
         }
@@ -218,24 +222,6 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)moreButClick:(UIBarButtonItem*)item
 {
-    NSArray *shareButtonTitleArray = [[NSArray alloc] init];
-    NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
-    shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];
-    shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
-    
-    NSArray *buttons = @[@"举报"];
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
-    if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
-        buttons = @[@"删除该动态",@"举报"];
-    }
-    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
-}
-
-
-#pragma mark - LXActivityDelegate
-- (void)didClickOnImageIndex:(NSString *)imageIndex
-{
     WLStatusM *statusM = self.statusM;
     NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
     __block UIImage *iconImage = self.commentHeadView.cellHeadView.iconImageView.image;
@@ -243,6 +229,61 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.commentHeadView.cellHeadView.iconImageView sd_setImageWithURL:[NSURL URLWithString:statusM.user.avatar] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         iconImage = image;
     }];
+    
+    ListItem *wlFriendItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_wechat.png"] text:@"微链好友" selectionStyle:0];
+    wlFriendItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+        NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+        [self presentViewController:navShareFVC animated:YES completion:^{
+            
+        }];
+        NSLog(@"%d",style);
+    };
+    
+    ListItem *wlCirleItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_wechat.png"] text:@"创业圈" selectionStyle:1];
+    wlCirleItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        NSLog(@"%d",style);
+    };
+    
+    ListItem *wechatItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_wechat"] text:@"微信好友" selectionStyle:2];
+    wechatItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        
+        NSLog(@"%d",style);
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChat];
+    };
+    
+    ListItem *friendcirleItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_friendcirle"] text:@"微信朋友圈" selectionStyle:3];
+    friendcirleItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        NSLog(@"%d",style);
+         [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.content andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChatFriend];
+    };
+    
+    ListItem *reportItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_friendcirle"] text:@"举报" selectionStyle:4];
+    reportItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        NSLog(@"%d",style);
+    };
+    NSArray *twoArray = @[reportItem];
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
+    if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
+        ListItem *deleteItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_friendcirle"] text:@"删除该动态" selectionStyle:5];
+        deleteItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+            NSLog(@"%d",style);
+        };
+        twoArray = @[reportItem, deleteItem];
+    }
+    
+    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:@[wlFriendItem,wlCirleItem,wechatItem,friendcirleItem] andTwoArray:twoArray];
+    [wlActivity show];
+    
+//    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+//    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+
+#pragma mark - LXActivityDelegate
+- (void)didClickOnImageIndex:(NSString *)imageIndex
+{
+    
     
     if ([imageIndex isEqualToString:@"删除该动态"]) {
         __weak CommentInfoController *commVC = self;
@@ -265,10 +306,10 @@ static NSString *noCommentCell = @"NoCommentCell";
         
     }else if ([imageIndex isEqualToString:@"微信好友"]){
         
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChat];
+        
     }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
         
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.content andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChatFriend];
+       
     }
 }
 

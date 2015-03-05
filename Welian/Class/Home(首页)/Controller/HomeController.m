@@ -204,7 +204,6 @@
             WLStatusFrame *sf = [self dataFrameWith:dic];
             [newFrames addObject:sf];
         }
-        
         // 2.将newFrames整体插入到旧数据的后面
         [_dataArry addObjectsFromArray:newFrames];
         

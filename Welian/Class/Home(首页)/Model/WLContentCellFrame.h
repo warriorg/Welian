@@ -17,6 +17,8 @@
 @property (nonatomic, assign, readonly) CGRect contentLabelF;
 /** 配图 */
 @property (nonatomic, assign, readonly) CGRect photoListViewF;
+///****项目和活动*****////
+@property (nonatomic, assign, readonly) CGRect cellCardF;
 /** 转发的整体 */
 //@property (nonatomic, assign, readonly) CGRect retweetViewF;
 /** 转发的昵称 */

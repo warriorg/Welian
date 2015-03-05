@@ -213,15 +213,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dic = _provinArray[indexPath.row];
-    NSArray *citya = [_cityArrayDic objectForKey:[dic objectForKey:@"pid"]];
     if (indexPath.section==1) {
+        NSArray *citya = [_cityArrayDic objectForKey:[dic objectForKey:@"pid"]];
+        if (citya.count) {
+            CityLocationController *cityVC = [[CityLocationController alloc] init];
+            [cityVC setCityArray:citya];
+            [cityVC setMeInfoVC:self.meinfoVC];
+            [cityVC setProvinDic:dic];
+            [cityVC setTitle:[dic objectForKey:@"name"]];
+            [self.navigationController pushViewController:cityVC animated:YES];
+        }else{
+            if ([_locationDelegate respondsToSelector:@selector(locationProvinController:withLocationDic:)]) {
+               NSDictionary *seleCityDic = @{@"provname":[dic objectForKey:@"name"],@"cityname":[dic objectForKey:@"name"],@"cityid":@([[dic objectForKey:@"cid"] integerValue]),@"provid":@([[dic objectForKey:@"pid"] integerValue])};
+                [_locationDelegate locationProvinController:self withLocationDic:seleCityDic];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }
         
-        CityLocationController *cityVC = [[CityLocationController alloc] init];
-        [cityVC setCityArray:citya];
-        [cityVC setMeInfoVC:self.meinfoVC];
-        [cityVC setProvinDic:dic];
-        [cityVC setTitle:[dic objectForKey:@"name"]];
-        [self.navigationController pushViewController:cityVC animated:YES];
     }else if (indexPath.section==0){
         if (_locationStr) {            
             if ([_locationDelegate respondsToSelector:@selector(locationProvinController:withLocationDic:)]) {

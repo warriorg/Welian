@@ -23,6 +23,7 @@
 #import "M80AttributedLabel.h"
 //#import "ActivityViewController.h"
 #import "ActivityDetailViewController.h"
+#import "WLCellCardView.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
@@ -30,10 +31,11 @@
     MLEmojiLabel *_contentLabel;
     /** 配图 */
     WLPhotoListView *_photoListView;
+    // 项目和活动
+    WLCellCardView *_cellCardView;
 }
 
 @end
-
 
 @implementation WLContentCellView
 
@@ -41,7 +43,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         // 1.添加原创微博的子控件
         [self setupOriginalSubviews];
     }
@@ -71,6 +72,15 @@
     _photoListView = [[WLPhotoListView alloc] init];
     [self addSubview:_photoListView];
     
+    // 活动和项目
+    _cellCardView = [[WLCellCardView alloc] init];
+//    _cellCardView.layer.masksToBounds = YES;
+//    _cellCardView.layer.cornerRadius = 6.0;
+//    _cellCardView.layer.borderWidth = 0.6;
+//    _cellCardView.layer.borderColor = [WLRGB(173, 173, 173) CGColor];
+    [_cellCardView.tapBut addTarget:self action:@selector(projectAndActivityBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_cellCardView];
+    
     // 添加工具条
     _dock = [[WLStatusDock alloc] init];
     // 赞
@@ -81,7 +91,6 @@
 }
 
 #pragma mark - Copying Method
-
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }
@@ -152,6 +161,9 @@
         _photoListView.hidden = YES;
     }
     
+    _cellCardView.frame = contenFrame.cellCardF;
+    
+    
     BOOL isDock = NO;
     if (status.content || status.photos.count) {
         isDock = YES;
@@ -166,6 +178,12 @@
         [_dock setHidden:YES];
     }
     
+}
+
+#pragma mark - 项目或活动点击
+- (void)projectAndActivityBtnClick:(UIButton*)but event:(id)event
+{
+    DLog(@"fad");
 }
 
 #pragma mark - 收起or展开
