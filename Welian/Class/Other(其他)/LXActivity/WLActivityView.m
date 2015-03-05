@@ -60,9 +60,9 @@
         
         [self addSubview:self.tableView];
         
-        CGFloat LXActivityHeight = 190;
+        CGFloat LXActivityHeight = 170;
         if (oneArray.count&&twoArray.count) {
-            LXActivityHeight += 80;
+            LXActivityHeight += 120;
         }
         [UIView animateWithDuration:ANIMATE_DURATION animations:^{
             [self.tableView setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-LXActivityHeight, SuperSize.width, LXActivityHeight)];
@@ -104,7 +104,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 110.0;
+    return 120.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

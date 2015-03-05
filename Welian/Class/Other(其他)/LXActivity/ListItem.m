@@ -41,8 +41,6 @@
         
         [self addSubview:title];
         [self addSubview:imageBut];
-//        UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemTapped:)];
-//        [self addGestureRecognizer:singleFingerTap];
     }
     
     return self;

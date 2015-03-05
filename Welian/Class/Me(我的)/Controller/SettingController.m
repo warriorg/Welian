@@ -88,14 +88,16 @@
 
 - (void)logout
 {
+    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
     [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-        
+        [WLHUDView hiddenHud];
+        [UserDefaults removeObjectForKey:@"sessionid"];
+        [LogInUser setUserisNow:NO];
+        [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
     } fail:^(NSError *error) {
-        
+        [WLHUDView showErrorHUD:@"退出失败！"];
     }];
-    [UserDefaults removeObjectForKey:@"sessionid"];
-    [LogInUser setUserisNow:NO];
-    [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
+    
 }
 
 #pragma mark 读取plist文件的内容

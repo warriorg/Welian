@@ -25,6 +25,7 @@
 #import "WLActivityView.h"
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
+#import "PublishStatusController.h"
 
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,LXActivityDelegate>
 {
@@ -242,6 +243,11 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     ListItem *wlCirleItem = [[ListItem alloc] initWithImage:[UIImage imageNamed:@"home_repost_wechat.png"] text:@"创业圈" selectionStyle:1];
     wlCirleItem.activityBlock = ^(HMSegmentedControlSelectionStyle style){
+        PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+        NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
+        [self presentViewController:navShareFVC animated:YES completion:^{
+            
+        }];
         NSLog(@"%d",style);
     };
     
@@ -272,7 +278,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         twoArray = @[reportItem, deleteItem];
     }
     
-    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:@[wlFriendItem,wlCirleItem,wechatItem,friendcirleItem] andTwoArray:twoArray];
+    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:twoArray andTwoArray:@[wlFriendItem,wlCirleItem,wechatItem,friendcirleItem]];
     [wlActivity show];
     
 //    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
@@ -581,7 +587,12 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.statusM setForwardsArray:_feedArrayM];
 
     [self.tableView reloadData];
-    
+
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
 @end

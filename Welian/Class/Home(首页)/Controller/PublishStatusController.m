@@ -13,9 +13,11 @@
 #import "PublishModel.h"
 #import "IWTextView.h"
 #import "ZBMessageManagerFaceView.h"
-#import "ForwardPublishView.h"
+//#import "ForwardPublishView.h"
 #import "WLStatusM.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+
+#import "WLCellCardView.h"
 
 static NSString *picCellid = @"PicCellID";
 
@@ -43,7 +45,7 @@ static NSString *picCellid = @"PicCellID";
 @property (nonatomic, strong) NSArray *friendArray;
 @property (nonatomic, strong) PublishModel *publishM;
 
-@property (nonatomic, strong) ForwardPublishView *forwardView;
+@property (nonatomic, strong) WLCellCardView *forwardView;
 
 @end
 
@@ -75,7 +77,7 @@ static NSString *picCellid = @"PicCellID";
 - (void)setUiItems
 {
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.navigationItem setTitle:@"发布动态"];
+//    [self.navigationItem setTitle:@"发布动态"];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmPublish)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPublish)];
 }
@@ -154,8 +156,9 @@ static NSString *picCellid = @"PicCellID";
         self.collectionView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:self.collectionView];
     }else if (_publishType == PublishTypeForward){
-        self.forwardView = [[ForwardPublishView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.textView.frame)+10, [[UIScreen mainScreen] bounds].size.width, 60)];
-        [self.forwardView setStatus:self.status];
+        self.forwardView = [[WLCellCardView alloc] init];
+        self.forwardView.frame = CGRectMake(15, CGRectGetMaxY(self.textView.frame)+10, SuperSize.width-30, 56);
+//        [self.forwardView setStatus:self.status];
         [self.view addSubview:self.forwardView];
     }
 
@@ -596,23 +599,25 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - 确认发布
 - (void)confirmPublish
 {
+//    [self.view.findFirstResponder resignFirstResponder];
+    
     if (_publishType == PublishTypeForward) {
-        NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
-        
-//        if (self.status.relationfeed) {
-//            fid = [NSNumber numberWithInt:self.status.relationfeed.fid];
-//        }
-        [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-            
-            [self dismissViewControllerAnimated:YES completion:^{
+        if (self.status) {
+            NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
+            [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+                
+            } fail:^(NSError *error) {
                 
             }];
-            
-        } fail:^(NSError *error) {
-            
-        }];
-        
+        }else{
+            [WLHUDView showErrorHUD:@"内容为空！"];
+            return;
+        }
     }else if (_publishType == PublishTypeNomel)
     {
         if (!(self.textView.text.length||self.assets.count)) {

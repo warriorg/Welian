@@ -205,7 +205,7 @@ static NSString *fridcellid = @"fridcellid";
             _count = [[alldataDic objectForKey:@"count"] integerValue];
             if (self.allArray.count) {
                 UILabel *fff = (UILabel*)self.tableView.tableFooterView;
-                [fff setText:[NSString stringWithFormat:@"%d位好友",_count]];
+                [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
                 [self.tableView reloadData];
             }
         }];
@@ -261,11 +261,10 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0){
+    if (tableView == self.tableView&&indexPath.section==0) {
         return 82.f;
-    }else{
-        return 60.0;
     }
+        return 60.0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -437,9 +436,9 @@ static NSString *fridcellid = @"fridcellid";
 }
 
 
+#pragma mark - 搜索本地好友
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    
     [self.filterArray removeAllObjects];
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]                                       objectAtIndex:[self.searchDisplayController.searchBar                                                      selectedScopeButtonIndex]]];
     return YES;
