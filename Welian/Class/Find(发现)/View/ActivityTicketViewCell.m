@@ -44,7 +44,13 @@
     [super willChangeValueForKey:@"iActivityTicket"];
     _iActivityTicket = iActivityTicket;
     [super didChangeValueForKey:@"iActivityTicket"];
-    
+    _nameLabel.text = _iActivityTicket.name;
+    _infoLabel.text = _iActivityTicket.intro;
+    _ticketNumLabel.text = [NSString stringWithFormat:@"剩余%d张",_iActivityTicket.ticketCount.intValue - _iActivityTicket.joined.intValue];
+    _moneyLabel.text = [NSString stringWithFormat:@"%@元",_iActivityTicket.price];
+    [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:@"元"]];
+    _statusLabel.hidden = _iActivityTicket.ticketCount.integerValue > _iActivityTicket.joined.integerValue ? YES : NO;
+    _operateView.hidden = _iActivityTicket.ticketCount.integerValue > _iActivityTicket.joined.integerValue ? NO : YES;
 }
 
 - (void)layoutSubviews

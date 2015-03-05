@@ -13,7 +13,7 @@
 @property (nonatomic,strong) NSNumber *ticketid;//票id
 @property (nonatomic,strong) NSString *name;
 @property (nonatomic,strong) NSString *intro;//描述
-@property (nonatomic,strong) NSNumber *count;//票的数量
+@property (nonatomic,strong) NSNumber *ticketCount;//票的数量
 @property (nonatomic,strong) NSNumber *joined;//已经出售的数量
 @property (nonatomic,strong) NSNumber *price;//票价
 

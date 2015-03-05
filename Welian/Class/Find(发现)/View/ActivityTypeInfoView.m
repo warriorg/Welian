@@ -85,10 +85,10 @@
                     if (citys.count == 0) {
                         NSArray *provinces = [self siftArray:_provinceArrayDic orderWithKey:city];
                         NSDictionary *dic = [provinces firstObject];
-                        locationCityDic = @{@"cityid":dic[@"pid"],@"name":dic[@"name"]};
+                        locationCityDic = @{@"cityid":dic[@"pid"],@"name":cityStr};
                     }else{
                         NSDictionary *dic = [citys firstObject];
-                        locationCityDic = @{@"cityid":dic[@"cid"],@"name":dic[@"name"]};
+                        locationCityDic = @{@"cityid":dic[@"cid"],@"name":cityStr};
                     }
                     
                     [all replaceObjectAtIndex:0 withObject:locationCityDic];

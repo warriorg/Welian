@@ -12,7 +12,7 @@
 
 - (void)customOperation:(NSDictionary *)dict
 {
-    [self setValuesForKeysWithDictionary:dict];
+    self.ticketCount = dict[@"count"];
 }
 
 @end
