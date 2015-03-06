@@ -475,11 +475,17 @@
     switch (_activityInfo.status.integerValue) {
         case 1:
             //活动进行中
-            
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //查看我的门票
+                [self lookMyTicketsInfo];
+            }
             break;
         case 2:
             //活动已结束
-            
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //查看我的门票
+                [self lookMyTicketsInfo];
+            }
             break;
         default:
         {
@@ -586,11 +592,21 @@
     switch (_activityInfo.status.integerValue) {
         case 1:
             //进行中
-            [_joinBtn setTitle:@"正在进行" forState:UIControlStateNormal];
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //如果是收费活动
+                [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
+            }else{
+                [_joinBtn setTitle:@"正在进行" forState:UIControlStateNormal];
+            }
             break;
         case 2:
             //获取已结束
-            [_joinBtn setTitle:@"已结束" forState:UIControlStateNormal];
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //如果是收费活动
+                [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
+            }else{
+                [_joinBtn setTitle:@"已结束" forState:UIControlStateNormal];
+            }
             break;
         default:
         {
