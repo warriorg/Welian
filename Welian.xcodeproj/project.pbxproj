@@ -275,6 +275,10 @@
 		A48302FD1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
 		A48302FE1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
 		A48302FF1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48303021AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303031AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303041AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303051AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
 		A489E7B71AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
@@ -4514,6 +4518,8 @@
 		A482A2451A5FD16F004AABE5 /* NeedAddUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedAddUser.h; sourceTree = "<group>"; };
 		A482A2461A5FD16F004AABE5 /* NeedAddUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedAddUser.m; sourceTree = "<group>"; };
 		A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_time@2x.png"; sourceTree = "<group>"; };
+		A48303001AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BackgroundColor.h"; sourceTree = "<group>"; };
+		A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BackgroundColor.m"; sourceTree = "<group>"; };
 		A489E7B51AA198E400F7BE9F /* ActivityOrderInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderInfoViewCell.h; sourceTree = "<group>"; };
 		A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewCell.m; sourceTree = "<group>"; };
 		A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityViewController.h; sourceTree = "<group>"; };
@@ -6366,6 +6372,8 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A48303001AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.h */,
+				A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */,
 				A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */,
 				A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */,
 				A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */,
@@ -11965,6 +11973,7 @@
 				A49C7C361A70D42700F2AEC5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB21A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				A49C7C371A70D42700F2AEC5 /* SchoolCompanyDate.m in Sources */,
+				A48303051AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				A49C7C381A70D42700F2AEC5 /* weLian.xcdatamodeld in Sources */,
 				A49C7C391A70D42700F2AEC5 /* MKAnnotationView+WebCache.m in Sources */,
 				A49C7C3A1A70D42700F2AEC5 /* LoginViewController.m in Sources */,
@@ -12477,6 +12486,7 @@
 				A4C140881A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB11A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F53DC2E61A49192600F5F712 /* SchoolCompanyDate.m in Sources */,
+				A48303041AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F53DC2E71A49192600F5F712 /* weLian.xcdatamodeld in Sources */,
 				F53DC2E81A49192600F5F712 /* MKAnnotationView+WebCache.m in Sources */,
 				F53DC2E91A49192600F5F712 /* LoginViewController.m in Sources */,
@@ -12989,6 +12999,7 @@
 				F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */,
 				A4743EAF1A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */,
+				A48303021AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F56649BE1A2AFD56008A5830 /* AFURLSessionManager.m in Sources */,
 				F56649C01A2AFD56008A5830 /* MKAnnotationView+WebCache.m in Sources */,
 				A4C140951A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
@@ -13501,6 +13512,7 @@
 				A4C140871A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB01A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F59E76101A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
+				A48303031AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F59E760C1A405D170028FBAF /* weLian.xcdatamodeld in Sources */,
 				F5664C7A1A2AFDD5008A5830 /* MKAnnotationView+WebCache.m in Sources */,
 				F5664C7B1A2AFDD5008A5830 /* LoginViewController.m in Sources */,

@@ -24,12 +24,12 @@
 
 #import "ShareEngine.h"
 #import "SEImageCache.h"
+#import "UINavigationBar+BackgroundColor.h"
 
-#define kHeaderImageHeight 178.f
+#define kHeaderImageHeight 238.f
 #define kTableViewHeaderHeight 45.f
 #define kOperateButtonHeight 35.f
 #define kmarginLeft 10.f
-
 
 @interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -71,11 +71,33 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.tintColor = KBasesColor;
-//    self.navigationController.navigationBar.translucent = YES;
-//    self.navigationController.navigationBar.alpha = 0.5f;
-//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [self scrollViewDidScroll:_tableView];
+    
+//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1]];
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:21], NSFontAttributeName, nil]];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar reset];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY > kHeaderImageHeight/3.f) {
+        CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
+        
+        [self.navigationController.navigationBar useBackgroundColor:[KBasesColor colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar useBackgroundColor:[KBasesColor colorWithAlphaComponent:0]];
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,7 +107,10 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,ViewCtrlTopBarHeight,self.view.width,self.view.height - toolBarHeight - ViewCtrlTopBarHeight)];
+    //设置头部背景透明
+    [self.navigationController.navigationBar useBackgroundColor:[UIColor clearColor]];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight)];
     tableView.dataSource = self;
     tableView.delegate = self;
     //隐藏表格分割线

@@ -25,6 +25,8 @@
 @property (assign,nonatomic) UILabel *moneyLabel;
 @property (assign,nonatomic) UILabel *ticketNumLabel;
 @property (assign,nonatomic) UILabel *statusLabel;
+@property (assign,nonatomic) UIButton *addImageBtn;
+@property (assign,nonatomic) UIButton *minusImageBtn;
 @property (assign,nonatomic) int buyNum;
 
 @end
@@ -68,13 +70,21 @@
     _operateView.centerY = self.height / 2.f;
     _operateView.right = self.width - kMarginLeft;
     
-    _addBtn.size = CGSizeMake(kOperateViewWidth / 3.f, _operateView.height);
-    _addBtn.right = _operateView.width;
-    _addBtn.centerY = _operateView.height / 2.f;
+    _addImageBtn.size = CGSizeMake(kOperateViewWidth / 3.f, _operateView.height);
+    _addImageBtn.right = _operateView.width;
+    _addImageBtn.centerY = _operateView.height / 2.f;
     
-    _minusBtn.size = CGSizeMake(kOperateViewWidth / 3.f, _operateView.height);
-    _minusBtn.left = 0.f;
-    _minusBtn.centerY = _operateView.height / 2.f;
+    _addBtn.size = CGSizeMake(kOperateViewWidth / 3.f + kMarginLeft, self.height);
+    _addBtn.right = self.width;
+    _addBtn.centerY = self.height / 2.f;
+    
+    _minusImageBtn.size = CGSizeMake(kOperateViewWidth / 3.f, _operateView.height);
+    _minusImageBtn.left = 0.f;
+    _minusImageBtn.centerY = _operateView.height / 2.f;
+    
+    _minusBtn.size = CGSizeMake(_addBtn.width, self.height);
+    _minusBtn.right = _addBtn.left - kOperateViewWidth / 3.f;
+    _minusBtn.centerY = self.height / 2.f;
     
     _buyNumLabel.size = CGSizeMake(kOperateViewWidth / 3.f, _operateView.height);
     _buyNumLabel.centerX = _operateView.width / 2.f;
@@ -117,18 +127,32 @@
     self.operateView = operateView;
     
     //添加按钮
+    UIButton *addImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    addImageBtn.backgroundColor = [UIColor clearColor];
+    [addImageBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_jia"] forState:UIControlStateNormal];
+    [operateView addSubview:addImageBtn];
+    self.addImageBtn = addImageBtn;
+    
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_jia"] forState:UIControlStateNormal];
+    addBtn.backgroundColor = [UIColor clearColor];
     [addBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [operateView addSubview:addBtn];
+    [self.contentView addSubview:addBtn];
     self.addBtn = addBtn;
+//    [addBtn setDebug:YES];
     
     //减少按钮
+    UIButton *minusImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    minusImageBtn.backgroundColor = [UIColor clearColor];
+    [minusImageBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_jian"] forState:UIControlStateNormal];
+    [operateView addSubview:minusImageBtn];
+    self.minusImageBtn = minusImageBtn;
+    
     UIButton *minusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [minusBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_jian"] forState:UIControlStateNormal];
+    minusBtn.backgroundColor = [UIColor clearColor];
     [minusBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [operateView addSubview:minusBtn];
+    [self.contentView addSubview:minusBtn];
     self.minusBtn = minusBtn;
+//    [minusBtn setDebug:YES];
     
     //购买数量
     UILabel *buyNumLabel = [[UILabel alloc] init];
