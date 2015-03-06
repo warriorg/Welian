@@ -11,6 +11,7 @@
 #import "WLLocationHelper.h"
 
 #define kTableViewCellHeight 43.f
+#define kTableViewMaxHeight (ScreenHeight - 200.f)
 
 @interface ActivityTypeInfoView ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
@@ -94,7 +95,8 @@
                     [all replaceObjectAtIndex:0 withObject:locationCityDic];
                     
                     self.datasource = [NSArray arrayWithArray:all];
-                    [_tableView reloadData];
+                    //刷新第一行
+                    [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
                     
                     NSInteger selectRow = [_datasource indexOfObject:_normalInfo];
                     [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectRow inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -104,18 +106,10 @@
     }
 }
 
-//- (void)setDatasource:(NSArray *)datasource
-//{
-//    [super willChangeValueForKey:@"datasource"];
-//    _datasource = datasource;
-//    [super didChangeValueForKey:@"datasource"];
-////    [_tableView reloadData];
-//}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _tableView.frame = CGRectMake(0.f, 0.f, self.width, kTableViewCellHeight * _datasource.count);
+    _tableView.frame = CGRectMake(0.f, 0.f, self.width, (kTableViewCellHeight * _datasource.count < kTableViewMaxHeight) ? kTableViewCellHeight * _datasource.count : kTableViewMaxHeight);
     
 }
 

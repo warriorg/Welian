@@ -16,6 +16,7 @@
 #define kTableViewCellHeight 60.f
 #define kLookTableViewCellHeight 69.f
 #define kMarginTop 20.f
+#define kTableViewMaxHeight (ScreenHeight - 200.f)
 
 @interface ActivityTicketView ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
@@ -76,7 +77,8 @@
     _operateBtn.centerX = _operateToolView.width / 2.f;
     _operateBtn.centerY = _operateToolView.height / 2.f;
     
-    _tableView.size = CGSizeMake(self.width,(_isBuyTicket ? kTableViewCellHeight : kLookTableViewCellHeight) * _datasource.count + (_isBuyTicket ? 0 : kMarginTop));
+    float tableHeight = (_isBuyTicket ? kTableViewCellHeight : kLookTableViewCellHeight) * _datasource.count + (_isBuyTicket ? 0 : kMarginTop);
+    _tableView.size = CGSizeMake(self.width,(tableHeight < kTableViewMaxHeight) ? tableHeight : kTableViewMaxHeight);
     _tableView.bottom = _operateToolView.top;
     _tableView.centerX = self.width / 2.f;
 }
@@ -120,9 +122,16 @@
 - (void)operateBtnClicked:(UIButton *)sender
 {
     [self dismiss];
-    if (_isBuyTicket) {
+    NSMutableArray *buyTickets = [NSMutableArray array];
+    for (IActivityTicket *iActivityTicket in _datasource) {
+        if (iActivityTicket.buyCount.integerValue > 0) {
+            [buyTickets addObject:iActivityTicket];
+        }
+    }
+    
+    if (_isBuyTicket && buyTickets.count > 0) {
         if (_buyTicketBlock) {
-            _buyTicketBlock(@[@"",@"",@""]);
+            _buyTicketBlock([NSArray arrayWithArray:buyTickets]);
         }
     }
 }
@@ -200,6 +209,7 @@
         if (!cell) {
             cell = [[ActivityLookTicketViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
+        cell.iActivityTicket = _datasource[indexPath.row];
         return cell;
     }
 }

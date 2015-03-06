@@ -40,6 +40,7 @@
     _refreshControl = nil;
     _datasource = nil;
     _notView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NotstringView *)notView
@@ -81,6 +82,9 @@
         self.pageIndex = 1;
         self.pageSize = KCellConut;
         self.selectType = 0;
+        
+        //监听页面数据改变
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadReflshData) name:@"MyActivityInfoChanged" object:nil];
     }
     return self;
 }

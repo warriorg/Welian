@@ -37,7 +37,15 @@
     [super willChangeValueForKey:@"iActivityTicket"];
     _iActivityTicket = iActivityTicket;
     [super didChangeValueForKey:@"iActivityTicket"];
-    
+    _nameLabel.text = _iActivityTicket.name;
+    _infoLabel.text = _iActivityTicket.intro;
+    if (_iActivityTicket.price.integerValue > 0) {
+        _moneyLabel.text = [NSString stringWithFormat:@"%@元",_iActivityTicket.price];
+        [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:@"元"]];
+    }else{
+        _moneyLabel.text = @"免费";
+    }
+    _ticketNumLabel.text = [NSString stringWithFormat:@"x %@",_iActivityTicket.ticketCount];
 }
 
 - (void)layoutSubviews
@@ -61,12 +69,12 @@
     _nameLabel.width = _bgImageView.width - _moneyLabel.width - kMarginLeft;
     [_nameLabel sizeToFit];
     _nameLabel.left = kMarginLeft;
-    _nameLabel.bottom = _bgImageView.height / 2.f;
+    _nameLabel.bottom = _bgImageView.height / 2.f - 2.f;
     
     _infoLabel.width = _bgImageView.width - _moneyLabel.width - kMarginLeft;
     [_infoLabel sizeToFit];
     _infoLabel.left = kMarginLeft;
-    _infoLabel.top = _bgImageView.height / 2.f + 3.f;
+    _infoLabel.top = _bgImageView.height / 2.f + (_infoLabel.height < 20 ? 3 : -2.f);
 }
 
 #pragma mark - Private
@@ -94,6 +102,7 @@
     infoLabel.textColor = kNormalTextColor;
     infoLabel.font = [UIFont systemFontOfSize:13.f];
     infoLabel.text = @"参加贵宾晚宴";
+    infoLabel.numberOfLines = 2;
     [bgImageView addSubview:infoLabel];
     self.infoLabel = infoLabel;
     

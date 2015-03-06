@@ -23,6 +23,7 @@
 #define kOperateButtonHeight 35.f
 #define kmarginLeft 10.f
 
+
 @interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic) UITableView *tableView;
@@ -40,6 +41,8 @@
 - (void)dealloc
 {
     _datasource = nil;
+    _activityInfo = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSString *)title
@@ -52,10 +55,8 @@
     self = [super init];
     if (self) {
         self.activityInfo = activityInfo;
-//        self.datasource = @[@{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(0),@"uid":@(1000),@"friendship":@(1)},
-//                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(0),@"uid":@(1000),@"friendship":@(1)},
-//                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)},
-//                            @{@"avatar":@"http://img.welian.com/1423142255161-200-200_x.jpg",@"name":@"陈xx",@"company":@"微链",@"position":@"iOS开发工程师",@"investorauth":@(1),@"uid":@(1000),@"friendship":@(1)}];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
     }
     return self;
 }
@@ -76,9 +77,6 @@
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
-    //添加分享按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,ViewCtrlTopBarHeight,self.view.width,self.view.height - toolBarHeight - ViewCtrlTopBarHeight)];
     tableView.dataSource = self;
@@ -152,6 +150,8 @@
     
     //刷新页面信息
     [self updateUI];
+    //检测分享按钮是否显示
+    [self checkShareBtn];
     
     //获取详情信息
     [self initData];
@@ -354,6 +354,15 @@
 }
 
 #pragma mark - Private
+//检测分享按钮是否显示
+- (void)checkShareBtn
+{
+    //添加分享按钮
+    if(_activityInfo.shareurl.length > 0){
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+    }
+}
+
 //分享
 - (void)shareBtnClicked
 {
@@ -370,6 +379,8 @@
 //                                                 _iProjectDetailInfo.isfavorite = @(0);
                                                  self.activityInfo = [_activityInfo updateFavorite:@(0)];
                                                  [self checkFavorteStatus];
+                                                 //通知刷新我的活动中的数据
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
                                              } fail:^(NSError *error) {
                                                  [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
                                              }];
@@ -381,6 +392,8 @@
 //                                           _iProjectDetailInfo.isfavorite = @(1);
                                            self.activityInfo = [_activityInfo updateFavorite:@(1)];
                                            [self checkFavorteStatus];
+                                           //通知刷新我的活动中的数据
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
                                         } fail:^(NSError *error) {
                                             [UIAlertView showWithTitle:@"系统提示" message:@"收藏活动失败，请重试！"];
                                         }];
@@ -389,21 +402,9 @@
 
 //我要报名
 - (void)joinBtnClicked:(UIButton *)sender
-{
+{    
     //我要购票
-//    if (_activityTicketView.hidden) {
-//        WEAKSELF
-//        [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
-//            [weakSelf buyTicketToOrderInfo:ticekets];
-//        }];
-//        _activityTicketView.isBuyTicket = NO;
-//        [_activityTicketView showInView];
-//    }else{
-//        [_activityTicketView dismiss];
-//    }
-    
-    //我要购票
-    [self loadActivityTickets];
+//    [self loadActivityTickets];
     
     //0 还没开始，1进行中。2结束
     switch (_activityInfo.status.integerValue) {
@@ -419,18 +420,24 @@
         {
             //还没开始
             //1.已报名
-            if(_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 0){
+            if(_activityInfo.isjoined.boolValue){
                 //1收费，0免费
                 if (_activityInfo.type.integerValue == 0) {
                     //取消报名
-                    [self cancelActivityJoined];
+                    [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                                                   message:@"取消参加当前活动？"
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:@[@"确定"]
+                                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                       if (buttonIndex == 0) {
+                                                           return;
+                                                       }else{
+                                                           [self cancelActivityJoined];
+                                                       }
+                                                   }];
                 }else{
                     //查看我的门票
-                    if (_activityTicketView.hidden) {
-                        [_activityTicketView showInView];
-                    }else{
-                        [_activityTicketView dismiss];
-                    }
+                    [self lookMyTicketsInfo];
                 }
             }else{
                 //名额未满
@@ -439,14 +446,14 @@
                     if (_activityInfo.type.integerValue == 0) {
                         //我要报名
                         [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
-                                                       message:@"确认是否报名参加当前活动？"
+                                                       message:@"报名参加当前活动？"
                                              cancelButtonTitle:@"取消"
                                              otherButtonTitles:@[@"报名"]
                                                        handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                                                            if (buttonIndex == 0) {
                                                                return ;
                                                            }else{
-                                                               [self createActivityOrderWithType:0 ticketInfo:nil];
+                                                               [self createActivityOrderWithType:0 Tickets:nil];
                                                            }
                                                        }];
                     }else{
@@ -466,17 +473,7 @@
 //创建订单进入购票页面
 - (void)buyTicketToOrderInfo:(NSArray *)tickets
 {
-    NSMutableArray *ticketsinfo = [NSMutableArray array];
-    for (int i = 0; i < tickets.count; i++) {
-        NSDictionary *ticket = tickets[i];
-//        if (i > 0) {
-//            [detailInfo appendString:@"|"];
-//        }
-//        [detailInfo appendString:[NSString stringWithFormat:@"%@共%@张",ticket[@"name"],ticket[@"num"]]];
-        [ticketsinfo addObject:@{@"ticketid":@([ticket[@"tid"] integerValue]),@"count":@([ticket[@"num"] integerValue])}];
-    }
-
-    [self createActivityOrderWithType:0 ticketInfo:[NSArray arrayWithArray:ticketsinfo]];
+    [self createActivityOrderWithType:1 Tickets:tickets];
 }
 
 //进入活动详情页面
@@ -522,7 +519,7 @@
         {
             //还没开始
             //1.已报名
-            if(_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 0){
+            if(_activityInfo.isjoined.boolValue){
                 //1收费，0免费
                 if (_activityInfo.type.integerValue == 0) {
                     [_joinBtn setTitle:@"取消报名" forState:UIControlStateNormal];
@@ -553,7 +550,7 @@
 - (void)loadActivityTickets
 {
     //1038   946  收费活动
-    [WLHttpTool getActivityTicketParameterDic:@{@"activeid":@(1038)}
+    [WLHttpTool getActivityTicketParameterDic:@{@"activeid":_activityInfo.activeid}
                                       success:^(id JSON) {
                                           
                                           if (JSON) {
@@ -575,12 +572,54 @@
                                       }];
 }
 
+//查看我购买的票务信息
+- (void)lookMyTicketsInfo
+{
+    [WLHttpTool getBuyedActiveTicketsParameterDic:@{@"activeid":_activityInfo.activeid}
+                                          success:^(id JSON) {
+                                              if (JSON) {
+                                                  NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
+                                                  if (_activityTicketView.hidden) {
+                                                      _activityTicketView.isBuyTicket = NO;
+                                                      _activityTicketView.tickets = tickets;
+                                                      [_activityTicketView showInView];
+                                                  }else{
+                                                      [_activityTicketView dismiss];
+                                                  }
+                                              }
+                                          } fail:^(NSError *error) {
+                                              DLog(@"getActivityTicketParameterDic error:%@",error.description);
+                                          }];
+}
+
 //更新页面信息
 - (void)updateUI
 {
     [_tableView reloadData];
     [self checkFavorteStatus];
     [self checkOperateBtnStatus];
+}
+
+//更新报名人数信息
+- (void)updateJoinedInfo:(BOOL)isJoin
+{
+    //通知刷新我的活动中的数据
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
+    //更新列表的报名状态
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateJoinedUI" object:nil];
+    
+    //更新报名状态
+    self.activityInfo = [_activityInfo updateIsjoined:@(isJoin)];
+    //更新报名人数
+    self.activityInfo = [_activityInfo updateJoined:@(isJoin ? 1 : -1)];
+    //更页面
+    [self updateUI];
+}
+
+//更新支付报名
+- (void)updatePayJoined
+{
+    [self updateJoinedInfo:YES];
 }
 
 //获取详情信息
@@ -593,6 +632,8 @@
                                               self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
                                               self.datasource = iActivity.guests;
                                               
+                                              //检测分享按钮
+                                              [self checkShareBtn];
                                               //更页面
                                               [self updateUI];
                                           }
@@ -606,42 +647,29 @@
 {
     [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityInfo.activeid}
                                          success:^(id JSON) {
-                                             //更新报名状态
-                                             self.activityInfo = [_activityInfo updateIsjoined:@(NO)];
-                                             //更新报名人数
-                                             self.activityInfo = [_activityInfo updateJoined:@(-1)];
                                              //更页面
-                                             [self updateUI];
+                                             [self updateJoinedInfo:NO];
                                          } fail:^(NSError *error) {
                                              DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
                                          }];
 }
 
 //创建活动报名   type: 0:免费 1：收费
-- (void)createActivityOrderWithType:(NSInteger)type ticketInfo:(NSArray *)ticketInfo
+- (void)createActivityOrderWithType:(NSInteger)type Tickets:(NSArray *)tickets
 {
     NSDictionary *param = [NSDictionary dictionary];
-    
-//    NSDictionary *activityInfo = nil;
-//    NSMutableString *detailInfo = [NSMutableString string];
     if (type == 0) {
         //免费活动
         param = @{@"activeid":_activityInfo.activeid};
     }else{
-//        activityInfo = [infos[1] JSONValue];
-//        NSArray *ticks = activityInfo[@"list"];
-//        NSMutableArray *ticketsinfo = [NSMutableArray array];
-//        for (int i = 0; i < ticks.count; i++) {
-//            NSDictionary *ticket = ticks[i];
-//            if (i > 0) {
-//                [detailInfo appendString:@"|"];
-//            }
-//            [detailInfo appendString:[NSString stringWithFormat:@"%@共%@张",ticket[@"name"],ticket[@"num"]]];
-//            [ticketsinfo addObject:@{@"ticketid":@([ticket[@"tid"] integerValue]),@"count":@([ticket[@"num"] integerValue])}];
-//        }
+        NSMutableArray *ticketsinfo = [NSMutableArray array];
+        for (int i = 0; i < tickets.count; i++) {
+            IActivityTicket *ticket = tickets[i];
+            [ticketsinfo addObject:@{@"ticketid":ticket.ticketid,@"count":ticket.buyCount}];
+        }
         //需要支付的活动
         param = @{@"activeid":_activityInfo.activeid,
-                  @"ticket":ticketInfo};
+                  @"ticket":ticketsinfo};
     }
     [WLHttpTool createTicketOrderParameterDic:param
                                       success:^(id JSON) {
@@ -653,16 +681,13 @@
                                           }
                                           if (type != 0) {
                                               //进入订单页面
-                                              ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] init];
+                                              ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
                                               [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
                                           }else{
                                               [UIAlertView showWithMessage:@"恭喜您，报名成功！"];
                                               
-                                              //更新报名状态
-                                              self.activityInfo = [_activityInfo updateIsjoined:@(YES)];
-                                              //更新报名人数
-                                              self.activityInfo = [_activityInfo updateJoined:@(1)];
-                                              [self updateUI];
+                                              //更页面
+                                              [self updateJoinedInfo:YES];
                                           }
                                       } fail:^(NSError *error) {
                                           [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];

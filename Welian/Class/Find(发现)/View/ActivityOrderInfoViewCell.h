@@ -10,4 +10,6 @@
 
 @interface ActivityOrderInfoViewCell : UITableViewCell
 
+@property (strong,nonatomic) IActivityTicket *iActivityTicket;
+
 @end
