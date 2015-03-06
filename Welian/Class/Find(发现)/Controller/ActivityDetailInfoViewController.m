@@ -89,12 +89,13 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = RGB(74.f, 117.f, 183.f);
     if (offsetY > kHeaderImageHeight/3.f) {
         CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
         
-        [self.navigationController.navigationBar useBackgroundColor:[KBasesColor colorWithAlphaComponent:alpha]];
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
-        [self.navigationController.navigationBar useBackgroundColor:[KBasesColor colorWithAlphaComponent:0]];
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
     }
 }
 
