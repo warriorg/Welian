@@ -242,6 +242,9 @@
     
     // 获取所有好友
     [self loadMyAllFriends];
+    
+    //每次程序启动获取一次活动里面的城市列表
+    [self loadAcitvityCitys];
 }
 
 - (void)dealloc
@@ -536,6 +539,25 @@
     SDWebImageManager *mgr = [SDWebImageManager sharedManager];
     [mgr cancelAll];
     [mgr.imageCache clearMemory];
+}
+
+//获取活动城市列表
+- (void)loadAcitvityCitys
+{
+    [WLHttpTool getActiveCitiesParameterDic:[NSDictionary dictionary]
+                                    success:^(id JSON) {
+                                        NSArray *citys = [NSArray arrayWithArray:JSON];
+                                        //写入到本地
+                                        BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
+                                        if (state == YES) {
+                                            NSLog(@"write successfully");
+                                        }else{
+                                            NSLog(@"fail to write");
+                                            
+                                        }
+                                    } fail:^(NSError *error) {
+                                        DLog(@"getActiveCitiesParameterDic error:%@",error.description);
+                                    }];
 }
 
 @end

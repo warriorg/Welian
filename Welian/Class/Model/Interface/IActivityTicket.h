@@ -16,5 +16,6 @@
 @property (nonatomic,strong) NSNumber *ticketCount;//票的数量
 @property (nonatomic,strong) NSNumber *joined;//已经出售的数量
 @property (nonatomic,strong) NSNumber *price;//票价
+@property (nonatomic,strong) NSNumber *buyCount;//购买的数量，自己设置买票的数量
 
 @end

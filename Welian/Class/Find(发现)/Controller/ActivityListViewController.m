@@ -33,7 +33,10 @@
 @property (assign,nonatomic) NSInteger pageIndex;
 @property (assign,nonatomic) NSInteger pageSize;
 
-@property (strong, nonatomic) NotstringView *notView;
+@property (strong,nonatomic) NotstringView *notView;
+@property (strong,nonatomic) NSIndexPath *selectIndex;
+@property (strong,nonatomic) NSArray *cityList;
+@property (strong,nonatomic) NSArray *timeList;
 
 @end
 
@@ -47,6 +50,10 @@
     _selectTimeType = nil;
     _selectAddressType = nil;
     _refreshControl = nil;
+    _selectIndex = nil;
+    _cityList = nil;
+    _timeList = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NotstringView *)notView
@@ -66,11 +73,29 @@
 {
     self = [super init];
     if (self) {
-//        self.datasource = [ActivityInfo allNormalActivityInfos];
+        self.datasource = [ActivityInfo allNormalActivityInfos];
+        
+        //获取省列表
+        NSArray *localCitys = [NSArray arrayWithContentsOfFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"]];
+        NSMutableArray *customCitys = [NSMutableArray array];
+        [customCitys addObject:@{@"cityid":@"-1",@"name":@"定位中..."}];
+        [customCitys addObject:@{@"cityid":@"0",@"name":@"全国"}];
+        [customCitys addObjectsFromArray:localCitys];
+        self.cityList = [NSArray arrayWithArray:customCitys];
+        
+        self.timeList = @[@{@"cityid":@"-1",@"name":@"全部"}
+                          ,@{@"cityid":@"0",@"name":@"今天"}
+                          ,@{@"cityid":@"1",@"name":@"明天"}
+                          ,@{@"cityid":@"7",@"name":@"最近一周"}
+                          ,@{@"cityid":@"-2",@"name":@"周末"}];
+        
         self.selectTimeType = @{@"cityid":@"-1",@"name":@"全部"};
         self.selectAddressType = @{@"cityid":@"0",@"name":@"全国"};
         self.pageIndex = 1;
         self.pageSize = KCellConut;
+        
+        //监听报名状态改变
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUiInfo) name:@"UpdateJoinedUI" object:nil];
     }
     return self;
 }
@@ -100,11 +125,7 @@
     
     ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     timeActivityTypeInfo.hidden = YES;
-    timeActivityTypeInfo.datasource = @[@{@"cityid":@"-1",@"name":@"全部"}
-                                        ,@{@"cityid":@"0",@"name":@"今天"}
-                                        ,@{@"cityid":@"1",@"name":@"明天"}
-                                        ,@{@"cityid":@"7",@"name":@"最近一周"}
-                                        ,@{@"cityid":@"-2",@"name":@"周末"}];
+    timeActivityTypeInfo.datasource = _timeList;
     WEAKSELF
     [timeActivityTypeInfo setBlock:^(NSDictionary *info){
 //        [weakSelf dismissTimeTypeInfo];
@@ -118,11 +139,7 @@
     ActivityTypeInfoView *cityActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     cityActivityTypeInfo.hidden = YES;
     cityActivityTypeInfo.showLocation = YES;//显示当前定位的城市
-    cityActivityTypeInfo.datasource = @[@{@"cityid":@"-1",@"name":@"定位中..."}
-                                        ,@{@"cityid":@"0",@"name":@"全国"}
-                                        ,@{@"cityid":@"179",@"name":@"杭州"}
-                                        ,@{@"cityid":@"289",@"name":@"上海"}
-                                        ,@{@"cityid":@"289",@"name":@"北京"}];
+    cityActivityTypeInfo.datasource = _cityList;
     [cityActivityTypeInfo setBlock:^(NSDictionary *info){
 //        [weakSelf dismissCityTypeInfo];
         weakSelf.selectAddressType = info;
@@ -151,6 +168,13 @@
     //上提加载更多
     [_tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
     [_tableView setFooterHidden:YES];
+}
+
+- (void)updateUiInfo
+{
+    //获取数据
+    self.datasource = [ActivityInfo allNormalActivityInfos];
+    [_tableView reloadData];
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -202,6 +226,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    self.selectIndex = indexPath;
     ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:_datasource[indexPath.section][indexPath.row]];
     [self.navigationController pushViewController:activityInfoVC animated:YES];
 }
@@ -294,7 +319,7 @@
                                      }
                                      //获取数据
                                      self.datasource = [ActivityInfo allNormalActivityInfos];
-                                     [self.tableView reloadData];
+                                     [_tableView reloadData];
                                      
                                      //设置是否可以下拉刷新
                                      if ([JSON count] != KCellConut) {
@@ -304,10 +329,15 @@
                                          _pageIndex++;
                                      }
                                      
-                                     if(_datasource.count == 0){
+                                     if(([_datasource[0] count] + [_datasource[1] count]) == 0){
                                          [_tableView addSubview:self.notView];
                                          [_tableView sendSubviewToBack:self.notView];
                                      }else{
+                                         if ([_datasource[0] count] > 0) {
+                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                                         }else if ([_datasource[1] count] > 0){
+                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                                         }
                                          [_notView removeFromSuperview];
                                      }
                                  } fail:^(NSError *error) {
@@ -333,6 +363,5 @@
 {
     [self initData];
 }
-
 
 @end
