@@ -8,32 +8,37 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum {
-    HMSegmentedControlSelectionStyleTextWidthStripe = 0, //
-    HMSegmentedControlSelectionStyleFullWidthStripe, //
-    HMSegmentedControlSelectionStyleBox, //
-    HMSegmentedControlSelectionStyleArrow, //
-    HMSegmentedControlSelectionStylexx, //
-    HMSegmentedControlSelectionStyleA, //
-    HMSegmentedControlSelectionStyleasd, //
-    HMSegmentedControlSelectionStyleaSDE //
-} HMSegmentedControlSelectionStyle;
+typedef NS_ENUM(NSInteger, ShareType) {
+    ///** 微链好友 **//
+    ShareTypeWLFriend = 1,
+    ///** 创业圈 **//
+    ShareTypeWLCircle,
+    ///** 微信好友 **//
+    ShareTypeWeixinFriend,
+    ///** 微信朋友圈 **//
+    ShareTypeWeixinCircle,
+    ///** 删除 **//
+    ShareTypeDelete,
+    ///** 举报 **//
+    ShareTypeReport,
+    ///** 编辑项目信息 **//
+    ShareTypeProjectInfo ,
+    ///** 设置团队成员 **//
+    ShareTypeProjectMember,
+    ///** 设置融资信息 **//
+    ShareTypeProjectFinancing
+};
 
-typedef void (^WLActivityBlock)(HMSegmentedControlSelectionStyle duration);
-typedef void (^ActivityCanleBlock)();
+typedef void (^WLActivityBlock)(ShareType duration);
 
 @interface ListItem : UIView {
     CGRect textRect;
     CGRect imageRect;
 }
 
-@property (nonatomic, retain) NSObject *objectTag;
-@property (nonatomic, retain) NSString *imageTitle;
-@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy)   WLActivityBlock activityBlock;
-@property (nonatomic, copy)   ActivityCanleBlock canleBlock;
-@property (nonatomic, assign) HMSegmentedControlSelectionStyle seleStyle;
+@property (nonatomic, assign) ShareType seleStyle;
 
-- (id)initWithImage:(UIImage *)image text:(NSString *)imageTitle selectionStyle:(HMSegmentedControlSelectionStyle)style;
+- (id)initWithImageName:(NSString *)imageName text:(NSString *)imageTitle selectionStyle:(ShareType)style;
 
 @end

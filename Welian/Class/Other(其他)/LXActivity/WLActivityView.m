@@ -7,7 +7,6 @@
 //
 
 #import "WLActivityView.h"
-#import "POHorizontalList.h"
 
 #define WINDOW_COLOR                            [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35]
 #define ANIMATE_DURATION                        0.25f
@@ -38,7 +37,6 @@
         [cancelButton setTitleColor:[UIColor colorWithRed:60.0/255 green:183.0/255 blue:226.0/255 alpha:1] forState:UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(tappedCancel) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableFooterView = cancelButton;
-        
     }
     return _tableView;
 }
@@ -128,7 +126,10 @@
         list = [[POHorizontalList alloc] initWithButItems:_twoArray];
     }
     WEAKSELF
-    list.cancelBlock = ^(){
+    list.shareBlock = ^(ShareType stype){
+        if (weakSelf.wlShareBlock) {
+            weakSelf.wlShareBlock(stype);
+        }
         [weakSelf tappedCancel];
     };
     [cell.contentView addSubview:list];

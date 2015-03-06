@@ -115,9 +115,7 @@ static NSString *fridcellid = @"fridcellid";
     [footLabel setTextAlignment:NSTextAlignmentCenter];
     [self.tableView setTableFooterView:footLabel];
     
-    [self.searchDisplayVC.searchResultsTableView setSeparatorInset:UIEdgeInsetsZero];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
-    [self.searchDisplayVC.searchResultsTableView setBackgroundColor:WLLineColor];
 
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 }

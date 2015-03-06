@@ -39,7 +39,6 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.tableView setTableHeaderView:self.searchBar];
-    [self.searchDisplayVC.searchResultsTableView setSeparatorInset:UIEdgeInsetsZero];
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                             forKey:@"_searchResultsTableViewStyle"];
