@@ -45,7 +45,14 @@ single_implementation(ShareEngine)
         NSData *thum = UIImageJPEGRepresentation(scaledImage, 32/length);
         scaledImage = [UIImage imageWithData:thum];
     }
-    
+    NSInteger meLength = message.length;
+    if (meLength>20) {
+        message = [message substringWithRange:NSMakeRange(0, 20)];
+    }
+    NSInteger desLength = descriptStr.length;
+    if (desLength>50) {
+        descriptStr = [descriptStr substringWithRange:NSMakeRange(0, 20)];
+    }
 //    NSUInteger titlength =[self getBytesLengthWithSring:message];
 //    NSUInteger desclength = [self getBytesLengthWithSring:descriptStr];
 //    NSUInteger appUrllength = [self getBytesLengthWithSring:appUrl];
