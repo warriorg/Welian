@@ -278,7 +278,7 @@
     //partner和seller获取失败,提示
     if ([partner length] == 0 || [seller length] == 0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"缺少partner或者seller。"
                                                        delegate:self
                                               cancelButtonTitle:@"确定"
@@ -330,7 +330,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
             }else{
                 if ([resultDic[@"memo"] length] > 0) {
-                    [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
+                    [UIAlertView showWithTitle:nil message:resultDic[@"memo"]];
                 }
             }
             DLog(@"支付结果 result = %@", resultDic);
@@ -354,7 +354,7 @@
                                                 [WLHUDView hiddenHud];
                                                 //刷新详情页面
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedReloadActivityUI" object:nil];
-                                                [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                                                [UIAlertView bk_showAlertViewWithTitle:nil
                                                                                message:@"恭喜您，活动报名成功！"
                                                                      cancelButtonTitle:@"确定"
                                                                      otherButtonTitles:nil
@@ -362,7 +362,7 @@
                                                                                    [self.navigationController popViewControllerAnimated:YES];
                                                                                }];
                                             } fail:^(NSError *error) {
-                                                [UIAlertView showWithTitle:@"系统提示" message:@"订单状态修改失败，请电话联系客服确认订单状态"];
+                                                [UIAlertView showWithTitle:nil message:@"订单状态修改失败，请电话联系客服确认订单状态"];
                                             }];
 }
 

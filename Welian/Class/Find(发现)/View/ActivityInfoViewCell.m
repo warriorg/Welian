@@ -51,10 +51,10 @@
     self.detailTextLabel.width = self.width - kMarginLeft * 2.f;
     [self.detailTextLabel sizeToFit];
     self.detailTextLabel.left = kMarginLeft;
-    self.detailTextLabel.top = self.textLabel.bottom + kMarginEdge;
+    self.detailTextLabel.top = self.textLabel.text.length > 0 ? self.textLabel.bottom + kMarginEdge : kMarginLeft;
     
-    _detailBtn.size = CGSizeMake(self.width, kButtonHeight);
-    _detailBtn.top = self.detailTextLabel.bottom + kMarginEdge;
+    _detailBtn.size = CGSizeMake(self.width, self.height - self.detailTextLabel.bottom);
+    _detailBtn.top = self.detailTextLabel.bottom;
     _detailBtn.centerX = self.width / 2.f;
 }
 
@@ -80,11 +80,12 @@
     [detailBtn setTitle:@"查看活动详情" forState:UIControlStateNormal];
     [detailBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     [detailBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_more"] forState:UIControlStateNormal];
-    detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,200,0,0);
-    detailBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 0);
+    detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,180,0,0);
+    detailBtn.titleEdgeInsets = UIEdgeInsetsMake(0,-50, 0, 0);
     [detailBtn addTarget:self action:@selector(detailBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:detailBtn];
     self.detailBtn = detailBtn;
+//    [detailBtn setDebug:YES];
 }
 
 - (void)detailBtnClicked:(UIButton *)sender
@@ -102,7 +103,7 @@
     CGSize size1 = [title calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     
-    float height = size1.height + size2.height + kMarginEdge * 2.f + kButtonHeight + kMarginLeft * 2.f;
+    float height = (title.length > 0 ? size1.height : 0) + size2.height + kMarginEdge * 2.f + kButtonHeight + kMarginLeft * 2.f;
     if (height > 60.f) {
         return height;
     }else{
