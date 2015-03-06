@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "POHorizontalList.h"
 
+typedef void (^WLActivityShareBlock)(ShareType duration);
 @interface WLActivityView : UIView
 
+@property (nonatomic, copy) WLActivityShareBlock wlShareBlock;
 #pragma mark - Public method
 - (id)initWithOneSectionArray:(NSArray *)oneArray andTwoArray:(NSArray *)twoArray;
 

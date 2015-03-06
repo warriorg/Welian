@@ -17,7 +17,7 @@
 @property (strong, nonatomic)  UISearchBar *searchBar;//搜索条
 @property (nonatomic,strong) NSMutableArray *filterArray;//搜索出来的数据数组
 
-@property (nonatomic, retain) NSOperationQueue *searchQueue;
+//@property (nonatomic, retain) NSOperationQueue *searchQueue;
 
 @end
 
@@ -26,6 +26,8 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.filterArray = [NSMutableArray array];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelf)];
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     self.searchBar = [[UISearchBar alloc] init];
@@ -37,6 +39,9 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.tableView setTableHeaderView:self.searchBar];
+    [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
+    [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
+                            forKey:@"_searchResultsTableViewStyle"];
     
     [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         
@@ -93,7 +98,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 28;
+    return 25;
 }
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -170,14 +175,5 @@ static NSString *fridcellid = @"fridcellid";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

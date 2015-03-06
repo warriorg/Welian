@@ -14,10 +14,6 @@
 {
     self = [super init];
     if (self) {
-        self.layer.masksToBounds = YES;
-        self.layer.cornerRadius = 6.0;
-        self.layer.borderWidth = 0.6;
-        self.layer.borderColor = [WLRGB(173, 173, 173) CGColor];
         [self addUIView];
     }
     return self;
@@ -25,6 +21,11 @@
 
 - (void)addUIView
 {
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 6.0;
+    self.layer.borderWidth = 0.6;
+    self.layer.borderColor = [WLRGB(173, 173, 173) CGColor];
+    
     _iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
     [_iconImage setBackgroundColor:[UIColor lightGrayColor]];
     [self addSubview:_iconImage];

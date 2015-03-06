@@ -199,7 +199,7 @@
 }
 
 #pragma mark 显示一个图片view
-- (void)showPhotoViewAtIndex:(int)index
+- (void)showPhotoViewAtIndex:(NSInteger)index
 {
     MJPhotoView *photoView = [self dequeueReusablePhotoView];
     if (!photoView) { // 添加新的图片view

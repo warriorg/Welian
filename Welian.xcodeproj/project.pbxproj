@@ -4105,6 +4105,10 @@
 		F57F31E31AA7F38900B8EF72 /* ShareFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */; };
 		F57F31E41AA7F38900B8EF72 /* ShareFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */; };
 		F57F31E51AA7F38900B8EF72 /* ShareFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */; };
+		F57F31EA1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
+		F57F31EB1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
+		F57F31EC1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
+		F57F31ED1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
 		F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
 		F58CA9521A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
 		F58CA9531A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
@@ -5719,6 +5723,7 @@
 		F57F31D91AA71A4E00B8EF72 /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItem.m; sourceTree = "<group>"; };
 		F57F31E01AA7F38900B8EF72 /* ShareFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFriendsController.h; sourceTree = "<group>"; };
 		F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFriendsController.m; sourceTree = "<group>"; };
+		F57F31E91AA947F900B8EF72 /* ShareType.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ShareType.plist; sourceTree = "<group>"; };
 		F5874C151A1C842E009F7D83 /* WLCellHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCellHead.h; sourceTree = "<group>"; };
 		F5874C161A1C842E009F7D83 /* WLCellHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCellHead.m; sourceTree = "<group>"; };
 		F5874C181A1C8DA9009F7D83 /* me_mycard_chuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_chuang@2x.png"; sourceTree = "<group>"; };
@@ -7552,6 +7557,7 @@
 				F51FB76419EE2A7900D85D7F /* LXActivity.m */,
 				F57F31B81AA6A5F200B8EF72 /* WLActivityView.h */,
 				F57F31B91AA6A5F200B8EF72 /* WLActivityView.m */,
+				F57F31E91AA947F900B8EF72 /* ShareType.plist */,
 			);
 			path = LXActivity;
 			sourceTree = "<group>";
@@ -9920,6 +9926,7 @@
 				A49C7E951A70D42700F2AEC5 /* yellowbutton_pressed@2x.png in Resources */,
 				A49C7E961A70D42700F2AEC5 /* MoreFunctionFrame@2x.png in Resources */,
 				A49C7E971A70D42700F2AEC5 /* NoCommentCell.xib in Resources */,
+				F57F31ED1AA947F900B8EF72 /* ShareType.plist in Resources */,
 				A49C7E981A70D42700F2AEC5 /* voice@2x.png in Resources */,
 				A49C7E991A70D42700F2AEC5 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				A49C7E9A1A70D42700F2AEC5 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
@@ -10451,6 +10458,7 @@
 				F53DC48D1A49192600F5F712 /* yellowbutton_pressed@2x.png in Resources */,
 				A4C144471A4C0A6B00C9BAB5 /* MoreFunctionFrame@2x.png in Resources */,
 				F53DC48F1A49192600F5F712 /* NoCommentCell.xib in Resources */,
+				F57F31EC1AA947F900B8EF72 /* ShareType.plist in Resources */,
 				A4C1440E1A4C0A6B00C9BAB5 /* voice@2x.png in Resources */,
 				A4C143DE1A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				A4C143CF1A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
@@ -10982,6 +10990,7 @@
 				F5664B511A2AFD56008A5830 /* me_mywriten_good@2x.png in Resources */,
 				F58CA9661A5BF3AE00988A61 /* leida5@2x.png in Resources */,
 				F534DAEB1A4EAF2900B6A725 /* InvestCollectionCell.xib in Resources */,
+				F57F31EA1AA947F900B8EF72 /* ShareType.plist in Resources */,
 				F5664B531A2AFD56008A5830 /* Expression_22@2x.png in Resources */,
 				F53356371A382301000A15AC /* osusume_friend_add_already@2x.png in Resources */,
 				F5C778D41A52B6A20098BC29 /* tabbar_chat_prompt@2x.png in Resources */,
@@ -11513,6 +11522,7 @@
 				F5664DFD1A2AFDD5008A5830 /* yellowbutton_pressed@2x.png in Resources */,
 				A4C144461A4C0A6B00C9BAB5 /* MoreFunctionFrame@2x.png in Resources */,
 				F5664DFF1A2AFDD5008A5830 /* NoCommentCell.xib in Resources */,
+				F57F31EB1AA947F900B8EF72 /* ShareType.plist in Resources */,
 				A4C1440D1A4C0A6B00C9BAB5 /* voice@2x.png in Resources */,
 				A4C143DD1A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				A4C143CE1A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying@2x.png in Resources */,

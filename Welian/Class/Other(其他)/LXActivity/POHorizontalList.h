@@ -14,14 +14,14 @@
 #define ITEM_WIDTH              60.0
 #define TITLE_HEIGHT            20.0
 
-typedef void (^WLActivityCancelBlock)();
+typedef void (^WLActivityShareBlock)(ShareType shareType);
 
 @interface POHorizontalList : UIView <UIScrollViewDelegate> {
     CGFloat scale;
 }
 
 @property (nonatomic, retain) UIScrollView *scrollView;
-@property (nonatomic, copy) WLActivityCancelBlock cancelBlock;
+@property (nonatomic, copy) WLActivityShareBlock shareBlock;
 
 - (id)initWithButItems:(NSArray *)items;
 

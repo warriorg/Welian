@@ -103,7 +103,7 @@
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg"] forState:UIControlStateNormal];
     [phongBut setBackgroundImage:[UIImage resizedImage:@"login_my_bg_pre"] forState:UIControlStateHighlighted];
     [phongBut setImage:[UIImage imageNamed:@"login_phone_logo"] forState:UIControlStateNormal];
-    [phongBut setTitle:@"手机登陆" forState:UIControlStateNormal];
+    [phongBut setTitle:@"手机登录" forState:UIControlStateNormal];
     [phongBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [phongBut setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     [phongBut addTarget:self action:@selector(phoneLoginButClick) forControlEvents:UIControlEventTouchUpInside];

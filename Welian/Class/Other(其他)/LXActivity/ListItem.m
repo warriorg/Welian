@@ -10,18 +10,16 @@
 
 @implementation ListItem
 
-- (id)initWithImage:(UIImage *)image text:(NSString *)imageTitle selectionStyle:(HMSegmentedControlSelectionStyle)style
+- (id)initWithImageName:(NSString *)imageName text:(NSString *)imageTitle selectionStyle:(ShareType)style
 {
     self = [super init];
     
     if (self) {
         [self setUserInteractionEnabled:YES];
         self.seleStyle = style;
-        self.imageTitle = imageTitle;
-        self.image = image;
         
         UIButton *imageBut = [UIButton buttonWithType:UIButtonTypeCustom];
-        [imageBut setImage:image forState:UIControlStateNormal];
+        [imageBut setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
         [imageBut addTarget:self action:@selector(itemTapped:) forControlEvents:UIControlEventTouchUpInside];
         
         UILabel *title = [[UILabel alloc] init];
@@ -41,8 +39,6 @@
         
         [self addSubview:title];
         [self addSubview:imageBut];
-//        UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemTapped:)];
-//        [self addGestureRecognizer:singleFingerTap];
     }
     
     return self;
@@ -51,9 +47,6 @@
 - (void)itemTapped:(UIButton *)recognizer {
     if (self.activityBlock) {
         self.activityBlock(self.seleStyle);
-    }
-    if (self.canleBlock) {
-        self.canleBlock();
     }
 }
 
