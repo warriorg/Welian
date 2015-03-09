@@ -41,8 +41,8 @@ single_implementation(ShareEngine)
     
     NSData * imageData = UIImageJPEGRepresentation(scaledImage,1);
     NSInteger length = [imageData length]/1024;
-    if (length>32) {
-        NSData *thum = UIImageJPEGRepresentation(scaledImage, 32/length);
+    if (length>30) {
+        NSData *thum = UIImageJPEGRepresentation(scaledImage, 30/length);
         scaledImage = [UIImage imageWithData:thum];
     }
     NSInteger meLength = message.length;
@@ -51,7 +51,7 @@ single_implementation(ShareEngine)
     }
     NSInteger desLength = descriptStr.length;
     if (desLength>50) {
-        descriptStr = [descriptStr substringWithRange:NSMakeRange(0, 20)];
+        descriptStr = [descriptStr substringWithRange:NSMakeRange(0, 50)];
     }
 //    NSUInteger titlength =[self getBytesLengthWithSring:message];
 //    NSUInteger desclength = [self getBytesLengthWithSring:descriptStr];

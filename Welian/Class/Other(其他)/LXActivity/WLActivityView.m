@@ -127,6 +127,7 @@
     }
     WEAKSELF
     list.shareBlock = ^(ShareType stype){
+        
         if (weakSelf.wlShareBlock) {
             weakSelf.wlShareBlock(stype);
         }
