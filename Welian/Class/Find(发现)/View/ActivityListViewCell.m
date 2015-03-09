@@ -50,6 +50,11 @@
                                  //黑白
                                  if (_activityInfo.status.integerValue == 2) {
                                      [_iconImageView setImage:[image partialImageWithPercentage:0 vertical:YES grayscaleRest:YES]];
+                                     //已报名的
+                                     [_joinedImageView setImage:[[UIImage imageNamed:@"discovery_activity_list_already"] partialImageWithPercentage:0 vertical:YES grayscaleRest:YES]];
+                                 }else{
+                                     _iconImageView.image = image;
+                                     _joinedImageView.image = [UIImage imageNamed:@"discovery_activity_list_already"];
                                  }
                              }];
     
@@ -61,13 +66,27 @@
     //设置日期
     [_timeBtn setTitle:[[_activityInfo.startime dateFromNormalString] formattedDateWithFormat:@"MM/dd"] forState:UIControlStateNormal];
     _dateLabel.text = [_activityInfo displayStartWeekDay];
-    if(_activityInfo.joined.integerValue == _activityInfo.limited.integerValue){
-        _numLabel.hidden = YES;
-        _statusLabel.text = @"已报满";
+    
+    if(_activityInfo.type.integerValue == 0){
+        //免费
+        if(_activityInfo.joined.integerValue >= _activityInfo.limited.integerValue){
+            _numLabel.hidden = YES;
+            _statusLabel.text = @"已报满";
+        }else{
+            _statusLabel.text = @"报名";
+            _numLabel.hidden = NO;
+            _numLabel.text = _activityInfo.joined.stringValue;
+        }
     }else{
-        _statusLabel.text = @"报名";
-        _numLabel.hidden = NO;
-        _numLabel.text = _activityInfo.joined.stringValue;
+        //收费
+        if(_activityInfo.limited.integerValue <= 0){
+            _numLabel.hidden = YES;
+            _statusLabel.text = @"已报满";
+        }else{
+            _statusLabel.text = @"报名";
+            _numLabel.hidden = NO;
+            _numLabel.text = _activityInfo.joined.stringValue;
+        }
     }
     
     //设置字体颜色

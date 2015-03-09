@@ -141,6 +141,10 @@
 		A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
+		A464614C1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
+		A464614D1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
+		A464614E1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
+		A464614F1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
 		A4670A801A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A811A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A821A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
@@ -4465,6 +4469,7 @@
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
+		A464614B1AAD424D00D2687B /* navbar_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_share@2x.png"; sourceTree = "<group>"; };
 		A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		A46FAE4E1A8DDE00005EB34E /* ActivityLookTicketViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityLookTicketViewCell.h; sourceTree = "<group>"; };
@@ -6491,6 +6496,14 @@
 				A44779E01A7632A60085AE3C /* ResManager.m */,
 			);
 			name = Project;
+			sourceTree = "<group>";
+		};
+		A464614A1AAD424D00D2687B /* NavImages */ = {
+			isa = PBXGroup;
+			children = (
+				A464614B1AAD424D00D2687B /* navbar_share@2x.png */,
+			);
+			path = NavImages;
 			sourceTree = "<group>";
 		};
 		A47D41FF1A8B8AB80070BFD8 /* Project */ = {
@@ -9270,6 +9283,7 @@
 		F5CE864219BFF44100A9D14C /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				A464614A1AAD424D00D2687B /* NavImages */,
 				F557729B1A5AA3E200693279 /* 登录images */,
 				A4C144771A4C3EC600C9BAB5 /* Chat_images */,
 				F5EE25E41A131E5500B0E836 /* iconx6 */,
@@ -9850,6 +9864,7 @@
 				A49C7E381A70D42700F2AEC5 /* discovery_person@2x.png in Resources */,
 				A49C7E391A70D42700F2AEC5 /* login_guide4@2x.png in Resources */,
 				A49C7E3A1A70D42700F2AEC5 /* Expression_92@2x.png in Resources */,
+				A464614F1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A49C7E3C1A70D42700F2AEC5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				A49C7E3D1A70D42700F2AEC5 /* Expression_91@2x.png in Resources */,
 				A49C7E3E1A70D42700F2AEC5 /* login_gongsi@2x.png in Resources */,
@@ -10383,6 +10398,7 @@
 				F53DC4451A49192600F5F712 /* discovery_person@2x.png in Resources */,
 				F55773271A5AB04200693279 /* login_guide4@2x.png in Resources */,
 				F53DC4461A49192600F5F712 /* Expression_92@2x.png in Resources */,
+				A464614E1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A4C143D81A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				F53DC4481A49192600F5F712 /* Expression_91@2x.png in Resources */,
 				F55772D21A5AA3E200693279 /* login_gongsi@2x.png in Resources */,
@@ -10916,6 +10932,7 @@
 				F534DADD1A4E9D0B00B6A725 /* investor_attestation_add@2x.png in Resources */,
 				F5664AFF1A2AFD56008A5830 /* Expression_92@2x.png in Resources */,
 				F5664B011A2AFD56008A5830 /* Expression_91@2x.png in Resources */,
+				A464614C1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A4C144181A4C0A6B00C9BAB5 /* AddGroupMemberBtn@2x.png in Resources */,
 				A4C1412F1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
 				F5664B021A2AFD56008A5830 /* tabbar_friend@2x.png in Resources */,
@@ -11449,6 +11466,7 @@
 				F5664DB81A2AFDD5008A5830 /* discovery_person@2x.png in Resources */,
 				F55773261A5AB04200693279 /* login_guide4@2x.png in Resources */,
 				F5664DB91A2AFDD5008A5830 /* Expression_92@2x.png in Resources */,
+				A464614D1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A4C143D71A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				F5664DBB1A2AFDD5008A5830 /* Expression_91@2x.png in Resources */,
 				F55772D11A5AA3E200693279 /* login_gongsi@2x.png in Resources */,

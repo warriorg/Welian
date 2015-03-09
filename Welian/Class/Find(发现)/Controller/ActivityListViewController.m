@@ -333,11 +333,11 @@
                                          [_tableView addSubview:self.notView];
                                          [_tableView sendSubviewToBack:self.notView];
                                      }else{
-                                         if ([_datasource[0] count] > 0) {
-                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                                         }else if ([_datasource[1] count] > 0){
-                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                                         }
+//                                         if ([_datasource[0] count] > 0) {
+//                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//                                         }else if ([_datasource[1] count] > 0){
+//                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//                                         }
                                          [_notView removeFromSuperview];
                                      }
                                  } fail:^(NSError *error) {

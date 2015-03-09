@@ -40,6 +40,7 @@
 @property (assign,nonatomic) UIButton *joinBtn;
 @property (assign,nonatomic) ActivityTicketView *activityTicketView;
 @property (strong,nonatomic) ActivityInfo *activityInfo;
+@property (strong,nonatomic) NSNumber *activityId;
 
 @end
 
@@ -62,7 +63,18 @@
     self = [super init];
     if (self) {
         self.activityInfo = activityInfo;
+        self.activityId = _activityInfo.activeid;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
+    }
+    return self;
+}
 
+- (instancetype)initWIthActivityId:(NSNumber *)activityId
+{
+    self = [super init];
+    if (self) {
+        self.activityId = activityId;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
     }
     return self;
@@ -120,32 +132,6 @@
     self.tableView = tableView;
 //    [tableView registerNib:[UINib nibWithNibName:@"NoCommentCell" bundle:nil] forCellReuseIdentifier:noCommentCell];
     
-    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - 30.f, FLT_MAX) font:[UIFont boldSystemFontOfSize:16.f]];
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight + titleSize.height + 20.f)];
-    headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-    headerView.layer.borderWidths = @"{0,0,0.6,0}";
-    
-    //图片
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight)];
-    imageView.backgroundColor = [UIColor lightGrayColor];
-    [headerView addSubview:imageView];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    
-    //标题
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.textColor = kTitleNormalTextColor;
-    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
-    titleLabel.text = _activityInfo.name;
-    titleLabel.width = headerView.width - 30.f;
-    titleLabel.numberOfLines = 0;
-    [titleLabel sizeToFit];
-    titleLabel.top = imageView.bottom + 10.f;
-    titleLabel.left = 15.f;
-    [headerView addSubview:titleLabel];
-    
-    [_tableView setTableHeaderView:headerView];
-    
     //设置底部操作栏
     UIView *operateToolView = [[UIView alloc] initWithFrame:CGRectMake(0.f, tableView.bottom, self.view.width, toolBarHeight)];
     operateToolView.backgroundColor = RGB(247.f, 247.f, 247.f);
@@ -181,10 +167,15 @@
     [[[UIApplication sharedApplication] keyWindow] addSubview:activityTicketView];
     self.activityTicketView = activityTicketView;
     
-    //刷新页面信息
-    [self updateUI];
-    //检测分享按钮是否显示
-    [self checkShareBtn];
+    if (_activityInfo) {
+        [self initActivityUIInfo];
+        
+        //检测分享按钮是否显示
+        [self checkShareBtn];
+        
+        [self checkFavorteStatus];
+        [self checkOperateBtnStatus];
+    }
     
     //获取详情信息
     [self initData];
@@ -199,7 +190,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4.f;
+        if (_activityInfo) {
+            return 4.f;
+        }else{
+            return 0;
+        }
     }else{
         return _datasource.count;
     }
@@ -281,7 +276,7 @@
                 default:
                     break;
             }
-             return cell;
+            return cell;
         }else if (indexPath.row == 3){
             static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
             ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -323,8 +318,8 @@
             case 1:
             {
                 //地图
-                NSString *address = [NSString stringWithFormat:@"%@%@",_activityInfo.city,_activityInfo.address];
-                DLog(@"toMapVC ----->%@",address);
+                NSString *cityAddress = [NSString stringWithFormat:@"%@-%@",_activityInfo.city,_activityInfo.address];
+                DLog(@"toMapVC ----->%@",cityAddress);
                 ActivityMapViewController *mapVC = [[ActivityMapViewController alloc] initWithAddress:_activityInfo.address city:_activityInfo.city];
                 [self.navigationController pushViewController:mapVC animated:YES];
             }
@@ -397,7 +392,7 @@
 {
     //添加分享按钮
     if(_activityInfo.shareurl.length > 0){
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_share"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
     }
 }
 
@@ -537,26 +532,51 @@
                     [self lookMyTicketsInfo];
                 }
             }else{
-                //名额未满
-                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-                    //不限人数，可以报名
-                    [self noPayToJoin];
-                }else{
-                    //名额未满
-                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                        //1收费，0免费
-                        if (_activityInfo.type.integerValue == 0) {
-                            //我要报名
+                //名额未满 //1收费，0免费
+                if(_activityInfo.type.integerValue == 0){
+                    //免费活动
+                    if(_activityInfo.limited.integerValue == 0){
+                        //不限人数，可以报名
+                        [self noPayToJoin];
+                    }else{
+                        if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+                            //不限人数，可以报名
                             [self noPayToJoin];
                         }else{
-                            //我要购票
-                            [self loadActivityTickets];
+                            
                         }
+                    }
+                }else{
+                    //收费活动
+                    if(_activityInfo.limited.integerValue > 0){
+                        //我要购票
+                        [self loadActivityTickets];
                     }else{
-                        //名额已满
                         
                     }
                 }
+                
+                
+//                //名额未满
+//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+//                    //不限人数，可以报名
+//                    [self noPayToJoin];
+//                }else{
+//                    //名额未满
+//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+//                        //1收费，0免费
+//                        if (_activityInfo.type.integerValue == 0) {
+//                            //我要报名
+//                            [self noPayToJoin];
+//                        }else{
+//                            //我要购票
+//                            [self loadActivityTickets];
+//                        }
+//                    }else{
+//                        //名额已满
+//                        
+//                    }
+//                }
             }
         }
             break;
@@ -646,25 +666,49 @@
                     [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
                 }
             }else{
-                //名额未满
-                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-                    //不限人数，可以报名
-                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
-                }else{
-                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                        //1收费，0免费
-                        if (_activityInfo.type.integerValue == 0) {
+                //名额未满 //1收费，0免费
+                if(_activityInfo.type.integerValue == 0){
+                    //免费活动
+                    if(_activityInfo.limited.integerValue == 0){
+                        //不限人数，可以报名
+                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                        [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+                    }else{
+                        if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
                             _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
                             [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
                         }else{
-                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                            [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
+                            [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
                         }
+                    }
+                }else{
+                    //收费活动
+                    if(_activityInfo.limited.integerValue > 0){
+                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                        [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
                     }else{
-                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+                        [_joinBtn setTitle:@"已售罄" forState:UIControlStateNormal];
                     }
                 }
+                
+//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+//                    //不限人数，可以报名
+//                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+//                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+//                }else{
+//                    //收费活动
+//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+//                        //1收费，0免费
+//                        if (_activityInfo.type.integerValue == 0) {
+//                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+//                            [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+//                        }else{
+//                            
+//                        }
+//                    }else{
+//                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+//                    }
+//                }
             }
         }
             break;
@@ -725,6 +769,36 @@
     [self checkOperateBtnStatus];
 }
 
+//更新页面展示数据信息
+- (void)initActivityUIInfo
+{
+    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - 30.f, FLT_MAX) font:[UIFont boldSystemFontOfSize:16.f]];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight + titleSize.height + 20.f)];
+    headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+    headerView.layer.borderWidths = @"{0,0,0.6,0}";
+    
+    //图片
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight)];
+    imageView.backgroundColor = [UIColor lightGrayColor];
+    [headerView addSubview:imageView];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    //标题
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = kTitleNormalTextColor;
+    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    titleLabel.text = _activityInfo.name;
+    titleLabel.width = headerView.width - 30.f;
+    titleLabel.numberOfLines = 0;
+    [titleLabel sizeToFit];
+    titleLabel.top = imageView.bottom + 10.f;
+    titleLabel.left = 15.f;
+    [headerView addSubview:titleLabel];
+    
+    [_tableView setTableHeaderView:headerView];
+}
+
 //更新报名人数信息
 - (void)updateJoinedInfo:(BOOL)isJoin
 {
@@ -750,17 +824,26 @@
 //获取详情信息
 - (void)initData
 {
-    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityInfo.activeid}
+    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
                                       success:^(id JSON) {
                                           if (JSON) {
                                               IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
-                                              self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+                                              BOOL isFromList = _activityInfo != nil ? YES : NO;
+                                              if (isFromList) {
+                                                  self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+                                              }else{
+                                                  self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
+                                                  //更新数据
+                                                  [self initActivityUIInfo];
+                                              }
                                               self.datasource = iActivity.guests;
                                               
                                               //检测分享按钮
                                               [self checkShareBtn];
                                               //更页面
                                               [self updateUI];
+                                          }else{
+                                              [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
                                           }
                                       } fail:^(NSError *error) {
                                           DLog(@"getActivityDetailParameterDic error:%@",error.description);
@@ -770,7 +853,7 @@
 //取消报名
 - (void)cancelActivityJoined
 {
-    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityInfo.activeid}
+    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityId}
                                          success:^(id JSON) {
                                              //更页面
                                              [self updateJoinedInfo:NO];
@@ -785,7 +868,7 @@
     NSDictionary *param = [NSDictionary dictionary];
     if (type == 0) {
         //免费活动
-        param = @{@"activeid":_activityInfo.activeid};
+        param = @{@"activeid":_activityId};
     }else{
         NSMutableArray *ticketsinfo = [NSMutableArray array];
         for (int i = 0; i < tickets.count; i++) {
@@ -793,7 +876,7 @@
             [ticketsinfo addObject:@{@"ticketid":ticket.ticketid,@"count":ticket.buyCount}];
         }
         //需要支付的活动
-        param = @{@"activeid":_activityInfo.activeid,
+        param = @{@"activeid":_activityId,
                   @"ticket":ticketsinfo};
     }
     [WLHttpTool createTicketOrderParameterDic:param

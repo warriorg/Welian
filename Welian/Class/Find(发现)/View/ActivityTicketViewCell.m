@@ -214,7 +214,7 @@
 {
     if ([sender isEqual:_addBtn]) {
         //添加
-        if (_buyNum < (_iActivityTicket.ticketCount.integerValue - _iActivityTicket.joined.integerValue)) {
+        if (_iActivityTicket.ticketCount.integerValue - _iActivityTicket.joined.integerValue > 0) {
             _buyNum++;
             _iActivityTicket.joined = @(_iActivityTicket.joined.integerValue + 1);
         }

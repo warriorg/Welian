@@ -33,7 +33,7 @@
 @dynamic rsLoginUser;
 
 //创建活动
-+ (void)createActivityInfoWith:(IActivityInfo *)iActivityInfo withType:(NSNumber *)activityType
++ (ActivityInfo *)createActivityInfoWith:(IActivityInfo *)iActivityInfo withType:(NSNumber *)activityType
 {
     ActivityInfo *activityInfo = [self getActivityInfoWithActiveId:iActivityInfo.activeid Type:activityType];
     if (!activityInfo) {
@@ -63,6 +63,8 @@
         [loginUser addRsActivityInfosObject:activityInfo];
     }
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    
+    return activityInfo;
 }
 
 //更新活动
