@@ -14,7 +14,6 @@
 #import "WLStatusCell.h"
 #import "WLUserStatusesResult.h"
 #import "WLStatusM.h"
-#import "WLBasicTrends.h"
 #import "WLStatusCell.h"
 #import "WLStatusFrame.h"
 #import "UIImageView+WebCache.h"

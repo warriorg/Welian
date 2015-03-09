@@ -2049,6 +2049,10 @@
 		A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
 		A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
 		A4F6A5EE1A514ADD008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
+		F500B1BE1AADBBFD00A7AD35 /* CardStatuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */; };
+		F500B1BF1AADBBFD00A7AD35 /* CardStatuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */; };
+		F500B1C01AADBBFD00A7AD35 /* CardStatuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */; };
+		F500B1C11AADBBFD00A7AD35 /* CardStatuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */; };
 		F51A9AC31A6E474C00918025 /* homeCellbackground_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC11A6E474C00918025 /* homeCellbackground_highlight@2x.png */; };
 		F51A9AC41A6E474C00918025 /* homeCellbackground_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC11A6E474C00918025 /* homeCellbackground_highlight@2x.png */; };
 		F51A9AC51A6E474C00918025 /* homeCellbackground_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51A9AC11A6E474C00918025 /* homeCellbackground_highlight@2x.png */; };
@@ -5006,6 +5010,8 @@
 		A4F647B91A43FB0D002E66FC /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
 		A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBlocksKit.a; sourceTree = "<group>"; };
 		A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F500B1BC1AADBBFD00A7AD35 /* CardStatuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardStatuModel.h; sourceTree = "<group>"; };
+		F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardStatuModel.m; sourceTree = "<group>"; };
 		F5021ADF1A22F8EF008B1534 /* CommentHeadFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadFrame.h; sourceTree = "<group>"; };
 		F5021AE01A22F8EF008B1534 /* CommentHeadFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHeadFrame.m; sourceTree = "<group>"; };
 		F5021AE21A22FC39008B1534 /* CommentHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeadView.h; sourceTree = "<group>"; };
@@ -9014,6 +9020,8 @@
 				F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */,
 				F5021ADF1A22F8EF008B1534 /* CommentHeadFrame.h */,
 				F5021AE01A22F8EF008B1534 /* CommentHeadFrame.m */,
+				F500B1BC1AADBBFD00A7AD35 /* CardStatuModel.h */,
+				F500B1BD1AADBBFD00A7AD35 /* CardStatuModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -12333,6 +12341,7 @@
 				A49C7D611A70D42700F2AEC5 /* AuthTypeView.m in Sources */,
 				A49C7D621A70D42700F2AEC5 /* M80AttributedLabel.m in Sources */,
 				A49C7D631A70D42700F2AEC5 /* DTError.m in Sources */,
+				F500B1C11AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A49C7D641A70D42700F2AEC5 /* XHHTTPClient.m in Sources */,
 				A49C7D651A70D42700F2AEC5 /* TTTAttributedLabel.m in Sources */,
 				A49C7D661A70D42700F2AEC5 /* WLMessageTableViewController.m in Sources */,
@@ -12846,6 +12855,7 @@
 				F53DC3A41A49192600F5F712 /* AuthTypeView.m in Sources */,
 				F53DC3A51A49192600F5F712 /* M80AttributedLabel.m in Sources */,
 				A48CA6A31A4D044B009EBD04 /* DTError.m in Sources */,
+				F500B1C01AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A4C140BC1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
 				F53DC3A61A49192600F5F712 /* TTTAttributedLabel.m in Sources */,
 				A4C1408E1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
@@ -13359,6 +13369,7 @@
 				F5664A6B1A2AFD56008A5830 /* M80AttributedLabel.m in Sources */,
 				F5664A6D1A2AFD56008A5830 /* TTTAttributedLabel.m in Sources */,
 				A48CA6AD1A4D044B009EBD04 /* DTTimePeriodGroup.m in Sources */,
+				F500B1BE1AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				F5B88FE11A35793200290B4F /* UIColor+_6jinzhi.m in Sources */,
 				F5664A6E1A2AFD56008A5830 /* UIColor+HBVHarmonies.m in Sources */,
 				10389B681A3F0740001A785C /* NSString+Extend.m in Sources */,
@@ -13872,6 +13883,7 @@
 				F5664D241A2AFDD5008A5830 /* AuthTypeView.m in Sources */,
 				F5664D251A2AFDD5008A5830 /* M80AttributedLabel.m in Sources */,
 				A48CA6A21A4D044B009EBD04 /* DTError.m in Sources */,
+				F500B1BF1AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A4C140BB1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
 				F5664D271A2AFDD5008A5830 /* TTTAttributedLabel.m in Sources */,
 				A4C1408D1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,

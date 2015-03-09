@@ -74,10 +74,6 @@
     
     // 活动和项目
     _cellCardView = [[WLCellCardView alloc] init];
-//    _cellCardView.layer.masksToBounds = YES;
-//    _cellCardView.layer.cornerRadius = 6.0;
-//    _cellCardView.layer.borderWidth = 0.6;
-//    _cellCardView.layer.borderColor = [WLRGB(173, 173, 173) CGColor];
     [_cellCardView.tapBut addTarget:self action:@selector(projectAndActivityBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_cellCardView];
     
