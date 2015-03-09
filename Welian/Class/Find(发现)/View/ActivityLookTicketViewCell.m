@@ -39,7 +39,7 @@
     [super didChangeValueForKey:@"iActivityTicket"];
     _nameLabel.text = _iActivityTicket.name;
     _infoLabel.text = _iActivityTicket.intro;
-    if (_iActivityTicket.price.integerValue > 0) {
+    if (_iActivityTicket.price.floatValue > 0) {
         _moneyLabel.text = [NSString stringWithFormat:@"%@元",_iActivityTicket.price];
         [_moneyLabel setAttributedText:[self getAttributedInfoString:_moneyLabel.text searchStr:@"元"]];
     }else{

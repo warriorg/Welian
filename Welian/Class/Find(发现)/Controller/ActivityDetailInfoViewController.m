@@ -532,26 +532,51 @@
                     [self lookMyTicketsInfo];
                 }
             }else{
-                //名额未满
-                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-                    //不限人数，可以报名
-                    [self noPayToJoin];
-                }else{
-                    //名额未满
-                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                        //1收费，0免费
-                        if (_activityInfo.type.integerValue == 0) {
-                            //我要报名
+                //名额未满 //1收费，0免费
+                if(_activityInfo.type.integerValue == 0){
+                    //免费活动
+                    if(_activityInfo.limited.integerValue == 0){
+                        //不限人数，可以报名
+                        [self noPayToJoin];
+                    }else{
+                        if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+                            //不限人数，可以报名
                             [self noPayToJoin];
                         }else{
-                            //我要购票
-                            [self loadActivityTickets];
+                            
                         }
+                    }
+                }else{
+                    //收费活动
+                    if(_activityInfo.limited.integerValue > 0){
+                        //我要购票
+                        [self loadActivityTickets];
                     }else{
-                        //名额已满
                         
                     }
                 }
+                
+                
+//                //名额未满
+//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+//                    //不限人数，可以报名
+//                    [self noPayToJoin];
+//                }else{
+//                    //名额未满
+//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+//                        //1收费，0免费
+//                        if (_activityInfo.type.integerValue == 0) {
+//                            //我要报名
+//                            [self noPayToJoin];
+//                        }else{
+//                            //我要购票
+//                            [self loadActivityTickets];
+//                        }
+//                    }else{
+//                        //名额已满
+//                        
+//                    }
+//                }
             }
         }
             break;
@@ -641,25 +666,49 @@
                     [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
                 }
             }else{
-                //名额未满
-                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-                    //不限人数，可以报名
-                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
-                }else{
-                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                        //1收费，0免费
-                        if (_activityInfo.type.integerValue == 0) {
+                //名额未满 //1收费，0免费
+                if(_activityInfo.type.integerValue == 0){
+                    //免费活动
+                    if(_activityInfo.limited.integerValue == 0){
+                        //不限人数，可以报名
+                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                        [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+                    }else{
+                        if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
                             _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
                             [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
                         }else{
-                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                            [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
+                            [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
                         }
+                    }
+                }else{
+                    //收费活动
+                    if(_activityInfo.limited.integerValue > 0){
+                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                        [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
                     }else{
-                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+                        [_joinBtn setTitle:@"已售罄" forState:UIControlStateNormal];
                     }
                 }
+                
+//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+//                    //不限人数，可以报名
+//                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+//                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+//                }else{
+//                    //收费活动
+//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+//                        //1收费，0免费
+//                        if (_activityInfo.type.integerValue == 0) {
+//                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+//                            [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+//                        }else{
+//                            
+//                        }
+//                    }else{
+//                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+//                    }
+//                }
             }
         }
             break;
@@ -793,6 +842,8 @@
                                               [self checkShareBtn];
                                               //更页面
                                               [self updateUI];
+                                          }else{
+                                              [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
                                           }
                                       } fail:^(NSError *error) {
                                           DLog(@"getActivityDetailParameterDic error:%@",error.description);

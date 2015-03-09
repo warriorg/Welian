@@ -52,7 +52,7 @@
     if (_isBuyTicket) {
         [_operateBtn setTitle:@"确认购票" forState:UIControlStateNormal];
     }else{
-        [_operateBtn setTitle:@"取　消" forState:UIControlStateNormal];
+        [_operateBtn setTitle:@"返　　回" forState:UIControlStateNormal];
     }
     [self setNeedsLayout];
 }

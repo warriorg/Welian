@@ -175,9 +175,15 @@
                                           NSInteger count = [JSON[@"count"] integerValue];
                                           NSArray *records = JSON[@"records"];
                                           if (count > 0) {
-                                              [_noDataNotView removeFromSuperview];
                                               [self.datasource addObjectsFromArray:records];
                                               [self.tableView reloadData];
+                                          }
+                                          
+                                          if (_datasource.count > 0) {
+                                              [_noDataNotView removeFromSuperview];
+                                          }else{
+                                              [self.tableView addSubview:self.noDataNotView];
+                                              [self.tableView sendSubviewToBack:self.noDataNotView];
                                           }
                                       } fail:^(NSError *error) {
                                           //隐藏加载更多动画

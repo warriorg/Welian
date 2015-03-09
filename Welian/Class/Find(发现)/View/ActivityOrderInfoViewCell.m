@@ -42,7 +42,7 @@
     _nameLabel.text = _iActivityTicket.name;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@元",_iActivityTicket.price];
     [_priceLabel setAttributedText:[NSObject getAttributedInfoString:_priceLabel.text searchStr:[NSString stringWithFormat:@"￥%@",_iActivityTicket.price] color:KBlueTextColor font:[UIFont boldSystemFontOfSize:14.f]]];
-    _numLabel.text = [NSString stringWithFormat:@"x %@",_iActivityTicket.ticketCount];
+    _numLabel.text = [NSString stringWithFormat:@"x %@",_iActivityTicket.buyCount];
 }
 
 - (void)layoutSubviews
