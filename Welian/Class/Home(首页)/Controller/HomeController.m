@@ -550,10 +550,9 @@
                                         //写入到本地
                                         BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
                                         if (state == YES) {
-                                            NSLog(@"write successfully");
+                                            DLog(@"write successfully");
                                         }else{
-                                            NSLog(@"fail to write");
-                                            
+                                            DLog(@"fail to write");
                                         }
                                     } fail:^(NSError *error) {
                                         DLog(@"getActiveCitiesParameterDic error:%@",error.description);

@@ -13,6 +13,8 @@
 #import "TOWebViewController.h"
 #import "ActivityDetailViewController.h"
 #import "WLDisplayMediaViewController.h"
+#import "ActivityDetailInfoViewController.h"
+
 #import "WLPhotoView.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
@@ -856,10 +858,13 @@
                 NSArray *info = [linkText componentsSeparatedByString:@"#"];
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载
-                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
-                activityDetailVC.wwwFolderName = @"www";
-                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];
-                [self.navigationController pushViewController:activityDetailVC animated:YES];
+//                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
+//                activityDetailVC.wwwFolderName = @"www";
+//                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];
+//                [self.navigationController pushViewController:activityDetailVC animated:YES];
+                
+                ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:@(sessionId.integerValue)];
+                [self.navigationController pushViewController:activityInfoVC animated:YES];
                 return;
             }
             

@@ -34,7 +34,7 @@
 @property (nonatomic, retain) LogInUser *rsLoginUser;
 
 //创建活动
-+ (void)createActivityInfoWith:(IActivityInfo *)iActivityInfo withType:(NSNumber *)activityType;
++ (ActivityInfo *)createActivityInfoWith:(IActivityInfo *)iActivityInfo withType:(NSNumber *)activityType;
 //更新活动
 + (ActivityInfo *)updateActivityInfoWith:(IActivityInfo *)iActivityInfo withType:(NSNumber *)activityType;
 

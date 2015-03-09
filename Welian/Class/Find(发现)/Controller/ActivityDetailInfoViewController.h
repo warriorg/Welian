@@ -11,5 +11,6 @@
 @interface ActivityDetailInfoViewController : BasicViewController
 
 - (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo;
+- (instancetype)initWIthActivityId:(NSNumber *)activityId;
 
 @end
