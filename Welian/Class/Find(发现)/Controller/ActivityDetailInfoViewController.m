@@ -11,18 +11,25 @@
 #import "ActivityMapViewController.h"
 #import "ActivityUserListViewController.h"
 #import "TOWebViewController.h"
+#import "ShareFriendsController.h"
+#import "NavViewController.h"
+#import "PublishStatusController.h"
 
 #import "MessageKeyboardView.h"
 #import "ActivityCustomViewCell.h"
 #import "ActivityInfoViewCell.h"
 #import "ActivityUserViewCell.h"
 #import "ActivityTicketView.h"
+#import "WLActivityView.h"
 
-#define kHeaderImageHeight 178.f
+#import "ShareEngine.h"
+#import "SEImageCache.h"
+#import "UINavigationBar+BackgroundColor.h"
+
+#define kHeaderImageHeight 238.f
 #define kTableViewHeaderHeight 45.f
 #define kOperateButtonHeight 35.f
 #define kmarginLeft 10.f
-
 
 @interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -64,11 +71,34 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.tintColor = KBasesColor;
-//    self.navigationController.navigationBar.translucent = YES;
-//    self.navigationController.navigationBar.alpha = 0.5f;
-//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [self scrollViewDidScroll:_tableView];
+    
+//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1]];
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:21], NSFontAttributeName, nil]];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar reset];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = RGB(74.f, 117.f, 183.f);
+    if (offsetY > kHeaderImageHeight/3.f) {
+        CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
+        
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,7 +108,10 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,ViewCtrlTopBarHeight,self.view.width,self.view.height - toolBarHeight - ViewCtrlTopBarHeight)];
+    //设置头部背景透明
+    [self.navigationController.navigationBar useBackgroundColor:[UIColor clearColor]];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight)];
     tableView.dataSource = self;
     tableView.delegate = self;
     //隐藏表格分割线
@@ -235,9 +268,14 @@
                     
                     NSString *detailInfo = [NSString stringWithFormat:@"/限额%@人",_activityInfo.limited];
                     cell.detailTextLabel.text = detailInfo;
-//                    cell.detailTextLabel.hidden = YES;
                     //设置特殊颜色
                     [cell.detailTextLabel setAttributedText:[NSObject getAttributedInfoString:detailInfo searchStr:_activityInfo.limited.stringValue color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
+                    //收费和免费中未现在人数
+                    if (_activityInfo.type.integerValue == 1 || (_activityInfo.type.integerValue == 0 && _activityInfo.limited.integerValue == 0)) {
+                        cell.detailTextLabel.hidden = YES;
+                    }else{
+                        cell.detailTextLabel.hidden = NO;
+                    }
                 }
                     break;
                 default:
@@ -253,7 +291,7 @@
             cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
             cell.layer.borderWidths = @"{0.6,0,0,0}";
             
-            cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
+            cell.textLabel.text = _activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"";
             cell.detailTextLabel.text = _activityInfo.intro;
             WEAKSELF
             [cell setBlock:^(void){
@@ -341,7 +379,7 @@
                 return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited]];
                 break;
             case 3:
-                return [ActivityInfoViewCell configureWithTitle:[NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] Msg:_activityInfo.intro];
+                return [ActivityInfoViewCell configureWithTitle:_activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"" Msg:_activityInfo.intro];
             default:
                 return 60.f;
                 break;
@@ -366,7 +404,60 @@
 //分享
 - (void)shareBtnClicked
 {
+    WLActivityView  *shareView = [[WLActivityView alloc] initWithOneSectionArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)] andTwoArray:nil];
+    [shareView show];
     
+    //分享回调
+    WEAKSELF
+    [shareView setWlShareBlock:^(ShareType duration){
+        switch (duration) {
+            case ShareTypeWLFriend://微链好友
+            {
+                ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+                [self presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+            }
+                break;
+            case ShareTypeWLCircle://微链创业圈
+            {
+                PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
+                [self presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+            }
+                break;
+            case ShareTypeWeixinFriend://微信好友
+                [weakSelf shareToWX:weChat];
+                break;
+            case ShareTypeWeixinCircle://微信朋友圈
+                [weakSelf shareToWX:weChatFriend];
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+//分享到微信和微信朋友圈
+- (void)shareToWX:(WeiboType)type
+{
+    NSString *desc = _activityInfo.intro;
+    NSURL *imgUrl = [NSURL URLWithString:_activityInfo.logo];
+    NSString *link = _activityInfo.shareurl;
+    NSString *title = _activityInfo.name;
+    
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
+                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                       [WLHUDView hiddenHud];
+                                                       DLog(@"shareFriendImage---->>>%@",image);
+                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+                                                   }];
 }
 
 //收藏
@@ -382,7 +473,7 @@
                                                  //通知刷新我的活动中的数据
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
                                              } fail:^(NSError *error) {
-                                                 [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
+                                                 [UIAlertView showWithTitle:nil message:@"取消收藏失败，请重试！"];
                                              }];
         
     }else{
@@ -395,7 +486,7 @@
                                            //通知刷新我的活动中的数据
                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
                                         } fail:^(NSError *error) {
-                                            [UIAlertView showWithTitle:@"系统提示" message:@"收藏活动失败，请重试！"];
+                                            [UIAlertView showWithTitle:nil message:@"收藏活动失败，请重试！"];
                                         }];
     }
 }
@@ -410,11 +501,17 @@
     switch (_activityInfo.status.integerValue) {
         case 1:
             //活动进行中
-            
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //查看我的门票
+                [self lookMyTicketsInfo];
+            }
             break;
         case 2:
             //活动已结束
-            
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //查看我的门票
+                [self lookMyTicketsInfo];
+            }
             break;
         default:
         {
@@ -424,7 +521,7 @@
                 //1收费，0免费
                 if (_activityInfo.type.integerValue == 0) {
                     //取消报名
-                    [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+                    [UIAlertView bk_showAlertViewWithTitle:nil
                                                    message:@"取消参加当前活动？"
                                          cancelButtonTitle:@"取消"
                                          otherButtonTitles:@[@"确定"]
@@ -441,33 +538,45 @@
                 }
             }else{
                 //名额未满
-                if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                    //1收费，0免费
-                    if (_activityInfo.type.integerValue == 0) {
-                        //我要报名
-                        [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
-                                                       message:@"报名参加当前活动？"
-                                             cancelButtonTitle:@"取消"
-                                             otherButtonTitles:@[@"报名"]
-                                                       handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                                           if (buttonIndex == 0) {
-                                                               return ;
-                                                           }else{
-                                                               [self createActivityOrderWithType:0 Tickets:nil];
-                                                           }
-                                                       }];
-                    }else{
-                        //我要购票
-                        [self loadActivityTickets];
-                    }
+                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+                    //不限人数，可以报名
+                    [self noPayToJoin];
                 }else{
-                    //名额已满
-                    
+                    //名额未满
+                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+                        //1收费，0免费
+                        if (_activityInfo.type.integerValue == 0) {
+                            //我要报名
+                            [self noPayToJoin];
+                        }else{
+                            //我要购票
+                            [self loadActivityTickets];
+                        }
+                    }else{
+                        //名额已满
+                        
+                    }
                 }
             }
         }
             break;
     }
+}
+
+//免费报名
+- (void)noPayToJoin
+{
+    [UIAlertView bk_showAlertViewWithTitle:nil
+                                   message:@"报名参加当前活动？"
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"报名"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                       if (buttonIndex == 0) {
+                                           return ;
+                                       }else{
+                                           [self createActivityOrderWithType:0 Tickets:nil];
+                                       }
+                                   }];
 }
 
 //创建订单进入购票页面
@@ -509,11 +618,21 @@
     switch (_activityInfo.status.integerValue) {
         case 1:
             //进行中
-            [_joinBtn setTitle:@"正在进行" forState:UIControlStateNormal];
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //如果是收费活动
+                [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
+            }else{
+                [_joinBtn setTitle:@"正在进行" forState:UIControlStateNormal];
+            }
             break;
         case 2:
             //获取已结束
-            [_joinBtn setTitle:@"已结束" forState:UIControlStateNormal];
+            if (_activityInfo.isjoined.boolValue && _activityInfo.type.integerValue == 1) {
+                //如果是收费活动
+                [_joinBtn setTitle:@"查看我的门票" forState:UIControlStateNormal];
+            }else{
+                [_joinBtn setTitle:@"已结束" forState:UIControlStateNormal];
+            }
             break;
         default:
         {
@@ -528,17 +647,23 @@
                 }
             }else{
                 //名额未满
-                if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-                    //1收费，0免费
-                    if (_activityInfo.type.integerValue == 0) {
-                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                        [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
-                    }else{
-                        _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                        [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
-                    }
+                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
+                    //不限人数，可以报名
+                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
                 }else{
-                    [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
+                        //1收费，0免费
+                        if (_activityInfo.type.integerValue == 0) {
+                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                            [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+                        }else{
+                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
+                            [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
+                        }
+                    }else{
+                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
+                    }
                 }
             }
         }
@@ -684,8 +809,7 @@
                                               ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
                                               [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
                                           }else{
-                                              [UIAlertView showWithMessage:@"恭喜您，报名成功！"];
-                                              
+                                              [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
                                               //更页面
                                               [self updateJoinedInfo:YES];
                                           }

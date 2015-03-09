@@ -26,7 +26,7 @@
             }
         }
     }else{
-        [types appendString:@"未知"];
+        [types appendString:@""];
     }
     self.sponsors = types;
 }

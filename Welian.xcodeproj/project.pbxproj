@@ -271,6 +271,14 @@
 		A482A2471A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A482A2481A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A482A2491A5FD16F004AABE5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
+		A48302FC1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48302FD1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48302FE1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48302FF1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48303021AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303031AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303041AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
+		A48303051AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */; };
 		A489E7B71AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
@@ -4509,6 +4517,9 @@
 		A482A2441A5FC2AB004AABE5 /* weLian1.1.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.4.xcdatamodel; sourceTree = "<group>"; };
 		A482A2451A5FD16F004AABE5 /* NeedAddUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedAddUser.h; sourceTree = "<group>"; };
 		A482A2461A5FD16F004AABE5 /* NeedAddUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedAddUser.m; sourceTree = "<group>"; };
+		A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_time@2x.png"; sourceTree = "<group>"; };
+		A48303001AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BackgroundColor.h"; sourceTree = "<group>"; };
+		A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BackgroundColor.m"; sourceTree = "<group>"; };
 		A489E7B51AA198E400F7BE9F /* ActivityOrderInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderInfoViewCell.h; sourceTree = "<group>"; };
 		A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewCell.m; sourceTree = "<group>"; };
 		A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityViewController.h; sourceTree = "<group>"; };
@@ -4962,7 +4973,6 @@
 		A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
 		A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_people@2x.png"; sourceTree = "<group>"; };
 		A4E731881A8C8AE500980676 /* discovery_activity_detail_place@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_place@2x.png"; sourceTree = "<group>"; };
-		A4E731891A8C8AE500980676 /* discovery_activity_detail_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_time@2x.png"; sourceTree = "<group>"; };
 		A4E731961A8C8C8600980676 /* ActivityCustomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityCustomViewCell.h; sourceTree = "<group>"; };
 		A4E731971A8C8C8600980676 /* ActivityCustomViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityCustomViewCell.m; sourceTree = "<group>"; };
 		A4E7319C1A8C94B900980676 /* ActivityInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityInfoViewCell.h; sourceTree = "<group>"; };
@@ -6362,6 +6372,8 @@
 		10389B541A3EC46C001A785C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A48303001AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.h */,
+				A48303011AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m */,
 				A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */,
 				A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */,
 				A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */,
@@ -7565,6 +7577,7 @@
 		F51FB9ED19EF6C3E00D85D7F /* 发现images */ = {
 			isa = PBXGroup;
 			children = (
+				A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */,
 				F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */,
 				F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */,
 				F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */,
@@ -7582,7 +7595,6 @@
 				F51FB9F719EF6C3E00D85D7F /* discovery_circle_owner_bg@2x.png */,
 				A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */,
 				A4E731881A8C8AE500980676 /* discovery_activity_detail_place@2x.png */,
-				A4E731891A8C8AE500980676 /* discovery_activity_detail_time@2x.png */,
 				A4E731A21A8C972700980676 /* discovery_activity_detail_more@2x.png */,
 				A4E731B31A8CCE2600980676 /* discovery_activity_detail_jia@2x.png */,
 				A4E731B41A8CCE2600980676 /* discovery_activity_detail_jian@2x.png */,
@@ -9715,6 +9727,7 @@
 				A49C7DB81A70D42700F2AEC5 /* circle_chat_lastseen_bg@2x.png in Resources */,
 				A49C7DB91A70D42700F2AEC5 /* multiMedia@2x.png in Resources */,
 				A49C7DBA1A70D42700F2AEC5 /* PioneerPlist.plist in Resources */,
+				A48302FF1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				A49C7DBB1A70D42700F2AEC5 /* home_repost_friendcirle@2x.png in Resources */,
 				A49C7DBC1A70D42700F2AEC5 /* osusume_add_bg@2x.png in Resources */,
 				A49C7DBD1A70D42700F2AEC5 /* home_loading_30px@2x.png in Resources */,
@@ -10247,6 +10260,7 @@
 				A4C144971A4C3EC600C9BAB5 /* circle_chat_lastseen_bg@2x.png in Resources */,
 				A4C144081A4C0A6B00C9BAB5 /* multiMedia@2x.png in Resources */,
 				F53DC3DF1A49192600F5F712 /* PioneerPlist.plist in Resources */,
+				A48302FE1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				F53DC3E01A49192600F5F712 /* home_repost_friendcirle@2x.png in Resources */,
 				F53DC3E11A49192600F5F712 /* osusume_add_bg@2x.png in Resources */,
 				A4C1449D1A4C3EC600C9BAB5 /* home_loading_30px@2x.png in Resources */,
@@ -10779,6 +10793,7 @@
 				F5664A9D1A2AFD56008A5830 /* home_repost_friendcirle@2x.png in Resources */,
 				F557863E1A63749500630A46 /* BadgeBaseCell.xib in Resources */,
 				A4C143821A4C0A6B00C9BAB5 /* section0_emotion1@2x.png in Resources */,
+				A48302FC1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				F5664A9F1A2AFD56008A5830 /* Expression_75@2x.png in Resources */,
 				F5664AA01A2AFD56008A5830 /* tabbar_friend_selected@2x.png in Resources */,
 				A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */,
@@ -11311,6 +11326,7 @@
 				A4C144961A4C3EC600C9BAB5 /* circle_chat_lastseen_bg@2x.png in Resources */,
 				A4C144071A4C0A6B00C9BAB5 /* multiMedia@2x.png in Resources */,
 				F5664D561A2AFDD5008A5830 /* PioneerPlist.plist in Resources */,
+				A48302FD1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				F5664D571A2AFDD5008A5830 /* home_repost_friendcirle@2x.png in Resources */,
 				F569A80B1A31B33C00B677B0 /* osusume_add_bg@2x.png in Resources */,
 				A4C1449C1A4C3EC600C9BAB5 /* home_loading_30px@2x.png in Resources */,
@@ -11957,6 +11973,7 @@
 				A49C7C361A70D42700F2AEC5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB21A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				A49C7C371A70D42700F2AEC5 /* SchoolCompanyDate.m in Sources */,
+				A48303051AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				A49C7C381A70D42700F2AEC5 /* weLian.xcdatamodeld in Sources */,
 				A49C7C391A70D42700F2AEC5 /* MKAnnotationView+WebCache.m in Sources */,
 				A49C7C3A1A70D42700F2AEC5 /* LoginViewController.m in Sources */,
@@ -12469,6 +12486,7 @@
 				A4C140881A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB11A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F53DC2E61A49192600F5F712 /* SchoolCompanyDate.m in Sources */,
+				A48303041AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F53DC2E71A49192600F5F712 /* weLian.xcdatamodeld in Sources */,
 				F53DC2E81A49192600F5F712 /* MKAnnotationView+WebCache.m in Sources */,
 				F53DC2E91A49192600F5F712 /* LoginViewController.m in Sources */,
@@ -12981,6 +12999,7 @@
 				F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */,
 				A4743EAF1A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */,
+				A48303021AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F56649BE1A2AFD56008A5830 /* AFURLSessionManager.m in Sources */,
 				F56649C01A2AFD56008A5830 /* MKAnnotationView+WebCache.m in Sources */,
 				A4C140951A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
@@ -13493,6 +13512,7 @@
 				A4C140871A4BEA8500C9BAB5 /* UIView+XHBadgeView.m in Sources */,
 				A4743EB01A7F7BCE00645998 /* ProjectDetailsViewController.m in Sources */,
 				F59E76101A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
+				A48303031AA9AD0400B5CB52 /* UINavigationBar+BackgroundColor.m in Sources */,
 				F59E760C1A405D170028FBAF /* weLian.xcdatamodeld in Sources */,
 				F5664C7A1A2AFDD5008A5830 /* MKAnnotationView+WebCache.m in Sources */,
 				F5664C7B1A2AFDD5008A5830 /* LoginViewController.m in Sources */,
