@@ -197,6 +197,11 @@
             chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
             break;
         default:
+        {
+            //其他未知类型
+            chatMsg.message = msg.length > 0 ? msg : @"消息无法识别，请升级";
+            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+        }
             break;
     }
     chatMsg.timestamp = [created dateFromNormalString];

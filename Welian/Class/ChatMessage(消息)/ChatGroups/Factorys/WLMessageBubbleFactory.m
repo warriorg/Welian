@@ -64,7 +64,9 @@
         case WLBubbleImageViewStyleWeChat:
             // 类似微信的
 //            edgeInsets = UIEdgeInsetsMake(30, 28, 85, 28);
-            edgeInsets = UIEdgeInsetsMake(20, 15, 85, 15);
+            edgeInsets = UIEdgeInsetsMake(30, 10, 85, 10);
+            //尖尖的
+//            edgeInsets = UIEdgeInsetsMake(20, 15, 85, 15);
             break;
         default:
             break;

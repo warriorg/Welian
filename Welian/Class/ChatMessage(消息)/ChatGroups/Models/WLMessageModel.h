@@ -53,6 +53,8 @@
 
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;
+- (BOOL)showTimeStamp;
+- (void)setShowTimeStamp:(BOOL)showTimeStamp;
 - (NSString *)sended;
 - (void)setSended:(NSString *)sended;
 

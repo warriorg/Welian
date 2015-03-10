@@ -48,6 +48,7 @@
 @property (nonatomic, assign) WLBubbleMessageType bubbleMessageType;
 
 @property (nonatomic) BOOL isRead;
+@property (nonatomic) BOOL showTimeStamp;
 
 
 /**

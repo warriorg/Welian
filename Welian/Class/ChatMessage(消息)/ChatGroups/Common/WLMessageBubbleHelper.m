@@ -7,7 +7,7 @@
 //
 
 #import "WLMessageBubbleHelper.h"
-#import "SECompatibility.h"
+//#import "SECompatibility.h"
 
 @interface WLMessageBubbleHelper (){
     NSCache *_attributedStringCache;
@@ -73,11 +73,11 @@
     
     NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink | NSTextCheckingTypePhoneNumber | NSTextCheckingTypeDate
                                                                error:nil];
-    NSColor *textColor = [NSColor whiteColor];
+    UIColor *textColor = [UIColor whiteColor];
     NSDictionary *textAttributes = @{(id)kCTForegroundColorAttributeName: (id)textColor.CGColor};
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:textAttributes];
     
-    NSColor *linkColor = [NSColor blueColor];
+    UIColor *linkColor = [UIColor blueColor];
     //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
     NSDictionary *linkAttributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor};
     
@@ -110,7 +110,7 @@
     NSDictionary *textAttributes = @{(id)kCTForegroundColorAttributeName: (id)textColor.CGColor};
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:textAttributes];
     
-    NSColor *linkColor = [NSColor blueColor];
+    UIColor *linkColor = [UIColor blueColor];
     //    NSDictionary *textAttributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
     NSDictionary *linkAttributes = @{(id)kCTForegroundColorAttributeName: (id)linkColor.CGColor};
     
@@ -136,13 +136,13 @@
 //        return [_attributedStringCache objectForKey:text];
     }
     
-    NSFont *font = [NSFont systemFontOfSize:16.0f];
+    UIFont *font = [UIFont systemFontOfSize:16.0f];
     CTFontRef tweetfont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
     
-    NSColor *tweetColor = [NSColor whiteColor];
+    UIColor *tweetColor = [UIColor whiteColor];
 //    NSColor *hashtagColor = [NSColor grayColor];
 //    UIColor *cashtagColor = [UIColor grayColor];
-    NSColor *linkColor = [NSColor blueColor];
+    UIColor *linkColor = [UIColor blueColor];
     
     NSDictionary *attributes = @{(id)kCTForegroundColorAttributeName: (id)tweetColor.CGColor, (id)kCTFontAttributeName: (__bridge id)tweetfont};
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];

@@ -87,6 +87,8 @@
                 default:
                     break;
             }
+            //设置是否现实时间戳
+            message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
             //添加到数组中
             if (message) {
                 [messages addObject:message];
@@ -234,6 +236,8 @@
         default:
             break;
     }
+    //设置是否现实时间戳
+    message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
     //在底部添加消息
     [self addMessage:message needSend:NO];
 }
@@ -319,7 +323,7 @@
     }
     NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
     //获取数据库中发送的消息对象
-    ChatMessage *chatMessage = _localMessages[indexPath.row];// [_friendUser getChatMessageWithMsgId:msg.msgId];
+    ChatMessage *chatMessage = _localMessages[indexPath.row];
     
     [WLHttpTool sendMessageParameterDic:param
                                 success:^(id JSON) {
@@ -435,6 +439,8 @@
 //        [self.messageTableView reloadRowsAtIndexPaths:newindexPaths withRowAnimation:UITableViewRowAnimationNone];
 //        [self scrollToBottomAnimated:YES];
         
+        //设置是否现实时间戳
+        textMessage.showTimeStamp = chatMessage.showTimeStamp.boolValue;
         //添加这条数据，不需要发送
         [self addMessage:textMessage needSend:YES];
     }];
@@ -488,61 +494,67 @@
     if (!self.loadingMoreMessage) {
         self.loadingMoreMessage = YES;
         
-        NSArray *getLocalMessages = nil;
-        //获取新的聊天记录
-        if(_offset - _count >= 0){
-            _offset = _offset - _count;
-            getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
-        }else if(_offset > 0 && _offset < _count){
-            _count = _offset - 0;
-            _offset = 0;
-            getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
-        }else{
-            self.loadingMoreMessage = NO;
-            return;
-        }
-        if (getLocalMessages) {
-            NSMutableArray *messages = [NSMutableArray arrayWithArray:getLocalMessages];
-            [messages addObjectsFromArray:_localMessages];
-            self.localMessages = messages;
-            
-            WEAKSELF
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSMutableArray *messages = [NSMutableArray array];
-                
-                for (ChatMessage *chatMessage in getLocalMessages) {
-                    WLMessage *message = nil;
-                    switch (chatMessage.messageType.integerValue) {
-                        case WLBubbleMessageMediaTypeActivity://活动
-                        case WLBubbleMessageMediaTypeText:
-                            //普通文本
-                            message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-                            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
-                            message.msgId = chatMessage.msgId.stringValue;
-                            message.avatorUrl = chatMessage.avatorUrl;
-                            message.sended = chatMessage.sendStatus.stringValue;
-                            message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                            message.uid = _friendUser.uid.stringValue;
-                            break;
-                            
-                        default:
-                            break;
-                    }
-                    //添加到数组中
-                    if (message) {
-                        [messages addObject:message];
-                    }
-                }
-                
-                //            NSMutableArray *messages = [weakSelf getTestMessages];
-                sleep(2);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf insertOldMessages:messages];
-                    weakSelf.loadingMoreMessage = NO;
-                });
+        WEAKSELF
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSMutableArray *messages = [weakSelf getTestMessages];
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf insertOldMessages:messages];
+                weakSelf.loadingMoreMessage = NO;
             });
+        });
+    }
+}
+
+- (NSMutableArray *)getTestMessages
+{
+    NSArray *getLocalMessages = nil;
+    //获取新的聊天记录
+    if(_offset - _count >= 0){
+        _offset = _offset - _count;
+        getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+    }else if(_offset > 0 && _offset < _count){
+        _count = _offset - 0;
+        _offset = 0;
+        getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+    }else{
+        self.loadingMoreMessage = NO;
+    }
+    
+    NSMutableArray *messages = [NSMutableArray array];
+    
+    if (getLocalMessages) {
+        NSMutableArray *localMessages = [NSMutableArray arrayWithArray:getLocalMessages];
+        [localMessages addObjectsFromArray:_localMessages];
+        self.localMessages = localMessages;
+        
+        for (ChatMessage *chatMessage in getLocalMessages) {
+            WLMessage *message = nil;
+            switch (chatMessage.messageType.integerValue) {
+                case WLBubbleMessageMediaTypeActivity://活动
+                case WLBubbleMessageMediaTypeText:
+                    //普通文本
+                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                    //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
+                    message.msgId = chatMessage.msgId.stringValue;
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    break;
+                    
+                default:
+                    break;
+            }
+            //设置是否现实时间戳
+            message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
+            //添加到数组中
+            if (message) {
+                [messages addObject:message];
+            }
         }
     }
+    return messages;
 }
 
 
@@ -571,9 +583,11 @@
     ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:_friendUser];
     textMessage.msgId = chatMessage.msgId.stringValue;
     
+    
     //添加数据
     [_localMessages addObject:chatMessage];
-    
+    //设置是否现实时间戳
+    textMessage.showTimeStamp = chatMessage.showTimeStamp.boolValue;
     [self addMessage:textMessage needSend:YES];
 //    [self sendMessage:textMessage];
     [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypeText];
@@ -602,12 +616,16 @@
     photoMessage.isRead = YES;
     photoMessage.sended = @"0";
     photoMessage.timestamp = [NSDate date];
+    photoMessage.text = @"[图片]";
     //本地聊天数据库添加
     ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:photoMessage FriendUser:_friendUser];
     photoMessage.msgId = chatMessage.msgId.stringValue;
     photoMessage.thumbnailUrl = chatMessage.thumbnailUrl;
     //添加数据
     [_localMessages addObject:chatMessage];
+    
+    //设置是否现实时间戳
+    photoMessage.showTimeStamp = chatMessage.showTimeStamp.boolValue;
     
     [self addMessage:photoMessage needSend:YES];
     [self finishSendMessageWithBubbleMessageType:WLBubbleMessageMediaTypePhoto];
@@ -759,6 +777,9 @@
     [_localMessages removeObjectAtIndex:indexPath.row];
     [_localMessages addObject:chatMessage];
     
+    //设置是否现实时间戳
+    message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
+    
     //在底部添加消息
     [self addMessage:message needSend:YES];
     
@@ -774,8 +795,9 @@
  *  @return 根据indexPath获取消息的Model的对象，从而判断返回YES or NO来控制是否显示时间轴Label
  */
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatMessage *chatMsg = [_localMessages objectAtIndex:indexPath.row];
-    return chatMsg.showTimeStamp.boolValue;
+//    ChatMessage *chatMsg = [_localMessages objectAtIndex:indexPath.row];
+    WLMessage *wlMessage = [self.messages objectAtIndex:indexPath.row];
+    return wlMessage.showTimeStamp;
 }
 
 /**

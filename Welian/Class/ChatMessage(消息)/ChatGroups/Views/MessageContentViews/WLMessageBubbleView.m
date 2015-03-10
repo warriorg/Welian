@@ -8,7 +8,7 @@
 
 #import "WLMessageBubbleView.h"
 #import "WLMessageBubbleHelper.h"
-#import "SEConstants.h"
+//#import "SEConstants.h"
 
 #define kMarginTop 8.0f
 #define kMarginBottom 2.0f

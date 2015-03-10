@@ -13,7 +13,6 @@
 #import "ActivityUserListViewController.h"
 #import "LXActivity.h"
 #import "ShareEngine.h"
-#import "SEImageCache.h"
 
 @interface ActivityDetailViewController ()<LXActivityDelegate>
 {
@@ -115,12 +114,14 @@
     NSString *title = sharDic[@"title"];
     
     [WLHUDView showHUDWithStr:@"" dim:NO];
-    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
-        [WLHUDView hiddenHud];
-        DLog(@"shareFriendImage---->>>%@",image);
-        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
-    }];
-    
+    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
+                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                       [WLHUDView hiddenHud];
+                                                       DLog(@"shareFriendImage---->>>%@",image);
+                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+                                                   }];
 }
 
 #pragma mark - private

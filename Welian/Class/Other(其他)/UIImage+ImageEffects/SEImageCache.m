@@ -39,19 +39,19 @@
     return self;
 }
 
-- (NSImage *)imageForURL:(NSURL *)imageURL completionBlock:(SEImageDownloadCompletionBlock)block
+- (UIImage *)imageForURL:(NSURL *)imageURL completionBlock:(SEImageDownloadCompletionBlock)block
 {
     return [self imageForURL:imageURL defaultImage:nil completionBlock:block];
 }
 
-- (NSImage *)imageForURL:(NSURL *)imageURL defaultImage:(NSImage *)defaultImage completionBlock:(SEImageDownloadCompletionBlock)block
+- (UIImage *)imageForURL:(NSURL *)imageURL defaultImage:(UIImage *)defaultImage completionBlock:(SEImageDownloadCompletionBlock)block
 {
     if (!imageURL) {
         return defaultImage;
     }
     
     NSString *key = [SEImageCache MD5HexDigest:imageURL.absoluteString];
-    NSImage *cachedImage = [self.cache objectForKey:key];
+    UIImage *cachedImage = [self.cache objectForKey:key];
     if (cachedImage) {
         return cachedImage;
     }
@@ -60,7 +60,7 @@
     [[self class] sendAsynchronousRequest:request queue:self.queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          if (!error) {
-             NSImage *image = [[NSImage alloc] initWithData:data];
+             UIImage *image = [[UIImage alloc] initWithData:data];
              if (image) {
                  [self.cache setObject:image forKey:key];
                  
