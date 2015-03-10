@@ -25,6 +25,7 @@
 #import "ActivityDetailViewController.h"
 #import "WLCellCardView.h"
 #import "ActivityDetailInfoViewController.h"
+#import "ProjectDetailsViewController.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
@@ -158,8 +159,13 @@
         _photoListView.hidden = YES;
     }
     
-    _cellCardView.frame = contenFrame.cellCardF;
-    
+    if (status.card) {
+        _cellCardView.hidden = NO;
+        _cellCardView.frame = contenFrame.cellCardF;
+        _cellCardView.cardM = status.card;
+    }else{
+        _cellCardView.hidden = YES;
+    }
     
     BOOL isDock = NO;
     if (status.content || status.photos.count) {
@@ -180,7 +186,24 @@
 #pragma mark - 项目或活动点击
 - (void)projectAndActivityBtnClick:(UIButton*)but event:(id)event
 {
-    DLog(@"fad");
+    CardStatuModel *card = self.statusFrame.status.card;
+    if (card.type.integerValue == 3) {   // 活动
+        
+        ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:card.cid];
+        [self.homeVC.navigationController pushViewController:activityInfoVC animated:YES];
+        
+    }else if (card.type.integerValue ==10){ // 项目
+        
+        ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectPid:card.cid];
+        [self.homeVC.navigationController pushViewController:projectVC animated:YES];
+        
+    }else if (card.type.integerValue == 11){  // 网页
+        //普通链接
+        TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:card.url];
+        [webVC setShowActionButton:NO];
+        webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+        [self.homeVC.navigationController pushViewController:webVC animated:YES];
+    }
 }
 
 #pragma mark - 收起or展开
@@ -207,7 +230,6 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
         if (statM.iszan==1) {
             

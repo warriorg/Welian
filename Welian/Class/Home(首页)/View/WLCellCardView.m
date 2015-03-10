@@ -22,12 +22,12 @@
 - (void)addUIView
 {
     self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = 6.0;
+    self.layer.cornerRadius = 4.0;
     self.layer.borderWidth = 0.6;
-    self.layer.borderColor = [WLRGB(173, 173, 173) CGColor];
+    self.layer.borderColor = [WLRGB(220, 220, 220) CGColor];
     
     _iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
-    [_iconImage setBackgroundColor:[UIColor lightGrayColor]];
+//    [_iconImage setBackgroundColor:[UIColor lightGrayColor]];
     [self addSubview:_iconImage];
     
     _titLabel = [[UILabel alloc] init];
@@ -48,10 +48,33 @@
     [super setFrame:frame];
     _tapBut.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     _titLabel.frame = CGRectMake(55, 8, frame.size.width-55-8, 21);
-    _titLabel.text = @"微链";
     _detailLabel.frame = CGRectMake(55, CGRectGetMaxY(_titLabel.frame), frame.size.width-55-8, 21);
-    _detailLabel.text = @"专注于互联网创业的社交平台";
 }
 
+- (void)setCardM:(CardStatuModel *)cardM
+{
+    _cardM = cardM;
+    NSInteger typeint = cardM.type.integerValue;
+    NSString *imageName = @"";
+    switch (typeint) {
+        case 11:  // 网页
+            imageName = @"home_repost_link";
+            break;
+        case 3:  // 活动
+            imageName = @"home_repost_huodong";
+            break;
+        case 10:  // 项目
+            imageName = @"home_repost_xiangmu";
+            break;
+        case 13:  // 话题
+            imageName = @"home_repost_huati";
+            break;
+        default:
+            break;
+    }
+    [_iconImage setImage:[UIImage imageNamed:imageName]];
+    _titLabel.text = cardM.title;
+    _detailLabel.text = cardM.intro;
+}
 
 @end

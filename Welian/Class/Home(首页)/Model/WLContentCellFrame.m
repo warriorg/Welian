@@ -76,8 +76,10 @@
     }
     
     // 活动和项目高度
-    _cellCardF = CGRectMake(contentX, _cellHeight+10, _cellWidth - IWCellBorderWidth, 56);
-    _cellHeight += 66;
+    if (status.card) {
+        _cellCardF = CGRectMake(contentX, _cellHeight+10, _cellWidth - IWCellBorderWidth, 56);
+        _cellHeight += 66;
+    }
     
     if (status.photos.count || status.content.length) {
         CGFloat dockY = _cellHeight+5;

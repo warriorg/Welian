@@ -16,7 +16,7 @@
 
 typedef void (^WLActivityShareBlock)(ShareType shareType);
 
-@interface POHorizontalList : UIView <UIScrollViewDelegate> {
+@interface POHorizontalList : UIToolbar <UIScrollViewDelegate> {
     CGFloat scale;
 }
 

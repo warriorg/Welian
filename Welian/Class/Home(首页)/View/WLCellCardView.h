@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardStatuModel.h"
 
 @interface WLCellCardView : UIView
+
+@property (nonatomic, strong) CardStatuModel *cardM;
 
 @property (nonatomic, strong) UIImageView *iconImage;
 @property (nonatomic, strong) UILabel *titLabel;

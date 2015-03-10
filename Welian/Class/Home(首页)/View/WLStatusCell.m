@@ -93,7 +93,6 @@
                 
             }
         };
-        
         [self.contentView addSubview:_contentAndDockView];
         
         _feznView = [[FeedAndZanView alloc] init];
@@ -151,7 +150,7 @@
     }else{
         [_moreBut setHidden:YES];
     }
-    
+
     [_cellHeadView setUserStat:status];
     [_cellHeadView setControllVC:self.homeVC];
     CGFloat y = 0;

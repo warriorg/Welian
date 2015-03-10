@@ -11,6 +11,7 @@
 @interface CardStatuModel : NSObject
 
 @property (nonatomic, strong) NSNumber *cid;
+ //3 活动，10项目，11 网页
 @property (nonatomic, strong) NSNumber *type;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *intro;

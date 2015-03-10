@@ -234,9 +234,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     NSArray *twoArray = @[@(ShareTypeReport)];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
-        twoArray = @[@(ShareTypeReport),@(ShareTypeDelete)];
+        
     }
-    
+    twoArray = @[@(ShareTypeReport),@(ShareTypeDelete),@(ShareTypeProjectInfo),@(ShareTypeProjectMember),@(ShareTypeProjectFinancing)];
     WEAKSELF
     WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:twoArray andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
     wlActivity.wlShareBlock = ^(ShareType type){

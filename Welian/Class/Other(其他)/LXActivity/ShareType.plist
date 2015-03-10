@@ -5,63 +5,63 @@
 	<key>1</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_wechat.png</string>
+		<string>share_welianfriend.png</string>
 		<key>itemTitle</key>
 		<string>微链好友</string>
 	</dict>
 	<key>2</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_welian.png</string>
+		<string>share_welian.png</string>
 		<key>itemTitle</key>
 		<string>创业圈</string>
 	</dict>
 	<key>3</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_wechat.png</string>
+		<string>share_wechat.png</string>
 		<key>itemTitle</key>
 		<string>微信好友</string>
 	</dict>
 	<key>4</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_friendcirle.png</string>
+		<string>share_friendcircle.png</string>
 		<key>itemTitle</key>
 		<string>微信朋友圈</string>
 	</dict>
 	<key>5</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_wechat.png</string>
+		<string>share_delete.png</string>
 		<key>itemTitle</key>
 		<string>删除</string>
 	</dict>
 	<key>6</key>
 	<dict>
 		<key>itemImage</key>
-		<string>home_repost_friendcirle.png</string>
+		<string>share_jubao.png</string>
 		<key>itemTitle</key>
 		<string>举报</string>
 	</dict>
 	<key>7</key>
 	<dict>
 		<key>itemImage</key>
-		<string></string>
+		<string>share_detail.png</string>
 		<key>itemTitle</key>
 		<string>编辑项目信息</string>
 	</dict>
 	<key>8</key>
 	<dict>
 		<key>itemImage</key>
-		<string></string>
+		<string>share_people.png</string>
 		<key>itemTitle</key>
 		<string>设置团队成员</string>
 	</dict>
 	<key>9</key>
 	<dict>
 		<key>itemImage</key>
-		<string></string>
+		<string>share_rongzi.png</string>
 		<key>itemTitle</key>
 		<string>设置融资信息</string>
 	</dict>
