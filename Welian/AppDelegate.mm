@@ -471,16 +471,17 @@ BMKMapManager* _mapManager;
 // 退出登录
 - (void)logout
 {
-    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
-    
-    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-        [UserDefaults removeObjectForKey:@"sessionid"];
-        [LogInUser setUserisNow:NO];
-        [self.window setRootViewController:[[LoginGuideController alloc] init]];
-    } fail:^(NSError *error) {
+    if ([LogInUser getCurrentLoginUser]) {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
         
-    }];
-    
+        [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+            [UserDefaults removeObjectForKey:@"sessionid"];
+            [LogInUser setUserisNow:NO];
+            [self.window setRootViewController:[[LoginGuideController alloc] init]];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
 }
 
 

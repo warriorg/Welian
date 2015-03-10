@@ -27,14 +27,14 @@
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SuperSize.height, SuperSize.width, 0) style:UITableViewStylePlain];
         _tableView.scrollEnabled = NO;
-        _tableView.backgroundColor = [UIColor lightGrayColor];
+        _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         
         UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 50)];
-        cancelButton.backgroundColor = [UIColor lightGrayColor];
+        cancelButton.backgroundColor = [UIColor whiteColor];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:[UIColor colorWithRed:60.0/255 green:183.0/255 blue:226.0/255 alpha:1] forState:UIControlStateNormal];
+        [cancelButton setTitleColor:WLRGB(116, 116, 116) forState:UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(tappedCancel) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableFooterView = cancelButton;
     }
@@ -113,6 +113,8 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:wlActivityCellId];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
     }
     
     POHorizontalList *list;

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "WLBasicTrends.h"
+#import "CardStatuModel.h"
 
 
 @interface WLStatusM : NSObject
@@ -76,5 +76,25 @@
 
 /**  和谁一起   */
 //@property (nonatomic, strong) NSArray *with;
+
+//** 动态卡片显示 **//
+@property (nonatomic, strong) CardStatuModel *card;
+/*
+
+ "card":{
+ 
+ "cid":10086,
+ 
+ "type":1，   //10 文章，11 活动，12 项目，13 话题，
+ 
+ "title":"题目",
+ 
+ “intro”:"简介",
+ 
+ "url":"http://www.welian.com"
+ 
+ }
+
+*/
 
 @end

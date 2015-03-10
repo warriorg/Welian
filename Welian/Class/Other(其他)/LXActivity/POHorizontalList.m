@@ -12,7 +12,7 @@
 
 - (id)initWithButItems:(NSArray *)items
 {
-    self = [super initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 110)];
+    self = [super initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 120)];
     
     if (self) {
         // 1.获得路径
@@ -21,7 +21,7 @@
         NSDictionary *shareDic = [NSDictionary dictionaryWithContentsOfURL:url];
         
         self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, TITLE_HEIGHT, self.frame.size.width, self.frame.size.height)];
-
+        self.scrollView.backgroundColor = [UIColor clearColor];
         CGSize pageSize = CGSizeMake(ITEM_WIDTH, self.scrollView.frame.size.height);
         NSUInteger page = 0;
         WEAKSELF
