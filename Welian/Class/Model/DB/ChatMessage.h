@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MyFriendUser,WLMessage;
+@class MyFriendUser,WLMessage,CardStatuModel;
 
 @interface ChatMessage : NSManagedObject
 
@@ -35,10 +35,18 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * sender;
 @property (nonatomic, retain) NSNumber * showTimeStamp;//是否显示时间戳
+@property (nonatomic, retain) NSNumber * cardId;//卡片标题
+@property (nonatomic, retain) NSNumber * cardType;//卡片类型 //3 活动，10项目，11 网页
+@property (nonatomic, retain) NSString * cardTitle;//卡片标题
+@property (nonatomic, retain) NSString * cardIntro;//卡片详情
+@property (nonatomic, retain) NSString * cardUrl;//卡片链接
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
 
 //创建新的聊天记录
 + (ChatMessage *)createChatMessageWithWLMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser;
+
+//创建新的卡片聊天记录
++ (ChatMessage *)createChatMessageWithCard:(CardStatuModel *)cardModel FriendUser:(MyFriendUser *)friendUser;
 
 //创建接受到的聊天消息
 + (void)createReciveMessageWithDict:(NSDictionary *)dict;

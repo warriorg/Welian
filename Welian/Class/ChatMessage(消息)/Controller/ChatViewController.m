@@ -62,12 +62,25 @@
                 case WLBubbleMessageMediaTypeActivity://活动
                 case WLBubbleMessageMediaTypeText:
                     //普通文本
-                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-                    message.msgId = chatMessage.msgId.stringValue;
+//                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+//                    message.msgId = chatMessage.msgId.stringValue;
+//                    message.avatorUrl = chatMessage.avatorUrl;
+//                    message.sended = chatMessage.sendStatus.stringValue;
+//                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+//                    message.uid = _friendUser.uid.stringValue;
+                    message = [[WLMessage alloc] initWithCard:chatMessage.message
+                                                       sender:chatMessage.sender
+                                                    timestamp:chatMessage.timestamp
+                                                       cardId:chatMessage.cardId
+                                                     cardType:chatMessage.cardType
+                                                    cardTitle:chatMessage.cardTitle
+                                                    cardIntro:chatMessage.cardIntro
+                                                      cardUrl:chatMessage.cardUrl];
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
+                    message.msgId = chatMessage.msgId.stringValue;
                     break;
                 case WLBubbleMessageMediaTypePhoto:
                 {
@@ -84,9 +97,27 @@
                     message.msgId = chatMessage.msgId.stringValue;
                 }
                     break;
+                case WLBubbleMessageMediaTypeCard:
+                {
+                    message = [[WLMessage alloc] initWithCard:chatMessage.message
+                                                       sender:chatMessage.sender
+                                                    timestamp:chatMessage.timestamp
+                                                       cardId:chatMessage.cardId
+                                                     cardType:chatMessage.cardType
+                                                    cardTitle:chatMessage.cardTitle
+                                                    cardIntro:chatMessage.cardIntro
+                                                      cardUrl:chatMessage.cardUrl];
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    message.msgId = chatMessage.msgId.stringValue;
+                }
+                    break;
                 default:
                     break;
             }
+            message.messageMediaType = WLBubbleMessageMediaTypeCard;
             //设置是否现实时间戳
             message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
             //添加到数组中
@@ -226,6 +257,23 @@
                                         originPhotoUrl:chatMessage.originPhotoUrl
                                                 sender:chatMessage.sender
                                              timestamp:chatMessage.timestamp];
+            message.avatorUrl = chatMessage.avatorUrl;
+            message.sended = chatMessage.sendStatus.stringValue;
+            message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+            message.uid = _friendUser.uid.stringValue;
+            message.msgId = chatMessage.msgId.stringValue;
+        }
+            break;
+        case WLBubbleMessageMediaTypeCard:
+        {
+            message = [[WLMessage alloc] initWithCard:chatMessage.message
+                                               sender:chatMessage.sender
+                                            timestamp:chatMessage.timestamp
+                                               cardId:chatMessage.cardId
+                                             cardType:chatMessage.cardType
+                                            cardTitle:chatMessage.cardTitle
+                                            cardIntro:chatMessage.cardIntro
+                                              cardUrl:chatMessage.cardUrl];
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
@@ -542,7 +590,23 @@
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
                     break;
-                    
+                case WLBubbleMessageMediaTypeCard:
+                {
+                    message = [[WLMessage alloc] initWithCard:chatMessage.message
+                                                       sender:chatMessage.sender
+                                                    timestamp:chatMessage.timestamp
+                                                       cardId:chatMessage.cardId
+                                                     cardType:chatMessage.cardType
+                                                    cardTitle:chatMessage.cardTitle
+                                                    cardIntro:chatMessage.cardIntro
+                                                      cardUrl:chatMessage.cardUrl];
+                    message.avatorUrl = chatMessage.avatorUrl;
+                    message.sended = chatMessage.sendStatus.stringValue;
+                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
+                    message.uid = _friendUser.uid.stringValue;
+                    message.msgId = chatMessage.msgId.stringValue;
+                }
+                    break;
                 default:
                     break;
             }
@@ -950,7 +1014,7 @@
 - (void)multiMediaMessageDidSelectedOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(WLMessageTableViewCell *)messageTableViewCell
 {
     switch (message.messageMediaType) {
-        case WLBubbleMessageMediaTypeVideo:
+//        case WLBubbleMessageMediaTypeVideo:
         case WLBubbleMessageMediaTypePhoto:
         {
             //键盘控制
@@ -998,9 +1062,20 @@
 //            [self.navigationController pushViewController:messageDisplayTextView animated:YES];
         }
             break;
+        case WLBubbleMessageMediaTypeCard:
+        {
+            DLog(@"message ----> Card");
+        }
+            break;
         default:
             break;
     }
+}
+
+//转发卡片消息
+- (void)didTranspondOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 

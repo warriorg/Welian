@@ -65,5 +65,7 @@
 - (NSString *)displayEndWeekDay;
 //获取活动时间
 - (NSString *)displayStartTimeInfo;
+//获取活动详情
+- (NSString *)displayActivityInfo;
 
 @end

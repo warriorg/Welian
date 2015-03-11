@@ -108,6 +108,9 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+    //添加创建活动按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建活动" style:UIBarButtonItemStyleDone target:self action:@selector(createActivity)];
+    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f,ViewCtrlTopBarHeight + kHeaderHeight,self.view.width,self.view.height - ViewCtrlTopBarHeight - kHeaderHeight)];
     tableView.backgroundColor = [UIColor whiteColor];
     tableView.dataSource = self;
@@ -362,6 +365,18 @@
 - (void)loadMoreDataArray
 {
     [self initData];
+}
+
+//创建活动
+- (void)createActivity
+{
+    [UIAlertView bk_showAlertViewWithTitle:@"创建活动"
+                                   message:@"创建活动请登录my.welian.com"
+                         cancelButtonTitle:@"好的"
+                         otherButtonTitles:nil
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                       return ;
+                                   }];
 }
 
 @end

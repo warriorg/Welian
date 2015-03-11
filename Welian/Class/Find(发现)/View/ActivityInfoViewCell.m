@@ -53,6 +53,10 @@
     self.detailTextLabel.left = kMarginLeft;
     self.detailTextLabel.top = self.textLabel.text.length > 0 ? self.textLabel.bottom + kMarginEdge : kMarginLeft;
     
+//    [_detailTextView sizeToFit];
+//    _detailTextView.left = kMarginLeft;
+//    _detailTextView.top = self.textLabel.text.length > 0 ? self.textLabel.bottom + kMarginEdge : kMarginLeft;
+    
     _detailBtn.size = CGSizeMake(self.width, self.height - self.detailTextLabel.bottom);
     _detailBtn.top = self.detailTextLabel.bottom;
     _detailBtn.centerX = self.width / 2.f;
@@ -71,7 +75,14 @@
     //详情
     self.detailTextLabel.textColor = kTitleNormalTextColor;
     self.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
-    self.detailTextLabel.numberOfLines = 0.f;
+    self.detailTextLabel.numberOfLines = 0;
+    
+    //详情
+    UITextView *detailTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    detailTextView.font = [UIFont systemFontOfSize:14.f];
+    detailTextView.textColor = kTitleNormalTextColor;
+    [self.contentView addSubview:detailTextView];
+    self.detailTextView = detailTextView;
     
     //查看活动详情按钮
     UIButton *detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];

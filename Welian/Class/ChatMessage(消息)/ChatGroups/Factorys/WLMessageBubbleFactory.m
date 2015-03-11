@@ -40,15 +40,18 @@
     
     switch (mediaType) {
         case WLBubbleMessageMediaTypePhoto:
-        case WLBubbleMessageMediaTypeVideo:
-            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
-            break;
+//        case WLBubbleMessageMediaTypeVideo:
         case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
-        case WLBubbleMessageMediaTypeVoice:
+//        case WLBubbleMessageMediaTypeVoice:
             messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
+        case WLBubbleMessageMediaTypeCard://卡片
+            //卡片
+            messageTypeString = [messageTypeString stringByAppendingString:@"_Card"];
+            break;
         default:
+            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
     }
     

@@ -26,6 +26,9 @@
  */
 - (void)multiMediaMessageDidSelectedOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(WLMessageTableViewCell *)messageTableViewCell;
 
+//转发卡片消息
+- (void)didTranspondOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath;
+
 /**
  *  双击文本消息，触发这个回调
  *

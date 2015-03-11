@@ -48,6 +48,12 @@
 - (NSString *)sender;
 - (NSString *)uid;
 
+- (NSNumber *)cardId;
+- (NSNumber *)cardType;
+- (NSString *)cardTitle;
+- (NSString *)cardIntro;
+- (NSString *)cardUrl;
+
 - (NSDate *)timestamp;
 - (void)setTimestamp:(NSDate *)timestamp;
 
