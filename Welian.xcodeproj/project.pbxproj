@@ -629,7 +629,6 @@
 		A49C7CF21A70D42700F2AEC5 /* WLMessageBubbleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140521A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m */; };
 		A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
 		A49C7CF41A70D42700F2AEC5 /* SELineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140E71A4BEF5700C9BAB5 /* SELineLayout.m */; };
-		A49C7CF51A70D42700F2AEC5 /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F545FA4F1A066B6F0057CFC6 /* DockItem.m */; };
 		A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
 		A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140371A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m */; };
@@ -641,7 +640,6 @@
 		A49C7CFE1A70D42700F2AEC5 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA97D1A5CFCB800988A61 /* CompotAndPostController.m */; };
 		A49C7D001A70D42700F2AEC5 /* TOActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FBA1F19EF723A00D85D7F /* TOActivitySafari.m */; };
-		A49C7D011A70D42700F2AEC5 /* LXActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB76419EE2A7900D85D7F /* LXActivity.m */; };
 		A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		A49C7D031A70D42700F2AEC5 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		A49C7D041A70D42700F2AEC5 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
@@ -2468,12 +2466,10 @@
 		F53DC3601A49192600F5F712 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6219F4EDC700D9E696 /* HanyuPinyinOutputFormat.m */; };
 		F53DC3611A49192600F5F712 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCE819C8694B005B887D /* AFHTTPRequestOperationManager.m */; };
 		F53DC3621A49192600F5F712 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
-		F53DC3631A49192600F5F712 /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F545FA4F1A066B6F0057CFC6 /* DockItem.m */; };
 		F53DC3641A49192600F5F712 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
 		F53DC3651A49192600F5F712 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261D1A14E45E00B0E836 /* MessageFrameModel.m */; };
 		F53DC3661A49192600F5F712 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88D19D2AA6000110C07 /* MJIvar.m */; };
 		F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FBA1F19EF723A00D85D7F /* TOActivitySafari.m */; };
-		F53DC3681A49192600F5F712 /* LXActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB76419EE2A7900D85D7F /* LXActivity.m */; };
 		F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F53DC36A1A49192600F5F712 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F53DC36B1A49192600F5F712 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
@@ -3245,12 +3241,10 @@
 		F5664A2A1A2AFD56008A5830 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6219F4EDC700D9E696 /* HanyuPinyinOutputFormat.m */; };
 		F5664A2B1A2AFD56008A5830 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCE819C8694B005B887D /* AFHTTPRequestOperationManager.m */; };
 		F5664A2C1A2AFD56008A5830 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
-		F5664A2D1A2AFD56008A5830 /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F545FA4F1A066B6F0057CFC6 /* DockItem.m */; };
 		F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
 		F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261D1A14E45E00B0E836 /* MessageFrameModel.m */; };
 		F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88D19D2AA6000110C07 /* MJIvar.m */; };
 		F5664A311A2AFD56008A5830 /* TOActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FBA1F19EF723A00D85D7F /* TOActivitySafari.m */; };
-		F5664A321A2AFD56008A5830 /* LXActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB76419EE2A7900D85D7F /* LXActivity.m */; };
 		F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
@@ -3768,12 +3762,10 @@
 		F5664CE41A2AFDD5008A5830 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6219F4EDC700D9E696 /* HanyuPinyinOutputFormat.m */; };
 		F5664CE51A2AFDD5008A5830 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCE819C8694B005B887D /* AFHTTPRequestOperationManager.m */; };
 		F5664CE61A2AFDD5008A5830 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
-		F5664CE71A2AFDD5008A5830 /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F545FA4F1A066B6F0057CFC6 /* DockItem.m */; };
 		F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
 		F5664CE91A2AFDD5008A5830 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261D1A14E45E00B0E836 /* MessageFrameModel.m */; };
 		F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88D19D2AA6000110C07 /* MJIvar.m */; };
 		F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FBA1F19EF723A00D85D7F /* TOActivitySafari.m */; };
-		F5664CEC1A2AFDD5008A5830 /* LXActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB76419EE2A7900D85D7F /* LXActivity.m */; };
 		F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F5664CEE1A2AFDD5008A5830 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F5664CEF1A2AFDD5008A5830 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
@@ -5160,8 +5152,6 @@
 		F51BA43B1A444DA2009E5CDF /* tabbar_home_selected_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_home_selected_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA43C1A444DA2009E5CDF /* tabbar_me_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_prompt@2x.png"; sourceTree = "<group>"; };
 		F51BA43D1A444DA2009E5CDF /* tabbar_me_selected_prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_me_selected_prompt@2x.png"; sourceTree = "<group>"; };
-		F51FB76319EE2A7900D85D7F /* LXActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXActivity.h; sourceTree = "<group>"; };
-		F51FB76419EE2A7900D85D7F /* LXActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXActivity.m; sourceTree = "<group>"; };
 		F51FB7F519EE548200D85D7F /* ForwardPublishView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForwardPublishView.h; sourceTree = "<group>"; };
 		F51FB7F619EE548200D85D7F /* ForwardPublishView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForwardPublishView.m; sourceTree = "<group>"; };
 		F51FB9EA19EE948F00D85D7F /* ShareEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareEngine.h; sourceTree = "<group>"; };
@@ -5619,8 +5609,6 @@
 		F53D4E531A4AB62600CA06C8 /* LoginUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginUserModel.h; sourceTree = "<group>"; };
 		F53D4E541A4AB62600CA06C8 /* LoginUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginUserModel.m; sourceTree = "<group>"; };
 		F53DC5871A49192600F5F712 /* weLianAppDis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weLianAppDis.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F545FA4E1A066B6F0057CFC6 /* DockItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockItem.h; sourceTree = "<group>"; };
-		F545FA4F1A066B6F0057CFC6 /* DockItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockItem.m; sourceTree = "<group>"; };
 		F546790B1A17524200D5EFF9 /* NoCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoCommentCell.h; sourceTree = "<group>"; };
 		F546790C1A17524200D5EFF9 /* NoCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoCommentCell.m; sourceTree = "<group>"; };
 		F546790D1A17524200D5EFF9 /* NoCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoCommentCell.xib; sourceTree = "<group>"; };
@@ -7627,10 +7615,6 @@
 				F57F31D91AA71A4E00B8EF72 /* ListItem.m */,
 				F57F31CE1AA71A2300B8EF72 /* POHorizontalList.h */,
 				F57F31CF1AA71A2300B8EF72 /* POHorizontalList.m */,
-				F545FA4E1A066B6F0057CFC6 /* DockItem.h */,
-				F545FA4F1A066B6F0057CFC6 /* DockItem.m */,
-				F51FB76319EE2A7900D85D7F /* LXActivity.h */,
-				F51FB76419EE2A7900D85D7F /* LXActivity.m */,
 				F57F31B81AA6A5F200B8EF72 /* WLActivityView.h */,
 				F57F31B91AA6A5F200B8EF72 /* WLActivityView.m */,
 				F57F31E91AA947F900B8EF72 /* ShareType.plist */,
@@ -12308,7 +12292,6 @@
 				A49C7CF41A70D42700F2AEC5 /* SELineLayout.m in Sources */,
 				A44779E41A7632A60085AE3C /* ResManager.m in Sources */,
 				F55078C61A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
-				A49C7CF51A70D42700F2AEC5 /* DockItem.m in Sources */,
 				A46FAE5E1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */,
 				A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */,
@@ -12326,7 +12309,6 @@
 				A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */,
 				F55078B61A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				A49C7D001A70D42700F2AEC5 /* TOActivitySafari.m in Sources */,
-				A49C7D011A70D42700F2AEC5 /* LXActivity.m in Sources */,
 				A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */,
 				A49C7D031A70D42700F2AEC5 /* CTAssetsGroupViewController.m in Sources */,
 				A49C7D041A70D42700F2AEC5 /* CTAssetsViewCell.m in Sources */,
@@ -12822,7 +12804,6 @@
 				A4C141431A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
 				A44779E31A7632A60085AE3C /* ResManager.m in Sources */,
 				F55078C51A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
-				F53DC3631A49192600F5F712 /* DockItem.m in Sources */,
 				A46FAE5D1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -12840,7 +12821,6 @@
 				F58CA9801A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
 				F55078B51A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */,
-				F53DC3681A49192600F5F712 /* LXActivity.m in Sources */,
 				F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */,
 				F53DC36A1A49192600F5F712 /* CTAssetsGroupViewController.m in Sources */,
 				F53DC36B1A49192600F5F712 /* CTAssetsViewCell.m in Sources */,
@@ -13336,7 +13316,6 @@
 				F5664A2C1A2AFD56008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A44779E11A7632A60085AE3C /* ResManager.m in Sources */,
 				F55078C31A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
-				F5664A2D1A2AFD56008A5830 /* DockItem.m in Sources */,
 				A46FAE5B1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				A4C141531A4BEF5700C9BAB5 /* SETextInput.m in Sources */,
 				A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -13357,7 +13336,6 @@
 				F5664A311A2AFD56008A5830 /* TOActivitySafari.m in Sources */,
 				A4C141681A4BEF5700C9BAB5 /* XHImageViewer.m in Sources */,
 				F59E760F1A4071320028FBAF /* SchoolCompanyDate.m in Sources */,
-				F5664A321A2AFD56008A5830 /* LXActivity.m in Sources */,
 				A48CA6A41A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A4C141321A4BEF5700C9BAB5 /* MultiSelectViewController.m in Sources */,
 				F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */,
@@ -13850,7 +13828,6 @@
 				A4C141421A4BEF5700C9BAB5 /* SELineLayout.m in Sources */,
 				A44779E21A7632A60085AE3C /* ResManager.m in Sources */,
 				F55078C41A7F5BE9009CE4F7 /* JKAssetsViewCell.m in Sources */,
-				F5664CE71A2AFDD5008A5830 /* DockItem.m in Sources */,
 				A46FAE5C1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
@@ -13868,7 +13845,6 @@
 				F58CA97F1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
 				F55078B41A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */,
-				F5664CEC1A2AFDD5008A5830 /* LXActivity.m in Sources */,
 				F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */,
 				F5664CEE1A2AFDD5008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F5664CEF1A2AFDD5008A5830 /* CTAssetsViewCell.m in Sources */,

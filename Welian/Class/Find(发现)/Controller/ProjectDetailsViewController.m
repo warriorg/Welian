@@ -24,9 +24,14 @@
 #import "MessageKeyboardView.h"
 #import "MJRefresh.h"
 //分享
+#import "WLActivityView.h"
 #import "ShareEngine.h"
-#import "LXActivity.h"
 #import "SEImageCache.h"
+#import "ShareFriendsController.h"
+#import "NavViewController.h"
+#import "PublishStatusController.h"
+#import "CardStatuModel.h"
+
 //图片展示
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
@@ -41,7 +46,7 @@
 
 static NSString *noCommentCell = @"NoCommentCell";
 
-@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,LXActivityDelegate,UIGestureRecognizerDelegate>
+@interface ProjectDetailsViewController ()<WLSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 {
     BOOL _isFinish;
 }
@@ -580,72 +585,72 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 #pragma mark - LXActivityDelegate
-- (void)didClickOnImageIndex:(NSString *)imageIndex
-{
-    DLog(@"选择的项目：%@",imageIndex);
-    
-    if ([imageIndex isEqualToString:@"微信好友"]) {
-        [self shareInfoWithType:1];
-    }
-    if ([imageIndex isEqualToString:@"微信朋友圈"]) {
-        [self shareInfoWithType:2];
-    }
-    WEAKSELF
-    if ([imageIndex isEqualToString:@"设置融资信息"]) {
-        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        financingProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
-            [weakSelf updateUI];
-        };
-        [self.navigationController pushViewController:financingProjectVC animated:YES];
-    }
-    if ([imageIndex isEqualToString:@"设置团队成员"]) {
-        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        memberProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
-            [weakSelf updateUI];
-        };
-        [self.navigationController pushViewController:memberProjectVC animated:YES];
-    }
-    if ([imageIndex isEqualToString:@"编辑项目信息"]) {
-        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
-        createProjcetVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
-            weakSelf.projectDetailInfo = projectModel;
-            [weakSelf updateUI];
-        };
-        [self.navigationController pushViewController:createProjcetVC animated:YES];
-    }
-}
+//- (void)didClickOnImageIndex:(NSString *)imageIndex
+//{
+//    DLog(@"选择的项目：%@",imageIndex);
+//    
+//    if ([imageIndex isEqualToString:@"微信好友"]) {
+//        [self shareInfoWithType:1];
+//    }
+//    if ([imageIndex isEqualToString:@"微信朋友圈"]) {
+//        [self shareInfoWithType:2];
+//    }
+//    WEAKSELF
+//    if ([imageIndex isEqualToString:@"设置融资信息"]) {
+//        FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+//        financingProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+//            weakSelf.projectDetailInfo = projectModel;
+//            [weakSelf updateUI];
+//        };
+//        [self.navigationController pushViewController:financingProjectVC animated:YES];
+//    }
+//    if ([imageIndex isEqualToString:@"设置团队成员"]) {
+//        MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+//        memberProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+//            weakSelf.projectDetailInfo = projectModel;
+//            [weakSelf updateUI];
+//        };
+//        [self.navigationController pushViewController:memberProjectVC animated:YES];
+//    }
+//    if ([imageIndex isEqualToString:@"编辑项目信息"]) {
+//        CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+//        createProjcetVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+//            weakSelf.projectDetailInfo = projectModel;
+//            [weakSelf updateUI];
+//        };
+//        [self.navigationController pushViewController:createProjcetVC animated:YES];
+//    }
+//}
 
 //分享
-- (void)shareInfoWithType:(NSInteger)type
-{
-    NSString *desc = [NSString stringWithFormat:@"%@\n%@",_projectDetailInfo.name,_projectDetailInfo.intro];
-    UIImage *shareImage = [UIImage imageNamed:@"discovery_xiangmu"];
-    NSString *link = _projectDetailInfo.shareurl.length == 0 ? @"http://www.welian.com/" : _projectDetailInfo.shareurl;
-    NSString *title = @"";
-    WeiboType wxType = weChat;
-    switch (type) {
-        case 1:
-            title = @"推荐一个好项目";
-            wxType = weChat;
-            break;
-        case 2:
-            title = [NSString stringWithFormat:@"%@ | %@",_projectDetailInfo.name,_projectDetailInfo.intro];
-            wxType = weChatFriend;
-            break;
-        default:
-            break;
-    }
-    
-    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:wxType];
-//    [WLHUDView showHUDWithStr:@"" dim:NO];
-//    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
-//        [WLHUDView hiddenHud];
-//        DLog(@"shareFriendImage---->>>%@",image);
-//        
-//    }];
-}
+//- (void)shareInfoWithType:(NSInteger)type
+//{
+//    NSString *desc = [NSString stringWithFormat:@"%@\n%@",_projectDetailInfo.name,_projectDetailInfo.intro];
+//    UIImage *shareImage = [UIImage imageNamed:@"discovery_xiangmu"];
+//    NSString *link = _projectDetailInfo.shareurl.length == 0 ? @"http://www.welian.com/" : _projectDetailInfo.shareurl;
+//    NSString *title = @"";
+//    WeiboType wxType = weChat;
+//    switch (type) {
+//        case 1:
+//            title = @"推荐一个好项目";
+//            wxType = weChat;
+//            break;
+//        case 2:
+//            title = [NSString stringWithFormat:@"%@ | %@",_projectDetailInfo.name,_projectDetailInfo.intro];
+//            wxType = weChatFriend;
+//            break;
+//        default:
+//            break;
+//    }
+//    
+//    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:wxType];
+////    [WLHUDView showHUDWithStr:@"" dim:NO];
+////    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+////        [WLHUDView hiddenHud];
+////        DLog(@"shareFriendImage---->>>%@",image);
+////        
+////    }];
+//}
 
 #pragma mark - Private
 /**
@@ -653,12 +658,98 @@ static NSString *noCommentCell = @"NoCommentCell";
  */
 - (void)shareBtnClicked
 {
-    NSArray *buttons = [NSArray array];
+    NSArray *buttons = nil;
     if ([LogInUser getCurrentLoginUser].uid.integerValue == _iProjectDetailInfo.user.uid.integerValue) {
-        buttons = @[@"编辑项目信息",@"设置团队成员",@"设置融资信息"];
+        buttons = @[@(ShareTypeProjectInfo),@(ShareTypeProjectMember),@(ShareTypeProjectFinancing)];
     }
-    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:@[@"微信好友",@"微信朋友圈"] withShareButtonImagesName:@[@"home_repost_wechat",@"home_repost_friendcirle"]];
-    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+    CardStatuModel *newCardM = [[CardStatuModel alloc] init];
+    newCardM.cid = self.projectDetailInfo.pid;
+    newCardM.type = @(10);
+    newCardM.title = self.projectDetailInfo.name;
+    newCardM.intro = self.projectDetailInfo.intro;
+    newCardM.url = self.projectDetailInfo.shareurl;
+    
+    WEAKSELF
+    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:buttons andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
+    wlActivity.wlShareBlock = ^(ShareType type){
+        switch (type) {
+            case ShareTypeWLFriend:
+            {
+                ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+                shareFVC.cardM = newCardM;
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+                [self presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+            }
+                break;
+            case ShareTypeWLCircle:
+            {
+                PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+                publishShareVC.statusCard = newCardM;
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
+                [self presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+                
+            }
+                break;
+            case ShareTypeWeixinFriend:
+            {
+                NSString *desc = [NSString stringWithFormat:@"%@\n%@",_projectDetailInfo.name,_projectDetailInfo.intro];
+                UIImage *shareImage = [UIImage imageNamed:@"discovery_xiangmu"];
+                NSString *link = _projectDetailInfo.shareurl.length == 0 ? @"http://www.welian.com/" : _projectDetailInfo.shareurl;
+                
+                [[ShareEngine sharedShareEngine] sendWeChatMessage:@"推荐一个好项目" andDescription:desc WithUrl:link andImage:shareImage WithScene:weChat];
+            }
+                break;
+            case ShareTypeWeixinCircle:
+            {
+                NSString *desc = [NSString stringWithFormat:@"%@\n%@",_projectDetailInfo.name,_projectDetailInfo.intro];
+                UIImage *shareImage = [UIImage imageNamed:@"discovery_xiangmu"];
+                NSString *link = _projectDetailInfo.shareurl.length == 0 ? @"http://www.welian.com/" : _projectDetailInfo.shareurl;
+                NSString *title = [NSString stringWithFormat:@"%@ | %@",_projectDetailInfo.name,_projectDetailInfo.intro];
+                [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:weChatFriend];
+            }
+                break;
+            case ShareTypeProjectInfo:
+            {
+                CreateProjectController *createProjcetVC = [[CreateProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+                createProjcetVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+                    weakSelf.projectDetailInfo = projectModel;
+                    [weakSelf updateUI];
+                };
+                [weakSelf.navigationController pushViewController:createProjcetVC animated:YES];
+            }
+                break;
+            case ShareTypeProjectMember:
+            {
+                MemberProjectController *memberProjectVC = [[MemberProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+                memberProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+                    weakSelf.projectDetailInfo = projectModel;
+                    [weakSelf updateUI];
+                };
+                [weakSelf.navigationController pushViewController:memberProjectVC animated:YES];
+            }
+            case ShareTypeProjectFinancing:
+            {
+                FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];
+                financingProjectVC.projectDataBlock = ^(ProjectDetailInfo *projectModel){
+                    weakSelf.projectDetailInfo = projectModel;
+                    [weakSelf updateUI];
+                };
+                [weakSelf.navigationController pushViewController:financingProjectVC animated:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    };
+    [wlActivity show];
+
+//    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:@[@"微信好友",@"微信朋友圈"] withShareButtonImagesName:@[@"home_repost_wechat",@"home_repost_friendcirle"]];
+//    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 /**
@@ -1006,8 +1097,6 @@ static NSString *noCommentCell = @"NoCommentCell";
             [self.navigationController pushViewController:projectUserListVC animated:YES];
         }
     }else{
-        //点击点赞的人，进入
-//        IBaseUserM *user = _iProjectDetailInfo.zanusers[indexPath.row];
         //系统联系人
         UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];

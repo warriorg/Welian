@@ -9,6 +9,7 @@
 #import "ShareFriendsController.h"
 #import "FriendCell.h"
 #import "UIImage+ImageEffects.h"
+#import "MJExtension.h"
 
 @interface ShareFriendsController ()<UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -142,6 +143,35 @@ static NSString *fridcellid = @"fridcellid";
     }
     
     return fcell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.cardM) return;
+    
+    IBaseUserM *modeIM = nil;
+    if (tableView == self.tableView) {
+        NSDictionary *usersDic = self.allArray[indexPath.section];
+        NSArray *modear = usersDic[@"userF"];
+        modeIM = modear[indexPath.row];
+    }else{
+        modeIM = self.filterArray[indexPath.row];
+    }
+    UIAlertView *alertV = [UIAlertView bk_alertViewWithTitle:@"确定发送给：" message:modeIM.name];
+    [alertV bk_addButtonWithTitle:@"取消" handler:nil];
+    WEAKSELF
+    [alertV bk_addButtonWithTitle:@"确定" handler:^{
+        NSDictionary *cardDic = [weakSelf.cardM keyValues];
+       NSDictionary *param = @{@"type":@(51),@"touser":modeIM.uid,@"card":cardDic};
+        [WLHttpTool sendMessageParameterDic:param success:^(id JSON) {
+                
+        } fail:^(NSError *error) {
+            
+        }];
+    }];
+    [alertV show];
+    [self.view.findFirstResponder resignFirstResponder];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

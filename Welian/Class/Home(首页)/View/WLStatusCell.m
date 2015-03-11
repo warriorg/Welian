@@ -17,7 +17,6 @@
 #import "WLCellHead.h"
 #import "FeedAndZanView.h"
 #import "CommentCellView.h"
-#import "WLStatusDock.h"
 #import "CommentInfoController.h"
 #import "MJExtension.h"
 #import "M80AttributedLabel.h"

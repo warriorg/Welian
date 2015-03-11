@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WLStatusM.h"
+#import "CardStatuModel.h"
 
 #define Time  0.25
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
@@ -23,7 +23,8 @@ typedef enum {
 
 @interface PublishStatusController : UIViewController
 
-@property (nonatomic, strong) WLStatusM *status;
+@property (nonatomic, strong) CardStatuModel *statusCard;
+
 
 - (instancetype)initWithType:(PublishType)publishType;
 

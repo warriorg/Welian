@@ -7,7 +7,10 @@
 //
 
 #import "BasicTableViewController.h"
+#import "CardStatuModel.h"
 
 @interface ShareFriendsController : BasicTableViewController
+
+@property (nonatomic, strong) CardStatuModel *cardM;
 
 @end
