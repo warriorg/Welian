@@ -35,6 +35,11 @@
 @dynamic longitude;
 @dynamic sender;
 @dynamic showTimeStamp;
+@dynamic cardId;
+@dynamic cardTitle;
+@dynamic cardType;
+@dynamic cardIntro;
+@dynamic cardUrl;
 @dynamic rsMyFriendUser;
 
 //创建新的聊天记录
@@ -103,6 +108,69 @@
 //    [friendUser updateLastChatTime:chatMsg.timestamp];
     //聊天状态发送改变
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    
+    return chatMsg;
+}
+
+//创建新的卡片聊天记录
++ (ChatMessage *)createChatMessageWithCard:(CardStatuModel *)cardModel FriendUser:(MyFriendUser *)friendUser
+{
+    //是否显示时间戳
+    ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
+    
+    ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
+    chatMsg.msgId = @([friendUser getMaxChatMessageId].integerValue + 1);
+    
+    switch (cardModel.type.integerValue) {
+        case 3://活动
+            chatMsg.message = @"[活动]";
+            break;
+        case 10://项目
+            chatMsg.message = @"[项目]";
+            break;
+        case 11://网页
+            chatMsg.message = @"[网页]";
+            break;
+        default:
+            break;
+    }
+    chatMsg.messageType = @(WLBubbleMessageMediaTypeCard);
+    chatMsg.timestamp = [NSDate date];
+    chatMsg.avatorUrl = friendUser.rsLogInUser.avatar;
+    chatMsg.isRead = @(1);
+    chatMsg.sendStatus = @(0);
+    chatMsg.bubbleMessageType = @(WLBubbleMessageTypeSending);
+    chatMsg.videoPath = @"";
+    chatMsg.sender = friendUser.rsLogInUser.name;
+    //    chatMsg.rsMyFriendUser = friendUser;
+    [friendUser addRsChatMessagesObject:chatMsg];
+    friendUser.unReadChatMsg = @(0);
+    
+    //是否显示时间戳
+    if (lastChatMsg) {
+        double min = [chatMsg.timestamp minutesLaterThan:lastChatMsg.timestamp];
+        if (min > 2) {
+            chatMsg.showTimeStamp = @(YES);
+        }else{
+            chatMsg.showTimeStamp = @(NO);
+        }
+    }else{
+        chatMsg.showTimeStamp = @(YES);
+    }
+    
+    //更新聊天好友
+    friendUser.isChatNow = @(YES);
+    //更新好友的聊天时间
+    friendUser.lastChatTime = chatMsg.timestamp;
+    //    [MOC save];
+    [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    
+    //更新好友的聊天时间
+    //    [friendUser updateLastChatTime:chatMsg.timestamp];
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    //调用获取收到新消息，刷新正在聊天的列表
+    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
     
     return chatMsg;
 }
@@ -180,23 +248,60 @@
             chatMsg.originPhotoUrl = msg;
             chatMsg.photoImage = nil;
             break;
-        case WLBubbleMessageMediaTypeVoice:
-            chatMsg.message = @"[语音]";
-            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
-            break;
-        case WLBubbleMessageMediaTypeVideo:
-            chatMsg.message = @"[视频]";
-            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
-            break;
-        case WLBubbleMessageMediaTypeEmotion:
-            chatMsg.message = @"[动态表情]";
-            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
-            break;
-        case WLBubbleMessageMediaTypeLocalPosition:
-            chatMsg.message = @"[视频]";
-            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+//        case WLBubbleMessageMediaTypeVoice:
+//            chatMsg.message = @"[语音]";
+//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+//            break;
+//        case WLBubbleMessageMediaTypeVideo:
+//            chatMsg.message = @"[视频]";
+//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+//            break;
+//        case WLBubbleMessageMediaTypeEmotion:
+//            chatMsg.message = @"[动态表情]";
+//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+//            break;
+//        case WLBubbleMessageMediaTypeLocalPosition:
+//            chatMsg.message = @"[视频]";
+//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+//            break;
+        case WLBubbleMessageMediaTypeCard:
+            //卡片 //3 活动，10项目，11 网页
+        {
+            NSDictionary *card = dict[@"card"];
+            NSNumber *cid = card[@"cid"];
+            NSString *title = card[@"title"];
+            NSString *intro = card[@"intro"];
+            NSString *url = card[@"url"];
+            NSInteger cardType = [card[@"type"] integerValue];
+            
+            chatMsg.cardId = cid;
+            chatMsg.cardType = @(cardType);
+            chatMsg.cardTitle = title;
+            chatMsg.cardIntro = intro;
+            chatMsg.cardUrl = url;
+            
+            switch (cardType) {
+                case 3://活动
+                    chatMsg.message = @"[活动]";
+                    break;
+                case 10://项目
+                    chatMsg.message = @"[项目]";
+                    break;
+                case 11://网页
+                    chatMsg.message = @"[网页]";
+                    break;
+                default:
+                    chatMsg.message = @"对方刚给你发了一条消息，您当前版本无法查看，快去升级吧.";
+                    break;
+            }
+        }
             break;
         default:
+        {
+            //其他未知类型
+            chatMsg.message = msg.length > 0 ? msg : @"对方刚给你发了一条消息，您当前版本无法查看，快去升级吧.";
+//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
+        }
             break;
     }
     chatMsg.timestamp = [created dateFromNormalString];

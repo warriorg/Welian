@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "SECompatibility.h"
+//#import "SECompatibility.h"
 
-typedef void(^SEImageDownloadCompletionBlock)(NSImage *image, NSError *error);
+typedef void(^SEImageDownloadCompletionBlock)(UIImage *image, NSError *error);
 
 @interface SEImageCache : NSObject
 
 + (SEImageCache *)sharedInstance;
 
-- (NSImage *)imageForURL:(NSURL *)imageURL completionBlock:(SEImageDownloadCompletionBlock)block;
-- (NSImage *)imageForURL:(NSURL *)imageURL defaultImage:(NSImage *)defaultImage completionBlock:(SEImageDownloadCompletionBlock)block;
+- (UIImage *)imageForURL:(NSURL *)imageURL completionBlock:(SEImageDownloadCompletionBlock)block;
+- (UIImage *)imageForURL:(NSURL *)imageURL defaultImage:(UIImage *)defaultImage completionBlock:(SEImageDownloadCompletionBlock)block;
 
 @end

@@ -19,6 +19,8 @@
 #import "FLAnimatedImageView.h"
 #import "FLAnimatedImage.h"
 
+#import "WLCellCardView.h"
+
 // Model
 #import "WLMessage.h"
 
@@ -41,6 +43,9 @@
 //自定义显示文本消息控件，子类化的原因有两个，第一个是屏蔽Menu的显示。第二是传递手势到下一层，因为文本需要双击的手势
 //@property (nonatomic, weak, readonly) SETextView *displayTextView;
 @property (nonatomic, weak, readonly) MLEmojiLabel *displayLabel;
+
+//用于显示卡片类型的控件
+@property (nonatomic, weak, readonly) WLCellCardView *displayCardView;
 
 //用于显示气泡的ImageView控件
 @property (nonatomic, weak, readonly) UIImageView *bubbleImageView;

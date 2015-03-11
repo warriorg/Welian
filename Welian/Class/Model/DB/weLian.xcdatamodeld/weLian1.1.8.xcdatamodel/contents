@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ActivityInfo" representedClassName="ActivityInfo" syncable="YES">
         <attribute name="activeid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="activeType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -43,6 +43,11 @@
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
         <attribute name="avatorUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bubbleMessageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardIntro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cardTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cardType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="geolocations" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -226,8 +231,9 @@
         <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsSchools" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <elements>
+        <element name="ActivityInfo" positionX="-1350" positionY="-387" width="128" height="328"/>
         <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
-        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="390"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="465"/>
         <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
         <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
         <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
@@ -245,6 +251,5 @@
         <element name="ProjectUser" positionX="-1359" positionY="-396" width="128" height="58"/>
         <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
         <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
-        <element name="ActivityInfo" positionX="-1350" positionY="-387" width="128" height="328"/>
     </elements>
 </model>

@@ -21,10 +21,7 @@
 
 - (void)addUIView
 {
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = 4.0;
-    self.layer.borderWidth = 0.6;
-    self.layer.borderColor = [WLRGB(220, 220, 220) CGColor];
+    self.isHidLine = NO;
     
     _iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
 //    [_iconImage setBackgroundColor:[UIColor lightGrayColor]];
@@ -49,6 +46,19 @@
     _tapBut.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     _titLabel.frame = CGRectMake(55, 8, frame.size.width-55-8, 21);
     _detailLabel.frame = CGRectMake(55, CGRectGetMaxY(_titLabel.frame), frame.size.width-55-8, 21);
+}
+
+- (void)setIsHidLine:(BOOL)isHidLine
+{
+    _isHidLine = isHidLine;
+    if (!_isHidLine) {
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 4.0;
+        self.layer.borderWidth = 0.6;
+        self.layer.borderColor = [WLRGB(220, 220, 220) CGColor];
+    }else{
+        self.layer.borderWidth = 0.f;
+    }
 }
 
 - (void)setCardM:(CardStatuModel *)cardM

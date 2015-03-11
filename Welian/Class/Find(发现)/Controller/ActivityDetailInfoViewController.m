@@ -84,13 +84,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+//    [self scrollViewDidScroll:_tableView];
     
 //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 //    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1]];
 //    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
 //                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:21], NSFontAttributeName, nil]];
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrollViewDidScroll:_tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -288,7 +294,9 @@
             cell.layer.borderWidths = @"{0.6,0,0,0}";
             
             cell.textLabel.text = _activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"";
-            cell.detailTextLabel.text = _activityInfo.intro;
+//            cell.detailTextLabel.text = _activityInfo.intro;
+//            cell.detailTextView.text = [_activityInfo displayActivityInfo];
+            cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
             WEAKSELF
             [cell setBlock:^(void){
                 [weakSelf showActivityDetailInfo];
@@ -375,7 +383,7 @@
                 return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited]];
                 break;
             case 3:
-                return [ActivityInfoViewCell configureWithTitle:_activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"" Msg:_activityInfo.intro];
+                return [ActivityInfoViewCell configureWithTitle:_activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
             default:
                 return 60.f;
                 break;
@@ -391,9 +399,9 @@
 //检测分享按钮是否显示
 - (void)checkShareBtn
 {
-    //添加分享按钮
+    //添加分享按钮 navbar_share
     if(_activityInfo.shareurl.length > 0){
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_share"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
     }
 }
 

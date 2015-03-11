@@ -43,11 +43,18 @@
 
 @property (nonatomic, copy) NSString *sended;
 
+@property (nonatomic, copy) NSNumber * cardId;//卡片标题
+@property (nonatomic, copy) NSNumber * cardType;//卡片类型 //3 活动，10项目，11 网页
+@property (nonatomic, copy) NSString * cardTitle;//卡片标题
+@property (nonatomic, copy) NSString * cardIntro;//卡片详情
+@property (nonatomic, copy) NSString * cardUrl;//卡片链接
+
 @property (nonatomic, assign) WLBubbleMessageMediaType messageMediaType;
 
 @property (nonatomic, assign) WLBubbleMessageType bubbleMessageType;
 
 @property (nonatomic) BOOL isRead;
+@property (nonatomic) BOOL showTimeStamp;
 
 
 /**
@@ -62,6 +69,24 @@
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
                    timestamp:(NSDate *)timestamp;
+
+/**
+ *  初始卡片消息
+ *
+ *  @param text   发送的目标文本
+ *  @param sender 发送者的名称
+ *  @param date   发送的时间
+ *
+ *  @return 返回Message model 对象
+ */
+- (instancetype)initWithCard:(NSString *)text
+                      sender:(NSString *)sender
+                   timestamp:(NSDate *)timestamp
+                      cardId:(NSNumber *)cardId
+                    cardType:(NSNumber *)cardType
+                   cardTitle:(NSString *)cardTitle
+                   cardIntro:(NSString *)cardIntro
+                     cardUrl:(NSString *)cardUrl;
 
 /**
  *  特殊消息消息

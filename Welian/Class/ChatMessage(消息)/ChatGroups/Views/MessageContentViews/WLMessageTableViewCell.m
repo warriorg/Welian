@@ -420,6 +420,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     for (UIGestureRecognizer *gesTureRecognizer in self.messageBubbleView.bubblePhotoImageView.gestureRecognizers) {
         [self.messageBubbleView.bubblePhotoImageView removeGestureRecognizer:gesTureRecognizer];
     }
+    for (UIGestureRecognizer *gesTureRecognizer in self.messageBubbleView.displayCardView.gestureRecognizers) {
+        [self.messageBubbleView.displayCardView removeGestureRecognizer:gesTureRecognizer];
+    }
     //特殊消息
     if (currentMediaType == WLBubbleMessageSpecialTypeText) {
         _messageSpecialView.hidden = NO;
@@ -437,10 +440,12 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
                 [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:tapGestureRecognizer];
                 break;
             }
+            case WLBubbleMessageMediaTypeCard:
             case WLBubbleMessageMediaTypeActivity://活动
             case WLBubbleMessageMediaTypeText:
-            case WLBubbleMessageMediaTypeVoice: {
-                self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
+            case WLBubbleMessageMediaTypeVoice:
+            {
+//                self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
                 //            break;
             }
             case WLBubbleMessageMediaTypeEmotion: {
@@ -452,6 +457,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
                 }
                 tapGestureRecognizer.numberOfTapsRequired = (currentMediaType == WLBubbleMessageMediaTypeText ? 2 : 1);
                 [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
+                [self.messageBubbleView.displayCardView addGestureRecognizer:tapGestureRecognizer];
                 break;
             }
             default:
@@ -509,6 +515,10 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
     if ([[NSString stringWithFormat:@"%@",[touch.view class]] isEqualToString:@"MLEmojiLabel"]) {
         return NO;
     }
+    //卡片
+    if ([[NSString stringWithFormat:@"%@",[touch.view class]] isEqualToString:@"WLCellCardView"]) {
+        return NO;
+    }
     
     return YES;
 }
@@ -535,7 +545,6 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
 - (void)longPressGestureRecognizerHandle:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
     if (longPressGestureRecognizer.state != UIGestureRecognizerStateBegan || ![self becomeFirstResponder])
         return;
-    
     if (self.messageBubbleView.message.messageMediaType == WLBubbleMessageMediaTypeText) {
         UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"copy", @"MessageDisplayKitString", @"复制文本消息") action:@selector(copyed:)];
         //    UIMenuItem *transpond = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
@@ -557,6 +566,38 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
                                                      name:UIMenuControllerWillShowMenuNotification
                                                    object:nil];
         [menu setMenuVisible:YES animated:YES];
+    }else if(self.messageBubbleView.message.messageMediaType == WLBubbleMessageMediaTypeCard){
+        UIMenuItem *menuItem = nil;
+        switch (self.messageBubbleView.message.cardType.integerValue) {
+            case WLBubbleMessageCardTypeActivity:
+            case WLBubbleMessageCardTypeProject:
+            case WLBubbleMessageCardTypeWeb:
+            {
+                menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
+            }
+                break;
+            default:
+            {
+                menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"copy", @"MessageDisplayKitString", @"复制文本消息") action:@selector(copyed:)];
+            }
+                break;
+        }
+        
+        if (menuItem) {
+            UIMenuController *menu = [UIMenuController sharedMenuController];
+            [menu setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
+            
+            CGRect targetRect = [self convertRect:[self.messageBubbleView bubbleFrame]
+                                         fromView:self.messageBubbleView];
+            
+            [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(handleMenuWillShowNotification:)
+                                                         name:UIMenuControllerWillShowMenuNotification
+                                                       object:nil];
+            [menu setMenuVisible:YES animated:YES];
+        }
     }
 }
 
@@ -602,6 +643,9 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
 
 - (void)transpond:(id)sender {
     DLog(@"Cell was transpond");
+    if([self.delegate respondsToSelector:@selector(didTranspondOnMessage:atIndexPath:)]){
+        [self.delegate didTranspondOnMessage:self.messageBubbleView.message atIndexPath:self.indexPath];
+    }
 }
 
 - (void)favorites:(id)sender {

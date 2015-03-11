@@ -32,4 +32,8 @@
 #import "IActivityInfo.h"
 #import "IActivityTicket.h"
 
+
+#pragma mark - Model
+#import "CardStatuModel.h"
+
 #endif

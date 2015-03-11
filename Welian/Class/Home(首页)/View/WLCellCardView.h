@@ -12,6 +12,7 @@
 @interface WLCellCardView : UIView
 
 @property (nonatomic, strong) CardStatuModel *cardM;
+@property (nonatomic, assign) BOOL isHidLine;
 
 @property (nonatomic, strong) UIImageView *iconImage;
 @property (nonatomic, strong) UILabel *titLabel;

@@ -15,7 +15,14 @@ typedef NS_ENUM(NSInteger, WLBubbleMessageType) {
 };
 
 typedef NS_ENUM(NSUInteger, WLBubbleImageViewStyle) {
-    WLBubbleImageViewStyleWeChat = 0
+    WLBubbleImageViewStyleWeChat = 0,
+    WLBubbleImageViewStyleWeChatPre
+};
+
+typedef NS_ENUM(NSUInteger, WLBubbleMessageCardType) {////3 活动，10项目，11 网页
+    WLBubbleMessageCardTypeActivity = 3,
+    WLBubbleMessageCardTypeProject = 10,
+    WLBubbleMessageCardTypeWeb = 11,
 };
 
 typedef NS_ENUM(NSInteger, WLBubbleMessageMediaType) {
@@ -27,6 +34,7 @@ typedef NS_ENUM(NSInteger, WLBubbleMessageMediaType) {
     WLBubbleMessageMediaTypeLocalPosition = 5,
     
     WLBubbleMessageMediaTypeActivity = 50,//系统发送的活动通知消息，展示方式和普通问题展示一样
+    WLBubbleMessageMediaTypeCard = 51,//卡片类型  //3 活动，10项目，11 网页
     WLBubbleMessageSpecialTypeText = 100,   //特殊消息提醒类型
 };
 

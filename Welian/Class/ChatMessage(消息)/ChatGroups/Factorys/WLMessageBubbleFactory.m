@@ -40,15 +40,18 @@
     
     switch (mediaType) {
         case WLBubbleMessageMediaTypePhoto:
-        case WLBubbleMessageMediaTypeVideo:
-            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
-            break;
+//        case WLBubbleMessageMediaTypeVideo:
         case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
-        case WLBubbleMessageMediaTypeVoice:
+//        case WLBubbleMessageMediaTypeVoice:
             messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
+        case WLBubbleMessageMediaTypeCard://卡片
+            //卡片
+            messageTypeString = [messageTypeString stringByAppendingString:@"_Card"];
+            break;
         default:
+            messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
     }
     
@@ -64,7 +67,9 @@
         case WLBubbleImageViewStyleWeChat:
             // 类似微信的
 //            edgeInsets = UIEdgeInsetsMake(30, 28, 85, 28);
-            edgeInsets = UIEdgeInsetsMake(20, 15, 85, 15);
+            edgeInsets = UIEdgeInsetsMake(30, 10, 85, 10);
+            //尖尖的
+//            edgeInsets = UIEdgeInsetsMake(20, 15, 85, 15);
             break;
         default:
             break;

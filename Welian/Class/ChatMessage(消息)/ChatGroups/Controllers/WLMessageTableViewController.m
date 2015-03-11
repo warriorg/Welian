@@ -377,19 +377,24 @@ static CGPoint  delayOffset = {0.0};
                                           forKeyPath:@"contentSize"
                                              options:NSKeyValueObservingOptionNew
                                              context:nil];
+    [self.messageInputView.inputTextView setEditable:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     // 取消输入框
-    [self.messageInputView.inputTextView resignFirstResponder];
-    [self setEditing:NO animated:YES];
+//    [self.messageInputView.inputTextView resignFirstResponder];
+//    [self setEditing:NO animated:YES];
+    if (self.textViewInputViewType != WLInputViewTypeNormal) {
+        [self layoutOtherMenuViewHiden:YES];
+    }
     
     // remove键盘通知或者手势
     [self.messageTableView disSetupPanGestureControlKeyboardHide:self.allowsPanToDismissKeyboard];
     
     // remove KVO
     [self.messageInputView.inputTextView removeObserver:self forKeyPath:@"contentSize"];
+    [self.messageInputView.inputTextView setEditable:NO];
 }
 
 //初始化消息页面布局
@@ -397,6 +402,10 @@ static CGPoint  delayOffset = {0.0};
     //tableview头部距离问题
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
     //初始化TableView
@@ -713,9 +722,10 @@ static CGPoint  delayOffset = {0.0};
     }
     
     messageTableViewCell.indexPath = indexPath;
-    messageTableViewCell.displayTimestamp = displayTimestamp;
-    messageTableViewCell.message = message;
-//    [messageTableViewCell configureCellWithMessage:message displaysTimestamp:displayTimestamp];
+//    messageTableViewCell.displayTimestamp = displayTimestamp;
+//    messageTableViewCell.message = message;
+//    displayTimestamp = message.showTimeStamp;
+    [messageTableViewCell configureCellWithMessage:message displaysTimestamp:displayTimestamp];
     [messageTableViewCell setBackgroundColor:tableView.backgroundColor];
     
     if ([self.delegate respondsToSelector:@selector(configureCell:atIndexPath:)]) {
@@ -744,7 +754,7 @@ static CGPoint  delayOffset = {0.0};
     if ([self.delegate respondsToSelector:@selector(shouldDisplayTimestampForRowAtIndexPath:)]) {
         displayTimestamp = [self.delegate shouldDisplayTimestampForRowAtIndexPath:indexPath];
     }
-    
+//    displayTimestamp = message.showTimeStamp;
     cellHeight = [WLMessageTableViewCell calculateCellHeightWithMessage:message displaysTimestamp:displayTimestamp];
     
     return cellHeight;
@@ -773,8 +783,8 @@ static CGPoint  delayOffset = {0.0};
     UIEdgeInsets insets = UIEdgeInsetsZero;
     
     if ([self respondsToSelector:@selector(topLayoutGuide)]) {
-        insets.top = 44;
-//        insets.top = 20;
+//        insets.top = 64;
+        insets.top = self.topLayoutGuide.length;
     }
     
     insets.bottom = bottom;
@@ -982,7 +992,8 @@ static CGPoint  delayOffset = {0.0};
     if ([self.delegate respondsToSelector:@selector(shouldLoadMoreMessagesScrollToTop)]) {
         BOOL shouldLoadMoreMessages = [self.delegate shouldLoadMoreMessagesScrollToTop];
         if (shouldLoadMoreMessages) {
-            if (scrollView.contentOffset.y >=0 && scrollView.contentOffset.y <= 44) {
+//            if (scrollView.contentOffset.y >=0 && scrollView.contentOffset.y <= 44) {
+            if (scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y <= 44){
                 if (!self.loadingMoreMessage) {
                     if ([self.delegate respondsToSelector:@selector(loadMoreMessagesScrollTotop)]) {
                         [self.delegate loadMoreMessagesScrollTotop];

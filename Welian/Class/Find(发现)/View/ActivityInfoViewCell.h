@@ -13,6 +13,7 @@ typedef void(^ActivityDetailInfoBlock)(void);
 @interface ActivityInfoViewCell : UITableViewCell
 
 @property (strong,nonatomic) ActivityDetailInfoBlock block;
+@property (assign,nonatomic) UITextView *detailTextView;
 
 
 //返回cell的高度

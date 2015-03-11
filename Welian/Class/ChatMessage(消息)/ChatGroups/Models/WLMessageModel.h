@@ -48,11 +48,19 @@
 - (NSString *)sender;
 - (NSString *)uid;
 
+- (NSNumber *)cardId;
+- (NSNumber *)cardType;
+- (NSString *)cardTitle;
+- (NSString *)cardIntro;
+- (NSString *)cardUrl;
+
 - (NSDate *)timestamp;
 - (void)setTimestamp:(NSDate *)timestamp;
 
 - (BOOL)isRead;
 - (void)setIsRead:(BOOL)isRead;
+- (BOOL)showTimeStamp;
+- (void)setShowTimeStamp:(BOOL)showTimeStamp;
 - (NSString *)sended;
 - (void)setSended:(NSString *)sended;
 

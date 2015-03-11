@@ -26,6 +26,40 @@
 }
 
 /**
+ *  初始卡片消息
+ *
+ *  @param text   发送的目标文本
+ *  @param sender 发送者的名称
+ *  @param date   发送的时间
+ *
+ *  @return 返回Message model 对象
+ */
+- (instancetype)initWithCard:(NSString *)text
+                      sender:(NSString *)sender
+                   timestamp:(NSDate *)timestamp
+                      cardId:(NSNumber *)cardId
+                    cardType:(NSNumber *)cardType
+                   cardTitle:(NSString *)cardTitle
+                   cardIntro:(NSString *)cardIntro
+                     cardUrl:(NSString *)cardUrl
+{
+    self = [super init];
+    if (self) {
+        self.text = text;
+        
+        self.sender = sender;
+        self.timestamp = timestamp;
+        self.cardId = cardId;
+        self.cardType = @(3);
+        self.cardTitle = cardTitle;
+        self.cardIntro = cardIntro;
+        self.cardUrl = cardUrl;
+        self.messageMediaType = WLBubbleMessageMediaTypeCard;
+    }
+    return self;
+}
+
+/**
  *  特殊消息消息
  *
  *  @param text   发送的目标文本
@@ -227,6 +261,13 @@
     _sended = nil;
     
     _timestamp = nil;
+    
+    
+    _cardId = nil;
+    _cardType = nil;
+    _cardTitle = nil;
+    _cardIntro = nil;
+    _cardUrl = nil;
 }
 
 #pragma mark - NSCoding
@@ -262,6 +303,13 @@
         _uid = [aDecoder decodeObjectForKey:@"uid"];
         _sended = [aDecoder decodeObjectForKey:@"sended"];
         _timestamp = [aDecoder decodeObjectForKey:@"timestamp"];
+        
+        //卡片
+        _cardId = [aDecoder decodeObjectForKey:@"cardId"];
+        _cardType = [aDecoder decodeObjectForKey:@"cardType"];
+        _cardTitle = [aDecoder decodeObjectForKey:@"cardTitle"];
+        _cardIntro = [aDecoder decodeObjectForKey:@"cardIntro"];
+        _cardUrl = [aDecoder decodeObjectForKey:@"cardUrl"];
     }
     return self;
 }
@@ -292,6 +340,12 @@
     [aCoder encodeObject:self.uid forKey:@"uid"];
     [aCoder encodeObject:self.sended forKey:@"sended"];
     [aCoder encodeObject:self.timestamp forKey:@"timestamp"];
+    
+    [aCoder encodeObject:self.cardId forKey:@"cardId"];
+    [aCoder encodeObject:self.cardType forKey:@"cardType"];
+    [aCoder encodeObject:self.cardTitle forKey:@"cardTitle"];
+    [aCoder encodeObject:self.cardIntro forKey:@"cardIntro"];
+    [aCoder encodeObject:self.cardUrl forKey:@"cardUrl"];
 }
 
 #pragma mark - NSCopying
