@@ -37,6 +37,13 @@
 
 #import "WeixinActivity.h"
 
+#import "NavViewController.h"
+#import "PublishStatusController.h"
+#import "ShareFriendsController.h"
+
+#import "WLActivityView.h"
+#import "ShareEngine.h"
+
 /* Detect if we're running iOS 7.0 or higher (With the new minimal UI) */
 #define MINIMAL_UI      ([[UIViewController class] instancesRespondToSelector:@selector(edgesForExtendedLayout)])
 /* Detect if we're running iOS 8.0 (With the new device rotation system) */
@@ -766,6 +773,10 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
     //see if we can set the proper page title at this point
     if (self.showPageTitles)
         self.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    
+    if (self.title.length > 0 && self.showRightShareBtn) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -773,6 +784,69 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
     self.loadingBarView.alpha = 0.0f;
     [self handleLoadRequestCompletion];
     [self refreshButtonsState];
+}
+
+#pragma mark - 分享
+- (void)shareBtnClicked
+{
+    WLActivityView  *shareView = [[WLActivityView alloc] initWithOneSectionArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)] andTwoArray:nil];
+    [shareView show];
+    CardStatuModel *newCardM = [[CardStatuModel alloc] init];
+    newCardM.cid = @(0);
+    newCardM.type = @(11);//网页类型
+    newCardM.url = self.url.relativeString;
+    newCardM.title = self.title;
+    NSString *bodyStr = [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerText"];
+    newCardM.intro = bodyStr.length > 50 ? [bodyStr substringToIndex:50] : bodyStr;
+    
+    //分享回调
+    WEAKSELF
+    [shareView setWlShareBlock:^(ShareType duration){
+        switch (duration) {
+            case ShareTypeWLFriend://微链好友
+            {
+                ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+                shareFVC.cardM = newCardM;
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+                [self presentViewController:navShareFVC animated:YES completion:nil];
+                //回调发送成功
+                [shareFVC setShareSuccessBlock:^(void){
+                    [WLHUDView showSuccessHUD:@"分享成功！"];
+                }];
+            }
+                break;
+            case ShareTypeWLCircle://微链创业圈
+            {
+                PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+                publishShareVC.statusCard = newCardM;
+                
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
+                [self presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+            }
+                break;
+            case ShareTypeWeixinFriend://微信好友
+                [weakSelf shareToWX:weChat card:newCardM];
+                break;
+            case ShareTypeWeixinCircle://微信朋友圈
+                [weakSelf shareToWX:weChatFriend card:newCardM];
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+//分享到微信和微信朋友圈
+- (void)shareToWX:(WeiboType)type card:(CardStatuModel *)card
+{
+    UIImage *image = [UIImage imageNamed:@"home_repost_link"];
+    NSString *title = card.title;
+    NSString *desc = card.intro;
+    NSString *link = card.url;
+    //分享
+    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
 }
 
 #pragma mark -

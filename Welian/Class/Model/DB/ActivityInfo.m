@@ -262,11 +262,9 @@
 - (NSString *)displayActivityInfo
 {
     //适应网页内容
-    NSString *text = self.intro;
-    
-    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[text dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    
-    return attrStr.string.length > 250 ? [attrStr.string substringToIndex:300] : attrStr.string;
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[self.intro dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    NSString *text = attrStr.string;
+    return text.length > 250 ? [text substringToIndex:250] : text;
 }
 
 @end

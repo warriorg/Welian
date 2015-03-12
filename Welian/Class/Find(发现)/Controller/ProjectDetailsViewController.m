@@ -663,11 +663,11 @@ static NSString *noCommentCell = @"NoCommentCell";
         buttons = @[@(ShareTypeProjectInfo),@(ShareTypeProjectMember),@(ShareTypeProjectFinancing)];
     }
     CardStatuModel *newCardM = [[CardStatuModel alloc] init];
-    newCardM.cid = self.projectDetailInfo.pid;
+    newCardM.cid = _projectDetailInfo.pid;
     newCardM.type = @(10);
-    newCardM.title = self.projectDetailInfo.name;
-    newCardM.intro = self.projectDetailInfo.intro;
-    newCardM.url = self.projectDetailInfo.shareurl;
+    newCardM.title = _projectDetailInfo.name;
+    newCardM.intro = _projectDetailInfo.intro.length > 50 ? [_projectDetailInfo.intro substringToIndex:50] : _projectDetailInfo.intro;
+    newCardM.url = _projectDetailInfo.shareurl;
     
     WEAKSELF
     WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:buttons andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];

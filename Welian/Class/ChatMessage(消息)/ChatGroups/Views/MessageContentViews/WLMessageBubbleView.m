@@ -249,12 +249,14 @@
             // 只要是文本、语音、第三方表情，都需要把显示尖嘴图片的控件隐藏了
             _bubblePhotoImageView.hidden = YES;
             
+            //卡片
+            _displayCardView.hidden = YES;
             
             if (currentType == WLBubbleMessageMediaTypeText) {
                 // 如果是文本消息，那文本消息的控件需要显示
 //                _displayTextView.hidden = NO;
                 _displayLabel.hidden = NO;
-                _displayCardView.hidden = YES;
+                
                 // 那语言的gif动画imageView就需要隐藏了
                 _animationVoiceImageView.hidden = YES;
                 _emotionImageView.hidden = YES;
@@ -262,7 +264,6 @@
                 // 那如果不文本消息，必须把文本消息的控件隐藏了啊
 //                _displayTextView.hidden = YES;
                 _displayLabel.hidden = YES;
-                _displayCardView.hidden = YES;
                 
                 // 对语音消息的进行特殊处理，第三方表情可以直接利用背景气泡的ImageView控件
                 if (currentType == WLBubbleMessageMediaTypeVoice) {
@@ -299,7 +300,6 @@
                             // 如果是文本消息，那文本消息的控件需要显示
                             //                _displayTextView.hidden = NO;
                             _displayLabel.hidden = NO;
-                            _displayCardView.hidden = YES;
                             // 那语言的gif动画imageView就需要隐藏了
                             _animationVoiceImageView.hidden = YES;
                             _emotionImageView.hidden = YES;
@@ -332,6 +332,8 @@
             _bubbleImageView.hidden = YES;
             _animationVoiceImageView.hidden = YES;
             _emotionImageView.hidden = YES;
+            //卡片
+            _displayCardView.hidden = YES;
             break;
         }
         default:

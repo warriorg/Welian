@@ -89,6 +89,9 @@
  */
 @property (nonatomic,assign)    BOOL navigationButtonsHidden;
 
+//是否显示分享按钮
+@property (nonatomic,assign)    BOOL showRightShareBtn;
+
 /**
  Shows the iOS 'Activty' button, which when tapped, presents a series of actions the user may
  take, including copying the page URL, tweeting the URL, or switching to Safari or Chrome.

@@ -129,7 +129,7 @@
             chatMsg.message = @"[项目]";
             break;
         case 11://网页
-            chatMsg.message = @"[网页]";
+            chatMsg.message = @"[链接]";
             break;
         default:
             break;
@@ -295,7 +295,7 @@
                     chatMsg.message = @"[项目]";
                     break;
                 case WLBubbleMessageCardTypeWeb://网页
-                    chatMsg.message = @"[网页]";
+                    chatMsg.message = @"[链接]";
                     break;
                 default:
                     chatMsg.message = @"对方刚给你发了一条消息，您当前版本无法查看，快去升级吧.";
@@ -307,7 +307,6 @@
         {
             //其他未知类型
             chatMsg.message = msg.length > 0 ? msg : @"对方刚给你发了一条消息，您当前版本无法查看，快去升级吧.";
-//            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
         }
             break;
     }
@@ -440,6 +439,49 @@
     self.timestamp = [time dateFromNormalString];
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 //    [MOC save];
+}
+
+//消息列表页面显示的消息内容
+- (NSString *)displayChatListMessageInfo
+{
+    NSString *msg = @"";
+    switch (self.messageType.integerValue) {
+        case WLBubbleMessageMediaTypeActivity:
+        case WLBubbleMessageMediaTypeText:
+            //文本
+            msg = self.message;
+            break;
+        case WLBubbleMessageMediaTypePhoto://照片
+            msg = @"[图片]";
+            break;
+        case WLBubbleMessageMediaTypeCard:
+        {
+            //卡片 //3 活动，10项目，11 网页
+            switch (self.cardType.integerValue) {
+                case WLBubbleMessageCardTypeActivity://活动
+                    msg = @"[活动]";
+                    break;
+                case WLBubbleMessageCardTypeProject://项目
+                    msg = @"[项目]";
+                    break;
+                case WLBubbleMessageCardTypeWeb://网页
+                    msg = @"[链接]";
+                    break;
+                default:
+                    //未知类型
+                    msg = self.message;
+                    break;
+            }
+        }
+            break;
+        default:
+        {
+            //其他未知类型
+            msg = self.message;
+        }
+            break;
+    }
+    return msg;
 }
 
 @end

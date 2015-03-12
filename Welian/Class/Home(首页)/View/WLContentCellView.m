@@ -207,6 +207,7 @@
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:card.url];
         [webVC setShowActionButton:NO];
         webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+        webVC.showRightShareBtn = YES;//现实右上角分享按钮
         [self.homeVC.navigationController pushViewController:webVC animated:YES];
     }
 }
@@ -362,6 +363,7 @@
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];
                 [webVC setShowActionButton:NO];
                 webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                webVC.showRightShareBtn = YES;//现实右上角分享按钮
                 [self.homeVC.navigationController pushViewController:webVC animated:YES];
             }
         }

@@ -415,7 +415,8 @@
     newCardM.type = @(3);
     newCardM.url = _activityInfo.shareurl;
     newCardM.title = _activityInfo.name;
-    newCardM.intro = [_activityInfo displayActivityInfo];
+    NSString *info = [_activityInfo displayActivityInfo];
+    newCardM.intro = info.length > 50 ? [info substringToIndex:50] : info;
     //分享回调
     WEAKSELF
     [shareView setWlShareBlock:^(ShareType duration){
@@ -631,6 +632,7 @@
     if (_activityInfo.url.length > 0) {
         TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:_activityInfo.url];
         webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+        webVC.showRightShareBtn = YES;//现实右上角分享按钮
         [self.navigationController pushViewController:webVC animated:YES];
     }else{
         [UIAlertView showWithMessage:@"暂无活动详情"];
