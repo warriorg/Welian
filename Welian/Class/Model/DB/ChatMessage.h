@@ -63,4 +63,7 @@
 //更新发送的消息的服务器时间
 - (void)updateTimeStampFromServer:(NSString *)time;
 
+//消息列表页面显示的消息内容
+- (NSString *)displayChatListMessageInfo;
+
 @end

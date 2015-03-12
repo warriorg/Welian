@@ -663,11 +663,11 @@ static NSString *noCommentCell = @"NoCommentCell";
         buttons = @[@(ShareTypeProjectInfo),@(ShareTypeProjectMember),@(ShareTypeProjectFinancing)];
     }
     CardStatuModel *newCardM = [[CardStatuModel alloc] init];
-    newCardM.cid = self.projectDetailInfo.pid;
+    newCardM.cid = _projectDetailInfo.pid;
     newCardM.type = @(10);
-    newCardM.title = self.projectDetailInfo.name;
-    newCardM.intro = self.projectDetailInfo.intro;
-    newCardM.url = self.projectDetailInfo.shareurl;
+    newCardM.title = _projectDetailInfo.name;
+    newCardM.intro = _projectDetailInfo.intro.length > 50 ? [_projectDetailInfo.intro substringToIndex:50] : _projectDetailInfo.intro;
+    newCardM.url = _projectDetailInfo.shareurl;
     
     WEAKSELF
     WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:buttons andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
@@ -678,8 +678,10 @@ static NSString *noCommentCell = @"NoCommentCell";
                 ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
                 shareFVC.cardM = newCardM;
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
-                [self presentViewController:navShareFVC animated:YES completion:^{
-                    
+                [self presentViewController:navShareFVC animated:YES completion:nil];
+                //回调发送成功
+                [shareFVC setShareSuccessBlock:^(void){
+                    [WLHUDView showSuccessHUD:@"分享成功！"];
                 }];
             }
                 break;

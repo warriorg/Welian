@@ -50,7 +50,7 @@
         self.sender = sender;
         self.timestamp = timestamp;
         self.cardId = cardId;
-        self.cardType = @(3);
+        self.cardType = cardType;
         self.cardTitle = cardTitle;
         self.cardIntro = cardIntro;
         self.cardUrl = cardUrl;

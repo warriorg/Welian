@@ -183,6 +183,7 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 // 观点  虎嗅网
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
                 webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                webVC.showRightShareBtn = YES;//现实右上角分享按钮
                 [self.navigationController pushViewController:webVC animated:YES];
             }
                 break;

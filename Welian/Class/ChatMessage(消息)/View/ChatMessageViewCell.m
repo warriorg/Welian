@@ -92,7 +92,7 @@
     }
     
     //消息内容
-    _messageLabel.text = chatMessage.message;
+    _messageLabel.text = [chatMessage displayChatListMessageInfo];
 }
 
 - (void)layoutSubviews

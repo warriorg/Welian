@@ -9,8 +9,11 @@
 #import "BasicTableViewController.h"
 #import "CardStatuModel.h"
 
+typedef void(^shareMessageSuccessBlock)(void);
+
 @interface ShareFriendsController : BasicTableViewController
 
 @property (nonatomic, strong) CardStatuModel *cardM;
+@property (nonatomic, strong) shareMessageSuccessBlock shareSuccessBlock;
 
 @end
