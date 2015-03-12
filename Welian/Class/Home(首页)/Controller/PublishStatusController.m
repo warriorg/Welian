@@ -14,7 +14,6 @@
 #import "IWTextView.h"
 #import "ZBMessageManagerFaceView.h"
 //#import "ForwardPublishView.h"
-#import "WLStatusM.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 #import "WLCellCardView.h"
@@ -112,7 +111,6 @@ static NSString *picCellid = @"PicCellID";
     CGFloat high = iPhone5?180:140;
     self.textView = [[IWTextView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, high)];
     [self.textView setPlaceholder:@"说点什么..."];
-//    [self.textView setBackgroundColor:[UIColor orangeColor]];
     [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
     [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.textView setFont:[UIFont systemFontOfSize:17]];
@@ -120,7 +118,6 @@ static NSString *picCellid = @"PicCellID";
     [self.textView becomeFirstResponder];
     [self.textView setReturnKeyType:UIReturnKeyDone];
     [self.view addSubview:self.textView];
-    
     
     self.inputttView = [[UIView alloc]initWithFrame:CGRectMake(0, SuperSize.height-INPUT_HEIGHT, SuperSize.width, INPUT_HEIGHT)];
     UIView *linView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 1)];
@@ -158,7 +155,7 @@ static NSString *picCellid = @"PicCellID";
     }else if (_publishType == PublishTypeForward){
         self.forwardView = [[WLCellCardView alloc] init];
         self.forwardView.frame = CGRectMake(15, CGRectGetMaxY(self.textView.frame)+10, SuperSize.width-30, 56);
-//        [self.forwardView setStatus:self.status];
+        [self.forwardView setCardM:self.statusCard];
         [self.view addSubview:self.forwardView];
     }
 
@@ -602,18 +599,18 @@ static NSString *picCellid = @"PicCellID";
 //    [self.view.findFirstResponder resignFirstResponder];
     
     if (_publishType == PublishTypeForward) {
-        if (self.status) {
-            NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
-            [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-                
-                [self dismissViewControllerAnimated:YES completion:^{
-                    
-                }];
-                
-            } fail:^(NSError *error) {
-                
-            }];
+        if (self.statusCard) {
+//            NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
+//            [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+//                
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                    
+//                }];
+//                
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else{
             [WLHUDView showErrorHUD:@"内容为空！"];
             return;

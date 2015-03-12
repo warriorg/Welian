@@ -18,7 +18,6 @@
 #import "FeedAndZanFrameM.h"
 #import "FeedAndZanCell.h"
 #import "CommentHeadView.h"
-#import "LXActivity.h"
 #import "ShareEngine.h"
 #import "UIImageView+WebCache.h"
 #import "ListItem.h"
@@ -27,7 +26,7 @@
 #import "NavViewController.h"
 #import "PublishStatusController.h"
 
-@interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,LXActivityDelegate>
+@interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     NSMutableArray *_dataArrayM;
     CommentCellFrame *_selecCommFrame;
@@ -234,18 +233,18 @@ static NSString *noCommentCell = @"NoCommentCell";
     NSArray *twoArray = @[@(ShareTypeReport)];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
-        
+        twoArray = @[@(ShareTypeReport),@(ShareTypeDelete)];
     }
-    twoArray = @[@(ShareTypeReport),@(ShareTypeDelete),@(ShareTypeProjectInfo),@(ShareTypeProjectMember),@(ShareTypeProjectFinancing)];
+
     WEAKSELF
-    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:twoArray andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
+    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:twoArray andTwoArray:@[@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
     wlActivity.wlShareBlock = ^(ShareType type){
         switch (type) {
             case ShareTypeWLFriend:
             {
                 ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
-                [self presentViewController:navShareFVC animated:YES completion:^{
+                [weakSelf presentViewController:navShareFVC animated:YES completion:^{
                     
                 }];
             }
@@ -254,7 +253,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             {
                 PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
-                [self presentViewController:navShareFVC animated:YES completion:^{
+                [weakSelf presentViewController:navShareFVC animated:YES completion:^{
                     
                 }];
 

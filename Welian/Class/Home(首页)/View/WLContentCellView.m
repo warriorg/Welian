@@ -103,8 +103,14 @@
 //针对于copy的实现
 -(void)copyText:(id)sender{
     UIPasteboard *pboard = [UIPasteboard generalPasteboard];
-    WLStatusM *status = _statusFrame.status;
-    pboard.string = status.content;
+    if (_statusFrame) {
+        WLStatusM *status = _statusFrame.status;
+        pboard.string = status.content;
+    }else if(_commentFrame){
+        WLStatusM *status = _commentFrame.status;
+        pboard.string = status.content;
+    }
+    
 }
 
 - (void)longPressGestureRecognizerHandle:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
@@ -135,7 +141,6 @@
     WLStatusM *status = statusFrame.status;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
     [self setViewDataAndFrame:status frame:contenFrame];
-    
 }
 
 

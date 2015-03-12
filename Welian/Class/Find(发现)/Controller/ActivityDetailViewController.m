@@ -11,13 +11,14 @@
 #import "ActivityOrderViewController.h"
 #import "ActivityMapViewController.h"
 #import "ActivityUserListViewController.h"
-#import "LXActivity.h"
 #import "ShareEngine.h"
+#import "SEImageCache.h"
+#import "WLActivityView.h"
+#import "ShareFriendsController.h"
+#import "NavViewController.h"
+#import "PublishStatusController.h"
 
-@interface ActivityDetailViewController ()<LXActivityDelegate>
-{
-    LXActivity *lxActivity;
-}
+@interface ActivityDetailViewController ()
 
 @property (nonatomic, strong) NSDictionary *shareFriend;//分享到微信好友的dict
 @property (nonatomic, strong) NSDictionary *shareFriendCircle;//分享到微信朋友圈
@@ -84,45 +85,106 @@
 //分享活动
 - (void)shareActivity
 {
-    NSArray *shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];;
-    NSArray *shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
-    if (lxActivity) {
-        [lxActivity removeFromSuperview];
-        lxActivity = nil;
-    }
-    lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:nil ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+    WEAKSELF
+    WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:nil andTwoArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
+    wlActivity.wlShareBlock = ^(ShareType type){
+        switch (type) {
+            case ShareTypeWLFriend:
+            {
+                ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+                [weakSelf presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+            }
+                break;
+            case ShareTypeWLCircle:
+            {
+                PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+                NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
+                [weakSelf presentViewController:navShareFVC animated:YES completion:^{
+                    
+                }];
+                
+            }
+                break;
+            case ShareTypeWeixinFriend:
+            {
+                NSDictionary *sharDic = _shareFriend;
+                NSString *desc = _shareFriend[@"desc"];
+                NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
+                NSString *link = sharDic[@"link"];
+                NSString *title = sharDic[@"title"];
+                
+                [WLHUDView showHUDWithStr:@"" dim:NO];
+                [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+                    [WLHUDView hiddenHud];
+                    DLog(@"shareFriendImage---->>>%@",image);
+                    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:weChat];
+                }];
+
+            }
+                break;
+            case ShareTypeWeixinCircle:
+            {
+                NSDictionary *sharDic = _shareFriendCircle;
+                NSString *desc = sharDic[@"desc"];
+                NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
+                NSString *link = sharDic[@"link"];
+                NSString *title = sharDic[@"title"];
+                
+                [WLHUDView showHUDWithStr:@"" dim:NO];
+                [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+                    [WLHUDView hiddenHud];
+                    DLog(@"shareFriendImage---->>>%@",image);
+                    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:weChatFriend];
+                }];
+            }
+                break;
+                
+            default:
+                break;
+        }
+
+    };
+    [wlActivity show];
+//    NSArray *shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];;
+//    NSArray *shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
+//    if (lxActivity) {
+//        [lxActivity removeFromSuperview];
+//        lxActivity = nil;
+//    }
+//    lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:nil ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+//    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
 }
 
-#pragma mark - LXActivityDelegate
-- (void)didClickOnImageIndex:(NSString *)imageIndex
-{
-    NSDictionary *sharDic = nil;
-    WeiboType type = weChat;
-    if ([imageIndex isEqualToString:@"微信好友"]){
-        sharDic = _shareFriend;
-        type = weChat;
-    }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
-        sharDic = _shareFriendCircle;
-        type = weChatFriend;
-    }
-
-    NSString *desc = sharDic[@"desc"];
-//        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sharDic[@"img"]]]];
-    NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
-    NSString *link = sharDic[@"link"];
-    NSString *title = sharDic[@"title"];
-    
-    [WLHUDView showHUDWithStr:@"" dim:NO];
-    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
-                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
-                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                       [WLHUDView hiddenHud];
-                                                       DLog(@"shareFriendImage---->>>%@",image);
-                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
-                                                   }];
-}
+//#pragma mark - LXActivityDelegate
+//- (void)didClickOnImageIndex:(NSString *)imageIndex
+//{
+//    NSDictionary *sharDic = nil;
+//    WeiboType type = weChat;
+//    if ([imageIndex isEqualToString:@"微信好友"]){
+//        sharDic = _shareFriend;
+//        type = weChat;
+//    }else if ([imageIndex isEqualToString:@"微信朋友圈"]){
+//        sharDic = _shareFriendCircle;
+//        type = weChatFriend;
+//    }
+//
+//    NSString *desc = sharDic[@"desc"];
+////        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:sharDic[@"img"]]]];
+//    NSURL *imgUrl = [NSURL URLWithString:sharDic[@"img"]];
+//    NSString *link = sharDic[@"link"];
+//    NSString *title = sharDic[@"title"];
+//    
+//    [WLHUDView showHUDWithStr:@"" dim:NO];
+//    [[SEImageCache sharedInstance] imageForURL:imgUrl completionBlock:^(UIImage *image, NSError *error) {
+//        [WLHUDView hiddenHud];
+//        DLog(@"shareFriendImage---->>>%@",image);
+//        [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+//    }];
+//    
+//}
 
 #pragma mark - private
 //进入地图页面

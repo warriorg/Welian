@@ -25,6 +25,7 @@
 #import "ShareEngine.h"
 #import "SEImageCache.h"
 #import "UINavigationBar+BackgroundColor.h"
+#import "CardStatuModel.h"
 
 #define kHeaderImageHeight 238.f
 #define kTableViewHeaderHeight 45.f
@@ -409,7 +410,12 @@
 {
     WLActivityView  *shareView = [[WLActivityView alloc] initWithOneSectionArray:@[@(ShareTypeWLFriend),@(ShareTypeWLCircle),@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)] andTwoArray:nil];
     [shareView show];
-    
+    CardStatuModel *newCardM = [[CardStatuModel alloc] init];
+    newCardM.cid = _activityId;
+    newCardM.type = @(3);
+    newCardM.url = _activityInfo.shareurl;
+    newCardM.title = _activityInfo.name;
+    newCardM.intro = _activityInfo.intro;
     //分享回调
     WEAKSELF
     [shareView setWlShareBlock:^(ShareType duration){
@@ -417,6 +423,7 @@
             case ShareTypeWLFriend://微链好友
             {
                 ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+                shareFVC.cardM = newCardM;
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
                 [self presentViewController:navShareFVC animated:YES completion:^{
                     
@@ -426,6 +433,8 @@
             case ShareTypeWLCircle://微链创业圈
             {
                 PublishStatusController *publishShareVC = [[PublishStatusController alloc] initWithType:PublishTypeForward];
+                publishShareVC.statusCard = newCardM;
+                
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
                 [self presentViewController:navShareFVC animated:YES completion:^{
                     

@@ -120,8 +120,11 @@
     POHorizontalList *list;
     
     if ([indexPath row] == 0) {
-        
-        list = [[POHorizontalList alloc] initWithButItems:_oneArray];
+        if (_oneArray) {
+            list = [[POHorizontalList alloc] initWithButItems:_oneArray];
+        }else{
+            list = [[POHorizontalList alloc] initWithButItems:_twoArray];
+        }
     }
     else if ([indexPath row] == 1) {
         
