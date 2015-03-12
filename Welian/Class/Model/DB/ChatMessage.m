@@ -281,13 +281,13 @@
             chatMsg.cardUrl = url;
             
             switch (cardType) {
-                case 3://活动
+                case WLBubbleMessageCardTypeActivity://活动
                     chatMsg.message = @"[活动]";
                     break;
-                case 10://项目
+                case WLBubbleMessageCardTypeProject://项目
                     chatMsg.message = @"[项目]";
                     break;
-                case 11://网页
+                case WLBubbleMessageCardTypeWeb://网页
                     chatMsg.message = @"[网页]";
                     break;
                 default:

@@ -401,21 +401,23 @@
 //            break;
         case WLBubbleMessageMediaTypeCard://卡片
         {
-//            CardStatuModel *model = [[CardStatuModel alloc] init];
-//            model.type = @(3);
-//            model.title = @"杭州投资牛皮盛宴";
-//            model.intro = @"4月10日，杭州";
-//            _displayCardView.cardM = model;
             switch (message.cardType.integerValue) {
                 case WLBubbleMessageCardTypeActivity:
                 case WLBubbleMessageCardTypeProject:
                 case WLBubbleMessageCardTypeWeb:
                 {
-                    //卡片
+                     //卡片
+                    CardStatuModel *model = [[CardStatuModel alloc] init];
+                    model.cid = message.cardId;
+                    model.type = message.cardType;
+                    model.title = message.cardTitle;
+                    model.intro = message.cardIntro;
+                    model.url = message.cardUrl;
+                    _displayCardView.cardM = model;
                     _displayCardView.isHidLine = YES;//隐藏边线
-                    _displayCardView.iconImage.image = [UIImage imageNamed:@"home_repost_huodong"];
-                    _displayCardView.titLabel.text = @"杭州投资牛皮盛宴";
-                    _displayCardView.detailLabel.text = @"4月10日，杭州";
+//                    _displayCardView.iconImage.image = [UIImage imageNamed:@"home_repost_huodong"];
+//                    _displayCardView.titLabel.text = @"杭州投资牛皮盛宴";
+//                    _displayCardView.detailLabel.text = @"4月10日，杭州";
                     _displayCardView.tapBut.hidden = YES;
                     //            [_displayCardView setDebug:YES];
                 }
