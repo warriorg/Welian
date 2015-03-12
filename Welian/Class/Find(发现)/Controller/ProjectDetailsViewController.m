@@ -678,8 +678,10 @@ static NSString *noCommentCell = @"NoCommentCell";
                 ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
                 shareFVC.cardM = newCardM;
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
-                [self presentViewController:navShareFVC animated:YES completion:^{
-                    
+                [self presentViewController:navShareFVC animated:YES completion:nil];
+                //回调发送成功
+                [shareFVC setShareSuccessBlock:^(void){
+                    [WLHUDView showSuccessHUD:@"分享成功！"];
                 }];
             }
                 break;

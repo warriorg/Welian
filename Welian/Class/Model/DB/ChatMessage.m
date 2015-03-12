@@ -142,6 +142,13 @@
     chatMsg.bubbleMessageType = @(WLBubbleMessageTypeSending);
     chatMsg.videoPath = @"";
     chatMsg.sender = friendUser.rsLogInUser.name;
+    chatMsg.cardId = cardModel.cid;
+    chatMsg.cardTitle = cardModel.title;
+    chatMsg.cardType = cardModel.type;
+    chatMsg.cardIntro = cardModel.intro;
+    chatMsg.cardUrl = cardModel.url;
+    chatMsg.sendStatus = @(1);//发送成功
+    
     //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
     friendUser.unReadChatMsg = @(0);

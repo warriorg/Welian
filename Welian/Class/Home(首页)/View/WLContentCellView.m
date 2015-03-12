@@ -346,9 +346,17 @@
 //                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];//sessionId
 //                [self.homeVC.navigationController pushViewController:activityDetailVC animated:YES];
                 
-                ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:@(sessionId.integerValue)];
-                [self.homeVC.navigationController pushViewController:activityInfoVC animated:YES];
-                
+                //查询本地有没有该活动
+                ActivityInfo *activityInfo = [ActivityInfo getActivityInfoWithActiveId:@(sessionId.integerValue) Type:@(0)];
+                ActivityDetailInfoViewController *activityInfoVC = nil;
+                if(activityInfo){
+                    activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:activityInfo];
+                }else{
+                    activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:@(sessionId.integerValue)];
+                }
+                if (activityInfoVC) {
+                    [self.homeVC.navigationController pushViewController:activityInfoVC animated:YES];
+                }
             }else{
                 //普通链接
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:link];

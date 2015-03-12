@@ -130,11 +130,11 @@
         }
         case WLBubbleMessageMediaTypeCard:
         {
-            DLog(@"-----%@",message.cardType);
+            DLog(@"cardType-----%@",message.cardType);
             switch (message.cardType.integerValue) {
-                case 10:
-                case 11:
-                case 3:
+                case WLBubbleMessageCardTypeActivity:
+                case WLBubbleMessageCardTypeProject:
+                case WLBubbleMessageCardTypeWeb:
                     bubbleSize = CGSizeMake(InfoMaxWidth, 56.f);
                     break;
                 default:

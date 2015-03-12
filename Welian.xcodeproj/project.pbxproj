@@ -615,7 +615,6 @@
 		A49C7CF11A70D42700F2AEC5 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCE819C8694B005B887D /* AFHTTPRequestOperationManager.m */; };
 		A49C7CF21A70D42700F2AEC5 /* WLMessageBubbleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140521A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m */; };
 		A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
-		A49C7CF41A70D42700F2AEC5 /* SELineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140E71A4BEF5700C9BAB5 /* SELineLayout.m */; };
 		A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
 		A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140371A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m */; };
@@ -1978,22 +1977,6 @@
 		A4E7BBEA1AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E7BBE41AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png */; };
 		A4E7BBEB1AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E7BBE41AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png */; };
 		A4E7BBEC1AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E7BBE41AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png */; };
-		A4E7BBF61AAF071A006BB52A /* EMMarkupProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */; };
-		A4E7BBF71AAF071A006BB52A /* EMMarkupProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */; };
-		A4E7BBF81AAF071A006BB52A /* EMMarkupProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */; };
-		A4E7BBF91AAF071A006BB52A /* EMMarkupProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */; };
-		A4E7BBFA1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */; };
-		A4E7BBFB1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */; };
-		A4E7BBFC1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */; };
-		A4E7BBFD1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */; };
-		A4E7BBFE1AAF071A006BB52A /* EMStylingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */; };
-		A4E7BBFF1AAF071A006BB52A /* EMStylingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */; };
-		A4E7BC001AAF071A006BB52A /* EMStylingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */; };
-		A4E7BC011AAF071A006BB52A /* EMStylingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */; };
-		A4E7BC021AAF071A006BB52A /* NSString+EMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */; };
-		A4E7BC031AAF071A006BB52A /* NSString+EMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */; };
-		A4E7BC041AAF071A006BB52A /* NSString+EMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */; };
-		A4E7BC051AAF071A006BB52A /* NSString+EMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */; };
 		A4EFA6C91A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
 		A4EFA6CA1A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
 		A4EFA6CB1A89E75C00CB5A4D /* ProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */; };
@@ -4972,14 +4955,6 @@
 		A4E7BBD11AAEE419006BB52A /* weChatBubble_Sending_Solid1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_Sending_Solid1@2x.png"; sourceTree = "<group>"; };
 		A4E7BBE31AAEF1B3006BB52A /* weChatBubble_pre_Receiving_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_pre_Receiving_Solid@2x.png"; sourceTree = "<group>"; };
 		A4E7BBE41AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChatBubble_pre_Sending_Solid@2x.png"; sourceTree = "<group>"; };
-		A4E7BBEE1AAF071A006BB52A /* EMMarkupProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMarkupProperty.h; sourceTree = "<group>"; };
-		A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMarkupProperty.m; sourceTree = "<group>"; };
-		A4E7BBF01AAF071A006BB52A /* EMStringStylingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMStringStylingConfiguration.h; sourceTree = "<group>"; };
-		A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMStringStylingConfiguration.m; sourceTree = "<group>"; };
-		A4E7BBF21AAF071A006BB52A /* EMStylingClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMStylingClass.h; sourceTree = "<group>"; };
-		A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMStylingClass.m; sourceTree = "<group>"; };
-		A4E7BBF41AAF071A006BB52A /* NSString+EMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EMAdditions.h"; sourceTree = "<group>"; };
-		A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EMAdditions.m"; sourceTree = "<group>"; };
 		A4EFA6C71A89E75C00CB5A4D /* ProjectInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectInfo.h; sourceTree = "<group>"; };
 		A4EFA6C81A89E75C00CB5A4D /* ProjectInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectInfo.m; sourceTree = "<group>"; };
 		A4EFA6CD1A89E75D00CB5A4D /* PhotoInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoInfos.h; sourceTree = "<group>"; };
@@ -7432,21 +7407,6 @@
 			path = ACETelPrompt;
 			sourceTree = "<group>";
 		};
-		A4E7BBED1AAF071A006BB52A /* EMString */ = {
-			isa = PBXGroup;
-			children = (
-				A4E7BBEE1AAF071A006BB52A /* EMMarkupProperty.h */,
-				A4E7BBEF1AAF071A006BB52A /* EMMarkupProperty.m */,
-				A4E7BBF01AAF071A006BB52A /* EMStringStylingConfiguration.h */,
-				A4E7BBF11AAF071A006BB52A /* EMStringStylingConfiguration.m */,
-				A4E7BBF21AAF071A006BB52A /* EMStylingClass.h */,
-				A4E7BBF31AAF071A006BB52A /* EMStylingClass.m */,
-				A4E7BBF41AAF071A006BB52A /* NSString+EMAdditions.h */,
-				A4E7BBF51AAF071A006BB52A /* NSString+EMAdditions.m */,
-			);
-			path = EMString;
-			sourceTree = "<group>";
-		};
 		A4F6479F1A43DA4B002E66FC /* phonegap */ = {
 			isa = PBXGroup;
 			children = (
@@ -9214,7 +9174,6 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
-				A4E7BBED1AAF071A006BB52A /* EMString */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				A437CEE81A53A32000B54E68 /* Project */,
 				F55078861A7F5BE9009CE4F7 /* JKImagePicker */,
@@ -12060,7 +12019,6 @@
 				A49C7C501A70D42700F2AEC5 /* WLHUDView.m in Sources */,
 				A49C7C511A70D42700F2AEC5 /* ZBExpressionSectionBar.m in Sources */,
 				F5E13A471A7B5329001BB786 /* CreateProjectController.m in Sources */,
-				A4E7BBFD1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */,
 				A49C7C521A70D42700F2AEC5 /* SWLongPressGestureRecognizer.m in Sources */,
 				A49C7C531A70D42700F2AEC5 /* WLMessageTableView.m in Sources */,
 				A49C7C541A70D42700F2AEC5 /* NSString+MD5.m in Sources */,
@@ -12262,7 +12220,6 @@
 				F55078B61A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				A49C7D001A70D42700F2AEC5 /* TOActivitySafari.m in Sources */,
 				A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */,
-				A4E7BBF91AAF071A006BB52A /* EMMarkupProperty.m in Sources */,
 				A49C7D031A70D42700F2AEC5 /* CTAssetsGroupViewController.m in Sources */,
 				A49C7D041A70D42700F2AEC5 /* CTAssetsViewCell.m in Sources */,
 				A49C7D051A70D42700F2AEC5 /* UIScrollView+MJExtension.m in Sources */,
@@ -12347,13 +12304,11 @@
 				A49C7D431A70D42700F2AEC5 /* InvestStages.m in Sources */,
 				A49C7D451A70D42700F2AEC5 /* WLPhotoListView.m in Sources */,
 				A49C7D461A70D42700F2AEC5 /* AFHTTPSessionManager.m in Sources */,
-				A4E7BC051AAF071A006BB52A /* NSString+EMAdditions.m in Sources */,
 				A49C7D471A70D42700F2AEC5 /* IWTextView.m in Sources */,
 				A49C7D481A70D42700F2AEC5 /* NSString+val.m in Sources */,
 				A46FAE531A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80671A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */,
-				A4E7BC011AAF071A006BB52A /* EMStylingClass.m in Sources */,
 				A49C7D4A1A70D42700F2AEC5 /* MJRefreshBaseView.m in Sources */,
 				A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */,
 				A49C7D4C1A70D42700F2AEC5 /* XHWaterDropRefresh.m in Sources */,
@@ -12560,7 +12515,6 @@
 				F53DC2F41A49192600F5F712 /* WLHUDView.m in Sources */,
 				F53DC2F51A49192600F5F712 /* ZBExpressionSectionBar.m in Sources */,
 				F5E13A461A7B5329001BB786 /* CreateProjectController.m in Sources */,
-				A4E7BBFC1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */,
 				F53DC2F71A49192600F5F712 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C1409A1A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F53DC2F81A49192600F5F712 /* NSString+MD5.m in Sources */,
@@ -12762,7 +12716,6 @@
 				F55078B51A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F53DC3671A49192600F5F712 /* TOActivitySafari.m in Sources */,
 				F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */,
-				A4E7BBF81AAF071A006BB52A /* EMMarkupProperty.m in Sources */,
 				F53DC36A1A49192600F5F712 /* CTAssetsGroupViewController.m in Sources */,
 				F53DC36B1A49192600F5F712 /* CTAssetsViewCell.m in Sources */,
 				F53DC36C1A49192600F5F712 /* UIScrollView+MJExtension.m in Sources */,
@@ -12847,13 +12800,11 @@
 				F534DB611A5119A000B6A725 /* InvestStages.m in Sources */,
 				F53DC3911A49192600F5F712 /* WLPhotoListView.m in Sources */,
 				F53DC3921A49192600F5F712 /* AFHTTPSessionManager.m in Sources */,
-				A4E7BC041AAF071A006BB52A /* NSString+EMAdditions.m in Sources */,
 				F53DC3931A49192600F5F712 /* IWTextView.m in Sources */,
 				F53DC3941A49192600F5F712 /* NSString+val.m in Sources */,
 				A46FAE521A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80661A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
-				A4E7BC001AAF071A006BB52A /* EMStylingClass.m in Sources */,
 				F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */,
 				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141791A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
@@ -13060,7 +13011,6 @@
 				F56649CE1A2AFD56008A5830 /* ZBExpressionSectionBar.m in Sources */,
 				F56649CF1A2AFD56008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				F56649D01A2AFD56008A5830 /* NSString+MD5.m in Sources */,
-				A4E7BBFA1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */,
 				A49C80501A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				A4F647A41A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				F56649D11A2AFD56008A5830 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
@@ -13346,13 +13296,11 @@
 				F5664A591A2AFD56008A5830 /* WLPhotoListView.m in Sources */,
 				F5664A5A1A2AFD56008A5830 /* AFHTTPSessionManager.m in Sources */,
 				F5664A5B1A2AFD56008A5830 /* IWTextView.m in Sources */,
-				A4E7BC021AAF071A006BB52A /* NSString+EMAdditions.m in Sources */,
 				F5664A5C1A2AFD56008A5830 /* NSString+val.m in Sources */,
 				A46FAE501A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80641A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664A5D1A2AFD56008A5830 /* MJRefreshBaseView.m in Sources */,
-				A4E7BBFE1AAF071A006BB52A /* EMStylingClass.m in Sources */,
 				F59E75F41A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
 				F5664A5E1A2AFD56008A5830 /* UIImage+GIF.m in Sources */,
 				F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -13559,7 +13507,6 @@
 				F5664C871A2AFDD5008A5830 /* WLHUDView.m in Sources */,
 				F5664C881A2AFDD5008A5830 /* ZBExpressionSectionBar.m in Sources */,
 				F5E13A451A7B5329001BB786 /* CreateProjectController.m in Sources */,
-				A4E7BBFB1AAF071A006BB52A /* EMStringStylingConfiguration.m in Sources */,
 				F5664C891A2AFDD5008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				A4C140991A4BEA8500C9BAB5 /* WLMessageTableView.m in Sources */,
 				F5664C8A1A2AFDD5008A5830 /* NSString+MD5.m in Sources */,
@@ -13761,7 +13708,6 @@
 				F55078B41A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F5664CEB1A2AFDD5008A5830 /* TOActivitySafari.m in Sources */,
 				F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */,
-				A4E7BBF71AAF071A006BB52A /* EMMarkupProperty.m in Sources */,
 				F5664CEE1A2AFDD5008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F5664CEF1A2AFDD5008A5830 /* CTAssetsViewCell.m in Sources */,
 				F5664CF01A2AFDD5008A5830 /* UIScrollView+MJExtension.m in Sources */,
@@ -13846,13 +13792,11 @@
 				F534DB601A5119A000B6A725 /* InvestStages.m in Sources */,
 				F5664D131A2AFDD5008A5830 /* WLPhotoListView.m in Sources */,
 				F5664D141A2AFDD5008A5830 /* AFHTTPSessionManager.m in Sources */,
-				A4E7BC031AAF071A006BB52A /* NSString+EMAdditions.m in Sources */,
 				F5664D151A2AFDD5008A5830 /* IWTextView.m in Sources */,
 				F5664D161A2AFDD5008A5830 /* NSString+val.m in Sources */,
 				A46FAE511A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80651A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
-				A4E7BBFF1AAF071A006BB52A /* EMStylingClass.m in Sources */,
 				F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */,
 				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141781A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,

@@ -14,6 +14,9 @@
 #import "ActivityDetailViewController.h"
 #import "WLDisplayMediaViewController.h"
 #import "ActivityDetailInfoViewController.h"
+#import "ProjectDetailsViewController.h"
+#import "ShareFriendsController.h"
+#import "NavViewController.h"
 
 #import "WLPhotoView.h"
 #import "MJPhoto.h"
@@ -62,25 +65,12 @@
                 case WLBubbleMessageMediaTypeActivity://活动
                 case WLBubbleMessageMediaTypeText:
                     //普通文本
-//                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-//                    message.msgId = chatMessage.msgId.stringValue;
-//                    message.avatorUrl = chatMessage.avatorUrl;
-//                    message.sended = chatMessage.sendStatus.stringValue;
-//                    message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-//                    message.uid = _friendUser.uid.stringValue;
-                    message = [[WLMessage alloc] initWithCard:chatMessage.message
-                                                       sender:chatMessage.sender
-                                                    timestamp:chatMessage.timestamp
-                                                       cardId:chatMessage.cardId
-                                                     cardType:chatMessage.cardType
-                                                    cardTitle:chatMessage.cardTitle
-                                                    cardIntro:chatMessage.cardIntro
-                                                      cardUrl:chatMessage.cardUrl];
+                    message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
+                    message.msgId = chatMessage.msgId.stringValue;
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
                     message.uid = _friendUser.uid.stringValue;
-                    message.msgId = chatMessage.msgId.stringValue;
                     break;
                 case WLBubbleMessageMediaTypePhoto:
                 {
@@ -117,7 +107,7 @@
                 default:
                     break;
             }
-            message.messageMediaType = WLBubbleMessageMediaTypeCard;
+            
             //设置是否现实时间戳
             message.showTimeStamp = chatMessage.showTimeStamp.boolValue;
             //添加到数组中
@@ -242,7 +232,6 @@
         case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             message = [[WLMessage alloc] initWithText:chatMessage.message sender:chatMessage.sender timestamp:chatMessage.timestamp];
-            //                    message.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
@@ -617,6 +606,8 @@
                 [messages addObject:message];
             }
         }
+    }else{
+        self.loadingMoreMessage = NO;
     }
     return messages;
 }
@@ -948,9 +939,17 @@
 //                activityDetailVC.wwwFolderName = @"www";
 //                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];
 //                [self.navigationController pushViewController:activityDetailVC animated:YES];
-                
-                ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:@(sessionId.integerValue)];
-                [self.navigationController pushViewController:activityInfoVC animated:YES];
+                //查询本地有没有该活动
+                ActivityInfo *activityInfo = [ActivityInfo getActivityInfoWithActiveId:@(sessionId.integerValue) Type:@(0)];
+                ActivityDetailInfoViewController *activityInfoVC = nil;
+                if(activityInfo){
+                    activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:activityInfo];
+                }else{
+                    activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:@(sessionId.integerValue)];
+                }
+                if (activityInfoVC) {
+                    [self.navigationController pushViewController:activityInfoVC animated:YES];
+                }
                 return;
             }
             
@@ -1065,6 +1064,52 @@
         case WLBubbleMessageMediaTypeCard:
         {
             DLog(@"message ----> Card");
+            switch (message.cardType.integerValue) {
+                case WLBubbleMessageCardTypeActivity:
+                {
+                    //查询本地有没有该活动
+                    ActivityInfo *activityInfo = [ActivityInfo getActivityInfoWithActiveId:message.cardId Type:@(0)];
+                    ActivityDetailInfoViewController *activityInfoVC = nil;
+                    if(activityInfo){
+                        activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:activityInfo];
+                    }else{
+                        activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:message.cardId];
+                    }
+                    if (activityInfoVC) {
+                        [self.navigationController pushViewController:activityInfoVC animated:YES];
+                    }
+                }
+                    break;
+                case WLBubbleMessageCardTypeProject:
+                {
+                    //查询数据库是否存在
+                    ProjectInfo *projectInfo = [ProjectInfo getProjectInfoWithPid:message.cardId Type:@(0)];
+                    ProjectDetailsViewController *projectDetailVC = nil;
+                    if (projectInfo) {
+                        projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
+                    }else{
+                        IProjectInfo *iProjectInfo = [[IProjectInfo alloc] init];
+                        iProjectInfo.name = message.cardTitle;
+                        iProjectInfo.pid = message.cardId;
+                        iProjectInfo.intro = message.cardIntro;
+                        projectDetailVC = [[ProjectDetailsViewController alloc] initWithIProjectInfo:iProjectInfo];
+                    }
+                    if (projectDetailVC) {
+                        [self.navigationController pushViewController:projectDetailVC animated:YES];
+                    }
+                }
+                    break;
+                case WLBubbleMessageCardTypeWeb:
+                {
+                    //普通链接
+                    TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:message.cardUrl];
+                    webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                    [self.navigationController pushViewController:webVC animated:YES];
+                }
+                    break;
+                default:
+                    break;
+            }
         }
             break;
         default:
@@ -1075,7 +1120,24 @@
 //转发卡片消息
 - (void)didTranspondOnMessage:(id <WLMessageModel>)message atIndexPath:(NSIndexPath *)indexPath
 {
+    CardStatuModel *cardModel = [[CardStatuModel alloc] init];
+    cardModel.cid = message.cardId;
+    cardModel.type = message.cardType;
+    cardModel.title = message.cardTitle;
+    cardModel.intro = message.cardIntro;
+    cardModel.url = message.cardUrl;
     
+    if (cardModel) {
+        ShareFriendsController *shareFVC = [[ShareFriendsController alloc] init];
+        shareFVC.cardM = cardModel;
+        NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
+        [self presentViewController:navShareFVC animated:YES completion:nil];
+        
+        //回调发送成功
+        [shareFVC setShareSuccessBlock:^(void){
+            [WLHUDView showSuccessHUD:@"转发成功！"];
+        }];
+    }
 }
 
 

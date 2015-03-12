@@ -136,10 +136,10 @@ static NSString *fridcellid = @"fridcellid";
         NSDictionary *usersDic = self.allArray[indexPath.section];
         NSArray *modear = usersDic[@"userF"];
         IBaseUserM *modeIM = modear[indexPath.row];
-        [fcell setUserMode:modeIM];
+        [fcell setUserMode:(FriendsUserModel *)modeIM];
     }else{
         IBaseUserM *modeIm = self.filterArray[indexPath.row];
-        fcell.userMode = modeIm;
+        fcell.userMode = (FriendsUserModel *)modeIm;
     }
     
     return fcell;
@@ -157,23 +157,55 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         modeIM = self.filterArray[indexPath.row];
     }
-    UIAlertView *alertV = [UIAlertView bk_alertViewWithTitle:@"确定发送给：" message:modeIM.name];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:modeIM.uid];
+    if (!friendUser) {
+        friendUser = [MyFriendUser createMyFriendUserModel:(FriendsUserModel *)modeIM];
+    }
+    
+    UIAlertView *alertV = [UIAlertView bk_alertViewWithTitle:@"确定发送给：" message:friendUser.name];
     [alertV bk_addButtonWithTitle:@"取消" handler:nil];
     WEAKSELF
     [alertV bk_addButtonWithTitle:@"确定" handler:^{
-        NSDictionary *cardDic = [weakSelf.cardM keyValues];
-       NSDictionary *param = @{@"type":@(51),@"touser":modeIM.uid,@"card":cardDic};
-        [WLHttpTool sendMessageParameterDic:param success:^(id JSON) {
-                
-        } fail:^(NSError *error) {
-            
-        }];
+        [weakSelf sendCardMessageToFriend:friendUser];
     }];
     [alertV show];
     [self.view.findFirstResponder resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+//发送卡片消息给好友
+- (void)sendCardMessageToFriend:(MyFriendUser *)friendUser
+{
+    NSDictionary *cardDic = [self.cardM keyValues];
+    NSDictionary *param = @{@"type":@(51),@"touser":friendUser.uid,@"card":cardDic};
+    [WLHttpTool sendMessageParameterDic:param success:^(id JSON) {
+        //返回的是字典
+        NSString *state = JSON[@"state"];
+        NSString *time = JSON[@"created"];
+        if ([state intValue] == -1) {
+            //更新发送状态为失败
+            [WLHUDView showSuccessHUD:@"发送失败！"];
+        }else{
+            //创建数据库对象
+            ChatMessage *chatMessage = [ChatMessage createChatMessageWithCard:self.cardM FriendUser:friendUser];
+            //更新发送时间
+            if (time) {
+                [chatMessage updateTimeStampFromServer:time];
+            }
+            
+            [self cancelSelf];
+            
+            //分享成功回调
+            if (_shareSuccessBlock) {
+                _shareSuccessBlock();
+            }
+        }
+    } fail:^(NSError *error) {
+        //更新发送状态为失败
+        [WLHUDView showSuccessHUD:@"发送失败！"];
+    }];
+}
 
 #pragma mark - 搜索
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
