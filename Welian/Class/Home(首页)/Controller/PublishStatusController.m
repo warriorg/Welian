@@ -600,6 +600,7 @@ static NSString *picCellid = @"PicCellID";
     
     if (_publishType == PublishTypeForward) {
         if (self.statusCard) {
+            
 //            NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
 //            [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
 //                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
@@ -661,6 +662,7 @@ static NSString *picCellid = @"PicCellID";
             
         }];
     }
+    
 }
 
 

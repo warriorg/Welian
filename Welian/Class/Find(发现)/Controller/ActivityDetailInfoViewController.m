@@ -460,15 +460,12 @@
     NSURL *imgUrl = [NSURL URLWithString:_activityInfo.logo];
     NSString *link = _activityInfo.shareurl;
     NSString *title = _activityInfo.name;
-    
-    [WLHUDView showHUDWithStr:@"" dim:NO];
     [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
                                                    progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                        DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
                                                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                       [WLHUDView hiddenHud];
                                                        DLog(@"shareFriendImage---->>>%@",image);
-                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:image WithScene:type];
+                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:nil WithScene:type];
                                                    }];
 }
 

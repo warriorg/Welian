@@ -66,22 +66,20 @@
     _cardM = cardM;
     NSInteger typeint = cardM.type.integerValue;
     NSString *imageName = @"";
-    switch (typeint) {
-        case 11:  // 网页
-            imageName = @"home_repost_link";
-            break;
-        case 3:  // 活动
-            imageName = @"home_repost_huodong";
-            break;
-        case 10:  // 项目
-            imageName = @"home_repost_xiangmu";
-            break;
-        case 13:  // 话题
-            imageName = @"home_repost_huati";
-            break;
-        default:
-            break;
+    
+    if (typeint==12||typeint==10) { // 项目
+        imageName = @"home_repost_xiangmu";
+        
+    }else if (typeint==11){    // 网页
+        imageName = @"home_repost_link";
+        
+    }else if (typeint==3||typeint==5){ // 活动
+        imageName = @"home_repost_huodong";
+        
+    }else if (typeint==13){ // 话题
+        imageName = @"home_repost_huati";
     }
+    
     [_iconImage setImage:[UIImage imageNamed:imageName]];
     _titLabel.text = cardM.title;
     _detailLabel.text = cardM.intro;

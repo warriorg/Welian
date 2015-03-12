@@ -81,12 +81,13 @@
         _cellHeight += 66;
     }
     
-    if (status.photos.count || status.content.length) {
+    if (!(status.type==4||status.type==5||status.type==6||status.type==12)) {
         CGFloat dockY = _cellHeight+5;
         _dockFrame = CGRectMake(contentX, dockY, _cellWidth - IWCellBorderWidth, IWStatusDockH);
         _cellHeight = CGRectGetMaxY(_dockFrame);
+    }else{
+        _cellHeight +=10;
     }
-    
     
 }
 

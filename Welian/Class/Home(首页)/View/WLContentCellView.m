@@ -172,9 +172,9 @@
         _cellCardView.hidden = YES;
     }
     
-    BOOL isDock = NO;
-    if (status.content || status.photos.count) {
-        isDock = YES;
+    BOOL isDock = YES;
+    if (status.type==4||status.type==5||status.type==6||status.type==12) {
+        isDock = NO;
     }
     
     if (isDock) {

@@ -37,6 +37,10 @@ single_implementation(ShareEngine)
 
 - (void)sendWeChatMessage:(NSString*)message andDescription:(NSString *)descriptStr WithUrl:(NSString*)appUrl andImage:(UIImage *)thumbImage WithScene:(WeiboType)weiboType;
 {
+    if (!([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi])) {
+        [WLHUDView showErrorHUD:@"微信未安装！"];
+        return;
+    }
     UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(180, 180)];
     
     NSData * imageData = UIImageJPEGRepresentation(scaledImage,1);

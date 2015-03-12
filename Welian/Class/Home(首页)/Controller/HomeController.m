@@ -415,7 +415,7 @@
 {
     WLStatusFrame *statusF = _dataArry[indexPath.row];
     
-    if (statusF.status.type==2) return;
+    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];

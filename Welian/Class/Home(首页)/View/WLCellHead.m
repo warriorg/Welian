@@ -32,6 +32,9 @@
     UILabel *_zhiwulncLabel;
     // 添加好友
     UIButton *_addFriendBut;
+    
+    // 点评，报名项目
+    UILabel *_mesLabel;
 }
 
 @end
@@ -69,8 +72,17 @@
     [_chuangImageView setImage:[UIImage imageNamed:@"me_mycard_chuang"]];
     [self addSubview:_chuangImageView];
     
-    // 姓名
     CGFloat nameX = CGRectGetMaxX(_iconImageView.frame)+8;
+    
+    
+    _mesLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameX, KIconX, frame.size.width-nameX-15, IWIconWHSmall)];
+    _mesLabel.numberOfLines = 0;
+    _mesLabel.font = WLFONT(13);
+    _mesLabel.textColor = WLRGB(178, 178, 178);
+    _mesLabel.backgroundColor = [UIColor clearColor];
+    [self addSubview:_mesLabel];
+    
+    // 姓名
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameX, KIconX, frame.size.width-nameX-90, 20)];
     _nameLabel.font = WLFONTBLOD(15);
     _nameLabel.textColor = WLRGB(51, 51, 51);
@@ -112,35 +124,8 @@
 {
     _userStat = userStat;
     WLBasicTrends *user = userStat.user;
-    // 姓名
+    // 头像
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    
-    // 姓名
-    [_nameLabel setText:user.name];
-    
-    // 职务和公司
-    if (user.position) {
-        [_zhiwulncLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
-    }
-
-    // 好友关系
-    if (user.friendship == WLRelationTypeFriend) {
-        [_friendLabel setText:@"朋友"];
-        [_friendLabel setHidden:NO];
-    }else if (user.friendship == WLRelationTypeFriendsFriend){
-        [_friendLabel setText:@"朋友的朋友"];
-        [_friendLabel setHidden:NO];
-    }else{
-        [_friendLabel setHidden:YES];
-    }
-    if (userStat.type==2) {
-        [_friendLabel setHidden:YES];
-        [_addFriendBut setHidden:NO];
-        
-    }else{
-        [_addFriendBut setHidden:YES];
-    }
-    
     // 是否创业和投资者
     if (user.investorauth == WLVerifiedTypeInvestor) {
         [_touziImageView setHidden:NO];
@@ -152,6 +137,45 @@
     }else{
         [_touziImageView setHidden:YES];
         [_chuangImageView setHidden:YES];
+    }
+
+    if (userStat.type==5 ||userStat.type==10) {
+        _mesLabel.text = userStat.content;
+        [_mesLabel setHidden:NO];
+        [_nameLabel setHidden:YES];
+        [_friendLabel setHidden:YES];
+        [_zhiwulncLabel setHidden:YES];
+        [_addFriendBut setHidden:YES];
+        
+    }else{
+        [_mesLabel setHidden:YES];
+        [_nameLabel setHidden:NO];
+        [_zhiwulncLabel setHidden:NO];
+        // 姓名
+        [_nameLabel setText:user.name];
+        
+        // 职务和公司
+        if (user.position) {
+            [_zhiwulncLabel setText:[NSString stringWithFormat:@"%@   %@",user.position,user.company]];
+        }
+        
+        // 好友关系
+        if (user.friendship == WLRelationTypeFriend) {
+            [_friendLabel setText:@"朋友"];
+            [_friendLabel setHidden:NO];
+        }else if (user.friendship == WLRelationTypeFriendsFriend){
+            [_friendLabel setText:@"朋友的朋友"];
+            [_friendLabel setHidden:NO];
+        }else{
+            [_friendLabel setHidden:YES];
+        }
+        if (userStat.type==2) {
+            [_friendLabel setHidden:YES];
+            [_addFriendBut setHidden:NO];
+            
+        }else{
+            [_addFriendBut setHidden:YES];
+        }
     }
 }
 
