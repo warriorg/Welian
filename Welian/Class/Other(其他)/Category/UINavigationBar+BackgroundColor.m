@@ -40,8 +40,10 @@ static char const * const overlayKey = "backgroundOverlay";
     [self setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self setShadowImage:nil];
 
-    [self.overlay removeFromSuperview];
-    self.overlay = nil;
+    if (self.overlay) {
+        [self.overlay removeFromSuperview];
+        self.overlay = nil;
+    }
 }
 
 @end

@@ -24,7 +24,6 @@
 
 #import "ShareEngine.h"
 #import "SEImageCache.h"
-#import "UINavigationBar+BackgroundColor.h"
 #import "CardStatuModel.h"
 
 #define kHeaderImageHeight 238.f
@@ -84,7 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self scrollViewDidScroll:_tableView];
+    [self scrollViewDidScroll:_tableView];
     
 //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 //    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1]];
@@ -96,7 +95,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+//    [self scrollViewDidScroll:_tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
