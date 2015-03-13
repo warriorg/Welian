@@ -21,10 +21,14 @@ typedef enum {
     
 } PublishType;
 
+// 发送成功
+typedef void(^WLPublishStatusBlock)(void);
+
 @interface PublishStatusController : UIViewController
 
 @property (nonatomic, strong) CardStatuModel *statusCard;
 
+@property (nonatomic, copy) WLPublishStatusBlock publishBlock;
 
 - (instancetype)initWithType:(PublishType)publishType;
 

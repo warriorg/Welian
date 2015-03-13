@@ -607,13 +607,15 @@ static NSString *picCellid = @"PicCellID";
             [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
             [WLHttpTool addFeedParameterDic:pubCardDic success:^(id JSON) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-                
+                if (self.publishBlock) {
+                    self.publishBlock();
+                }
                 [self dismissViewControllerAnimated:YES completion:^{
                     
                 }];
                 
             } fail:^(NSError *error) {
-                
+                [WLHUDView showErrorHUD:@"发布失败！"];
             }];
         }else{
             [WLHUDView showErrorHUD:@"内容为空！"];
@@ -657,12 +659,14 @@ static NSString *picCellid = @"PicCellID";
         
         [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
             [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-            
+            if (self.publishBlock) {
+                self.publishBlock();
+            }
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];
         } fail:^(NSError *error) {
-            
+            [WLHUDView showErrorHUD:@"发布失败！"];
         }];
     }
     
