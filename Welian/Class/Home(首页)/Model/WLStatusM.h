@@ -78,6 +78,9 @@
 
 //** 动态卡片显示 **//
 @property (nonatomic, strong) CardStatuModel *card;
+
+@property (nonatomic, strong) NSArray *joineduserArray;
+
 /*
 
  "card":{

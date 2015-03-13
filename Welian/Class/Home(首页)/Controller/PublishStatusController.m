@@ -600,18 +600,21 @@ static NSString *picCellid = @"PicCellID";
     
     if (_publishType == PublishTypeForward) {
         if (self.statusCard) {
-            
-//            NSNumber *fid = [NSNumber numberWithInt:self.status.fid];
-//            [WLHttpTool forwardFeedParameterDic:@{@"fid":fid,@"content":self.textView.text} success:^(id JSON) {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-//                
-//                [self dismissViewControllerAnimated:YES completion:^{
-//                    
-//                }];
-//                
-//            } fail:^(NSError *error) {
-//                
-//            }];
+            NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
+            if (self.textView.text.length) {
+                [pubCardDic setObject:self.textView.text forKey:@"content"];
+            }
+            [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
+            [WLHttpTool addFeedParameterDic:pubCardDic success:^(id JSON) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+                
+            } fail:^(NSError *error) {
+                
+            }];
         }else{
             [WLHUDView showErrorHUD:@"内容为空！"];
             return;

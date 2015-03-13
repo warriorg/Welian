@@ -37,7 +37,7 @@
 {
     _status = status;
     _cellHigh = 60;
-    if (status.type==1||status.type==2) { // 0正常动态，1转推动态，2推荐动态
+    if (status.type==1||status.type==2||status.type==6) { // 0正常动态，1转推动态，2推荐动态，6修改自己资料
         _cellHigh = 90;
     }
     _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth];

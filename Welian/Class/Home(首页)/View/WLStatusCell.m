@@ -127,11 +127,11 @@
 {
     // 1.默认
     UIImageView *bg = [[UIImageView alloc] init];
-    bg.image = [UIImage resizedImage:@"homeCellbackground_normal" leftScale:0.9 topScale:0.5];
+    bg.image = [UIImage resizedImage:@"homeCellbackground_normal"];
     self.backgroundView = bg;
     // 2.选中
     UIImageView *selectedBg = [[UIImageView alloc] init];
-    selectedBg.image = [UIImage resizedImage:@"homeCellbackground_highlight" leftScale:0.98 topScale:0.5];
+    selectedBg.image = [UIImage resizedImage:@"homeCellbackground_highlight"];
     self.selectedBackgroundView = selectedBg;
 }
 
@@ -154,7 +154,7 @@
     [_cellHeadView setControllVC:self.homeVC];
     CGFloat y = 0;
     CGRect headFrame = _cellHeadView.frame;
-    if (status.type==1||status.type==2) {
+    if (status.type==1||status.type==2||status.type==6 ||status.type==4) {
         y= 30;
         headFrame.origin.y = 30;
         [_cellHeadView setFrame:headFrame];
@@ -174,6 +174,9 @@
         }else if (status.type ==2){  // 推荐好友
             [_imageV setImage:[UIImage imageNamed:@"osusume"]];
             [_tuiUserLabel setText:status.commandmsg];
+        }else if (status.type ==6||status.type ==4){  // 修改背景
+            [_imageV setImage:[UIImage imageNamed:@"xiugai"]];
+            [_tuiUserLabel setText:[NSString stringWithFormat:@"%@　修改了自己的背景",status.user.name]];
         }
     }else{
         y= 0;

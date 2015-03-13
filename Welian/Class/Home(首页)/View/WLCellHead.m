@@ -139,8 +139,33 @@
         [_chuangImageView setHidden:YES];
     }
 
-    if (userStat.type==5 ||userStat.type==10) {
-        _mesLabel.text = userStat.content;
+    if (userStat.type==5||userStat.type==12) {
+        NSMutableString *nameStr = [NSMutableString string];
+        NSInteger conut = 0;
+        for (UserInfoModel *userM in userStat.joineduserArray) {
+            if (conut<=1) {
+                if (conut==0) {
+                    if (userStat.joineduserArray.count==1) {
+                        [nameStr appendString:[NSString stringWithFormat:@"%@",userM.name]];
+                    }else{
+                        [nameStr appendString:[NSString stringWithFormat:@"%@，",userM.name]];
+                    }
+
+                }else{
+                    if (userStat.joineduserArray.count>2) {
+                        [nameStr appendString:[NSString stringWithFormat:@"%@等%lu位好友",userM.name,(unsigned long)userStat.joineduserArray.count]];
+                    }else{
+                        [nameStr appendString:userM.name];
+                    }
+                }
+            }
+            conut++;
+        }
+        if (userStat.type==5) { // 参加活动
+            _mesLabel.text = [NSString stringWithFormat:@"%@报名了该活动",nameStr];
+        }else if (userStat.type==12){  // 点评了项目
+            _mesLabel.text = [NSString stringWithFormat:@"%@点评了该项目",nameStr];
+        }
         [_mesLabel setHidden:NO];
         [_nameLabel setHidden:YES];
         [_friendLabel setHidden:YES];
@@ -186,9 +211,6 @@
     [mode setUid:user.uid];
     [mode setAvatar:user.avatar];
     [mode setName:user.name];
-    NSString *da = [NSString stringWithFormat:@"%d",user.friendship];
-    
-    [mode setFriendship:da];
     
     UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
     [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];

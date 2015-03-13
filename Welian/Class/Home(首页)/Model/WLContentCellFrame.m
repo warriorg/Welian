@@ -40,32 +40,35 @@
     // 1.内容
     CGFloat contentX = 10;
     CGFloat contentY = 0;
-    if (status.content.length) {
-        MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
-        [contLabel setText:status.content];
-        contLabel.numberOfLines = 0;
-        contLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        contLabel.font = WLFONT(15);
-        
-        CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - IWCellBorderWidth];
-        if (sizelabel.height>140) {
-            
-        }
-        _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
-        
-    }else {
+    if (status.type== 6||status.type==5||status.type== 12) {
         _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
-    }
-    if (status.photos.count) {
-        // 4.如果有配图
-        CGFloat photoListX = contentX;
-        CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + 5;
-        
-        // 根据图片数量计算相册的尺寸
-        CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos needAutoSize:NO];
-        
-        _photoListViewF = (CGRect){{photoListX, photoListY}, photoListSize};
-
+        _photoListViewF = _contentLabelF;
+    }else{
+        if (status.content.length) {
+            MLEmojiLabel *contLabel = [[MLEmojiLabel alloc] init];
+            [contLabel setText:status.content];
+            contLabel.numberOfLines = 0;
+            contLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            contLabel.font = WLFONT(15);
+            
+            CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - IWCellBorderWidth];
+            if (sizelabel.height>140) {
+                
+            }
+            _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
+        }else{
+            _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
+        }
+        if (status.photos.count) {
+            // 4.如果有配图
+            CGFloat photoListX = contentX;
+            CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + 5;
+            
+            // 根据图片数量计算相册的尺寸
+            CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos needAutoSize:NO];
+            
+            _photoListViewF = (CGRect){{photoListX, photoListY}, photoListSize};
+        }
     }
     
     // 6.整个cell的高度
@@ -77,8 +80,12 @@
     
     // 活动和项目高度
     if (status.card) {
-        _cellCardF = CGRectMake(contentX, _cellHeight+10, _cellWidth - IWCellBorderWidth, 56);
-        _cellHeight += 66;
+        NSInteger yy = 10;
+        if (status.type== 6||status.type==5||status.type== 12) {
+            yy = 0;
+        }
+        _cellCardF = CGRectMake(contentX, _cellHeight+yy, _cellWidth - IWCellBorderWidth, 56);
+        _cellHeight += 56+yy;
     }
     
     if (!(status.type==4||status.type==5||status.type==6||status.type==12)) {
@@ -86,7 +93,7 @@
         _dockFrame = CGRectMake(contentX, dockY, _cellWidth - IWCellBorderWidth, IWStatusDockH);
         _cellHeight = CGRectGetMaxY(_dockFrame);
     }else{
-        _cellHeight +=10;
+        _cellHeight +=5;
     }
     
 }

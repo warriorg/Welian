@@ -171,6 +171,15 @@
         }
     }
     [statusM setCommentsArray:commentArrayM];
+    NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
+    NSMutableArray *joinArrayM = [NSMutableArray array];
+    if (joinedusers.count) {
+        for (NSDictionary *joDic in joinedusers) {
+            UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
+            [joinArrayM addObject:joMode];
+        }
+    }
+    [statusM setJoineduserArray:joinArrayM];
     
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
@@ -415,7 +424,7 @@
 {
     WLStatusFrame *statusF = _dataArry[indexPath.row];
     
-    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5) return;
+    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];

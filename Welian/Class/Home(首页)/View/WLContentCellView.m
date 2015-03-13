@@ -146,22 +146,28 @@
 
 - (void)setViewDataAndFrame:(WLStatusM *)status frame:(WLContentCellFrame *)contenFrame
 {
-    // 3.正文
-    _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    _contentLabel.customEmojiPlistName = @"expressionImage_custom";
-    CGRect textFrame = contenFrame.contentLabelF;
-
-    _contentLabel.frame = textFrame;
-    _contentLabel.text = status.content;
-    
-    // 4.配图
-    if (status.photos.count) {
-        _photoListView.hidden = NO;
-        _photoListView.frame = contenFrame.photoListViewF;
-        // 传递图片数组给相册控件
-        _photoListView.photos = status.photos;
-    } else {
+    if (status.type==6||status.type==5||status.type==12) {
+        _contentLabel.hidden = YES;
         _photoListView.hidden = YES;
+    }else{
+        _contentLabel.hidden = NO;
+        // 3.正文
+        _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+        _contentLabel.customEmojiPlistName = @"expressionImage_custom";
+        CGRect textFrame = contenFrame.contentLabelF;
+        
+        _contentLabel.frame = textFrame;
+        _contentLabel.text = status.content;
+        
+        // 4.配图
+        if (status.photos.count) {
+            _photoListView.hidden = NO;
+            _photoListView.frame = contenFrame.photoListViewF;
+            // 传递图片数组给相册控件
+            _photoListView.photos = status.photos;
+        } else {
+            _photoListView.hidden = YES;
+        }
     }
     
     if (status.card) {
@@ -192,15 +198,37 @@
 - (void)projectAndActivityBtnClick:(UIButton*)but event:(id)event
 {
     CardStatuModel *card = self.statusFrame.status.card;
-    if (card.type.integerValue == 3) {   // 活动
+    if (card.type.integerValue == 3||card.type.integerValue == 5) {   // 活动
         
-        ActivityDetailInfoViewController *activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:card.cid];
-        [self.homeVC.navigationController pushViewController:activityInfoVC animated:YES];
+        //查询本地有没有该活动
+        ActivityInfo *activityInfo = [ActivityInfo getActivityInfoWithActiveId:card.cid Type:@(0)];
+        ActivityDetailInfoViewController *activityInfoVC = nil;
+        if(activityInfo){
+            activityInfoVC = [[ActivityDetailInfoViewController alloc] initWithActivityInfo:activityInfo];
+        }else{
+            activityInfoVC = [[ActivityDetailInfoViewController alloc] initWIthActivityId:card.cid];
+        }
+        if (activityInfoVC) {
+            [self.homeVC.navigationController pushViewController:activityInfoVC animated:YES];
+        }
         
-    }else if (card.type.integerValue ==10){ // 项目
+    }else if (card.type.integerValue ==10||card.type.integerValue==12){ // 项目
         
-        ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectPid:card.cid];
-        [self.homeVC.navigationController pushViewController:projectVC animated:YES];
+        //查询数据库是否存在
+        ProjectInfo *projectInfo = [ProjectInfo getProjectInfoWithPid:card.cid Type:@(0)];
+        ProjectDetailsViewController *projectDetailVC = nil;
+        if (projectInfo) {
+            projectDetailVC = [[ProjectDetailsViewController alloc] initWithProjectInfo:projectInfo];
+        }else{
+            IProjectInfo *iProjectInfo = [[IProjectInfo alloc] init];
+            iProjectInfo.name = card.title;
+            iProjectInfo.pid = card.cid;
+            iProjectInfo.intro = card.intro;
+            projectDetailVC = [[ProjectDetailsViewController alloc] initWithIProjectInfo:iProjectInfo];
+        }
+        if (projectDetailVC) {
+            [self.homeVC.navigationController pushViewController:projectDetailVC animated:YES];
+        }
         
     }else if (card.type.integerValue == 11){  // 网页
         //普通链接
@@ -209,6 +237,15 @@
         webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
         webVC.showRightShareBtn = YES;//现实右上角分享按钮
         [self.homeVC.navigationController pushViewController:webVC animated:YES];
+    }else if (card.type.integerValue==4||card.type.integerValue==6){   // 个人信息
+        UserInfoModel *mode = [[UserInfoModel alloc] init];
+        WLBasicTrends *user = self.statusFrame.status.user?self.statusFrame.status.user:self.commentFrame.status.user;
+        [mode setUid:user.uid];
+        [mode setAvatar:user.avatar];
+        [mode setName:user.name];
+        
+        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
     }
 }
 

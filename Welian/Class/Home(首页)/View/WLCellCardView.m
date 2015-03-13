@@ -78,6 +78,9 @@
         
     }else if (typeint==13){ // 话题
         imageName = @"home_repost_huati";
+    }else if (typeint==4 || typeint==6){ // 个人信息
+        
+        imageName = @"home_repost_beijing";
     }
     
     [_iconImage setImage:[UIImage imageNamed:imageName]];
