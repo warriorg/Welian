@@ -439,8 +439,10 @@
                 publishShareVC.statusCard = newCardM;
                 
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:publishShareVC];
-                [self presentViewController:navShareFVC animated:YES completion:^{
-                    
+                [self presentViewController:navShareFVC animated:YES completion:nil];
+                //回调发送成功
+                [publishShareVC setPublishBlock:^(void){
+                    [WLHUDView showSuccessHUD:@"分享成功！"];
                 }];
             }
                 break;
