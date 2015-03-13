@@ -79,7 +79,7 @@
 }
 
 + (CGSize)neededSizeForText:(NSString *)text {
-    CGFloat maxWidth = InfoMaxWidth;
+    CGFloat maxWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.8 : 0.56);
     
     CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
     

@@ -68,24 +68,31 @@
     _dateLabel.text = [_activityInfo displayStartWeekDay];
     
     if(_activityInfo.type.integerValue == 0){
-        //免费
-        if(_activityInfo.joined.integerValue >= _activityInfo.limited.integerValue){
-            _numLabel.hidden = YES;
-            _statusLabel.text = @"已报满";
-        }else{
+        //免费活动
+        if(_activityInfo.limited.integerValue == 0){
+            //不限人数，可以报名
             _statusLabel.text = @"报名";
             _numLabel.hidden = NO;
             _numLabel.text = _activityInfo.joined.stringValue;
+        }else{
+            if(_activityInfo.joined.integerValue >= _activityInfo.limited.integerValue){
+                _numLabel.hidden = YES;
+                _statusLabel.text = @"已报满";
+            }else{
+                _statusLabel.text = @"报名";
+                _numLabel.hidden = NO;
+                _numLabel.text = _activityInfo.joined.stringValue;
+            }
         }
     }else{
         //收费
-        if(_activityInfo.limited.integerValue <= 0){
-            _numLabel.hidden = YES;
-            _statusLabel.text = @"已报满";
-        }else{
+        if(_activityInfo.limited.integerValue > 0){
             _statusLabel.text = @"报名";
             _numLabel.hidden = NO;
             _numLabel.text = _activityInfo.joined.stringValue;
+        }else{
+            _numLabel.hidden = YES;
+            _statusLabel.text = @"已报满";
         }
     }
     

@@ -524,7 +524,11 @@
 
 #pragma mark - XHMessageTableViewController Delegate
 - (BOOL)shouldLoadMoreMessagesScrollToTop {
-    return YES;
+    if (_friendUser.rsChatMessages.count > _localMessages.count) {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 - (void)loadMoreMessagesScrollTotop {

@@ -129,7 +129,6 @@
 //获取所有的普通的项目排序后数据
 + (NSArray *)allNormalActivityInfos
 {
-//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K != %@", @"activeType",@(0),@"status",@(2)];
     NSArray *nowArray = [ActivityInfo MR_findAllSortedBy:@"startime" ascending:YES withPredicate:pre];
     //0 还没开始，1进行中。2结束
@@ -145,10 +144,18 @@
 + (NSArray *)allMyActivityInfoWithType:(NSNumber *)activityType
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"activeType",activityType,@"rsLoginUser",loginUser];
-    NSArray *all = [ActivityInfo MR_findAllSortedBy:@"activeid" ascending:NO withPredicate:pre];
+    //未开始
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != %@", @"activeType",activityType,@"rsLoginUser",loginUser,@"status",@(2)];
+    NSArray *unStartArray = [ActivityInfo MR_findAllSortedBy:@"startime" ascending:YES withPredicate:pre];
+    //已结束
+    NSPredicate *pre1 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"activeType",activityType,@"rsLoginUser",loginUser,@"status",@(2)];
+    NSArray *endArray = [ActivityInfo MR_findAllSortedBy:@"startime" ascending:NO withPredicate:pre1];
     
-    return all;
+    NSMutableArray *allArray = [NSMutableArray array];
+    [allArray addObjectsFromArray:unStartArray];
+    [allArray addObjectsFromArray:endArray];
+    
+    return [NSArray arrayWithArray:allArray];
 }
 
 //更新收藏状态
