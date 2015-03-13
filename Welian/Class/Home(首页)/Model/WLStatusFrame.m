@@ -37,7 +37,8 @@
 {
     _status = status;
     _cellHigh = 60;
-    if (status.type==1||status.type==2||status.type==6) { // 0正常动态，1转推动态，2推荐动态，6修改自己资料
+    //0 正常动态，1 转推的动态，2推荐的动态，3创建的活动，4 修改个人公司，5 参加的活动，6 修改学校资料，10创建项目，11 网页, 12点评项目
+    if (status.type==1||status.type==2||status.type==6||status.type==4) {
         _cellHigh = 90;
     }
     _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth];

@@ -40,7 +40,7 @@
     // 1.内容
     CGFloat contentX = 10;
     CGFloat contentY = 0;
-    if (status.type== 6||status.type==5||status.type== 12) {
+    if (status.type== 6||status.type==5||status.type== 12||status.type==4) {
         _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
         _photoListViewF = _contentLabelF;
     }else{
@@ -81,7 +81,7 @@
     // 活动和项目高度
     if (status.card) {
         NSInteger yy = 10;
-        if (status.type== 6||status.type==5||status.type== 12) {
+        if (status.type== 6||status.type==5||status.type== 12||status.type==4) {
             yy = 0;
         }
         _cellCardF = CGRectMake(contentX, _cellHeight+yy, _cellWidth - IWCellBorderWidth, 56);
