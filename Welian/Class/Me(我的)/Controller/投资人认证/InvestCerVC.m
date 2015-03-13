@@ -131,7 +131,7 @@ static NSString *itemscellid = @"itemscellid";
             
         }else if (auth ==-1){ // 认证失败
             [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(anewAuth)]];
-            [cell.stateLabel setText:@"认证失败"];
+            [cell.stateLabel setText:@"认证失败，请重新上传名片！"];
         }
         
         [cell.investCardBut sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"investor_attestation_add"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
