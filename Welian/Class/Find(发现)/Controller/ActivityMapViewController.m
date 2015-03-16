@@ -52,6 +52,12 @@
     self.mapView = mapView;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar reset];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     _searcher.delegate = nil;

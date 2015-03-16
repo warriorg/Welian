@@ -29,6 +29,7 @@
 #import "UIImage+FixOrientation.h"
 
 #import "NSObject+MJKeyValue.h"
+#import "UINavigationBar+BackgroundColor.h"
 
 #pragma mark - Other
 #import "ACETelPrompt.h"
