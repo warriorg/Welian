@@ -191,7 +191,6 @@
     }else{
         [_dock setHidden:YES];
     }
-    
 }
 
 #pragma mark - 项目或活动点击
