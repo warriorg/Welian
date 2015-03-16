@@ -229,7 +229,17 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.commentHeadView.cellHeadView.iconImageView sd_setImageWithURL:[NSURL URLWithString:statusM.user.avatar] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         iconImage = image;
     }];
-
+    NSString *contStr = statusM.content;
+    
+    //3 活动，10项目，11 网页
+    if (statusM.type==3||statusM.type==10||statusM.type==11) {
+        if (statusM.content.length) {
+            contStr = [NSString stringWithFormat:@"%@ | %@，%@",statusM.content,statusM.card.title,statusM.card.intro];
+        }else{
+            contStr = [NSString stringWithFormat:@"%@，%@",statusM.card.title,statusM.card.intro];
+        }
+    }
+    
     NSArray *twoArray = @[@(ShareTypeReport)];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
@@ -261,12 +271,12 @@ static NSString *noCommentCell = @"NoCommentCell";
                 break;
             case ShareTypeWeixinFriend:
             {
-                [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChat];
+                [[ShareEngine sharedShareEngine] sendWeChatMessage:name andDescription:contStr WithUrl:statusM.shareurl andImage:iconImage WithScene:weChat];
             }
                 break;
             case ShareTypeWeixinCircle:
             {
-                [[ShareEngine sharedShareEngine] sendWeChatMessage:statusM.content andDescription:statusM.content WithUrl:statusM.shareurl andImage:iconImage WithScene:weChatFriend];
+                [[ShareEngine sharedShareEngine] sendWeChatMessage:contStr andDescription:contStr WithUrl:statusM.shareurl andImage:iconImage WithScene:weChatFriend];
             }
                 break;
             case ShareTypeReport:

@@ -197,7 +197,10 @@
 #pragma mark - 项目或活动点击
 - (void)projectAndActivityBtnClick:(UIButton*)but event:(id)event
 {
-    CardStatuModel *card = self.statusFrame.status.card;
+    CardStatuModel *card = self.commentFrame.status.card;
+    if (card==nil) {
+        card = self.statusFrame.status.card;
+    }
     if (card.type.integerValue == 3||card.type.integerValue == 5) {   // 活动
         
         //查询本地有没有该活动

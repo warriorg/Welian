@@ -14,6 +14,7 @@
 #import "UserInfoBasicVC.h"
 #import "InvestorUser.h"
 #import "UIImage+ImageEffects.h"
+#import "InvestCerVC.h"
 
 @interface InvestorUsersListController () <UISearchBarDelegate,UISearchDisplayDelegate>
 {
@@ -100,6 +101,8 @@ static NSString *identifier = @"investorcellid";
     self.searchQueue = [[NSOperationQueue alloc] init];
     [self.searchQueue setMaxConcurrentOperationCount:1];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"认证投资人" style:UIBarButtonItemStyleBordered target:self action:@selector(goToInvestor)];
+    
     self.searchBar = [[UISearchBar alloc] init];
     [self.searchBar setDelegate:self];
     [self.searchBar setSearchBarStyle:UISearchBarStyleProminent];
@@ -127,6 +130,13 @@ static NSString *identifier = @"investorcellid";
     [self loadNewDataArray];
 }
 
+
+#pragma mark - 去认证
+- (void)goToInvestor
+{
+    InvestCerVC *investVC = [[InvestCerVC alloc] init];
+    [self.navigationController pushViewController:investVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

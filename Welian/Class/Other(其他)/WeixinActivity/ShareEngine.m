@@ -50,8 +50,8 @@ single_implementation(ShareEngine)
         scaledImage = [UIImage imageWithData:thum];
     }
     NSInteger meLength = message.length;
-    if (meLength>20) {
-        message = [message substringWithRange:NSMakeRange(0, 20)];
+    if (meLength>50) {
+        message = [message substringWithRange:NSMakeRange(0, 50)];
     }
     NSInteger desLength = descriptStr.length;
     if (desLength>50) {
