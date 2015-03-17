@@ -274,4 +274,12 @@
     return text.length > 250 ? [text substringToIndex:250] : text;
 }
 
+//分享到微信的内容
+- (NSString *)displayShareToWx
+{
+    NSDate *startDate = [self.startime dateFromNormalString];
+    NSString *info = [NSString stringWithFormat:@"%@ · %@(%@)\n%@",self.city,[startDate formattedDateWithFormat:@"MM月dd日"],[self displayStartWeekDay],self.address];
+    return info;
+}
+
 @end

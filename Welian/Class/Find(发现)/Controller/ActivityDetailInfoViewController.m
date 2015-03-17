@@ -414,8 +414,9 @@
     newCardM.type = @(3);
     newCardM.url = _activityInfo.shareurl;
     newCardM.title = _activityInfo.name;
-    NSString *info = [_activityInfo displayActivityInfo];
-    newCardM.intro = info.length > 50 ? [info substringToIndex:50] : info;
+    newCardM.intro = [NSString stringWithFormat:@"%@ %@",_activityInfo.city,[[_activityInfo.startime dateFromNormalString] formattedDateWithFormat:@"yyyy-MM-dd"]];
+//    NSString *info = [_activityInfo displayActivityInfo];
+//    newCardM.intro = info.length > 50 ? [info substringToIndex:50] : info;
     //分享回调
     WEAKSELF
     [shareView setWlShareBlock:^(ShareType duration){
@@ -460,17 +461,20 @@
 //分享到微信和微信朋友圈
 - (void)shareToWX:(WeiboType)type
 {
-    NSString *desc = _activityInfo.intro;
-    NSURL *imgUrl = [NSURL URLWithString:_activityInfo.logo];
+    NSString *desc = [_activityInfo displayShareToWx];
+//    NSURL *imgUrl = [NSURL URLWithString:_activityInfo.logo];
     NSString *link = _activityInfo.shareurl;
     NSString *title = _activityInfo.name;
-    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
-                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
-                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                       DLog(@"shareFriendImage---->>>%@",image);
-                                                       [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:nil WithScene:type];
-                                                   }];
+    
+    UIImage *shareImage = [UIImage imageNamed:@"home_repost_huodong"];
+    [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:type];
+//    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
+//                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
+//                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//                                                       DLog(@"shareFriendImage---->>>%@",image);
+//                                                       
+//                                                   }];
 }
 
 //收藏
