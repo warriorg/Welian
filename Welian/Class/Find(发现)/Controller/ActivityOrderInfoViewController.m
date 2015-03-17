@@ -159,7 +159,7 @@
     payAboutBtn.right = payBtn.right;
     payAboutBtn.bottom = payBtn.top - kMarginEdge;
     [payAboutBtn addTarget:self action:@selector(payAboutBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:payAboutBtn];
+//    [footerView addSubview:payAboutBtn];
     
     tableView.tableFooterView = footerView;
 }
@@ -354,7 +354,7 @@
                                                 [WLHUDView hiddenHud];
                                                 //刷新详情页面
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedReloadActivityUI" object:nil];
-                                                [UIAlertView bk_showAlertViewWithTitle:nil
+                                                [UIAlertView bk_showAlertViewWithTitle:@""
                                                                                message:@"恭喜您，活动报名成功！"
                                                                      cancelButtonTitle:@"确定"
                                                                      otherButtonTitles:nil
@@ -362,10 +362,31 @@
                                                                                    [self.navigationController popViewControllerAnimated:YES];
                                                                                }];
                                             } fail:^(NSError *error) {
-                                                [UIAlertView showWithTitle:nil message:@"订单状态修改失败，请电话联系客服确认订单状态"];
+                                                [UIAlertView bk_showAlertViewWithTitle:@""
+                                                                               message:[NSString stringWithFormat:@"订单状态修改失败，请联系客服：%@",kTelNumber]
+                                                                        cancelButtonTitle:@"取消"
+                                                                     otherButtonTitles:@[@"呼叫"]
+                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                                                   if(buttonIndex == 0){
+                                                                                       return ;
+                                                                                   }else{
+                                                                                       [self telToWeLian];
+                                                                                   }
+                                                                               }];
                                             }];
 }
 
+//拨打电话
+- (void)telToWeLian
+{
+    //拨打电话
+    [ACETelPrompt callPhoneNumber:kTelNumber
+                             call:^(NSTimeInterval duration) {
+                                 DLog(@"User made a call of \(%f) seconds",duration);
+                             } cancel:^{
+                                 DLog(@"User cancelled the call");
+                             }];
+}
 
 //获取表格头部内容的高度
 - (CGFloat)configureTableHeaderHeight

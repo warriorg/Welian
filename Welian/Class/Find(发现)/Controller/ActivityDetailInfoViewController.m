@@ -311,8 +311,8 @@
             cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         cell.indexPath = indexPath;
-        cell.hidOperateBtn = YES;
         cell.baseUser = _datasource[indexPath.row];
+        cell.hidOperateBtn = YES;
         cell.hidBottomLine = YES;//隐藏分割线
         return cell;
     }
@@ -373,13 +373,13 @@
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
-                return [ActivityCustomViewCell configureWithMsg:[_activityInfo displayStartTimeInfo]];
+                return [ActivityCustomViewCell configureWithMsg:[_activityInfo displayStartTimeInfo] hasArrowImage:NO];
                 break;
             case 1:
-                return [ActivityCustomViewCell configureWithMsg:_activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address];
+                return [ActivityCustomViewCell configureWithMsg:_activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address hasArrowImage:YES];
                 break;
             case 2:
-                return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited]];
+                return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited] hasArrowImage:YES];
                 break;
             case 3:
                 return [ActivityInfoViewCell configureWithTitle:_activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
@@ -534,7 +534,7 @@
                 //1收费，0免费
                 if (_activityInfo.type.integerValue == 0) {
                     //取消报名
-                    [UIAlertView bk_showAlertViewWithTitle:nil
+                    [UIAlertView bk_showAlertViewWithTitle:@""
                                                    message:@"取消参加当前活动？"
                                          cancelButtonTitle:@"取消"
                                          otherButtonTitles:@[@"确定"]
