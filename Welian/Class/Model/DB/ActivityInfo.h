@@ -67,5 +67,7 @@
 - (NSString *)displayStartTimeInfo;
 //获取活动详情
 - (NSString *)displayActivityInfo;
+//分享到微信的内容
+- (NSString *)displayShareToWx;
 
 @end
