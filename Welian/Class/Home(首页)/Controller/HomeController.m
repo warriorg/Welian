@@ -173,6 +173,11 @@
     [statusM setCommentsArray:commentArrayM];
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
+   UserInfoModel *meInfoM = [[UserInfoModel alloc] init];
+    meInfoM.name = statusM.user.name;
+    meInfoM.uid = statusM.user.uid;
+    meInfoM.avatar = statusM.user.avatar;
+    [joinArrayM addObject:meInfoM];
     if (joinedusers.count) {
         for (NSDictionary *joDic in joinedusers) {
             UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
