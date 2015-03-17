@@ -381,7 +381,7 @@
 #pragma mark - 删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [UIAlertView bk_showAlertViewWithTitle:nil
+    [UIAlertView bk_showAlertViewWithTitle:@""
                                    message:@"确认删除当前项目？"
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@[@"删除"]

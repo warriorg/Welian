@@ -911,7 +911,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (loginUser.investorauth.integerValue == 1 || loginUser.uid.integerValue == _projectDetailInfo.rsProjectUser.uid.integerValue) {
         [self openProjectDetailInfoView];
     }else{
-        [UIAlertView bk_showAlertViewWithTitle:nil
+        [UIAlertView bk_showAlertViewWithTitle:@""
                                        message:@"您不是认证投资人，无法查看融资信息"
                              cancelButtonTitle:@"取消"
                              otherButtonTitles:@[@"去认证"]

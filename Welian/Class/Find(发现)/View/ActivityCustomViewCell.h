@@ -13,6 +13,6 @@
 @property (assign,nonatomic) BOOL showCustomInfo;
 
 //返回cell的高度
-+ (CGFloat)configureWithMsg:(NSString *)msg;
++ (CGFloat)configureWithMsg:(NSString *)msg hasArrowImage:(BOOL)hasArrowImage;
 
 @end

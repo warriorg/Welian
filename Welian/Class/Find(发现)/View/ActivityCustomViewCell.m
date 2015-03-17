@@ -97,9 +97,9 @@
 }
 
 //返回cell的高度
-+ (CGFloat)configureWithMsg:(NSString *)msg
++ (CGFloat)configureWithMsg:(NSString *)msg hasArrowImage:(BOOL)hasArrowImage
 {
-    float maxWidth = [[UIScreen mainScreen] bounds].size.width - 70.f;
+    float maxWidth = [[UIScreen mainScreen] bounds].size.width - 47.f - (hasArrowImage ? 40.f : 15.f);
     //计算第一个label的高度
     CGSize size = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     

@@ -79,7 +79,7 @@
 }
 
 + (CGSize)neededSizeForText:(NSString *)text {
-    CGFloat maxWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.8 : 0.56);
+    CGFloat maxWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.8 : 0.6);
     
     CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
     
@@ -97,7 +97,7 @@
     
     CGSize textSize = [displayLabel preferredSizeWithMaxWidth:maxWidth];
     
-    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop * 2);
+    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight + kWLArrowMarginWidth, textSize.height + kMarginTop);
 //    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
 }
 
@@ -366,7 +366,7 @@
 //            _displayLabel.customEmojiPlistName = @"expressionImage_custom";
 //            _displayLabel.frame = textFrame;
             //设置文字
-            _displayLabel.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+            _displayLabel.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? kTitleNormalTextColor : [UIColor whiteColor];
             _displayLabel.text = message.text;
             
 //            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text] withTextColor:[UIColor blackColor]];
@@ -621,14 +621,14 @@
         {
             self.bubbleImageView.frame = bubbleFrame;
             
-            CGFloat textX = CGRectGetMinX(bubbleFrame) + kBubblePaddingRight;
+            CGFloat textX = CGRectGetMinX(bubbleFrame) + kBubblePaddingRight - kWLArrowMarginWidth / 4.0;
             
             if (self.message.bubbleMessageType == WLBubbleMessageTypeReceiving) {
-                textX += kWLArrowMarginWidth / 2.0;
+                textX += 6.f;
             }
             
             CGRect textFrame = CGRectMake(textX,
-                                          CGRectGetMinY(bubbleFrame) + kPaddingTop,
+                                          CGRectGetMinY(bubbleFrame) + kPaddingTop / 2.f + 1.f,
                                           CGRectGetWidth(bubbleFrame) - kBubblePaddingRight * 2,
                                           bubbleFrame.size.height - kMarginTop - kMarginBottom);
             
@@ -662,16 +662,14 @@
         }
         default:
         {
-            self.bubbleImageView.frame = bubbleFrame;
-            
-            CGFloat textX = CGRectGetMinX(bubbleFrame) + kBubblePaddingRight;
+            CGFloat textX = CGRectGetMinX(bubbleFrame) + kBubblePaddingRight - kWLArrowMarginWidth / 4.0;
             
             if (self.message.bubbleMessageType == WLBubbleMessageTypeReceiving) {
-                textX += kWLArrowMarginWidth / 2.0;
+                textX += 6.f;
             }
             
             CGRect textFrame = CGRectMake(textX,
-                                          CGRectGetMinY(bubbleFrame) + kPaddingTop,
+                                          CGRectGetMinY(bubbleFrame) + kPaddingTop / 2.f + 1.f,
                                           CGRectGetWidth(bubbleFrame) - kBubblePaddingRight * 2,
                                           bubbleFrame.size.height - kMarginTop - kMarginBottom);
             

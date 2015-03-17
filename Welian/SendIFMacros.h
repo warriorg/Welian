@@ -134,8 +134,12 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 
 //支付宝回调地址
-#define kAlipayNotifyURL @"http://test.welian.com:8080/alipay/notify"
-//#define kAlipayNotifyURL @"http://www.welian.com:8080/alipay/notify"
+//#define kAlipayNotifyURL @"http://test.welian.com:8080/alipay/notify"
+#define kAlipayNotifyURL @"http://www.welian.com:8080/alipay/notify"
+
+
+//微链服务电话 now now
+#define kTelNumber @"18658883913"
 
 
 #define KupdataMyAllFriends @"KupdataMyAllFriends"

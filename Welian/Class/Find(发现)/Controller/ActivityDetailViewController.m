@@ -221,7 +221,7 @@
 - (void)entry:(CDVInvokedUrlCommand *)command
 {
      DLog(@"entry -----> %@",command);
-    [UIAlertView bk_showAlertViewWithTitle:@"系统提示"
+    [UIAlertView bk_showAlertViewWithTitle:@""
                                    message:@"确认是否报名参加当前活动？"
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@[@"报名"]

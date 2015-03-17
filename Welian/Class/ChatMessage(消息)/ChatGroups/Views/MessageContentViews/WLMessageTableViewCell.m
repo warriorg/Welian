@@ -176,6 +176,9 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     //特殊消息大小
     self.messageSpecialView.frame = CGRectMake(self.messageSpecialView.origin.x, layoutOriginY + 5, CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:self.messageSpecialView.message]);//specialViewFrame;
     
+    //设置时间戳位置
+    _timestampLabel.centerX = CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2.0;
+    _timestampLabel.centerY = self.avatorButton.top - 15;
 //    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatorButtonFrame), CGRectGetMaxY(avatorButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
 }
 

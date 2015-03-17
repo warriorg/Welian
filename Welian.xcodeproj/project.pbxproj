@@ -6544,9 +6544,9 @@
 				A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */,
 				A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */,
 				A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */,
-				A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */,
 				A40355F31A5D0A14006AE52C /* BaseCDVViewController.h */,
 				A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */,
+				A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */,
 				A41CE1A51A6E25CC004F17E7 /* ActivityUserListViewController.h */,
 				A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */,
 			);
