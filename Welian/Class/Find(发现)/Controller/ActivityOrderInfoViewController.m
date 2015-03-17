@@ -159,7 +159,7 @@
     payAboutBtn.right = payBtn.right;
     payAboutBtn.bottom = payBtn.top - kMarginEdge;
     [payAboutBtn addTarget:self action:@selector(payAboutBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:payAboutBtn];
+//    [footerView addSubview:payAboutBtn];
     
     tableView.tableFooterView = footerView;
 }
