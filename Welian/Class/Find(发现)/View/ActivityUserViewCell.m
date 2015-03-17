@@ -74,6 +74,7 @@
         [_wxBtn setTitle:@"微信用户" forState:UIControlStateNormal];
         [_wxBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     }else{
+        /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
         [_wxBtn setTitle:@"微链好友" forState:UIControlStateNormal];
         [_wxBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
         _wxBtn.hidden = _baseUser.friendship.integerValue == 1 ? NO : YES;
@@ -104,9 +105,16 @@
             _operateBtn.layer.masksToBounds = YES;
         }
     }
+}
+
+- (void)setHidOperateBtn:(BOOL)hidOperateBtn
+{
+    [super willChangeValueForKey:@"hidOperateBtn"];
+    _hidOperateBtn = hidOperateBtn;
+    [super didChangeValueForKey:@"hidOperateBtn"];
     
     //判断是否隐藏操作按钮
-     _operateBtn.hidden = _hidOperateBtn;
+    _operateBtn.hidden = _hidOperateBtn;
 }
 
 //报名列表的字典用户

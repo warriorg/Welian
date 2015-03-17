@@ -311,8 +311,8 @@
             cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         cell.indexPath = indexPath;
-        cell.hidOperateBtn = YES;
         cell.baseUser = _datasource[indexPath.row];
+        cell.hidOperateBtn = YES;
         cell.hidBottomLine = YES;//隐藏分割线
         return cell;
     }
