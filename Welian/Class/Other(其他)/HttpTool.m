@@ -25,6 +25,8 @@ static HttpTool *engine;
         dispatch_once(&onceToken, ^{
             engine = [[self alloc] initWithBaseURL:[NSURL URLWithString:WLHttpServer]];
             engine.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+            engine.requestSerializer = [AFHTTPRequestSerializer serializer];
+            engine.responseSerializer = [AFHTTPResponseSerializer serializer];
         });
     }
     return engine;
@@ -99,8 +101,15 @@ static HttpTool *engine;
     [self formatUrlAndParameters:parmetDic];
 
     [engine POST:path parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         DLog(@"%@",[operation responseString]);
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
+        NSData *doubi = responseObject;
+        NSString *shabi =  [[NSString alloc]initWithData:doubi encoding:NSUTF8StringEncoding];
+        
+        DLog(@"%@",shabi);
+        
+        
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功
             [WLHUDView hiddenHud];

@@ -604,7 +604,7 @@
 //免费报名
 - (void)noPayToJoin
 {
-    [UIAlertView bk_showAlertViewWithTitle:nil
+    [UIAlertView bk_showAlertViewWithTitle:@""
                                    message:@"报名参加当前活动？"
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@[@"报名"]
