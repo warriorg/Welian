@@ -222,8 +222,12 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             [avatorButton setImage:[WLMessageAvatorFactory avatarImageNamed:[UIImage imageNamed:@"user_small"] messageAvatorType:WLMessageAvatorTypeCircle] forState:UIControlStateNormal];
             [avatorButton addTarget:self action:@selector(avatorButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             //        avatorButton.hidden = message.messageMediaType == WLBubbleMessageSpecialTypeText ? YES : NO;
+            avatorButton.layer.cornerRadius = 17;
+            avatorButton.layer.masksToBounds = YES;
+            avatorButton.backgroundColor = [UIColor lightGrayColor];
             [self.contentView addSubview:avatorButton];
             self.avatorButton = avatorButton;
+//            [avatorButton setDebug:YES];
         }
         
         
