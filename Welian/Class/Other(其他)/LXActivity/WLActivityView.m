@@ -132,11 +132,10 @@
     }
     WEAKSELF
     list.shareBlock = ^(ShareType stype){
-        
+        [weakSelf tappedCancel];
         if (weakSelf.wlShareBlock) {
             weakSelf.wlShareBlock(stype);
         }
-        [weakSelf tappedCancel];
     };
     [cell.contentView addSubview:list];
     

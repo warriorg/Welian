@@ -31,7 +31,8 @@
 @property (nonatomic, weak, readwrite) MLEmojiLabel *displayLabel;
 
 //用于显示卡片类型的控件
-@property (nonatomic, weak, readwrite) WLCellCardView *displayCardView;
+//@property (nonatomic, weak, readwrite) WLCellCardView *displayCardView;
+@property (nonatomic, weak, readwrite) WLMessageCardView *displayCardView;
 
 @property (nonatomic, weak, readwrite) UIImageView *bubbleImageView;
 
@@ -135,7 +136,7 @@
                 case WLBubbleMessageCardTypeActivity:
                 case WLBubbleMessageCardTypeProject:
                 case WLBubbleMessageCardTypeWeb:
-                    bubbleSize = CGSizeMake(InfoMaxWidth, 56.f);
+                    bubbleSize = CGSizeMake(InfoMaxWidth, [WLMessageCardView calculateCellHeightWithMessage:message]);
                     break;
                 default:
                     //其他展示文本类型
@@ -415,13 +416,13 @@
                     model.title = message.cardTitle;
                     model.intro = message.cardIntro;
                     model.url = message.cardUrl;
-                    _displayCardView.cardM = model;
-                    _displayCardView.isHidLine = YES;//隐藏边线
-//                    _displayCardView.iconImage.image = [UIImage imageNamed:@"home_repost_huodong"];
-//                    _displayCardView.titLabel.text = @"杭州投资牛皮盛宴";
-//                    _displayCardView.detailLabel.text = @"4月10日，杭州";
-                    _displayCardView.tapBut.hidden = YES;
-                    //            [_displayCardView setDebug:YES];
+                    model.content = message.text;
+//                    _displayCardView.cardM = model;
+//                    _displayCardView.isHidLine = YES;//隐藏边线
+//                    _displayCardView.tapBut.hidden = YES;
+                    _displayCardView.cardInfo = model;
+//                    [_displayCardView setDebug:YES];
+                    
                 }
                     break;
                 default:
@@ -467,8 +468,11 @@
         
         //初始化现实卡片的view
         if(!_displayCardView){
-            WLCellCardView *cardView = [[WLCellCardView alloc] init];
-            cardView.backgroundColor = [UIColor clearColor];
+//            WLCellCardView *cardView = [[WLCellCardView alloc] init];
+//            cardView.backgroundColor = [UIColor clearColor];
+//            [self addSubview:cardView];
+//            self.displayCardView = cardView;
+            WLMessageCardView *cardView = [[WLMessageCardView alloc] init];
             [self addSubview:cardView];
             self.displayCardView = cardView;
         }
@@ -694,7 +698,7 @@
 {
     CGRect cardFrame = bubbleFrame;
     cardFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x : 7.f);
-    cardFrame.size = CGSizeMake(bubbleFrame.size.width - kPaddingTop,56.f);
+    cardFrame.size = CGSizeMake(bubbleFrame.size.width - kPaddingTop,bubbleFrame.size.height);
     _displayCardView.frame = cardFrame;
     _displayCardView.centerY = _bubbleImageView.centerY;
 }

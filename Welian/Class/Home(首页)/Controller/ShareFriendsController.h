@@ -10,10 +10,12 @@
 #import "CardStatuModel.h"
 
 typedef void(^shareMessageSuccessBlock)(void);
+typedef void(^selectFriendBlock)(MyFriendUser *friendUser);
 
 @interface ShareFriendsController : BasicTableViewController
 
 @property (nonatomic, strong) CardStatuModel *cardM;
 @property (nonatomic, strong) shareMessageSuccessBlock shareSuccessBlock;
+@property (nonatomic, strong) selectFriendBlock selectFriendBlock;
 
 @end

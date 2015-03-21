@@ -163,14 +163,19 @@ static NSString *fridcellid = @"fridcellid";
         friendUser = [MyFriendUser createMyFriendUserModel:(FriendsUserModel *)modeIM];
     }
     
-    UIAlertView *alertV = [UIAlertView bk_alertViewWithTitle:@"确定发送给：" message:friendUser.name];
-    [alertV bk_addButtonWithTitle:@"取消" handler:nil];
-    WEAKSELF
-    [alertV bk_addButtonWithTitle:@"确定" handler:^{
-        [weakSelf sendCardMessageToFriend:friendUser];
-    }];
-    [alertV show];
-    [self.view.findFirstResponder resignFirstResponder];
+    if (_selectFriendBlock) {
+        _selectFriendBlock(friendUser);
+        [self cancelSelf];
+    }
+    
+//    UIAlertView *alertV = [UIAlertView bk_alertViewWithTitle:@"确定发送给：" message:friendUser.name];
+//    [alertV bk_addButtonWithTitle:@"取消" handler:nil];
+//    WEAKSELF
+//    [alertV bk_addButtonWithTitle:@"确定" handler:^{
+//        [weakSelf sendCardMessageToFriend:friendUser];
+//    }];
+//    [alertV show];
+//    [self.view.findFirstResponder resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

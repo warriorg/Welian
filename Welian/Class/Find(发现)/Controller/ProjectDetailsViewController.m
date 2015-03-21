@@ -31,6 +31,7 @@
 #import "NavViewController.h"
 #import "PublishStatusController.h"
 #import "CardStatuModel.h"
+#import "CardAlertView.h"
 
 //图片展示
 #import "MJPhoto.h"
@@ -680,8 +681,12 @@ static NSString *noCommentCell = @"NoCommentCell";
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
                 [self presentViewController:navShareFVC animated:YES completion:nil];
                 //回调发送成功
-                [shareFVC setShareSuccessBlock:^(void){
-                    [WLHUDView showSuccessHUD:@"分享成功！"];
+//                [shareFVC setShareSuccessBlock:^(void){
+//                    [WLHUDView showSuccessHUD:@"分享成功！"];
+//                }];
+                WEAKSELF
+                [shareFVC setSelectFriendBlock:^(MyFriendUser *friendUser){
+                    [weakSelf shareToWeLianFriendWithCardStatuModel:newCardM friend:friendUser];
                 }];
             }
                 break;
@@ -754,6 +759,17 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //    LXActivity *lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:buttons ShareButtonTitles:@[@"微信好友",@"微信朋友圈"] withShareButtonImagesName:@[@"home_repost_wechat",@"home_repost_friendcirle"]];
 //    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+//分享到微链好友
+- (void)shareToWeLianFriendWithCardStatuModel:(CardStatuModel *)cardModel friend:(MyFriendUser *)friendUser
+{
+    CardAlertView *alertView = [[CardAlertView alloc] initWithCardModel:cardModel Friend:friendUser];
+    [alertView show];
+    //发送成功
+    [alertView setSendSuccessBlock:^(void){
+        [WLHUDView showSuccessHUD:@"分享成功！"];
+    }];
 }
 
 /**

@@ -25,6 +25,7 @@
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
 #import "PublishStatusController.h"
+#import "CardAlertView.h"
 
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {

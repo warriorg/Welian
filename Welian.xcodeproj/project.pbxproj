@@ -141,6 +141,10 @@
 		A45065571A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065581A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
 		A45065591A5BD4AF0057F8AA /* ActivityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */; };
+		A460E4161ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
+		A460E4171ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
+		A460E4181ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
+		A460E4191ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
 		A464614C1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
 		A464614D1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
 		A464614E1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
@@ -149,6 +153,10 @@
 		A4670A811A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A821A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
 		A4670A831A79D38800490E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */; };
+		A46A283B1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
+		A46A283C1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
+		A46A283D1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
+		A46A283E1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
 		A46FAE501A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
 		A46FAE511A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
 		A46FAE521A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
@@ -4461,9 +4469,13 @@
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
+		A460E4141ABC150B009DCF63 /* CardAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardAlertView.h; sourceTree = "<group>"; };
+		A460E4151ABC150B009DCF63 /* CardAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardAlertView.m; sourceTree = "<group>"; };
 		A464614B1AAD424D00D2687B /* navbar_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_share@2x.png"; sourceTree = "<group>"; };
 		A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+		A46A28391ABD36AF00BD5EA3 /* WLMessageCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMessageCardView.h; sourceTree = "<group>"; };
+		A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMessageCardView.m; sourceTree = "<group>"; };
 		A46FAE4E1A8DDE00005EB34E /* ActivityLookTicketViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityLookTicketViewCell.h; sourceTree = "<group>"; };
 		A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityLookTicketViewCell.m; sourceTree = "<group>"; };
 		A46FAE541A8DE033005EB34E /* discovery_activity_ticket_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_ticket_bg@2x.png"; sourceTree = "<group>"; };
@@ -6470,6 +6482,23 @@
 			name = Project;
 			sourceTree = "<group>";
 		};
+		A460E4121ABC14E8009DCF63 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				A460E4131ABC14E8009DCF63 /* CardAlertView */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		A460E4131ABC14E8009DCF63 /* CardAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				A460E4141ABC150B009DCF63 /* CardAlertView.h */,
+				A460E4151ABC150B009DCF63 /* CardAlertView.m */,
+			);
+			path = CardAlertView;
+			sourceTree = "<group>";
+		};
 		A464614A1AAD424D00D2687B /* NavImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -6543,9 +6572,9 @@
 				A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */,
 				A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */,
 				A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */,
-				A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */,
 				A40355F31A5D0A14006AE52C /* BaseCDVViewController.h */,
 				A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */,
+				A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */,
 				A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */,
 				A41CE1A51A6E25CC004F17E7 /* ActivityUserListViewController.h */,
 				A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */,
@@ -6983,6 +7012,8 @@
 				A4C144671A4C271900C9BAB5 /* WLBubblePhotoImageView.m */,
 				A437CEF31A541BF300B54E68 /* WLMessageSpecialView.h */,
 				A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */,
+				A46A28391ABD36AF00BD5EA3 /* WLMessageCardView.h */,
+				A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */,
 			);
 			path = MessageContentViews;
 			sourceTree = "<group>";
@@ -9181,6 +9212,7 @@
 			isa = PBXGroup;
 			children = (
 				10389B611A3EC8E3001A785C /* Other.h */,
+				A460E4121ABC14E8009DCF63 /* CustomView */,
 				A437CEE81A53A32000B54E68 /* Project */,
 				F55078861A7F5BE9009CE4F7 /* JKImagePicker */,
 				F5E13A3B1A7B45EF001BB786 /* HMSegmentedControl */,
@@ -12079,6 +12111,7 @@
 				A49C7C7F1A70D42700F2AEC5 /* NSObject+MJMember.m in Sources */,
 				A49C7C801A70D42700F2AEC5 /* YTKKeyValueStore.m in Sources */,
 				A49C7C811A70D42700F2AEC5 /* UIScrollView+XHkeyboardControl.m in Sources */,
+				A460E4191ABC150B009DCF63 /* CardAlertView.m in Sources */,
 				A49C7C821A70D42700F2AEC5 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				A49C7C831A70D42700F2AEC5 /* UIImage+XHRounded.m in Sources */,
 				A49C7C841A70D42700F2AEC5 /* WLPhotoView.m in Sources */,
@@ -12304,6 +12337,7 @@
 				A49C7D391A70D42700F2AEC5 /* WLHttpTool.m in Sources */,
 				A49C7D3A1A70D42700F2AEC5 /* CompanyModel.m in Sources */,
 				A49C7D3B1A70D42700F2AEC5 /* InvestItems.m in Sources */,
+				A46A283E1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */,
 				A49C7D3C1A70D42700F2AEC5 /* NSManagedObject+MagicalRequests.m in Sources */,
 				A49C7D3D1A70D42700F2AEC5 /* AboutViewController.m in Sources */,
 				A49C7D3E1A70D42700F2AEC5 /* WLMessageVoiceFactory.m in Sources */,
@@ -12575,6 +12609,7 @@
 				F53DC3141A49192600F5F712 /* NSObject+MJMember.m in Sources */,
 				F53DC3151A49192600F5F712 /* YTKKeyValueStore.m in Sources */,
 				A4C140851A4BEA8500C9BAB5 /* UIScrollView+XHkeyboardControl.m in Sources */,
+				A460E4181ABC150B009DCF63 /* CardAlertView.m in Sources */,
 				A4A2EAED1A6CF7C8006ADA55 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				A4C140821A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F53DC3161A49192600F5F712 /* WLPhotoView.m in Sources */,
@@ -12800,6 +12835,7 @@
 				F53DC38C1A49192600F5F712 /* WLHttpTool.m in Sources */,
 				F53DC38D1A49192600F5F712 /* CompanyModel.m in Sources */,
 				F534DB661A5119A000B6A725 /* InvestItems.m in Sources */,
+				A46A283D1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */,
 				A4A2EAFF1A6CF7C8006ADA55 /* NSManagedObject+MagicalRequests.m in Sources */,
 				F53DC38E1A49192600F5F712 /* AboutViewController.m in Sources */,
 				A4C144761A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
@@ -13071,6 +13107,7 @@
 				F56649EA1A2AFD56008A5830 /* YTKKeyValueStore.m in Sources */,
 				F56649EB1A2AFD56008A5830 /* WLPhotoView.m in Sources */,
 				F55078B71A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
+				A460E4161ABC150B009DCF63 /* CardAlertView.m in Sources */,
 				F56649EC1A2AFD56008A5830 /* UIView+MJExtension.m in Sources */,
 				A4A2EB241A6CF7C8006ADA55 /* MagicalRecord+Setup.m in Sources */,
 				F56649ED1A2AFD56008A5830 /* ALAsset+isEqual.m in Sources */,
@@ -13296,6 +13333,7 @@
 				F5664A531A2AFD56008A5830 /* TOActivityChrome.m in Sources */,
 				A4A2EAFD1A6CF7C8006ADA55 /* NSManagedObject+MagicalRequests.m in Sources */,
 				F56272901A4D474E002A9B88 /* HomeMessage.m in Sources */,
+				A46A283B1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */,
 				F5664A541A2AFD56008A5830 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F58CA9A31A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */,
 				F5664A551A2AFD56008A5830 /* WLHttpTool.m in Sources */,
@@ -13567,6 +13605,7 @@
 				F5664CA31A2AFDD5008A5830 /* NSObject+MJMember.m in Sources */,
 				F5664CA41A2AFDD5008A5830 /* YTKKeyValueStore.m in Sources */,
 				A4C140841A4BEA8500C9BAB5 /* UIScrollView+XHkeyboardControl.m in Sources */,
+				A460E4171ABC150B009DCF63 /* CardAlertView.m in Sources */,
 				A4A2EAEC1A6CF7C8006ADA55 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				A4C140811A4BEA8500C9BAB5 /* UIImage+XHRounded.m in Sources */,
 				F5664CA51A2AFDD5008A5830 /* WLPhotoView.m in Sources */,
@@ -13792,6 +13831,7 @@
 				F5664D0F1A2AFDD5008A5830 /* WLHttpTool.m in Sources */,
 				F59E76141A4071330028FBAF /* CompanyModel.m in Sources */,
 				F534DB651A5119A000B6A725 /* InvestItems.m in Sources */,
+				A46A283C1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */,
 				A4A2EAFE1A6CF7C8006ADA55 /* NSManagedObject+MagicalRequests.m in Sources */,
 				F5664D101A2AFDD5008A5830 /* AboutViewController.m in Sources */,
 				A4C144751A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,

@@ -600,12 +600,14 @@ static NSString *picCellid = @"PicCellID";
     
     if (_publishType == PublishTypeForward) {
         if (self.statusCard) {
-            NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
-            if (self.textView.text.length) {
-                [pubCardDic setObject:self.textView.text forKey:@"content"];
-            }
-            [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
-            [WLHttpTool addFeedParameterDic:pubCardDic success:^(id JSON) {
+//            NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
+//            if (self.textView.text.length) {
+//                [pubCardDic setObject:self.textView.text forKey:@"content"];
+//            }
+            self.statusCard.content = self.textView.text;
+//            [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
+            NSDictionary *params = @{@"card":[self.statusCard keyValues]};
+            [WLHttpTool addFeedParameterDic:params success:^(id JSON) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
                 if (self.publishBlock) {
                     self.publishBlock();
