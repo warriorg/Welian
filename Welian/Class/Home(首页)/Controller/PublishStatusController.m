@@ -374,34 +374,6 @@ static NSString *picCellid = @"PicCellID";
     }
 }
 
-
-
-
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    if (textView.text.length || self.assets.count) {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    }
-}
-
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    
-    if ([text isEqualToString:@"\n"]) {//按下return键
-        
-        [self dismissKeyBoard];
-        //这里隐藏键盘，不做任何处理
-        [textView resignFirstResponder];
-        
-        return NO;
-    }
-    return YES;
-}
-
-
-
 #pragma mark - Keyboard notifications
 - (void)handleWillShowKeyboard:(NSNotification *)notification
 {

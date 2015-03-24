@@ -27,9 +27,6 @@
 #import "PublishStatusController.h"
 #import "WLMessageInputView.h"
 
-// Categorys
-#import "UIScrollView+XHkeyboardControl.h"
-
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     NSMutableArray *_dataArrayM;
