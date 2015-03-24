@@ -276,33 +276,33 @@
     }
     NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
-        if (statM.iszan==1) {
-            
-            for (UserInfoModel *zanM in statM.zansArray) {
-                if ([zanM.uid integerValue] == [mode.uid integerValue]) {
-                    [zans removeObject:zanM];
-                }
+    if (statM.iszan==1) {
+        
+        for (UserInfoModel *zanM in statM.zansArray) {
+            if ([zanM.uid integerValue] == [mode.uid integerValue]) {
+                [zans removeObject:zanM];
             }
-            [statM setZansArray:zans];
-            [statM setIszan:0];
-            statM.zan -= 1;
-            
-            [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
-                [but setEnabled:YES];
-            } fail:^(NSError *error) {
-                [but setEnabled:YES];
-            }];
-        }else{
-            [zans insertObject:mode atIndex:0];
-            [statM setZansArray:zans];
-            [statM setIszan:1];
-            statM.zan +=1;
-            [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
-                [but setEnabled:YES];
-            } fail:^(NSError *error) {
-                [but setEnabled:YES];
-            }];
         }
+        [statM setZansArray:zans];
+        [statM setIszan:0];
+        statM.zan -= 1;
+        
+        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+            [but setEnabled:YES];
+        } fail:^(NSError *error) {
+            [but setEnabled:YES];
+        }];
+    }else{
+        [zans insertObject:mode atIndex:0];
+        [statM setZansArray:zans];
+        [statM setIszan:1];
+        statM.zan +=1;
+        [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+            [but setEnabled:YES];
+        } fail:^(NSError *error) {
+            [but setEnabled:YES];
+        }];
+    }
     
     if (self.feedzanBlock) {
         self.feedzanBlock (statM);
@@ -323,7 +323,7 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *forwards = [NSMutableArray arrayWithArray:statM.forwardsArray];
-//    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
+    //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (statM.isforward==1) {
         
@@ -381,10 +381,10 @@
                 NSArray *info = [link componentsSeparatedByString:@"#"];
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载
-//                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
-//                activityDetailVC.wwwFolderName = @"www";
-//                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];//sessionId
-//                [self.homeVC.navigationController pushViewController:activityDetailVC animated:YES];
+                //                ActivityDetailViewController *activityDetailVC = [[ActivityDetailViewController alloc] init];
+                //                activityDetailVC.wwwFolderName = @"www";
+                //                activityDetailVC.startPage = [NSString stringWithFormat:@"activity_detail.html?%@?t=%@",sessionId,[NSString getNowTimestamp]];//sessionId
+                //                [self.homeVC.navigationController pushViewController:activityDetailVC animated:YES];
                 
                 //查询本地有没有该活动
                 ActivityInfo *activityInfo = [ActivityInfo getActivityInfoWithActiveId:@(sessionId.integerValue) Type:@(0)];

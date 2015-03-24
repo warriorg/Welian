@@ -377,16 +377,16 @@
     
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         NSArray *dataArray = [NSArray arrayWithArray:JSON];
-        NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:dataArray.count];
-        for (NSDictionary *dic in dataArray) {
-            
-            CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
-            CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-            [commentFrame setCommentM:commentM];
-            
-            [dataAM addObject:commentFrame];
-        }
-        succeBlock (dataAM);
+//        NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:dataArray.count];
+//        for (NSDictionary *dic in dataArray) {
+//            
+//            CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
+//            CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+//            [commentFrame setCommentM:commentM];
+//            
+//            [dataAM addObject:commentFrame];
+//        }
+        succeBlock (dataArray);
     } failure:^(NSError *error) {
         failurBlock(error);
     } withHUD:NO andDim:NO];
