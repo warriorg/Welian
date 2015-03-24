@@ -4,80 +4,46 @@
 <array>
 	<array>
 		<dict>
-			<key>row</key>
-			<string></string>
 			<key>title</key>
 			<string>头像</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 	</array>
 	<array>
 		<dict>
-			<key>row</key>
-			<string>0</string>
 			<key>title</key>
 			<string>名字</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 		<dict>
-			<key>row</key>
-			<string>1</string>
 			<key>title</key>
 			<string>公司</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 		<dict>
-			<key>row</key>
-			<string>2</string>
 			<key>title</key>
 			<string>职位</string>
-			<key>content</key>
-			<string></string>
 		</dict>
+	</array>
+	<array>
+        <dict>
+            <key>title</key>
+            <string>手机号</string>
+        </dict>
 		<dict>
-			<key>row</key>
-			<string>3</string>
 			<key>title</key>
 			<string>邮箱</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 		<dict>
-			<key>row</key>
-			<string>4</string>
 			<key>title</key>
 			<string>地区</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 		<dict>
-			<key>row</key>
-			<string>5</string>
 			<key>title</key>
 			<string>详细地址</string>
-			<key>content</key>
-			<string></string>
 		</dict>
 	</array>
 	<array>
 		<dict>
-			<key>row</key>
-			<string>0</string>
 			<key>title</key>
-			<string>教育背景</string>
-			<key>content</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>row</key>
-			<string>1</string>
-			<key>title</key>
-			<string>工作经历</string>
-			<key>content</key>
-			<string></string>
+			<string>履历</string>
 		</dict>
 	</array>
 </array>

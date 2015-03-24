@@ -81,19 +81,24 @@
 
 - (void)deletePick
 {
-    NSMutableArray *mutAssets = [NSMutableArray arrayWithArray:self.assets];
-    [mutAssets removeObjectAtIndex:_currently-1];
-    self.assets = mutAssets;
-    if (_currently==1) {
-        if (self.assets.count==0) {
-            [self.navigationController popViewControllerAnimated:YES];
-            return;
+    [UIAlertView bk_showAlertViewWithTitle:@"确定删除吗？" message:@"" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex==1) {
+            NSMutableArray *mutAssets = [NSMutableArray arrayWithArray:self.assets];
+            [mutAssets removeObjectAtIndex:_currently-1];
+            self.assets = mutAssets;
+            if (_currently==1) {
+                if (self.assets.count==0) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    return;
+                }
+                [self setPageIndex:0];
+            }else {
+                
+                [self setPageIndex:_currently-2];
+            }
+
         }
-        [self setPageIndex:0];
-    }else {
-        
-        [self setPageIndex:_currently-2];
-    }
+    }];
 }
 
 

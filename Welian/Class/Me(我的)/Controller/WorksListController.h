@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "BasicTableViewController.h"
+#import <UIKit/UIKit.h>
 
 typedef enum {
     WLSchool = 1,   // 教育
@@ -14,7 +14,7 @@ typedef enum {
 } WLUserLoadType;
 
 
-@interface WorksListController : BasicTableViewController
+@interface WorksListController : UIViewController
 
 - (instancetype)initWithType:(WLUserLoadType)type;
 

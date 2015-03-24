@@ -10,7 +10,6 @@
 
 @interface WorkListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *detieLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end

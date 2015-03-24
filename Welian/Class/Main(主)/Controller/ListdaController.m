@@ -74,12 +74,12 @@ static NSString *cellid = @"workscellid";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     WorkListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if ([_type isEqualToString:@"1"]) {
         ISchoolResult *schoolM = _listArray[indexPath.section];
-        [cell.titeLabel setText:schoolM.schoolname];
-        [cell.detieLabel setText:schoolM.specialtyname];
+        NSString *titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
+        [cell.titeLabel setText:titStr];
+        
         if (schoolM.endyear.integerValue==-1) {
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",schoolM.startyear,schoolM.startmonth]];
         }else{
@@ -88,8 +88,8 @@ static NSString *cellid = @"workscellid";
         
     }else if ([_type isEqualToString:@"2"]){
         ICompanyResult *companyM = _listArray[indexPath.section];
-        [cell.titeLabel setText:companyM.companyname];
-        [cell.detieLabel setText:companyM.jobname];
+        NSString *titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
+        [cell.titeLabel setText:titStr];
         if (companyM.endyear.integerValue==-1) {
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",companyM.startyear,companyM.startmonth]];
         }else{
@@ -103,23 +103,13 @@ static NSString *cellid = @"workscellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL ishave = NO;
     NSString *titStr = @"";
-    NSString *deltiStr = @"";
     if ([_type isEqualToString:@"1"]) {
         ISchoolResult *schoolM = _listArray[indexPath.section];
-        titStr = schoolM.schoolname;
-        if (schoolM.specialtyname) {
-            deltiStr = schoolM.specialtyname;
-            ishave = YES;
-        }
+        titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
     }else if ([_type isEqualToString:@"2"]){
         ICompanyResult *companyM = _listArray[indexPath.section];
-        titStr = companyM.companyname;
-        if (companyM.jobname) {
-            deltiStr = companyM.jobname;
-            ishave = YES;
-        }
+        titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
     }
     WorkListCell *workCell = [tableView dequeueReusableCellWithIdentifier:cellid];
     float width = [[UIScreen mainScreen] bounds].size.width - 30;
@@ -130,14 +120,6 @@ static NSString *cellid = @"workscellid";
         moreH += size1.height-18;
     }
     
-    if (ishave) {
-        //计算第二个label的高度
-        CGSize size2 = [deltiStr calculateSize:CGSizeMake(width, FLT_MAX) font:workCell.detieLabel.font];
-        if (size2.height>18) {
-            moreH+= size2.height-18;
-        }
-        return 80+moreH;
-    }
     return 60+moreH;
 }
 

@@ -16,16 +16,57 @@
 #import "ISchoolResult.h"
 #import "ICompanyResult.h"
 
-@interface WorksListController ()
+@interface WorksListController () <UITableViewDelegate,UITableViewDataSource>
 {
     WLUserLoadType _wlUserLoadType;
 }
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NoListView *nolistView;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
+@property (nonatomic, strong) UIView *footView;
 @end
 
 static NSString *cellid = @"workscellid";
 @implementation WorksListController
+
+- (UIView *)footView
+{
+    if (_footView == nil) {
+        _footView = [[UIView alloc] initWithFrame:CGRectMake(0, SuperSize.height-45, SuperSize.width, 45)];
+        UIButton *schoolBut = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width/2, 45)];
+        [schoolBut setTitle:@"教育背景" forState:UIControlStateNormal];
+        [schoolBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        schoolBut.titleLabel.font = WLFONT(16);
+        [_footView addSubview:schoolBut];
+        
+        UIButton *companyBut = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width/2, 0, SuperSize.width/2, 45)];
+        [companyBut setTitle:@"工作经历" forState:UIControlStateNormal];
+        [companyBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        companyBut.titleLabel.font = WLFONT(16);
+        [_footView addSubview:companyBut];
+        UIView *lieView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 1)];
+        [lieView setBackgroundColor:WLLineColor];
+        [_footView addSubview:lieView];
+        UIView *lietwoView = [[UIView alloc] initWithFrame:CGRectMake(SuperSize.width/2, 5, 1, 35)];
+        [lietwoView setBackgroundColor:WLLineColor];
+        [_footView addSubview:lietwoView];
+        
+    }
+    return _footView;
+}
+
+- (UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, SuperSize.height-45) style:UITableViewStylePlain];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+        [self.view addSubview:_tableView];
+    }
+    return _tableView;
+}
 
 - (instancetype)initWithType:(WLUserLoadType)type
 {
@@ -61,14 +102,16 @@ static NSString *cellid = @"workscellid";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.dataArray = [NSMutableArray array];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addWorkExperience)];
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl beginRefreshing];
-
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView registerNib:[UINib nibWithNibName:@"WorkListCell" bundle:nil] forCellReuseIdentifier:cellid];
-    // 加载ui
-    [self loadUIview];
+    [self.view addSubview:self.footView];
 }
 
 - (void)beginPullDownRefreshing
@@ -131,27 +174,15 @@ static NSString *cellid = @"workscellid";
 #pragma mark - 加载页面UI
 - (void)loadUIview
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addWorkExperience)];
-    
-    if (self.dataArray.count==0) {
-        
-    }else {
-        [self.tableView setRowHeight:60.0];
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
+
 }
 
 
 #pragma mark - tableView代理
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return self.dataArray.count;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -159,9 +190,9 @@ static NSString *cellid = @"workscellid";
 
     WorkListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (_wlUserLoadType == WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.section];
-        [cell.titeLabel setText:schoolM.schoolname];
-        [cell.detieLabel setText:schoolM.specialtyname];
+        SchoolModel *schoolM = self.dataArray[indexPath.row];
+        NSString *titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
+        [cell.titeLabel setText:titStr];
         if (schoolM.endyear.integerValue==-1) {
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",schoolM.startyear,schoolM.startmonth]];
         }else{
@@ -169,9 +200,9 @@ static NSString *cellid = @"workscellid";
         }
         
     }else if (_wlUserLoadType == WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.section];
-        [cell.titeLabel setText:companyM.companyname];
-        [cell.detieLabel setText:companyM.jobname];
+        CompanyModel *companyM = self.dataArray[indexPath.row];
+        NSString *titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
+        [cell.titeLabel setText:titStr];
         if (companyM.endyear.integerValue==-1) {
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  至今",companyM.startyear,companyM.startmonth]];
         }else{
@@ -188,7 +219,7 @@ static NSString *cellid = @"workscellid";
     AddWorkOrEducationController *addWkOrEdVC;
 
     if (_wlUserLoadType ==WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.section];
+        SchoolModel *schoolM = self.dataArray[indexPath.row];
         ISchoolResult *iSchool = [[ISchoolResult alloc] init];
         [iSchool setSchoolid:schoolM.schoolid];
         [iSchool setSchoolname:schoolM.schoolname];
@@ -202,7 +233,7 @@ static NSString *cellid = @"workscellid";
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1];
         [addWkOrEdVC setSchoolM:iSchool];
     }else if (_wlUserLoadType ==WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.section];
+        CompanyModel *companyM = self.dataArray[indexPath.row];
         ICompanyResult *iCompany = [[ICompanyResult alloc] init];
         [iCompany setUcid:companyM.ucid];
         [iCompany setCompanyid:companyM.companyid];
@@ -224,24 +255,13 @@ static NSString *cellid = @"workscellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    BOOL ishave = NO;
     NSString *titStr = @"";
-    NSString *deltiStr = @"";
     if (_wlUserLoadType ==WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.section];
-        titStr = schoolM.schoolname;
-        if (schoolM.specialtyname) {
-            deltiStr = schoolM.specialtyname;
-            ishave = YES;
-        }
+        SchoolModel *schoolM = self.dataArray[indexPath.row];
+        titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
     }else if (_wlUserLoadType ==WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.section];
-        titStr = companyM.companyname;
-        if (companyM.jobname) {
-            deltiStr = companyM.jobname;
-            ishave = YES;
-        }
+        CompanyModel *companyM = self.dataArray[indexPath.row];
+        titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
     }
     WorkListCell *workCell = [tableView dequeueReusableCellWithIdentifier:cellid];
     //    cell.friendM = newFM;
@@ -253,14 +273,14 @@ static NSString *cellid = @"workscellid";
         moreH += size1.height-18;
     }
     
-    if (ishave) {
-        //计算第二个label的高度
-        CGSize size2 = [deltiStr calculateSize:CGSizeMake(width, FLT_MAX) font:workCell.detieLabel.font];
-        if (size2.height>18) {
-            moreH+= size2.height-18;
-        }
-        return 80+moreH;
-    }
+//    if (ishave) {
+//        //计算第二个label的高度
+//        CGSize size2 = [deltiStr calculateSize:CGSizeMake(width, FLT_MAX) font:workCell.detieLabel.font];
+//        if (size2.height>18) {
+//            moreH+= size2.height-18;
+//        }
+//        return 80+moreH;
+//    }
     return 60+moreH;
 }
 
@@ -270,11 +290,11 @@ static NSString *cellid = @"workscellid";
 {
     // Remove the row from data model
     if (_wlUserLoadType == WLSchool) {
-        SchoolModel *scmode = self.dataArray[indexPath.section];
+        SchoolModel *scmode = self.dataArray[indexPath.row];
         [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":scmode.usid} success:^(id JSON) {
             // 删除数据库数据
             [scmode MR_deleteEntity];
-            [self.dataArray removeObjectAtIndex:indexPath.section];
+            [self.dataArray removeObjectAtIndex:indexPath.row];
             if (self.dataArray.count==0) {
                 [self.tableView addSubview:self.nolistView];
             }
@@ -286,12 +306,12 @@ static NSString *cellid = @"workscellid";
             
         }];
     }else if (_wlUserLoadType == WLCompany){
-        CompanyModel *commode = self.dataArray[indexPath.section];
+        CompanyModel *commode = self.dataArray[indexPath.row];
         [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":commode.ucid} success:^(id JSON) {
             // 删除数据库数据
             [commode MR_deleteEntity];
             //
-            [self.dataArray removeObjectAtIndex:indexPath.section];
+            [self.dataArray removeObjectAtIndex:indexPath.row];
             if (self.dataArray.count==0) {
                 [self.tableView addSubview:self.nolistView];
             }

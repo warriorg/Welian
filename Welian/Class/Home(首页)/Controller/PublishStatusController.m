@@ -103,7 +103,7 @@ static NSString *picCellid = @"PicCellID";
     _textCell = cell;
     cell.text = _dataStr;
     cell.textView.font = WLFONT(15);
-    cell.textView.placeholder = @"Placeholder";
+    cell.textView.placeholder = @"说点什么...";
     [cell.textView becomeFirstResponder];
     _textCell.maxCellHeight = SuperSize.height - 380;
     return cell;
@@ -112,7 +112,7 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - Table View Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MAX(60.0, _cellHeight);
+    return MAX(80.0, _cellHeight);
 }
 
 - (void)tableView:(UITableView *)tableView updatedHeight:(CGFloat)height atIndexPath:(NSIndexPath *)indexPath
@@ -584,10 +584,19 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - 取消
 - (void)cancelPublish
 {
-    [_textCell.textView resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self dismissKeyBoard];
+    if (_textCell.textView.text.length||self.assets.count||self.statusCard) {
+        WEAKSELF
+        [UIAlertView bk_showAlertViewWithTitle:@"退出此次编辑？" message:@"" cancelButtonTitle:@"取消" otherButtonTitles:@[@"退出"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex==1) {
+                [weakSelf dismissViewControllerAnimated:YES completion:^{
+                }];
+            }
+        }];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+    }
 }
 
 

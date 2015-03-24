@@ -127,12 +127,13 @@
     
     if (nil ==cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell.detailTextLabel setFont:WLFONT(15)];
     }
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
-//    UserInfoModel *modeuser = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     
     if (indexPath.section==0) {
@@ -147,18 +148,24 @@
             [cell.detailTextLabel setText:mode.company];
         }else if (indexPath.row ==2){
             [cell.detailTextLabel setText:mode.position];
-        }else if (indexPath.row ==3){
+        }
+    }else if (indexPath.section ==2){
+        if (indexPath.row==0) {
+            [cell.detailTextLabel setText:mode.mobile];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        }else if (indexPath.row ==1){
             [cell.detailTextLabel setText:mode.email];
-        }else if (indexPath.row==4){
+        }else if (indexPath.row==2){
             if (mode.provincename||mode.cityname) {
                 
                 [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provincename,mode.cityname]];
             }
-        }else if (indexPath.row ==5){
+        }else if (indexPath.row ==3){
             [cell.detailTextLabel setText:mode.address];
         }
 
-    }else if (indexPath.section ==2){
+    }else if (indexPath.section ==3){
         [cell.detailTextLabel setText:nil];
     }
     return cell;
@@ -177,102 +184,105 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
+    UIViewController *controller;
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (indexPath.section==0) {
         [self choosePicture];
         
-    }else{
-        UIViewController *controller;
-        if (indexPath.section==2) {
-            if (indexPath.row==0) {
-                controller = [[WorksListController alloc] initWithType:WLSchool];
-            }else {
-                controller = [[WorksListController alloc] initWithType:WLCompany];
-            }
-        }else {
-            LogInUser *mode = [LogInUser getCurrentLoginUser];
+    }else if(indexPath.section ==1){
 
-            if (indexPath.row==0) {
-                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                    [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
+        if (indexPath.row==0) {
+            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
 
-                        [LogInUser setUserName:userInfo];
-                        
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    } fail:^(NSError *error) {
-                        
-                    }];
+                    [LogInUser setUserName:userInfo];
                     
-                } withType:IWVerifiedTypeName];
-                NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.name];
-            }else if (indexPath.row ==1){
-                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                } fail:^(NSError *error) {
                     
-                    [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
-                        [LogInUser setUsercompany:userInfo];
-                        
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    } fail:^(NSError *error) {
-                        
-                    }];
+                }];
+                
+            } withType:IWVerifiedTypeName];
+            NameController *inffVC = (NameController*)controller;
+            [inffVC setUserInfoStr:mode.name];
+        }else if (indexPath.row ==1){
+            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                
+                [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
+                    [LogInUser setUsercompany:userInfo];
                     
-                } withType:IWVerifiedTypeCompany];
-                NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.company];
-            }else if (indexPath.row ==2){
-                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                    [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
-                        [LogInUser setUserPosition:userInfo];
-                        
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- 
-                    } fail:^(NSError *error) {
-                        
-                    }];
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                } fail:^(NSError *error) {
                     
-                } withType:IWVerifiedTypeJob];
-                NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.position];
-            }else if (indexPath.row ==3){
-                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                    [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
-                        [LogInUser setUserEmail:userInfo];
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    } fail:^(NSError *error) {
-                        
-                    }];
+                }];
+                
+            } withType:IWVerifiedTypeCompany];
+            NameController *inffVC = (NameController*)controller;
+            [inffVC setUserInfoStr:mode.company];
+        }else if (indexPath.row ==2){
+            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
+                    [LogInUser setUserPosition:userInfo];
                     
-                } withType:IWVerifiedTypeMailbox];
-                NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.email];
-            } else if (indexPath.row==4){
-               LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
-                controller=locontroller;
-                [locontroller setLocationDelegate:self];
-                [locontroller setMeinfoVC:self];
-            
-            } else if (indexPath.row==5){
-                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                    [WLHttpTool saveProfileParameterDic:@{@"address":userInfo} success:^(id JSON) {
-                        
-                        [LogInUser setUserAddress:userInfo];
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    } fail:^(NSError *error) {
-                        
-                    }];
-                } withType:IWVerifiedTypeAddress];
-                NameController *inffVC = (NameController*)controller;
-                [inffVC setUserInfoStr:mode.address];
-            }
-
+                } fail:^(NSError *error) {
+                    
+                }];
+                
+            } withType:IWVerifiedTypeJob];
+            NameController *inffVC = (NameController*)controller;
+            [inffVC setUserInfoStr:mode.position];
         }
-        [controller setTitle:dict[@"title"]];
         
-        [self.navigationController pushViewController:controller animated:YES];
+    }else if (indexPath.section ==2){
+        if (indexPath.row==0) {
+            return;
+        }else if (indexPath.row ==1){
+            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
+                    [LogInUser setUserEmail:userInfo];
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                } fail:^(NSError *error) {
+                    
+                }];
+                
+            } withType:IWVerifiedTypeMailbox];
+            NameController *inffVC = (NameController*)controller;
+            [inffVC setUserInfoStr:mode.email];
+        } else if (indexPath.row==2){
+            LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
+            controller=locontroller;
+            [locontroller setLocationDelegate:self];
+            [locontroller setMeinfoVC:self];
+            
+        } else if (indexPath.row==3){
+            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                [WLHttpTool saveProfileParameterDic:@{@"address":userInfo} success:^(id JSON) {
+                    
+                    [LogInUser setUserAddress:userInfo];
+                    
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                } fail:^(NSError *error) {
+                    
+                }];
+            } withType:IWVerifiedTypeAddress];
+            NameController *inffVC = (NameController*)controller;
+            [inffVC setUserInfoStr:mode.address];
+        }
+
+    }else if (indexPath.section ==3){
+        if (indexPath.row==0) {
+            controller = [[WorksListController alloc] initWithType:WLSchool];
+        }else {
+            controller = [[WorksListController alloc] initWithType:WLCompany];
+        }
 
     }
-    
+    if (controller) {
+        [controller setTitle:dict[@"title"]];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
