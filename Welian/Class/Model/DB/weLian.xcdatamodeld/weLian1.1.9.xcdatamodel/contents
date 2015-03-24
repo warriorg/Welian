@@ -149,6 +149,7 @@
     </entity>
     <entity name="MyFriendUser" representedClassName="MyFriendUser" parentEntity="BaseUser" syncable="YES">
         <attribute name="isChatNow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isMyFriend" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastChatTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="unReadChatMsg" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -243,9 +244,9 @@
         <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
         <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="480"/>
-        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
+        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="150"/>
         <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
-        <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
+        <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="150"/>
         <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="360"/>
         <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="240"/>

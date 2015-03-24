@@ -7,7 +7,7 @@
 //
 
 #import "MessagesViewController.h"
-#import "HMSegmentedControl.h"
+#import "WLCustomSegmentedControl.h"
 #import "NotstringView.h"
 #import "ChatMessageViewCell.h"
 #import "ChatViewController.h"
@@ -23,7 +23,7 @@
 
 @interface MessagesViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (strong,nonatomic) HMSegmentedControl *segmentedControl;
+@property (strong,nonatomic) WLCustomSegmentedControl *wlSegmentedControl;
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSArray *datasource;
 @property (strong,nonatomic) NotstringView *notHasDataView;//无消息提醒
@@ -32,6 +32,11 @@
 @end
 
 @implementation MessagesViewController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 //没有聊天记录提醒
 - (NotstringView *)notHasDataView
@@ -42,20 +47,20 @@
     return _notHasDataView;
 }
 
-- (HMSegmentedControl *)segmentedControl
+- (WLCustomSegmentedControl *)wlSegmentedControl
 {
-    if (_segmentedControl == nil) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, StatusBarHeight, self.view.width, NaviBarHeight - 0.5)];
-        _segmentedControl.sectionTitles = @[@"聊天", @"消息",@"好友通知"];
-        _segmentedControl.selectedTextColor = [UIColor whiteColor];
-        _segmentedControl.textColor = [UIColor whiteColor];
-        _segmentedControl.selectionIndicatorColor = [UIColor whiteColor];
-        _segmentedControl.selectionIndicatorHeight = 2;
-        _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
-        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        _segmentedControl.backgroundColor = kNavBgColor;
+    if (!_wlSegmentedControl) {
+        _wlSegmentedControl = [[WLCustomSegmentedControl alloc] initWithSectionTitles:@[@"聊天", @"消息",@"好友通知"]];
+        _wlSegmentedControl.frame = CGRectMake(0, StatusBarHeight, self.view.width, NaviBarHeight - 0.5);
+        _wlSegmentedControl.selectedTextColor = [UIColor whiteColor];
+        _wlSegmentedControl.textColor = [UIColor whiteColor];
+        _wlSegmentedControl.selectionIndicatorColor = [UIColor whiteColor];
+        _wlSegmentedControl.selectionIndicatorHeight = 2;
+        _wlSegmentedControl.backgroundColor = kNavBgColor;
+        _wlSegmentedControl.showBottomLine = YES;
+        _wlSegmentedControl.font = [UIFont boldSystemFontOfSize:16.f];
     }
-    return _segmentedControl;
+    return _wlSegmentedControl;
 }
 
 - (instancetype)init
@@ -63,10 +68,13 @@
     self = [super init];
     if (self) {
         //添加聊天用户改变监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:@"ChatUserChanged" object:nil];
         //添加聊天消息数量改变监听
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:@"ChatMsgNumChanged" object:nil];
-        
+        //新的好友改变通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:KNewFriendNotif object:nil];
+        //添加新的消息通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:KMessageHomeNotif object:nil];
         //如果是从好友列表进入聊天，首页变换
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
         
@@ -88,10 +96,10 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ViewCtrlTopBarHeight)];
     headerView.backgroundColor = kNavBgColor;
     [self.view addSubview:headerView];
-    [headerView addSubview:self.segmentedControl];
+    [headerView addSubview:self.wlSegmentedControl];
     
     WEAKSELF
-    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+    [self.wlSegmentedControl setIndexChangeBlock:^(NSInteger index) {
         [weakSelf selectIndexChanged:index];
     }];
     
@@ -315,6 +323,8 @@
 #pragma mark - private
 - (void)selectIndexChanged:(NSInteger)index
 {
+    //设置是否在新的好友通知页面
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLookAtNewFriendVC"];
     self.selectType = index;
     switch (_selectType) {
         case 0:
@@ -329,12 +339,23 @@
             break;
         case 2:
         {
+            //设置角标改变
+            [self setNewUserBadgeChange];
             [self loadNewFriendData];
         }
             break;
         default:
             break;
     }
+}
+
+- (void)setNewUserBadgeChange
+{
+    //设置是否在新的好友通知页面
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLookAtNewFriendVC"];
+    //设置新的好友角标
+    [LogInUser setUserNewfriendbadge:@(0)];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
 }
 
 //获取好友消息
@@ -406,6 +427,9 @@
 //从用户信息中发送消息
 - (void)chatFromUserInfo:(NSNotification *)notification
 {
+    //切换到聊天列表也没
+    [self selectIndexChanged:0];
+    
     //切换首页Tap
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
     
@@ -423,9 +447,7 @@
     //聊天
     NSInteger unReadChatMsg = [loginUser allUnReadChatMessageNum];
     //设置角标
-//    _segmentedControl.sectionBadges = @[@(unReadChatMsg),loginUser.homemessagebadge,loginUser.newfriendbadge];
-    //重绘内容
-    [_segmentedControl setSelectedSegmentIndex:_selectType animated:YES];
+    _wlSegmentedControl.sectionBadges = @[@(unReadChatMsg),loginUser.homemessagebadge,loginUser.newfriendbadge];
     switch (_selectType) {
         case 0:
         {

@@ -156,7 +156,9 @@ static NSString *fridcellid = @"fridcellid";
                 //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
                 if(myFriendUser.uid.integerValue > 100){
                     //不包含，删除当前数据
-                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+//                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+                    //更新设置为不是我的好友
+                    [myFriendUser updateIsNotMyFriend];
                 }
             }
         }
@@ -191,6 +193,7 @@ static NSString *fridcellid = @"fridcellid";
                 myFriend.startupauth = friendM.startupauth;
                 myFriend.company = friendM.company;
                 myFriend.status = friendM.status;
+                myFriend.isMyFriend = @(YES);
                 [loginUser addRsMyFriendsObject:myFriend];
             }
             

@@ -170,7 +170,7 @@
     UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     numBtn.backgroundColor = [UIColor clearColor];
     numBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
-    numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
+//    numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
 //    [numBtn setTitle:@"99" forState:UIControlStateNormal];
     [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];

@@ -132,6 +132,9 @@ single_implementation(MainViewController)
 // 根据更新信息设置 提示角标
 - (void)updataItembadge
 {
+    //更新消息页面角标
+    [self updateChatMessageBadge:nil];
+    
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     // 首页
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
@@ -309,6 +312,9 @@ single_implementation(MainViewController)
 {
     NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
     [circleItem setBadgeValue:badgeStr];
+    
+    //更新消息页面角标
+    [self updateChatMessageBadge:nil];
 }
 
 
