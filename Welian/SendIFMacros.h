@@ -263,6 +263,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 //常用系统颜色
 #define kNormalTextColor RGB(173.f, 173.f, 173.f)
 #define kTitleNormalTextColor RGB(51.f, 51.f, 51.f)
+#define kTitleTextColor RGB(125.f, 125.f, 125.f)
 #define KBlueTextColor RGB(52.f, 116.f, 186.f)
 
 //nav背景颜色

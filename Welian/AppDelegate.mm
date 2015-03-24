@@ -438,7 +438,10 @@ BMKMapManager* _mapManager;
             //不是好友，添加角标
             NSInteger badge = [loginUser.newfriendbadge integerValue];
             if (!badge) {
-                [LogInUser setUserNewfriendbadge:@(1)];
+                //设置是否在新的好友通知页面
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLookAtNewFriendVC"]) {
+                    [LogInUser setUserNewfriendbadge:@(1)];
+                }
                 [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
             }
         }

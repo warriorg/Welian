@@ -179,14 +179,18 @@ static NSString *staurCellid = @"staurCellid";
         
         MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_userMode.uid];
         //数据库删除当前好友
-        [loginUser removeRsMyFriendsObject:friendUser];
+//        [loginUser removeRsMyFriendsObject:friendUser];
+        //更新设置为不是我的好友
+        [friendUser updateIsNotMyFriend];
+        //聊天状态发送改变
+        [friendUser updateIsChatStatus:NO];
         
         //删除新的好友本地数据库
         NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
         if (newFuser) {
             //删除好友请求数据
             //更新好友请求列表数据为 添加
-            [newFuser updateOperateType:1];
+            [newFuser updateOperateType:0];
         }
         //更新本地添加好友数据库
         NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];

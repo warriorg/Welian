@@ -15,6 +15,7 @@
 
 @implementation MyFriendUser
 
+@dynamic isMyFriend;
 @dynamic status;
 @dynamic isChatNow;
 @dynamic unReadChatMsg;
@@ -47,6 +48,7 @@
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.unReadChatMsg = @(0);
+    myFriend.isMyFriend = @(YES);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -80,6 +82,7 @@
     myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.unReadChatMsg = @(0);
+    myFriend.isMyFriend = @(YES);
 //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -112,6 +115,7 @@
     myFriend.startupauth = newFriendUser.startupauth;
     myFriend.company = newFriendUser.company;
     myFriend.unReadChatMsg = @(0);
+    myFriend.isMyFriend = @(YES);
     //    myFriend.status = userInfoM.status;
     
     [loginUser addRsMyFriendsObject:myFriend];
@@ -131,6 +135,7 @@
         myFriend.uid = fromuser[@"uid"];
         myFriend.avatar = fromuser[@"avatar"];
         myFriend.name = fromuser[@"name"];
+        myFriend.isMyFriend = @(YES);
         
         [loginUser addRsMyFriendsObject:myFriend];
     }
@@ -139,6 +144,13 @@
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     return myFriend;
+}
+
+//更新好友状态为 不是我的好友
+- (void)updateIsNotMyFriend
+{
+    self.isMyFriend = @(NO);
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 //更新聊天状态

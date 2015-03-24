@@ -195,6 +195,7 @@
     textMessage.isRead = YES;
     textMessage.sended = @"1";
     textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+    textMessage.messageMediaType = WLBubbleMessageMediaTypeText;
 
     //    //本地聊天数据库添加
     ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];

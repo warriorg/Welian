@@ -14,6 +14,7 @@
 
 @interface MyFriendUser : BaseUser
 
+@property (nonatomic, retain) NSNumber * isMyFriend;//是否是我的好友
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * isChatNow;
 @property (nonatomic, retain) NSNumber * unReadChatMsg;
@@ -30,6 +31,9 @@
 
 //创建接收消息的聊天对象
 + (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict;
+
+//更新好友状态为 不是我的好友
+- (void)updateIsNotMyFriend;
 
 //更新聊天状态
 - (void)updateIsChatStatus:(BOOL)status;
