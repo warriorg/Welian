@@ -88,7 +88,7 @@
     return myFriend;
 }
 
-+ (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser
++ (MyFriendUser *)createWithNewFriendUser:(NewFriendUser *)newFriendUser
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:newFriendUser.uid];
@@ -116,6 +116,7 @@
     
     [loginUser addRsMyFriendsObject:myFriend];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+    return myFriend;
 }
 
 

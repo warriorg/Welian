@@ -26,7 +26,7 @@
 
 //创建新的同意好意请求数据
 + (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM;
-+ (void)createWithNewFriendUser:(NewFriendUser *)newFriendUser;
++ (MyFriendUser *)createWithNewFriendUser:(NewFriendUser *)newFriendUser;
 
 //创建接收消息的聊天对象
 + (MyFriendUser *)createMyFriendFromReceive:(NSDictionary *)dict;

@@ -53,6 +53,7 @@
 - (NSString *)cardTitle;
 - (NSString *)cardIntro;
 - (NSString *)cardUrl;
+- (NSString *)cardMsg;
 
 - (NSDate *)timestamp;
 - (void)setTimestamp:(NSDate *)timestamp;

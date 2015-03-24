@@ -113,7 +113,7 @@
     textView.layer.borderWidth = 0.4f;
     textView.layer.cornerRadius = 5.f;
     textView.layer.masksToBounds = YES;
-    textView.textColor = kNormalTextColor;
+    textView.textColor = kTitleNormalTextColor;
     textView.placeHolder = @"给朋友留言";
 //    textView.delegate = self;
     
@@ -172,15 +172,16 @@
 //发送卡片消息给好友
 - (void)sendCardMessageToFriend
 {
+    _cardModel.content = _textView.text;
     NSDictionary *cardDic = [_cardModel keyValues];
-    NSDictionary *param = @{@"type":@(51),@"touser":_selectFriendUser.uid,@"card":cardDic};
+    NSDictionary *param = @{@"type":@(51),@"touser":_selectFriendUser.uid,@"card":cardDic,@"msg":_cardModel.content};
     [WLHttpTool sendMessageParameterDic:param success:^(id JSON) {
         //返回的是字典
         NSString *state = JSON[@"state"];
         NSString *time = JSON[@"created"];
         if ([state intValue] == -1) {
             //更新发送状态为失败
-            [WLHUDView showSuccessHUD:@"发送失败！"];
+            [WLHUDView showErrorHUD:@"发送失败！"];
         }else{
             //创建数据库对象
             ChatMessage *chatMessage = [ChatMessage createChatMessageWithCard:_cardModel FriendUser:_selectFriendUser];
@@ -196,7 +197,7 @@
         }
     } fail:^(NSError *error) {
         //更新发送状态为失败
-        [WLHUDView showSuccessHUD:@"发送失败！"];
+        [WLHUDView showErrorHUD:@"发送失败！"];
     }];
 }
 
