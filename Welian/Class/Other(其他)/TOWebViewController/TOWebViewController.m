@@ -43,6 +43,7 @@
 
 #import "WLActivityView.h"
 #import "ShareEngine.h"
+#import "CardAlertView.h"
 
 /* Detect if we're running iOS 7.0 or higher (With the new minimal UI) */
 #define MINIMAL_UI      ([[UIViewController class] instancesRespondToSelector:@selector(edgesForExtendedLayout)])
@@ -812,8 +813,13 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
                 NavViewController *navShareFVC = [[NavViewController alloc] initWithRootViewController:shareFVC];
                 [self presentViewController:navShareFVC animated:YES completion:nil];
                 //回调发送成功
-                [shareFVC setShareSuccessBlock:^(void){
-                    [WLHUDView showSuccessHUD:@"分享成功！"];
+//                [shareFVC setShareSuccessBlock:^(void){
+//                    [WLHUDView showSuccessHUD:@"分享成功！"];
+//                }];
+                
+                WEAKSELF
+                [shareFVC setSelectFriendBlock:^(MyFriendUser *friendUser){
+                    [weakSelf shareToWeLianFriendWithCardStatuModel:newCardM friend:friendUser];
                 }];
             }
                 break;
@@ -839,6 +845,17 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
             default:
                 break;
         }
+    }];
+}
+
+//分享到微链好友
+- (void)shareToWeLianFriendWithCardStatuModel:(CardStatuModel *)cardModel friend:(MyFriendUser *)friendUser
+{
+    CardAlertView *alertView = [[CardAlertView alloc] initWithCardModel:cardModel Friend:friendUser];
+    [alertView show];
+    //发送成功
+    [alertView setSendSuccessBlock:^(void){
+        [WLHUDView showSuccessHUD:@"分享成功！"];
     }];
 }
 

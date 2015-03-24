@@ -341,12 +341,12 @@ BMKMapManager* _mapManager;
         // 好友消息推送
         [self getNewFriendMessage:dataDic];
         // 振动和声音提示
-        [[MsgPlaySound sharedMsgPlaySound] playSystemShakeAndSoundWithName:@"1"];
+//        [[MsgPlaySound sharedMsgPlaySound] playSystemShakeAndSoundWithName:@"1"];
     }else if([type isEqualToString:@"IM"]){
         //接收的聊天消息
         [self getIMGTMessage:userInfo[@"data"]];
         // 振动和声音提示
-        [[MsgPlaySound sharedMsgPlaySound] playSystemShakeAndSoundWithName:@"1"];
+//        [[MsgPlaySound sharedMsgPlaySound] playSystemShakeAndSoundWithName:@"1"];
     } else if ([type isEqualToString:@"logout"]){
         // 退出登录
         [self logout];

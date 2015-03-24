@@ -20,6 +20,7 @@
 #import "FLAnimatedImage.h"
 
 #import "WLCellCardView.h"
+#import "WLMessageCardView.h"
 
 // Model
 #import "WLMessage.h"
@@ -45,7 +46,8 @@
 @property (nonatomic, weak, readonly) MLEmojiLabel *displayLabel;
 
 //用于显示卡片类型的控件
-@property (nonatomic, weak, readonly) WLCellCardView *displayCardView;
+//@property (nonatomic, weak, readonly) WLCellCardView *displayCardView;
+@property (nonatomic, weak, readonly) WLMessageCardView *displayCardView;
 
 //用于显示气泡的ImageView控件
 @property (nonatomic, weak, readonly) UIImageView *bubbleImageView;

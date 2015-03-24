@@ -21,6 +21,7 @@
 #import "WLPhotoView.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
+#import "CardAlertView.h"
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
@@ -1140,10 +1141,25 @@
         [self presentViewController:navShareFVC animated:YES completion:nil];
         
         //回调发送成功
-        [shareFVC setShareSuccessBlock:^(void){
-            [WLHUDView showSuccessHUD:@"转发成功！"];
+//        [shareFVC setShareSuccessBlock:^(void){
+//            [WLHUDView showSuccessHUD:@"转发成功！"];
+//        }];
+        WEAKSELF
+        [shareFVC setSelectFriendBlock:^(MyFriendUser *friendUser){
+            [weakSelf shareToWeLianFriendWithCardStatuModel:cardModel friend:friendUser];
         }];
     }
+}
+
+//分享到微链好友
+- (void)shareToWeLianFriendWithCardStatuModel:(CardStatuModel *)cardModel friend:(MyFriendUser *)friendUser
+{
+    CardAlertView *alertView = [[CardAlertView alloc] initWithCardModel:cardModel Friend:friendUser];
+    [alertView show];
+    //发送成功
+    [alertView setSendSuccessBlock:^(void){
+        [WLHUDView showSuccessHUD:@"分享成功！"];
+    }];
 }
 
 

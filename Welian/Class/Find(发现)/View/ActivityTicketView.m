@@ -138,7 +138,7 @@
 
 - (void)showInView
 {
-    self.top = self.top = [[UIScreen mainScreen] bounds].size.height;
+    self.top = [[UIScreen mainScreen] bounds].size.height;
     [UIView animateWithDuration:.3f
                           delay:.0f
                         options:UIViewAnimationOptionCurveEaseInOut
