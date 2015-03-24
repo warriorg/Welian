@@ -12,6 +12,9 @@
 
 #define segmentImageTextPadding 7
 
+#define kBadgeHeight 17.f
+#define kBadge2Width 24.f
+
 @interface HMScrollView : UIScrollView
 @end
 
@@ -23,6 +26,7 @@
 @property (nonatomic, readwrite) CGFloat segmentWidth;
 @property (nonatomic, readwrite) NSArray *segmentWidthsArray;
 @property (nonatomic, strong) HMScrollView *scrollView;
+//@property (nonatomic, assign) BOOL isLoadBadge;
 
 @end
 
@@ -178,6 +182,34 @@
     [self updateSegmentsRects];
 }
 
+//- (void)setSectionBadges:(NSArray *)sectionBadges
+//{
+//    _sectionBadges = sectionBadges;
+//    
+//    [self setNeedsLayout];
+//    [self setNeedsDisplayInRect:self.bounds];
+    
+//    if (_isLoadBadge) {
+//        if (_sectionBadges) {
+//            [_sectionBadges enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
+//                UIButton *numBtn = (UIButton *)[self.scrollView viewWithTag:idx];
+//                NSNumber *badge = titleString;
+//                if (badge.integerValue < 100) {
+//                    [numBtn setTitle:[NSString stringWithFormat:@"%@",badge] forState:UIControlStateNormal];
+//                    [numBtn setTitle:[NSString stringWithFormat:@"%@",badge] forState:UIControlStateSelected];
+//                    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];
+//                    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateSelected];
+//                }else{
+//                    [numBtn setTitle:@"99+" forState:UIControlStateNormal];
+//                    [numBtn setTitle:@"99+" forState:UIControlStateSelected];
+//                    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateNormal];
+//                    [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateSelected];
+//                }
+//            }];
+//        }
+//    }
+//}
+
 - (void)setSectionTitles:(NSArray *)sectionTitles {
     _sectionTitles = sectionTitles;
     
@@ -279,8 +311,41 @@
             }
             
             titleLayer.contentsScale = [[UIScreen mainScreen] scale];
-            
+//            titleLayer.borderColor = [UIColor redColor].CGColor;
+//            titleLayer.borderWidth = 1.f;
             [self.scrollView.layer addSublayer:titleLayer];
+            
+            //添加角标
+//            if (self.sectionBadges) {
+//                NSNumber *badge = [self.sectionBadges objectAtIndex:idx];
+//                
+//                if (badge.integerValue > 0) {
+//                    UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//                    numBtn.backgroundColor = [UIColor clearColor];
+//                    numBtn.titleLabel.font = [UIFont systemFontOfSize:10.f];
+////                    numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
+//                    [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                    [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//                    if (badge.integerValue < 100) {
+//                        [numBtn setTitle:[NSString stringWithFormat:@"%@",badge] forState:UIControlStateNormal];
+//                        [numBtn setTitle:[NSString stringWithFormat:@"%@",badge] forState:UIControlStateSelected];
+//                        [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];
+//                        [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateSelected];
+//                    }else{
+//                        [numBtn setTitle:@"99+" forState:UIControlStateNormal];
+//                        [numBtn setTitle:@"99+" forState:UIControlStateSelected];
+//                        [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateNormal];
+//                        [numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateSelected];
+//                    }
+//                    numBtn.size = CGSizeMake(badge.integerValue < 100 ? kBadgeHeight : kBadge2Width, kBadgeHeight);
+//                    numBtn.left = rect.origin.x + rect.size.width - 5.f;
+//                    numBtn.bottom = rect.origin.y + 8.f;
+//                    numBtn.tag = idx;
+//                    [self.scrollView addSubview:numBtn];
+//                    //设置已经加载角标完成
+//                    self.isLoadBadge = YES;
+//                }
+//            }
             
             // Vertical Divider
             if (self.isVerticalDividerEnabled && idx > 0) {

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1514" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ActivityInfo" representedClassName="ActivityInfo" syncable="YES">
+        <attribute name="activeid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activeType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isfavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isjoined" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="joined" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="limited" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="logo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sponsor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsActivityInfos" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="BaseUser" representedClassName="BaseUser" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cityid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendship" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="investorauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="inviteurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="provinceid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="provincename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startupauth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
+        <attribute name="avatorUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bubbleMessageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardIntro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cardMsg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cardTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cardType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cardUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geolocations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="localPositionPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="msgId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="originPhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sendStatus" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="showTimeStamp" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="videoConverPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voiceUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsMyFriendUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyFriendUser" inverseName="rsChatMessages" inverseEntity="MyFriendUser" syncable="YES"/>
+    </entity>
+    <entity name="CompanyModel" representedClassName="CompanyModel" parentEntity="SchoolCompanyDate" syncable="YES">
+        <attribute name="companyid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="companyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="jobname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ucid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsCompanys" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="FriendsFriendUser" representedClassName="FriendsFriendUser" parentEntity="BaseUser" syncable="YES">
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsFriendsFriends" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="HomeMessage" representedClassName="HomeMessage" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commentid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedcontent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="feedpic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLook" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsHomeMessages" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="InvestIndustry" representedClassName="InvestIndustry" syncable="YES">
+        <attribute name="industryid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="industryname" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsInvestIndustrys" inverseEntity="LogInUser" syncable="YES"/>
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsIndustrys" inverseEntity="ProjectDetailInfo" syncable="YES"/>
+    </entity>
+    <entity name="InvestItems" representedClassName="InvestItems" syncable="YES">
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsInvestItems" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="InvestorUser" representedClassName="InvestorUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="items" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="InvestStages" representedClassName="InvestStages" syncable="YES">
+        <attribute name="stage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="stagename" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsInvestStages" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="LogInUser" representedClassName="LogInUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="activecount" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="auth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="checkcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firststustid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="homemessagebadge" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="investorcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isactivebadge" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isinvestorbadge" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isNow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isprojectbadge" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="newfriendbadge" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="newstustcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="openid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sessionid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unionid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsActivityInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ActivityInfo" inverseName="rsLoginUser" inverseEntity="ActivityInfo" syncable="YES"/>
+        <relationship name="rsCompanys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CompanyModel" inverseName="rsLogInUser" inverseEntity="CompanyModel" syncable="YES"/>
+        <relationship name="rsFriendsFriends" optional="YES" toMany="YES" maxCount="15" deletionRule="Cascade" destinationEntity="FriendsFriendUser" inverseName="rsLogInUser" inverseEntity="FriendsFriendUser" syncable="YES"/>
+        <relationship name="rsHomeMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HomeMessage" inverseName="rsLogInUser" inverseEntity="HomeMessage" syncable="YES"/>
+        <relationship name="rsInvestIndustrys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestIndustry" inverseName="rsLogInUser" inverseEntity="InvestIndustry" syncable="YES"/>
+        <relationship name="rsInvestItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestItems" inverseName="rsLogInUser" inverseEntity="InvestItems" syncable="YES"/>
+        <relationship name="rsInvestStages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestStages" inverseName="rsLogInUser" inverseEntity="InvestStages" syncable="YES"/>
+        <relationship name="rsMyFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MyFriendUser" inverseName="rsLogInUser" inverseEntity="MyFriendUser" syncable="YES"/>
+        <relationship name="rsNeedAddUsers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NeedAddUser" inverseName="rsLoginUser" inverseEntity="NeedAddUser" syncable="YES"/>
+        <relationship name="rsNewFriends" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NewFriendUser" inverseName="rsLogInUser" inverseEntity="NewFriendUser" syncable="YES"/>
+        <relationship name="rsProjectInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProjectInfo" inverseName="rsLoginUser" inverseEntity="ProjectInfo" syncable="YES"/>
+        <relationship name="rsSchools" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SchoolModel" inverseName="rsLogInUser" inverseEntity="SchoolModel" syncable="YES"/>
+    </entity>
+    <entity name="MyFriendUser" representedClassName="MyFriendUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="isChatNow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastChatTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="unReadChatMsg" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsChatMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatMessage" inverseName="rsMyFriendUser" inverseEntity="ChatMessage" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsMyFriends" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="NeedAddUser" representedClassName="NeedAddUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="pinyin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="wlname" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsNeedAddUsers" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="NewFriendUser" representedClassName="NewFriendUser" parentEntity="BaseUser" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAgree" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isLook" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="operateType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="pushType" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsNewFriends" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="PhotoInfos" representedClassName="PhotoInfos" syncable="YES">
+        <attribute name="photo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsPhotoInfos" inverseEntity="ProjectDetailInfo" syncable="YES"/>
+    </entity>
+    <entity name="ProjectDetailInfo" representedClassName="ProjectDetailInfo" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="commentcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="financing" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="financingtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isfavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="iszan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="share" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="shareurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsIndustrys" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InvestIndustry" inverseName="rsProjectDetailInfo" inverseEntity="InvestIndustry" syncable="YES"/>
+        <relationship name="rsPhotoInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoInfos" inverseName="rsProjectDetailInfo" inverseEntity="PhotoInfos" syncable="YES"/>
+        <relationship name="rsProjectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectUser" inverseName="rsProjectDetailInfo" inverseEntity="ProjectUser" syncable="YES"/>
+    </entity>
+    <entity name="ProjectInfo" representedClassName="ProjectInfo" syncable="YES">
+        <attribute name="commentcount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="des" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="industrys" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iszan" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="membercount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="zancount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsProjectInfos" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <entity name="ProjectUser" representedClassName="ProjectUser" parentEntity="BaseUser" syncable="YES">
+        <relationship name="rsProjectDetailInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectDetailInfo" inverseName="rsProjectUser" inverseEntity="ProjectDetailInfo" syncable="YES"/>
+    </entity>
+    <entity name="SchoolCompanyDate" representedClassName="SchoolCompanyDate" isAbstract="YES" syncable="YES">
+        <attribute name="endmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="endyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="startmonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="startyear" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="SchoolModel" representedClassName="SchoolModel" parentEntity="SchoolCompanyDate" syncable="YES">
+        <attribute name="schoolid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="schoolname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialtyid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="specialtyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="usid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="rsLogInUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsSchools" inverseEntity="LogInUser" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ActivityInfo" positionX="-1350" positionY="-387" width="128" height="328"/>
+        <element name="BaseUser" positionX="-1566" positionY="-244" width="128" height="298"/>
+        <element name="ChatMessage" positionX="-423" positionY="-549" width="128" height="480"/>
+        <element name="CompanyModel" positionX="52" positionY="-234" width="128" height="133"/>
+        <element name="FriendsFriendUser" positionX="-632" positionY="-31" width="128" height="60"/>
+        <element name="HomeMessage" positionX="-1359" positionY="-396" width="128" height="223"/>
+        <element name="InvestIndustry" positionX="-1332" positionY="-369" width="128" height="103"/>
+        <element name="InvestItems" positionX="-1350" positionY="-387" width="128" height="103"/>
+        <element name="InvestorUser" positionX="-729" positionY="-477" width="128" height="58"/>
+        <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
+        <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="480"/>
+        <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="133"/>
+        <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
+        <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="148"/>
+        <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="103"/>
+        <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="360"/>
+        <element name="ProjectInfo" positionX="-1359" positionY="-396" width="128" height="240"/>
+        <element name="ProjectUser" positionX="-1359" positionY="-396" width="128" height="58"/>
+        <element name="SchoolCompanyDate" positionX="322" positionY="-63" width="128" height="103"/>
+        <element name="SchoolModel" positionX="63" positionY="53" width="128" height="133"/>
+    </elements>
+</model>

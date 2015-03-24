@@ -41,11 +41,11 @@
     switch (mediaType) {
         case WLBubbleMessageMediaTypePhoto:
 //        case WLBubbleMessageMediaTypeVideo:
-        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
 //        case WLBubbleMessageMediaTypeVoice:
             messageTypeString = [messageTypeString stringByAppendingString:@"_Solid"];
             break;
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeCard://卡片
             //卡片
             messageTypeString = [messageTypeString stringByAppendingString:@"_Card"];

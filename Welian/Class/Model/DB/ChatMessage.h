@@ -40,6 +40,7 @@
 @property (nonatomic, retain) NSString * cardTitle;//卡片标题
 @property (nonatomic, retain) NSString * cardIntro;//卡片详情
 @property (nonatomic, retain) NSString * cardUrl;//卡片链接
+@property (nonatomic, retain) NSString * cardMsg;//卡片评论消息
 @property (nonatomic, retain) MyFriendUser *rsMyFriendUser;
 
 //创建新的聊天记录
@@ -47,6 +48,9 @@
 
 //创建新的卡片聊天记录
 + (ChatMessage *)createChatMessageWithCard:(CardStatuModel *)cardModel FriendUser:(MyFriendUser *)friendUser;
+
+//创建添加好友成功的本地可以聊天的消息
++ (ChatMessage *)createChatMessageForAddFriend:(MyFriendUser *)friendUser;
 
 //创建接受到的聊天消息
 + (void)createReciveMessageWithDict:(NSDictionary *)dict;

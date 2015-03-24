@@ -40,6 +40,7 @@
 @dynamic cardType;
 @dynamic cardIntro;
 @dynamic cardUrl;
+@dynamic cardMsg;
 @dynamic rsMyFriendUser;
 
 //创建新的聊天记录
@@ -136,6 +137,7 @@
     }
     chatMsg.messageType = @(WLBubbleMessageMediaTypeCard);
     chatMsg.timestamp = [NSDate date];
+    chatMsg.cardMsg = cardModel.content;
     chatMsg.avatorUrl = friendUser.rsLogInUser.avatar;
     chatMsg.isRead = @(1);
     chatMsg.sendStatus = @(0);
@@ -180,6 +182,25 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
     
     return chatMsg;
+}
+
+//创建添加好友成功的本地可以聊天的消息
++ (ChatMessage *)createChatMessageForAddFriend:(MyFriendUser *)friendUser
+{
+    //接受后，本地创建一条消息
+    WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"我们已经成为微链好友,现在可以开始聊聊创业那些事了"] sender:friendUser.name timestamp:[NSDate date]];
+    textMessage.avatorUrl = friendUser.avatar;
+    textMessage.sender = nil;
+    //是否读取
+    textMessage.isRead = YES;
+    textMessage.sended = @"1";
+    textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+
+    //    //本地聊天数据库添加
+    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+    textMessage.msgId = chatMessage.msgId.stringValue;
+    
+    return chatMessage;
 }
 
 //创建接受到的聊天消息
@@ -242,7 +263,6 @@
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
     switch (type) {
-        case WLBubbleMessageMediaTypeActivity:
         case WLBubbleMessageMediaTypeText:
             //文本
             chatMsg.message = msg;
@@ -271,6 +291,7 @@
 //            chatMsg.message = @"[视频]";
 //            chatMsg.messageType = @(WLBubbleMessageMediaTypeText);
 //            break;
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeCard:
             //卡片 //3 活动，10项目，11 网页
         {
@@ -286,6 +307,7 @@
             chatMsg.cardTitle = title;
             chatMsg.cardIntro = intro;
             chatMsg.cardUrl = url;
+            chatMsg.cardMsg = msg;
             
             switch (cardType) {
                 case WLBubbleMessageCardTypeActivity://活动
@@ -446,7 +468,6 @@
 {
     NSString *msg = @"";
     switch (self.messageType.integerValue) {
-        case WLBubbleMessageMediaTypeActivity:
         case WLBubbleMessageMediaTypeText:
             //文本
             msg = self.message;
@@ -454,18 +475,15 @@
         case WLBubbleMessageMediaTypePhoto://照片
             msg = @"[图片]";
             break;
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeCard:
         {
             //卡片 //3 活动，10项目，11 网页
             switch (self.cardType.integerValue) {
                 case WLBubbleMessageCardTypeActivity://活动
-                    msg = @"[活动]";
-                    break;
                 case WLBubbleMessageCardTypeProject://项目
-                    msg = @"[项目]";
-                    break;
                 case WLBubbleMessageCardTypeWeb://网页
-                    msg = @"[链接]";
+                    msg = self.cardMsg.length > 0 ? self.cardMsg : self.message;
                     break;
                 default:
                     //未知类型

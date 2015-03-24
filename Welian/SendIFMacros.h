@@ -265,6 +265,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define kTitleNormalTextColor RGB(51.f, 51.f, 51.f)
 #define KBlueTextColor RGB(52.f, 116.f, 186.f)
 
+//nav背景颜色
+#define kNavBgColor RGB(74.f, 117.f, 183.f)
+
 /*
  7.一条微博上的字体
  */

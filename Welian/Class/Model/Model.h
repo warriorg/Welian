@@ -19,6 +19,7 @@
 #import "NewFriendUser.h"
 #import "ActivityInfo.h"
 #import "ChatMessage.h"
+#import "HomeMessage.h"
 
 
 #pragma mark - Interface

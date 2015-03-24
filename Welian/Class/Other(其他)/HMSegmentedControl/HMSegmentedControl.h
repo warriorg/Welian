@@ -48,6 +48,7 @@ typedef enum {
 
 @interface HMSegmentedControl : UIControl
 
+//@property (nonatomic, strong) NSArray *sectionBadges;
 @property (nonatomic, strong) NSArray *sectionTitles;
 @property (nonatomic, strong) NSArray *sectionImages;
 @property (nonatomic, strong) NSArray *sectionSelectedImages;

@@ -15,6 +15,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "ChatMessageController.h"
+#import "MessagesViewController.h"
 #import "LogInUser.h"
 #import "LocationTool.h"
 
@@ -174,8 +175,15 @@ single_implementation(MainViewController)
 //更新消息数量改变
 - (void)updateChatMessageBadge:(NSNotification *)notification
 {
-    NSInteger unRead = [[LogInUser getCurrentLoginUser] allUnReadChatMessageNum];
-    chatMessageItem.badgeValue = unRead <= 0 ? nil : [NSString stringWithFormat:@"%d",(int)unRead];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    //聊天
+    NSInteger unReadChatMsg = [loginUser allUnReadChatMessageNum];
+    //消息
+    NSInteger unReadMsg = loginUser.homemessagebadge.integerValue;
+    //好友通知
+    NSInteger unReadFriend = loginUser.newfriendbadge.integerValue;
+    NSInteger totalUnRead = unReadChatMsg + unReadMsg + unReadFriend;
+    chatMessageItem.badgeValue = totalUnRead <= 0 ? nil : [NSString stringWithFormat:@"%@",@(totalUnRead)];
 }
 
 //设置选择的为消息列表页面
@@ -251,9 +259,10 @@ single_implementation(MainViewController)
     
     // 聊天消息
     chatMessageItem = [self itemWithTitle:@"消息" imageStr:@"tabbar_chat" selectedImageStr:@"tabbar_chat_selected"];
-    ChatMessageController *chatMessageVC = [[ChatMessageController alloc] initWithStyle:UITableViewStylePlain];
+//    ChatMessageController *chatMessageVC = [[ChatMessageController alloc] initWithStyle:UITableViewStylePlain];
+    MessagesViewController *chatMessageVC = [[MessagesViewController alloc] init];
     NavViewController *chatMeeageNav = [[NavViewController alloc] initWithRootViewController:chatMessageVC];
-    [chatMessageVC.navigationItem setTitle:@"消息"];
+//    [chatMessageVC.navigationItem setTitle:@"消息"];
     [chatMeeageNav setDelegate:self];
     [chatMeeageNav setTabBarItem:chatMessageItem];
     

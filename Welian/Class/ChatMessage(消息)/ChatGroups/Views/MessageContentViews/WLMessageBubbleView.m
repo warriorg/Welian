@@ -124,11 +124,15 @@
 + (CGSize)getBubbleFrameWithMessage:(id <WLMessageModel>)message {
     CGSize bubbleSize;
     switch (message.messageMediaType) {
-        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText: {
             bubbleSize = [WLMessageBubbleView neededSizeForText:message.text];
             break;
         }
+        case WLBubbleMessageMediaTypeActivity://活动
+        {
+            bubbleSize = CGSizeMake(InfoMaxWidth, [WLMessageCardView calculateCellHeightWithMessage:message]);
+        }
+            break;
         case WLBubbleMessageMediaTypeCard:
         {
             DLog(@"cardType-----%@",message.cardType);
@@ -307,6 +311,13 @@
                         }
                             break;
                     }
+                }else if (currentType == WLBubbleMessageMediaTypeActivity) {
+                    //卡片
+                    _displayCardView.hidden = NO;
+                    
+                    // 那语言的gif动画imageView就需要隐藏了
+                    _animationVoiceImageView.hidden = YES;
+                    _emotionImageView.hidden = YES;
                 }else{
                     _emotionImageView.hidden = NO;
                     
@@ -360,7 +371,6 @@
 
 - (void)configureMessageDisplayMediaWithMessage:(id <WLMessageModel>)message {
     switch (message.messageMediaType) {
-        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeText:
             // 设置表情
 //            _displayLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
@@ -402,6 +412,7 @@
 //            
 //            _geolocationsLabel.text = message.geolocations;
 //            break;
+        case WLBubbleMessageMediaTypeActivity://活动
         case WLBubbleMessageMediaTypeCard://卡片
         {
             switch (message.cardType.integerValue) {
@@ -416,7 +427,7 @@
                     model.title = message.cardTitle;
                     model.intro = message.cardIntro;
                     model.url = message.cardUrl;
-                    model.content = message.text;
+                    model.content = message.cardMsg;
 //                    _displayCardView.cardM = model;
 //                    _displayCardView.isHidLine = YES;//隐藏边线
 //                    _displayCardView.tapBut.hidden = YES;

@@ -16,6 +16,7 @@
 @interface WLMessageCardView ()
 
 @property (assign,nonatomic) MLEmojiLabel *titleLabel;
+@property (assign,nonatomic) UIImageView *lineView;
 
 @end
 
@@ -32,20 +33,34 @@
 
 - (void)setCardInfo:(CardStatuModel *)cardInfo
 {
-    _titleLabel.text = cardInfo.content;
-    _cardView.cardM = cardInfo;
+    [super willChangeValueForKey:@"cardInfo"];
+    _cardInfo = cardInfo;
+    [super didChangeValueForKey:@"cardInfo"];
+    _titleLabel.text = _cardInfo.content;
+    _cardView.cardM = _cardInfo;
+    //是否隐藏分割线
+    _lineView.hidden = _cardInfo.content.length > 0 ? NO : YES;
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    _titleLabel.width = self.width - kMarginLeft * 2.f;
     [_titleLabel sizeToFit];
     _titleLabel.left = kMarginLeft;
     _titleLabel.top = kPaddingTop;
     
     _cardView.size = CGSizeMake(self.width, kCardViewHeight);
     _cardView.centerX = self.width / 2.f;
-    _cardView.bottom = self.height;
+    if (_cardInfo.content.length > 0) {
+        _cardView.bottom = self.height;
+    }else{
+        _cardView.centerY = self.height / 2.f;
+    }
+    
+    _lineView.size = CGSizeMake(self.width - kMarginLeft * 2.f, 1.5f);
+    _lineView.centerX = self.width / 2.f;
+    _lineView.bottom = _cardView.top;
 }
 
 #pragma mark - Private
@@ -61,6 +76,12 @@
     [self addSubview:titleLabel];
     self.titleLabel = titleLabel;
 //    [titleLabel setDebug:YES];
+    
+    //分割线
+    UIImageView *lineView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"circle_chat_line"]];
+    lineView.backgroundColor = [UIColor clearColor];
+    [self addSubview:lineView];
+    self.lineView = lineView;
     
     //初始化现实卡片的view
     WLCellCardView *cardView = [[WLCellCardView alloc] init];
@@ -84,15 +105,17 @@
 + (CGFloat)calculateCellHeightWithMessage:(id <WLMessageModel>)message
 {
     CGFloat textHeight = 0.f;
-    if (message.text.length > 0) {
+    if (message.cardMsg.length > 0) {
         MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
         displayLabel.numberOfLines = 0;
         //    displayLabel.emojiDelegate = self;
         displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
         displayLabel.font = [UIFont systemFontOfSize:16.f];
-        displayLabel.text = message.text;
+        displayLabel.text = message.cardMsg;
         
         textHeight = [displayLabel preferredSizeWithMaxWidth:InfoMaxWidth - kMarginLeft].height + 5.f;
+    }else{
+        textHeight = -kPaddingTop;
     }
     return textHeight + kCardViewHeight;
 }

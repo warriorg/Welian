@@ -157,6 +157,14 @@
 		A46A283C1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
 		A46A283D1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
 		A46A283E1ABD36AF00BD5EA3 /* WLMessageCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */; };
+		A46A28471ABD72F100BD5EA3 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */; };
+		A46A28481ABD72F100BD5EA3 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */; };
+		A46A28491ABD72F100BD5EA3 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */; };
+		A46A284A1ABD72F100BD5EA3 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */; };
+		A46D5E9D1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */; };
+		A46D5E9E1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */; };
+		A46D5E9F1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */; };
+		A46D5EA01ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */; };
 		A46FAE501A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
 		A46FAE511A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
 		A46FAE521A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */; };
@@ -4476,6 +4484,10 @@
 		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		A46A28391ABD36AF00BD5EA3 /* WLMessageCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLMessageCardView.h; sourceTree = "<group>"; };
 		A46A283A1ABD36AF00BD5EA3 /* WLMessageCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLMessageCardView.m; sourceTree = "<group>"; };
+		A46A28451ABD72F100BD5EA3 /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
+		A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
+		A46D5E9B1ABFE56600FF0554 /* weLian1.1.9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.9.xcdatamodel; sourceTree = "<group>"; };
+		A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_chat_line@2x.png"; sourceTree = "<group>"; };
 		A46FAE4E1A8DDE00005EB34E /* ActivityLookTicketViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityLookTicketViewCell.h; sourceTree = "<group>"; };
 		A46FAE4F1A8DDE00005EB34E /* ActivityLookTicketViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityLookTicketViewCell.m; sourceTree = "<group>"; };
 		A46FAE541A8DE033005EB34E /* discovery_activity_ticket_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_ticket_bg@2x.png"; sourceTree = "<group>"; };
@@ -7408,6 +7420,7 @@
 		A4C144771A4C3EC600C9BAB5 /* Chat_images */ = {
 			isa = PBXGroup;
 			children = (
+				A46D5E9C1ABFFC1900FF0554 /* circle_chat_line@2x.png */,
 				F5472DB41A8DCE8E002C9B35 /* backItem@2x.png */,
 				A41CE1BF1A6F9E25004F17E7 /* me_circle_chat_camera_pressed@2x.png */,
 				A41CE1C01A6F9E25004F17E7 /* me_circle_chat_camera@2x.png */,
@@ -8105,6 +8118,8 @@
 				F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */,
 				A4C13FFD1A4BC0AD00C9BAB5 /* ChatViewController.h */,
 				A4C13FFE1A4BC0AD00C9BAB5 /* ChatViewController.m */,
+				A46A28451ABD72F100BD5EA3 /* MessagesViewController.h */,
+				A46A28461ABD72F100BD5EA3 /* MessagesViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -9701,6 +9716,7 @@
 				A49C7D9F1A70D42700F2AEC5 /* weLianDev-Info.plist in Resources */,
 				A49C7DA11A70D42700F2AEC5 /* tabbar_circle@2x.png in Resources */,
 				A49C7DA31A70D42700F2AEC5 /* Expression_14@2x.png in Resources */,
+				A46D5EA01ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */,
 				A49C7DA41A70D42700F2AEC5 /* AddGroupMemberBtnHL@2x.png in Resources */,
 				A49C7DA51A70D42700F2AEC5 /* CellGraySelected@2x.png in Resources */,
 				A49C7DA61A70D42700F2AEC5 /* Expression_69@2x.png in Resources */,
@@ -10251,6 +10267,7 @@
 				F5318F011A63E986009B6635 /* weLianDev-Info.plist in Resources */,
 				F53DC3CE1A49192600F5F712 /* tabbar_circle@2x.png in Resources */,
 				F53DC3D01A49192600F5F712 /* Expression_14@2x.png in Resources */,
+				A46D5E9F1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */,
 				A4C1441D1A4C0A6B00C9BAB5 /* AddGroupMemberBtnHL@2x.png in Resources */,
 				A4C144231A4C0A6B00C9BAB5 /* CellGraySelected@2x.png in Resources */,
 				F53DC3D11A49192600F5F712 /* Expression_69@2x.png in Resources */,
@@ -10801,6 +10818,7 @@
 				F5664A8E1A2AFD56008A5830 /* Expression_69@2x.png in Resources */,
 				F5664A8F1A2AFD56008A5830 /* tabbar_circle_selected@2x.png in Resources */,
 				F51BA44E1A444DA2009E5CDF /* tabbar_me_prompt@2x.png in Resources */,
+				A46D5E9D1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */,
 				A4C144A61A4C3F5500C9BAB5 /* weChatBubble_Receiving_Solid2@2x.png in Resources */,
 				F53356341A370EEC000A15AC /* osusume_friend_add@2x.png in Resources */,
 				A414FE1D1A4402AC0004F415 /* config.xml in Resources */,
@@ -11351,6 +11369,7 @@
 				F5318F001A63E986009B6635 /* weLianDev-Info.plist in Resources */,
 				F5664D451A2AFDD5008A5830 /* tabbar_circle@2x.png in Resources */,
 				F5664D471A2AFDD5008A5830 /* Expression_14@2x.png in Resources */,
+				A46D5E9E1ABFFC1900FF0554 /* circle_chat_line@2x.png in Resources */,
 				A4C1441C1A4C0A6B00C9BAB5 /* AddGroupMemberBtnHL@2x.png in Resources */,
 				A4C144221A4C0A6B00C9BAB5 /* CellGraySelected@2x.png in Resources */,
 				F5664D481A2AFDD5008A5830 /* Expression_69@2x.png in Resources */,
@@ -11901,6 +11920,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A49C7BC31A70D42700F2AEC5 /* ISchoolResult.m in Sources */,
+				A46A284A1ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				A49C7BC41A70D42700F2AEC5 /* NewFriendController.m in Sources */,
 				A49C7BC51A70D42700F2AEC5 /* DTTimePeriod.m in Sources */,
 				A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */,
@@ -12399,6 +12419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */,
+				A46A28491ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */,
 				A48CA6A61A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A41CE1AE1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
@@ -12897,6 +12918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5E380B51A41B1680084F7F3 /* WorkListCell.m in Sources */,
+				A46A28471ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				A4C140741A4BEA8500C9BAB5 /* UIImage+Resize.m in Sources */,
 				F566497C1A2AFD56008A5830 /* NewFriendController.m in Sources */,
 				F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -13395,6 +13417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */,
+				A46A28481ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				F5664C361A2AFDD5008A5830 /* NewFriendController.m in Sources */,
 				A48CA6A51A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A41CE1AD1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
@@ -14554,6 +14577,7 @@
 		F59E76091A405D170028FBAF /* weLian.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A46D5E9B1ABFE56600FF0554 /* weLian1.1.9.xcdatamodel */,
 				A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */,
 				A4715B211A84A2C3005DB2FC /* weLian1.1.7.xcdatamodel */,
 				A49C7FC81A70EA0B00F2AEC5 /* weLian1.1.6.xcdatamodel */,
@@ -14565,7 +14589,7 @@
 				A437CEE71A539DBE00B54E68 /* weLian1.1.1.xcdatamodel */,
 				F59E760A1A405D170028FBAF /* weLian.xcdatamodel */,
 			);
-			currentVersion = A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */;
+			currentVersion = A46D5E9B1ABFE56600FF0554 /* weLian1.1.9.xcdatamodel */;
 			path = weLian.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

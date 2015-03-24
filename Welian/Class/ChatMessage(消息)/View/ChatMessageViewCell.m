@@ -67,11 +67,12 @@
     //是否隐藏
     _numBtn.hidden = unRead <= 0 ? YES : NO;
     if (unRead < 100) {
+        [_numBtn setTitle:[NSString stringWithFormat:@"%d",(int)unRead] forState:UIControlStateNormal];
         [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge1"] forState:UIControlStateNormal];
     }else{
+        [_numBtn setTitle:@"99+" forState:UIControlStateNormal];
         [_numBtn setBackgroundImage:[UIImage imageNamed:@"notification_badge2"] forState:UIControlStateNormal];
     }
-    [_numBtn setTitle:[NSString stringWithFormat:@"%d",(int)unRead] forState:UIControlStateNormal];
     
     ChatMessage *chatMessage = [_myFriendUser getTheNewChatMessage];
     _timeLabel.text = [chatMessage.timestamp timeAgoSinceNow];

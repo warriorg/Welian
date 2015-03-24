@@ -42,6 +42,7 @@
                    cardTitle:(NSString *)cardTitle
                    cardIntro:(NSString *)cardIntro
                      cardUrl:(NSString *)cardUrl
+                     cardMsg:(NSString *)cardMsg
 {
     self = [super init];
     if (self) {
@@ -54,6 +55,7 @@
         self.cardTitle = cardTitle;
         self.cardIntro = cardIntro;
         self.cardUrl = cardUrl;
+        self.cardMsg = cardMsg;
         self.messageMediaType = WLBubbleMessageMediaTypeCard;
     }
     return self;
@@ -268,6 +270,7 @@
     _cardTitle = nil;
     _cardIntro = nil;
     _cardUrl = nil;
+    _cardMsg = nil;
 }
 
 #pragma mark - NSCoding
@@ -310,6 +313,7 @@
         _cardTitle = [aDecoder decodeObjectForKey:@"cardTitle"];
         _cardIntro = [aDecoder decodeObjectForKey:@"cardIntro"];
         _cardUrl = [aDecoder decodeObjectForKey:@"cardUrl"];
+        _cardMsg = [aDecoder decodeObjectForKey:@"cardMsg"];
     }
     return self;
 }
@@ -346,6 +350,7 @@
     [aCoder encodeObject:self.cardTitle forKey:@"cardTitle"];
     [aCoder encodeObject:self.cardIntro forKey:@"cardIntro"];
     [aCoder encodeObject:self.cardUrl forKey:@"cardUrl"];
+    [aCoder encodeObject:self.cardUrl forKey:@"cardMsg"];
 }
 
 #pragma mark - NSCopying
@@ -353,6 +358,16 @@
 - (id)copyWithZone:(NSZone *)zone {
     switch (self.messageMediaType) {
         case WLBubbleMessageMediaTypeActivity://活动
+        case WLBubbleMessageMediaTypeCard://卡片
+            return [[[self class] allocWithZone:zone] initWithCard:[self.text copy]
+                                                            sender:[self.sender copy]
+                                                         timestamp:[self.timestamp copy]
+                                                            cardId:[self.cardId copy]
+                                                          cardType:[self.cardType copy]
+                                                         cardTitle:[self.cardTitle copy]
+                                                         cardIntro:[self.cardIntro copy]
+                                                           cardUrl:[self.cardUrl copy]
+                                                           cardMsg:[self.cardMsg copy]];
         case WLBubbleMessageMediaTypeText:
             return [[[self class] allocWithZone:zone] initWithText:[self.text copy]
                                                             sender:[self.sender copy]
