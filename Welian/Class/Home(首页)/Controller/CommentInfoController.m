@@ -25,13 +25,16 @@
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
 #import "PublishStatusController.h"
-#import "CardAlertView.h"
+#import "WLMessageInputView.h"
+
+// Categorys
+#import "UIScrollView+XHkeyboardControl.h"
 
 @interface CommentInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     NSMutableArray *_dataArrayM;
     CommentCellFrame *_selecCommFrame;
-   __block NSMutableArray *_feedArrayM;
+    __block NSMutableArray *_feedArrayM;
     __block NSMutableArray *_zanArrayM;
     
     FeedAndZanFrameM *_feedAndZanFM;
@@ -44,11 +47,17 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) MessageKeyboardView *messageView;
 
+
 @end
 
 static NSString *noCommentCell = @"NoCommentCell";
 
 @implementation CommentInfoController
+
+- (BOOL)allowsPanToDismissKeyboard
+{
+    return YES;
+}
 
 - (CommentHeadFrame*)commentHFrame
 {
@@ -71,7 +80,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
     [_commentHeadView setCommHeadFrame:self.commentHFrame];
     __weak CommentInfoController *commin = self;
-
+    
     _commentHeadView.feezanBlock = ^(WLStatusM *statusM){
         
         [commin backDataStatusFrame:NO];
@@ -95,7 +104,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     [WLHttpTool loadOneFeedParameterDic:@{@"fid":@(fid)} success:^(id JSON) {
         NSDictionary *statusDic = JSON;
         [[WLDataDBTool sharedService] putObject:statusDic withId:[NSString stringWithFormat:@"%@",[statusDic objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
-
+        
         WLStatusM *loadstatusM = [WLStatusM objectWithKeyValues:statusDic];
         [self.statusM setContent:loadstatusM.content];
         [self.statusM setCommentcount:loadstatusM.commentcount];
@@ -128,7 +137,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         
         NSArray *feedarray = [JSON objectForKey:@"forwards"];
         NSArray *zanarray = [JSON objectForKey:@"zans"];
-
+        
         [_feedArrayM removeAllObjects];
         [_zanArrayM removeAllObjects];
         if (feedarray.count) {
@@ -176,8 +185,13 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.view setBackgroundColor:WLLineColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreButClick:)];
     
-    _feedArrayM = [NSMutableArray array];
-    _zanArrayM = [NSMutableArray array];
+    _feedArrayM = [NSMutableArray arrayWithArray:self.statusM.forwardsArray];
+    _zanArrayM = [NSMutableArray arrayWithArray:self.statusM.zansArray];
+    _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
+    [_feedAndZanFM setCellWidth:SuperSize.width];
+    [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
+    
+    _dataArrayM = [self commentFrameArrayModel:self.statusM.commentsArray];
     self.reqestDic = [NSMutableDictionary dictionary];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadnewcommentAndFeedZanAndForward) forControlEvents:UIControlEventValueChanged];
@@ -185,22 +199,22 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     [self.refreshControl beginRefreshing];
     [self loadnewcommentAndFeedZanAndForward];
-    
     [self.view addSubview:self.tableView];
+    
     
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height, self.view.frame.size.width, 50) andSuperView:self.view withMessageBlock:^(NSString *comment) {
         
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-
+        
         [reqstDicM setObject:@(self.statusM.topid) forKey:@"fid"];
         if (self.statusM.topid==0) {
-        [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
+            [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
         }
         [reqstDicM setObject:comment forKey:@"comment"];
         
         if (_selecCommFrame) {
             [reqstDicM setObject:_selecCommFrame.commentM.user.uid forKey:@"touid"];
-        } 
+        }
         
         [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
             
@@ -246,7 +260,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     if ([self.statusM.user.uid integerValue]==[mode.uid integerValue]) {
         twoArray = @[@(ShareTypeReport),@(ShareTypeDelete)];
     }
-
+    
     WEAKSELF
     WLActivityView *wlActivity = [[WLActivityView alloc] initWithOneSectionArray:twoArray andTwoArray:@[@(ShareTypeWeixinFriend),@(ShareTypeWeixinCircle)]];
     wlActivity.wlShareBlock = ^(ShareType type){
@@ -267,7 +281,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                 [weakSelf presentViewController:navShareFVC animated:YES completion:^{
                     
                 }];
-
+                
             }
                 break;
             case ShareTypeWeixinFriend:
@@ -340,12 +354,12 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.reqestDic setObject:@(KCellConut) forKey:@"size"];
     [self.reqestDic setObject:@(1) forKey:@"page"];
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-        _dataArrayM = JSON;
+        [_dataArrayM removeAllObjects];
+        _dataArrayM = [self commentFrameArray:JSON];
         [self hiddenRefresh];
         if (!_dataArrayM.count) return;
         NSMutableArray *commentArray = [NSMutableArray array];
         for (CommentCellFrame *cellF in _dataArrayM) {
-            
             [commentArray addObject:cellF.commentM];
         }
         [self.statusM setCommentsArray:commentArray];
@@ -356,9 +370,37 @@ static NSString *noCommentCell = @"NoCommentCell";
     }];
 }
 
+#pragma mark - 计算评论cell高度
+- (NSMutableArray *)commentFrameArrayModel:(NSArray *)commentArray
+{
+    NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:commentArray.count];
+    for (CommentMode *commentM in commentArray) {
+        CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+        [commentFrame setCommentM:commentM];
+        
+        [dataAM addObject:commentFrame];
+    }
+    return dataAM;
+}
+
+
+- (NSMutableArray *)commentFrameArray:(NSArray *)commentArray
+{
+    NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:commentArray.count];
+    for (NSDictionary *dic in commentArray) {
+        
+        CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
+        CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+        [commentFrame setCommentM:commentM];
+        
+        [dataAM addObject:commentFrame];
+    }
+    return dataAM;
+}
+
 - (void)updataCommentBlock
 {
-        __weak CommentInfoController *weakSelf = self;
+    __weak CommentInfoController *weakSelf = self;
     if (weakSelf.commentBlock) {
         weakSelf.commentBlock(weakSelf.statusM);
     }
@@ -371,7 +413,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
         NSArray *dataarr = JSON;
-        [_dataArrayM addObjectsFromArray:dataarr];
+        [_dataArrayM addObjectsFromArray:[self commentFrameArray:dataarr]];
         
         [self hiddenRefresh];
         if (dataarr.count<KCellConut) {
@@ -543,14 +585,14 @@ static NSString *noCommentCell = @"NoCommentCell";
             } fail:^(NSError *error) {
                 
             }];
-
+            
         }];
         [sheet showInView:self.view];
     }else{
         [sheet bk_addButtonWithTitle:@"回复" handler:^{
             [self.messageView startCompile:_selecCommFrame.commentM.user];
         }];
-
+        
         [sheet showInView:self.view];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -576,9 +618,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     [self.statusM setZansArray:_zanArrayM];
     [self.statusM setForwardsArray:_feedArrayM];
-
+    
     [self.tableView reloadData];
-
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

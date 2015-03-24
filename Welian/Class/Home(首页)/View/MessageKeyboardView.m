@@ -8,8 +8,9 @@
 
 #import "MessageKeyboardView.h"
 #import "ZBMessageManagerFaceView.h"
+#import "WUDemoKeyboardBuilder.h"
 
-@interface MessageKeyboardView() <UITextFieldDelegate,UIScrollViewDelegate,ZBMessageManagerFaceViewDelegate>
+@interface MessageKeyboardView() <UITextViewDelegate,UIScrollViewDelegate>
 {
     UIButton *_emojiBut;
     MessageCommeBlock _messageBlock;
@@ -21,7 +22,7 @@
     UIView *_theSuperView;
 }
 
-@property (nonatomic,strong) ZBMessageManagerFaceView *faceView;
+//@property (nonatomic,strong) ZBMessageManagerFaceView *faceView;
 
 @end
 
@@ -44,17 +45,17 @@
         _emojiBut = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-IWCellBorderWidth-40, 5, 40, 40)];
         [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_emoji"] forState:UIControlStateNormal];
         [_emojiBut setImage:[UIImage imageNamed:@"me_circle_chat_keybroad"] forState:UIControlStateSelected];
-        [_emojiBut addTarget:self action:@selector(showEmojiView:) forControlEvents:UIControlEventTouchDown];
+        [_emojiBut addTarget:self action:@selector(switchKeyboard:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_emojiBut];
         
-        _commentTextView = [[WLTextField alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
+        _commentTextView = [[WLMessageTextView alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
         [_commentTextView.layer setMasksToBounds:YES];
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
         [_commentTextView.layer setBorderColor:[WLLineColor CGColor]];
         [_commentTextView setFont:[UIFont systemFontOfSize:17]];
         [_commentTextView setReturnKeyType:UIReturnKeySend];
-        [_commentTextView setPlaceholder:@"写评论..."];
+        [_commentTextView setPlaceHolder:@"写评论..."];
         [_commentTextView setDelegate:self];
         [self addSubview:_commentTextView];
         
@@ -67,96 +68,67 @@
                                                  selector:@selector(inputKeyboardWillHide:)
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
-        self.faceView = [[ZBMessageManagerFaceView alloc]initWithFrame:CGRectMake(0, superView.frame.size.height, superView.frame.size.width, keyboardHeight)];//216-->196
-        self.faceView.delegate = self;
-        [superView addSubview:self.faceView];
-        
-        
         [superView addSubview:self];
         // Do any additional setup after loading the view, typically from a nib.
     }
     return self;
 }
 
-- (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele isSend:(BOOL)send
+- (void)textViewDidChange:(UITextView *)textView
 {
-    if (send) {
-        [self textFieldShouldReturn:_commentTextView];
-    }else{
-        if (dele) {
-            
-            NSString *inputString = _commentTextView.text;
-            
-            NSString *string = nil;
-            NSInteger stringLength = inputString.length;
-            if (stringLength > 0) {
-                if ([@"]" isEqualToString:[inputString substringFromIndex:stringLength-1]]) {
-                    if ([inputString rangeOfString:@"["].location == NSNotFound){
-                        string = [inputString substringToIndex:stringLength - 1];
-                    } else {
-                        string = [inputString substringToIndex:[inputString rangeOfString:@"[" options:NSBackwardsSearch].location];
-                    }
-                } else {
-                    string = [inputString substringToIndex:stringLength - 1];
-                }
-            }
-            
-            _commentTextView.text = string;
-        }else{
-            
-            _commentTextView.text = [_commentTextView.text stringByAppendingString:faceStr];
-        }
+    CGSize size = textView.contentSize;
+    size.height -= 2;
+    if ( size.height >= 58 ) {
+        
+        size.height = 58;
+    }
+    else if ( size.height <= 32 ) {
+        
+        size.height = 32;
+    }
     
+    if ( size.height != textView.frame.size.height ) {
+        
+        CGFloat span = size.height - textView.frame.size.height;
+        
+        CGRect frame = self.frame;
+        frame.origin.y -= span;
+        frame.size.height += span;
+        self.frame = frame;
+        
+        CGFloat centerY = frame.size.height / 2;
+        
+        frame = textView.frame;
+        frame.size = size;
+        textView.frame = frame;
+        
+        CGPoint center = textView.center;
+        center.y = centerY;
+        textView.center = center;
     }
 }
 
--(void)showEmojiView:(UIButton*)but{
-    
-    [but setSelected:!but.selected];
-    
-    //如果直接点击表情，通过toolbar的位置来判断
-    if (self.frame.origin.y== _theSuperView.bounds.size.height - toolBarHeight&&self.frame.size.height==toolBarHeight) {
-        
-        [UIView animateWithDuration:Time animations:^{
-            self.frame = CGRectMake(0, _theSuperView.frame.size.height-keyboardHeight-toolBarHeight,  _theSuperView.bounds.size.width,toolBarHeight);
-        }];
-        [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, _theSuperView.frame.size.height-keyboardHeight,_theSuperView.frame.size.width, keyboardHeight)];
-        }];
-        [_commentTextView resignFirstResponder];
-        return;
-    }
-    //如果键盘没有显示，点击表情了，隐藏表情，显示键盘
-    if (!keyboardIsShow) {
-        [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, _theSuperView.frame.size.height, _theSuperView.frame.size.width, keyboardHeight)];
-        }];
-        [_commentTextView becomeFirstResponder];
-        
+
+- (void)switchKeyboard:(UIButton *)sender {
+    [_emojiBut setSelected:!_emojiBut.selected];
+    if (_commentTextView.isFirstResponder) {
+        if (_commentTextView.emoticonsKeyboard) [_commentTextView switchToDefaultKeyboard];
+        else [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
     }else{
-        [_commentTextView resignFirstResponder];
-        //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
-        [UIView animateWithDuration:Time animations:^{
-            self.frame = CGRectMake(0, _theSuperView.frame.size.height-keyboardHeight-self.frame.size.height,  _theSuperView.bounds.size.width,self.frame.size.height);
-        }];
-        
-        [UIView animateWithDuration:Time animations:^{
-            [self.faceView setFrame:CGRectMake(0, _theSuperView.frame.size.height-keyboardHeight,_theSuperView.frame.size.width, keyboardHeight)];
-        }];
+        [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+        [_commentTextView becomeFirstResponder];
     }
 }
+
 
 //#pragma mark 隐藏键盘
 -(void)dismissKeyBoard{
     //键盘显示的时候，toolbar需要还原到正常位置，并显示表情
     [UIView animateWithDuration:Time animations:^{
-        self.frame = CGRectMake(0, _theSuperView.frame.size.height-toolBarHeight,  _theSuperView.bounds.size.width,self.frame.size.height);
-    }];
-
-    [UIView animateWithDuration:Time animations:^{
-        [self.faceView setFrame:CGRectMake(0, _theSuperView.frame.size.height,_theSuperView.frame.size.width, keyboardHeight)];
+        self.frame = CGRectMake(0, _theSuperView.frame.size.height-self.frame.size.height,  _theSuperView.bounds.size.width,self.frame.size.height);
     }];
     [_emojiBut setSelected:NO];
+    [_commentTextView switchToDefaultKeyboard];
     [_commentTextView resignFirstResponder];
 }
 
@@ -173,7 +145,7 @@
         CGFloat inputViewFrameY = keyboardY - self.bounds.size.height;
         
         // for ipad modal form presentations
-        CGFloat messageViewFrameBottom = _theSuperView.frame.size.height - toolBarHeight;
+        CGFloat messageViewFrameBottom = _theSuperView.frame.size.height - self.frame.size.height;
         
         if(inputViewFrameY > messageViewFrameBottom){
             
@@ -182,20 +154,14 @@
         self.frame = CGRectMake(0,
                                 inputViewFrameY,
                                 self.bounds.size.width,
-                                toolBarHeight);
-
+                                self.frame.size.height);
+        
     } completion:^(BOOL finished) {
-       
+        
         
     }];
-
+    
     keyboardIsShow=YES;
-}
-
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [_emojiBut setSelected:NO];
 }
 
 -(void)inputKeyboardWillHide:(NSNotification *)notification{
@@ -208,23 +174,27 @@
 - (void)startCompile:(WLBasicTrends *)touser
 {
     if (!touser) {
-        [_commentTextView setPlaceholder:@"写评论..."];
+        [_commentTextView setPlaceHolder:@"写评论..."];
         return;
     }
     [_commentTextView becomeFirstResponder];
-    [_commentTextView setPlaceholder:[NSString stringWithFormat:@"回复%@:",touser.name]];
+    [_commentTextView setPlaceHolder:[NSString stringWithFormat:@"回复%@:",touser.name]];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self dismissKeyBoard];
-    if (textField.text.length) {
-        _messageBlock(textField.text);
-        [textField setText:nil];
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        [self dismissKeyBoard];
+        if (textView.text.length) {
+            _messageBlock(textView.text);
+            [textView setText:nil];
+            [self textViewDidChange:textView];
+        }
+        //在这里做你响应return键的代码
+        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
+    
     return YES;
 }
-
 
 - (void)dealloc
 {

@@ -28,9 +28,9 @@ return _##regularExpression;\
 
 REGULAREXPRESSION(URLRegularExpression,@"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)")
 
-REGULAREXPRESSION(PhoneNumerRegularExpression, @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}")
+//REGULAREXPRESSION(PhoneNumerRegularExpression, @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}")
 
-REGULAREXPRESSION(EmailRegularExpression, @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}")
+//REGULAREXPRESSION(EmailRegularExpression, @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}")
 
 REGULAREXPRESSION(AtRegularExpression, @"@[\\u4e00-\\u9fa5\\w\\-]+")
 
@@ -54,8 +54,11 @@ NSString *const kCustomGlyphAttributeImageName = @"CustomGlyphAttributeImageName
 
 #define kEmojiReplaceCharacter @"\uFFFC"
 
-#define kURLActionCount 5
-NSString * const kURLActions[] = {@"url->",@"email->",@"phoneNumber->",@"at->",@"poundSign->"};
+//#define kURLActionCount 5
+//NSString * const kURLActions[] = {@"url->",@"email->",@"phoneNumber->",@"at->",@"poundSign->"};
+
+#define kURLActionCount 3
+NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
 
 /**
  *  搞个管理器，否则自定义plist的话，每个label都会有个副本很操蛋
@@ -496,8 +499,10 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     }
     
     NSRange stringRange = NSMakeRange(0, mutableAttributedString.length);
-    
-    NSRegularExpression * const regexps[] = {kURLRegularExpression(),kEmailRegularExpression(),kPhoneNumerRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
+
+    #pragma mark ---禁用电话和邮箱
+//    NSRegularExpression * const regexps[] = {kURLRegularExpression(),kEmailRegularExpression(),kPhoneNumerRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
+    NSRegularExpression * const regexps[] = {kURLRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
     
     NSMutableArray *results = [NSMutableArray array];
     
