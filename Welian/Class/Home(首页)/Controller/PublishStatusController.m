@@ -229,8 +229,8 @@ static NSString *picCellid = @"PicCellID";
     }];
     
     [_emojiBut setSelected:NO];
-    [_textCell.textView switchToDefaultKeyboard];
     [_textCell.textView resignFirstResponder];
+    [_textCell.textView switchToDefaultKeyboard];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
