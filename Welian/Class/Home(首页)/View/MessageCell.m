@@ -15,6 +15,8 @@
 {
     // 头像
     UIImageView *_iconImage;
+    // 角标
+    UIImageView *_badgeImage;
     // 姓名
     UILabel *_nameLabel;
     // 对我的评论
@@ -80,6 +82,10 @@
     [_iconImage.layer setCornerRadius:IWIconWHSmall*0.5];
     [self.contentView addSubview:_iconImage];
     
+    //点
+    _badgeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"msg_dian"]];
+    [self.contentView addSubview:_badgeImage];
+    
     _nameLabel = [[UILabel alloc] init];
     [_nameLabel setFont:IWContentFont];
     [self.contentView addSubview:_nameLabel];
@@ -129,6 +135,8 @@
     
     [_iconImage setFrame:messageFrameModel.iconImageF];
     [_iconImage sd_setImageWithURL:[NSURL URLWithString:messageDataM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    [_badgeImage setFrame:CGRectMake(_iconImage.right-8, _iconImage.top, 9, 9)];
+    _badgeImage.hidden= messageDataM.isLook.boolValue;
     
     [_nameLabel setFrame:messageFrameModel.nameLabelF];
     [_nameLabel setText:messageDataM.name];

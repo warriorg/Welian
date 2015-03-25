@@ -25,8 +25,9 @@
 #import "UIImage+ImageEffects.h"
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
+#import "UserInfoViewController.h"
 
-@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate,WLSegmentedControlDelegate>
+@interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate>//,WLSegmentedControlDelegate>
 
 {
     NSInteger _count;
@@ -45,6 +46,11 @@ static NSString *myFriendsOperatecellid = @"MyFriendsOperatecellid";
 //static NSString *newFriendcellid = @"newFriendcellid";
 static NSString *fridcellid = @"fridcellid";
 @implementation MyFriendsController
+
+- (NSString *)title
+{
+    return @"一度好友";
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -83,10 +89,10 @@ static NSString *fridcellid = @"fridcellid";
     self.filterArray = [NSMutableArray array];
     
     //右侧添加按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加好友"
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(addFriendClick)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加好友"
+//                                                                              style:UIBarButtonItemStylePlain
+//                                                                             target:self
+//                                                                             action:@selector(addFriendClick)];
     
     //搜索栏
     self.searchBar = [[UISearchBar alloc] init];
@@ -129,7 +135,7 @@ static NSString *fridcellid = @"fridcellid";
 
 -(void)loadMyAllFriends
 {
-    if (![[LogInUser getCurrentLoginUser] getAllMyFriendUsers].count) {
+    if (![[LogInUser getCurrentLoginUser] rsMyFriends].count) {
         [WLHUDView showCustomHUD:@"加载好友..." imageview:nil];
     }
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
@@ -231,6 +237,7 @@ static NSString *fridcellid = @"fridcellid";
     }];
 }
 
+#pragma mark - UITableView Datasource&delegate
 - (NSArray*)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
@@ -259,21 +266,13 @@ static NSString *fridcellid = @"fridcellid";
 //    return index;
 //}
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == self.tableView&&indexPath.section==0) {
-        return 82.f;
-    }
-        return 60.0;
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         return 1;
     }else{
-        return self.allArray.count+1;
+//        return self.allArray.count+1;
+         return self.allArray.count;
     }
 }
 
@@ -283,14 +282,14 @@ static NSString *fridcellid = @"fridcellid";
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         return self.filterArray.count;
     }else{
-        
-        if (section==0) {
-            return 1;
-        }else{
-            NSDictionary *userF = self.allArray[section-1];
-            
-            return [[userF objectForKey:@"userF"] count];
-        }
+        NSDictionary *userF = self.allArray[section];
+        return [[userF objectForKey:@"userF"] count];
+//        if (section==0) {
+//            return 1;
+//        }else{
+//            NSDictionary *userF = self.allArray[section-1];
+//            return [[userF objectForKey:@"userF"] count];
+//        }
     }
 }
 
@@ -299,15 +298,13 @@ static NSString *fridcellid = @"fridcellid";
 {
     
     if (tableView == self.tableView) {
-        if (section) {
-            NSDictionary *dick = self.allArray[section-1];
-            UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
-            sectionHeader.backgroundColor = WLLineColor;
-            sectionHeader.font = [UIFont systemFontOfSize:15];
-            sectionHeader.textColor = [UIColor grayColor];
-            sectionHeader.text = [NSString stringWithFormat:@"   %@",[dick objectForKey:@"key"]];
-            return sectionHeader;
-        }
+        NSDictionary *dick = self.allArray[section];
+        UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+        sectionHeader.backgroundColor = WLLineColor;
+        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.textColor = [UIColor grayColor];
+        sectionHeader.text = [NSString stringWithFormat:@"   %@",[dick objectForKey:@"key"]];
+        return sectionHeader;
     }else{
         UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         sectionHeader.backgroundColor = WLLineColor;
@@ -321,51 +318,6 @@ static NSString *fridcellid = @"fridcellid";
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section==0&&tableView==self.tableView) {
-        return 0.0;
-    }else{
-        return 25.0;
-    }
-}
-
-//代理函数 获取当前下标
-- (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
-{
-    DLog(@"选中的类型--》 %d",(int)index);
-    switch (index) {
-        case 0:
-        {
-            //新的好友
-            NewFriendViewController *newFriendVC = [[NewFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            [self.navigationController pushViewController:newFriendVC animated:YES];
-            [self.navigationController.tabBarItem setBadgeValue:nil];
-            [LogInUser setUserNewfriendbadge:@(0)];
-//            [UserDefaults removeObjectForKey:KFriendbadge];
-        }
-            break;
-        case 1:
-        case 2:
-        {
-            //1.手机联系人
-            //2.微信好友
-            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped WithSelectType:(index == 1 ? 0 : 1)];
-            [self.navigationController pushViewController:addFriendVC animated:YES];
-        }
-            break;
-        case 3:
-        {
-            //好友的好友
-            FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
-            [self.navigationController pushViewController:friendsfVC animated:YES];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
@@ -374,28 +326,28 @@ static NSString *fridcellid = @"fridcellid";
         [fcell setUserMode:modeIM];
         return fcell;
     }else{
-        if (indexPath.section==0) {
-            MyFriendsOperateViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myFriendsOperatecellid];
-            if(!cell){
-                cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
-            }
-            cell.segementedControl.delegate = self;
-            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
-            cell.segementedControl.bridges = @[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"];
-            return cell;
-        }else{
-            
-            FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
+//        if (indexPath.section==0) {
+//            MyFriendsOperateViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myFriendsOperatecellid];
+//            if(!cell){
+//                cell = [[MyFriendsOperateViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myFriendsOperatecellid];
+//            }
+//            cell.segementedControl.delegate = self;
+//            NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
+//            cell.segementedControl.bridges = @[badgeStr == nil ? @"0": badgeStr,@"0",@"0",@"0"];
+//            return cell;
+//        }else{
+//            
+//            
+//        }
+        FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
 #warning  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++标星好友
-            
-            NSDictionary *usersDic = self.allArray[indexPath.section-1];
-            NSArray *modear = usersDic[@"userF"];
-            FriendsUserModel *modeIM = modear[indexPath.row];
-            
-            [fcell setUserMode:modeIM];
-            return fcell;
-        }
-    
+        
+        NSDictionary *usersDic = self.allArray[indexPath.section];
+        NSArray *modear = usersDic[@"userF"];
+        FriendsUserModel *modeIM = modear[indexPath.row];
+        
+        [fcell setUserMode:modeIM];
+        return fcell;
     }
 }
 
@@ -405,37 +357,62 @@ static NSString *fridcellid = @"fridcellid";
     FriendsUserModel *userMode;
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         userMode = self.filterArray[indexPath.row];
-        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
+//        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
         
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
-        if (indexPath.section==0) {
-//            if (indexPath.row==0) {
-//                NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
-//                
-//                [self.navigationController pushViewController:friendNewVC animated:YES];
-//                
-//                [self.navigationController.tabBarItem setBadgeValue:nil];
-//                [UserDefaults removeObjectForKey:KFriendbadge];
-//                
-//            }else if (indexPath.row==1){
-//                FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
-//                [self.navigationController pushViewController:friendsfVC animated:YES];
-//                
-//            }
-            return;
-        }else{
-            NSDictionary *usersDic = self.allArray[indexPath.section-1];
-            NSArray *modear = usersDic[@"userF"];
-            userMode = modear[indexPath.row];
-            [userMode setFriendship:@(1)];
-            UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
-            
-            [self.navigationController pushViewController:userInfoVC animated:YES];
-        }
+//        if (indexPath.section==0) {
+////            if (indexPath.row==0) {
+////                NewFriendController *friendNewVC = [[NewFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+////                
+////                [self.navigationController pushViewController:friendNewVC animated:YES];
+////                
+////                [self.navigationController.tabBarItem setBadgeValue:nil];
+////                [UserDefaults removeObjectForKey:KFriendbadge];
+////                
+////            }else if (indexPath.row==1){
+////                FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
+////                [self.navigationController pushViewController:friendsfVC animated:YES];
+////                
+////            }
+//            return;
+//        }else{
+//            
+//        }
+        NSDictionary *usersDic = self.allArray[indexPath.section];
+        NSArray *modear = usersDic[@"userF"];
+        userMode = modear[indexPath.row];
+        [userMode setFriendship:@(1)];
+//        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //    if (tableView == self.tableView&&indexPath.section==0) {
+    //        return 82.f;
+    //    }
+    return 60.0;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    //    if (section==0&&tableView==self.tableView) {
+    //        return 0.0;
+    //    }else{
+    //        return 25.0;
+    //    }
+    return 25.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
 
 #pragma mark - 搜索本地好友
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -455,5 +432,41 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
+
+////代理函数 获取当前下标
+//- (void)wlSegmentedControlSelectAtIndex:(NSInteger)index
+//{
+//    DLog(@"选中的类型--》 %d",(int)index);
+//    switch (index) {
+//        case 0:
+//        {
+//            //新的好友
+//            NewFriendViewController *newFriendVC = [[NewFriendViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//            [self.navigationController pushViewController:newFriendVC animated:YES];
+//            [self.navigationController.tabBarItem setBadgeValue:nil];
+//            [LogInUser setUserNewfriendbadge:@(0)];
+//            //            [UserDefaults removeObjectForKey:KFriendbadge];
+//        }
+//            break;
+//        case 1:
+//        case 2:
+//        {
+//            //1.手机联系人
+//            //2.微信好友
+//            AddFriendViewController *addFriendVC = [[AddFriendViewController alloc] initWithStyle:UITableViewStyleGrouped WithSelectType:(index == 1 ? 0 : 1)];
+//            [self.navigationController pushViewController:addFriendVC animated:YES];
+//        }
+//            break;
+//        case 3:
+//        {
+//            //好友的好友
+//            FriendsFriendController *friendsfVC = [[FriendsFriendController alloc] initWithStyle:UITableViewStylePlain];
+//            [self.navigationController pushViewController:friendsfVC animated:YES];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//}
 
 @end

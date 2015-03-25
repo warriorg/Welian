@@ -28,6 +28,7 @@
 @property (strong,nonatomic) NSArray *datasource;
 @property (strong,nonatomic) NotstringView *notHasDataView;//无消息提醒
 @property (assign,nonatomic) NSInteger selectType;//选择的类型
+@property (assign,nonatomic) BOOL isLookedMessage;//已经查看了消息
 
 @end
 
@@ -325,6 +326,15 @@
 {
     //设置是否在新的好友通知页面
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLookAtNewFriendVC"];
+    //改变普通消息的查看状态
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    if (_isLookedMessage) {
+        //更新状态
+        [loginUser updateALLNotLookMessages];
+    }
+    
+    //设置未查看普通消息
+    self.isLookedMessage = NO;
     self.selectType = index;
     switch (_selectType) {
         case 0:
@@ -334,12 +344,16 @@
             break;
         case 1:
         {
+            //更新角标
+            loginUser.homemessagebadge = @(0);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
             [self loadMessageData];
         }
             break;
         case 2:
         {
             //设置角标改变
+            self.isLookedMessage = YES;
             [self setNewUserBadgeChange];
             [self loadNewFriendData];
         }
@@ -379,7 +393,7 @@
     NSMutableArray *messageModels = [NSMutableArray array];
     for (HomeMessage *homeM  in messages) {
         if (!homeM.isLook.boolValue) {
-            homeM.isLook = @(1);
+//            homeM.isLook = @(1);
             MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
             messageFrameM.messageDataM = homeM;
             [messageModels addObject:messageFrameM];

@@ -83,6 +83,15 @@
         [customCitys addObjectsFromArray:localCitys];
         self.cityList = [NSArray arrayWithArray:customCitys];
         
+        //活动当前定位的城市
+        NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:@"LocationCity"];
+        NSDictionary *localCity = nil;
+        if (city) {
+            localCity = [localCitys bk_match:^BOOL(id obj) {
+                return [[obj objectForKey:@"name"] isEqualToString:city];
+            }];
+        }
+        
         self.timeList = @[@{@"cityid":@"-1",@"name":@"全部"}
                           ,@{@"cityid":@"0",@"name":@"今天"}
                           ,@{@"cityid":@"1",@"name":@"明天"}
@@ -90,7 +99,7 @@
                           ,@{@"cityid":@"-2",@"name":@"周末"}];
         
         self.selectTimeType = @{@"cityid":@"-1",@"name":@"全部"};
-        self.selectAddressType = @{@"cityid":@"0",@"name":@"全国"};
+        self.selectAddressType = localCity != nil ? localCity : @{@"cityid":@"0",@"name":@"全国"};
         self.pageIndex = 1;
         self.pageSize = KCellConut;
         

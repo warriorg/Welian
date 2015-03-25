@@ -95,7 +95,7 @@
     self.opaque = NO;
     self.selectionIndicatorColor = [UIColor colorWithRed:52.0f/255.0f green:181.0f/255.0f blue:229.0f/255.0f alpha:1.0f];
     
-    self.selectedSegmentIndex = 0;
+//    self.selectedSegmentIndex = 0;
     self.segmentEdgeInset = UIEdgeInsetsMake(0, 5, 0, 5);
     self.selectionIndicatorHeight = 5.0f;
     self.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -156,7 +156,7 @@
             if (_isShowVertical) {
                 titleLabel.centerX = (_segmentWidth / 2.f) + _segmentWidth * idx;
                 titleLabel.top = (self.height - _selectionIndicatorHeight) / 2.f;
-                detailLabel.bottom = titleLabel.top - 5.f;
+                detailLabel.bottom = titleLabel.top;
                 detailLabel.centerX = titleLabel.centerX;
             }else{
                 titleLabel.left = (_segmentWidth - titleLabel.width - detailLabel.width - 3.f) / 2.f + _segmentWidth * idx;
@@ -177,7 +177,7 @@
                 [_scrollView addSubview:lineView];
             }
             lineView.backgroundColor = WLLineColor;
-            lineView.size = CGSizeMake(0.5f, self.height - _selectionIndicatorHeight - 10.f);
+            lineView.size = CGSizeMake(0.8f, self.height - _selectionIndicatorHeight - 15.f);
             lineView.left = _segmentWidth * idx;
             lineView.centerY = (self.height - _selectionIndicatorHeight) / 2.f;
         }
@@ -198,7 +198,7 @@
                 //角标
                 numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 numBtn.backgroundColor = [UIColor clearColor];
-                numBtn.titleLabel.font = [UIFont systemFontOfSize:10.f];
+                numBtn.titleLabel.font = [UIFont systemFontOfSize:11.f];
                 [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
                 numBtn.tag = kTagOfBadge + idx;
@@ -246,6 +246,14 @@
 {
     _sectionBadges = sectionBadges;
     [self setNeedsLayout];
+}
+
+- (void)setShowLine:(BOOL)showLine
+{
+    _showLine = showLine;
+    if (_showLine && [self sectionCount] > 0) {
+        self.segmentWidth = (self.frame.size.width - ([self sectionCount] - 1) * 0.8) / [self sectionCount];
+    }
 }
 
 - (void)updateSegmentsRects {
@@ -308,11 +316,16 @@
 //        } else if (self.type == HMSegmentedControlTypeTextImages || self.type == HMSegmentedControlTypeText) {
             sectionsCount = [self.sectionTitles count];
 //        }
-        
-        if (segment != self.selectedSegmentIndex && segment < sectionsCount) {
-            // Check if we have to do anything with the touch event
+        if(_isAllowTouchEveryTime)
+        {
             if (self.isTouchEnabled)
                 [self setSelectedSegmentIndex:segment animated:self.shouldAnimateUserSelection notify:YES];
+        }else{
+            if (segment != self.selectedSegmentIndex && segment < sectionsCount) {
+                // Check if we have to do anything with the touch event
+                if (self.isTouchEnabled)
+                    [self setSelectedSegmentIndex:segment animated:self.shouldAnimateUserSelection notify:YES];
+            }
         }
     }
 }

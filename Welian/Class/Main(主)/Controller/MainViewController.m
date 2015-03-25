@@ -18,6 +18,7 @@
 #import "MessagesViewController.h"
 #import "LogInUser.h"
 #import "LocationTool.h"
+#import "WLLocationHelper.h"
 
 #import "FriendsUserModel.h"
 #import "MyFriendUser.h"
@@ -83,7 +84,7 @@
 {
     UITabBarItem *homeItem;
     UITabBarItem *selectItem;
-    UITabBarItem *circleItem;
+//    UITabBarItem *circleItem;
     UITabBarItem *chatMessageItem;
     UITabBarItem *findItem;
     UITabBarItem *meItem;
@@ -136,20 +137,23 @@ single_implementation(MainViewController)
     [self updateChatMessageBadge:nil];
     
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
-    // 首页
+    // 首页 创业圈角标
     if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
         [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    }else{
-        [self.navTitleView hidePrompt];
-        [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
-        [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
-        if (meinfo.homemessagebadge.integerValue) {
-            NSString *badgeStr = [NSString stringWithFormat:@"%@",meinfo.homemessagebadge];
-            [homeItem setBadgeValue:badgeStr];
-        }
     }
+    //新消息的角标
+//    else{
+//        [self.navTitleView hidePrompt];
+//        [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
+//        [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
+//        if (meinfo.homemessagebadge.integerValue) {
+//            NSString *badgeStr = [NSString stringWithFormat:@"%@",meinfo.homemessagebadge];
+//            [homeItem setBadgeValue:badgeStr];
+//        }
+//    }
+    
     /// 有新的活动或者新的项目
     if (meinfo.isactivebadge.boolValue || meinfo.isprojectbadge.boolValue) {
         [findItem setImage:[[UIImage imageNamed:@"tabbar_discovery_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -247,17 +251,17 @@ single_implementation(MainViewController)
     [homeNav setTabBarItem:homeItem];
     
     // 好友
-    circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
-    if ([LogInUser getCurrentLoginUser].newfriendbadge.integerValue) {
-        
-        [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge]];
-    }
+//    circleItem = [self itemWithTitle:@"好友" imageStr:@"tabbar_friend" selectedImageStr:@"tabbar_friend_selected"];
+//    if ([LogInUser getCurrentLoginUser].newfriendbadge.integerValue) {
+//        
+//        [circleItem setBadgeValue:[NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge]];
+//    }
     
-    MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
-    NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
-    [friendsNav setDelegate:self];
-    [friendsVC.navigationItem setTitle:@"好友"];
-    [friendsNav setTabBarItem:circleItem];
+//    MyFriendsController *friendsVC = [[MyFriendsController alloc] initWithStyle:UITableViewStylePlain];
+//    NavViewController *friendsNav = [[NavViewController alloc] initWithRootViewController:friendsVC];
+//    [friendsNav setDelegate:self];
+//    [friendsVC.navigationItem setTitle:@"好友"];
+//    [friendsNav setTabBarItem:circleItem];
     
     
     // 聊天消息
@@ -282,10 +286,9 @@ single_implementation(MainViewController)
     MeViewController *meVC = [[MeViewController alloc] init];
     NavViewController *meNav = [[NavViewController alloc] initWithRootViewController:meVC];
     [meNav setDelegate:self];
-    [meVC.navigationItem setTitle:@"我"];
     [meNav setTabBarItem:meItem];
     //设置底部导航
-    [self setViewControllers:@[homeNav,findNav,chatMeeageNav,friendsNav,meNav]];
+    [self setViewControllers:@[homeNav,findNav,chatMeeageNav,meNav]];
     [self.tabBar setSelectedImageTintColor:KBasesColor];
 
     selectItem = homeItem;
@@ -305,13 +308,37 @@ single_implementation(MainViewController)
             
         }];
     };
+    
+    //获取城市定位
+    [self getCityLocationInfo];
+}
+
+//获取城市定位
+- (void)getCityLocationInfo
+{
+    [[WLLocationHelper sharedInstance] getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+        CLPlacemark *placemark = [placemarks lastObject];
+        if (placemark) {
+            NSDictionary *addressDictionary = placemark.addressDictionary;
+            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+            NSString *geoLocations = [formattedAddressLines lastObject];
+            if (geoLocations) {
+                //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+                NSString *cityStr = addressDictionary[@"City"];
+                NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+                DLog(@"当前城市：%@",city);
+                //定位的城市
+                [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+            }
+        }
+    }];
 }
 
 
 - (void)newFriendPuthMessga
 {
-    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
-    [circleItem setBadgeValue:badgeStr];
+//    NSString *badgeStr = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].newfriendbadge];
+//    [circleItem setBadgeValue:badgeStr];
     
     //更新消息页面角标
     [self updateChatMessageBadge:nil];

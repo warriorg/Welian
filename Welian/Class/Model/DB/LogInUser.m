@@ -481,7 +481,7 @@
 - (void)updateAllNewFriendsOperateStatus
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",self,@"operateType",@(3)];
-    NSArray *waitNewFriends = [NewFriendUser MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NSArray *waitNewFriends = [NewFriendUser MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
     
 //    NSArray *waitNewFriends = [[[[NewFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:self] where:@"operateType" equals:@"3"] results];
     for (NewFriendUser *newFriendUser in waitNewFriends) {
@@ -493,7 +493,7 @@
 - (void)updateAllNeedAddFriendOperateStatus
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",self,@"friendship",@"4"];
-    NSArray *waitAddFriends = [NeedAddUser MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NSArray *waitAddFriends = [NeedAddUser MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
     
 //    NSArray *waitAddFriends = [[[[NeedAddUser queryInManagedObjectContext:MOC] where:@"rsLoginUser" equals:self] where:@"friendship" equals:@"4"] results];
     for (NeedAddUser *needAdd in waitAddFriends) {
@@ -515,7 +515,7 @@
 - (NSArray *)getAllMyFriendUsers
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K > %@ && %K == %@", @"rsLogInUser",self,@"uid",@"100",@"isMyFriend",@(YES)];
-    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:[NSManagedObjectContext MR_defaultContext]];
     return allFriends;
 //    return  [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"uid" greaterThan:@"100"] results];
 }
@@ -547,7 +547,7 @@
 {
 // return [[[CompanyModel queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] results];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsLogInUser",self];
-    NSArray *allCompanys = [CompanyModel MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NSArray *allCompanys = [CompanyModel MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
     return allCompanys;
 }
 
@@ -574,7 +574,7 @@
 - (NSArray *)getIsLookNotMessages
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",self,@"isLook",@(NO)];
-    NSArray *homearray = [HomeMessage MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NSArray *homearray = [HomeMessage MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
 //    NSArray *homearray = [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"isLook" isTrue:NO] results];
     for (HomeMessage *meee  in homearray) {
         meee.isLook = @(1);
@@ -583,6 +583,17 @@
 //    [MOC save];
     return homearray;
     
+}
+
+//改变所有未读消息状态为已读
+- (void)updateALLNotLookMessages
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",self,@"isLook",@(NO)];
+    NSArray *homearray = [HomeMessage MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
+    for (HomeMessage *meee  in homearray) {
+        meee.isLook = @(1);
+    }
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 // 获取全部消息

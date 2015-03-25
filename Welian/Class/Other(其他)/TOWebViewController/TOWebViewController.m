@@ -479,8 +479,6 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar reset];
-    
     //see if we need to show the toolbar
     if (self.navigationController) {
         if (IPAD == NO) { //iPhone

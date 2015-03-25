@@ -5,16 +5,6 @@
 	<array>
 		<dict>
 			<key>row</key>
-			<string></string>
-			<key>name</key>
-			<string>张艳东</string>
-			<key>icon</key>
-			<string></string>
-		</dict>
-	</array>
-	<array>
-		<dict>
-			<key>row</key>
 			<string>0</string>
 			<key>name</key>
 			<string>我的动态</string>
@@ -25,17 +15,17 @@
 			<key>row</key>
 			<string>1</string>
 			<key>name</key>
-			<string>我的项目</string>
+			<string>我的活动</string>
 			<key>icon</key>
-			<string>discovery_xiangmu.png</string>
+			<string>discovery_calendar.png</string>
 		</dict>
 		<dict>
 			<key>row</key>
 			<string>2</string>
 			<key>name</key>
-			<string>我的活动</string>
+			<string>我的项目</string>
 			<key>icon</key>
-			<string>discovery_calendar.png</string>
+			<string>me_xiangmu.png</string>
 		</dict>
 	</array>
 	<array>
@@ -43,19 +33,17 @@
 			<key>row</key>
 			<string>0</string>
 			<key>name</key>
-			<string>我是投资人</string>
+			<string>投资信息</string>
 			<key>icon</key>
-			<string>me_yes.png</string>
+			<string>me_touzi.png</string>
 		</dict>
-	</array>
-	<array>
 		<dict>
 			<key>row</key>
-			<string>0</string>
+			<string>1</string>
 			<key>name</key>
-			<string>设置</string>
+			<string>我的履历</string>
 			<key>icon</key>
-			<string>me_setting.png</string>
+			<string>me_lvli.png</string>
 		</dict>
 	</array>
 </array>

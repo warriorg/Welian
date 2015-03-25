@@ -290,13 +290,13 @@
         [button addTarget:self action:@selector(messageButtonPress:) forControlEvents:UIControlEventTouchUpInside];
         
         // Make BarButton Item
-        UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-        self.navigationItem.leftBarButtonItem = navLeftButton;
-        self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor redColor];
-        NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
-        if (badge>0) {
-            self.navigationItem.leftBarButtonItem.badgeValue = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].homemessagebadge];
-        }
+//        UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//        self.navigationItem.leftBarButtonItem = navLeftButton;
+//        self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor redColor];
+//        NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
+//        if (badge>0) {
+//            self.navigationItem.leftBarButtonItem.badgeValue = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].homemessagebadge];
+//        }
     }
     // 背景颜色
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
