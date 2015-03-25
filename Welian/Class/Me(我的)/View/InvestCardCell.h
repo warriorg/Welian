@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *investCardBut;
 
-@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 
 @end

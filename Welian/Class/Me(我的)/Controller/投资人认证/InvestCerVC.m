@@ -25,6 +25,7 @@
 {
     LogInUser *_loginuser;
 }
+@property (nonatomic, strong) UILabel *headLabel;
 @end
 
 
@@ -34,6 +35,27 @@ static NSString *seeltwocellid = @"seeltwocellid";
 static NSString *itemscellid = @"itemscellid";
 
 @implementation InvestCerVC
+
+- (UILabel *)headLabel
+{
+    if (_headLabel == nil) {
+        _headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 48)];
+        [_headLabel setTextAlignment:NSTextAlignmentCenter];
+        _headLabel.font = WLFONT(16);
+        NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+        if (auth ==1){ // 认证成功
+            _headLabel.text = @"  投资人认证成功！";
+            _headLabel.textColor = WLRGB(52, 116, 186);
+        }else if (auth ==-2){  // 正在审核
+            _headLabel.text = @"  名片已上传，正在等待验证...";
+            _headLabel.textColor = WLRGB(52, 116, 186);
+        }else if (auth ==-1){ // 认证失败
+            _headLabel.text = @"  很遗憾，未能通过投资人认证";
+            _headLabel.textColor = WLRGB(255, 117, 117);
+        }
+    }
+    return _headLabel;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,11 +78,23 @@ static NSString *itemscellid = @"itemscellid";
         
     }];
     
-    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    [self refreshTabelViewHead];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestCardCell" bundle:nil] forCellReuseIdentifier:invcellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"AddCaseCell" bundle:nil] forCellReuseIdentifier:addcasecellid];
-    // Do any additional setup after loading the view.
 }
+
+- (void)refreshTabelViewHead
+{
+    NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+    if (auth != 0) {
+        [self.tableView setTableHeaderView:self.headLabel];
+    }else{
+        [self.tableView setTableHeaderView:nil];
+    }
+    [self.tableView reloadData];
+//    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -87,7 +121,7 @@ static NSString *itemscellid = @"itemscellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 110;
+        return 78;
     }else{
         return 47;
     }
@@ -95,7 +129,9 @@ static NSString *itemscellid = @"itemscellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section==2) {
+    if (section==0) {
+        return 20;
+    }else if (section ==2){
         return 30;
     }
     return KTableHeaderHeight;
@@ -103,8 +139,21 @@ static NSString *itemscellid = @"itemscellid";
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (section ==0) {
+         NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+        if (auth == 0) {  // 默认状态
+            return @"  上传名片，认证投资人";
+        }else if (auth ==1){ // 认证成功
+            return @"  如果想重新认证，可重新上传名片";
+        }else if (auth ==-2){  // 正在审核
+            return @"  如果想重新认证，可重新上传名片";
+            
+        }else if (auth ==-1){ // 认证失败
+            return @"  上传名片，重新认证";
+        }
+    }
     if (section==2) {
-        return @"    投资案例";
+        return @"  投资案例";
     }
     return nil;
 }
@@ -118,22 +167,9 @@ static NSString *itemscellid = @"itemscellid";
         NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
         NSString *urlStr = [LogInUser getCurrentLoginUser].url;
         if (auth == 0) {  // 默认状态
-            [cell.stateLabel setText:@"上传名片，成为认证投资人"];
-            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosePicture)]];
             urlStr = nil;
 
-        }else if (auth ==1){ // 认证成功
-            [cell.stateLabel setText:@"你已经是认证投资人了"];
-            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelAuth)]];
-        }else if (auth ==-2){  // 正在审核
-            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelAuth)]];
-            [cell.stateLabel setText:@"正在认证..."];
-            
-        }else if (auth ==-1){ // 认证失败
-            [cell.investCardBut addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(anewAuth)]];
-            [cell.stateLabel setText:@"认证失败，请重新上传名片！"];
         }
-        
         [cell.investCardBut sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"investor_attestation_add"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         
         return cell;
@@ -213,7 +249,7 @@ static NSString *itemscellid = @"itemscellid";
         [WLHttpTool deleteInvestorParameterDic:@{} success:^(id JSON) {
             [LogInUser setUserinvestorauth:@(0)];
             [LogInUser setUserUrl:nil];
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+            [self refreshTabelViewHead];
         } fail:^(NSError *error) {
             
         }];
@@ -232,7 +268,8 @@ static NSString *itemscellid = @"itemscellid";
         NSString *url = [JSON objectForKey:@"url"];
         [LogInUser setUserinvestorauth:@(-2)];
         [LogInUser setUserUrl:url];
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self refreshTabelViewHead];
+//        [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
     } fail:^(NSError *error) {
         
     }];
@@ -248,7 +285,18 @@ static NSString *itemscellid = @"itemscellid";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     __weak InvestCerVC *weakSelf = self;
-    if (indexPath.section==1) {
+    if (indexPath.section==0) {
+        NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+        if (auth == 0) {  // 默认状态
+            [self choosePicture];
+        }else if (auth ==1){ // 认证成功
+            [self cancelAuth];
+        }else if (auth ==-2){  // 正在审核
+            [self cancelAuth];
+        }else if (auth ==-1){ // 认证失败
+            [self anewAuth];
+        }
+    }else if (indexPath.section==1) {
         if (indexPath.row==0) {      // 投资领域
             InvestCollectionVC *investVC = [[InvestCollectionVC alloc] initWithType:1];
             investVC.investBlock = ^(){

@@ -15,15 +15,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2I-TQ-u2V">
-                        <rect key="frame" x="30" y="32" width="240" height="48"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="30" y="29" width="240" height="50.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxJ-eT-rHz">
-                        <rect key="frame" x="30" y="11" width="240" height="19.5"/>
+                        <rect key="frame" x="30" y="15" width="240" height="14"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="19.5" id="kjD-db-2VB"/>
+                            <constraint firstAttribute="height" constant="14" id="4vB-18-kpy"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
@@ -31,13 +31,13 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bxJ-eT-rHz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="76g-ms-IO0"/>
                     <constraint firstItem="v2I-TQ-u2V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="AB3-FA-F2a"/>
                     <constraint firstAttribute="trailing" secondItem="bxJ-eT-rHz" secondAttribute="trailing" constant="3" id="Hhw-TR-e20"/>
-                    <constraint firstItem="v2I-TQ-u2V" firstAttribute="top" secondItem="bxJ-eT-rHz" secondAttribute="bottom" constant="1.5" id="Pjo-a6-uyI"/>
+                    <constraint firstItem="v2I-TQ-u2V" firstAttribute="top" secondItem="bxJ-eT-rHz" secondAttribute="bottom" id="Pjo-a6-uyI"/>
                     <constraint firstItem="bxJ-eT-rHz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="WPT-zM-NW7"/>
                     <constraint firstAttribute="bottom" secondItem="v2I-TQ-u2V" secondAttribute="bottom" id="cmE-dn-kPb"/>
                     <constraint firstAttribute="trailing" secondItem="v2I-TQ-u2V" secondAttribute="trailing" constant="3" id="n87-QN-DgH"/>
+                    <constraint firstItem="bxJ-eT-rHz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="tjR-MA-4m1"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

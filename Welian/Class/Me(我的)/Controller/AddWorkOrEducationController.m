@@ -13,6 +13,7 @@
 #import "MJExtension.h"
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
+#import "UIImage+ImageEffects.h"
 
 @interface AddWorkOrEducationController () <UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 {
@@ -219,18 +220,33 @@
 }
 
 
-- (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType
+- (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType isNew:(BOOL)isNew
 {
     _wlUserLoadType = wlUserLoadType;
     self = [super initWithStyle:style];
     if (self) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissVC)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(savedata)];
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 84)];
+        UIButton *footBut = [[UIButton alloc] initWithFrame:CGRectMake(15, 20, SuperSize.width-30, 44)];
+        [footBut setTitle:@"保存" forState:UIControlStateNormal];
+        [footBut setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateNormal];
+        [footBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateHighlighted];
+        [footBut addTarget:self action:@selector(savedata) forControlEvents:UIControlEventTouchUpInside];
+        [footView addSubview:footBut];
+        
+        if (!isNew) {
+            [footView setFrame:CGRectMake(0, 0, 0, 128)];
+            UIButton *deletBut = [[UIButton alloc] initWithFrame:CGRectMake(15, 84, SuperSize.width-30, 44)];
+            [deletBut setTitle:@"删除该条履历" forState:UIControlStateNormal];
+            [deletBut setBackgroundImage:[UIImage resizedImage:@"me_delect_button"] forState:UIControlStateNormal];
+            [deletBut setBackgroundImage:[UIImage resizedImage:@"me_delect_button_pre"] forState:UIControlStateHighlighted];
+            [deletBut addTarget:self action:@selector(deleteData) forControlEvents:UIControlEventTouchUpInside];
+            [footView addSubview:deletBut];
+        }
+        [self.tableView setTableFooterView:footView];
         [self.tableView setSectionHeaderHeight:30.0];
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
         UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
         UILabel *teseLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, self.view.bounds.size.width, 20)];
-//        [teseLabel setBackgroundColor:[UIColor redColor]];
         [teseLabel setTextColor:[UIColor lightGrayColor]];
         [teseLabel setFont:WLFONT(15)];
         [teseLabel setBackgroundColor:[UIColor clearColor]];
@@ -240,7 +256,6 @@
         if (wlUserLoadType ==2) {
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的公司"]];
             self.dataArray = @[@[@"公司名称",@"职位"],@[@"入职时间",@"离职时间"]];
-//            _companyM = [[ICompanyResult alloc] init];
         }else if(wlUserLoadType ==1){
             [teseLabel setText:[NSString stringWithFormat:@"请填写你的母校"]];
             self.dataArray = @[@[@"院校名称",@"专业"],@[@"入学时间",@"毕业时间"]];
@@ -251,26 +266,25 @@
 
 - (void)dismissVC
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    if (self.recorBlock) {
+        self.recorBlock();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)savedata
 {
     if (_wlUserLoadType==1) {
-
         if (_schoolM.schoolname.length&&_schoolM.startyear&&_schoolM.endyear&&_schoolM.startmonth&&_schoolM.endmonth) {
             [_schoolM setSchoolid:nil];
             [_schoolM setSpecialtyid:nil];
             NSDictionary *daDic = [_schoolM keyValues];
             
             [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
-//                [_schoolM setUsid:@([[JSON objectForKey:@"usid"] integerValue])];
                 [_schoolM setKeyValues:JSON];
                 [SchoolModel createCompanyModel:_schoolM];
-                [WLHUDView showSuccessHUD:@"保存成功！"];
                 [self dismissVC];
+                [WLHUDView showSuccessHUD:@"保存成功！"];
             } fail:^(NSError *error) {
                 
             }];
@@ -285,9 +299,8 @@
             [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
                 [_companyM setUcid:@([[JSON objectForKey:@"ucid"] integerValue])];
                 [CompanyModel createCompanyModel:_companyM];
-                
-                [WLHUDView showSuccessHUD:@"保存成功！"];
                 [self dismissVC];
+                [WLHUDView showSuccessHUD:@"保存成功！"];
             } fail:^(NSError *error) {
                 
             }];
@@ -301,7 +314,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     //数据模型初始化
     if (_wlUserLoadType == 1){
         if (!_schoolM) {
@@ -528,5 +541,29 @@
         [_endTextF setText:dateStr];
     }
 }
+
+#pragma mark - 删除
+- (void)deleteData
+{
+    if (_wlUserLoadType == 1) {
+        [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":_schoolM.usid} success:^(id JSON) {
+            [self.coerSchoolM MR_deleteEntity];
+            [self dismissVC];
+
+        } fail:^(NSError *error) {
+            
+        }];
+    }else if (_wlUserLoadType == 2){
+
+        [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":_companyM.ucid} success:^(id JSON) {
+            [self.coerCompanyM MR_deleteEntity];
+            [self dismissVC];
+        } fail:^(NSError *error) {
+            
+        }];
+    }
+
+}
+
 
 @end

@@ -12,7 +12,7 @@
 
 + (NSError *)errorWithMsg:(NSString *)msg
 {
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:msg? : @"发生错误!", NSLocalizedDescriptionKey, nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:msg? : @"连接错误，请稍后再试", NSLocalizedDescriptionKey, nil];
     return [NSError errorWithDomain:@"ERROR DOMAIN" code:-1000 userInfo:userInfo];
 }
 

@@ -9,11 +9,20 @@
 #import "BasicTableViewController.h"
 @class ISchoolResult;
 @class ICompanyResult;
+@class SchoolModel;
+@class CompanyModel;
+
+typedef void (^RecordBlock)(void);
 
 @interface AddWorkOrEducationController : BasicTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType;
+- (id)initWithStyle:(UITableViewStyle)style withType:(int)wlUserLoadType isNew:(BOOL)isNew;
+@property (nonatomic, strong) SchoolModel *coerSchoolM;
+@property (nonatomic, strong) CompanyModel *coerCompanyM;
+
 @property (nonatomic, strong) ISchoolResult *schoolM;
 @property (nonatomic, strong) ICompanyResult *companyM;
+
+@property (nonatomic, copy) RecordBlock recorBlock;
 
 @end
