@@ -138,7 +138,8 @@ single_implementation(MainViewController)
     
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     // 首页 创业圈角标
-    if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
+//    if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
+    if (meinfo.newstustcount.integerValue) {
         [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
