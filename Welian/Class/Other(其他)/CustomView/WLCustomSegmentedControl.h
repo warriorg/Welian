@@ -52,6 +52,7 @@ typedef void (^IndexChangeBlock)(NSInteger index);
 @property (nonatomic, assign) BOOL showBottomLine;
 //标题和副标题排列方式  默认为横向
 @property (nonatomic, assign) BOOL isShowVertical;//是否纵向排列
+@property (nonatomic, assign) BOOL isAllowTouchEveryTime;//是否允许每次重复点击
 
 /**
  Segmented control background color.

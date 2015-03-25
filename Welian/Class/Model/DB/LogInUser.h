@@ -88,6 +88,8 @@
 - (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
 // 获取未读消息
 - (NSArray *)getIsLookNotMessages;
+//改变所有未读消息状态为已读
+- (void)updateALLNotLookMessages;
 // 获取全部消息
 - (NSArray *)getAllMessages;
 

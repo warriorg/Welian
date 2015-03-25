@@ -15,4 +15,6 @@ typedef void(^DidGetGeolocationsCompledBlock)(NSArray *placemarks);
 
 - (void)getCurrentGeolocationsCompled:(DidGetGeolocationsCompledBlock)compled;
 
++ (WLLocationHelper *)sharedInstance;
+
 @end

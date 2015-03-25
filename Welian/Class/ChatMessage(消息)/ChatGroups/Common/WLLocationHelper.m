@@ -25,6 +25,16 @@
     _locationManager.distanceFilter = 5.0;
 }
 
++ (WLLocationHelper *)sharedInstance
+{
+    static WLLocationHelper *_helper = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _helper = [[WLLocationHelper alloc] init];
+    });
+    return _helper;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
