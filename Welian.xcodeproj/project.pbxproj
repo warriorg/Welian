@@ -45,6 +45,34 @@
 		A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
 		A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
 		A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
+		A409A1121AC2DEF50033A31D /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10C1AC2DEF50033A31D /* me_background@2x.png */; };
+		A409A1131AC2DEF50033A31D /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10C1AC2DEF50033A31D /* me_background@2x.png */; };
+		A409A1141AC2DEF50033A31D /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10C1AC2DEF50033A31D /* me_background@2x.png */; };
+		A409A1151AC2DEF50033A31D /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10C1AC2DEF50033A31D /* me_background@2x.png */; };
+		A409A1161AC2DEF50033A31D /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */; };
+		A409A1171AC2DEF50033A31D /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */; };
+		A409A1181AC2DEF50033A31D /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */; };
+		A409A1191AC2DEF50033A31D /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */; };
+		A409A11A1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */; };
+		A409A11B1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */; };
+		A409A11C1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */; };
+		A409A11D1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */; };
+		A409A11E1AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */; };
+		A409A11F1AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */; };
+		A409A1201AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */; };
+		A409A1211AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */; };
+		A409A1221AC2DEF50033A31D /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1101AC2DEF50033A31D /* me_touzi@2x.png */; };
+		A409A1231AC2DEF50033A31D /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1101AC2DEF50033A31D /* me_touzi@2x.png */; };
+		A409A1241AC2DEF50033A31D /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1101AC2DEF50033A31D /* me_touzi@2x.png */; };
+		A409A1251AC2DEF50033A31D /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1101AC2DEF50033A31D /* me_touzi@2x.png */; };
+		A409A1261AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */; };
+		A409A1271AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */; };
+		A409A1281AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */; };
+		A409A1291AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */; };
+		A409A12B1AC2DF060033A31D /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */; };
+		A409A12C1AC2DF060033A31D /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */; };
+		A409A12D1AC2DF060033A31D /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */; };
+		A409A12E1AC2DF060033A31D /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */; };
 		A414FE1D1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
@@ -1221,10 +1249,6 @@
 		A49FF3BF1AC2671B009982E2 /* UserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3BD1AC2671B009982E2 /* UserInfoView.m */; };
 		A49FF3C01AC2671B009982E2 /* UserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3BD1AC2671B009982E2 /* UserInfoView.m */; };
 		A49FF3C11AC2671B009982E2 /* UserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3BD1AC2671B009982E2 /* UserInfoView.m */; };
-		A49FF3C31AC267D0009982E2 /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C21AC267D0009982E2 /* me_background@2x.png */; };
-		A49FF3C41AC267D0009982E2 /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C21AC267D0009982E2 /* me_background@2x.png */; };
-		A49FF3C51AC267D0009982E2 /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C21AC267D0009982E2 /* me_background@2x.png */; };
-		A49FF3C61AC267D0009982E2 /* me_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C21AC267D0009982E2 /* me_background@2x.png */; };
 		A49FF3C91AC29A1B009982E2 /* me_add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C71AC29A1B009982E2 /* me_add_friend@2x.png */; };
 		A49FF3CA1AC29A1B009982E2 /* me_add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C71AC29A1B009982E2 /* me_add_friend@2x.png */; };
 		A49FF3CB1AC29A1B009982E2 /* me_add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C71AC29A1B009982E2 /* me_add_friend@2x.png */; };
@@ -1233,46 +1257,24 @@
 		A49FF3CE1AC29A1B009982E2 /* navbar_set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C81AC29A1B009982E2 /* navbar_set@2x.png */; };
 		A49FF3CF1AC29A1B009982E2 /* navbar_set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C81AC29A1B009982E2 /* navbar_set@2x.png */; };
 		A49FF3D01AC29A1B009982E2 /* navbar_set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3C81AC29A1B009982E2 /* navbar_set@2x.png */; };
-		A49FF3D31AC29CDB009982E2 /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D11AC29CDB009982E2 /* me_touzi@2x.png */; };
 		A49FF3D41AC29CDB009982E2 /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D11AC29CDB009982E2 /* me_touzi@2x.png */; };
 		A49FF3D51AC29CDB009982E2 /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D11AC29CDB009982E2 /* me_touzi@2x.png */; };
-		A49FF3D61AC29CDB009982E2 /* me_touzi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D11AC29CDB009982E2 /* me_touzi@2x.png */; };
-		A49FF3D71AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D21AC29CDB009982E2 /* me_xiangmu@2x.png */; };
-		A49FF3D81AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D21AC29CDB009982E2 /* me_xiangmu@2x.png */; };
-		A49FF3D91AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D21AC29CDB009982E2 /* me_xiangmu@2x.png */; };
-		A49FF3DA1AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3D21AC29CDB009982E2 /* me_xiangmu@2x.png */; };
-		A49FF3DC1AC29D55009982E2 /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3DB1AC29D55009982E2 /* me_lvli@2x.png */; };
-		A49FF3DD1AC29D55009982E2 /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3DB1AC29D55009982E2 /* me_lvli@2x.png */; };
-		A49FF3DE1AC29D55009982E2 /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3DB1AC29D55009982E2 /* me_lvli@2x.png */; };
-		A49FF3DF1AC29D55009982E2 /* me_lvli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3DB1AC29D55009982E2 /* me_lvli@2x.png */; };
-		A49FF3E11AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E01AC2A491009982E2 /* me_mycard_tou_big2@2x.png */; };
-		A49FF3E21AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E01AC2A491009982E2 /* me_mycard_tou_big2@2x.png */; };
-		A49FF3E31AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E01AC2A491009982E2 /* me_mycard_tou_big2@2x.png */; };
-		A49FF3E41AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E01AC2A491009982E2 /* me_mycard_tou_big2@2x.png */; };
-		A49FF3E71AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E51AC2A7BC009982E2 /* me_phone_no@2x.png */; };
-		A49FF3E81AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E51AC2A7BC009982E2 /* me_phone_no@2x.png */; };
-		A49FF3E91AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E51AC2A7BC009982E2 /* me_phone_no@2x.png */; };
-		A49FF3EA1AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E51AC2A7BC009982E2 /* me_phone_no@2x.png */; };
-		A49FF3EB1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E61AC2A7BC009982E2 /* me_phone_yes@2x.png */; };
-		A49FF3EC1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E61AC2A7BC009982E2 /* me_phone_yes@2x.png */; };
-		A49FF3ED1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E61AC2A7BC009982E2 /* me_phone_yes@2x.png */; };
-		A49FF3EE1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3E61AC2A7BC009982E2 /* me_phone_yes@2x.png */; };
-		A49FF3F01AC2AB43009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3EF1AC2AB43009982E2 /* me_myplace@2x.png */; };
-		A49FF3F11AC2AB43009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3EF1AC2AB43009982E2 /* me_myplace@2x.png */; };
-		A49FF3F21AC2AB43009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3EF1AC2AB43009982E2 /* me_myplace@2x.png */; };
-		A49FF3F31AC2AB43009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3EF1AC2AB43009982E2 /* me_myplace@2x.png */; };
-		A49FF3F61AC2AD69009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F41AC2AD69009982E2 /* me_button_add@2x.png */; };
-		A49FF3F71AC2AD69009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F41AC2AD69009982E2 /* me_button_add@2x.png */; };
-		A49FF3F81AC2AD69009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F41AC2AD69009982E2 /* me_button_add@2x.png */; };
-		A49FF3F91AC2AD69009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F41AC2AD69009982E2 /* me_button_add@2x.png */; };
-		A49FF3FA1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F51AC2AD69009982E2 /* me_button_chat@2x.png */; };
-		A49FF3FB1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F51AC2AD69009982E2 /* me_button_chat@2x.png */; };
-		A49FF3FC1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F51AC2AD69009982E2 /* me_button_chat@2x.png */; };
-		A49FF3FD1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF3F51AC2AD69009982E2 /* me_button_chat@2x.png */; };
 		A49FF4001AC2B1A3009982E2 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */; };
 		A49FF4011AC2B1A3009982E2 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */; };
 		A49FF4021AC2B1A3009982E2 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */; };
 		A49FF4031AC2B1A3009982E2 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */; };
+		A49FF4071AC2DCFF009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */; };
+		A49FF4081AC2DCFF009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */; };
+		A49FF4091AC2DCFF009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */; };
+		A49FF40A1AC2DCFF009982E2 /* me_button_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */; };
+		A49FF4111AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */; };
+		A49FF4121AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */; };
+		A49FF4131AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */; };
+		A49FF4141AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */; };
+		A49FF4151AC2DD35009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */; };
+		A49FF4161AC2DD35009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */; };
+		A49FF4171AC2DD35009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */; };
+		A49FF4181AC2DD35009982E2 /* me_myplace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */; };
 		A4A2EADC1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
 		A4A2EADD1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
 		A4A2EADE1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */; };
@@ -4434,6 +4436,13 @@
 		A40356191A5D5B7E006AE52C /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		A403561D1A5D5C85006AE52C /* NewFriendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendViewCell.h; sourceTree = "<group>"; };
 		A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewCell.m; sourceTree = "<group>"; };
+		A409A10C1AC2DEF50033A31D /* me_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_background@2x.png"; sourceTree = "<group>"; };
+		A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_lvli@2x.png"; sourceTree = "<group>"; };
+		A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_phone_no@2x.png"; sourceTree = "<group>"; };
+		A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_phone_yes@2x.png"; sourceTree = "<group>"; };
+		A409A1101AC2DEF50033A31D /* me_touzi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_touzi@2x.png"; sourceTree = "<group>"; };
+		A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_xiangmu@2x.png"; sourceTree = "<group>"; };
+		A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_button_chat@2x.png"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		A41CE1A51A6E25CC004F17E7 /* ActivityUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityUserListViewController.h; sourceTree = "<group>"; };
@@ -4726,20 +4735,14 @@
 		A49C80331A71040F00F2AEC5 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		A49FF3BC1AC2671B009982E2 /* UserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoView.h; sourceTree = "<group>"; };
 		A49FF3BD1AC2671B009982E2 /* UserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoView.m; sourceTree = "<group>"; };
-		A49FF3C21AC267D0009982E2 /* me_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_background@2x.png"; sourceTree = "<group>"; };
 		A49FF3C71AC29A1B009982E2 /* me_add_friend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_add_friend@2x.png"; sourceTree = "<group>"; };
 		A49FF3C81AC29A1B009982E2 /* navbar_set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_set@2x.png"; sourceTree = "<group>"; };
 		A49FF3D11AC29CDB009982E2 /* me_touzi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_touzi@2x.png"; sourceTree = "<group>"; };
-		A49FF3D21AC29CDB009982E2 /* me_xiangmu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_xiangmu@2x.png"; sourceTree = "<group>"; };
-		A49FF3DB1AC29D55009982E2 /* me_lvli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_lvli@2x.png"; sourceTree = "<group>"; };
-		A49FF3E01AC2A491009982E2 /* me_mycard_tou_big2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou_big2@2x.png"; sourceTree = "<group>"; };
-		A49FF3E51AC2A7BC009982E2 /* me_phone_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_phone_no@2x.png"; sourceTree = "<group>"; };
-		A49FF3E61AC2A7BC009982E2 /* me_phone_yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_phone_yes@2x.png"; sourceTree = "<group>"; };
-		A49FF3EF1AC2AB43009982E2 /* me_myplace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myplace@2x.png"; sourceTree = "<group>"; };
-		A49FF3F41AC2AD69009982E2 /* me_button_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_button_add@2x.png"; sourceTree = "<group>"; };
-		A49FF3F51AC2AD69009982E2 /* me_button_chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_button_chat@2x.png"; sourceTree = "<group>"; };
 		A49FF3FE1AC2B1A3009982E2 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_button_add@2x.png"; sourceTree = "<group>"; };
+		A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_tou_big2@2x.png"; sourceTree = "<group>"; };
+		A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_myplace@2x.png"; sourceTree = "<group>"; };
 		A4A2EA9F1A6CF7C8006ADA55 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		A4A2EAA01A6CF7C8006ADA55 /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
 		A4A2EAA11A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -7734,6 +7737,16 @@
 		F51FBAF119EFEE6C00D85D7F /* 我的images */ = {
 			isa = PBXGroup;
 			children = (
+				A409A12A1AC2DF060033A31D /* me_button_chat@2x.png */,
+				A409A10C1AC2DEF50033A31D /* me_background@2x.png */,
+				A409A10D1AC2DEF50033A31D /* me_lvli@2x.png */,
+				A409A10E1AC2DEF50033A31D /* me_phone_no@2x.png */,
+				A409A10F1AC2DEF50033A31D /* me_phone_yes@2x.png */,
+				A409A1101AC2DEF50033A31D /* me_touzi@2x.png */,
+				A409A1111AC2DEF50033A31D /* me_xiangmu@2x.png */,
+				A49FF40F1AC2DD35009982E2 /* me_mycard_tou_big2@2x.png */,
+				A49FF4101AC2DD35009982E2 /* me_myplace@2x.png */,
+				A49FF4051AC2DCFF009982E2 /* me_button_add@2x.png */,
 				F5D04E761AC282A2004DE412 /* me_lvli_add@2x.png */,
 				F5D04E6C1AC27E98004DE412 /* me_delect_button_pre@2x.png */,
 				F5D04E6D1AC27E98004DE412 /* me_delect_button@2x.png */,
@@ -9836,7 +9849,6 @@
 				A49C7D971A70D42700F2AEC5 /* login_button_bg@2x.png in Resources */,
 				A49C7D991A70D42700F2AEC5 /* about_welian_logo@2x.png in Resources */,
 				A49FF3CC1AC29A1B009982E2 /* me_add_friend@2x.png in Resources */,
-				A49FF3FD1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */,
 				A49C7D9B1A70D42700F2AEC5 /* icon_session-8@2x.png in Resources */,
 				A49C7D9C1A70D42700F2AEC5 /* home_picture_add_camera@2x.png in Resources */,
 				A489E7C61AA5553E00F7BE9F /* citys.plist in Resources */,
@@ -9868,6 +9880,7 @@
 				A48302FF1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				A49C7DBC1A70D42700F2AEC5 /* osusume_add_bg@2x.png in Resources */,
 				A49C7DBD1A70D42700F2AEC5 /* home_loading_30px@2x.png in Resources */,
+				A409A1251AC2DEF50033A31D /* me_touzi@2x.png in Resources */,
 				A49C7DBF1A70D42700F2AEC5 /* me_circle_chat_picture_pressed@2x.png in Resources */,
 				A49C7DC01A70D42700F2AEC5 /* weChatBubble_Receiving_Solid2@2x.png in Resources */,
 				F5D04D251AC1056F004DE412 /* Expression_21@2x.png in Resources */,
@@ -9912,7 +9925,6 @@
 				A49C7DE51A70D42700F2AEC5 /* discovery_circle_ administrator_bg@2x.png in Resources */,
 				A49C7DE71A70D42700F2AEC5 /* sharemore_friendcard@2x.png in Resources */,
 				A49C7DE81A70D42700F2AEC5 /* discovery_activity_list_ registered_bg@2x.png in Resources */,
-				A49FF3DA1AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */,
 				A49C7DEA1A70D42700F2AEC5 /* me_mywriten_location@2x.png in Resources */,
 				A49C7DEB1A70D42700F2AEC5 /* AddGroupMemberBtn@2x.png in Resources */,
 				F5D04E0D1AC1056F004DE412 /* Expression_74@2x.png in Resources */,
@@ -9924,7 +9936,6 @@
 				A49C7DF31A70D42700F2AEC5 /* me_renzheng_chuang@2x.png in Resources */,
 				A49C7DF41A70D42700F2AEC5 /* me_mycard_emaillogo@2x.png in Resources */,
 				F500B2011AAEB16800A7AD35 /* share_delete@2x.png in Resources */,
-				A49FF3F91AC2AD69009982E2 /* me_button_add@2x.png in Resources */,
 				A49C7DF51A70D42700F2AEC5 /* me_circle_chat_user@x.png in Resources */,
 				A49C7DF71A70D42700F2AEC5 /* login_my_bg@2x.png in Resources */,
 				A49C7DF81A70D42700F2AEC5 /* input-field-cover.png in Resources */,
@@ -9940,7 +9951,6 @@
 				A49C7E041A70D42700F2AEC5 /* me_mail@2x.png in Resources */,
 				A49C7E051A70D42700F2AEC5 /* Resource.bundle in Resources */,
 				F5D04E451AC1056F004DE412 /* Expression_87@2x.png in Resources */,
-				A49FF3EE1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */,
 				A49C7E071A70D42700F2AEC5 /* home_empty_button_highlight@2x.png in Resources */,
 				A49C7E081A70D42700F2AEC5 /* TOWebViewControllerLocalizable.strings in Resources */,
 				A49C7E0A1A70D42700F2AEC5 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -9999,7 +10009,7 @@
 				A464614F1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A49C7E3C1A70D42700F2AEC5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				A4E7BBE81AAEF1B3006BB52A /* weChatBubble_pre_Receiving_Solid@2x.png in Resources */,
-				A49FF3C61AC267D0009982E2 /* me_background@2x.png in Resources */,
+				A49FF40A1AC2DCFF009982E2 /* me_button_add@2x.png in Resources */,
 				A49C7E3E1A70D42700F2AEC5 /* login_gongsi@2x.png in Resources */,
 				A49C7E3F1A70D42700F2AEC5 /* tabbar_friend@2x.png in Resources */,
 				A49C7E411A70D42700F2AEC5 /* discovery_activity_creat_add_picture@2x.png in Resources */,
@@ -10022,6 +10032,7 @@
 				A49C7E541A70D42700F2AEC5 /* greenbutton@2x.png in Resources */,
 				F550790E1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				A49C7E551A70D42700F2AEC5 /* investor_attestation_to_select@2x.png in Resources */,
+				A409A1291AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */,
 				A49C7FC71A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				A49C7E561A70D42700F2AEC5 /* me_mywriten_good_pre@2x.png in Resources */,
 				A49C7E571A70D42700F2AEC5 /* login_chacha@2x.png in Resources */,
@@ -10079,7 +10090,6 @@
 				F5D04D3D1AC1056F004DE412 /* Expression_27@2x.png in Resources */,
 				A49C7E891A70D42700F2AEC5 /* enroll_button_pre@2x.png in Resources */,
 				A49C7E8A1A70D42700F2AEC5 /* investor_attestation_eg_add@2x.png in Resources */,
-				A49FF3E41AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				A49C7E8D1A70D42700F2AEC5 /* tabbar_friend_selected_prompt@2x.png in Resources */,
 				A49C7E8E1A70D42700F2AEC5 /* research_bg_pre@2x.png in Resources */,
 				A49C7E8F1A70D42700F2AEC5 /* section0_emotion2@2x.png in Resources */,
@@ -10131,7 +10141,6 @@
 				A49C7EBE1A70D42700F2AEC5 /* WorkListCell.xib in Resources */,
 				A49C7EBF1A70D42700F2AEC5 /* sharemore_voiceinput@2x.png in Resources */,
 				A49C7EC11A70D42700F2AEC5 /* common_card_background_highlighted@2x.png in Resources */,
-				A49FF3F31AC2AB43009982E2 /* me_myplace@2x.png in Resources */,
 				A49C7EC21A70D42700F2AEC5 /* me_mywriten_more@2x.png in Resources */,
 				A49C7EC31A70D42700F2AEC5 /* home_search_result@2x.png in Resources */,
 				A49C7EC41A70D42700F2AEC5 /* me_circle_chat_emoji@2x.png in Resources */,
@@ -10141,6 +10150,7 @@
 				A49C7ECC1A70D42700F2AEC5 /* sharemore_videovoip@2x.png in Resources */,
 				F5472DC21A8DF4E9002C9B35 /* home_picture_enlarge_download@2x.png in Resources */,
 				F5D04D591AC1056F004DE412 /* Expression_33@2x.png in Resources */,
+				A409A1211AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */,
 				A49C7ECD1A70D42700F2AEC5 /* background_grey@2x.png in Resources */,
 				A49C7ECE1A70D42700F2AEC5 /* FriendCell.xib in Resources */,
 				A49C7ECF1A70D42700F2AEC5 /* AddWXFriendCell.xib in Resources */,
@@ -10195,6 +10205,7 @@
 				A49C7EFE1A70D42700F2AEC5 /* me_myfriend_phone_logo@2x.png in Resources */,
 				A49C7F001A70D42700F2AEC5 /* RecordingSignal001@2x.png in Resources */,
 				F5D04E751AC27E98004DE412 /* me_delect_button@2x.png in Resources */,
+				A409A1151AC2DEF50033A31D /* me_background@2x.png in Resources */,
 				A49C7F011A70D42700F2AEC5 /* bluebuttton_pressed@2x.png in Resources */,
 				A49C7F021A70D42700F2AEC5 /* login_zhiwei@2x.png in Resources */,
 				A49C7F031A70D42700F2AEC5 /* leida2@2x.png in Resources */,
@@ -10223,16 +10234,15 @@
 				A49C7F241A70D42700F2AEC5 /* me_myactivity_point@2x.png in Resources */,
 				A4C770CB1A806A6D005ABC7F /* discovery_rongzi_right@2x.png in Resources */,
 				F5D04D891AC1056F004DE412 /* Expression_44@2x.png in Resources */,
-				A49FF3D61AC29CDB009982E2 /* me_touzi@2x.png in Resources */,
 				A49C7F251A70D42700F2AEC5 /* SenderVoiceNodePlaying003@2x.png in Resources */,
 				F5D04DB91AC1056F004DE412 /* Expression_55@2x.png in Resources */,
 				A49C7F261A70D42700F2AEC5 /* tabbar_chat@2x.png in Resources */,
 				F5A7D5AE1AB2C3620060AE1F /* homeCellbackground_highlight@2x.png in Resources */,
 				F5D04E511AC1056F004DE412 /* Expression_8@2x.png in Resources */,
 				A49C7F271A70D42700F2AEC5 /* section0_emotion7@2x.png in Resources */,
+				A409A1191AC2DEF50033A31D /* me_lvli@2x.png in Resources */,
 				A49C7F281A70D42700F2AEC5 /* me_circle_chat_location@2x.png in Resources */,
 				A49C7F291A70D42700F2AEC5 /* InfoPlist.strings in Resources */,
-				A49FF3EA1AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */,
 				A49C7F2B1A70D42700F2AEC5 /* MultiSelectTableViewCell.xib in Resources */,
 				A49C7F2D1A70D42700F2AEC5 /* www in Resources */,
 				F5D04CF51AC1056F004DE412 /* Expression_10@2x.png in Resources */,
@@ -10241,6 +10251,7 @@
 				A49C7F301A70D42700F2AEC5 /* me_right@2x.png in Resources */,
 				A49C7F321A70D42700F2AEC5 /* RecordingSignal003@2x.png in Resources */,
 				A49C7F341A70D42700F2AEC5 /* MultiSelectedPanelBkg@2x.png in Resources */,
+				A409A11D1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */,
 				F5472DCE1A8E3D82002C9B35 /* FinancingStagePlist.plist in Resources */,
 				A49C7F361A70D42700F2AEC5 /* navbar_more@2x.png in Resources */,
 				F5D04D691AC1056F004DE412 /* Expression_37@2x.png in Resources */,
@@ -10271,6 +10282,7 @@
 				A49C7F4A1A70D42700F2AEC5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				A49C7F4B1A70D42700F2AEC5 /* DateTools.bundle in Resources */,
 				A49C7F4C1A70D42700F2AEC5 /* me_circle_chat_card@2x.png in Resources */,
+				A49FF4141AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				A49C7F4D1A70D42700F2AEC5 /* circle_chat_bg_white_pre@2x.png in Resources */,
 				A49C7F511A70D42700F2AEC5 /* login_camera@2x.png in Resources */,
 				F5D04D511AC1056F004DE412 /* Expression_31@2x.png in Resources */,
@@ -10332,12 +10344,14 @@
 				F5D04E311AC1056F004DE412 /* Expression_82@2x.png in Resources */,
 				A49C7F891A70D42700F2AEC5 /* login_register_btn_pre@2x.png in Resources */,
 				A49C7F8C1A70D42700F2AEC5 /* login_register_btn@2x.png in Resources */,
+				A409A12E1AC2DF060033A31D /* me_button_chat@2x.png in Resources */,
 				A49C7F8F1A70D42700F2AEC5 /* CellNotSelected@2x.png in Resources */,
 				A49C7F901A70D42700F2AEC5 /* icon_session-8.png in Resources */,
 				A49C7F911A70D42700F2AEC5 /* yellowbutton@2x.png in Resources */,
 				F5D04E551AC1056F004DE412 /* Expression_9@2x.png in Resources */,
 				A49C7F921A70D42700F2AEC5 /* me_myfriend_add_wechat_logo@2x.png in Resources */,
 				A49C7F961A70D42700F2AEC5 /* login_right@2x.png in Resources */,
+				A49FF4181AC2DD35009982E2 /* me_myplace@2x.png in Resources */,
 				F5D04E2D1AC1056F004DE412 /* Expression_81@2x.png in Resources */,
 				F5D04DA91AC1056F004DE412 /* Expression_51@2x.png in Resources */,
 				A49C7F971A70D42700F2AEC5 /* mapapi.bundle in Resources */,
@@ -10351,7 +10365,6 @@
 				A49C7F9F1A70D42700F2AEC5 /* MultiSelectedPanelConfirmBtnbKG@2x.png in Resources */,
 				A49C7FA01A70D42700F2AEC5 /* MessageDisplayKitString.strings in Resources */,
 				A49C7FA11A70D42700F2AEC5 /* me_mycard_tou@2x.png in Resources */,
-				A49FF3DF1AC29D55009982E2 /* me_lvli@2x.png in Resources */,
 				A47BA66A1A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */,
 				A47D41F81A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A49C7FA61A70D42700F2AEC5 /* notification_badge1@2x.png in Resources */,
@@ -10385,7 +10398,6 @@
 				F55772BD1A5AA3E200693279 /* login_button_bg@2x.png in Resources */,
 				F53DC3C81A49192600F5F712 /* about_welian_logo@2x.png in Resources */,
 				A49FF3CB1AC29A1B009982E2 /* me_add_friend@2x.png in Resources */,
-				A49FF3FC1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */,
 				F53DC3CA1A49192600F5F712 /* icon_session-8@2x.png in Resources */,
 				F53DC3CB1A49192600F5F712 /* home_picture_add_camera@2x.png in Resources */,
 				A489E7C51AA5553E00F7BE9F /* citys.plist in Resources */,
@@ -10417,6 +10429,7 @@
 				A48302FE1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				F53DC3E11A49192600F5F712 /* osusume_add_bg@2x.png in Resources */,
 				A4C1449D1A4C3EC600C9BAB5 /* home_loading_30px@2x.png in Resources */,
+				A409A1241AC2DEF50033A31D /* me_touzi@2x.png in Resources */,
 				A41CE1DB1A6F9E25004F17E7 /* me_circle_chat_picture_pressed@2x.png in Resources */,
 				A4C144A81A4C3F5500C9BAB5 /* weChatBubble_Receiving_Solid2@2x.png in Resources */,
 				F5D04D241AC1056F004DE412 /* Expression_21@2x.png in Resources */,
@@ -10461,7 +10474,6 @@
 				F53DC4001A49192600F5F712 /* discovery_circle_ administrator_bg@2x.png in Resources */,
 				A4C143A21A4C0A6B00C9BAB5 /* sharemore_friendcard@2x.png in Resources */,
 				F53DC4021A49192600F5F712 /* discovery_activity_list_ registered_bg@2x.png in Resources */,
-				A49FF3D91AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */,
 				F53DC4051A49192600F5F712 /* me_mywriten_location@2x.png in Resources */,
 				A4C1441A1A4C0A6B00C9BAB5 /* AddGroupMemberBtn@2x.png in Resources */,
 				F5D04E0C1AC1056F004DE412 /* Expression_74@2x.png in Resources */,
@@ -10473,7 +10485,6 @@
 				F53DC40E1A49192600F5F712 /* me_renzheng_chuang@2x.png in Resources */,
 				F53DC40F1A49192600F5F712 /* me_mycard_emaillogo@2x.png in Resources */,
 				F500B2001AAEB16800A7AD35 /* share_delete@2x.png in Resources */,
-				A49FF3F81AC2AD69009982E2 /* me_button_add@2x.png in Resources */,
 				F53DC4111A49192600F5F712 /* me_circle_chat_user@x.png in Resources */,
 				F55772D51A5AA3E200693279 /* login_my_bg@2x.png in Resources */,
 				A4C143F61A4C0A6B00C9BAB5 /* input-field-cover.png in Resources */,
@@ -10489,7 +10500,6 @@
 				F53DC4191A49192600F5F712 /* me_mail@2x.png in Resources */,
 				F5B5FE731A596D4B007FE11B /* Resource.bundle in Resources */,
 				F5D04E441AC1056F004DE412 /* Expression_87@2x.png in Resources */,
-				A49FF3ED1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */,
 				F53DC41B1A49192600F5F712 /* home_empty_button_highlight@2x.png in Resources */,
 				F53DC41C1A49192600F5F712 /* TOWebViewControllerLocalizable.strings in Resources */,
 				A4C143C91A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -10548,7 +10558,7 @@
 				A464614E1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A4C143D81A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				A4E7BBE71AAEF1B3006BB52A /* weChatBubble_pre_Receiving_Solid@2x.png in Resources */,
-				A49FF3C51AC267D0009982E2 /* me_background@2x.png in Resources */,
+				A49FF4091AC2DCFF009982E2 /* me_button_add@2x.png in Resources */,
 				F55772D21A5AA3E200693279 /* login_gongsi@2x.png in Resources */,
 				F53DC4491A49192600F5F712 /* tabbar_friend@2x.png in Resources */,
 				F53DC44B1A49192600F5F712 /* discovery_activity_creat_add_picture@2x.png in Resources */,
@@ -10571,6 +10581,7 @@
 				F53DC45A1A49192600F5F712 /* greenbutton@2x.png in Resources */,
 				F550790D1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F534DAF81A4F07FA00B6A725 /* investor_attestation_to_select@2x.png in Resources */,
+				A409A1281AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */,
 				A49C7FC61A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F53DC45B1A49192600F5F712 /* me_mywriten_good_pre@2x.png in Resources */,
 				F55772C61A5AA3E200693279 /* login_chacha@2x.png in Resources */,
@@ -10628,7 +10639,6 @@
 				F5D04D3C1AC1056F004DE412 /* Expression_27@2x.png in Resources */,
 				F53DC4821A49192600F5F712 /* enroll_button_pre@2x.png in Resources */,
 				F534DB051A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */,
-				A49FF3E31AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				F53DC4881A49192600F5F712 /* tabbar_friend_selected_prompt@2x.png in Resources */,
 				F53328EC1A5E3015001F48FA /* research_bg_pre@2x.png in Resources */,
 				A4C143871A4C0A6B00C9BAB5 /* section0_emotion2@2x.png in Resources */,
@@ -10680,7 +10690,6 @@
 				F53DC4B11A49192600F5F712 /* WorkListCell.xib in Resources */,
 				A4C143B71A4C0A6B00C9BAB5 /* sharemore_voiceinput@2x.png in Resources */,
 				F53DC4B31A49192600F5F712 /* common_card_background_highlighted@2x.png in Resources */,
-				A49FF3F21AC2AB43009982E2 /* me_myplace@2x.png in Resources */,
 				F53DC4B41A49192600F5F712 /* me_mywriten_more@2x.png in Resources */,
 				F53DC4B51A49192600F5F712 /* home_search_result@2x.png in Resources */,
 				F53DC4B61A49192600F5F712 /* me_circle_chat_emoji@2x.png in Resources */,
@@ -10690,6 +10699,7 @@
 				A4C143B41A4C0A6B00C9BAB5 /* sharemore_videovoip@2x.png in Resources */,
 				F5472DC11A8DF4E9002C9B35 /* home_picture_enlarge_download@2x.png in Resources */,
 				F5D04D581AC1056F004DE412 /* Expression_33@2x.png in Resources */,
+				A409A1201AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */,
 				F53DC4BF1A49192600F5F712 /* background_grey@2x.png in Resources */,
 				F53DC4C01A49192600F5F712 /* FriendCell.xib in Resources */,
 				F53DC4C11A49192600F5F712 /* AddWXFriendCell.xib in Resources */,
@@ -10744,6 +10754,7 @@
 				A40356091A5D1D05006AE52C /* me_myfriend_phone_logo@2x.png in Resources */,
 				A4C144501A4C0A6B00C9BAB5 /* RecordingSignal001@2x.png in Resources */,
 				F5D04E741AC27E98004DE412 /* me_delect_button@2x.png in Resources */,
+				A409A1141AC2DEF50033A31D /* me_background@2x.png in Resources */,
 				F53DC4E91A49192600F5F712 /* bluebuttton_pressed@2x.png in Resources */,
 				F557730E1A5AA3E200693279 /* login_zhiwei@2x.png in Resources */,
 				F58CA95F1A5BF3AE00988A61 /* leida2@2x.png in Resources */,
@@ -10779,9 +10790,9 @@
 				F5A7D5AD1AB2C3620060AE1F /* homeCellbackground_highlight@2x.png in Resources */,
 				F5D04E501AC1056F004DE412 /* Expression_8@2x.png in Resources */,
 				A4C143961A4C0A6B00C9BAB5 /* section0_emotion7@2x.png in Resources */,
+				A409A1181AC2DEF50033A31D /* me_lvli@2x.png in Resources */,
 				A41CE1D81A6F9E25004F17E7 /* me_circle_chat_location@2x.png in Resources */,
 				F53DC50B1A49192600F5F712 /* InfoPlist.strings in Resources */,
-				A49FF3E91AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */,
 				A4C141311A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
 				F53DC50F1A49192600F5F712 /* www in Resources */,
 				F5D04CF41AC1056F004DE412 /* Expression_10@2x.png in Resources */,
@@ -10790,6 +10801,7 @@
 				F53DC5111A49192600F5F712 /* me_right@2x.png in Resources */,
 				A4C144561A4C0A6B00C9BAB5 /* RecordingSignal003@2x.png in Resources */,
 				A4C1442F1A4C0A6B00C9BAB5 /* MultiSelectedPanelBkg@2x.png in Resources */,
+				A409A11C1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */,
 				F5472DCD1A8E3D82002C9B35 /* FinancingStagePlist.plist in Resources */,
 				F53DC5151A49192600F5F712 /* navbar_more@2x.png in Resources */,
 				F5D04D681AC1056F004DE412 /* Expression_37@2x.png in Resources */,
@@ -10820,6 +10832,7 @@
 				A4C143D21A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				A41CE1D21A6F9E25004F17E7 /* me_circle_chat_card@2x.png in Resources */,
+				A49FF4131AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				A4C144941A4C3EC600C9BAB5 /* circle_chat_bg_white_pre@2x.png in Resources */,
 				F55772C31A5AA3E200693279 /* login_camera@2x.png in Resources */,
 				F5D04D501AC1056F004DE412 /* Expression_31@2x.png in Resources */,
@@ -10881,12 +10894,14 @@
 				F5D04E301AC1056F004DE412 /* Expression_82@2x.png in Resources */,
 				F55772F61A5AA3E200693279 /* login_register_btn_pre@2x.png in Resources */,
 				F55772F31A5AA3E200693279 /* login_register_btn@2x.png in Resources */,
+				A409A12D1AC2DF060033A31D /* me_button_chat@2x.png in Resources */,
 				A4C144261A4C0A6B00C9BAB5 /* CellNotSelected@2x.png in Resources */,
 				F53DC5571A49192600F5F712 /* icon_session-8.png in Resources */,
 				F53DC5581A49192600F5F712 /* yellowbutton@2x.png in Resources */,
 				F5D04E541AC1056F004DE412 /* Expression_9@2x.png in Resources */,
 				F53DC5591A49192600F5F712 /* me_myfriend_add_wechat_logo@2x.png in Resources */,
 				F55772FC1A5AA3E200693279 /* login_right@2x.png in Resources */,
+				A49FF4171AC2DD35009982E2 /* me_myplace@2x.png in Resources */,
 				F5D04E2C1AC1056F004DE412 /* Expression_81@2x.png in Resources */,
 				F5D04DA81AC1056F004DE412 /* Expression_51@2x.png in Resources */,
 				F53DC55D1A49192600F5F712 /* mapapi.bundle in Resources */,
@@ -10900,7 +10915,6 @@
 				A4C144321A4C0A6B00C9BAB5 /* MultiSelectedPanelConfirmBtnbKG@2x.png in Resources */,
 				A4C143E11A4C0A6B00C9BAB5 /* MessageDisplayKitString.strings in Resources */,
 				F55772821A5A612400693279 /* me_mycard_tou@2x.png in Resources */,
-				A49FF3DE1AC29D55009982E2 /* me_lvli@2x.png in Resources */,
 				A47BA6691A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */,
 				A47D41F71A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A4C144A31A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
@@ -10934,7 +10948,6 @@
 				F5664A891A2AFD56008A5830 /* home_picture_add_camera@2x.png in Resources */,
 				F55772EE1A5AA3E200693279 /* login_phone@2x.png in Resources */,
 				A49FF3C91AC29A1B009982E2 /* me_add_friend@2x.png in Resources */,
-				A49FF3FA1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */,
 				A4C144A11A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
 				A489E7C31AA5553E00F7BE9F /* citys.plist in Resources */,
 				F5664A8B1A2AFD56008A5830 /* tabbar_circle@2x.png in Resources */,
@@ -10966,6 +10979,7 @@
 				F5664AA01A2AFD56008A5830 /* tabbar_friend_selected@2x.png in Resources */,
 				A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				A41CE1D91A6F9E25004F17E7 /* me_circle_chat_picture_pressed@2x.png in Resources */,
+				A409A1221AC2DEF50033A31D /* me_touzi@2x.png in Resources */,
 				F51BA4421A444DA2009E5CDF /* tabbar_discovery_prompt@2x.png in Resources */,
 				F569A8151A31B36D00B677B0 /* me_mywriten_repea_pre@2x.png in Resources */,
 				F5D04D221AC1056F004DE412 /* Expression_21@2x.png in Resources */,
@@ -11010,7 +11024,6 @@
 				A40356041A5D1D05006AE52C /* me_myfriend_new_logo@2x.png in Resources */,
 				A4C143CD1A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
 				A4C143E21A4C0A6B00C9BAB5 /* msg_chat_voice_unread.png in Resources */,
-				A49FF3D71AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */,
 				F5664AC01A2AFD56008A5830 /* me_mywriten_location@2x.png in Resources */,
 				A4C143A01A4C0A6B00C9BAB5 /* sharemore_friendcard@2x.png in Resources */,
 				F5D04E0A1AC1056F004DE412 /* Expression_74@2x.png in Resources */,
@@ -11022,7 +11035,6 @@
 				A4C1445D1A4C0A6B00C9BAB5 /* RecordingSignal006@2x.png in Resources */,
 				F5664AC61A2AFD56008A5830 /* tabbar_b@2x.png in Resources */,
 				F500B1FE1AAEB16800A7AD35 /* share_delete@2x.png in Resources */,
-				A49FF3F61AC2AD69009982E2 /* me_button_add@2x.png in Resources */,
 				F55772F71A5AA3E200693279 /* login_research@2x.png in Resources */,
 				F5664AC81A2AFD56008A5830 /* me_mycard_phonelogo@2x.png in Resources */,
 				F5664AC91A2AFD56008A5830 /* me_renzheng_chuang@2x.png in Resources */,
@@ -11038,7 +11050,6 @@
 				F5664AD21A2AFD56008A5830 /* navbar_mail@2x.png in Resources */,
 				F58CA95A1A5BF3AE00988A61 /* leida1@2x.png in Resources */,
 				F5D04E421AC1056F004DE412 /* Expression_87@2x.png in Resources */,
-				A49FF3EB1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */,
 				F5664AD51A2AFD56008A5830 /* me_mail@2x.png in Resources */,
 				F5664AD71A2AFD56008A5830 /* home_empty_button_highlight@2x.png in Resources */,
 				F5664AD81A2AFD56008A5830 /* TOWebViewControllerLocalizable.strings in Resources */,
@@ -11097,7 +11108,7 @@
 				A4C144181A4C0A6B00C9BAB5 /* AddGroupMemberBtn@2x.png in Resources */,
 				A4E7BBE51AAEF1B3006BB52A /* weChatBubble_pre_Receiving_Solid@2x.png in Resources */,
 				A4C1412F1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
-				A49FF3C31AC267D0009982E2 /* me_background@2x.png in Resources */,
+				A49FF4071AC2DCFF009982E2 /* me_button_add@2x.png in Resources */,
 				F5664B021A2AFD56008A5830 /* tabbar_friend@2x.png in Resources */,
 				F5664B041A2AFD56008A5830 /* discovery_activity_creat_add_picture@2x.png in Resources */,
 				F534DB031A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */,
@@ -11120,6 +11131,7 @@
 				F5664B1A1A2AFD56008A5830 /* home_new_upload_picture_add@2x.png in Resources */,
 				F550790B1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F58CA95D1A5BF3AE00988A61 /* leida2@2x.png in Resources */,
+				A409A1261AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */,
 				A49C7FC41A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664B1C1A2AFD56008A5830 /* home_label_point@2x.png in Resources */,
 				F5C5668E1A821BD8002AF408 /* HeaderLabel.xib in Resources */,
@@ -11177,7 +11189,6 @@
 				F5D04D3A1AC1056F004DE412 /* Expression_27@2x.png in Resources */,
 				F5664B491A2AFD56008A5830 /* good_small@2x.png in Resources */,
 				F5664B4B1A2AFD56008A5830 /* meinfoPlist.plist in Resources */,
-				A49FF3E11AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				A4C143C41A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
 				A41CE1C71A6F9E25004F17E7 /* me_circle_chat_camera_pressed@2x.png in Resources */,
 				F5664B501A2AFD56008A5830 /* bluebutton@2x.png in Resources */,
@@ -11229,7 +11240,6 @@
 				A4C143BE1A4C0A6B00C9BAB5 /* MessageVideoPlay@2x.png in Resources */,
 				A4C1440C1A4C0A6B00C9BAB5 /* voice@2x.png in Resources */,
 				F557730F1A5AA3E200693279 /* search_bg@2x.png in Resources */,
-				A49FF3F01AC2AB43009982E2 /* me_myplace@2x.png in Resources */,
 				F5664B741A2AFD56008A5830 /* background_grey@2x.png in Resources */,
 				F5664B751A2AFD56008A5830 /* FriendCell.xib in Resources */,
 				A4C144601A4C0A6B00C9BAB5 /* RecordingSignal007@2x.png in Resources */,
@@ -11239,6 +11249,7 @@
 				F5664B761A2AFD56008A5830 /* AddWXFriendCell.xib in Resources */,
 				F5472DBF1A8DF4E9002C9B35 /* home_picture_enlarge_download@2x.png in Resources */,
 				F5D04D561AC1056F004DE412 /* Expression_33@2x.png in Resources */,
+				A409A11E1AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */,
 				F5664B771A2AFD56008A5830 /* error@2x.png in Resources */,
 				F51BA44C1A444DA2009E5CDF /* tabbar_home_selected_prompt@2x.png in Resources */,
 				A4C143A91A4C0A6B00C9BAB5 /* sharemore_openapi@2x.png in Resources */,
@@ -11293,6 +11304,7 @@
 				F55772DF1A5AA3E200693279 /* login_name@2x.png in Resources */,
 				A4C143911A4C0A6B00C9BAB5 /* section0_emotion6@2x.png in Resources */,
 				F5D04E721AC27E98004DE412 /* me_delect_button@2x.png in Resources */,
+				A409A1121AC2DEF50033A31D /* me_background@2x.png in Resources */,
 				F5664B9D1A2AFD56008A5830 /* bluebuttton_pressed@2x.png in Resources */,
 				F5664B9E1A2AFD56008A5830 /* discovery_calendar@2x.png in Resources */,
 				F5664B9F1A2AFD56008A5830 /* Icon-60@2x.png in Resources */,
@@ -11321,16 +11333,15 @@
 				A4C1440F1A4C0A6B00C9BAB5 /* voice_HL@2x.png in Resources */,
 				A4C770C81A806A6D005ABC7F /* discovery_rongzi_right@2x.png in Resources */,
 				F5D04D861AC1056F004DE412 /* Expression_44@2x.png in Resources */,
-				A49FF3D31AC29CDB009982E2 /* me_touzi@2x.png in Resources */,
 				A4C1439A1A4C0A6B00C9BAB5 /* section0_emotion9@2x.png in Resources */,
 				F5D04DB61AC1056F004DE412 /* Expression_55@2x.png in Resources */,
 				F5664BBE1A2AFD56008A5830 /* me_myactivity_point@2x.png in Resources */,
 				F5A7D5AB1AB2C3620060AE1F /* homeCellbackground_highlight@2x.png in Resources */,
 				F5D04E4E1AC1056F004DE412 /* Expression_8@2x.png in Resources */,
 				F5664BBF1A2AFD56008A5830 /* InfoPlist.strings in Resources */,
+				A409A1161AC2DEF50033A31D /* me_lvli@2x.png in Resources */,
 				A41CE1D61A6F9E25004F17E7 /* me_circle_chat_location@2x.png in Resources */,
 				F55773091A5AA3E200693279 /* login_wechat_logo@2x.png in Resources */,
-				A49FF3E71AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */,
 				F55772D91A5AA3E200693279 /* login_my_button@2x.png in Resources */,
 				A4C143611A4C0A6B00C9BAB5 /* weChatBubble_Sending_Cavern@2x.png in Resources */,
 				F5D04CF21AC1056F004DE412 /* Expression_10@2x.png in Resources */,
@@ -11339,6 +11350,7 @@
 				F5664BC41A2AFD56008A5830 /* me_right@2x.png in Resources */,
 				F55772841A5A696800693279 /* me_mycard_tou_big@2x.png in Resources */,
 				F5664BC81A2AFD56008A5830 /* MeinfoCell.xib in Resources */,
+				A409A11A1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */,
 				F5472DCB1A8E3D82002C9B35 /* FinancingStagePlist.plist in Resources */,
 				F5664BCA1A2AFD56008A5830 /* navbar_remind@2x.png in Resources */,
 				F5D04D661AC1056F004DE412 /* Expression_37@2x.png in Resources */,
@@ -11369,6 +11381,7 @@
 				A41CE1D01A6F9E25004F17E7 /* me_circle_chat_card@2x.png in Resources */,
 				F569A8171A31B36D00B677B0 /* me_mywriten_repeat_no@2x.png in Resources */,
 				F5664BDC1A2AFD56008A5830 /* settingPlist.plist in Resources */,
+				A49FF4111AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				F5664BDD1A2AFD56008A5830 /* me_renzheng_tou@2x.png in Resources */,
 				A4C144301A4C0A6B00C9BAB5 /* MultiSelectedPanelConfirmBtnbKG@2x.png in Resources */,
 				F5D04D4E1AC1056F004DE412 /* Expression_31@2x.png in Resources */,
@@ -11430,12 +11443,14 @@
 				F5D04E2E1AC1056F004DE412 /* Expression_82@2x.png in Resources */,
 				A4C144271A4C0A6B00C9BAB5 /* CellRedSelected@2x.png in Resources */,
 				F569A80C1A31B33C00B677B0 /* osusume_already_bg@2x.png in Resources */,
+				A409A12B1AC2DF060033A31D /* me_button_chat@2x.png in Resources */,
 				F5B5FE6E1A596D4A007FE11B /* ShareSDKLocalizable.strings in Resources */,
 				F55772BB1A5AA3E200693279 /* login_button_bg@2x.png in Resources */,
 				A4C143E51A4C0A6B00C9BAB5 /* msg_chat_voice_unread@2x.png in Resources */,
 				F5D04E521AC1056F004DE412 /* Expression_9@2x.png in Resources */,
 				A4C143EE1A4C0A6B00C9BAB5 /* input-bar-flat.png in Resources */,
 				A4C144981A4C3EC600C9BAB5 /* circle_chat_sendfailed@2x.png in Resources */,
+				A49FF4151AC2DD35009982E2 /* me_myplace@2x.png in Resources */,
 				F5D04E2A1AC1056F004DE412 /* Expression_81@2x.png in Resources */,
 				F5D04DA61AC1056F004DE412 /* Expression_51@2x.png in Resources */,
 				A41CE1D31A6F9E25004F17E7 /* me_circle_chat_location_pressed@2x.png in Resources */,
@@ -11449,7 +11464,6 @@
 				A47D41F51A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A4C143F71A4C0A6B00C9BAB5 /* input-field-cover@2x.png in Resources */,
 				A4C1449E1A4C3EC600C9BAB5 /* notification_badge2@2x.png in Resources */,
-				A49FF3DC1AC29D55009982E2 /* me_lvli@2x.png in Resources */,
 				A4C143AF1A4C0A6B00C9BAB5 /* sharemore_video@2x.png in Resources */,
 				F5664C201A2AFD56008A5830 /* me_circle_chat_keybroad@2x.png in Resources */,
 				F53519981A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */,
@@ -11483,7 +11497,6 @@
 				F55772BC1A5AA3E200693279 /* login_button_bg@2x.png in Resources */,
 				F5664D401A2AFDD5008A5830 /* about_welian_logo@2x.png in Resources */,
 				A49FF3CA1AC29A1B009982E2 /* me_add_friend@2x.png in Resources */,
-				A49FF3FB1AC2AD69009982E2 /* me_button_chat@2x.png in Resources */,
 				F5664D421A2AFDD5008A5830 /* icon_session-8@2x.png in Resources */,
 				F5664D431A2AFDD5008A5830 /* home_picture_add_camera@2x.png in Resources */,
 				A489E7C41AA5553E00F7BE9F /* citys.plist in Resources */,
@@ -11515,6 +11528,7 @@
 				A48302FD1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */,
 				F569A80B1A31B33C00B677B0 /* osusume_add_bg@2x.png in Resources */,
 				A4C1449C1A4C3EC600C9BAB5 /* home_loading_30px@2x.png in Resources */,
+				A409A1231AC2DEF50033A31D /* me_touzi@2x.png in Resources */,
 				A41CE1DA1A6F9E25004F17E7 /* me_circle_chat_picture_pressed@2x.png in Resources */,
 				A4C144A71A4C3F5500C9BAB5 /* weChatBubble_Receiving_Solid2@2x.png in Resources */,
 				F5D04D231AC1056F004DE412 /* Expression_21@2x.png in Resources */,
@@ -11559,7 +11573,6 @@
 				F5664D751A2AFDD5008A5830 /* discovery_circle_ administrator_bg@2x.png in Resources */,
 				A4C143A11A4C0A6B00C9BAB5 /* sharemore_friendcard@2x.png in Resources */,
 				F5664D771A2AFDD5008A5830 /* discovery_activity_list_ registered_bg@2x.png in Resources */,
-				A49FF3D81AC29CDB009982E2 /* me_xiangmu@2x.png in Resources */,
 				F5664D7A1A2AFDD5008A5830 /* me_mywriten_location@2x.png in Resources */,
 				A4C144191A4C0A6B00C9BAB5 /* AddGroupMemberBtn@2x.png in Resources */,
 				F5D04E0B1AC1056F004DE412 /* Expression_74@2x.png in Resources */,
@@ -11571,7 +11584,6 @@
 				F5664D831A2AFDD5008A5830 /* me_renzheng_chuang@2x.png in Resources */,
 				F5664D841A2AFDD5008A5830 /* me_mycard_emaillogo@2x.png in Resources */,
 				F500B1FF1AAEB16800A7AD35 /* share_delete@2x.png in Resources */,
-				A49FF3F71AC2AD69009982E2 /* me_button_add@2x.png in Resources */,
 				F5664D861A2AFDD5008A5830 /* me_circle_chat_user@x.png in Resources */,
 				F55772D41A5AA3E200693279 /* login_my_bg@2x.png in Resources */,
 				A4C143F51A4C0A6B00C9BAB5 /* input-field-cover.png in Resources */,
@@ -11587,7 +11599,6 @@
 				F5664D8F1A2AFDD5008A5830 /* me_mail@2x.png in Resources */,
 				F5B5FE721A596D4B007FE11B /* Resource.bundle in Resources */,
 				F5D04E431AC1056F004DE412 /* Expression_87@2x.png in Resources */,
-				A49FF3EC1AC2A7BC009982E2 /* me_phone_yes@2x.png in Resources */,
 				F5664D911A2AFDD5008A5830 /* home_empty_button_highlight@2x.png in Resources */,
 				F5664D921A2AFDD5008A5830 /* TOWebViewControllerLocalizable.strings in Resources */,
 				A4C143C81A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -11646,7 +11657,7 @@
 				A464614D1AAD424D00D2687B /* navbar_share@2x.png in Resources */,
 				A4C143D71A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				A4E7BBE61AAEF1B3006BB52A /* weChatBubble_pre_Receiving_Solid@2x.png in Resources */,
-				A49FF3C41AC267D0009982E2 /* me_background@2x.png in Resources */,
+				A49FF4081AC2DCFF009982E2 /* me_button_add@2x.png in Resources */,
 				F55772D11A5AA3E200693279 /* login_gongsi@2x.png in Resources */,
 				F5664DBC1A2AFDD5008A5830 /* tabbar_friend@2x.png in Resources */,
 				F5664DBE1A2AFDD5008A5830 /* discovery_activity_creat_add_picture@2x.png in Resources */,
@@ -11669,6 +11680,7 @@
 				F5664DCF1A2AFDD5008A5830 /* greenbutton@2x.png in Resources */,
 				F550790C1A80EA16009CE4F7 /* ProjectIndustryCell.xib in Resources */,
 				F534DAF71A4F07FA00B6A725 /* investor_attestation_to_select@2x.png in Resources */,
+				A409A1271AC2DEF50033A31D /* me_xiangmu@2x.png in Resources */,
 				A49C7FC51A70D63C00F2AEC5 /* weLianAppDev-Info.plist in Resources */,
 				F5664DD01A2AFDD5008A5830 /* me_mywriten_good_pre@2x.png in Resources */,
 				F55772C51A5AA3E200693279 /* login_chacha@2x.png in Resources */,
@@ -11726,7 +11738,6 @@
 				F5D04D3B1AC1056F004DE412 /* Expression_27@2x.png in Resources */,
 				F5664DF51A2AFDD5008A5830 /* enroll_button_pre@2x.png in Resources */,
 				F534DB041A4F1BDD00B6A725 /* investor_attestation_eg_add@2x.png in Resources */,
-				A49FF3E21AC2A491009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				F51BA4491A444DA2009E5CDF /* tabbar_friend_selected_prompt@2x.png in Resources */,
 				F53328EB1A5E3015001F48FA /* research_bg_pre@2x.png in Resources */,
 				A4C143861A4C0A6B00C9BAB5 /* section0_emotion2@2x.png in Resources */,
@@ -11778,7 +11789,6 @@
 				F5E380B81A41B1680084F7F3 /* WorkListCell.xib in Resources */,
 				A4C143B61A4C0A6B00C9BAB5 /* sharemore_voiceinput@2x.png in Resources */,
 				F5664E221A2AFDD5008A5830 /* common_card_background_highlighted@2x.png in Resources */,
-				A49FF3F11AC2AB43009982E2 /* me_myplace@2x.png in Resources */,
 				F5664E231A2AFDD5008A5830 /* me_mywriten_more@2x.png in Resources */,
 				F5664E241A2AFDD5008A5830 /* home_search_result@2x.png in Resources */,
 				F5664E251A2AFDD5008A5830 /* me_circle_chat_emoji@2x.png in Resources */,
@@ -11788,6 +11798,7 @@
 				A4C143B31A4C0A6B00C9BAB5 /* sharemore_videovoip@2x.png in Resources */,
 				F5472DC01A8DF4E9002C9B35 /* home_picture_enlarge_download@2x.png in Resources */,
 				F5D04D571AC1056F004DE412 /* Expression_33@2x.png in Resources */,
+				A409A11F1AC2DEF50033A31D /* me_phone_yes@2x.png in Resources */,
 				F5664E2E1A2AFDD5008A5830 /* background_grey@2x.png in Resources */,
 				F5664E2F1A2AFDD5008A5830 /* FriendCell.xib in Resources */,
 				F5664E301A2AFDD5008A5830 /* AddWXFriendCell.xib in Resources */,
@@ -11842,6 +11853,7 @@
 				A40356081A5D1D05006AE52C /* me_myfriend_phone_logo@2x.png in Resources */,
 				A4C1444F1A4C0A6B00C9BAB5 /* RecordingSignal001@2x.png in Resources */,
 				F5D04E731AC27E98004DE412 /* me_delect_button@2x.png in Resources */,
+				A409A1131AC2DEF50033A31D /* me_background@2x.png in Resources */,
 				F5664E571A2AFDD5008A5830 /* bluebuttton_pressed@2x.png in Resources */,
 				F557730D1A5AA3E200693279 /* login_zhiwei@2x.png in Resources */,
 				F58CA95E1A5BF3AE00988A61 /* leida2@2x.png in Resources */,
@@ -11877,9 +11889,9 @@
 				F5A7D5AC1AB2C3620060AE1F /* homeCellbackground_highlight@2x.png in Resources */,
 				F5D04E4F1AC1056F004DE412 /* Expression_8@2x.png in Resources */,
 				A4C143951A4C0A6B00C9BAB5 /* section0_emotion7@2x.png in Resources */,
+				A409A1171AC2DEF50033A31D /* me_lvli@2x.png in Resources */,
 				A41CE1D71A6F9E25004F17E7 /* me_circle_chat_location@2x.png in Resources */,
 				F5664E791A2AFDD5008A5830 /* InfoPlist.strings in Resources */,
-				A49FF3E81AC2A7BC009982E2 /* me_phone_no@2x.png in Resources */,
 				A4C141301A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
 				A414FE271A4402CA0004F415 /* www in Resources */,
 				F5D04CF31AC1056F004DE412 /* Expression_10@2x.png in Resources */,
@@ -11888,6 +11900,7 @@
 				F5664E7E1A2AFDD5008A5830 /* me_right@2x.png in Resources */,
 				A4C144551A4C0A6B00C9BAB5 /* RecordingSignal003@2x.png in Resources */,
 				A4C1442E1A4C0A6B00C9BAB5 /* MultiSelectedPanelBkg@2x.png in Resources */,
+				A409A11B1AC2DEF50033A31D /* me_phone_no@2x.png in Resources */,
 				F5472DCC1A8E3D82002C9B35 /* FinancingStagePlist.plist in Resources */,
 				F58F85AA1A3A9ED700C55F4E /* navbar_more@2x.png in Resources */,
 				F5D04D671AC1056F004DE412 /* Expression_37@2x.png in Resources */,
@@ -11918,6 +11931,7 @@
 				A4C143D11A4C0A6B00C9BAB5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */,
 				A41CE1D11A6F9E25004F17E7 /* me_circle_chat_card@2x.png in Resources */,
+				A49FF4121AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
 				A4C144931A4C3EC600C9BAB5 /* circle_chat_bg_white_pre@2x.png in Resources */,
 				F55772C21A5AA3E200693279 /* login_camera@2x.png in Resources */,
 				F5D04D4F1AC1056F004DE412 /* Expression_31@2x.png in Resources */,
@@ -11979,12 +11993,14 @@
 				F5D04E2F1AC1056F004DE412 /* Expression_82@2x.png in Resources */,
 				F55772F51A5AA3E200693279 /* login_register_btn_pre@2x.png in Resources */,
 				F55772F21A5AA3E200693279 /* login_register_btn@2x.png in Resources */,
+				A409A12C1AC2DF060033A31D /* me_button_chat@2x.png in Resources */,
 				A4C144251A4C0A6B00C9BAB5 /* CellNotSelected@2x.png in Resources */,
 				F5664EBD1A2AFDD5008A5830 /* icon_session-8.png in Resources */,
 				F5664EBE1A2AFDD5008A5830 /* yellowbutton@2x.png in Resources */,
 				F5D04E531AC1056F004DE412 /* Expression_9@2x.png in Resources */,
 				F5664EBF1A2AFDD5008A5830 /* me_myfriend_add_wechat_logo@2x.png in Resources */,
 				F55772FB1A5AA3E200693279 /* login_right@2x.png in Resources */,
+				A49FF4161AC2DD35009982E2 /* me_myplace@2x.png in Resources */,
 				F5D04E2B1AC1056F004DE412 /* Expression_81@2x.png in Resources */,
 				F5D04DA71AC1056F004DE412 /* Expression_51@2x.png in Resources */,
 				F5664EC31A2AFDD5008A5830 /* mapapi.bundle in Resources */,
@@ -11998,7 +12014,6 @@
 				A4C144311A4C0A6B00C9BAB5 /* MultiSelectedPanelConfirmBtnbKG@2x.png in Resources */,
 				A4C143E01A4C0A6B00C9BAB5 /* MessageDisplayKitString.strings in Resources */,
 				F55772811A5A612400693279 /* me_mycard_tou@2x.png in Resources */,
-				A49FF3DD1AC29D55009982E2 /* me_lvli@2x.png in Resources */,
 				A47BA6681A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */,
 				A47D41F61A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A4C144A21A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
