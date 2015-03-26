@@ -21,10 +21,11 @@
                             <constraint firstAttribute="height" constant="24" id="cjx-kd-DlK"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKX-pS-u4z">
-                        <rect key="frame" x="47" y="13" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKX-pS-u4z">
+                        <rect key="frame" x="47" y="13" width="80" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="FK5-fo-7ri"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="RGf-Kj-LvB"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
