@@ -14,6 +14,7 @@
 #import "LoginViewController.h"
 #import "LoginGuideController.h"
 #import <StoreKit/StoreKit.h>
+#import "MeInfoController.h"
 
 @interface SettingController () <UIActionSheetDelegate,SKStoreProductViewControllerDelegate>
 {
@@ -139,24 +140,18 @@
     
     if (nil ==cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     [cell.textLabel setText:dict[@"title"]];
-    
-    if (indexPath.section==0&&indexPath.row==0) {
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        
-        [cell.detailTextLabel setText:[LogInUser getCurrentLoginUser].mobile];
+    [cell.detailTextLabel setText:dict[@"content"]];
+    if (indexPath.section==2) {
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
-
-    }else if (indexPath.section==0&&indexPath.row==1){
-        
-    }else if (indexPath.section==1&&indexPath.row==1){
-        [cell.detailTextLabel setText:XcodeAppVersion];
+    }else{
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     return cell;
 }
@@ -165,24 +160,33 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section==1&&indexPath.row==0){
+    if (indexPath.section==0) {
+        MeInfoController *meInfoVC = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
+        [self.navigationController pushViewController:meInfoVC animated:YES];
+    }else if (indexPath.section ==1&&indexPath.row==0){
         AboutViewController *aboutVC = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
-        
-    }else if (indexPath.section==1&&indexPath.row==1){
-        [WLTool updateVersions:^(NSDictionary *versionDic) {
-            
-            if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
-                NSString *msg = [versionDic objectForKey:@"msg"];
-                _upURL = [versionDic objectForKey:@"url"];
-                
-                [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
-            }else{
-                [WLHUDView showSuccessHUD:@"已是最新版本！"];
-            }
-
-        }];
+    }else if (indexPath.section ==1&&indexPath.row==1){
+        NSString *str = [NSString stringWithFormat: @"itms-apps://itunes.apple.com/app/id%@", @"944154493"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }
+//    if (indexPath.section==1&&indexPath.row==0){
+//        
+//        
+//    }else if (indexPath.section==1&&indexPath.row==1){
+//        [WLTool updateVersions:^(NSDictionary *versionDic) {
+//            
+//            if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
+//                NSString *msg = [versionDic objectForKey:@"msg"];
+//                _upURL = [versionDic objectForKey:@"url"];
+//                
+//                [[[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil] show];
+//            }else{
+//                [WLHUDView showSuccessHUD:@"已是最新版本！"];
+//            }
+//
+//        }];
+//    }
 }
 
 
@@ -194,7 +198,7 @@
 }
 
 
-#pragma mark - AppStore更新
+#pragma mark - AppStore更新,评分
 - (void)appStoreUpdata
 {
     SKStoreProductViewController *sKStoreProductViewController = [[SKStoreProductViewController alloc] init];
