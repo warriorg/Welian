@@ -106,7 +106,7 @@
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"uid",userInfoM.uid];
     LogInUser *loginuser = [LogInUser MR_findFirstWithPredicate:pre];
     loginuser.uid = userInfoM.uid;
-//    loginuser.mobile = userInfoM.mobile;
+    loginuser.mobile = userInfoM.mobile;
     loginuser.position = userInfoM.position;
     loginuser.provinceid = userInfoM.provinceid;
     loginuser.provincename = userInfoM.provincename;

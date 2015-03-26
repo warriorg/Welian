@@ -291,7 +291,7 @@ static NSString *fridcellid = @"fridcellid";
             switch (type.integerValue) {
                 case 0:
                 {
-                    IIMeInvestAuthModel *investModel = (IIMeInvestAuthModel *)info;
+                    IIMeInvestAuthModel *investModel = [_datasource1[indexPath.section] objectForKey:@"info"];
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
                     switch (indexPath.row) {
@@ -443,7 +443,7 @@ static NSString *fridcellid = @"fridcellid";
                 {
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
-                    IIMeInvestAuthModel *investModel = [[_datasource1[indexPath.section] objectForKey:@"info"] objectAtIndex:indexPath.row];
+                    IIMeInvestAuthModel *investModel = [_datasource1[indexPath.section] objectForKey:@"info"];
                     switch (indexPath.row) {
                         case 1:
                             titleInfo = @"投资领域：";
