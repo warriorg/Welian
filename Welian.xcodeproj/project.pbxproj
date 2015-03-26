@@ -3719,6 +3719,18 @@
 		F569A81A1A31B36D00B677B0 /* me_mywriten_repeat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8141A31B36D00B677B0 /* me_mywriten_repeat@2x.png */; };
 		F569A81C1A31B5E900B677B0 /* tui@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A81B1A31B5E900B677B0 /* tui@2x.png */; };
 		F569A81D1A31B5E900B677B0 /* tui@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A81B1A31B5E900B677B0 /* tui@2x.png */; };
+		F56C303F1AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */; };
+		F56C30401AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */; };
+		F56C30411AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */; };
+		F56C30421AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */; };
+		F56C30431AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */; };
+		F56C30441AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */; };
+		F56C30451AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */; };
+		F56C30461AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */; };
+		F56C30481AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */; };
+		F56C30491AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */; };
+		F56C304A1AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */; };
+		F56C304B1AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */; };
 		F57F31BA1AA6A5F200B8EF72 /* WLActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31B91AA6A5F200B8EF72 /* WLActivityView.m */; };
 		F57F31BB1AA6A5F200B8EF72 /* WLActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31B91AA6A5F200B8EF72 /* WLActivityView.m */; };
 		F57F31BC1AA6A5F200B8EF72 /* WLActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = F57F31B91AA6A5F200B8EF72 /* WLActivityView.m */; };
@@ -5645,6 +5657,10 @@
 		F569A81B1A31B5E900B677B0 /* tui@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tui@2x.png"; sourceTree = "<group>"; };
 		F56A6D821A21C5CB0024591E /* CommentHomeViewFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHomeViewFrame.h; sourceTree = "<group>"; };
 		F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHomeViewFrame.m; sourceTree = "<group>"; };
+		F56C303C1AC3B9AF00EDF054 /* MobileInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileInfoCell.h; sourceTree = "<group>"; };
+		F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileInfoCell.m; sourceTree = "<group>"; };
+		F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileInfoCell.xib; sourceTree = "<group>"; };
+		F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_renzheng_certification_bg@2x.png"; sourceTree = "<group>"; };
 		F57423C319FA92C9003D20C8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F579097B19C2C6A9009DB1B2 /* SendIFMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendIFMacros.h; sourceTree = "<group>"; };
 		F579098019C2E3F2009DB1B2 /* home_detail_user_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_detail_user_small@2x.png"; sourceTree = "<group>"; };
@@ -7829,6 +7845,7 @@
 				F51FBB4C19EFEE6C00D85D7F /* tabbar_me_selected@2x.png */,
 				F51FBB4D19EFEE6C00D85D7F /* yellowbutton@2x.png */,
 				F51FBB4E19EFEE6C00D85D7F /* yellowbutton_pressed@2x.png */,
+				F56C30471AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png */,
 			);
 			path = "我的images";
 			sourceTree = "<group>";
@@ -9193,6 +9210,9 @@
 				F534DAFB1A4F1BB100B6A725 /* AddCaseCell.xib */,
 				A49FF3BC1AC2671B009982E2 /* UserInfoView.h */,
 				A49FF3BD1AC2671B009982E2 /* UserInfoView.m */,
+				F56C303C1AC3B9AF00EDF054 /* MobileInfoCell.h */,
+				F56C303D1AC3B9AF00EDF054 /* MobileInfoCell.m */,
+				F56C303E1AC3B9AF00EDF054 /* MobileInfoCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -10072,6 +10092,7 @@
 				F5D04D711AC1056F004DE412 /* Expression_39@2x.png in Resources */,
 				A49C7E7A1A70D42700F2AEC5 /* AuthTypeView.xib in Resources */,
 				F5D04DD11AC1056F004DE412 /* Expression_60@2x.png in Resources */,
+				F56C304B1AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */,
 				A49C7E7B1A70D42700F2AEC5 /* sharemore_myfav@2x.png in Resources */,
 				A49C7E7C1A70D42700F2AEC5 /* login_password@2x.png in Resources */,
 				A4A888C01AB030DE00588436 /* weChatBubble_Receiving_Card@2x.png in Resources */,
@@ -10280,6 +10301,7 @@
 				A49C7F481A70D42700F2AEC5 /* readme.txt in Resources */,
 				A49C7F491A70D42700F2AEC5 /* osusume_friend_add@2x.png in Resources */,
 				A49C7F4A1A70D42700F2AEC5 /* SenderVoiceNodePlaying000@2x.png in Resources */,
+				F56C30461AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */,
 				A49C7F4B1A70D42700F2AEC5 /* DateTools.bundle in Resources */,
 				A49C7F4C1A70D42700F2AEC5 /* me_circle_chat_card@2x.png in Resources */,
 				A49FF4141AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
@@ -10513,6 +10535,7 @@
 				A4C1412B1A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.xib in Resources */,
 				F5D04DF41AC1056F004DE412 /* Expression_69@2x.png in Resources */,
 				F53DC4261A49192600F5F712 /* tabbar_discovery@2x.png in Resources */,
+				F56C304A1AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */,
 				F5D04D341AC1056F004DE412 /* Expression_25@2x.png in Resources */,
 				F53DC4271A49192600F5F712 /* login_user@2x.png in Resources */,
 				A4C143C31A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
@@ -10879,6 +10902,7 @@
 				F5D04D001AC1056F004DE412 /* Expression_13@2x.png in Resources */,
 				F53DC5491A49192600F5F712 /* home_picture_enlarge_download@2x.png in Resources */,
 				F53519A61A8C8DD2004488EE /* discovery_buzhou_step_two640@2x.png in Resources */,
+				F56C30451AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */,
 				A47C5F5B1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */,
 				F534DADF1A4E9D0B00B6A725 /* investor_attestation_add@2x.png in Resources */,
 				F53DC54C1A49192600F5F712 /* tabbar_me@2x.png in Resources */,
@@ -11171,6 +11195,7 @@
 				F5D04D6E1AC1056F004DE412 /* Expression_39@2x.png in Resources */,
 				A4A888BD1AB030DE00588436 /* weChatBubble_Receiving_Card@2x.png in Resources */,
 				F5D04DCE1AC1056F004DE412 /* Expression_60@2x.png in Resources */,
+				F56C30481AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */,
 				F5664B411A2AFD56008A5830 /* tabbar_discovery_selected@2x.png in Resources */,
 				F5664B431A2AFD56008A5830 /* yellowbutton_pressed@2x.png in Resources */,
 				F534DAF61A4F07FA00B6A725 /* investor_attestation_to_select@2x.png in Resources */,
@@ -11379,6 +11404,7 @@
 				F55772C41A5AA3E200693279 /* login_chacha@2x.png in Resources */,
 				F557730C1A5AA3E200693279 /* login_zhiwei@2x.png in Resources */,
 				A41CE1D01A6F9E25004F17E7 /* me_circle_chat_card@2x.png in Resources */,
+				F56C30431AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */,
 				F569A8171A31B36D00B677B0 /* me_mywriten_repeat_no@2x.png in Resources */,
 				F5664BDC1A2AFD56008A5830 /* settingPlist.plist in Resources */,
 				A49FF4111AC2DD35009982E2 /* me_mycard_tou_big2@2x.png in Resources */,
@@ -11612,6 +11638,7 @@
 				A4C1412A1A4BEF5700C9BAB5 /* MultiSelectSearchResultTableViewCell.xib in Resources */,
 				F5D04DF31AC1056F004DE412 /* Expression_69@2x.png in Resources */,
 				F5664D9C1A2AFDD5008A5830 /* tabbar_discovery@2x.png in Resources */,
+				F56C30491AC3C50400EDF054 /* me_renzheng_certification_bg@2x.png in Resources */,
 				F5D04D331AC1056F004DE412 /* Expression_25@2x.png in Resources */,
 				F5664D9D1A2AFDD5008A5830 /* login_user@2x.png in Resources */,
 				A4C143C21A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
@@ -11978,6 +12005,7 @@
 				F5D04CFF1AC1056F004DE412 /* Expression_13@2x.png in Resources */,
 				F5664EAF1A2AFDD5008A5830 /* home_picture_enlarge_download@2x.png in Resources */,
 				F53519A51A8C8DD2004488EE /* discovery_buzhou_step_two640@2x.png in Resources */,
+				F56C30441AC3B9AF00EDF054 /* MobileInfoCell.xib in Resources */,
 				A47C5F5A1A5E87FB00E63737 /* me_myfriend_add_phone_logo@2x.png in Resources */,
 				F534DADE1A4E9D0B00B6A725 /* investor_attestation_add@2x.png in Resources */,
 				F5664EB31A2AFDD5008A5830 /* tabbar_me@2x.png in Resources */,
@@ -12444,6 +12472,7 @@
 				A49C7D0E1A70D42700F2AEC5 /* UIButton+WebCache.m in Sources */,
 				A49C7D0F1A70D42700F2AEC5 /* AddFriendTypeListViewController.m in Sources */,
 				A49C7D101A70D42700F2AEC5 /* CommentCell.m in Sources */,
+				F56C30421AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */,
 				A49C7D111A70D42700F2AEC5 /* NSNumber+MagicalDataImport.m in Sources */,
 				A49C7D121A70D42700F2AEC5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B391A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
@@ -12957,6 +12986,7 @@
 				F53DC3731A49192600F5F712 /* UIButton+WebCache.m in Sources */,
 				A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
+				F56C30411AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */,
 				A4A2EAE71A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B381A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
@@ -13470,6 +13500,7 @@
 				F5664A3C1A2AFD56008A5830 /* SignInPhoneController.m in Sources */,
 				A4A2EAE51A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
+				F56C303F1AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */,
 				A47F1B361A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
 				F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
 				F55078781A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
@@ -13983,6 +14014,7 @@
 				F5664CF81A2AFDD5008A5830 /* UIButton+WebCache.m in Sources */,
 				A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
+				F56C30401AC3B9AF00EDF054 /* MobileInfoCell.m in Sources */,
 				A4A2EAE61A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B371A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,

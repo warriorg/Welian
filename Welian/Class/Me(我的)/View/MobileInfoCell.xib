@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MobileInfoCellid" id="KGk-i7-Jjw" customClass="MobileInfoCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-Mc-umt">
+                        <rect key="frame" x="15" y="13" width="65" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Gw6-7H-tHS"/>
+                            <constraint firstAttribute="width" constant="65" id="Kmh-EK-vs5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_renzheng_certification_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="x8Y-xF-HZy">
+                        <rect key="frame" x="239" y="12" width="48" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="FTM-iD-d0k"/>
+                            <constraint firstAttribute="width" constant="48" id="JGB-Ve-pF7"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13173698687" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7N-Fg-TXf">
+                        <rect key="frame" x="143" y="13" width="97" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="97" id="JC3-mD-ERa"/>
+                            <constraint firstAttribute="height" constant="21" id="seq-ny-bMC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="x8Y-xF-HZy" secondAttribute="trailing" id="Jdk-c6-cd6"/>
+                    <constraint firstAttribute="centerY" secondItem="Y7N-Fg-TXf" secondAttribute="centerY" id="dSs-wY-7ln"/>
+                    <constraint firstAttribute="centerY" secondItem="x8Y-xF-HZy" secondAttribute="centerY" id="eVC-MX-onP"/>
+                    <constraint firstAttribute="trailing" secondItem="Y7N-Fg-TXf" secondAttribute="trailing" constant="47" id="gTv-15-k1n"/>
+                    <constraint firstAttribute="centerY" secondItem="Qq3-Mc-umt" secondAttribute="centerY" id="qm3-VJ-6vg"/>
+                    <constraint firstItem="Qq3-Mc-umt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="yQf-j3-pGp"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="authImageV" destination="x8Y-xF-HZy" id="eAs-Qk-SVq"/>
+                <outlet property="detailLabel" destination="Y7N-Fg-TXf" id="eAS-gZ-zCs"/>
+                <outlet property="titleLabel" destination="Qq3-Mc-umt" id="J3j-6c-3WY"/>
+            </connections>
+            <point key="canvasLocation" x="316" y="312.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="me_renzheng_certification_bg.png" width="48" height="22"/>
+    </resources>
+</document>

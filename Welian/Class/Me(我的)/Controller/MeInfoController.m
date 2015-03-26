@@ -13,30 +13,19 @@
 #import "LocationprovinceController.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
+#import "IconTableViewCell.h"
+#import "MobileInfoCell.h"
 
 @interface MeInfoController () <LocationProDelegate>
 {
     NSArray *_data;
+    IconTableViewCell *_iconCell;
 }
-@property (nonatomic, strong) UIImageView *iconImage;
 @end
 
+static NSString *iconCellid = @"IconTableViewCellid";
+static NSString *mobileCellid = @"MobileInfoCellid";
 @implementation MeInfoController
-
-- (UIImageView*)iconImage
-{
-    if (nil == _iconImage) {
-//        UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-        LogInUser *mode = [LogInUser getCurrentLoginUser];
-        _iconImage = [[UIImageView alloc] init];
-        
-        [_iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-        [_iconImage setUserInteractionEnabled:YES];
-        [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-    }
-    return _iconImage;
-}
-
 
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
@@ -48,7 +37,7 @@
     url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
     url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
     photo.url = [NSURL URLWithString:url]; // 图片路径
-    photo.srcImageView = self.iconImage; // 来源于哪个UIImageView
+    photo.srcImageView = _iconCell.iconImage; // 来源于哪个UIImageView
     
     // 2.显示相册
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
@@ -64,7 +53,8 @@
     if (self) {
         [self loadPlist];
         // 2.设置tableView分割线
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        [self.tableView registerNib:[UINib nibWithNibName:@"IconTableViewCell" bundle:nil] forCellReuseIdentifier:iconCellid];
+        [self.tableView registerNib:[UINib nibWithNibName:@"MobileInfoCell" bundle:nil] forCellReuseIdentifier:mobileCellid];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_businesscard"] style:UIBarButtonItemStyleBordered target:self action:@selector(showUserCar)];
         
     }
@@ -122,53 +112,57 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *reuseIdentifier = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    
-    if (nil ==cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        [cell.detailTextLabel setFont:WLFONT(15)];
-    }
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
-    [cell.textLabel setText:dict[@"title"]];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     
     if (indexPath.section==0) {
-        [self.iconImage setFrame:CGRectMake(self.view.bounds.size.width-70, 10, 40, 40)];
-        [cell.contentView addSubview:self.iconImage];
+       IconTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:iconCellid];
+        _iconCell = cell;
+        cell.titleLabel.text = dict[@"title"];
+        [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [cell.iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
+        return cell;
+    }else if(indexPath.section ==2&&indexPath.row==0){
+        MobileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:mobileCellid];
+        [cell.detailLabel setText:mode.mobile];
+        return cell;
+    }else{
+        static NSString *reuseIdentifier = @"cellId";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+        if (nil ==cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
+            [cell.detailTextLabel setFont:WLFONT(15)];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        [cell.textLabel setText:dict[@"title"]];
         
-    }else if (indexPath.section==1){
-        if (indexPath.row==0) {
-            
-            [cell.detailTextLabel setText:mode.name];
-        }else if (indexPath.row ==1){
-            [cell.detailTextLabel setText:mode.company];
-        }else if (indexPath.row ==2){
-            [cell.detailTextLabel setText:mode.position];
-        }
-    }else if (indexPath.section ==2){
-        if (indexPath.row==0) {
-            [cell.detailTextLabel setText:mode.mobile];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        }else if (indexPath.row ==1){
-            [cell.detailTextLabel setText:mode.email];
-        }else if (indexPath.row==2){
-            if (mode.provincename||mode.cityname) {
+        if (indexPath.section==1){
+            if (indexPath.row==0) {
                 
-                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provincename,mode.cityname]];
+                [cell.detailTextLabel setText:mode.name];
+            }else if (indexPath.row ==1){
+                [cell.detailTextLabel setText:mode.company];
+            }else if (indexPath.row ==2){
+                [cell.detailTextLabel setText:mode.position];
             }
-        }else if (indexPath.row ==3){
-            [cell.detailTextLabel setText:mode.address];
+        }else if (indexPath.section ==2){
+            if (indexPath.row ==1){
+                [cell.detailTextLabel setText:mode.email];
+            }else if (indexPath.row==2){
+                if (mode.provincename||mode.cityname) {
+                    
+                    [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@   %@",mode.provincename,mode.cityname]];
+                }
+            }else if (indexPath.row ==3){
+                [cell.detailTextLabel setText:mode.address];
+            }
+            
+        }else if (indexPath.section ==3){
+            [cell.detailTextLabel setText:nil];
         }
-
-    }else if (indexPath.section ==3){
-        [cell.detailTextLabel setText:nil];
+        return cell;
     }
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -237,7 +231,16 @@
         
     }else if (indexPath.section ==2){
         if (indexPath.row==0) {
-            return;
+            UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+            [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
+                
+            }];
+            [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
+                
+            }];
+            [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+            [sheet showInView:self.view];
+            
         }else if (indexPath.row ==1){
             controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
                 [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
@@ -314,7 +317,7 @@
     [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
 
         [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];
-        [self.iconImage setImage:image];
+        [_iconCell.iconImage setImage:image];
 
         [UserDefaults setObject:avatarStr forKey:@"icon"];
         [self.tableView reloadData];
