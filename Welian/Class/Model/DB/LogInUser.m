@@ -515,7 +515,7 @@
 - (NSArray *)getAllMyFriendUsers
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K > %@ && %K == %@", @"rsLogInUser",self,@"uid",@"100",@"isMyFriend",@(YES)];
-    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:[NSManagedObjectContext MR_defaultContext]];
+    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
     return allFriends;
 //    return  [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"uid" greaterThan:@"100"] results];
 }

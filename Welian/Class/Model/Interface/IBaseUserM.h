@@ -68,4 +68,9 @@
 /**  邀请url   */
 @property (nonatomic, strong) NSString *inviteurl;
 
+@property (nonatomic, strong) NSNumber *friendcount;//好友数量
+@property (nonatomic, strong) NSNumber *feedcount;// 动态数量
+@property (nonatomic, strong) NSNumber *friend2count;// 二度好友 数量
+@property (nonatomic, strong) NSNumber *checked;//手机号码是否验证
+
 @end

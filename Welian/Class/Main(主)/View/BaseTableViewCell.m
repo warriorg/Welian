@@ -10,7 +10,7 @@
 
 @interface BaseTableViewCell ()
 
-@property (assign, nonatomic) UIView *bottomLineView;
+//@property (assign, nonatomic) UIView *bottomLineView;
 
 @end
 

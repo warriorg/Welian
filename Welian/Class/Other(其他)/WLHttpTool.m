@@ -252,8 +252,10 @@
     NSDictionary *dic;
     
     if (uid) {
+        //别人的
         dic = @{@"type":@"loadUserFeed2",@"data":parameterDic};
     }else {
+        //自己的
         dic = @{@"type":@"loadFeeds",@"data":parameterDic};
     }
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
@@ -489,10 +491,9 @@
 #pragma mark - 根据uid取用户好友列表  0取自己
 + (void)loadFriendWithSQL:(BOOL)isSQL ParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    NSArray *myFriends = [loginUser getAllMyFriendUsers];
     if (isSQL) {
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        NSArray *myFriends = [loginUser getAllMyFriendUsers];
         succeBlock (@{@"count":@(myFriends.count),@"array":[self getChineseStringArr:myFriends]});
     }else{
         NSDictionary *dic = @{@"type":@"loadFriend",@"data":parameterDic};

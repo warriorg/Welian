@@ -8,7 +8,7 @@
 
 #import "UserInfoView.h"
 
-#define kBlueBgViewHeight 130.f
+#define kBlueBgViewHeight 250.f
 #define kLogoHeight 70.f
 #define kButtonWidth 65.f
 #define kButtonHeight 25.f
@@ -131,7 +131,7 @@
     _cityBtn.width = _cityBtn.width + 10.f;
     if (_touZiRenBtn.hidden) {
         _cityBtn.left = _nameLabel.left;
-        _cityBtn.top = kMarginEdge;
+        _cityBtn.top = _bgImageView.bottom + kMarginEdge;
     }else{
         _cityBtn.left = _touZiRenBtn.right + 10.f;
         _cityBtn.centerY =  _touZiRenBtn.centerY;

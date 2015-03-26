@@ -471,6 +471,14 @@
 		A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
 		A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
 		A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */ = {isa = PBXBuildFile; fileRef = A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */; };
+		A44BDF831AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */; };
+		A44BDF841AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */; };
+		A44BDF851AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */; };
+		A44BDF861AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */; };
+		A44BDF891AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
+		A44BDF8A1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
+		A44BDF8B1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
+		A44BDF8C1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
 		A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
 		A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
 		A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
@@ -4602,6 +4610,9 @@
 		A44779E01A7632A60085AE3C /* ResManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResManager.m; sourceTree = "<group>"; };
 		A44779E51A76393B0085AE3C /* NSFileManager+DoNotBackup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DoNotBackup.h"; sourceTree = "<group>"; };
 		A44779E61A76393B0085AE3C /* NSFileManager+DoNotBackup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DoNotBackup.m"; sourceTree = "<group>"; };
+		A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_lvli_line@2x.png"; sourceTree = "<group>"; };
+		A44BDF871AC3F4B000E306E7 /* UserInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewCell.h; sourceTree = "<group>"; };
+		A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewCell.m; sourceTree = "<group>"; };
 		A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.2.xcdatamodel; sourceTree = "<group>"; };
 		A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
 		A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
@@ -6485,6 +6496,7 @@
 		A409A12F1AC2E1AE0033A31D /* 我的images */ = {
 			isa = PBXGroup;
 			children = (
+				A44BDF821AC3F27B00E306E7 /* me_lvli_line@2x.png */,
 				A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */,
 				A409A1311AC2E1AE0033A31D /* bluebutton@2x.png */,
 				A409A1321AC2E1AE0033A31D /* bluebuttton_pressed@2x.png */,
@@ -9160,6 +9172,10 @@
 		F5CE864019BFF44100A9D14C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A49FF3BC1AC2671B009982E2 /* UserInfoView.h */,
+				A49FF3BD1AC2671B009982E2 /* UserInfoView.m */,
+				A44BDF871AC3F4B000E306E7 /* UserInfoViewCell.h */,
+				A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */,
 				F53C6EC019C5910D00FE9AE6 /* MeinfoCell.h */,
 				F53C6EC119C5910D00FE9AE6 /* MeinfoCell.m */,
 				F53C6EC319C5925200FE9AE6 /* MeinfoCell.xib */,
@@ -9187,8 +9203,6 @@
 				F534DAF91A4F1BB100B6A725 /* AddCaseCell.h */,
 				F534DAFA1A4F1BB100B6A725 /* AddCaseCell.m */,
 				F534DAFB1A4F1BB100B6A725 /* AddCaseCell.xib */,
-				A49FF3BC1AC2671B009982E2 /* UserInfoView.h */,
-				A49FF3BD1AC2671B009982E2 /* UserInfoView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9926,6 +9940,7 @@
 				A49C7DEE1A70D42700F2AEC5 /* tabbar_b@2x.png in Resources */,
 				A409A2551AC2E1AF0033A31D /* me_mywriten_comment@2x.png in Resources */,
 				F5D04E491AC1056F004DE412 /* Expression_88@2x.png in Resources */,
+				A44BDF861AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */,
 				A409A2A11AC2E1AF0033A31D /* navbar_more@2x.png in Resources */,
 				A49C7DF01A70D42700F2AEC5 /* placeholderImage@2x.png in Resources */,
 				F500B2011AAEB16800A7AD35 /* share_delete@2x.png in Resources */,
@@ -10707,6 +10722,7 @@
 				F53DC4C01A49192600F5F712 /* FriendCell.xib in Resources */,
 				F53DC4C11A49192600F5F712 /* AddWXFriendCell.xib in Resources */,
 				F5D04D281AC1056F004DE412 /* Expression_22@2x.png in Resources */,
+				A44BDF851AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */,
 				F5D04D541AC1056F004DE412 /* Expression_32@2x.png in Resources */,
 				F5318EFE1A63E986009B6635 /* weLianAppDis-Info.plist in Resources */,
 				A437CEF01A53D53100B54E68 /* circle_chatlist_sending@2x.png in Resources */,
@@ -11025,6 +11041,7 @@
 				A4C1438B1A4C0A6B00C9BAB5 /* section0_emotion4@2x.png in Resources */,
 				A409A2521AC2E1AF0033A31D /* me_mywriten_comment@2x.png in Resources */,
 				F5D04E461AC1056F004DE412 /* Expression_88@2x.png in Resources */,
+				A44BDF831AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */,
 				A409A29E1AC2E1AF0033A31D /* navbar_more@2x.png in Resources */,
 				A4C141201A4BEF5700C9BAB5 /* MultiSelectedPanel.xib in Resources */,
 				A4C143731A4C0A6B00C9BAB5 /* section0_emotion11@2x.png in Resources */,
@@ -11806,6 +11823,7 @@
 				F5664E2F1A2AFDD5008A5830 /* FriendCell.xib in Resources */,
 				F5664E301A2AFDD5008A5830 /* AddWXFriendCell.xib in Resources */,
 				F5D04D271AC1056F004DE412 /* Expression_22@2x.png in Resources */,
+				A44BDF841AC3F27B00E306E7 /* me_lvli_line@2x.png in Resources */,
 				F5D04D531AC1056F004DE412 /* Expression_32@2x.png in Resources */,
 				F5318EFD1A63E986009B6635 /* weLianAppDis-Info.plist in Resources */,
 				A437CEEF1A53D53100B54E68 /* circle_chatlist_sending@2x.png in Resources */,
@@ -12055,6 +12073,7 @@
 				A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */,
 				A49C7BC71A70D42700F2AEC5 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F57F31BD1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
+				A44BDF8C1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				A49C7BC81A70D42700F2AEC5 /* FriendsNewCell.m in Sources */,
 				F55078D61A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				F5D04C721AC104A6004DE412 /* WUEmoticonsKeyboard.m in Sources */,
@@ -12568,6 +12587,7 @@
 				A41CE1AE1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F57F31BC1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
+				A44BDF8B1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F53DC2A01A49192600F5F712 /* FriendsNewCell.m in Sources */,
 				F55078D51A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				F5D04C711AC104A6004DE412 /* WUEmoticonsKeyboard.m in Sources */,
@@ -13081,6 +13101,7 @@
 				F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A41CE1AC1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */,
+				A44BDF891AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F57F31BA1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
 				F566497F1A2AFD56008A5830 /* MJPhotoToolbar.m in Sources */,
 				F5D04C6F1AC104A6004DE412 /* WUEmoticonsKeyboard.m in Sources */,
@@ -13594,6 +13615,7 @@
 				A41CE1AD1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				F57F31BB1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
+				A44BDF8A1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F5664C381A2AFDD5008A5830 /* FriendsNewCell.m in Sources */,
 				F55078D41A7F5BE9009CE4F7 /* JKPromptView.m in Sources */,
 				F5D04C701AC104A6004DE412 /* WUEmoticonsKeyboard.m in Sources */,

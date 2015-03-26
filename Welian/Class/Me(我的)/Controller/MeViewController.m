@@ -24,7 +24,7 @@
 #import "UserInfoView.h"
 #import "WLCustomSegmentedControl.h"
 
-#define kTableViewHeaderViewHeight 220.f
+#define kTableViewHeaderViewHeight 340.f
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -110,8 +110,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     UIColor *color = kNavBgColor;
-    if (offsetY > kTableViewHeaderViewHeight/3) {
-        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/3 + 64 - offsetY) / 64);
+    if (offsetY > kTableViewHeaderViewHeight/2) {
+        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
         
         [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
@@ -145,13 +145,15 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     // 2.读取plist文件的内容
     [self loadPlist];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - TabBarHeight) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
+    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
     //隐藏表格分割线
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     self.tableView = tableView;
+//    [tableView setDebug:YES];
     
     //注册cell
     //    [self.tableView registerNib:[UINib nibWithNibName:@"MeinfoCell" bundle:nil] forCellReuseIdentifier:meinfocellid];
@@ -169,7 +171,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     _wlSegmentedControl.sectionDetailTitles = @[@"23",@"476"];
     
     [_tableView setTableHeaderView:headerView];
-
+    
     WEAKSELF
     [_wlSegmentedControl setIndexChangeBlock:^(NSInteger index) {
         [weakSelf selectIndexChanged:index];
@@ -178,6 +180,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [userInfoView setLookUserDetailBlock:^(void){
         [weakSelf lookMeInfo];
     }];
+    
+    [self initUserInfo];
 }
 
 #pragma mark 读取plist文件的内容
@@ -382,6 +386,93 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 {
     MeInfoController *meInfoVC = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:meInfoVC animated:YES];
+}
+
+
+- (NSDictionary *)getUserInfoWith:(NSDictionary *)dataDic
+{
+    // 详细信息
+    NSDictionary *profile = [dataDic objectForKey:@"profile"];
+    UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+    
+    //设置好友数量
+    _wlSegmentedControl.sectionDetailTitles = @[profileM.friendcount.stringValue,profileM.friend2count.stringValue];
+    
+    // 动态
+    NSDictionary *feed = [dataDic objectForKey:@"feed"];
+    WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
+    
+    // 投资案例
+    NSDictionary *investor = [dataDic objectForKey:@"investor"];
+    IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
+    
+    // 我的项目
+    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
+    
+    NSArray *projects = [dataDic objectForKey:@"projects"];
+    NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];
+    
+    // 创业者
+    //        NSDictionary *startup = [dataDic objectForKey:@"startup"];
+    
+    // 工作经历列表
+    NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
+    NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
+    for (NSDictionary *dic in usercompany) {
+        ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
+        [companyArrayM addObject:usercompanyM];
+    }
+    
+    // 教育经历列表
+    NSArray *userschool = [dataDic objectForKey:@"userschool"];
+    NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
+    for (NSDictionary *dic  in userschool) {
+        ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
+//        [schoolArrayM addObject:userschoolM];
+    }
+    return (@{@"feed":feedM,@"investor":investorM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+}
+
+- (void)initUserInfo
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+//    if (!([mode.uid integerValue]==[_userMode.uid integerValue])&&[usermode.friendship integerValue]==1) {
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
+//    }
+//    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLUserInfoTableName];
+//    if (item) {
+//        _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:item.itemObject]];
+//        _userMode = [_dataDicM objectForKey:@"profile"];
+//        [self.tableView reloadData];
+//    }
+//    
+//    YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLSamefriendsTableName];
+//    if (sameFitem) {
+//        _sameFriendArry = [self getSameFriendsWith:sameFitem.itemObject];
+//        [self.tableView reloadData];
+//    }
+    
+    [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
+        
+        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
+//        _userMode = [_dataDicM objectForKey:@"profile"];
+//        if (!isask) {
+//            if ([_userMode.friendship integerValue]==-1) {
+//                
+//            }else if ([_userMode.friendship integerValue]==1) {
+//                [MyFriendUser createMyFriendUserModel:_userMode];
+//                if (!_isHideSendMsgBtn) {
+//                    [self.tableView setTableFooterView:self.sendView];
+//                }
+//            }else {
+//                [[mode getMyfriendUserWithUid:_userMode.uid] MR_deleteEntity];
+//                [self.tableView setTableFooterView:self.addFriendView];
+//            }
+//        }
+//        [self.tableView reloadData];
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 @end

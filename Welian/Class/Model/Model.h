@@ -33,9 +33,15 @@
 #import "FriendsUserModel.h"
 #import "IActivityInfo.h"
 #import "IActivityTicket.h"
+#import "IIMeInvestAuthModel.h"
+#import "ICompanyResult.h"
+#import "ISchoolResult.h"
 
 
 #pragma mark - Model
 #import "CardStatuModel.h"
+#import "WLStatusM.h"
+#import "CommentMode.h"
+#import "WLStatusFrame.h"
 
 #endif
