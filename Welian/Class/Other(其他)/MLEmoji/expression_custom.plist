@@ -3,9 +3,11 @@
 <plist version="1.0">
 <array>
 	<string>[微笑]</string>
+	<string>[撇嘴]</string>
 	<string>[色]</string>
+	<string>[发呆]</string>
 	<string>[酷]</string>
-	<string>[大哭]</string>
+	<string>[流泪]</string>
 	<string>[害羞]</string>
 	<string>[闭嘴]</string>
 	<string>[睡]</string>
@@ -14,29 +16,36 @@
 	<string>[眨眼]</string>
 	<string>[调皮]</string>
 	<string>[呲牙]</string>
-	<string>[吃惊]</string>
+	<string>[惊讶]</string>
 	<string>[难过]</string>
+	<string>[冷汗]</string>
 	<string>[抓狂]</string>
 	<string>[吐]</string>
 	<string>[偷笑]</string>
 	<string>[愉快]</string>
 	<string>[流汗]</string>
 	<string>[大笑]</string>
+	<string>[悠闲]</string>
 	<string>[奋斗]</string>
 	<string>[咒骂]</string>
 	<string>[疑问]</string>
 	<string>[嘘]</string>
 	<string>[晕]</string>
 	<string>[衰]</string>
+	<string>[骷髅]</string>
 	<string>[敲打]</string>
 	<string>[再见]</string>
 	<string>[抠鼻]</string>
 	<string>[鼓掌]</string>
+	<string>[糗大了]</string>
+	<string>[坏笑]</string>
 	<string>[左哼哼]</string>
 	<string>[右哼哼]</string>
+	<string>[哈欠]</string>
 	<string>[鄙视]</string>
 	<string>[委屈]</string>
 	<string>[快哭了]</string>
+	<string>[阴险]</string>
 	<string>[亲亲]</string>
 	<string>[可怜]</string>
 	<string>[财]</string>
@@ -49,12 +58,12 @@
 	<string>[胜利]</string>
 	<string>[思考]</string>
 	<string>[生病]</string>
+	<string>[生气]</string>
 	<string>[斜眼]</string>
 	<string>[无语]</string>
 	<string>[天使]</string>
 	<string>[恶魔]</string>
-	<string>[生气]</string>
-	<string>[手掌]</string>
+    <string>[手掌]</string>
 	<string>[OK]</string>
 	<string>[爱你]</string>
 	<string>[耶]</string>
