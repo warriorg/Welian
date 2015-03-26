@@ -20,6 +20,7 @@
 #import "MyFriendsController.h"
 #import "AddFriendTypeListViewController.h"
 #import "FriendsFriendController.h"
+#import "WorksListController.h"
 
 #import "UserInfoView.h"
 #import "WLCustomSegmentedControl.h"
@@ -33,6 +34,8 @@
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) WLCustomSegmentedControl *wlSegmentedControl;
+@property (strong,nonatomic) NSDictionary *infoDict;
+@property (assign,nonatomic) UserInfoView *userInfoView;
 
 @end
 
@@ -150,7 +153,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     tableView.delegate = self;
     tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
     //隐藏表格分割线
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     self.tableView = tableView;
 //    [tableView setDebug:YES];
@@ -164,6 +167,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 60.f)];
     userInfoView.loginUser = [LogInUser getCurrentLoginUser];
+    self.userInfoView = userInfoView;
     [headerView addSubview:userInfoView];
     
     //切换按钮
@@ -216,33 +220,88 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //        [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
 //        return cell;
 //    }else{
-//        
+//
 //    }
+//    (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+    
     BadgeBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgeBaseCellid];
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     // 2.设置文字
     cell.titLabel.text = dict[@"name"];
+    cell.deputLabel.hidden = NO;
     [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
-    if (indexPath.section==1) {
-        [cell.deputLabel setHidden:NO];
-        [cell.badgeImage setHidden:YES];
-        if (indexPath.row==0) {
-            [cell.badgeImage setHidden:!loginUser.isinvestorbadge.boolValue];
-            //            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
-            if (loginUser.investorauth.integerValue==1) {
-                [cell.deputLabel setText:@"认证成功"];
-            }else if (loginUser.investorauth.integerValue ==-2){
-                [cell.deputLabel setText:@"正在审核"];
-            }else if (loginUser.investorauth.integerValue ==-1){
-                [cell.deputLabel setText:@"认证失败"];
-            }else{
-                [cell.deputLabel setHidden:YES];
-            }
-        }else if (indexPath.row==1){
-            [cell.deputLabel setHidden:YES];
+    if (indexPath.section==1 && indexPath.row==0) {
+        //        [cell.deputLabel setHidden:NO];
+//        [cell.badgeImage setHidden:YES];
+        [cell.badgeImage setHidden:!loginUser.isinvestorbadge.boolValue];
+        //            0 默认状态  1  认证成功  -2 正在审核  -1 认证失败
+        if (loginUser.investorauth.integerValue==1) {
+            [cell.deputLabel setText:@"认证成功"];
+        }else if (loginUser.investorauth.integerValue ==-2){
+            [cell.deputLabel setText:@"正在审核"];
+        }else if (loginUser.investorauth.integerValue ==-1){
+            [cell.deputLabel setText:@"认证失败"];
+        }else{
+            cell.deputLabel.text = @"";
         }
     }
+    
+    NSString *detailInfo = @"";
+    switch (indexPath.section) {
+        case 0:
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    //动态
+                    WLStatusM *feedM = [_infoDict objectForKey:@"feed"];
+                    detailInfo = feedM.content;
+                }
+                    break;
+                case 1:
+                {
+                    //活动
+                    detailInfo = @"活动";
+                }
+                    break;
+                case 2:
+                {
+                    //项目
+                    detailInfo = [_infoDict objectForKey:@"project"];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+            break;
+        case 1:
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    //投资案例
+                    IIMeInvestAuthModel *investorM = [_infoDict objectForKey:@"investor"];
+                    InvestItemM *investItemM = [investorM.items firstObject];
+                    detailInfo = investItemM.item;
+                }
+                    break;
+                case 1:
+                {
+                    //我的履历
+                    detailInfo = @"杭州传送门网络技术有限公司/iOS";
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    cell.deputLabel.text = detailInfo;
     return cell;
 }
 
@@ -287,7 +346,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
                 case 0:
                 {
                     controller = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
-                    [controller setTitle:@"我是投资人"];
                     // 取消我是投资人角标
                     [LogInUser setUserIsinvestorbadge:NO];
                     [[MainViewController sharedMainViewController] loadNewStustupdata];
@@ -297,7 +355,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
                 case 1:
                 {
                     //我的履历
-                    
+                    controller = [[WorksListController alloc] init];
                 }
                     break;
                 default:
@@ -395,6 +453,10 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     NSDictionary *profile = [dataDic objectForKey:@"profile"];
     UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
     
+    //保存到数据库
+    LogInUser *loginUser = [LogInUser updateLoginUserWithModel:profileM];
+    //设置用户信息
+    _userInfoView.loginUser = loginUser;
     //设置好友数量
     _wlSegmentedControl.sectionDetailTitles = @[profileM.friendcount.stringValue,profileM.friend2count.stringValue];
     
@@ -428,9 +490,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
     for (NSDictionary *dic  in userschool) {
         ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
-//        [schoolArrayM addObject:userschoolM];
+        [schoolArrayM addObject:userschoolM];
     }
-    return (@{@"feed":feedM,@"investor":investorM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+    return (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"project":projectName,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
 }
 
 - (void)initUserInfo
@@ -454,7 +516,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     
     [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
         
-        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
+        self.infoDict = [self getUserInfoWith:JSON];
+//        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
 //        _userMode = [_dataDicM objectForKey:@"profile"];
 //        if (!isask) {
 //            if ([_userMode.friendship integerValue]==-1) {
@@ -469,7 +532,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //                [self.tableView setTableFooterView:self.addFriendView];
 //            }
 //        }
-//        [self.tableView reloadData];
+        [_tableView reloadData];
     } fail:^(NSError *error) {
         
     }];

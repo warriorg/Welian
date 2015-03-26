@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^lookUserDetailInfoBlock)(void);
+typedef void(^operateBtnClickedBlcok)(void);
 
 @interface UserInfoView : UIView
 
@@ -16,5 +17,6 @@ typedef void(^lookUserDetailInfoBlock)(void);
 @property (strong,nonatomic) IBaseUserM *baseUserModel;
 
 @property (strong,nonatomic) lookUserDetailInfoBlock lookUserDetailBlock;
+@property (strong,nonatomic) operateBtnClickedBlcok operateClickedBlock;
 
 @end

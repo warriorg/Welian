@@ -212,6 +212,7 @@
     operateBtn.layer.borderWidth = 1.f;
     operateBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     operateBtn.imageEdgeInsets = UIEdgeInsetsMake(0.f, -5.f, 0.f, 0.f);
+    [operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;
     
@@ -223,6 +224,13 @@
     }];
     tap.delegate = self;
     [self addGestureRecognizer:tap];
+}
+
+- (void)operateBtnClicked:(UIButton *)sender
+{
+    if (_operateClickedBlock) {
+        _operateClickedBlock();
+    }
 }
 
 #pragma mark - UIGestureRecognizerDelegate

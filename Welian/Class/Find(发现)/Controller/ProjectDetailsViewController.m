@@ -936,7 +936,6 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                return ;
                                            }else{
                                                InvestCerVC *investVC = [[InvestCerVC alloc] initWithStyle:UITableViewStyleGrouped];
-                                               [investVC setTitle:@"我是投资人"];
                                                [self.navigationController pushViewController:investVC animated:YES];
                                            }
                                        }];

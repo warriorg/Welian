@@ -16,4 +16,11 @@
 @property (nonatomic, strong) NSArray *industry;
 @property (nonatomic, strong) NSArray *stages;
 
+//案例
+- (NSString *)displayInvestItems;
+//领域
+- (NSString *)displayInvestIndustrys;
+//阶段
+- (NSString *)displayInvestStages;
+
 @end

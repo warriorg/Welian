@@ -232,19 +232,26 @@
 
 - (void)setSectionDetailTitles:(NSArray *)sectionDetailTitles
 {
+    [super willChangeValueForKey:@"sectionDetailTitles"];
     _sectionDetailTitles = sectionDetailTitles;
+    [super didChangeValueForKey:@"sectionDetailTitles"];
     [self setNeedsLayout];
 }
 
-- (void)setSectionTitles:(NSArray *)sectionTitles {
+- (void)setSectionTitles:(NSArray *)sectionTitles
+{
+    [super willChangeValueForKey:@"sectionTitles"];
     _sectionTitles = sectionTitles;
+    [super didChangeValueForKey:@"sectionTitles"];
     
     [self setNeedsLayout];
 }
 
 - (void)setSectionBadges:(NSArray *)sectionBadges
 {
+    [super willChangeValueForKey:@"sectionBadges"];
     _sectionBadges = sectionBadges;
+    [super didChangeValueForKey:@"sectionBadges"];
     [self setNeedsLayout];
 }
 

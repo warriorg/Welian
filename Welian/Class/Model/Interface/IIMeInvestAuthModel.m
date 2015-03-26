@@ -20,4 +20,61 @@
     self.industry = [IInvestIndustryModel objectsWithInfo:self.industry];
 }
 
+//案例
+- (NSString *)displayInvestItems
+{
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (self.items.count > 0) {
+        [types appendFormat:@"%@",[[(InvestItemM *)self.items[0] item] deleteTopAndBottomKonggeAndHuiche]];
+        if(self.items.count > 1){
+            for (int i = 1; i < self.items.count;i++) {
+                InvestItemM *industry = self.items[i];
+                [types appendFormat:@" | %@",[industry.item deleteTopAndBottomKonggeAndHuiche]];
+            }
+        }
+    }else{
+        [types appendString:@""];
+    }
+    return types;
+}
+
+//领域
+- (NSString *)displayInvestIndustrys
+{
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (self.industry.count > 0) {
+        [types appendFormat:@"%@",[[self.industry[0] industryname] deleteTopAndBottomKonggeAndHuiche]];
+        if(self.industry.count > 1){
+            for (int i = 1; i < self.industry.count;i++) {
+                IInvestIndustryModel *industry = self.industry[i];
+                [types appendFormat:@" | %@",[industry.industryname deleteTopAndBottomKonggeAndHuiche]];
+            }
+        }
+    }else{
+        [types appendString:@""];
+    }
+    return types;
+}
+
+//阶段
+- (NSString *)displayInvestStages
+{
+    //类型
+    NSMutableString *types = [NSMutableString string];
+    if (self.stages.count > 0) {
+        [types appendFormat:@"%@",[[self.stages[0] stagename] deleteTopAndBottomKonggeAndHuiche]];
+        if(self.stages.count > 1){
+            for (int i = 1; i < self.stages.count;i++) {
+                IInvestStageModel *industry = self.stages[i];
+                [types appendFormat:@" | %@",[industry.stagename deleteTopAndBottomKonggeAndHuiche]];
+            }
+        }
+    }else{
+        [types appendString:@""];
+    }
+    return types;
+}
+
 @end

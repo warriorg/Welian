@@ -45,6 +45,7 @@
 
 //创建新收据
 + (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
++ (LogInUser *)updateLoginUserWithModel:(UserInfoModel *)userInfoM;
 
 //通过ucid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;

@@ -36,6 +36,11 @@ static NSString *itemscellid = @"itemscellid";
 
 @implementation InvestCerVC
 
+- (NSString *)title
+{
+    return @"我是投资人";
+}
+
 - (UILabel *)headLabel
 {
     if (_headLabel == nil) {

@@ -28,5 +28,10 @@
 @property (nonatomic, retain) NSNumber * cityid;
 @property (nonatomic, retain) NSString * cityname;
 @property (nonatomic, retain) NSString * shareurl;
+@property (nonatomic, strong) NSNumber * friendcount;//好友数量
+@property (nonatomic, strong) NSNumber * feedcount;// 动态数量
+@property (nonatomic, strong) NSNumber * friend2count;// 二度好友 数量
+@property (nonatomic, strong) NSNumber * phoneChecked;//手机号码是否验证
+@property (nonatomic, strong) NSNumber * samefriendscount; // 共同好友数量  取自己信息的时候没有
 
 @end

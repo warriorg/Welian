@@ -28,5 +28,10 @@
 @dynamic cityid;
 @dynamic cityname;
 @dynamic shareurl;
+@dynamic friendcount;
+@dynamic feedcount;
+@dynamic friend2count;
+@dynamic phoneChecked;
+@dynamic samefriendscount;
 
 @end

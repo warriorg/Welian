@@ -202,12 +202,12 @@ static NSString *fridcellid = @"fridcellid";
             }
             
         } completion:^(BOOL contextDidSave, NSError *error) {
-            NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
-            NSDictionary *alldataDic =  @{@"count":@(myFriends.count),@"array":[WLHttpTool getChineseStringArr:myFriends]};
             [self.refreshControl endRefreshing];
             [WLHUDView hiddenHud];
-            self.allArray = [alldataDic objectForKey:@"array"];
-            _count = [[alldataDic objectForKey:@"count"] integerValue];
+            
+            NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+            self.allArray = [WLHttpTool getChineseStringArr:myFriends];
+            _count = myFriends.count;
             if (self.allArray.count) {
                 UILabel *fff = (UILabel*)self.tableView.tableFooterView;
                 [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];

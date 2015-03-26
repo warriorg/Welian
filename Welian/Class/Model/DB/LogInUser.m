@@ -90,7 +90,48 @@
     loginuser.sessionid = userInfoM.sessionid;
     loginuser.inviteurl = userInfoM.inviteurl;
     loginuser.isNow = @(1);
+    loginuser.friendcount = userInfoM.friendcount;
+    loginuser.feedcount = userInfoM.feedcount;
+    loginuser.friend2count = userInfoM.friend2count;
+    loginuser.phoneChecked = userInfoM.checked;
+    loginuser.samefriendscount = userInfoM.samefriendscount;
+    
 //    [MOC save];
+    [[loginuser managedObjectContext] MR_saveToPersistentStoreAndWait];
+    return loginuser;
+}
+
++ (LogInUser *)updateLoginUserWithModel:(UserInfoModel *)userInfoM
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"uid",userInfoM.uid];
+    LogInUser *loginuser = [LogInUser MR_findFirstWithPredicate:pre];
+    loginuser.uid = userInfoM.uid;
+//    loginuser.mobile = userInfoM.mobile;
+    loginuser.position = userInfoM.position;
+    loginuser.provinceid = userInfoM.provinceid;
+    loginuser.provincename = userInfoM.provincename;
+    loginuser.cityid = userInfoM.cityid;
+    loginuser.cityname = userInfoM.cityname;
+    loginuser.friendship = userInfoM.friendship;
+    loginuser.shareurl = userInfoM.shareurl;
+    loginuser.avatar = userInfoM.avatar;
+    loginuser.name = userInfoM.name;
+    loginuser.address = userInfoM.address;
+    loginuser.email = userInfoM.email;
+    loginuser.investorauth = userInfoM.investorauth;
+    loginuser.startupauth = userInfoM.startupauth;
+    loginuser.company = userInfoM.company;
+    loginuser.checkcode = userInfoM.checkcode;
+//    loginuser.sessionid = userInfoM.sessionid;
+    loginuser.inviteurl = userInfoM.inviteurl;
+    loginuser.isNow = @(1);
+    loginuser.friendcount = userInfoM.friendcount;
+    loginuser.feedcount = userInfoM.feedcount;
+    loginuser.friend2count = userInfoM.friend2count;
+    loginuser.phoneChecked = userInfoM.checked;
+    loginuser.samefriendscount = userInfoM.samefriendscount;
+    
+    //    [MOC save];
     [[loginuser managedObjectContext] MR_saveToPersistentStoreAndWait];
     return loginuser;
 }
@@ -514,8 +555,8 @@
 // 所有好友
 - (NSArray *)getAllMyFriendUsers
 {
-    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K > %@ && %K == %@", @"rsLogInUser",self,@"uid",@"100",@"isMyFriend",@(YES)];
-    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"rsLogInUser == %@ && uid > %@ && %K == %@",self,@(100),@"isMyFriend",@(YES)];
+    NSArray *allFriends = [MyFriendUser MR_findAllWithPredicate:pre inContext:[NSManagedObjectContext MR_defaultContext]];
     return allFriends;
 //    return  [[[[MyFriendUser queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"uid" greaterThan:@"100"] results];
 }

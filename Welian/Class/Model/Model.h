@@ -36,6 +36,7 @@
 #import "IIMeInvestAuthModel.h"
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
+#import "InvestItemM.h"
 
 
 #pragma mark - Model
