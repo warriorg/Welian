@@ -55,28 +55,27 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self loadNewFriendsList];
     //刷新角标
-    [self loadNewFriendsList];
+//    [self loadNewFriendsList];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadMyAllFriends];
+    
     //新的好友改变通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
     //刷新所有好友通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
-    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
-        self.allArray = [JSON objectForKey:@"array"];
-        _count= [[JSON objectForKey:@"count"] integerValue];
-        if (self.allArray.count) {
-            [self.tableView reloadData];
-        }
-    } fail:^(NSError *error) {
-        
-    }];
+    //获取数据库好友信息
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSArray *myFriends = [loginUser getAllMyFriendUsers];
+    _count = myFriends.count;
+    self.allArray = [WLHttpTool getChineseStringArr:myFriends];
+    
+    //添加ui
     [self addUI];
+    //获取好友列表
+    [self loadMyAllFriends];
 }
 
 - (void)dealloc
@@ -135,12 +134,11 @@ static NSString *fridcellid = @"fridcellid";
 
 -(void)loadMyAllFriends
 {
-    if (![[LogInUser getCurrentLoginUser] rsMyFriends].count) {
+    LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
+    if (!nowLoginUser.rsMyFriends.count) {
         [WLHUDView showCustomHUD:@"加载好友..." imageview:nil];
     }
     [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-        LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
-        
         NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
         NSArray  *json = [NSArray arrayWithArray:JSON];
         //循环，删除本地数据库多余的缓存数据

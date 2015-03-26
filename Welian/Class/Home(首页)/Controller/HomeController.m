@@ -469,11 +469,9 @@
 //加载好友列表
 -(void)loadMyAllFriends
 {
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    if(loginUser){
+    LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
+    if(nowLoginUser){
         [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-            LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
-            
             NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
             NSArray  *json = [NSArray arrayWithArray:JSON];
             //循环，删除本地数据库多余的缓存数据
@@ -530,6 +528,7 @@
                     myFriend.startupauth = friendM.startupauth;
                     myFriend.company = friendM.company;
                     myFriend.status = friendM.status;
+                    myFriend.isMyFriend = @(YES);
                     [loginUser addRsMyFriendsObject:myFriend];
                 }
                 

@@ -12,4 +12,6 @@
 
 @property (assign,nonatomic) BOOL hidBottomLine;//隐藏下划线
 
+@property (assign, nonatomic) UIView *bottomLineView;
+
 @end
