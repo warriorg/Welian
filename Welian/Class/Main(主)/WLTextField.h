@@ -10,4 +10,6 @@
 
 @interface WLTextField : UITextField
 
+@property (nonatomic, assign) BOOL isToBounds;
+
 @end

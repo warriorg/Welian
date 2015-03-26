@@ -20,6 +20,16 @@
     return self;
 }
 
+- (void)setIsToBounds:(BOOL)isToBounds
+{
+    _isToBounds = isToBounds;
+    if (isToBounds) {
+        [self.layer setMasksToBounds:YES];
+        [self.layer setCornerRadius:5];
+    }
+
+}
+
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     

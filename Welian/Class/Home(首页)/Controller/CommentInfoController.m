@@ -234,6 +234,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)moreButClick:(UIBarButtonItem*)item
 {
+    [self.messageView dismissKeyBoard];
     WLStatusM *statusM = self.statusM;
     NSString *name = [NSString stringWithFormat:@"%@在微链上说",statusM.user.name];
     __block UIImage *iconImage = self.commentHeadView.cellHeadView.iconImageView.image;
