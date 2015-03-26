@@ -7,12 +7,14 @@
 //
 
 #import "UserInfoViewController.h"
+#import "CommentInfoController.h"
 
 #import "WLCustomSegmentedControl.h"
 #import "UserInfoView.h"
 #import "FriendCell.h"
 #import "WLStatusCell.h"
 #import "UserInfoViewCell.h"
+#import "UserInfoBasicVC.h"
 
 #define kTableViewHeaderViewHeight 318.f
 
@@ -320,12 +322,15 @@ static NSString *fridcellid = @"fridcellid";
             break;
         case 1:
         {
-            
+            //进入详情
+            [self pushCommentInfoVC:indexPath];
         }
             break;
         case 2:
         {
-            
+            UserInfoModel *modeIM = _datasource3[indexPath.row];
+            UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
+            [self.navigationController pushViewController:userinfVC animated:YES];
         }
             break;
         default:
@@ -665,6 +670,83 @@ static NSString *fridcellid = @"fridcellid";
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
     return sf;
+}
+
+#pragma mark - 进入详情页
+- (void)pushCommentInfoVC:(NSIndexPath*)indexPath
+{
+    WLStatusFrame *statusF = _datasource2[indexPath.row];
+    
+    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12) return;
+    
+    CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
+    [commentInfo setStatusM:statusF.status];
+    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+    };
+    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+    };
+    commentInfo.commentBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadData];
+    };
+    
+    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 removeObject:statusF];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
+//    _seletIndexPath = indexPath;
+    [self.navigationController pushViewController:commentInfo animated:YES];
+}
+
+#pragma mark- 评论
+- (void)commentBtnClick:(UIButton*)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    if(indexPath)
+    {
+        [self pushCommentInfoVC:indexPath];
+    }
+}
+
+#pragma mark - 更多按钮
+- (void)moreClick:(UIButton*)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    
+    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [sheet bk_addButtonWithTitle:@"删除该条动态" handler:^{
+        WLStatusFrame *statuF = _datasource2[indexPath.row];
+        
+        [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
+            
+            [_datasource2 removeObject:statuF];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } fail:^(NSError *error) {
+            
+        }];
+    }];
+    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+    [sheet showInView:self.view];
 }
 
 @end
