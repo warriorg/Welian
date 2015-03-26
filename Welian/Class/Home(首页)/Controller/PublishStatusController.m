@@ -38,7 +38,7 @@ static NSString *picCellid = @"PicCellID";
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIView *inputttView;
-@property (nonatomic, copy)   NSMutableArray *assets;
+@property (nonatomic, strong) __block NSMutableArray *assets;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 @property (nonatomic, strong) NSArray *friendArray;
@@ -417,14 +417,14 @@ static NSString *picCellid = @"PicCellID";
     return ([[group valueForProperty:ALAssetsGroupPropertyType] integerValue] == ALAssetsGroupSavedPhotos);
 }
 
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSMutableArray *)assets
 {
     [picker.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     
     if (assets.count || _textCell.textView.text.length) {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
-    self.assets = [NSMutableArray arrayWithArray:assets];
+    self.assets = assets;
     //    [self reloadCollectionView];
     [self.collectionView reloadData];
     [self.tableView setTableFooterView:self.collectionView];

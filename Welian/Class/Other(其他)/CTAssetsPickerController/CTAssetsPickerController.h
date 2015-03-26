@@ -144,7 +144,7 @@
  *
  *  @see assetsPickerControllerDidCancel:
  */
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets;
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSMutableArray *)assets;
 
 @optional
 

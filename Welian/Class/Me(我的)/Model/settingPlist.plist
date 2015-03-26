@@ -24,25 +24,25 @@
 			<string></string>
 		</dict>
 	</array>
-    <array>
-        <dict>
-            <key>title</key>
-            <string>用户交流QQ群</string>
-            <key>content</key>
-            <string>264772171</string>
-        </dict>
-        <dict>
-            <key>title</key>
-            <string>微信服务号</string>
-            <key>content</key>
-            <string>welian123</string>
-        </dict>
-        <dict>
-            <key>title</key>
-            <string>微信订阅号</string>
-            <key>content</key>
-            <string></string>
-        </dict>
-    </array>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>用户交流QQ群</string>
+			<key>content</key>
+			<string>264772171</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>微信服务号</string>
+			<key>content</key>
+			<string>welian123</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>微信订阅号</string>
+			<key>content</key>
+			<string>welianapp</string>
+		</dict>
+	</array>
 </array>
 </plist>

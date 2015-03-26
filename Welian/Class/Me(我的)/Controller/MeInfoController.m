@@ -15,6 +15,7 @@
 #import "MJPhotoBrowser.h"
 #import "IconTableViewCell.h"
 #import "MobileInfoCell.h"
+#import "PhoneChangeVC.h"
 
 @interface MeInfoController () <LocationProDelegate>
 {
@@ -233,10 +234,12 @@ static NSString *mobileCellid = @"MobileInfoCellid";
         if (indexPath.row==0) {
             UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
             [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
-                
+                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
+                [self.navigationController pushViewController:phoneVC animated:YES];
             }];
             [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
-                
+                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
+                [self.navigationController pushViewController:phoneVC animated:YES];
             }];
             [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
             [sheet showInView:self.view];
