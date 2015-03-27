@@ -561,53 +561,53 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)checkNoteInfoLoad:(BOOL)isLoad
 {
-    NSString *noteInfo = @"加载中...";
-    UIView *noteView = nil;
-    BOOL loaded = YES;
-    switch (_selectType) {
-        case 0:
-        {
-            //加载完成，但数据为空
-            if (isLoad && _datasource1.count <= 0) {
-                noteInfo = @"这家伙还没设置过自己的资料";
-                noteView = self.wlNoteInfoView;
-            }else if(!isLoad && _datasource1.count <= 0){
-                loaded = NO;
-                noteView = self.wlNoteInfoView;
-            }
-        }
-            break;
-        case 1:
-        {
-            //加载完成，但数据为空
-            if (isLoad && _datasource2.count <= 0) {
-                noteInfo = @"这家伙很懒，什么都没留下";
-                noteView = self.wlNoteInfoView;
-            }else if(!isLoad && _datasource2.count <= 0){
-                loaded = NO;
-                noteView = self.wlNoteInfoView;
-            }
-        }
-            break;
-        case 2:
-        {
-            //加载完成，但数据为空
-            if (isLoad && _datasource3.count <= 0) {
-                noteInfo = @"你们之间还没有共同好友";
-                noteView = self.wlNoteInfoView;
-            }else if(!isLoad && _datasource3.count <= 0){
-                loaded = NO;
-                noteView = self.wlNoteInfoView;
-            }
-        }
-            break;
-        default:
-            break;
-    }
-    
-    self.wlNoteInfoView.isLoaded = isLoad;
-    self.wlNoteInfoView.noteInfo = noteInfo;
-    _tableView.tableFooterView = noteView;
+//    NSString *noteInfo = @"加载中...";
+//    UIView *noteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
+//    BOOL loaded = YES;
+//    switch (_selectType) {
+//        case 0:
+//        {
+//            //加载完成，但数据为空
+//            if (isLoad && _datasource1.count <= 0) {
+//                noteInfo = @"这家伙还没设置过自己的资料";
+//                noteView = self.wlNoteInfoView;
+//            }else if(!isLoad && _datasource1.count <= 0){
+//                loaded = NO;
+//                noteView = self.wlNoteInfoView;
+//            }
+//        }
+//            break;
+//        case 1:
+//        {
+//            //加载完成，但数据为空
+//            if (isLoad && _datasource2.count <= 0) {
+//                noteInfo = @"这家伙很懒，什么都没留下";
+//                noteView = self.wlNoteInfoView;
+//            }else if(!isLoad && _datasource2.count <= 0){
+//                loaded = NO;
+//                noteView = self.wlNoteInfoView;
+//            }
+//        }
+//            break;
+//        case 2:
+//        {
+//            //加载完成，但数据为空
+//            if (isLoad && _datasource3.count <= 0) {
+//                noteInfo = @"你们之间还没有共同好友";
+//                noteView = self.wlNoteInfoView;
+//            }else if(!isLoad && _datasource3.count <= 0){
+//                loaded = NO;
+//                noteView = self.wlNoteInfoView;
+//            }
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//    
+//    self.wlNoteInfoView.isLoaded = isLoad;
+//    self.wlNoteInfoView.noteInfo = noteInfo;
+//    _tableView.tableFooterView = noteView;
     
     [_tableView reloadData];
 }
