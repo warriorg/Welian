@@ -106,7 +106,9 @@
     [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         
         NSArray *jsonarray = [NSArray arrayWithArray:JSON];
-        
+        if (!_uid) {
+            [LogInUser setUserNewstustcount:@(0)];
+        }
         // 1.在拿到最新微博数据的同时计算它的frame
         [_dataArry removeAllObjects];
         
@@ -122,7 +124,6 @@
                 [self.homeView setHidden:YES];
             }
         }
-        [LogInUser setUserNewstustcount:@(0)];
         [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
 

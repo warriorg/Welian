@@ -136,27 +136,19 @@ single_implementation(MainViewController)
     //更新消息页面角标
     [self updateChatMessageBadge:nil];
     
-    LogInUser *meinfo = [LogInUser getCurrentLoginUser];
     // 首页 创业圈角标
 //    if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
-    if (meinfo.newstustcount.integerValue) {
+    if ([LogInUser getCurrentLoginUser].newstustcount.integerValue) {
         [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }else{
+        [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
+        [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
     }
-    //新消息的角标
-//    else{
-//        [self.navTitleView hidePrompt];
-//        [homeItem setImage:[UIImage imageNamed:@"tabbar_home"]];
-//        [homeItem setSelectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
-//        if (meinfo.homemessagebadge.integerValue) {
-//            NSString *badgeStr = [NSString stringWithFormat:@"%@",meinfo.homemessagebadge];
-//            [homeItem setBadgeValue:badgeStr];
-//        }
-//    }
     
     /// 有新的活动或者新的项目
-    if (meinfo.isactivebadge.boolValue || meinfo.isprojectbadge.boolValue) {
+    if ([LogInUser getCurrentLoginUser].isactivebadge.boolValue || [LogInUser getCurrentLoginUser].isprojectbadge.boolValue) {
         [findItem setImage:[[UIImage imageNamed:@"tabbar_discovery_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [findItem setSelectedImage:[[UIImage imageNamed:@"tabbar_discovery_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }else{
@@ -165,7 +157,7 @@ single_implementation(MainViewController)
     }
     
     // 我的投资人认证状态改变
-    if (meinfo.isinvestorbadge.boolValue) {
+    if ([LogInUser getCurrentLoginUser].isinvestorbadge.boolValue) {
         [meItem setImage:[[UIImage imageNamed:@"tabbar_friend_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [meItem setSelectedImage:[[UIImage imageNamed:@"tabbar_friend_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }else{
@@ -232,15 +224,10 @@ single_implementation(MainViewController)
     [[UITextView appearance] setTintColor:KBasesColor];
 
     LogInUser *mode = [LogInUser getCurrentLoginUser];
-    UIImageView *a = [[UIImageView alloc] init];
-    [a sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:mode.avatar] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         [UserDefaults setObject:avatarStr forKey:@"icon"];
-        
     }];
-    [a setHidden:YES];
-    [self.view addSubview:a];
     
     // 首页
     homeItem = [self itemWithTitle:@"创业圈" imageStr:@"tabbar_home" selectedImageStr:@"tabbar_home_selected"];
