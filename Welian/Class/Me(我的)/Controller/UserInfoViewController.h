@@ -10,6 +10,6 @@
 
 @interface UserInfoViewController : BasicViewController
 
-- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel;
+- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel OperateType:(NSNumber *)operateType;
 
 @end

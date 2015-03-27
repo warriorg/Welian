@@ -93,7 +93,7 @@
     loginuser.friendcount = userInfoM.friendcount;
     loginuser.feedcount = userInfoM.feedcount;
     loginuser.friend2count = userInfoM.friend2count;
-    loginuser.phoneChecked = userInfoM.checked;
+    loginuser.checked = userInfoM.checked;
     loginuser.samefriendscount = userInfoM.samefriendscount;
     
 //    [MOC save];
@@ -128,7 +128,7 @@
     loginuser.friendcount = userInfoM.friendcount;
     loginuser.feedcount = userInfoM.feedcount;
     loginuser.friend2count = userInfoM.friend2count;
-    loginuser.phoneChecked = userInfoM.checked;
+    loginuser.checked = userInfoM.checked;
     loginuser.samefriendscount = userInfoM.samefriendscount;
     
     //    [MOC save];
