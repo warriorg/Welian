@@ -453,7 +453,67 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kTableViewCellHeight;
+    switch (_selectType) {
+        case 0:
+        {
+            //个人信息
+            NSNumber *type = (NSNumber *)[_datasource1[indexPath.section] objectForKey:@"type"];
+            switch (type.integerValue) {
+                case 0:
+                {
+                    NSString *titleInfo = @"";
+                    NSString *detailInfo = @"";
+                    
+                    NSDictionary *infoData = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    NSArray *types = [infoData objectForKey:@"types"];
+                    IIMeInvestAuthModel *investModel = [infoData objectForKey:@"info"];
+                    NSNumber *investType = [[types objectAtIndex:indexPath.row] objectForKey:@"type"];
+                    switch (investType.integerValue) {
+                        case 1:
+                            titleInfo = @"投资领域：";
+                            detailInfo = [investModel displayInvestIndustrys];
+                            break;
+                        case 2:
+                            titleInfo = @"投资案例：";
+                            detailInfo = [investModel displayInvestItems];
+                            break;
+                        default:
+                            titleInfo = @"投资阶段：";
+                            detailInfo = [investModel displayInvestStages];
+                            break;
+                    }
+                    return [UserInfoViewCell configureWithMsg:titleInfo detailMsg:detailInfo];
+                }
+                    break;
+                case 1:
+                {
+                    //项目
+                    return 50.f;
+                }
+                    break;
+                case 2:
+                {
+                    //履历
+                    return 53.f;
+                }
+                    break;
+                default:
+                    return kTableViewCellHeight;
+                    break;
+            }
+        }
+            break;
+        case 1:
+        {
+            //动态
+            return [_datasource2[indexPath.row] cellHigh]+5;
+        }
+            break;
+        default:
+            //共同好友
+            return kTableViewCellHeight;
+            break;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
