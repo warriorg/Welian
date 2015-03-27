@@ -1005,27 +1005,18 @@ static NSString *fridcellid = @"fridcellid";
     // 工作经历列表
     NSMutableArray *lvliArray = [NSMutableArray array];
     NSArray *usercompany = [dataDic objectForKey:@"usercompany"];
-//    NSMutableArray *companyArrayM = [NSMutableArray arrayWithCapacity:usercompany.count];
     for (NSDictionary *dic in usercompany) {
         ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
-//        [companyArrayM addObject:usercompanyM];
         [lvliArray addObject:usercompanyM];
     }
     
     // 教育经历列表
     NSArray *userschool = [dataDic objectForKey:@"userschool"];
-//    NSMutableArray *schoolArrayM = [NSMutableArray arrayWithCapacity:userschool.count];
     for (NSDictionary *dic  in userschool) {
         ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
-//        [schoolArrayM addObject:userschoolM];
         [lvliArray addObject:userschoolM];
     }
     
-//    NSArray *sortedArray = [lvliArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-//        //这里的代码可以参照上面compare:默认的排序方法，也可以把自定义的方法写在这里，给对象排序
-//        NSComparisonResult result = [[obj1 startyear] compare:[obj2 startyear]];
-//        return result;
-//    }];
     NSSortDescriptor *sortByName= [NSSortDescriptor sortDescriptorWithKey:@"startyear" ascending:NO];
     [lvliArray sortUsingDescriptors:[NSArray arrayWithObject:sortByName]];
     
