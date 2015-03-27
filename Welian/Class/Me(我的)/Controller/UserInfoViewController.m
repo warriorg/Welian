@@ -609,11 +609,7 @@ static NSString *fridcellid = @"fridcellid";
     self.wlNoteInfoView.noteInfo = noteInfo;
     _tableView.tableFooterView = noteView;
     
-    if (_selectType == 1 && _datasource2.count > 0) {
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    }else{
-        [_tableView reloadData];
-    }
+    [_tableView reloadData];
 }
 
 //更多按钮操作
