@@ -799,39 +799,6 @@ static NSString *fridcellid = @"fridcellid";
             [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_datasource2.count -1 inSection:0]]withRowAnimation:UITableViewRowAnimationAutomatic];
             [_tableView endUpdates];
             
-            
-//
-//            NSInteger currentCount = datasource2.count;
-//            WEAKSELF
-//            int64_t delayInSeconds = 2.0;
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-//                
-//                // build the index paths for insertion
-//                // since you're adding to the end of datasource, the new rows will start at count
-//                NSMutableArray *indexPaths = [NSMutableArray array];
-//                for (int i = 0; i < addArray.count; i++) {
-//                    [indexPaths addObject:[NSIndexPath indexPathForRow:currentCount+i inSection:0]];
-//                }
-//                
-//                // do the insertion
-//                [weakSelf.datasource2 addObjectsFromArray:addArray];
-//                
-//                // tell the table view to update (at all of the inserted index paths)
-//                [weakSelf.tableView beginUpdates];
-//                [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
-//                [weakSelf.tableView endUpdates];
-//                
-//                [weakSelf.tableView footerEndRefreshing];
-//            });
-            
-            
-//            [UIView setAnimationsEnabled:NO];
-            
-            
-//            [self.tableView endUpdates];
-//            [UIView setAnimationsEnabled:YES];
-            
 //            [_tableView reloadData];
             
             //检查
