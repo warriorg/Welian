@@ -493,6 +493,10 @@
 		A460E4171ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
 		A460E4181ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
 		A460E4191ABC150B009DCF63 /* CardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A460E4151ABC150B009DCF63 /* CardAlertView.m */; };
+		A4645C8D1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */; };
+		A4645C8E1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */; };
+		A4645C8F1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */; };
+		A4645C901AC524AC00DF3593 /* WLNoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */; };
 		A464614C1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
 		A464614D1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
 		A464614E1AAD424D00D2687B /* navbar_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A464614B1AAD424D00D2687B /* navbar_share@2x.png */; };
@@ -4689,6 +4693,8 @@
 		A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapViewController.m; sourceTree = "<group>"; };
 		A460E4141ABC150B009DCF63 /* CardAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardAlertView.h; sourceTree = "<group>"; };
 		A460E4151ABC150B009DCF63 /* CardAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardAlertView.m; sourceTree = "<group>"; };
+		A4645C8B1AC524AC00DF3593 /* WLNoteInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLNoteInfoView.h; sourceTree = "<group>"; };
+		A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLNoteInfoView.m; sourceTree = "<group>"; };
 		A464614B1AAD424D00D2687B /* navbar_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_share@2x.png"; sourceTree = "<group>"; };
 		A4670A7E1A79D38800490E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		A4670A7F1A79D38800490E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
@@ -6770,6 +6776,8 @@
 			children = (
 				A460E4131ABC14E8009DCF63 /* CardAlertView */,
 				A4675D291AC1539A00E556B2 /* WLCustomSegmentedControl */,
+				A4645C8B1AC524AC00DF3593 /* WLNoteInfoView.h */,
+				A4645C8C1AC524AC00DF3593 /* WLNoteInfoView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -12463,6 +12471,7 @@
 				A49C7C8E1A70D42700F2AEC5 /* MJPhotoLoadingView.m in Sources */,
 				A49C7C8F1A70D42700F2AEC5 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				A49C7C901A70D42700F2AEC5 /* InvestorController.m in Sources */,
+				A4645C901AC524AC00DF3593 /* WLNoteInfoView.m in Sources */,
 				A49C7C911A70D42700F2AEC5 /* MJPhotoView.m in Sources */,
 				A49C7C921A70D42700F2AEC5 /* WLStatusCell.m in Sources */,
 				A49C7C931A70D42700F2AEC5 /* ActivityViewController.m in Sources */,
@@ -12979,6 +12988,7 @@
 				F53DC31B1A49192600F5F712 /* MJPhotoLoadingView.m in Sources */,
 				A4C1406A1A4BEA8500C9BAB5 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				F53DC31C1A49192600F5F712 /* InvestorController.m in Sources */,
+				A4645C8F1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */,
 				F53DC31D1A49192600F5F712 /* MJPhotoView.m in Sources */,
 				F53DC31E1A49192600F5F712 /* WLStatusCell.m in Sources */,
 				F53DC31F1A49192600F5F712 /* ActivityViewController.m in Sources */,
@@ -13495,6 +13505,7 @@
 				A4A2EAE81A6CF7C8006ADA55 /* NSObject+MagicalDataImport.m in Sources */,
 				A4E731AF1A8CC94800980676 /* ActivityTicketViewCell.m in Sources */,
 				F56649F21A2AFD56008A5830 /* WLStatusCell.m in Sources */,
+				A4645C8D1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */,
 				F56649F31A2AFD56008A5830 /* SameFriendsCell.m in Sources */,
 				F56649F41A2AFD56008A5830 /* WeixinSessionActivity.m in Sources */,
 				F59E75F61A4059D00028FBAF /* NSManagedObjectContext+e0571.m in Sources */,
@@ -14011,6 +14022,7 @@
 				F5664CA81A2AFDD5008A5830 /* MJPhotoLoadingView.m in Sources */,
 				A4C140691A4BEA8500C9BAB5 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				F5664CA91A2AFDD5008A5830 /* InvestorController.m in Sources */,
+				A4645C8E1AC524AC00DF3593 /* WLNoteInfoView.m in Sources */,
 				F5664CAA1A2AFDD5008A5830 /* MJPhotoView.m in Sources */,
 				F5664CAC1A2AFDD5008A5830 /* WLStatusCell.m in Sources */,
 				A4F646D91A43CE46002E66FC /* ActivityViewController.m in Sources */,

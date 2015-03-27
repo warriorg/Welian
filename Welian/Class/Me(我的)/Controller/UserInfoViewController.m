@@ -16,6 +16,8 @@
 #import "WLStatusCell.h"
 #import "UserInfoViewCell.h"
 #import "UserInfoBasicVC.h"
+#import "WLNoteInfoView.h"
+#import "MJRefresh.h"
 
 #define kTableViewHeaderViewHeight 318.f
 
@@ -32,6 +34,7 @@
 @property (assign,nonatomic) NSInteger selectType;//选择的类型
 @property (strong,nonatomic) IBaseUserM *baseUserModel;
 @property (assign,nonatomic) UserInfoView *userInfoView;
+@property (strong,nonatomic) WLNoteInfoView *wlNoteInfoView;//状态提醒
 @property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
 
 @end
@@ -51,6 +54,14 @@ static NSString *fridcellid = @"fridcellid";
 - (NSString *)title
 {
     return @"详细信息";
+}
+
+- (WLNoteInfoView *)wlNoteInfoView
+{
+    if (!_wlNoteInfoView) {
+        _wlNoteInfoView = [[WLNoteInfoView alloc] initWithFrame:CGRectMake(0.f, kTableViewHeaderViewHeight, self.view.width, self.view.height - kTableViewHeaderViewHeight)];
+    }
+    return _wlNoteInfoView;
 }
 
 - (WLCustomSegmentedControl *)wlSegmentedControl
@@ -91,27 +102,27 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+//    [self scrollViewDidScroll:_tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar reset];
+//    [self.navigationController.navigationBar reset];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    UIColor *color = kNavBgColor;
-    if (offsetY > kTableViewHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-        
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-    } else {
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//    UIColor *color = kNavBgColor;
+//    if (offsetY > kTableViewHeaderViewHeight/2) {
+//        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
+//        
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+//    } else {
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -120,15 +131,13 @@ static NSString *fridcellid = @"fridcellid";
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
     //更多操作
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
+//    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -156,10 +165,12 @@ static NSString *fridcellid = @"fridcellid";
         [weakSelf operateBtnClicked];
     }];
     
+    [_tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
+    //上提加载更多
+    [_tableView addFooterWithTarget:self action:@selector(loadMoreData)];
+    
     //设置默认选择
     [self selectIndexChanged:_selectType];
-    
-    [_tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -256,14 +267,15 @@ static NSString *fridcellid = @"fridcellid";
                 WLStatusFrame *statusF = _datasource2[indexPath.row];
                 [statusF setStatus:statusM];
                 [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-                [_tableView reloadData];
+//                [_tableView reloadData];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             cell.feedTuiBlock = ^(WLStatusM *statusM){
                 WLStatusFrame *statusF = _datasource2[indexPath.row];
                 [statusF setStatus:statusM];
                 [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-                [_tableView reloadData];
+//                [_tableView reloadData];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             //    // 评论
             [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
@@ -516,7 +528,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)selectIndexChanged:(NSInteger)index
 {
     self.selectType = index;
-    [_tableView reloadData];
+    [self checkNoteInfoLoad:NO];
+    [_tableView setFooterHidden:YES];
     switch (index) {
         case 0:
         {
@@ -528,6 +541,7 @@ static NSString *fridcellid = @"fridcellid";
         case 1:
         {
             //隐藏表格分割线
+            [_tableView setFooterHidden:NO];
             _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             [self getUserFeedsData];
         }
@@ -542,6 +556,63 @@ static NSString *fridcellid = @"fridcellid";
             break;
         default:
             break;
+    }
+}
+
+- (void)checkNoteInfoLoad:(BOOL)isLoad
+{
+    NSString *noteInfo = @"加载中...";
+    UIView *noteView = nil;
+    BOOL loaded = YES;
+    switch (_selectType) {
+        case 0:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource1.count <= 0) {
+                noteInfo = @"这家伙还没设置过自己的资料";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource1.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        case 1:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource2.count <= 0) {
+                noteInfo = @"这家伙很懒，什么都没留下";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource2.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        case 2:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource3.count <= 0) {
+                noteInfo = @"你们之间还没有共同好友";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource3.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    self.wlNoteInfoView.isLoaded = isLoad;
+    self.wlNoteInfoView.noteInfo = noteInfo;
+    _tableView.tableFooterView = noteView;
+    
+    if (_selectType == 1 && _datasource2.count > 0) {
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    }else{
+        [_tableView reloadData];
     }
 }
 
@@ -602,7 +673,8 @@ static NSString *fridcellid = @"fridcellid";
     [WLHttpTool loadSameFriendParameterDic:@{@"uid":loginUser.uid,@"fid":_baseUserModel.uid,@"size":@(1000)} success:^(id JSON) {
         [[WLDataDBTool sharedService] putObject:JSON withId:_baseUserModel.uid.stringValue intoTable:KWLSamefriendsTableName];
         _datasource3 = [self getSameFriendsWith:JSON];
-        [_tableView reloadData];
+        //检查
+        [self checkNoteInfoLoad:YES];
     } fail:^(NSError *error) {
         
     }];
@@ -661,62 +733,64 @@ static NSString *fridcellid = @"fridcellid";
         }
 //        [LogInUser setUserNewstustcount:@(0)];
 //        [[MainViewController sharedMainViewController] updataItembadge];
-        [_tableView reloadData];
+          //检查
+          [self checkNoteInfoLoad:YES];
         
 //        [self.refreshControl endRefreshing];
-//        [self.tableView footerEndRefreshing];
-//        if (jsonarray.count<KCellConut) {
-//            [_tableView setFooterHidden:YES];
-//        }
+        [_tableView footerEndRefreshing];
+        if (jsonarray.count<KCellConut) {
+            [_tableView setFooterHidden:YES];
+        }
     } fail:^(NSError *error) {
 //        [self.refreshControl endRefreshing];
-//        [self.tableView footerEndRefreshing];
+        [_tableView footerEndRefreshing];
     }];
 }
 
 #pragma mark 加载更多数据
 - (void)loadMoreData
 {
-    // 1.最后1条微博的ID
-    WLStatusFrame *f = [_datasource2 lastObject];
-    int start = f.status.fid;
-    
-    NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
-    [darDic setObject:@(KCellConut) forKey:@"size"];
-    if (_baseUserModel.uid) {
-        [darDic setObject:_baseUserModel.uid forKey:@"uid"];
-        [darDic setObject:@(start) forKey:@"page"];
-    }else{
-        [darDic setObject:@(start) forKey:@"start"];
-    }
-    
-    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
-        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+    if (_selectType == 1) {
+        // 1.最后1条微博的ID
+        WLStatusFrame *f = [_datasource2 lastObject];
+        int start = f.status.fid;
         
-        // 1.在拿到最新微博数据的同时计算它的frame
-        NSMutableArray *newFrames = [NSMutableArray array];
-        
-        for (NSDictionary *dic in jsonarray) {
-            WLStatusFrame *sf = [self dataFrameWith:dic];
-            [newFrames addObject:sf];
+        NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
+        [darDic setObject:@(KCellConut) forKey:@"size"];
+        if (_baseUserModel.uid) {
+            [darDic setObject:_baseUserModel.uid forKey:@"uid"];
+            [darDic setObject:@(start) forKey:@"page"];
+        }else{
+            [darDic setObject:@(start) forKey:@"start"];
         }
-        // 2.将newFrames整体插入到旧数据的后面
-        [_datasource2 addObjectsFromArray:newFrames];
         
-        [_tableView reloadData];
-        
-//        [self.refreshControl endRefreshing];
-//        [self.tableView footerEndRefreshing];
-        
-//        if (jsonarray.count<KCellConut) {
-//            [self.tableView setFooterHidden:YES];
-//        }
-        
-    } fail:^(NSError *error) {
-//        [self.refreshControl endRefreshing];
-//        [self.tableView footerEndRefreshing];
-    }];
-    
+        [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
+            NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+            
+            // 1.在拿到最新微博数据的同时计算它的frame
+            NSMutableArray *newFrames = [NSMutableArray array];
+            
+            for (NSDictionary *dic in jsonarray) {
+                WLStatusFrame *sf = [self dataFrameWith:dic];
+                [newFrames addObject:sf];
+            }
+            // 2.将newFrames整体插入到旧数据的后面
+            [_datasource2 addObjectsFromArray:newFrames];
+            
+//            [_tableView reloadData];
+            //检查
+            [self checkNoteInfoLoad:YES];
+            
+//            [self.refreshControl endRefreshing];
+            [_tableView footerEndRefreshing];
+            if (jsonarray.count<KCellConut) {
+                [_tableView setFooterHidden:YES];
+            }
+        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+            [_tableView footerEndRefreshing];
+        }];
+    }
 }
 
 #pragma mark - 取第一条ID保存
@@ -913,7 +987,7 @@ static NSString *fridcellid = @"fridcellid";
     _userInfoView.baseUserModel = profileM;
     
     //设置好友数量
-    _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? : @"",profileM.samefriendscount.stringValue ? : @""];
+    _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? (profileM.feedcount.integerValue > 1000 ? @"999+" : profileM.friendcount.stringValue) : @"",profileM.samefriendscount.stringValue ? (profileM.samefriendscount.integerValue > 99 ? @"99+" : profileM.samefriendscount.stringValue) : @""];
     
     // 动态
 //    NSDictionary *feed = [dataDic objectForKey:@"feed"];
@@ -987,7 +1061,8 @@ static NSString *fridcellid = @"fridcellid";
     }
     self.datasource1 = infos;
     
-    [_tableView reloadData];
+    //检查
+    [self checkNoteInfoLoad:YES];
 }
 
 - (void)initUserInfo
