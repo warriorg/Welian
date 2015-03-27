@@ -8,6 +8,7 @@
 
 #import "PhoneChangeVC.h"
 #import "UIImage+ImageEffects.h"
+#import "NSString+val.h"
 
 @interface PhoneChangeVC () <UITextFieldDelegate>
 {
@@ -32,7 +33,6 @@
 }
 
 - (void)viewDidLoad {
-    timeout = KTimes;
     [super viewDidLoad];
     self.title = @"手机校验";
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
@@ -85,16 +85,46 @@
 
 #pragma mark - 确认
 - (IBAction)sureButClick:(id)sender {
-    DLog(@"da");
+    if (!self.phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请输入手机号"];
+        return;
+    }
+    if (![NSString phoneValidate:self.phoneTF.text]) {
+        [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
+        return;
+    }
+    if (self.authCodeTF.text.length<4) {
+        [WLHUDView showErrorHUD:@"验证码错误！"];
+        return;
+    }
+    [WLHttpTool checkMobileCodeParameterDic:@{@"code":self.authCodeTF.text} success:^(id JSON) {
+        if ([JSON objectForKey:@"flag"]) {
+            [WLHUDView showSuccessHUD:[JSON objectForKey:@"msg"]];
+            if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+            }
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+    
 }
 
 
 #pragma mark - 发送验证码
 - (IBAction)authButClick:(id)sender {
-    timeout = KTimes;
+    if (!self.phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请输入手机号"];
+        return;
+    }
+    if (![NSString phoneValidate:self.phoneTF.text]) {
+        [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
+        return;
+    }
     [self startTime];
     [self chongxingfasongforgetcode];
-    DLog(@"aadf");
 }
 
 
@@ -102,12 +132,18 @@
 // 注册重新发送验证码
 - (void)chongxingfasongforgetcode
 {
-    
+    [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
+        if ([JSON objectForKey:@"checkcode"]) {
+            [WLHUDView showSuccessHUD:@"发送成功"];
+        }
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 
 -(void)startTime{
-    
+    timeout = KTimes;
     if (timeout< 60)  {
         return;
     }else{

@@ -60,7 +60,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<true/>
+	<string>YES</string>
 	<key>ShareSDKAppKey</key>
 	<string>507798c0a08e</string>
 	<key>UIRequiredDeviceCapabilities</key>
