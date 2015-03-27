@@ -357,7 +357,7 @@ static NSString *fridcellid = @"fridcellid";
         userMode = self.filterArray[indexPath.row];
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
         
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode OperateType:nil];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
 //        if (indexPath.section==0) {
@@ -383,7 +383,7 @@ static NSString *fridcellid = @"fridcellid";
         userMode = modear[indexPath.row];
         [userMode setFriendship:@(1)];
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode OperateType:nil];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }

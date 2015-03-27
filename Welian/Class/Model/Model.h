@@ -20,6 +20,7 @@
 #import "ActivityInfo.h"
 #import "ChatMessage.h"
 #import "HomeMessage.h"
+#import "NeedAddUser.h"
 
 
 #pragma mark - Interface

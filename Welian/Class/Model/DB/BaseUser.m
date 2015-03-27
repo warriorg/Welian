@@ -31,7 +31,7 @@
 @dynamic friendcount;
 @dynamic feedcount;
 @dynamic friend2count;
-@dynamic phoneChecked;
+@dynamic checked;
 @dynamic samefriendscount;
 
 @end

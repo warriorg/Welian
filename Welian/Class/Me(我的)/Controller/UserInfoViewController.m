@@ -32,6 +32,7 @@
 @property (assign,nonatomic) NSInteger selectType;//选择的类型
 @property (strong,nonatomic) IBaseUserM *baseUserModel;
 @property (assign,nonatomic) UserInfoView *userInfoView;
+@property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
 
 @end
 
@@ -76,12 +77,13 @@ static NSString *fridcellid = @"fridcellid";
     return _wlSegmentedControl;
 }
 
-- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel
+- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel OperateType:(NSNumber *)operateType
 {
     self = [super init];
     if (self) {
         self.selectType = 0;
         self.baseUserModel = iBaseUserModel;
+        self.operateType = operateType;
     }
     return self;
 }
@@ -117,6 +119,8 @@ static NSString *fridcellid = @"fridcellid";
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     //更多操作
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
@@ -185,7 +189,7 @@ static NSString *fridcellid = @"fridcellid";
                 case 0:
                 {
                     //投资信息
-                    return 3;
+                    return [[[_datasource1[section] objectForKey:@"info"] objectForKey:@"types"] count];
                 }
                     break;
                 default:
@@ -287,14 +291,22 @@ static NSString *fridcellid = @"fridcellid";
             }
             
             NSNumber *type = (NSNumber *)[_datasource1[indexPath.section] objectForKey:@"type"];
-            NSObject *info = [[_datasource1[indexPath.section] objectForKey:@"info"] objectAtIndex:indexPath.row];
+            
+            cell.imageView.image = nil;
+            cell.detailTextLabel.numberOfLines = 1.f;
+            cell.hidBottomLine = NO;
+            cell.isInTwoLine = NO;
             switch (type.integerValue) {
                 case 0:
                 {
-                    IIMeInvestAuthModel *investModel = [_datasource1[indexPath.section] objectForKey:@"info"];
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
-                    switch (indexPath.row) {
+                    
+                    NSDictionary *infoData = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    NSArray *types = [infoData objectForKey:@"types"];
+                    IIMeInvestAuthModel *investModel = [infoData objectForKey:@"info"];
+                    NSNumber *investType = [[types objectAtIndex:indexPath.row] objectForKey:@"type"];
+                    switch (investType.integerValue) {
                         case 1:
                             titleInfo = @"投资领域：";
                             detailInfo = [investModel displayInvestIndustrys];
@@ -323,10 +335,10 @@ static NSString *fridcellid = @"fridcellid";
                     break;
                 case 1:
                 {
-                    IProjectInfo *projectInfo = (IProjectInfo *)info;
                     //项目
+                    NSArray *infos = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    IProjectInfo *projectInfo = [infos objectAtIndex:indexPath.row];
                     cell.textLabel.text = projectInfo.name;
-                    cell.textLabel.numberOfLines = 0.f;
                     cell.textLabel.font = [UIFont systemFontOfSize:14.f];
                     cell.textLabel.textColor = kTitleTextColor;
                     
@@ -339,6 +351,9 @@ static NSString *fridcellid = @"fridcellid";
                     break;
                 case 2:
                 {
+                    NSArray *infos = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    NSObject *info = [infos objectAtIndex:indexPath.row];
+                    //履历
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
                     NSString *endTime = @"";
@@ -354,11 +369,10 @@ static NSString *fridcellid = @"fridcellid";
                         detailInfo = [NSString stringWithFormat:@"%@ %@",result.specialtyname.length ? result.specialtyname : @"",result.schoolname];
                     }
                     
-                    //履历
+                    
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.hidBottomLine = YES;
                     cell.textLabel.text = titleInfo;
-                    cell.textLabel.numberOfLines = 0.f;
                     cell.textLabel.font = [UIFont systemFontOfSize:12.f];
                     cell.textLabel.textColor = kNormalTextColor;
                     
@@ -366,7 +380,6 @@ static NSString *fridcellid = @"fridcellid";
                     cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
                     cell.detailTextLabel.textColor = kTitleNormalTextColor;
                     cell.imageView.image = [UIImage imageNamed:@"me_lvli_line"];
-                    cell.detailTextLabel.top = cell.textLabel.bottom + 10.f;
                 }
                     break;
                 default:
@@ -443,8 +456,12 @@ static NSString *fridcellid = @"fridcellid";
                 {
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
-                    IIMeInvestAuthModel *investModel = [_datasource1[indexPath.section] objectForKey:@"info"];
-                    switch (indexPath.row) {
+                    
+                    NSDictionary *infoData = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    NSArray *types = [infoData objectForKey:@"types"];
+                    IIMeInvestAuthModel *investModel = [infoData objectForKey:@"info"];
+                    NSNumber *investType = [[types objectAtIndex:indexPath.row] objectForKey:@"type"];
+                    switch (investType.integerValue) {
                         case 1:
                             titleInfo = @"投资领域：";
                             detailInfo = [investModel displayInvestIndustrys];
@@ -542,40 +559,40 @@ static NSString *fridcellid = @"fridcellid";
 // 删除好友
 - (void)deleteFriend
 {
-//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-//    [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
-//        
-//        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_userMode.uid];
-//        //数据库删除当前好友
-//        //        [loginUser removeRsMyFriendsObject:friendUser];
-//        //更新设置为不是我的好友
-//        [friendUser updateIsNotMyFriend];
-//        //聊天状态发送改变
-//        [friendUser updateIsChatStatus:NO];
-//        
-//        //删除新的好友本地数据库
-//        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
-//        if (newFuser) {
-//            //删除好友请求数据
-//            //更新好友请求列表数据为 添加
-//            [newFuser updateOperateType:0];
-//        }
-//        //更新本地添加好友数据库
-//        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];
-//        if (needAddUser) {
-//            //更新未好友的好友
-//            [needAddUser updateFriendShip:2];
-//        }
-//        
-//        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
-//        //聊天状态发送改变
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
-//        [self.navigationController popViewControllerAnimated:YES];
-//        [WLHUDView showSuccessHUD:@"删除成功！"];
-//    } fail:^(NSError *error) {
-//        
-//    }];
+    [WLHttpTool deleteFriendParameterDic:@{@"fid":_baseUserModel.uid} success:^(id JSON) {
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
+        //数据库删除当前好友
+        //        [loginUser removeRsMyFriendsObject:friendUser];
+        //更新设置为不是我的好友
+        [friendUser updateIsNotMyFriend];
+        //聊天状态发送改变
+        [friendUser updateIsChatStatus:NO];
+        
+        //删除新的好友本地数据库
+        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_baseUserModel.uid];
+        if (newFuser) {
+            //删除好友请求数据
+            //更新好友请求列表数据为 添加
+            [newFuser updateOperateType:0];
+        }
+        //更新本地添加好友数据库
+        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_baseUserModel.uid];
+        if (needAddUser) {
+            //更新未好友的好友
+            [needAddUser updateFriendShip:2];
+        }
+        
+        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+        
+        //聊天状态发送改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        [self.navigationController popViewControllerAnimated:YES];
+        [WLHUDView showSuccessHUD:@"删除成功！"];
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 //获取共同好友列表
@@ -851,7 +868,29 @@ static NSString *fridcellid = @"fridcellid";
         //好友
         [self chatBtnClicked:nil];
     }else{
-        
+        ///操作类型0：添加 1：接受  2:已添加 3：待验证
+        switch (_operateType.integerValue) {
+            case 0:
+            {
+                //加好友
+                
+            }
+                break;
+            case 1:
+            {
+                //通过验证
+                
+            }
+                break;
+            case 3:
+            {
+                //待验证
+                
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -923,7 +962,21 @@ static NSString *fridcellid = @"fridcellid";
     NSMutableArray *infos = [NSMutableArray array];
     //me_touzi.png   me_lvli.png me_xiangmu.png
     if (investorM.items.count > 0 || investorM.industry.count > 0 || investorM.stages.count > 0) {
-        [infos addObject:@{@"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":investorM}];
+        //投资阶段
+        NSMutableArray *types = [NSMutableArray array];
+        if (investorM.stages.count > 0) {
+            [types addObject:@{@"type":@(0)}];
+        }
+        //投资领域
+        if (investorM.industry.count > 0) {
+            [types addObject:@{@"type":@(1)}];
+        }
+        //投资案例
+        if (investorM.items.count > 0) {
+            [types addObject:@{@"type":@(2)}];
+        }
+        NSDictionary *infoData = @{@"info":investorM,@"types":types};
+        [infos addObject:@{@"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":infoData}];
     }
     if (projectsArrayM.count > 0) {
         [infos addObject:@{@"icon":@"me_xiangmu",@"title":@"项目",@"type":@(1),@"info":projectsArrayM}];

@@ -27,14 +27,21 @@
     
     [self.textLabel sizeToFit];
     self.textLabel.left = kMarginLeft;
-    self.textLabel.bottom = self.height / 2.f;
+    self.textLabel.bottom = self.contentView.height / 2.f;
     
     if (_isInTwoLine) {
         self.detailTextLabel.width = self.width - kMarginLeft - 15 - self.textLabel.width;
         [self.detailTextLabel sizeToFit];
         self.detailTextLabel.left = self.textLabel.right;
-        self.detailTextLabel.centerY = self.height / 2.f;
-        self.textLabel.top = self.detailTextLabel.top;
+        
+        if(self.detailTextLabel.text.length > 0){
+            self.detailTextLabel.centerY = self.contentView.height / 2.f;
+            self.textLabel.top = self.detailTextLabel.top;
+        }else{
+            self.textLabel.centerY = self.contentView.height / 2.f;
+            self.detailTextLabel.top = self.textLabel.top;
+        }
+        
     }else{
         [self.detailTextLabel sizeToFit];
         self.detailTextLabel.top = self.textLabel.bottom + 3.f;

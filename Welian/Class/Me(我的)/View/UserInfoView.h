@@ -15,6 +15,7 @@ typedef void(^operateBtnClickedBlcok)(void);
 
 @property (strong,nonatomic) LogInUser *loginUser;
 @property (strong,nonatomic) IBaseUserM *baseUserModel;
+@property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
 
 @property (strong,nonatomic) lookUserDetailInfoBlock lookUserDetailBlock;
 @property (strong,nonatomic) operateBtnClickedBlcok operateClickedBlock;

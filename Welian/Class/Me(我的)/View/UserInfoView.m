@@ -60,6 +60,8 @@
     _nameLabel.text = _loginUser.name;
     _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_loginUser.position,_loginUser.company];
     _touZiRenBtn.hidden = _loginUser.investorauth.integerValue == 1 ? NO : YES;
+    //手机是否通过认证
+    _phoneRZImageView.image = [UIImage imageNamed:_loginUser.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];
     if (_loginUser.cityname.length > 0) {
         _cityBtn.hidden = NO;
         [_cityBtn setTitle:_loginUser.cityname forState:UIControlStateNormal];
@@ -81,6 +83,14 @@
     _nameLabel.text = _baseUserModel.name;
     _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_baseUserModel.position,_baseUserModel.company];
     _touZiRenBtn.hidden = _baseUserModel.investorauth.integerValue == 1 ? NO : YES;
+    //手机是否通过认证
+    _phoneRZImageView.image = [UIImage imageNamed:_baseUserModel.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];
+//    if (_baseUserModel.checked) {
+//        
+//    }else{
+//        _phoneRZImageView.image = [UIImage imageNamed:@"me_phone_no"];
+//    }
+    
     if (_baseUserModel.cityname.length > 0) {
         _cityBtn.hidden = NO;
         [_cityBtn setTitle:_baseUserModel.cityname forState:UIControlStateNormal];
@@ -88,6 +98,7 @@
     }else{
         _cityBtn.hidden = YES;
     }
+    _operateBtn.enabled = YES;
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     if (_baseUserModel.friendship.integerValue == 1) {
         [_operateBtn setTitle:@"发消息" forState:UIControlStateNormal];
@@ -95,6 +106,44 @@
     }else{
         [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
         [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+    }
+}
+
+////操作类型0：添加 1：接受  2:已添加 3：待验证
+- (void)setOperateType:(NSNumber *)operateType
+{
+    [super willChangeValueForKey:@"operateType"];
+    _operateType = operateType;
+    [super didChangeValueForKey:@"operateType"];
+    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    _operateBtn.enabled = YES;
+    if (_baseUserModel.friendship.integerValue == 1) {
+        [_operateBtn setTitle:@"发消息" forState:UIControlStateNormal];
+        [_operateBtn setImage:[UIImage imageNamed:@"me_button_chat"] forState:UIControlStateNormal];
+    }else{
+        switch (_operateType.integerValue) {
+            case 0:
+            {
+                [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
+                [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+            }
+                break;
+            case 1:
+            {
+                [_operateBtn setTitle:@"通过验证" forState:UIControlStateNormal];
+                [_operateBtn setImage:nil forState:UIControlStateNormal];
+            }
+                break;
+            case 3:
+            {
+                [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
+                [_operateBtn setImage:nil forState:UIControlStateNormal];
+                _operateBtn.enabled = NO;
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 
