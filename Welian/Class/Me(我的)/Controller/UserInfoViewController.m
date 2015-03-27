@@ -151,7 +151,7 @@ static NSString *fridcellid = @"fridcellid";
     
     //切换按钮
     [headerView addSubview:self.wlSegmentedControl];
-    _wlSegmentedControl.sectionDetailTitles = @[@"",@"2",@"106"];
+//    _wlSegmentedControl.sectionDetailTitles = @[@"",@"2",@"106"];
     
     [_tableView setTableHeaderView:headerView];
     
