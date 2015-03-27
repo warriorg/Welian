@@ -25,7 +25,7 @@
 #import "UserInfoView.h"
 #import "WLCustomSegmentedControl.h"
 
-#define kTableViewHeaderViewHeight 340.f
+#define kTableViewHeaderViewHeight 230.f
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -111,7 +111,15 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [self.tableView shouldPositionParallaxHeader];
     CGFloat offsetY = scrollView.contentOffset.y;
+//    if (offsetY < -20) {
+//        scrollView.contentOffset = CGPointMake(0, -20);
+//        _tableView.contentOffset = CGPointMake(0, -20);
+//        scrollView.contentInset = UIEdgeInsetsMake(-20,0, 0,0);
+//        _tableView.contentInset = UIEdgeInsetsMake(-20,0, 0,0);
+//        return;
+//    }
     UIColor *color = kNavBgColor;
     if (offsetY > kTableViewHeaderViewHeight/2) {
         CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
@@ -151,7 +159,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - TabBarHeight) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
+//    tableView.contentInset = UIEdgeInsetsMake(-50,0, 0,0);
     //隐藏表格分割线
 //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
@@ -165,6 +173,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     
     //设置头部
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
+    headerView.backgroundColor = [UIColor clearColor];
+    
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 60.f)];
     userInfoView.loginUser = [LogInUser getCurrentLoginUser];
     self.userInfoView = userInfoView;
@@ -174,7 +184,10 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [headerView addSubview:self.wlSegmentedControl];
     _wlSegmentedControl.sectionDetailTitles = @[@"23",@"476"];
     
-    [_tableView setTableHeaderView:headerView];
+//    [_tableView setTableHeaderView:headerView];
+    [self.tableView setParallaxHeaderView:headerView
+                                     mode:VGParallaxHeaderModeFill
+                                   height:kTableViewHeaderViewHeight];
     
     WEAKSELF
     [_wlSegmentedControl setIndexChangeBlock:^(NSInteger index) {

@@ -19,7 +19,7 @@
 #import "WLNoteInfoView.h"
 #import "MJRefresh.h"
 
-#define kTableViewHeaderViewHeight 318.f
+#define kTableViewHeaderViewHeight 198.f
 
 #define kTableViewCellHeight 60.f
 #define kTableViewHeaderHeight 60.f
@@ -102,27 +102,27 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [self scrollViewDidScroll:_tableView];
+    [self scrollViewDidScroll:_tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar reset];
+    [self.navigationController.navigationBar reset];
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    UIColor *color = kNavBgColor;
-//    if (offsetY > kTableViewHeaderViewHeight/2) {
-//        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-//        
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-//    }
-//}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = kNavBgColor;
+    if (offsetY > kTableViewHeaderViewHeight/2) {
+        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
+        
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -263,20 +263,20 @@ static NSString *fridcellid = @"fridcellid";
             // 2.给cell传递模型数据
             // 传递的模型：文字数据 + 子控件frame数据
             cell.statusFrame = _datasource2[indexPath.row];
-            cell.feedzanBlock = ^(WLStatusM *statusM){
-                WLStatusFrame *statusF = _datasource2[indexPath.row];
-                [statusF setStatus:statusM];
-                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-//                [_tableView reloadData];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            };
-            cell.feedTuiBlock = ^(WLStatusM *statusM){
-                WLStatusFrame *statusF = _datasource2[indexPath.row];
-                [statusF setStatus:statusM];
-                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-//                [_tableView reloadData];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            };
+//            cell.feedzanBlock = ^(WLStatusM *statusM){
+//                WLStatusFrame *statusF = _datasource2[indexPath.row];
+//                [statusF setStatus:statusM];
+//                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+////                [_tableView reloadData];
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            };
+//            cell.feedTuiBlock = ^(WLStatusM *statusM){
+//                WLStatusFrame *statusF = _datasource2[indexPath.row];
+//                [statusF setStatus:statusM];
+//                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+////                [_tableView reloadData];
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            };
             //    // 评论
             [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
             // 更多
@@ -561,53 +561,53 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)checkNoteInfoLoad:(BOOL)isLoad
 {
-//    NSString *noteInfo = @"加载中...";
-//    UIView *noteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
-//    BOOL loaded = YES;
-//    switch (_selectType) {
-//        case 0:
-//        {
-//            //加载完成，但数据为空
-//            if (isLoad && _datasource1.count <= 0) {
-//                noteInfo = @"这家伙还没设置过自己的资料";
-//                noteView = self.wlNoteInfoView;
-//            }else if(!isLoad && _datasource1.count <= 0){
-//                loaded = NO;
-//                noteView = self.wlNoteInfoView;
-//            }
-//        }
-//            break;
-//        case 1:
-//        {
-//            //加载完成，但数据为空
-//            if (isLoad && _datasource2.count <= 0) {
-//                noteInfo = @"这家伙很懒，什么都没留下";
-//                noteView = self.wlNoteInfoView;
-//            }else if(!isLoad && _datasource2.count <= 0){
-//                loaded = NO;
-//                noteView = self.wlNoteInfoView;
-//            }
-//        }
-//            break;
-//        case 2:
-//        {
-//            //加载完成，但数据为空
-//            if (isLoad && _datasource3.count <= 0) {
-//                noteInfo = @"你们之间还没有共同好友";
-//                noteView = self.wlNoteInfoView;
-//            }else if(!isLoad && _datasource3.count <= 0){
-//                loaded = NO;
-//                noteView = self.wlNoteInfoView;
-//            }
-//        }
-//            break;
-//        default:
-//            break;
-//    }
-//    
-//    self.wlNoteInfoView.isLoaded = isLoad;
-//    self.wlNoteInfoView.noteInfo = noteInfo;
-//    _tableView.tableFooterView = noteView;
+    NSString *noteInfo = @"加载中...";
+    UIView *noteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
+    BOOL loaded = YES;
+    switch (_selectType) {
+        case 0:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource1.count <= 0) {
+                noteInfo = @"这家伙还没设置过自己的资料";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource1.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        case 1:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource2.count <= 0) {
+                noteInfo = @"这家伙很懒，什么都没留下";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource2.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        case 2:
+        {
+            //加载完成，但数据为空
+            if (isLoad && _datasource3.count <= 0) {
+                noteInfo = @"你们之间还没有共同好友";
+                noteView = self.wlNoteInfoView;
+            }else if(!isLoad && _datasource3.count <= 0){
+                loaded = NO;
+                noteView = self.wlNoteInfoView;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    self.wlNoteInfoView.isLoaded = isLoad;
+    self.wlNoteInfoView.noteInfo = noteInfo;
+    _tableView.tableFooterView = noteView;
     
     [_tableView reloadData];
 }
@@ -761,27 +761,87 @@ static NSString *fridcellid = @"fridcellid";
         }
         
         [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
+            [_tableView footerEndRefreshing];
+            
             NSArray *jsonarray = [NSArray arrayWithArray:JSON];
             
             // 1.在拿到最新微博数据的同时计算它的frame
-            NSMutableArray *newFrames = [NSMutableArray array];
-            
-            for (NSDictionary *dic in jsonarray) {
-                WLStatusFrame *sf = [self dataFrameWith:dic];
-                [newFrames addObject:sf];
-            }
+//            NSMutableArray *newFrames = [NSMutableArray array];
+//            
+//            for (NSDictionary *dic in jsonarray) {
+//                WLStatusFrame *sf = [self dataFrameWith:dic];
+//                [newFrames addObject:sf];
+//            }
             // 2.将newFrames整体插入到旧数据的后面
-            [_datasource2 addObjectsFromArray:newFrames];
+//            [_datasource2 addObjectsFromArray:newFrames];
+            
+//            [_datasource2 addObjectsFromArray:_datasource2];
+            
+//            for (int i = 0; i < _datasource2.count; i++) {
+//                NSMutableArray *indexpaths = [NSMutableArray array];
+//                [_datasource2 addObject:_datasource2[i]];
+//                [indexpaths addObject:[NSIndexPath indexPathForRow:(_datasource2.count + i) inSection:0]];
+//                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithArray:indexpaths] withRowAnimation:UITableViewRowAnimationNone];
+//            }
+            
+            NSArray *addArray = _datasource2;
+            NSInteger currentCount = _datasource2.count;
+            
+//            NSMutableArray *indexPaths = [NSMutableArray array];
+//            for (int i=0; i<addArray.count; i++) {
+//                // The new index path is the original number of rows plus i - 1 to leave the last row where it is.
+//                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:(currentCount+i) inSection:0];
+//                [indexPaths addObject:indexpath];
+//            }
+            [_datasource2 addObject:addArray[0]];
+            
+            [_tableView beginUpdates];
+            [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_datasource2.count -1 inSection:0]]withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_tableView endUpdates];
+            
+            
+//
+//            NSInteger currentCount = datasource2.count;
+//            WEAKSELF
+//            int64_t delayInSeconds = 2.0;
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+//                
+//                // build the index paths for insertion
+//                // since you're adding to the end of datasource, the new rows will start at count
+//                NSMutableArray *indexPaths = [NSMutableArray array];
+//                for (int i = 0; i < addArray.count; i++) {
+//                    [indexPaths addObject:[NSIndexPath indexPathForRow:currentCount+i inSection:0]];
+//                }
+//                
+//                // do the insertion
+//                [weakSelf.datasource2 addObjectsFromArray:addArray];
+//                
+//                // tell the table view to update (at all of the inserted index paths)
+//                [weakSelf.tableView beginUpdates];
+//                [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+//                [weakSelf.tableView endUpdates];
+//                
+//                [weakSelf.tableView footerEndRefreshing];
+//            });
+            
+            
+//            [UIView setAnimationsEnabled:NO];
+            
+            
+//            [self.tableView endUpdates];
+//            [UIView setAnimationsEnabled:YES];
             
 //            [_tableView reloadData];
+            
             //检查
-            [self checkNoteInfoLoad:YES];
+//            [self checkNoteInfoLoad:YES];
             
 //            [self.refreshControl endRefreshing];
-            [_tableView footerEndRefreshing];
-            if (jsonarray.count<KCellConut) {
-                [_tableView setFooterHidden:YES];
-            }
+            
+//            if (jsonarray.count<KCellConut) {
+//                [_tableView setFooterHidden:YES];
+//            }
         } fail:^(NSError *error) {
 //            [self.refreshControl endRefreshing];
             [_tableView footerEndRefreshing];
@@ -862,33 +922,36 @@ static NSString *fridcellid = @"fridcellid";
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
-    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
-        
-        WLStatusFrame *statusF = _datasource2[indexPath.row];
-        [statusF setStatus:statusM];
-        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
-    };
-    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
-        
-        WLStatusFrame *statusF = _datasource2[indexPath.row];
-        [statusF setStatus:statusM];
-        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
-    };
-    commentInfo.commentBlock = ^(WLStatusM *statusM){
-        WLStatusFrame *statusF = _datasource2[indexPath.row];
-        [statusF setStatus:statusM];
-        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
-    };
-    
-    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
-        WLStatusFrame *statusF = _datasource2[indexPath.row];
-        [statusF setStatus:statusM];
-        [_datasource2 removeObject:statusF];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    };
+//    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
+//        
+//        WLStatusFrame *statusF = _datasource2[indexPath.row];
+//        [statusF setStatus:statusM];
+//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+////        [self.tableView reloadData];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    };
+//    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
+//        
+//        WLStatusFrame *statusF = _datasource2[indexPath.row];
+//        [statusF setStatus:statusM];
+//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+////        [self.tableView reloadData];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    };
+//    commentInfo.commentBlock = ^(WLStatusM *statusM){
+//        WLStatusFrame *statusF = _datasource2[indexPath.row];
+//        [statusF setStatus:statusM];
+//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+////        [self.tableView reloadData];
+////        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    };
+//    
+//    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
+//        WLStatusFrame *statusF = _datasource2[indexPath.row];
+//        [statusF setStatus:statusM];
+//        [_datasource2 removeObject:statusF];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    };
 //    _seletIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];
 }

@@ -31,6 +31,7 @@
 #import "NSObject+MJKeyValue.h"
 #import "UINavigationBar+BackgroundColor.h"
 
+#import "UIScrollView+VGParallaxHeader.h"
 
 #pragma mark - Other
 #import "ACETelPrompt.h"

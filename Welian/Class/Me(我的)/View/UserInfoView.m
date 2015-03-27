@@ -8,7 +8,10 @@
 
 #import "UserInfoView.h"
 
-#define kBlueBgViewHeight 250.f
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
+
+#define kBlueBgViewHeight 130.f
 #define kLogoHeight 70.f
 #define kButtonWidth 65.f
 #define kButtonHeight 25.f
@@ -55,7 +58,7 @@
     _operateBtn.hidden = YES;
     
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_loginUser.avatar]
-                      placeholderImage:[UIImage imageNamed:@""]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _loginUser.name;
     _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_loginUser.position,_loginUser.company];
@@ -78,7 +81,7 @@
     _operateBtn.hidden = NO;
     
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_baseUserModel.avatar]
-                      placeholderImage:[UIImage imageNamed:@""]
+                      placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _baseUserModel.name;
     _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_baseUserModel.position,_baseUserModel.company];
@@ -209,6 +212,7 @@
     logoImageView.layer.borderColor = RGB(229.f, 229.f, 229.f).CGColor;
     logoImageView.layer.cornerRadius = kLogoHeight / 2.f;
     logoImageView.layer.masksToBounds = YES;
+    logoImageView.userInteractionEnabled = YES;
     [self addSubview:logoImageView];
     self.logoImageView = logoImageView;
     
@@ -273,6 +277,26 @@
     }];
     tap.delegate = self;
     [self addGestureRecognizer:tap];
+    
+    UITapGestureRecognizer *logoTap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        if (_loginUser || _baseUserModel) {
+            // 替换为中等尺寸图片
+            NSString *url = _loginUser ? _loginUser.avatar : _baseUserModel.avatar;
+            MJPhoto *photo = [[MJPhoto alloc] init];
+            url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
+            url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
+            photo.url = [NSURL URLWithString:url]; // 图片路径
+            photo.srcImageView = _logoImageView; // 来源于哪个UIImageView
+            
+            // 2.显示相册
+            MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+            browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+            browser.photos = @[photo]; // 设置所有的图片
+            [browser show];
+            [browser.toolbar setHidden:YES];
+        }
+    }];
+    [logoImageView addGestureRecognizer:logoTap];
 }
 
 - (void)operateBtnClicked:(UIButton *)sender
