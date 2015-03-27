@@ -20,43 +20,6 @@
 
 @implementation ActivityViewController
 
-//隐藏头部
-//- (void)hideHeader
-//{
-////    self.webView.frame = self.view.frame;
-//    
-//    //延迟1秒
-//    [self performSelector:@selector(test) withObject:self afterDelay:.5];
-//    
-//    //隐藏旋转
-//    [WLHUDView hiddenHud];
-//}
-//
-//- (void)test {
-//    self.webView.top = 0;
-//    self.navigationController.navigationBarHidden = YES;
-//}
-//
-////返回发现
-//- (void)backToFindVC
-//{
-//    [self.navigationController popViewControllerAnimated:YES];
-//    self.navigationController.navigationBarHidden = NO;
-//}
-
-//分享
-//- (void)shareWithInfo:(NSDictionary *)commandDic
-//{
-//    _shareData = commandDic;
-//    NSArray *shareButtonTitleArray = @[@"微信好友",@"微信朋友圈"];;
-//    NSArray *shareButtonImageNameArray = @[@"home_repost_wechat",@"home_repost_friendcirle"];
-//    if (lxActivity) {
-//        [lxActivity removeFromSuperview];
-//        lxActivity = nil;
-//    }
-//    lxActivity = [[LXActivity alloc] initWithDelegate:self WithTitle:@"分享到" otherButtonTitles:nil ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
-//    [lxActivity showInView:[UIApplication sharedApplication].keyWindow];
-//}
 
 //进入活动详情页面
 - (void)toActivityDetailVC:(NSArray *)infos
