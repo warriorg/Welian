@@ -112,6 +112,7 @@
         [_beginTextF setInputView:self.datePick];
         [_beginTextF setDelegate:self];
         [_beginTextF setInputAccessoryView:self.oneinputToolView];
+        [_beginTextF setFrame:CGRectMake(0, 0, SuperSize.width-100, KCellConut)];
     }
     if (_wlUserLoadType ==1) {
         if (_schoolM.startyear) {
@@ -135,6 +136,7 @@
         [_endTextF setTintColor:KBasesColor];
         [_endTextF setInputView:self.datePick];
         [_endTextF setInputAccessoryView:self.inputToolView];
+        [_endTextF setFrame:CGRectMake(0, 0, SuperSize.width-100, KCellConut)];
     }
     if (_wlUserLoadType ==1) {
         if (_schoolM.endyear.integerValue==-1) {
@@ -356,7 +358,6 @@
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell.detailTextLabel setTextColor:[UIColor blackColor]];
     }
-    CGSize size = cell.bounds.size;
     
     if (_wlUserLoadType ==1) {
         if (indexPath.section==0) {
@@ -364,21 +365,6 @@
                 [cell.detailTextLabel setText:_schoolM.schoolname];
             }else if (indexPath.row==1){
                 [cell.detailTextLabel setText:_schoolM.specialtyname];
-            }
-        }else if (indexPath.section ==1){
-
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            if (indexPath.row==0) {
-                [self.beginTextF removeFromSuperview];
-                [self.endTextF removeFromSuperview];
-                [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                [cell.contentView addSubview:self.beginTextF];
-
-            }else if (indexPath.row==1){
-                [self.endTextF removeFromSuperview];
-                [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                [cell.contentView addSubview:self.endTextF];
             }
         }
     }else if (_wlUserLoadType ==2){
@@ -388,24 +374,15 @@
             }else if (indexPath.row==1){
                 [cell.detailTextLabel setText:_companyM.jobname];
             }
-        }else if (indexPath.section ==1){
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            if (indexPath.row==0) {
-                [self.beginTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                if (!self.beginTextF.superview) {
-                    [cell.contentView addSubview:self.beginTextF];
-                }
-                
-            }else if (indexPath.row==1){
-                
-                [self.endTextF setFrame:CGRectMake(100, 0, size.width-130, size.height)];
-                
-                if (!self.endTextF.superview) {
-                    
-                    [cell.contentView addSubview:self.endTextF];
-                }
-            }
+        }
+    }
+    if (indexPath.section==1) {
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        if (indexPath.row==0) {
+            cell.accessoryView = self.beginTextF;
+        }else if (indexPath.row ==1){
+            cell.accessoryView = self.endTextF;
         }
     }
     NSArray *sectionArray = self.dataArray[indexPath.section];
@@ -545,24 +522,28 @@
 #pragma mark - 删除
 - (void)deleteData
 {
-    if (_wlUserLoadType == 1) {
-        [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":_schoolM.usid} success:^(id JSON) {
-            [self.coerSchoolM MR_deleteEntity];
-            [self dismissVC];
-
-        } fail:^(NSError *error) {
-            
-        }];
-    }else if (_wlUserLoadType == 2){
-
-        [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":_companyM.ucid} success:^(id JSON) {
-            [self.coerCompanyM MR_deleteEntity];
-            [self dismissVC];
-        } fail:^(NSError *error) {
-            
-        }];
-    }
-
+    [UIAlertView bk_showAlertViewWithTitle:@"" message:@"确定删除？" cancelButtonTitle:@"取消" otherButtonTitles:@[@"删除"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex) {
+            if (_wlUserLoadType == 1) {
+                [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":_schoolM.usid} success:^(id JSON) {
+                    [self.coerSchoolM MR_deleteEntity];
+                    [self dismissVC];
+                    
+                } fail:^(NSError *error) {
+                    
+                }];
+            }else if (_wlUserLoadType == 2){
+                
+                [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":_companyM.ucid} success:^(id JSON) {
+                    [self.coerCompanyM MR_deleteEntity];
+                    [self dismissVC];
+                } fail:^(NSError *error) {
+                    
+                }];
+            }
+        }
+        
+    }];
 }
 
 

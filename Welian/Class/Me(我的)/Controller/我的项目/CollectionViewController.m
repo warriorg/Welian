@@ -27,26 +27,26 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 {
     [_alldataArray removeAllObjects];
     NSMutableArray *allArray = [NSMutableArray arrayWithArray:dataarray];
-    [allArray insertObject:@{@"id":@(-1),@"name":@"不限"} atIndex:0];
+//    [allArray insertObject:@{@"id":@(-1),@"name":@"不限"} atIndex:0];
     BOOL isAll = NO;
     for (NSDictionary *indDic in allArray) {
         IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
         [indust setIndustryid:[indDic objectForKey:@"id"]];
         [indust setIndustryname:[indDic objectForKey:@"name"]];
         if (_projectModel.industrys.count) {
-            NSString *buxianname = [_projectModel getindustrysName][0];
-            if ([buxianname isEqualToString:@"不限"]) {
-                isAll = YES;
-            }else{
+//            NSString *buxianname = [_projectModel getindustrysName][0];
+//            if ([buxianname isEqualToString:@"不限"]) {
+//                isAll = YES;
+//            }else{
                 for (NSString *nameStr in [_projectModel getindustrysName]) {
                     if ([[nameStr deleteTopAndBottomKonggeAndHuiche] isEqualToString:[indDic objectForKey:@"name"]]) {
                         [indust setIsSelect:YES];
                     }
                 }
-            }
-            if (isAll) {
-                [indust setIsSelect:YES];
-            }
+//            }
+//            if (isAll) {
+//                [indust setIsSelect:YES];
+//            }
         }
         
         [_alldataArray addObject:indust];
@@ -141,25 +141,25 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     if (_type ==1) {
         [cell.selectBut setSelected:!cell.selectBut.selected];
         IInvestIndustryModel *model = _alldataArray[indexPath.row];
-        if ([model.industryname isEqualToString:@"不限"]) {
-            for (NSInteger i = 0; i<_alldataArray.count; i++) {
-                IInvestIndustryModel *invmodel = _alldataArray[i];
-                [invmodel setIsSelect:cell.selectBut.selected];
-                [_alldataArray replaceObjectAtIndex:i withObject:invmodel];
-            }
-            [self.collectionView reloadData];
-            return NO;
-        }else{
-            IInvestIndustryModel *buxian = _alldataArray[0];
-            if ([buxian.industryname isEqualToString:@"不限"]&&buxian.isSelect) {
-                [buxian setIsSelect:cell.selectBut.selected];
-                [_alldataArray replaceObjectAtIndex:0 withObject:buxian];
-                ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-                [cell.selectBut setSelected:buxian.isSelect];
-            }
+//        if ([model.industryname isEqualToString:@"不限"]) {
+//            for (NSInteger i = 0; i<_alldataArray.count; i++) {
+//                IInvestIndustryModel *invmodel = _alldataArray[i];
+//                [invmodel setIsSelect:cell.selectBut.selected];
+//                [_alldataArray replaceObjectAtIndex:i withObject:invmodel];
+//            }
+//            [self.collectionView reloadData];
+//            return NO;
+//        }else{
+//            IInvestIndustryModel *buxian = _alldataArray[0];
+//            if ([buxian.industryname isEqualToString:@"不限"]&&buxian.isSelect) {
+//                [buxian setIsSelect:cell.selectBut.selected];
+//                [_alldataArray replaceObjectAtIndex:0 withObject:buxian];
+//                ProjectIndustryCell *cell = (ProjectIndustryCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+//                [cell.selectBut setSelected:buxian.isSelect];
+//            }
             [model setIsSelect:cell.selectBut.selected];
             [_alldataArray replaceObjectAtIndex:indexPath.row withObject:model];
-        }
+//        }
     }else if (_type ==2){
         IInvestStageModel *stageM = _alldataArray[indexPath.row];
         if (!cell.selectBut.selected) {
@@ -223,19 +223,19 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
         [WLHUDView showErrorHUD:@"请选择"];
         return;
     }
-    if (_type==1) {
-        for (IInvestIndustryModel *industM in arrayPre) {
-            if ([industM.industryname isEqualToString:@"不限"]) {
-                if (self.investBlock) {
-                    self.investBlock(@[industM]);
-                }
-                [self.navigationController popViewControllerAnimated:YES];
-                return;
-            }
-        }
-    }else if (_type==2){
-        
-    }
+//    if (_type==1) {
+//        for (IInvestIndustryModel *industM in arrayPre) {
+//            if ([industM.industryname isEqualToString:@"不限"]) {
+//                if (self.investBlock) {
+//                    self.investBlock(@[industM]);
+//                }
+//                [self.navigationController popViewControllerAnimated:YES];
+//                return;
+//            }
+//        }
+//    }else if (_type==2){
+//        
+//    }
     if (self.investBlock) {
         self.investBlock(arrayPre);
     }

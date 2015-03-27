@@ -135,6 +135,7 @@ BMKMapManager* _mapManager;
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
+//        [LogInUser setUserNewstustcount:@(0)];
         [mainVC loadNewStustupdata];
         [self.window setRootViewController:mainVC];
     }else{
