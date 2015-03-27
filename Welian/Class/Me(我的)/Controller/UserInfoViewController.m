@@ -821,21 +821,20 @@ static NSString *fridcellid = @"fridcellid";
         }
         
         [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
-            [_tableView footerEndRefreshing];
             
             NSArray *jsonarray = [NSArray arrayWithArray:JSON];
             
             // 1.在拿到最新微博数据的同时计算它的frame
-//            NSMutableArray *newFrames = [NSMutableArray array];
-//            
-//            for (NSDictionary *dic in jsonarray) {
-//                WLStatusFrame *sf = [self dataFrameWith:dic];
-//                [newFrames addObject:sf];
-//            }
+            NSMutableArray *newFrames = [NSMutableArray array];
+
+            for (NSDictionary *dic in jsonarray) {
+                WLStatusFrame *sf = [self dataFrameWith:dic];
+                [newFrames addObject:sf];
+            }
             // 2.将newFrames整体插入到旧数据的后面
-//            [_datasource2 addObjectsFromArray:newFrames];
+            [_datasource2 addObjectsFromArray:newFrames];
             
-//            [_datasource2 addObjectsFromArray:_datasource2];
+            [_datasource2 addObjectsFromArray:_datasource2];
             
 //            for (int i = 0; i < _datasource2.count; i++) {
 //                NSMutableArray *indexpaths = [NSMutableArray array];
@@ -844,31 +843,31 @@ static NSString *fridcellid = @"fridcellid";
 //                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithArray:indexpaths] withRowAnimation:UITableViewRowAnimationNone];
 //            }
             
-            NSArray *addArray = _datasource2;
-            NSInteger currentCount = _datasource2.count;
-            
-//            NSMutableArray *indexPaths = [NSMutableArray array];
-//            for (int i=0; i<addArray.count; i++) {
-//                // The new index path is the original number of rows plus i - 1 to leave the last row where it is.
-//                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:(currentCount+i) inSection:0];
-//                [indexPaths addObject:indexpath];
-//            }
-            [_datasource2 addObject:addArray[0]];
-            
-            [_tableView beginUpdates];
-            [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_datasource2.count -1 inSection:0]]withRowAnimation:UITableViewRowAnimationAutomatic];
-            [_tableView endUpdates];
+//            NSArray *addArray = _datasource2;
+//            NSInteger currentCount = _datasource2.count;
+//            
+////            NSMutableArray *indexPaths = [NSMutableArray array];
+////            for (int i=0; i<addArray.count; i++) {
+////                // The new index path is the original number of rows plus i - 1 to leave the last row where it is.
+////                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:(currentCount+i) inSection:0];
+////                [indexPaths addObject:indexpath];
+////            }
+//            [_datasource2 addObject:addArray[0]];
+//            
+//            [_tableView beginUpdates];
+//            [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_datasource2.count -1 inSection:0]]withRowAnimation:UITableViewRowAnimationAutomatic];
+//            [_tableView endUpdates];
             
 //            [_tableView reloadData];
             
             //检查
-//            [self checkNoteInfoLoad:YES];
+            [self checkNoteInfoLoad:YES];
             
 //            [self.refreshControl endRefreshing];
-            
-//            if (jsonarray.count<KCellConut) {
-//                [_tableView setFooterHidden:YES];
-//            }
+            [_tableView footerEndRefreshing];
+            if (jsonarray.count<KCellConut) {
+                [_tableView setFooterHidden:YES];
+            }
         } fail:^(NSError *error) {
 //            [self.refreshControl endRefreshing];
             [_tableView footerEndRefreshing];
