@@ -107,6 +107,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [self.tableView shouldPositionParallaxHeader];
     CGFloat offsetY = scrollView.contentOffset.y;
     UIColor *color = RGB(74.f, 117.f, 183.f);
     if (offsetY > kHeaderImageHeight/3.f) {
@@ -835,7 +836,11 @@
     titleLabel.left = 15.f;
     [headerView addSubview:titleLabel];
     
-    [_tableView setTableHeaderView:headerView];
+//    [_tableView setTableHeaderView:headerView];
+    
+    [_tableView setParallaxHeaderView:headerView
+                                 mode:VGParallaxHeaderModeFill
+                               height:kHeaderImageHeight + titleSize.height + 20.f];
 }
 
 //更新报名人数信息

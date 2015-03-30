@@ -2124,6 +2124,22 @@
 		A4C8E94C1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
 		A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */; };
+		A4D43AAC1AC55A7200713295 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */; };
+		A4D43AAD1AC55A7200713295 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */; };
+		A4D43AAE1AC55A7200713295 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */; };
+		A4D43AAF1AC55A7200713295 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */; };
+		A4D43AB01AC55A7200713295 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */; };
+		A4D43AB11AC55A7200713295 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */; };
+		A4D43AB21AC55A7200713295 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */; };
+		A4D43AB31AC55A7200713295 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */; };
+		A4D43AB41AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */; };
+		A4D43AB51AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */; };
+		A4D43AB61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */; };
+		A4D43AB71AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */; };
+		A4D43AB81AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */; };
+		A4D43AB91AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */; };
+		A4D43ABA1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */; };
+		A4D43ABB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */; };
 		A4E7318A1A8C8AE500980676 /* discovery_activity_detail_people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */; };
 		A4E7318B1A8C8AE500980676 /* discovery_activity_detail_people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */; };
 		A4E7318C1A8C8AE500980676 /* discovery_activity_detail_people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */; };
@@ -5190,6 +5206,17 @@
 		A4C8E9461A4ACA1A003A5A72 /* ChatMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewCell.m; sourceTree = "<group>"; };
 		A4C8E94A1A4ACECC003A5A72 /* CALayer+XibConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+XibConfiguration.h"; sourceTree = "<group>"; };
 		A4C8E94B1A4ACECC003A5A72 /* CALayer+XibConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+XibConfiguration.m"; sourceTree = "<group>"; };
+		A4D43AA11AC55A7200713295 /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
+		A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
+		A4D43AA31AC55A7200713295 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PureLayout.h"; sourceTree = "<group>"; };
+		A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PureLayout.m"; sourceTree = "<group>"; };
+		A4D43AA51AC55A7200713295 /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
+		A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
+		A4D43AA71AC55A7200713295 /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
+		A4D43AA81AC55A7200713295 /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
+		A4D43AA91AC55A7200713295 /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		A4D43AAA1AC55A7200713295 /* UIScrollView+VGParallaxHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+VGParallaxHeader.h"; sourceTree = "<group>"; };
+		A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+VGParallaxHeader.m"; sourceTree = "<group>"; };
 		A4E731871A8C8AE500980676 /* discovery_activity_detail_people@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_people@2x.png"; sourceTree = "<group>"; };
 		A4E731881A8C8AE500980676 /* discovery_activity_detail_place@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_place@2x.png"; sourceTree = "<group>"; };
 		A4E731961A8C8C8600980676 /* ActivityCustomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityCustomViewCell.h; sourceTree = "<group>"; };
@@ -7747,6 +7774,32 @@
 			path = ACETelPrompt;
 			sourceTree = "<group>";
 		};
+		A4D43A9F1AC55A7100713295 /* VGParallaxHeader */ = {
+			isa = PBXGroup;
+			children = (
+				A4D43AA01AC55A7100713295 /* PureLayout */,
+				A4D43AAA1AC55A7200713295 /* UIScrollView+VGParallaxHeader.h */,
+				A4D43AAB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m */,
+			);
+			path = VGParallaxHeader;
+			sourceTree = "<group>";
+		};
+		A4D43AA01AC55A7100713295 /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				A4D43AA11AC55A7200713295 /* ALView+PureLayout.h */,
+				A4D43AA21AC55A7200713295 /* ALView+PureLayout.m */,
+				A4D43AA31AC55A7200713295 /* NSArray+PureLayout.h */,
+				A4D43AA41AC55A7200713295 /* NSArray+PureLayout.m */,
+				A4D43AA51AC55A7200713295 /* NSLayoutConstraint+PureLayout.h */,
+				A4D43AA61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m */,
+				A4D43AA71AC55A7200713295 /* PureLayout+Internal.h */,
+				A4D43AA81AC55A7200713295 /* PureLayout.h */,
+				A4D43AA91AC55A7200713295 /* PureLayoutDefines.h */,
+			);
+			path = PureLayout;
+			sourceTree = "<group>";
+		};
 		A4F6479F1A43DA4B002E66FC /* phonegap */ = {
 			isa = PBXGroup;
 			children = (
@@ -9309,6 +9362,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				A4D43A9F1AC55A7100713295 /* VGParallaxHeader */,
 				F5D04C8B1AC1056F004DE412 /* MLEmoji */,
 				10389B611A3EC8E3001A785C /* Other.h */,
 				A460E4121ABC14E8009DCF63 /* CustomView */,
@@ -12414,6 +12468,7 @@
 				F5D04C821AC104A6004DE412 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				A49C7C591A70D42700F2AEC5 /* XHZoomingImageView.m in Sources */,
 				A49C7C5A1A70D42700F2AEC5 /* CTAssetScrollView.m in Sources */,
+				A4D43ABB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A49C7C5B1A70D42700F2AEC5 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				A49C7C5C1A70D42700F2AEC5 /* UIWebView+AFNetworking.m in Sources */,
 				A49C7C5D1A70D42700F2AEC5 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
@@ -12604,6 +12659,7 @@
 				A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */,
 				A49C7CFD1A70D42700F2AEC5 /* DTTimePeriodCollection.m in Sources */,
 				A49C7CFE1A70D42700F2AEC5 /* CALayer+XibConfiguration.m in Sources */,
+				A4D43AB71AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C861AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */,
 				F55078B61A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
@@ -12618,6 +12674,7 @@
 				A49C80631A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				A49C7D081A70D42700F2AEC5 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DE1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
+				A4D43AAF1AC55A7200713295 /* ALView+PureLayout.m in Sources */,
 				A49C7D091A70D42700F2AEC5 /* InvestCollectionCell.m in Sources */,
 				A49C7D0A1A70D42700F2AEC5 /* FriendsFriendModel.m in Sources */,
 				A49C7D0B1A70D42700F2AEC5 /* SignInPhoneController.m in Sources */,
@@ -12633,6 +12690,7 @@
 				F550787B1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				A49C7D141A70D42700F2AEC5 /* WLStatusM.m in Sources */,
 				A49C7D151A70D42700F2AEC5 /* ALAsset+assetType.m in Sources */,
+				A4D43AB31AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				A49C7D161A70D42700F2AEC5 /* MeinfoCell.m in Sources */,
 				A49C7D171A70D42700F2AEC5 /* SEImageCache.m in Sources */,
 				A49C7D181A70D42700F2AEC5 /* CommentHeadView.m in Sources */,
@@ -12931,6 +12989,7 @@
 				F5D04C811AC104A6004DE412 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				A4C141701A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F53DC2FC1A49192600F5F712 /* CTAssetScrollView.m in Sources */,
+				A4D43ABA1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A4A2EB081A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				F53DC2FD1A49192600F5F712 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9991A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
@@ -13121,6 +13180,7 @@
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
 				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
+				A4D43AB61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C851AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F58CA9801A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
 				F55078B51A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
@@ -13135,6 +13195,7 @@
 				A49C80621A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F53DC36F1A49192600F5F712 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DD1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
+				A4D43AAE1AC55A7200713295 /* ALView+PureLayout.m in Sources */,
 				F534DAEA1A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F53DC3701A49192600F5F712 /* FriendsFriendModel.m in Sources */,
 				F53DC3711A49192600F5F712 /* SignInPhoneController.m in Sources */,
@@ -13150,6 +13211,7 @@
 				F550787A1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F53DC3751A49192600F5F712 /* WLStatusM.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
+				A4D43AB21AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
 				A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F53DC3781A49192600F5F712 /* CommentHeadView.m in Sources */,
@@ -13448,6 +13510,7 @@
 				F5D04C7F1AC104A6004DE412 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				A4743EB51A7F896E00645998 /* ProjectFavorteViewCell.m in Sources */,
 				F53D4E381A4AABE800CA06C8 /* LogInUser.m in Sources */,
+				A4D43AB81AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				F55078AF1A7F5BE9009CE4F7 /* JKAssets.m in Sources */,
 				A4C140651A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
@@ -13638,6 +13701,7 @@
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
 				F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F58CA97E1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
+				A4D43AB41AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C831AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F55078B31A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
 				F5664A311A2AFD56008A5830 /* TOActivitySafari.m in Sources */,
@@ -13652,6 +13716,7 @@
 				F55078DB1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */,
 				F5664A361A2AFD56008A5830 /* UIScrollView+MJExtension.m in Sources */,
+				A4D43AAC1AC55A7200713295 /* ALView+PureLayout.m in Sources */,
 				F5664A381A2AFD56008A5830 /* MJPhotoBrowser.m in Sources */,
 				F5664A391A2AFD56008A5830 /* ForwardPublishView.m in Sources */,
 				F5664A3A1A2AFD56008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
@@ -13667,6 +13732,7 @@
 				F5664A3E1A2AFD56008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
 				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
+				A4D43AB01AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5664A401A2AFD56008A5830 /* WLStatusM.m in Sources */,
 				A403561A1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F5664A411A2AFD56008A5830 /* ALAsset+assetType.m in Sources */,
@@ -13965,6 +14031,7 @@
 				F5D04C801AC104A6004DE412 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				A4C1416F1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				F5664C8D1A2AFDD5008A5830 /* CTAssetScrollView.m in Sources */,
+				A4D43AB91AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A4A2EB071A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				F5664C8E1A2AFDD5008A5830 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9981A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
@@ -14155,6 +14222,7 @@
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
 				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
+				A4D43AB51AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C841AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F58CA97F1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
 				F55078B41A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
@@ -14169,6 +14237,7 @@
 				A49C80611A71041000F2AEC5 /* RSADataSigner.m in Sources */,
 				F5664CF41A2AFDD5008A5830 /* NSString+PinYin4Cocoa.m in Sources */,
 				F55078DC1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
+				A4D43AAD1AC55A7200713295 /* ALView+PureLayout.m in Sources */,
 				F534DAE91A4EAF2900B6A725 /* InvestCollectionCell.m in Sources */,
 				F5664CF51A2AFDD5008A5830 /* FriendsFriendModel.m in Sources */,
 				F5664CF61A2AFDD5008A5830 /* SignInPhoneController.m in Sources */,
@@ -14184,6 +14253,7 @@
 				F55078791A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F5664CFA1A2AFDD5008A5830 /* WLStatusM.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
+				A4D43AB11AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
 				A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664CFD1A2AFDD5008A5830 /* CommentHeadView.m in Sources */,

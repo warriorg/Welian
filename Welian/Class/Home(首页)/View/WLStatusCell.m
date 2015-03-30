@@ -41,7 +41,7 @@
 
 + (instancetype)cellWithTableView:(UITableView *)tableView
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"cooooooooCell";
     WLStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[WLStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
