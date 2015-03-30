@@ -645,6 +645,7 @@ BMKMapManager* _mapManager;
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (loginUser) {
+        NSNumber *maxChatNum = [ChatMessage getMaxChatMessageId];
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(0),@"topid":@(111)}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
                                                
