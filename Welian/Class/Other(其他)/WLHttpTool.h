@@ -200,6 +200,8 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 
 #pragma mark - 发送聊天消息
 + (void)sendMessageParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
+//取聊天消息和好友请求的记录
++ (void)getServiceMessagesParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 取活动报名用户列表
 + (void)loadActiveRecordsParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;

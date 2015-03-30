@@ -426,6 +426,20 @@
     return chatMsg;
 }
 
+//获取当前最大的消息ID
++ (NSNumber *)getMaxChatMessageId
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser.rsLogInUser",loginUser];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"msgId" ascending:NO inContext:loginUser.managedObjectContext];
+    
+    if (chatMessage) {
+        return chatMessage.msgId;
+    }else{
+        return @(0);
+    }
+}
+
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status
 {

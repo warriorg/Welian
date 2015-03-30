@@ -175,14 +175,15 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
     headerView.backgroundColor = [UIColor clearColor];
     
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 60.f)];
-    userInfoView.loginUser = [LogInUser getCurrentLoginUser];
+    userInfoView.loginUser = loginUser;
     self.userInfoView = userInfoView;
     [headerView addSubview:userInfoView];
     
     //切换按钮
     [headerView addSubview:self.wlSegmentedControl];
-    _wlSegmentedControl.sectionDetailTitles = @[@"23",@"476"];
+    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount.stringValue,loginUser.friend2count.stringValue];
     
     [_tableView setTableHeaderView:headerView];
 //    [self.tableView setParallaxHeaderView:headerView
@@ -275,7 +276,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
                 case 1:
                 {
                     //活动
-                    detailInfo = @"活动";
+                    detailInfo = [_infoDict objectForKey:@"active"];
                 }
                     break;
                 case 2:
@@ -482,7 +483,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
     
     // 我的项目
-    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
+    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"] ? : @"";
     
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];
@@ -507,9 +508,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     }
     
     //活动
-    NSString *active = [dataDic objectForKey:@"active"];
+    NSString *active = [[dataDic objectForKey:@"active"] objectForKey:@"name"] ? : @"";
     
-    return (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"project":projectName,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
+    return (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"project":projectName,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM,@"active":active});
 }
 
 - (void)initUserInfo
