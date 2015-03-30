@@ -263,20 +263,20 @@ static NSString *fridcellid = @"fridcellid";
             // 2.给cell传递模型数据
             // 传递的模型：文字数据 + 子控件frame数据
             cell.statusFrame = _datasource2[indexPath.row];
-//            cell.feedzanBlock = ^(WLStatusM *statusM){
-//                WLStatusFrame *statusF = _datasource2[indexPath.row];
-//                [statusF setStatus:statusM];
-//                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-////                [_tableView reloadData];
-//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            };
-//            cell.feedTuiBlock = ^(WLStatusM *statusM){
-//                WLStatusFrame *statusF = _datasource2[indexPath.row];
-//                [statusF setStatus:statusM];
-//                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-////                [_tableView reloadData];
-//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            };
+            cell.feedzanBlock = ^(WLStatusM *statusM){
+                WLStatusFrame *statusF = _datasource2[indexPath.row];
+                [statusF setStatus:statusM];
+                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+//                [_tableView reloadData];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            };
+            cell.feedTuiBlock = ^(WLStatusM *statusM){
+                WLStatusFrame *statusF = _datasource2[indexPath.row];
+                [statusF setStatus:statusM];
+                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+//                [_tableView reloadData];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            };
             //    // 评论
             [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
             // 更多
@@ -779,7 +779,7 @@ static NSString *fridcellid = @"fridcellid";
             // 2.将newFrames整体插入到旧数据的后面
             [_datasource2 addObjectsFromArray:newFrames];
             
-            [_datasource2 addObjectsFromArray:_datasource2];
+//            [_datasource2 addObjectsFromArray:_datasource2];
             
             //检查
             [self checkNoteInfoLoad:YES];
@@ -953,13 +953,36 @@ static NSString *fridcellid = @"fridcellid";
             case 0:
             {
                 //加好友
-                
+                //添加好友，发送添加成功，状态变成待验证
+                LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+                UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",_baseUserModel.name]];
+                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position]];
+                [alert bk_addButtonWithTitle:@"取消" handler:nil];
+                [alert bk_addButtonWithTitle:@"发送" handler:^{
+                    //发送好友请求
+                    [WLHttpTool requestFriendParameterDic:@{@"fid":_baseUserModel.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+                        //设置成待验证的
+                        self.operateType = @(3);
+                        _userInfoView.operateType = _operateType;
+                        
+                        [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                        if (_addFriendBlock) {
+                            _addFriendBlock();
+                        }
+                    } fail:^(NSError *error) {
+                        
+                    }];
+                }];
+                [alert show];
             }
                 break;
             case 1:
             {
                 //通过验证
-                
+                if (self.acceptFriendBlock) {
+                    self.acceptFriendBlock();
+                }
             }
                 break;
             case 3:

@@ -184,10 +184,10 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [headerView addSubview:self.wlSegmentedControl];
     _wlSegmentedControl.sectionDetailTitles = @[@"23",@"476"];
     
-//    [_tableView setTableHeaderView:headerView];
-    [self.tableView setParallaxHeaderView:headerView
-                                     mode:VGParallaxHeaderModeFill
-                                   height:kTableViewHeaderViewHeight];
+    [_tableView setTableHeaderView:headerView];
+//    [self.tableView setParallaxHeaderView:headerView
+//                                     mode:VGParallaxHeaderModeFill
+//                                   height:kTableViewHeaderViewHeight];
     
     WEAKSELF
     [_wlSegmentedControl setIndexChangeBlock:^(NSInteger index) {
@@ -505,6 +505,10 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
         [schoolArrayM addObject:userschoolM];
     }
+    
+    //活动
+    NSString *active = [dataDic objectForKey:@"active"];
+    
     return (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"project":projectName,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
 }
 
