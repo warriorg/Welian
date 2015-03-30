@@ -453,70 +453,16 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (_selectType) {
-        case 0:
-        {
-            //个人信息
-            NSNumber *type = (NSNumber *)[_datasource1[indexPath.section] objectForKey:@"type"];
-            switch (type.integerValue) {
-                case 0:
-                {
-                    NSString *titleInfo = @"";
-                    NSString *detailInfo = @"";
-                    
-                    NSDictionary *infoData = [_datasource1[indexPath.section] objectForKey:@"info"];
-                    NSArray *types = [infoData objectForKey:@"types"];
-                    IIMeInvestAuthModel *investModel = [infoData objectForKey:@"info"];
-                    NSNumber *investType = [[types objectAtIndex:indexPath.row] objectForKey:@"type"];
-                    switch (investType.integerValue) {
-                        case 1:
-                            titleInfo = @"投资领域：";
-                            detailInfo = [investModel displayInvestIndustrys];
-                            break;
-                        case 2:
-                            titleInfo = @"投资案例：";
-                            detailInfo = [investModel displayInvestItems];
-                            break;
-                        default:
-                            titleInfo = @"投资阶段：";
-                            detailInfo = [investModel displayInvestStages];
-                            break;
-                    }
-                    return [UserInfoViewCell configureWithMsg:titleInfo detailMsg:detailInfo];
-                }
-                    break;
-                case 1:
-                {
-                    //项目
-                    return 50.f;
-                }
-                    break;
-                case 2:
-                {
-                    //履历
-                    return 53.f;
-                }
-                    break;
-                default:
-                    return kTableViewCellHeight;
-                    break;
-            }
-        }
-            break;
-        case 1:
-        {
-            //动态
-            return [_datasource2[indexPath.row] cellHigh]+5;
-        }
-            break;
-        default:
-            //共同好友
-            return kTableViewCellHeight;
-            break;
-    }
+    return [self configureCellHeightWithIndex:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self configureCellHeightWithIndex:indexPath];
+}
+
+//获取对应的Cell高度
+- (CGFloat)configureCellHeightWithIndex:(NSIndexPath *)indexPath
 {
     switch (_selectType) {
         case 0:
@@ -580,7 +526,6 @@ static NSString *fridcellid = @"fridcellid";
             break;
     }
 }
-
 
 
 #pragma mark - Private
@@ -836,30 +781,6 @@ static NSString *fridcellid = @"fridcellid";
             
             [_datasource2 addObjectsFromArray:_datasource2];
             
-//            for (int i = 0; i < _datasource2.count; i++) {
-//                NSMutableArray *indexpaths = [NSMutableArray array];
-//                [_datasource2 addObject:_datasource2[i]];
-//                [indexpaths addObject:[NSIndexPath indexPathForRow:(_datasource2.count + i) inSection:0]];
-//                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithArray:indexpaths] withRowAnimation:UITableViewRowAnimationNone];
-//            }
-            
-//            NSArray *addArray = _datasource2;
-//            NSInteger currentCount = _datasource2.count;
-//            
-////            NSMutableArray *indexPaths = [NSMutableArray array];
-////            for (int i=0; i<addArray.count; i++) {
-////                // The new index path is the original number of rows plus i - 1 to leave the last row where it is.
-////                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:(currentCount+i) inSection:0];
-////                [indexPaths addObject:indexpath];
-////            }
-//            [_datasource2 addObject:addArray[0]];
-//            
-//            [_tableView beginUpdates];
-//            [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_datasource2.count -1 inSection:0]]withRowAnimation:UITableViewRowAnimationAutomatic];
-//            [_tableView endUpdates];
-            
-//            [_tableView reloadData];
-            
             //检查
             [self checkNoteInfoLoad:YES];
             
@@ -948,36 +869,36 @@ static NSString *fridcellid = @"fridcellid";
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
-//    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
-//        
-//        WLStatusFrame *statusF = _datasource2[indexPath.row];
-//        [statusF setStatus:statusM];
-//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-////        [self.tableView reloadData];
-//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    };
-//    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
-//        
-//        WLStatusFrame *statusF = _datasource2[indexPath.row];
-//        [statusF setStatus:statusM];
-//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-////        [self.tableView reloadData];
-//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    };
-//    commentInfo.commentBlock = ^(WLStatusM *statusM){
-//        WLStatusFrame *statusF = _datasource2[indexPath.row];
-//        [statusF setStatus:statusM];
-//        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-////        [self.tableView reloadData];
-////        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    };
-//    
-//    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
-//        WLStatusFrame *statusF = _datasource2[indexPath.row];
-//        [statusF setStatus:statusM];
-//        [_datasource2 removeObject:statusF];
-//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    };
+    commentInfo.feedzanBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+//        [self.tableView reloadData];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
+    commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
+        
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+//        [self.tableView reloadData];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
+    commentInfo.commentBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+//        [self.tableView reloadData];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
+    
+    commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
+        WLStatusFrame *statusF = _datasource2[indexPath.row];
+        [statusF setStatus:statusM];
+        [_datasource2 removeObject:statusF];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
 //    _seletIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];
 }
