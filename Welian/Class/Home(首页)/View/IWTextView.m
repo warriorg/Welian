@@ -85,7 +85,6 @@
     
     // 设置画笔颜色
     [_placeholderColor set];
-    
     /*
      NSLineBreakByWordWrapping = 0,  保持单词的完整性
     NSLineBreakByCharWrapping,
