@@ -14,6 +14,7 @@
 @implementation ChatMessage
 
 @dynamic msgId;
+@dynamic messageId;
 @dynamic message;
 @dynamic messageType;
 @dynamic timestamp;
@@ -431,7 +432,7 @@
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser.rsLogInUser",loginUser];
-    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"msgId" ascending:NO inContext:loginUser.managedObjectContext];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO inContext:loginUser.managedObjectContext];
     
     if (chatMessage) {
         return chatMessage.msgId;
