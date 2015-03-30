@@ -408,7 +408,11 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.01f;
+    if (section == _data.count - 1) {
+        return 50.f;
+    }else{
+        return 0.01f;
+    }
 }
 
 #pragma mark - Private
