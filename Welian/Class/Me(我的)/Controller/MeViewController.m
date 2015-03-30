@@ -111,7 +111,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.tableView shouldPositionParallaxHeader];
+//    [self.tableView shouldPositionParallaxHeader];
     CGFloat offsetY = scrollView.contentOffset.y;
 //    if (offsetY < -20) {
 //        scrollView.contentOffset = CGPointMake(0, -20);
