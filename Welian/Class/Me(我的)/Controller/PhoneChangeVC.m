@@ -47,9 +47,11 @@
     [self.authCodeTF setDelegate:self];
     
     if (_type==1) {
+        [self.phoneTF setText:[LogInUser getCurrentLoginUser].mobile];
         [self.titleLabel setText:@"验证手机就可以成为认证用户了哦"];
         [self.sureBut setTitle:@"立即认证" forState:UIControlStateNormal];
     }else if (_type==2){
+        [self.phoneTF setText:[LogInUser getCurrentLoginUser].mobile];
         [self.titleLabel setText:@"修改手机号码"];
         [self.sureBut setTitle:@"确认修改" forState:UIControlStateNormal];
     }
@@ -97,10 +99,16 @@
         [WLHUDView showErrorHUD:@"验证码错误！"];
         return;
     }
+    WEAKSELF
     [WLHttpTool checkMobileCodeParameterDic:@{@"code":self.authCodeTF.text} success:^(id JSON) {
         if ([JSON objectForKey:@"flag"]) {
             [WLHUDView showSuccessHUD:[JSON objectForKey:@"msg"]];
             if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+                [LogInUser setUserMobile:self.phoneTF.text];
+                [LogInUser setUserChecked:@(1)];
+                if (weakSelf.phoneChangeBlcok) {
+                    weakSelf.phoneChangeBlcok();
+                }
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
                 

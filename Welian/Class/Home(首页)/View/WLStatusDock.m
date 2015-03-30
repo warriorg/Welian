@@ -23,6 +23,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         //0.添加时间
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.font = IWTimeFont;

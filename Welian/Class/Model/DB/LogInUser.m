@@ -269,9 +269,13 @@
     LogInUser *loginUser = [self getCurrentLoginUser];
     loginUser.mobile = mobile;
     [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
-    
-//    [[LogInUser getNowLogInUser] setMobile:mobile];
-//    [MOC save];
+}
+
++ (void)setUserChecked:(NSNumber *)checked
+{
+    LogInUser *loginUser = [self getCurrentLoginUser];
+    loginUser.checked = checked;
+    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
 }
 
 + (void)setUserPosition:(NSString*)position

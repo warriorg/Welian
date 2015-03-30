@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WLTextField.h"
 
+typedef void (^PhoneChangeBlock)(void);
+
 @interface PhoneChangeVC : UIViewController
 
 // type  1 为验证手机号   2为修改手机号
@@ -24,6 +26,6 @@
 - (IBAction)sureButClick:(id)sender;
 
 - (IBAction)authButClick:(id)sender;
-
+@property (nonatomic, copy) PhoneChangeBlock phoneChangeBlcok;
 
 @end

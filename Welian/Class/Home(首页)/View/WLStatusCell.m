@@ -71,6 +71,7 @@
         [self.contentView addSubview:_imageV];
         
         _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
+        _cellHeadView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_cellHeadView];
 
         _contentAndDockView = [[WLContentCellView alloc] init];

@@ -424,6 +424,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self pushCommentInfoVC:indexPath];
 }
 
@@ -441,6 +442,7 @@
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
     };
     commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
@@ -448,13 +450,14 @@
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [self.tableView reloadData];
     };
     commentInfo.commentBlock = ^(WLStatusM *statusM){
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     
     commentInfo.deleteStustBlock = ^(WLStatusM *statusM){

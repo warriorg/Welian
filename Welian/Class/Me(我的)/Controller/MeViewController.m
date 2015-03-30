@@ -470,6 +470,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     
     // 我的项目
     NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
+    if (!projectName) {
+        projectName = @"";
+    }
     
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];

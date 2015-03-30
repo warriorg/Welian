@@ -9,13 +9,27 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/AddWorkOrEducationController.m"
-            timestampString = "449120647.943029"
+            filePath = "../../../../var/folders/cq/b7gp8wps70313qvd5v4yjq9m0000gn/T/XcodeMergeSession-d89916a4ea066338078371c4538be2fa99a912f6/MergeDocument-WLLocationHelper.h"
+            timestampString = "448977871.326268"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
-            landmarkName = "-savedata"
+            startingLineNumber = "6"
+            endingLineNumber = "6">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/UserInfoViewController.m"
+            timestampString = "449143197.202064"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "861"
+            endingLineNumber = "861"
+            landmarkName = "-pushCommentInfoVC:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,12 +39,30 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../../../var/folders/cq/b7gp8wps70313qvd5v4yjq9m0000gn/T/XcodeMergeSession-d89916a4ea066338078371c4538be2fa99a912f6/MergeDocument-WLLocationHelper.h"
-            timestampString = "448977871.326268"
+            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/WorksListController.m"
+            timestampString = "449153115.878869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "6"
-            endingLineNumber = "6">
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/WorksListController.m"
+            timestampString = "449153115.878869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "-tableView:numberOfRowsInSection:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

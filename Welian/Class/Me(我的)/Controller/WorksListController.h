@@ -16,6 +16,6 @@ typedef enum {
 
 @interface WorksListController : UIViewController
 
-- (instancetype)initWithType:(WLUserLoadType)type;
+- (instancetype)init;
 
 @end

@@ -127,9 +127,9 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     //tableview头部距离问题
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     
     //更多操作
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
@@ -422,7 +422,9 @@ static NSString *fridcellid = @"fridcellid";
         case 1:
         {
             //进入详情
-            [self pushCommentInfoVC:indexPath];
+            
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            [self pushCommentInfoVC:indexPath];
         }
             break;
         case 2:
@@ -529,7 +531,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     self.selectType = index;
     [self checkNoteInfoLoad:NO];
-    [_tableView setFooterHidden:YES];
+//    [_tableView setFooterHidden:YES];
     switch (index) {
         case 0:
         {
@@ -867,20 +869,20 @@ static NSString *fridcellid = @"fridcellid";
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
         
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     commentInfo.commentBlock = ^(WLStatusM *statusM){
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     
     commentInfo.deleteStustBlock = ^(WLStatusM *statusM){
