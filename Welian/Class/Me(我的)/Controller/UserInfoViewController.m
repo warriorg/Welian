@@ -779,6 +779,7 @@ static NSString *fridcellid = @"fridcellid";
             // 2.将newFrames整体插入到旧数据的后面
             [_datasource2 addObjectsFromArray:newFrames];
             
+//            [_datasource2 addObjectsFromArray:_datasource2];
             //            [_datasource2 addObjectsFromArray:_datasource2];
             
             //检查
