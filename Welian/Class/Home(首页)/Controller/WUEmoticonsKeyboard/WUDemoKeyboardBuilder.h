@@ -13,4 +13,6 @@
 
 + (WUEmoticonsKeyboard *)sharedEmoticonsKeyboard;
 
++ (void)hideSendBut:(BOOL)isHide;
+
 @end

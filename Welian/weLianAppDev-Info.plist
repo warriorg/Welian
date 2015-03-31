@@ -60,7 +60,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<true/>
+	<string>YES</string>
 	<key>PartnerID</key>
 	<string>2088611088140964</string>
 	<key>RSA private key</key>

@@ -24,7 +24,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_renzheng_certification_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="x8Y-xF-HZy">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x8Y-xF-HZy">
                         <rect key="frame" x="239" y="12" width="48" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="FTM-iD-d0k"/>
@@ -59,7 +59,4 @@
             <point key="canvasLocation" x="316" y="312.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="me_renzheng_certification_bg.png" width="48" height="22"/>
-    </resources>
 </document>

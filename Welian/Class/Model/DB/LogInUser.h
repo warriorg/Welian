@@ -156,6 +156,8 @@
 
 
 + (void)setUserUid:(NSNumber *)uid;
++ (void)setUserMobile:(NSString *)mobile;
++ (void)setUserChecked:(NSNumber *)checked;
 + (void)setUserPosition:(NSString*)position;
 + (void)setUserProvinceid:(NSNumber *)provinceid;
 + (void)setUserProvincename:(NSString *)provincename;

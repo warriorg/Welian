@@ -487,7 +487,14 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
     
     // 我的项目
+<<<<<<< HEAD
     NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"] ? : @"";
+=======
+    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
+    if (!projectName) {
+        projectName = @"";
+    }
+>>>>>>> origin/master
     
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];

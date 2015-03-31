@@ -126,6 +126,12 @@ static NSString *mobileCellid = @"MobileInfoCellid";
         return cell;
     }else if(indexPath.section ==2&&indexPath.row==0){
         MobileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:mobileCellid];
+        if (mode.checked.boolValue) {
+            
+            cell.authImageV.image = [UIImage imageNamed:@"me_renzheng_certification_bg.png"];
+        }else{
+            cell.authImageV.image = [UIImage imageNamed:@"me_renzheng_phone_failed_bg"];
+        }
         [cell.detailLabel setText:mode.mobile];
         return cell;
     }else{
@@ -233,14 +239,24 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     }else if (indexPath.section ==2){
         if (indexPath.row==0) {
             UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-            [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
-                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
-                [self.navigationController pushViewController:phoneVC animated:YES];
-            }];
-            [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
-                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
-                [self.navigationController pushViewController:phoneVC animated:YES];
-            }];
+            if (mode.checked.boolValue) {
+                [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
+                    PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
+                    phoneVC.phoneChangeBlcok = ^{
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    };
+                    [self.navigationController pushViewController:phoneVC animated:YES];
+                }];
+            }else{
+                [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
+                    PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
+                    phoneVC.phoneChangeBlcok = ^{
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    };
+                    [self.navigationController pushViewController:phoneVC animated:YES];
+                }];
+            }
+            
             [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
             [sheet showInView:self.view];
             
@@ -278,12 +294,7 @@ static NSString *mobileCellid = @"MobileInfoCellid";
         }
 
     }else if (indexPath.section ==3){
-        if (indexPath.row==0) {
-            controller = [[WorksListController alloc] initWithType:WLSchool];
-        }else {
-            controller = [[WorksListController alloc] initWithType:WLCompany];
-        }
-
+            controller = [[WorksListController alloc] init];
     }
     if (controller) {
         [controller setTitle:dict[@"title"]];

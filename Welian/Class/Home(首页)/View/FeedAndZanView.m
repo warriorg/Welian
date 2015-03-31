@@ -27,6 +27,7 @@
 {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         [self setUserInteractionEnabled:YES];
         _zanimageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"good_small"]];
         [self addSubview:_zanimageview];

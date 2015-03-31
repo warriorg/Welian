@@ -35,6 +35,7 @@
     self = [super init];
     if (self) {
         [self setUserInteractionEnabled:YES];
+        self.backgroundColor = [UIColor clearColor];
         oneLabel = [self newHBVLabel];
         twoLabel = [self newHBVLabel];
         threeLabel = [self newHBVLabel];

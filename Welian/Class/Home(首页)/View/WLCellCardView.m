@@ -21,6 +21,7 @@
 
 - (void)addUIView
 {
+    self.backgroundColor = [UIColor clearColor];
     self.isHidLine = NO;
     
     _iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];

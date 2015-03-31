@@ -17,9 +17,6 @@
 #import "ICompanyResult.h"
 
 @interface WorksListController () <UITableViewDelegate,UITableViewDataSource>
-{
-    WLUserLoadType _wlUserLoadType;
-}
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NoListView *nolistView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -29,6 +26,7 @@
 
 static NSString *cellid = @"workscellid";
 @implementation WorksListController
+
 
 - (UIView *)footView
 {
@@ -71,16 +69,16 @@ static NSString *cellid = @"workscellid";
     return _tableView;
 }
 
-- (instancetype)initWithType:(WLUserLoadType)type
+- (instancetype)init
 {
     self = [super init];
     if (self) {
-        _wlUserLoadType = type;
-        if (type==WLCompany) {
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
-        }else if (type == WLSchool){
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
-        }
+        
+        self.dataArray = [NSMutableArray array];
+        [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
+        [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+        NSSortDescriptor *sortByName= [NSSortDescriptor sortDescriptorWithKey:@"startyear" ascending:NO];
+        [self.dataArray sortUsingDescriptors:[NSArray arrayWithObject:sortByName]];
     }
     return self;
 }
@@ -106,50 +104,50 @@ static NSString *cellid = @"workscellid";
 
 
 #pragma mark - 加载数据
-- (void)loadDataArray
-{
-    if (_wlUserLoadType == WLSchool) {
-        
-        [WLHttpTool loadUserSchoolParameterDic:@{} success:^(id JSON) {
-            for (ISchoolResult *iSchool in JSON) {
-                [SchoolModel createCompanyModel:iSchool];
-            }
-            
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
-
-            if (self.dataArray.count) {
-                [self.tableView reloadData];
-                [self.nolistView removeFromSuperview];
-            }else{
-                if (self.nolistView.superview==nil) {
-                    
-                    [self.tableView addSubview:self.nolistView];
-                }
-            }
-        } fail:^(NSError *error) {
-        }];
-    }else if (_wlUserLoadType == WLCompany){
-        
-        [WLHttpTool loadUserCompanyParameterDic:@{} success:^(id JSON) {
-            
-            for (ICompanyResult *iCompany in JSON) {
-                [CompanyModel createCompanyModel:iCompany];
-            }
-            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
-            if (self.dataArray.count) {
-                [self.tableView reloadData];
-                [self.nolistView removeFromSuperview];
-            }else{
-                if (self.nolistView.superview==nil) {
-                    [self.tableView addSubview:self.nolistView];
-                }
-            }
-
-        } fail:^(NSError *error) {
-        }];
-    }
-    
-}
+//- (void)loadDataArray
+//{
+//    if (_wlUserLoadType == WLSchool) {
+//        
+//        [WLHttpTool loadUserSchoolParameterDic:@{} success:^(id JSON) {
+//            for (ISchoolResult *iSchool in JSON) {
+//                [SchoolModel createCompanyModel:iSchool];
+//            }
+//            
+//            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+//
+//            if (self.dataArray.count) {
+//                [self.tableView reloadData];
+//                [self.nolistView removeFromSuperview];
+//            }else{
+//                if (self.nolistView.superview==nil) {
+//                    
+//                    [self.tableView addSubview:self.nolistView];
+//                }
+//            }
+//        } fail:^(NSError *error) {
+//        }];
+//    }else if (_wlUserLoadType == WLCompany){
+//        
+//        [WLHttpTool loadUserCompanyParameterDic:@{} success:^(id JSON) {
+//            
+//            for (ICompanyResult *iCompany in JSON) {
+//                [CompanyModel createCompanyModel:iCompany];
+//            }
+//            self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
+//            if (self.dataArray.count) {
+//                [self.tableView reloadData];
+//                [self.nolistView removeFromSuperview];
+//            }else{
+//                if (self.nolistView.superview==nil) {
+//                    [self.tableView addSubview:self.nolistView];
+//                }
+//            }
+//
+//        } fail:^(NSError *error) {
+//        }];
+//    }
+//    
+//}
 
 
 #pragma mark - tableView代理
@@ -163,8 +161,9 @@ static NSString *cellid = @"workscellid";
 {
 
     WorkListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    if (_wlUserLoadType == WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.row];
+    id dataM = self.dataArray[indexPath.row];
+    if ([dataM isKindOfClass:[SchoolModel class]]) {
+        SchoolModel *schoolM = dataM;
         NSString *titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
         [cell.titeLabel setText:titStr];
         if (schoolM.endyear.integerValue==-1) {
@@ -172,9 +171,8 @@ static NSString *cellid = @"workscellid";
         }else{
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  %@年%@月",schoolM.startyear,schoolM.startmonth,schoolM.endyear,schoolM.endmonth]];
         }
-        
-    }else if (_wlUserLoadType == WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.row];
+    }else if ([dataM isKindOfClass:[CompanyModel class]]){
+        CompanyModel *companyM = dataM;
         NSString *titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
         [cell.titeLabel setText:titStr];
         if (companyM.endyear.integerValue==-1) {
@@ -182,6 +180,13 @@ static NSString *cellid = @"workscellid";
         }else{
             [cell.dateLabel setText:[NSString stringWithFormat:@"%@年%@月  -  %@年%@月",companyM.startyear,companyM.startmonth,companyM.endyear,companyM.endmonth]];
         }
+        
+    }
+    if (indexPath.row+1==self.dataArray.count) {
+        
+        cell.LiveImage.image = [UIImage imageNamed:@"me_lvli_line_end"];
+    }else{
+        cell.LiveImage.image = [UIImage imageNamed:@"me_lvli_line"];
     }
     
     return cell;
@@ -191,9 +196,10 @@ static NSString *cellid = @"workscellid";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AddWorkOrEducationController *addWkOrEdVC;
-
-    if (_wlUserLoadType ==WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.row];
+    
+    id dataM = self.dataArray[indexPath.row];
+    if ([dataM isKindOfClass:[SchoolModel class]]) {
+        SchoolModel *schoolM = dataM;
         ISchoolResult *iSchool = [[ISchoolResult alloc] init];
         [iSchool setSchoolid:schoolM.schoolid];
         [iSchool setSchoolname:schoolM.schoolname];
@@ -207,8 +213,8 @@ static NSString *cellid = @"workscellid";
         addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1 isNew:NO];
         [addWkOrEdVC setCoerSchoolM:schoolM];
         [addWkOrEdVC setSchoolM:iSchool];
-    }else if (_wlUserLoadType ==WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.row];
+    }else if ([dataM isKindOfClass:[CompanyModel class]]){
+        CompanyModel *companyM = dataM;
         ICompanyResult *iCompany = [[ICompanyResult alloc] init];
         [iCompany setUcid:companyM.ucid];
         [iCompany setCompanyid:companyM.companyid];
@@ -234,13 +240,16 @@ static NSString *cellid = @"workscellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *titStr = @"";
-    if (_wlUserLoadType ==WLSchool) {
-        SchoolModel *schoolM = self.dataArray[indexPath.row];
+    
+    id dataM = self.dataArray[indexPath.row];
+    if ([dataM isKindOfClass:[SchoolModel class]]) {
+        SchoolModel *schoolM = dataM;
         titStr = schoolM.specialtyname.length?[NSString stringWithFormat:@"%@  %@",schoolM.specialtyname,schoolM.schoolname]:schoolM.schoolname;
-    }else if (_wlUserLoadType ==WLCompany){
-        CompanyModel *companyM = self.dataArray[indexPath.row];
+    }else if ([dataM isKindOfClass:[CompanyModel class]]){
+        CompanyModel *companyM = dataM;
         titStr = companyM.companyname.length?[NSString stringWithFormat:@"%@  %@",companyM.jobname,companyM.companyname]:companyM.companyname;
     }
+
     WorkListCell *workCell = [tableView dequeueReusableCellWithIdentifier:cellid];
     //    cell.friendM = newFM;
     float width = [[UIScreen mainScreen] bounds].size.width - 30;

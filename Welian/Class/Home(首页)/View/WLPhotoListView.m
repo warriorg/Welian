@@ -21,6 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         // 1.初始化9个图片对象
         for (int i = 0; i<IWPhotoMaxCount; i++) {
             WLPhotoView *photoView = [[WLPhotoView alloc] init];

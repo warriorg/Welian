@@ -198,13 +198,12 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self loadnewcommentAndFeedZanAndForward];
     [self.view addSubview:self.tableView];
     
-    
+    WEAKSELF
     self.messageView = [[MessageKeyboardView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height, self.view.frame.size.width, 50) andSuperView:self.view withMessageBlock:^(NSString *comment) {
         
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-        
         [reqstDicM setObject:@(self.statusM.topid) forKey:@"fid"];
-        if (self.statusM.topid==0) {
+        if (weakSelf.statusM.topid==0) {
             [reqstDicM setObject:@(self.statusM.fid) forKey:@"fid"];
         }
         [reqstDicM setObject:comment forKey:@"comment"];
@@ -215,8 +214,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         
         [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
             
-            self.statusM.commentcount++;
-            [self loadNewCommentListData];
+            weakSelf.statusM.commentcount++;
+            [weakSelf loadNewCommentListData];
         } fail:^(NSError *error) {
             
         }];

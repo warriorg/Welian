@@ -52,6 +52,7 @@
 
 - (void)setup:(CGRect)frame
 {
+    self.backgroundColor= [UIColor clearColor];
     // 1.头像图片
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KIconX, KIconX, IWIconWHSmall, IWIconWHSmall)];
     [_iconImageView.layer setMasksToBounds:YES];

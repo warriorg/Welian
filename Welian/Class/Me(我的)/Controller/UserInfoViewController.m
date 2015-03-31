@@ -77,7 +77,7 @@ static NSString *fridcellid = @"fridcellid";
         _wlSegmentedControl.selectionIndicatorColor = KBlueTextColor;
         _wlSegmentedControl.showBottomLine = YES;
         _wlSegmentedControl.showLine = YES;//显示分割线
-//        _wlSegmentedControl.isShowVertical = YES;//纵向显示
+        //        _wlSegmentedControl.isShowVertical = YES;//纵向显示
         _wlSegmentedControl.isAllowTouchEveryTime = YES;//允许重复点击
         _wlSegmentedControl.detailLabelFont = [UIFont boldSystemFontOfSize:14.f];
         _wlSegmentedControl.font = [UIFont systemFontOfSize:14.f];
@@ -139,7 +139,7 @@ static NSString *fridcellid = @"fridcellid";
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-//    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
+    //    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -153,7 +153,7 @@ static NSString *fridcellid = @"fridcellid";
     
     //切换按钮
     [headerView addSubview:self.wlSegmentedControl];
-//    _wlSegmentedControl.sectionDetailTitles = @[@"",@"2",@"106"];
+    //    _wlSegmentedControl.sectionDetailTitles = @[@"",@"2",@"106"];
     
     [_tableView setTableHeaderView:headerView];
     
@@ -227,7 +227,7 @@ static NSString *fridcellid = @"fridcellid";
         UIView *topBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headView.width, KTableHeaderHeight)];
         topBgView.backgroundColor = WLLineColor;
         [headView addSubview:topBgView];
-//        @"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":investorM}
+        //        @"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":investorM}
         UIImageView *logoImageView = [[UIImageView alloc] init];
         logoImageView.image = [UIImage imageNamed:[_datasource1[section] objectForKey:@"icon"]];//me_touzi.png   me_lvli.png me_xiangmu.png
         [logoImageView sizeToFit];
@@ -718,40 +718,40 @@ static NSString *fridcellid = @"fridcellid";
     [WLHttpTool loadFeedsParameterDic:darDic
                           andLoadType:_baseUserModel.uid
                               success:^(id JSON) {
-        
-        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
-        
-        // 1.在拿到最新微博数据的同时计算它的frame
-        [_datasource2 removeAllObjects];
-        NSMutableArray *datas = [NSMutableArray array];
-                    
-        for (NSDictionary *dic in jsonarray) {
-            WLStatusFrame *sf = [self dataFrameWith:dic];
-            [datas addObject:sf];
-        }
-        self.datasource2 = datas;
-        if (!_baseUserModel.uid) {
-            [self loadFirstFID];
-//            if (!_datasource.count) {
-//                [self.homeView setHidden:NO];
-//            }else{
-//                [self.homeView setHidden:YES];
-//            }
-        }
-//        [LogInUser setUserNewstustcount:@(0)];
-//        [[MainViewController sharedMainViewController] updataItembadge];
-          //检查
-          [self checkNoteInfoLoad:YES];
-        
-//        [self.refreshControl endRefreshing];
-        [_tableView footerEndRefreshing];
-        if (jsonarray.count<KCellConut) {
-            [_tableView setFooterHidden:YES];
-        }
-    } fail:^(NSError *error) {
-//        [self.refreshControl endRefreshing];
-        [_tableView footerEndRefreshing];
-    }];
+                                  
+                                  NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+                                  
+                                  // 1.在拿到最新微博数据的同时计算它的frame
+                                  [_datasource2 removeAllObjects];
+                                  NSMutableArray *datas = [NSMutableArray array];
+                                  
+                                  for (NSDictionary *dic in jsonarray) {
+                                      WLStatusFrame *sf = [self dataFrameWith:dic];
+                                      [datas addObject:sf];
+                                  }
+                                  self.datasource2 = datas;
+                                  if (!_baseUserModel.uid) {
+                                      [self loadFirstFID];
+                                      //            if (!_datasource.count) {
+                                      //                [self.homeView setHidden:NO];
+                                      //            }else{
+                                      //                [self.homeView setHidden:YES];
+                                      //            }
+                                  }
+                                  //        [LogInUser setUserNewstustcount:@(0)];
+                                  //        [[MainViewController sharedMainViewController] updataItembadge];
+                                  //检查
+                                  [self checkNoteInfoLoad:YES];
+                                  
+                                  //        [self.refreshControl endRefreshing];
+                                  [_tableView footerEndRefreshing];
+                                  if (jsonarray.count<KCellConut) {
+                                      [_tableView setFooterHidden:YES];
+                                  }
+                              } fail:^(NSError *error) {
+                                  //        [self.refreshControl endRefreshing];
+                                  [_tableView footerEndRefreshing];
+                              }];
 }
 
 #pragma mark 加载更多数据
@@ -777,7 +777,7 @@ static NSString *fridcellid = @"fridcellid";
             
             // 1.在拿到最新微博数据的同时计算它的frame
             NSMutableArray *newFrames = [NSMutableArray array];
-
+            
             for (NSDictionary *dic in jsonarray) {
                 WLStatusFrame *sf = [self dataFrameWith:dic];
                 [newFrames addObject:sf];
@@ -785,12 +785,12 @@ static NSString *fridcellid = @"fridcellid";
             // 2.将newFrames整体插入到旧数据的后面
             [_datasource2 addObjectsFromArray:newFrames];
             
-//            [_datasource2 addObjectsFromArray:_datasource2];
+            //            [_datasource2 addObjectsFromArray:_datasource2];
             
             //检查
             [self checkNoteInfoLoad:YES];
             
-//            [self.refreshControl endRefreshing];
+            //            [self.refreshControl endRefreshing];
             [_tableView footerEndRefreshing];
             if (jsonarray.count<KCellConut) {
                 [_tableView setFooterHidden:YES];
@@ -882,7 +882,7 @@ static NSString *fridcellid = @"fridcellid";
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadData];
+        //        [self.tableView reloadData];
         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
@@ -890,14 +890,14 @@ static NSString *fridcellid = @"fridcellid";
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadData];
+        //        [self.tableView reloadData];
         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     commentInfo.commentBlock = ^(WLStatusM *statusM){
         WLStatusFrame *statusF = _datasource2[indexPath.row];
         [statusF setStatus:statusM];
         [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadData];
+        //        [self.tableView reloadData];
         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     
@@ -907,7 +907,7 @@ static NSString *fridcellid = @"fridcellid";
         [_datasource2 removeObject:statusF];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
-//    _seletIndexPath = indexPath;
+    //    _seletIndexPath = indexPath;
     [self.navigationController pushViewController:commentInfo animated:YES];
 }
 
@@ -1027,15 +1027,15 @@ static NSString *fridcellid = @"fridcellid";
     _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? (profileM.feedcount.integerValue > 1000 ? @"999+" : profileM.friendcount.stringValue) : @"",profileM.samefriendscount.stringValue ? (profileM.samefriendscount.integerValue > 99 ? @"99+" : profileM.samefriendscount.stringValue) : @""];
     
     // 动态
-//    NSDictionary *feed = [dataDic objectForKey:@"feed"];
-//    WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
+    //    NSDictionary *feed = [dataDic objectForKey:@"feed"];
+    //    WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
     
     // 投资案例
     NSDictionary *investor = [dataDic objectForKey:@"investor"];
     IIMeInvestAuthModel *investorM = [IIMeInvestAuthModel objectWithDict:investor];
     
     // 我的项目
-//    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
+    //    NSString *projectName = [[dataDic objectForKey:@"project"] objectForKey:@"name"];
     
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];
@@ -1113,7 +1113,7 @@ static NSString *fridcellid = @"fridcellid";
     
     [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
         [self getUserInfoWith:JSON];
-//        self.infoDict = [self getUserInfoWith:JSON];
+        //        self.infoDict = [self getUserInfoWith:JSON];
         //        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
         //        _userMode = [_dataDicM objectForKey:@"profile"];
         //        if (!isask) {

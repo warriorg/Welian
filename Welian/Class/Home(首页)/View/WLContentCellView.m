@@ -56,6 +56,7 @@
  */
 - (void)setupOriginalSubviews
 {
+    self.backgroundColor = [UIColor clearColor];
     // 5.内容
     _contentLabel = [[MLEmojiLabel alloc]init];
     _contentLabel.numberOfLines = 0;

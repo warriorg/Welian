@@ -8,6 +8,7 @@
 
 #import "PhoneChangeVC.h"
 #import "UIImage+ImageEffects.h"
+#import "NSString+val.h"
 
 @interface PhoneChangeVC () <UITextFieldDelegate>
 {
@@ -32,7 +33,6 @@
 }
 
 - (void)viewDidLoad {
-    timeout = KTimes;
     [super viewDidLoad];
     self.title = @"手机校验";
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
@@ -47,9 +47,11 @@
     [self.authCodeTF setDelegate:self];
     
     if (_type==1) {
+        [self.phoneTF setText:[LogInUser getCurrentLoginUser].mobile];
         [self.titleLabel setText:@"验证手机就可以成为认证用户了哦"];
         [self.sureBut setTitle:@"立即认证" forState:UIControlStateNormal];
     }else if (_type==2){
+        [self.phoneTF setText:[LogInUser getCurrentLoginUser].mobile];
         [self.titleLabel setText:@"修改手机号码"];
         [self.sureBut setTitle:@"确认修改" forState:UIControlStateNormal];
     }
@@ -85,16 +87,52 @@
 
 #pragma mark - 确认
 - (IBAction)sureButClick:(id)sender {
-    DLog(@"da");
+    if (!self.phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请输入手机号"];
+        return;
+    }
+    if (![NSString phoneValidate:self.phoneTF.text]) {
+        [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
+        return;
+    }
+    if (self.authCodeTF.text.length<4) {
+        [WLHUDView showErrorHUD:@"验证码错误！"];
+        return;
+    }
+    WEAKSELF
+    [WLHttpTool checkMobileCodeParameterDic:@{@"code":self.authCodeTF.text} success:^(id JSON) {
+        if ([JSON objectForKey:@"flag"]) {
+            [WLHUDView showSuccessHUD:[JSON objectForKey:@"msg"]];
+            if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+                [LogInUser setUserMobile:self.phoneTF.text];
+                [LogInUser setUserChecked:@(1)];
+                if (weakSelf.phoneChangeBlcok) {
+                    weakSelf.phoneChangeBlcok();
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+            }
+        }
+    } fail:^(NSError *error) {
+        
+    }];
+    
 }
 
 
 #pragma mark - 发送验证码
 - (IBAction)authButClick:(id)sender {
-    timeout = KTimes;
+    if (!self.phoneTF.text.length) {
+        [WLHUDView showErrorHUD:@"请输入手机号"];
+        return;
+    }
+    if (![NSString phoneValidate:self.phoneTF.text]) {
+        [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
+        return;
+    }
     [self startTime];
     [self chongxingfasongforgetcode];
-    DLog(@"aadf");
 }
 
 
@@ -102,12 +140,18 @@
 // 注册重新发送验证码
 - (void)chongxingfasongforgetcode
 {
-    
+    [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
+        if ([JSON objectForKey:@"checkcode"]) {
+            [WLHUDView showSuccessHUD:@"发送成功"];
+        }
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 
 -(void)startTime{
-    
+    timeout = KTimes;
     if (timeout< 60)  {
         return;
     }else{
