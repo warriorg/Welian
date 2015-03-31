@@ -267,14 +267,14 @@ static NSString *fridcellid = @"fridcellid";
                 WLStatusFrame *statusF = _datasource2[indexPath.row];
                 [statusF setStatus:statusM];
                 [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-                //                [_tableView reloadData];
+//                [_tableView reloadData];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             cell.feedTuiBlock = ^(WLStatusM *statusM){
                 WLStatusFrame *statusF = _datasource2[indexPath.row];
                 [statusF setStatus:statusM];
                 [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
-                //                [_tableView reloadData];
+//                [_tableView reloadData];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             //    // 评论
@@ -790,7 +790,7 @@ static NSString *fridcellid = @"fridcellid";
                 [_tableView setFooterHidden:YES];
             }
         } fail:^(NSError *error) {
-            //            [self.refreshControl endRefreshing];
+//            [self.refreshControl endRefreshing];
             [_tableView footerEndRefreshing];
         }];
     }
