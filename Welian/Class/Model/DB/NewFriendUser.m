@@ -12,6 +12,7 @@
 
 @implementation NewFriendUser
 
+@dynamic messageId;
 @dynamic created;
 @dynamic isLook;
 @dynamic pushType;

@@ -36,6 +36,7 @@
 @property (assign,nonatomic) UserInfoView *userInfoView;
 @property (strong,nonatomic) WLNoteInfoView *wlNoteInfoView;//状态提醒
 @property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
+@property (assign,nonatomic) NSInteger pageIndex;//默认选择动态页数
 
 @end
 
@@ -93,6 +94,7 @@ static NSString *fridcellid = @"fridcellid";
     self = [super init];
     if (self) {
         self.selectType = 0;
+        self.pageIndex = 1;//默认第一页
         self.baseUserModel = iBaseUserModel;
         self.operateType = operateType;
     }
@@ -548,7 +550,9 @@ static NSString *fridcellid = @"fridcellid";
             //隐藏表格分割线
             [_tableView setFooterHidden:NO];
             _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [self getUserFeedsData];
+            if (_datasource2.count <= 0) {
+                [self getUserFeedsData];
+            }
         }
             break;
         case 2:
@@ -700,9 +704,11 @@ static NSString *fridcellid = @"fridcellid";
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
     
+    self.pageIndex = 1;
+    
     if (_baseUserModel.uid) {
         //查看他人的动态
-        [darDic setObject:@(0) forKey:@"page"];
+        [darDic setObject:@(_pageIndex) forKey:@"page"];
         [darDic setObject:_baseUserModel.uid forKey:@"uid"];
     }else {
         //调用自己的动态
@@ -760,7 +766,7 @@ static NSString *fridcellid = @"fridcellid";
         [darDic setObject:@(KCellConut) forKey:@"size"];
         if (_baseUserModel.uid) {
             [darDic setObject:_baseUserModel.uid forKey:@"uid"];
-            [darDic setObject:@(start) forKey:@"page"];
+            [darDic setObject:@(_pageIndex) forKey:@"page"];
         }else{
             [darDic setObject:@(start) forKey:@"start"];
         }
@@ -789,6 +795,8 @@ static NSString *fridcellid = @"fridcellid";
             [_tableView footerEndRefreshing];
             if (jsonarray.count<KCellConut) {
                 [_tableView setFooterHidden:YES];
+            }else{
+                _pageIndex++;
             }
         } fail:^(NSError *error) {
 //            [self.refreshControl endRefreshing];

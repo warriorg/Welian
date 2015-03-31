@@ -605,6 +605,20 @@
     return newFriend;
 }
 
+//获取当前最大的新的好友的messageID
+- (NSNumber *)getMaxNewFriendUserMessageId
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsLogInUser",self];
+    
+    NewFriendUser *newFriend = [NewFriendUser MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO];
+    
+    if (newFriend) {
+        return @(newFriend.messageId.integerValue);
+    }else{
+        return @(0);
+    }
+}
+
 //---------------------HomeMessage----------
 // //通过commentid查询
 - (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid

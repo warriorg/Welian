@@ -14,6 +14,7 @@
 
 @interface NewFriendUser : BaseUser
 
+@property (nonatomic, retain) NSString * messageId;
 @property (nonatomic, retain) NSString * created;
 @property (nonatomic, retain) NSNumber * isLook;
 @property (nonatomic, retain) NSString * pushType;

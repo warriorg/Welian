@@ -199,7 +199,7 @@
 {
     if (section == 0) {
         if (_activityInfo) {
-            return 4.f;
+            return _activityInfo.sponsor.length > 0 ? 5.f : 4.f;
         }else{
             return 0;
         }
@@ -236,7 +236,7 @@
     
     if(indexPath.section == 0){
         //微信联系人
-        if (indexPath.row < 3) {
+        if (indexPath.row < 4) {
             static NSString *cellIdentifier = @"Activity_Custom_View_Cell";
             ActivityCustomViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -281,11 +281,41 @@
                     }
                 }
                     break;
+                case 3:
+                {
+                    //如果活动主办方存在
+                    if(_activityInfo.sponsor.length > 0){
+                        //活动主办方
+                        cell.showCustomInfo = NO;
+                        cell.accessoryType = UITableViewCellSelectionStyleNone;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_zhubanfang"];
+                        cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
+                    }else{
+                        //活动详情
+                        static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
+                        ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                        if (!cell) {
+                            cell = [[ActivityInfoViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+                        }
+                        cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+                        cell.layer.borderWidths = @"{0.6,0,0,0}";
+                        
+                        cell.textLabel.text = @"";
+                        cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
+                        WEAKSELF
+                        [cell setBlock:^(void){
+                            [weakSelf showActivityDetailInfo];
+                        }];
+                        return cell;
+                    }
+                }
+                    break;
                 default:
                     break;
             }
             return cell;
-        }else if (indexPath.row == 3){
+        }else if (indexPath.row == 4){
             static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
             ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -294,9 +324,7 @@
             cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
             cell.layer.borderWidths = @"{0.6,0,0,0}";
             
-            cell.textLabel.text = _activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"";
-//            cell.detailTextLabel.text = _activityInfo.intro;
-//            cell.detailTextView.text = [_activityInfo displayActivityInfo];
+            cell.textLabel.text = @"";
             cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
             WEAKSELF
             [cell setBlock:^(void){
@@ -384,7 +412,17 @@
                 return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited] hasArrowImage:YES];
                 break;
             case 3:
-                return [ActivityInfoViewCell configureWithTitle:_activityInfo.sponsor.length > 0 ? [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] : @"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
+                //如果活动主办方存在
+                if(_activityInfo.sponsor.length > 0){
+                    return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] hasArrowImage:NO];
+                }else{
+                    //活动详情
+                    return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
+                }
+                break;
+            case 4:
+                return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
+                break;
             default:
                 return 60.f;
                 break;

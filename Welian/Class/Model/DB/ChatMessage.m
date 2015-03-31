@@ -14,6 +14,7 @@
 @implementation ChatMessage
 
 @dynamic msgId;
+@dynamic messageId;
 @dynamic message;
 @dynamic messageType;
 @dynamic timestamp;
@@ -424,6 +425,20 @@
     [friendUser updateLastChatTime:chatMsg.timestamp];
     
     return chatMsg;
+}
+
+//获取当前最大的消息ID
++ (NSNumber *)getMaxChatMessageId
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser.rsLogInUser",loginUser];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO inContext:loginUser.managedObjectContext];
+    
+    if (chatMessage) {
+        return chatMessage.msgId;
+    }else{
+        return @(0);
+    }
 }
 
 //更新发送状态

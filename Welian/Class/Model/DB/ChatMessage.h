@@ -14,6 +14,7 @@
 @interface ChatMessage : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * msgId;
+@property (nonatomic, retain) NSString * messageId;
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSNumber * messageType;
 @property (nonatomic, retain) NSDate * timestamp;
@@ -57,6 +58,9 @@
 
 //创建特殊自定义聊天类型
 + (ChatMessage *)createSpecialMessageWithMessage:(WLMessage *)wlMessage FriendUser:(MyFriendUser *)friendUser;
+
+//获取当前最大的消息ID
++ (NSNumber *)getMaxChatMessageId;
 
 //更新发送状态
 - (void)updateSendStatus:(NSInteger)status;

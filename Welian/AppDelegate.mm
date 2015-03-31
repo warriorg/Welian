@@ -527,6 +527,9 @@ BMKMapManager* _mapManager;
         _updataalert =  [[UIAlertView alloc] initWithTitle:@"更新提示" message:_msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
         [_updataalert show];
     }
+    
+    //获取聊天消息记录 和好友请求消息
+    [self getServiceChatMsgInfo];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -637,5 +640,29 @@ BMKMapManager* _mapManager;
     [mgr.imageCache clearMemory];
 }
 
+//获取聊天消息记录 和好友请求消息
+- (void)getServiceChatMsgInfo
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    if (loginUser) {
+        NSNumber *maxChatNum = [ChatMessage getMaxChatMessageId];
+        [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(0),@"topid":maxChatNum}//0 聊天消息，1 好友请求
+                                           success:^(id JSON) {
+                                               
+                                               
+                                           } fail:^(NSError *error) {
+                                               DLog(@"service chatMsg error:%@",error.description);
+                                           }];
+        
+        //好友请求消息
+        [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(1),@"topid":@(111)}//0 聊天消息，1 好友请求
+                                           success:^(id JSON) {
+                                               
+                                               
+                                           } fail:^(NSError *error) {
+                                               DLog(@"service friendMsg error:%@",error.description);
+                                           }];
+    }
+}
 
 @end
