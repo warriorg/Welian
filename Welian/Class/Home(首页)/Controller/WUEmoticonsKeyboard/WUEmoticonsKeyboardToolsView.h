@@ -22,4 +22,5 @@
 @property (nonatomic,weak,readonly) UIButton *backspaceButton;
 @property (nonatomic,weak,readonly) UIButton *spaceButton;
 
+@property (nonatomic,assign) BOOL hideSendBut;
 @end

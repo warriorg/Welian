@@ -89,4 +89,13 @@
     }
 }
 
+
++ (void)hideSendBut:(BOOL)isHide
+{
+    if (isHide) {
+      WUEmoticonsKeyboard *keyboard = [self sharedEmoticonsKeyboard];
+        [keyboard setHideSendBut:isHide];
+    }
+}
+
 @end

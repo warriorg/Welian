@@ -11,5 +11,6 @@
 @interface WorkListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *LiveImage;
 
 @end

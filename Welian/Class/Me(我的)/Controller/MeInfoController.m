@@ -126,11 +126,11 @@ static NSString *mobileCellid = @"MobileInfoCellid";
         return cell;
     }else if(indexPath.section ==2&&indexPath.row==0){
         MobileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:mobileCellid];
-        if (!mode.checked.boolValue) {
+        if (mode.checked.boolValue) {
             
             cell.authImageV.image = [UIImage imageNamed:@"me_renzheng_certification_bg.png"];
         }else{
-            cell.authImageV.image = [UIImage imageNamed:@"me_renzheng_certification_bg.png"];
+            cell.authImageV.image = [UIImage imageNamed:@"me_renzheng_phone_failed_bg"];
         }
         [cell.detailLabel setText:mode.mobile];
         return cell;

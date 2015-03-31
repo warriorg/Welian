@@ -7,6 +7,7 @@
 //
 
 #import "WUEmoticonsKeyboardToolsView.h"
+#import "UIImage+ImageEffects.h"
 
 @interface WUEmoticonsKeyboardToolsView ()
 @property (nonatomic,weak,readwrite) UIButton           *keyboardSwitchButton;
@@ -43,13 +44,25 @@
         self.segmentedControl = segmentedControl;
 //
 //        // 空格
-//        UIButton *spaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        spaceButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//        [spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-//        [self addSubview:spaceButton];
-//        self.spaceButton = spaceButton;
+        UIButton *spaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        spaceButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [spaceButton setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateNormal];
+        [spaceButton setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateHighlighted];
+        [spaceButton setTitle:@"发送" forState:UIControlStateNormal];
+        [spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:spaceButton];
+        self.spaceButton = spaceButton;
+        if (self.hideSendBut) {
+            [self.spaceButton setHidden:YES];
+        }
     }
     return self;
+}
+
+- (void)setHideSendBut:(BOOL)hideSendBut
+{
+    _hideSendBut = hideSendBut;
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
@@ -59,8 +72,12 @@
     CGSize backspaceButtonSize = [self.backspaceButton sizeThatFits:self.bounds.size];
     
 //    self.keyboardSwitchButton.frame = (CGRect){CGPointZero,keyboardSwitchButtonSize};
-    self.backspaceButton.frame = (CGRect){ {CGRectGetWidth(self.bounds) - backspaceButtonSize.width-20, 0} ,backspaceButtonSize};
-//    self.spaceButton.frame = self.segmentedControl.frame = CGRectMake(keyboardSwitchButtonSize.width, 0, CGRectGetWidth(self.bounds) - keyboardSwitchButtonSize.width - backspaceButtonSize.width, CGRectGetHeight(self.bounds));
+    self.backspaceButton.frame = (CGRect){ {CGRectGetWidth(self.bounds) - backspaceButtonSize.width-20, 5} ,backspaceButtonSize};
+    self.spaceButton.frame = self.segmentedControl.frame = CGRectMake(CGRectGetMinX(self.backspaceButton.frame)-70-20, 5, 70, CGRectGetHeight(self.bounds)-10);
+    if (self.hideSendBut) {
+        [self.spaceButton setHidden:YES];
+    }
+
 }
 
 - (void)setKeyItemGroups:(NSArray *)keyItemGroups {

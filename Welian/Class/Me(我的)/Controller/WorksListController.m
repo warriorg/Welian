@@ -182,6 +182,12 @@ static NSString *cellid = @"workscellid";
         }
         
     }
+    if (indexPath.row+1==self.dataArray.count) {
+        
+        cell.LiveImage.image = [UIImage imageNamed:@"me_lvli_line_end"];
+    }else{
+        cell.LiveImage.image = [UIImage imageNamed:@"me_lvli_line"];
+    }
     
     return cell;
 }

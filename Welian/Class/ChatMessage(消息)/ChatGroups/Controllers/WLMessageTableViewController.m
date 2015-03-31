@@ -622,6 +622,7 @@ static CGPoint  delayOffset = {0.0};
         self.previousTextViewContentHeight = [self getTextViewContentH:messageInputTextView];
 }
 
+
 - (void)didChangeSendVoiceAction:(BOOL)changed {
     if (changed) {
         if (self.textViewInputViewType == WLInputViewTypeText)

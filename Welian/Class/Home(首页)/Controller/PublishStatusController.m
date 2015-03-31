@@ -211,10 +211,15 @@ static NSString *picCellid = @"PicCellID";
             [_textCell.textView switchToDefaultKeyboard];
         }
         else{
-            [_textCell.textView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+            WUEmoticonsKeyboard *adf = [WUDemoKeyboardBuilder sharedEmoticonsKeyboard];
+            [adf setHideSendBut:YES];
+            [_textCell.textView switchToEmoticonsKeyboard:adf];
         }
     }else{
-        [_textCell.textView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+        WUEmoticonsKeyboard *adf = [WUDemoKeyboardBuilder sharedEmoticonsKeyboard];
+        [adf setHideSendBut:YES];
+        [_textCell.textView switchToEmoticonsKeyboard:adf];
+//        [_textCell.textView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
         [_textCell.textView becomeFirstResponder];
     }
 }
@@ -510,6 +515,10 @@ static NSString *picCellid = @"PicCellID";
         if (self.statusCard) {
             NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
             if (_textCell.textView.text.length) {
+                if (_textCell.textView.text.length>300) {
+                    [WLHUDView showErrorHUD:@"不能超过300字"];
+                    return;
+                }
                 [pubCardDic setObject:_textCell.textView.text forKey:@"content"];
             }
             [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
@@ -540,6 +549,10 @@ static NSString *picCellid = @"PicCellID";
         self.publishM.photos = [NSMutableArray array];
         NSMutableDictionary *reqDataDic = [NSMutableDictionary dictionary];
         if (self.publishM.content) {
+            if (_textCell.textView.text.length>300) {
+                [WLHUDView showErrorHUD:@"不能超过300字"];
+                return;
+            }
             [reqDataDic setObject:self.publishM.content forKey:@"content"];
         }
         if (self.publishM.address) {

@@ -141,8 +141,9 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
     WUEmoticonsKeyboard *__weak weakSelf = self;
     
     self.toolsViewHeight = WUEmoticonsKeyboardToolsViewDefaultHeight;
-    
+    self.hideSendBut = NO;
     WUEmoticonsKeyboardToolsView *toolsView = [[WUEmoticonsKeyboardToolsView alloc] initWithFrame:self.toolsViewFrame];
+    [toolsView setHideSendBut:self.hideSendBut];
     toolsView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     [toolsView setKeyboardSwitchButtonTappedBlock:^{
@@ -152,9 +153,12 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
     [toolsView setBackspaceButtonTappedBlock:^{
         [weakSelf backspace];
     }];
-    
+//    self.spaceButtonTappedBlock = toolsView.spaceButtonTappedBlock;
     [toolsView setSpaceButtonTappedBlock:^{
-        [weakSelf inputText:@" "];
+        if (weakSelf.spaceButtonTappedBlock) {
+            weakSelf.spaceButtonTappedBlock();
+        }
+//        [weakSelf inputText:@" "];
     }];
     
     [toolsView setKeyItemGroupSelectedBlock:^(WUEmoticonsKeyboardKeyItemGroup *keyItemGroup) {
@@ -172,6 +176,12 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 
 #pragma mark - Layout
 
+- (void)setHideSendBut:(BOOL)hideSendBut
+{
+    _hideSendBut = hideSendBut;
+    [self setNeedsLayout];
+}
+
 - (void)setToolsViewHeight:(CGFloat)toolsViewHeight {
     _toolsViewHeight = toolsViewHeight;
     [self setNeedsLayout];
@@ -188,6 +198,7 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.toolsView.frame = self.toolsViewFrame;
+    [self.toolsView setHideSendBut:self.hideSendBut];
     [self.keyItemGroupViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.frame = self.keyItemGroupViewFrame;
     }];

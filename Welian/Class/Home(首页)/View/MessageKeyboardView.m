@@ -74,17 +74,16 @@
     return self;
 }
 
-- (void)textViewDidChange:(UITextView *)textView
+- (void)textviewChangeHigh:(CGSize)size withTextView:(UITextView *)textView
 {
-    CGSize size = textView.contentSize;
     size.height -= 2;
     if ( size.height >= 58 ) {
         
         size.height = 58;
     }
-    else if ( size.height <= 32 ) {
+    else if ( size.height <= 35 ) {
         
-        size.height = 32;
+        size.height = 35;
     }
     
     if ( size.height != textView.frame.size.height ) {
@@ -106,16 +105,40 @@
         center.y = centerY;
         textView.center = center;
     }
+
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    CGSize size = textView.contentSize;
+    [self textviewChangeHigh:size withTextView:textView];
 }
 
 
 - (void)switchKeyboard:(UIButton *)sender {
     [_emojiBut setSelected:!_emojiBut.selected];
+    WEAKSELF
     if (_commentTextView.isFirstResponder) {
         if (_commentTextView.emoticonsKeyboard) [_commentTextView switchToDefaultKeyboard];
-        else [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+        else {
+            WUEmoticonsKeyboard *keyboard = [WUDemoKeyboardBuilder sharedEmoticonsKeyboard];
+            [keyboard setHideSendBut:NO];
+            [keyboard setSpaceButtonTappedBlock:^{
+//                _messageBlock(_commentTextView.text);
+                [weakSelf sendMessgeText];
+            }];
+            [_commentTextView switchToEmoticonsKeyboard:keyboard];
+
+//            [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+        }
     }else{
-        [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
+        WUEmoticonsKeyboard *keyboard = [WUDemoKeyboardBuilder sharedEmoticonsKeyboard];
+        [keyboard setHideSendBut:NO];
+        [keyboard setSpaceButtonTappedBlock:^{
+            [weakSelf sendMessgeText];
+        }];
+        [_commentTextView switchToEmoticonsKeyboard:keyboard];
+//        [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
         [_commentTextView becomeFirstResponder];
     }
 }
@@ -183,12 +206,13 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
-        [self dismissKeyBoard];
-        if (textView.text.length) {
-            _messageBlock(textView.text);
-            [textView setText:nil];
-            [self textViewDidChange:textView];
-        }
+        [self sendMessgeText];
+//        if (textView.text.length) {
+//            _messageBlock(textView.text);
+//            [textView setText:nil];
+//        }
+//        [self textviewChangeHigh:CGSizeMake(textView.bounds.size.width, 35) withTextView:textView];
+//        [self dismissKeyBoard];
         //在这里做你响应return键的代码
         return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
@@ -196,6 +220,15 @@
     return YES;
 }
 
+- (void)sendMessgeText
+{
+    if (_commentTextView.text.length) {
+        _messageBlock(_commentTextView.text);
+        [_commentTextView setText:nil];
+    }
+    [self textviewChangeHigh:CGSizeMake(_commentTextView.bounds.size.width, 35) withTextView:_commentTextView];
+    [self dismissKeyBoard];
+}
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];

@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, WUEmoticonsKeyboardButton) {
 
 @interface WUEmoticonsKeyboard : UIView <UIAppearance,UIAppearanceContainer>
 
+@property (nonatomic,copy)   void    (^spaceButtonTappedBlock)(void);
+
 @property (nonatomic)      BOOL    enableStandardSystemKeyboardClickSound;
 
 /*
@@ -59,6 +61,8 @@ typedef NS_ENUM(NSUInteger, WUEmoticonsKeyboardButton) {
 - (NSAttributedString *)attributedTitleForButton:(WUEmoticonsKeyboardButton)button state:(UIControlState)state;
 
 @property (nonatomic) CGFloat toolsViewHeight UI_APPEARANCE_SELECTOR; //Default 45.0f
+
+@property (nonatomic, assign) BOOL hideSendBut;
 
 @end
 
