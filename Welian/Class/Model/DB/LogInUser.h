@@ -83,7 +83,7 @@
 //---------------------- NewFriendUser -------
 - (NewFriendUser *)getNewFriendUserWithUid:(NSNumber *)uid;
 //获取当前最大的新的好友的messageID
-- (NSNumber *)getMaxNewFriendUserMessageId;
+- (NSString *)getMaxNewFriendUserMessageId;
 
 
 //---------------------HomeMessage----------

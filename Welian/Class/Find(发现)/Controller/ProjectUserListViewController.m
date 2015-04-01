@@ -7,6 +7,8 @@
 //
 
 #import "ProjectUserListViewController.h"
+#import "UserInfoViewController.h"
+
 #import "ActivityUserViewCell.h"
 #import "UserInfoBasicVC.h"
 #import "MJRefresh.h"
@@ -108,7 +110,9 @@
     //    NSString *friendship = info[@"friendship"];
     if(user.uid != nil){
         //系统联系人
-        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
+//        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:user OperateType:nil];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
         //添加好友成功
         [userInfoVC setAddFriendBlock:^(){
             
@@ -120,7 +124,6 @@
             //刷新列表
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
-        [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 

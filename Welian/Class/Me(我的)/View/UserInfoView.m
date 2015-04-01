@@ -11,7 +11,7 @@
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
 
-#define kBlueBgViewHeight 130.f
+#define kBlueBgViewHeight 230.f
 #define kLogoHeight 70.f
 #define kButtonWidth 65.f
 #define kButtonHeight 25.f
@@ -71,6 +71,7 @@
     }else{
         _cityBtn.hidden = YES;
     }
+    [self setNeedsLayout];
 }
 
 - (void)setBaseUserModel:(IBaseUserM *)baseUserModel
@@ -102,17 +103,26 @@
         _cityBtn.hidden = YES;
     }
     _operateBtn.enabled = YES;
+    //自己
+    _operateBtn.hidden = NO;
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     if (_baseUserModel.friendship.integerValue == 1) {
         [_operateBtn setTitle:@"发消息" forState:UIControlStateNormal];
         [_operateBtn setImage:[UIImage imageNamed:@"me_button_chat"] forState:UIControlStateNormal];
     }else{
-        [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
-        [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+        if (_baseUserModel.friendship.integerValue == -1) {
+            //自己
+            _operateBtn.hidden = YES;
+        }else{
+            [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
+            [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+        }
     }
+    
+    [self setNeedsLayout];
 }
 
-////操作类型0：添加 1：接受  2:已添加 3：待验证
+////操作类型0：添加 1：接受  2:已添加 3：待验证   10:隐藏操作按钮
 - (void)setOperateType:(NSNumber *)operateType
 {
     [super willChangeValueForKey:@"operateType"];
@@ -120,32 +130,37 @@
     [super didChangeValueForKey:@"operateType"];
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     _operateBtn.enabled = YES;
-    if (_baseUserModel.friendship.integerValue == 1) {
-        [_operateBtn setTitle:@"发消息" forState:UIControlStateNormal];
-        [_operateBtn setImage:[UIImage imageNamed:@"me_button_chat"] forState:UIControlStateNormal];
+    if (_operateType.integerValue == 10 || _baseUserModel.friendship.integerValue == -1) {
+        _operateBtn.hidden = YES;
     }else{
-        switch (_operateType.integerValue) {
-            case 0:
-            {
-                [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
-                [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+        _operateBtn.hidden = NO;
+        if (_baseUserModel.friendship.integerValue == 1 || _operateType.integerValue == 2) {
+            [_operateBtn setTitle:@"发消息" forState:UIControlStateNormal];
+            [_operateBtn setImage:[UIImage imageNamed:@"me_button_chat"] forState:UIControlStateNormal];
+        }else{
+            switch (_operateType.integerValue) {
+                case 0:
+                {
+                    [_operateBtn setTitle:@"加好友" forState:UIControlStateNormal];
+                    [_operateBtn setImage:[UIImage imageNamed:@"me_button_add"] forState:UIControlStateNormal];
+                }
+                    break;
+                case 1:
+                {
+                    [_operateBtn setTitle:@"通过验证" forState:UIControlStateNormal];
+                    [_operateBtn setImage:nil forState:UIControlStateNormal];
+                }
+                    break;
+                case 3:
+                {
+                    [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
+                    [_operateBtn setImage:nil forState:UIControlStateNormal];
+                    _operateBtn.enabled = NO;
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            case 1:
-            {
-                [_operateBtn setTitle:@"通过验证" forState:UIControlStateNormal];
-                [_operateBtn setImage:nil forState:UIControlStateNormal];
-            }
-                break;
-            case 3:
-            {
-                [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
-                [_operateBtn setImage:nil forState:UIControlStateNormal];
-                _operateBtn.enabled = NO;
-            }
-                break;
-            default:
-                break;
         }
     }
 }

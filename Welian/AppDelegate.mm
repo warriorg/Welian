@@ -338,7 +338,18 @@ BMKMapManager* _mapManager;
         [KNSNotification postNotificationName:KMessageHomeNotif object:self];
         
     }else if([type isEqualToString:@"friendRequest"]||[type isEqualToString:@"friendAdd"]||[type isEqualToString:@"friendCommand"]){
-        
+        /*
+         data =     {
+         avatar = "http://img.welian.com/1418619525311-200-200_x.jpg";
+         company = "\U676d\U5dde\U4f20\U9001\U95e8\U7f51\U7edc\U6280\U672f\U6709\U9650\U516c\U53f8";
+         created = "2015-03-31 15:25:03";
+         msg = "\U6211\U662f\U676d\U5dde\U4f20\U9001\U95e8\U7f51\U7edc\U6280\U672f\U6709\U9650\U516c\U53f8\U7684iOS\U9ad8\U7ea7\U5f00\U53d1\U5de5\U7a0b\U5e08";
+         name = "\U6d4b\U8bd511078";
+         position = "iOS\U9ad8\U7ea7\U5f00\U53d1\U5de5\U7a0b\U5e08";
+         uid = 11078;
+         };
+         type = friendRequest;
+         */
         // 好友消息推送
         [self getNewFriendMessage:dataDic];
         // 振动和声音提示
@@ -446,14 +457,11 @@ BMKMapManager* _mapManager;
                 [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
             }
         }
-
     }
     [NewFriendUser createNewFriendUserModel:newfrendM];
-    
 }
 
-
-// 接受聊天消息
+// 接收聊天消息
 - (void)getIMGTMessage:(NSDictionary *)dataDic
 {
     NSNumber *toUser = dataDic[@"uid"];
@@ -465,12 +473,7 @@ BMKMapManager* _mapManager;
     
     //添加数据
     [ChatMessage createReciveMessageWithDict:dataDic];
-    
-    //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
-
-
 
 // 退出登录
 - (void)logout
@@ -645,20 +648,57 @@ BMKMapManager* _mapManager;
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (loginUser) {
-        NSNumber *maxChatNum = [ChatMessage getMaxChatMessageId];
+        NSString *maxChatNum = [ChatMessage getMaxChatMessageId];
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(0),@"topid":maxChatNum}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
-                                               
-                                               
+                                               if ([JSON count] > 0) {
+                                                   for(NSDictionary *chatDic in JSON){
+                                                       [self getIMGTMessage:chatDic];
+                                                   }
+                                               }
                                            } fail:^(NSError *error) {
                                                DLog(@"service chatMsg error:%@",error.description);
                                            }];
         
         //好友请求消息
-        [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(1),@"topid":@(111)}//0 聊天消息，1 好友请求
+        /*
+         created = "2015-03-19 00:09:41";
+         fromuser =     {
+             avatar = "http://img.welian.com/1426666616205-200-200_x.jpg";
+             name = "\U6d4b\U8bd517912";
+             uid = 17912;
+         };
+         messageid = 95395;
+         msg = "\U6211\U662f\U667a\U534e\U56fd\U9645\U63a7\U80a1\U96c6\U56e2\U6709\U9650\U516c\U53f8\U7684\U521b\U59cb\U5408\U4f19\U4eba\Uff0c\U60a8\U597d";
+         type = friendRequest;
+         uid = 10019;
+         */
+        NSString *maxNewFriendId = [loginUser getMaxNewFriendUserMessageId];
+        [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(1),@"topid":maxNewFriendId}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
-                                               
-                                               
+                                               if ([JSON count] > 0) {
+                                                   for(NSDictionary *newFriendDic in JSON){
+                                                       NSMutableDictionary *dictData = [NSMutableDictionary dictionaryWithDictionary:newFriendDic];
+                                                       
+                                                       NSNumber *toUser = dictData[@"uid"];
+                                                       LogInUser *loginUser = [LogInUser getLogInUserWithUid:toUser];
+                                                       //如果本地数据库没有当前登陆用户，不处理
+                                                       if (loginUser == nil) {
+                                                           return;
+                                                       }
+                                                       
+                                                       //设置请求方式
+                                                       [dictData setObject:@"friendRequest" forKey:@"type"];
+                                                       //设置用户信息
+                                                       NSDictionary *userDict = dictData[@"fromuser"];
+                                                       [dictData setObject:userDict[@"uid"] forKey:@"uid"];
+                                                       [dictData setObject:userDict[@"name"] forKey:@"name"];
+                                                       [dictData setObject:userDict[@"avatar"] forKey:@"avatar"];
+                                                       
+                                                       //别人请求的
+                                                       [self getNewFriendMessage:dictData];
+                                                   }
+                                               }
                                            } fail:^(NSError *error) {
                                                DLog(@"service friendMsg error:%@",error.description);
                                            }];

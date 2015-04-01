@@ -14,6 +14,7 @@
 #import "CommentInfoController.h"
 #import "ProjectDetailsViewController.h"
 #import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
 
 #import "MessageCell.h"
 #import "NewFriendViewCell.h"
@@ -209,18 +210,21 @@
         case 2:
         {
             NewFriendUser *friendM = _datasource[indexPath.row];
-            BOOL isask = NO;
+            NSNumber *opereateType = nil;
             if ([friendM.operateType integerValue] == 1 ||[friendM.pushType isEqualToString:@"friendCommand"]) {
-                isask = YES;
+                opereateType = @(1);
+            }else{
+                opereateType = friendM.operateType;
             }
-            UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-            [userInfoVC setNeedlessCancel:YES];
+//            UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:opereateType];
+            [self.navigationController pushViewController:userInfoVC animated:YES];
+//            [userInfoVC setNeedlessCancel:YES];
             WEAKSELF
             userInfoVC.acceptFriendBlock = ^(){
                 [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];
                 //        [weakUserInfoVC addSucceed];
             };
-            [self.navigationController pushViewController:userInfoVC animated:YES];
         }
             break;
         default:
@@ -441,11 +445,11 @@
 //从用户信息中发送消息
 - (void)chatFromUserInfo:(NSNotification *)notification
 {
-    //切换到聊天列表也没
-    [self selectIndexChanged:0];
-    
     //切换首页Tap
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+    
+    //切换到聊天列表也没
+    [self selectIndexChanged:0];
     
     NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];

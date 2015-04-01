@@ -25,7 +25,7 @@
 #import "UserInfoView.h"
 #import "WLCustomSegmentedControl.h"
 
-#define kTableViewHeaderViewHeight 230.f
+#define kTableViewHeaderViewHeight 330.f
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -72,9 +72,24 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     return _wlSegmentedControl;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.showCustomNavHeader = YES;
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //隐藏导航条
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    //获取用户信息
+    [self initUserInfo];
     
 //    //设置导航条是否半透明, 设置背景色,半透明失效
 //    self.navigationController.navigationBar.translucent = YES;
@@ -92,13 +107,13 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+//    [self scrollViewDidScroll:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar reset];
+//    [self.navigationController.navigationBar reset];
     
 //    [[UINavigationBar appearance] setBarTintColor:KBasesColor];
 //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -107,27 +122,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //    self.navigationController.navigationBar.translucent = YES;
 //    //设置导航条样式
 //    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-//    [self.tableView shouldPositionParallaxHeader];
-    CGFloat offsetY = scrollView.contentOffset.y;
-//    if (offsetY < -20) {
-//        scrollView.contentOffset = CGPointMake(0, -20);
-//        _tableView.contentOffset = CGPointMake(0, -20);
-//        scrollView.contentInset = UIEdgeInsetsMake(-20,0, 0,0);
-//        _tableView.contentInset = UIEdgeInsetsMake(-20,0, 0,0);
-//        return;
-//    }
-    UIColor *color = kNavBgColor;
-    if (offsetY > kTableViewHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-        
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-    } else {
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-    }
 }
 
 - (void)viewDidLoad
@@ -140,18 +134,23 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    //添加好友
-    UIBarButtonItem *leftBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_add_friend"]
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:self
-                                                                   action:@selector(addFriendBtnClick)];
-    self.navigationItem.leftBarButtonItem = leftBtnItem;
+    //设置左侧按钮
+    [self.navHeaderView setLeftBtnTitle:nil LeftBtnImage:[UIImage imageNamed:@"me_add_friend"]];
+    //设置右侧按钮
+    [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_set"]];
     
-    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_set"]
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:self
-                                                                   action:@selector(setBtnClick)];
-    self.navigationItem.rightBarButtonItem = rightBtnItem;
+    //添加好友
+//    UIBarButtonItem *leftBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_add_friend"]
+//                                                                    style:UIBarButtonItemStylePlain
+//                                                                   target:self
+//                                                                   action:@selector(addFriendBtnClick)];
+//    self.navigationItem.leftBarButtonItem = leftBtnItem;
+//    
+//    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_set"]
+//                                                                    style:UIBarButtonItemStylePlain
+//                                                                   target:self
+//                                                                   action:@selector(setBtnClick)];
+//    self.navigationItem.rightBarButtonItem = rightBtnItem;
     
     // 2.读取plist文件的内容
     [self loadPlist];
@@ -159,10 +158,11 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - TabBarHeight) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-//    tableView.contentInset = UIEdgeInsetsMake(-50,0, 0,0);
+    tableView.contentInset = UIEdgeInsetsMake(-100,0, 0,0);
     //隐藏表格分割线
 //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
+    [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
 //    [tableView setDebug:YES];
     
@@ -198,8 +198,17 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [userInfoView setLookUserDetailBlock:^(void){
         [weakSelf lookMeInfo];
     }];
-    
-    [self initUserInfo];
+}
+
+#pragma mark - 重新方法
+- (void)leftBtnClicked:(UIButton *)sender
+{
+    [self addFriendBtnClick];
+}
+
+- (void)rightBtnClicked:(UIButton *)sender
+{
+    [self setBtnClick];
 }
 
 #pragma mark 读取plist文件的内容
@@ -409,7 +418,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (section == _data.count - 1) {
-        return 50.f;
+        return 30.f;
     }else{
         return 0.01f;
     }

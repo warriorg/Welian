@@ -7,12 +7,14 @@
 //
 
 #import "CommentCellView.h"
-#import "M80AttributedLabel.h"
-#import "CommentMode.h"
 #import "UserInfoBasicVC.h"
-#import "WLStatusM.h"
 #import "CommentInfoController.h"
 #import "TOWebViewController.h"
+#import "UserInfoViewController.h"
+
+#import "WLStatusM.h"
+#import "M80AttributedLabel.h"
+#import "CommentMode.h"
 
 @interface CommentCellView() <M80AttributedLabelDelegate>
 {
@@ -225,8 +227,10 @@
         [userModel setPosition:usmode.position];
         [userModel setCompany:usmode.company];
         
-        UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
-        [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
+//        UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userModel isAsk:NO];
+//        [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userModel OperateType:nil];
+        [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
     }
     
 }

@@ -15,6 +15,14 @@
 
 @implementation BasicTableViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //显示导航条
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:UITableViewStyleGrouped];

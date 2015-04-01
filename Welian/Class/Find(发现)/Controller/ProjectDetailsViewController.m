@@ -12,6 +12,7 @@
 #import "MemberProjectController.h"
 #import "TOWebViewController.h"
 #import "FinancingProjectController.h"
+#import "UserInfoViewController.h"
 
 #import "ProjectInfoView.h"
 #import "ProjectDetailView.h"
@@ -1091,7 +1092,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)showProjectUserInfo
 {
     //系统联系人
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:_iProjectDetailInfo.user isAsk:NO];
+//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:_iProjectDetailInfo.user isAsk:NO];
+//    [self.navigationController pushViewController:userInfoVC animated:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:_iProjectDetailInfo.user OperateType:nil];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
@@ -1117,7 +1120,8 @@ static NSString *noCommentCell = @"NoCommentCell";
         }
     }else{
         //系统联系人
-        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
+//        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:user OperateType:nil];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }

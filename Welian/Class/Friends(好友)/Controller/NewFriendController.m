@@ -7,12 +7,14 @@
 //
 
 #import "NewFriendController.h"
-#import "FriendsNewCell.h"
-//#import "NewFriendModel.h"
-#import "MJExtension.h"
 #import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
+#import "UserInfoViewController.h"
+
+#import "FriendsNewCell.h"
+//#import "NewFriendModel.h"
+#import "MJExtension.h"
 #import "NotstringView.h"
 #import "NewFriendUser.h"
 #import "MyFriendUser.h"
@@ -133,7 +135,9 @@ static NSString *frnewCellid = @"frnewCellid";
     if ([friendM.isAgree boolValue]||[friendM.pushType isEqualToString:@"friendCommand"]) {
         isask = NO;
     }
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
+//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:nil];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
     __weak NewFriendController *newFVC = self;
     userInfoVC.acceptFriendBlock = ^(){
         [newFVC jieshouFriend:indexPath];

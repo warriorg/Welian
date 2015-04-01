@@ -606,16 +606,15 @@
 }
 
 //获取当前最大的新的好友的messageID
-- (NSNumber *)getMaxNewFriendUserMessageId
+- (NSString *)getMaxNewFriendUserMessageId
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsLogInUser",self];
-    
     NewFriendUser *newFriend = [NewFriendUser MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO];
     
-    if (newFriend) {
-        return @(newFriend.messageId.integerValue);
+    if (newFriend.messageId.length > 0) {
+        return newFriend.messageId;
     }else{
-        return @(0);
+        return @"0";
     }
 }
 

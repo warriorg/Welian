@@ -236,19 +236,37 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isBuyTicket) {
-        return kTableViewCellHeight;
+    IActivityTicket *iActivityTicket = _datasource[indexPath.row];
+    if (_datasource.count > 0) {
+        if (_isBuyTicket) {
+            return [ActivityTicketViewCell configureWithName:iActivityTicket.name DetailInfo:iActivityTicket.intro];
+        }else{
+            return [ActivityLookTicketViewCell configureWithName:iActivityTicket.name DetailInfo:iActivityTicket.intro];
+        }
     }else{
-        return kLookTableViewCellHeight;
+        if (_isBuyTicket) {
+            return kTableViewCellHeight;
+        }else{
+            return kLookTableViewCellHeight;
+        }
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isBuyTicket) {
-        return kTableViewCellHeight;
+    IActivityTicket *iActivityTicket = _datasource[indexPath.row];
+    if (_datasource.count > 0) {
+        if (_isBuyTicket) {
+            return [ActivityTicketViewCell configureWithName:iActivityTicket.name DetailInfo:iActivityTicket.intro];
+        }else{
+            return [ActivityLookTicketViewCell configureWithName:iActivityTicket.name DetailInfo:iActivityTicket.intro];
+        }
     }else{
-        return kLookTableViewCellHeight;
+        if (_isBuyTicket) {
+            return kTableViewCellHeight;
+        }else{
+            return kLookTableViewCellHeight;
+        }
     }
 }
 

@@ -26,6 +26,7 @@
 #import "WLCellCardView.h"
 #import "ActivityDetailInfoViewController.h"
 #import "ProjectDetailsViewController.h"
+#import "UserInfoViewController.h"
 
 @interface WLContentCellView () <MLEmojiLabelDelegate,M80AttributedLabelDelegate>
 {
@@ -247,8 +248,10 @@
         [mode setAvatar:user.avatar];
         [mode setName:user.name];
         
-        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+//        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+        [self.homeVC.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 

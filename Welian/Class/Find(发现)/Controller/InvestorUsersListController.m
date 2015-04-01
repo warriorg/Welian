@@ -7,14 +7,16 @@
 //
 
 #import "InvestorUsersListController.h"
+#import "UserInfoBasicVC.h"
+#import "InvestCerVC.h"
+#import "UserInfoViewController.h"
+
 #import "MJRefresh.h"
 #import "InvestorUserCell.h"
 #import "UIImageView+WebCache.h"
 #import "InvestorUserM.h"
-#import "UserInfoBasicVC.h"
 #import "InvestorUser.h"
 #import "UIImage+ImageEffects.h"
-#import "InvestCerVC.h"
 
 @interface InvestorUsersListController () <UISearchBarDelegate,UISearchDisplayDelegate>
 {
@@ -201,8 +203,8 @@ static NSString *identifier = @"investorcellid";
     [mode setProvincename:invesM.provincename];
     [mode setCityname:invesM.cityname];
     
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-    
+//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

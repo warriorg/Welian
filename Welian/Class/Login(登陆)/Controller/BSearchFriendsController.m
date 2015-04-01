@@ -7,6 +7,10 @@
 //
 
 #import "BSearchFriendsController.h"
+#import "MainViewController.h"
+#import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "WLTool.h"
@@ -15,8 +19,6 @@
 #import "MJExtension.h"
 #import "NotstringView.h"
 #import "FriendCell.h"
-#import "MainViewController.h"
-#import "UserInfoBasicVC.h"
 
 @interface BSearchFriendsController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -333,9 +335,10 @@ static NSString *fridcellid = @"fridcellid";
         friends = self.friendsWeixing[indexPath.row];
     }
     
-    UserInfoBasicVC *userVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friends isAsk:NO];
-    [userVC setIsHideSendMsgBtn:YES];
-    [self.navigationController pushViewController:userVC animated:YES];
+//    UserInfoBasicVC *userVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friends isAsk:NO];
+//    [userVC setIsHideSendMsgBtn:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:friends OperateType:nil];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 //    [self cancelClick];
 }
 

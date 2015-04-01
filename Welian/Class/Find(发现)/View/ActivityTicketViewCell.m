@@ -14,6 +14,9 @@
 #define kMarginLeft 15.f
 #define kMarginEdge 20.f
 
+#define kMarginTop 10.f
+#define kMarginInEdge 5.f
+
 @interface ActivityTicketViewCell ()
 
 @property (assign,nonatomic) UIView *operateView;
@@ -94,21 +97,29 @@
     
     [_moneyLabel sizeToFit];
     _moneyLabel.right = self.width - kMarginLeft - kOperateViewWidth - kMarginEdge;
-    _moneyLabel.bottom = self.height / 2.f - 2.f;
+    _moneyLabel.bottom = self.height / 2.f;
     
     [_ticketNumLabel sizeToFit];
     _ticketNumLabel.right = _moneyLabel.right;
-    _ticketNumLabel.top = self.height / 2.f + 3.f;
-    
-    _nameLabel.width = _moneyLabel.left - kMarginLeft * 2.f;
-    [_nameLabel sizeToFit];
-    _nameLabel.left = kMarginLeft;
-    _nameLabel.bottom = self.height / 2.f - 2.f;
+    _ticketNumLabel.top = self.height / 2.f + kMarginInEdge;
     
     _infoLabel.width = _ticketNumLabel.left - kMarginLeft - 6.f;
     [_infoLabel sizeToFit];
     _infoLabel.left = kMarginLeft;
-    _infoLabel.top = self.height / 2.f + (_infoLabel.height < 20.f ? 2.f : -1.f);
+    if (_iActivityTicket.name.length > 0) {
+        _infoLabel.bottom = self.height - kMarginTop;
+    }else{
+        _infoLabel.centerY = self.height / 2.f;
+    }
+    
+    _nameLabel.width = _moneyLabel.left - kMarginLeft * 2.f;
+    [_nameLabel sizeToFit];
+    _nameLabel.left = kMarginLeft;
+    if (_iActivityTicket.intro.length > 0) {
+        _nameLabel.bottom = _infoLabel.top - kMarginInEdge;
+    }else{
+        _nameLabel.centerY = self.height / 2.f;
+    }
 }
 
 #pragma mark - Private
@@ -185,7 +196,8 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = kTitleNormalTextColor;
-    nameLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    nameLabel.font = [UIFont boldSystemFontOfSize:14.f];
+    nameLabel.numberOfLines = 0;
     nameLabel.text = @"VIP门票";
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -196,7 +208,7 @@
     infoLabel.textColor = kNormalTextColor;
     infoLabel.font = [UIFont systemFontOfSize:12.f];
     infoLabel.text = @"参加贵宾晚宴";
-    infoLabel.numberOfLines = 2;
+    infoLabel.numberOfLines = 0;
     [self.contentView addSubview:infoLabel];
     self.infoLabel = infoLabel;
     
@@ -239,6 +251,22 @@
     NSRange searchRange = [str rangeOfString:searchStr options:NSCaseInsensitiveSearch];
     [attrstr addAttributes:attrsDic range:searchRange];
     return attrstr;
+}
+
+//返回cell的高度
++ (CGFloat)configureWithName:(NSString *)name DetailInfo:(NSString *)detailInfo
+{
+    float maxWidth = [[UIScreen mainScreen] bounds].size.width / 2.f - kMarginLeft * 2.f;
+    //计算第一个label的高度
+    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    
+    float height = (name.length > 0 ? size1.height : 0) + (detailInfo.length > 0 ? size2.height + kMarginInEdge : 0) + kMarginTop * 2.f;
+    if (height > 60.f) {
+        return height;
+    }else{
+        return 60.f;
+    }
 }
 
 

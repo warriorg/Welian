@@ -12,4 +12,7 @@
 
 @property (strong,nonatomic) IActivityTicket *iActivityTicket;
 
+//返回cell的高度
++ (CGFloat)configureWithName:(NSString *)name DetailInfo:(NSString *)detailInfo;
+
 @end
