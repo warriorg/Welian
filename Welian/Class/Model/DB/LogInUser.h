@@ -50,6 +50,9 @@
 //通过ucid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;
 
+//获取最新的履历信息
+- (NSString *)displayMyNewLvliInfo;
+
 //获取正在聊天的好友列表
 - (NSArray *)chatUsers;
 //获取新的好友列表

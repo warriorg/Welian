@@ -319,7 +319,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
                 case 1:
                 {
                     //我的履历
-                    detailInfo = @"杭州传送门网络技术有限公司/iOS";
+                    detailInfo = [loginUser displayMyNewLvliInfo];//@"杭州传送门网络技术有限公司/iOS";
                 }
                     break;
                 default:
