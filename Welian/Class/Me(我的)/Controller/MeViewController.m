@@ -116,19 +116,19 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //    [self scrollViewDidScroll:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar reset];
-    
-//    [[UINavigationBar appearance] setBarTintColor:KBasesColor];
-//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
-//    //设置导航条是否半透明, 设置背景色,半透明失效
-//    self.navigationController.navigationBar.translucent = YES;
-//    //设置导航条样式
-//    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-}
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+////    [self.navigationController.navigationBar reset];
+//    
+////    [[UINavigationBar appearance] setBarTintColor:KBasesColor];
+////    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//    
+////    //设置导航条是否半透明, 设置背景色,半透明失效
+////    self.navigationController.navigationBar.translucent = YES;
+////    //设置导航条样式
+////    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+//}
 
 - (void)viewDidLoad
 {
@@ -337,7 +337,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIViewController *controller;
+    UIViewController *controller = nil;
     // 1.取出这行对应的字典数据
     NSDictionary *dict = _data[indexPath.section][indexPath.row];
     // 2.设置文字
@@ -360,7 +360,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
                     break;
                 case 2:
                 {
-                    controller = [[MyProjectViewController alloc] init];
+                    controller = [[MyProjectViewController alloc] initWithUid:nil];
                     [controller setTitle:@"我的项目"];
                 }
                     break;
@@ -395,7 +395,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         default:
             break;
     }
-    [self.navigationController pushViewController:controller animated:YES];
+    if (controller) {
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 //    if (indexPath.section==0) {
 //        controller = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
 //        [controller setTitle:@"个人信息"];

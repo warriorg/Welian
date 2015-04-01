@@ -26,7 +26,7 @@
 #define kTableViewCellHeight 60.f
 #define kTableViewHeaderHeight 60.f
 
-@interface UserInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface UserInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) WLCustomSegmentedControl *wlSegmentedControl;
@@ -39,6 +39,7 @@
 @property (strong,nonatomic) WLNoteInfoView *wlNoteInfoView;//状态提醒
 @property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证    10:隐藏
 @property (assign,nonatomic) NSInteger pageIndex;//默认选择动态页数
+@property (assign,nonatomic) BOOL canLoadMore;
 
 @end
 
@@ -106,23 +107,41 @@ static NSString *fridcellid = @"fridcellid";
         self.pageIndex = 1;//默认第一页
         self.baseUserModel = iBaseUserModel;
         self.operateType = operateType;
+        self.canLoadMore = YES;
     }
     return self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //代理置空，否则会闪退 设置手势滑动返回
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }else{
+        navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self initUserInfo];
-//    [self scrollViewDidScroll:_tableView];
-//    
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar reset];
+    
+    //开启iOS7的滑动返回效果
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        //只有在二级页面生效
+        if ([self.navigationController.viewControllers count] > 1) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+    }
 }
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -568,6 +587,9 @@ static NSString *fridcellid = @"fridcellid";
             if (_datasource2.count <= 0) {
                 [self getUserFeedsData];
             }
+            if(!_canLoadMore){
+                [_tableView setFooterHidden:YES];
+            }
         }
             break;
         case 2:
@@ -727,7 +749,7 @@ static NSString *fridcellid = @"fridcellid";
         [darDic setObject:_baseUserModel.uid forKey:@"uid"];
     }else {
         //调用自己的动态
-        [darDic setObject:@(0) forKey:@"start"];
+//        [darDic setObject:@(0) forKey:@"start"];
     }
     
     [WLHttpTool loadFeedsParameterDic:darDic
@@ -745,14 +767,14 @@ static NSString *fridcellid = @"fridcellid";
                                       [datas addObject:sf];
                                   }
                                   self.datasource2 = datas;
-                                  if (!_baseUserModel.uid) {
-                                      [self loadFirstFID];
+//                                  if (!_baseUserModel.uid) {
+//                                      [self loadFirstFID];
                                       //            if (!_datasource.count) {
                                       //                [self.homeView setHidden:NO];
                                       //            }else{
                                       //                [self.homeView setHidden:YES];
                                       //            }
-                                  }
+//                                  }
                                   //        [LogInUser setUserNewstustcount:@(0)];
                                   //        [[MainViewController sharedMainViewController] updataItembadge];
                                   //检查
@@ -762,10 +784,14 @@ static NSString *fridcellid = @"fridcellid";
                                   [_tableView footerEndRefreshing];
                                   if (jsonarray.count<KCellConut) {
                                       [_tableView setFooterHidden:YES];
+                                      _canLoadMore = NO;
+                                  }else{
+                                      _pageIndex++;
+                                      _canLoadMore = YES;
                                   }
                               } fail:^(NSError *error) {
                                   //        [self.refreshControl endRefreshing];
-//                                  [_tableView footerEndRefreshing];
+                                  [_tableView footerEndRefreshing];
                                   _wlNoteInfoView.loadFailed = YES;
                               }];
 }
@@ -775,8 +801,8 @@ static NSString *fridcellid = @"fridcellid";
 {
     if (_selectType == 1) {
         // 1.最后1条微博的ID
-        WLStatusFrame *f = [_datasource2 lastObject];
-        int start = f.status.fid;
+//        WLStatusFrame *f = [_datasource2 lastObject];
+//        int start = f.status.fid;
         
         NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
         [darDic setObject:@(KCellConut) forKey:@"size"];
@@ -784,7 +810,7 @@ static NSString *fridcellid = @"fridcellid";
             [darDic setObject:_baseUserModel.uid forKey:@"uid"];
             [darDic setObject:@(_pageIndex) forKey:@"page"];
         }else{
-            [darDic setObject:@(start) forKey:@"start"];
+//            [darDic setObject:@(start) forKey:@"start"];
         }
         
         [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
@@ -811,8 +837,10 @@ static NSString *fridcellid = @"fridcellid";
             [_tableView footerEndRefreshing];
             if (jsonarray.count<KCellConut) {
                 [_tableView setFooterHidden:YES];
+                _canLoadMore = NO;
             }else{
                 _pageIndex++;
+                _canLoadMore = YES;
             }
         } fail:^(NSError *error) {
 //            [self.refreshControl endRefreshing];

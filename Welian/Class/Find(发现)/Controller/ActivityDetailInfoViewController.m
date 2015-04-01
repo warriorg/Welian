@@ -32,7 +32,7 @@
 #define kOperateButtonHeight 35.f
 #define kmarginLeft 10.f
 
-@interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSArray *datasource;
@@ -83,28 +83,34 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-//    [self scrollViewDidScroll:_tableView];
-    
-//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1]];
-//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-//                                                           [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:21], NSFontAttributeName, nil]];
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [super viewWillDisappear:animated];
+    //代理置空，否则会闪退 设置手势滑动返回
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }else{
+        navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [self scrollViewDidScroll:_tableView];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar reset];
+    //开启iOS7的滑动返回效果
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        //只有在二级页面生效
+        if ([self.navigationController.viewControllers count] > 1) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
