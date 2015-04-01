@@ -344,6 +344,9 @@
         [loginUser updateALLNotLookMessages];
     }
     
+    //更新待验证的好友状态
+    [loginUser updateAllNewFriendsOperateStatus];
+    
     //设置未查看普通消息
     self.isLookedMessage = NO;
     self.selectType = index;
@@ -531,6 +534,7 @@
             [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
                 //发送邀请成功，修改状态，刷新列表
                 NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+                
                 //改变数组，刷新列表
                 NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
                 [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
