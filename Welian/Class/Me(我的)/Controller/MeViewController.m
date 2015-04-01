@@ -516,6 +516,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     for (NSDictionary *dic in usercompany) {
         ICompanyResult *usercompanyM = [ICompanyResult objectWithKeyValues:dic];
         [companyArrayM addObject:usercompanyM];
+        //保存到数据库
+        [CompanyModel createCompanyModel:usercompanyM];
     }
     
     // 教育经历列表
@@ -524,6 +526,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     for (NSDictionary *dic  in userschool) {
         ISchoolResult *userschoolM = [ISchoolResult objectWithKeyValues:dic];
         [schoolArrayM addObject:userschoolM];
+        //保存到数据库
+        [SchoolModel createSchoolModel:userschoolM];
     }
     
     //活动

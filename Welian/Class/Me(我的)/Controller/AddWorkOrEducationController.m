@@ -284,7 +284,7 @@
             
             [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
                 [_schoolM setKeyValues:JSON];
-                [SchoolModel createCompanyModel:_schoolM];
+                [SchoolModel createSchoolModel:_schoolM];
                 [self dismissVC];
                 [WLHUDView showSuccessHUD:@"保存成功！"];
             } fail:^(NSError *error) {

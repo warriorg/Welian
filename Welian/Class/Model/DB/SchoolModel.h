@@ -31,7 +31,7 @@
 + (NSArray *)allSchoolModels;
 
 //创建新收据
-+ (SchoolModel *)createCompanyModel:(ISchoolResult *)iSchool;
++ (SchoolModel *)createSchoolModel:(ISchoolResult *)iSchool;
 
 //通过ucid查询
 //+ (SchoolModel *)getCompanyModelWithUcid:(NSNumber*)usid;
