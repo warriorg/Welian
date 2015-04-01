@@ -14,7 +14,7 @@
 @interface ChatMessage : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * msgId;
-@property (nonatomic, retain) NSString * messageId;
+@property (nonatomic, retain) NSString * messageid;
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSNumber * messageType;
 @property (nonatomic, retain) NSDate * timestamp;

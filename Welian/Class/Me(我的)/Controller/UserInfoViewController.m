@@ -9,6 +9,8 @@
 #import "UserInfoViewController.h"
 #import "CommentInfoController.h"
 #import "ProjectDetailsViewController.h"
+#import "MessagesViewController.h"
+#import "ChatViewController.h"
 
 #import "WLCustomSegmentedControl.h"
 #import "UserInfoView.h"
@@ -1017,27 +1019,81 @@ static NSString *fridcellid = @"fridcellid";
 //进入聊天页面
 - (void)chatBtnClicked:(UIButton *)sender
 {
-    //进入聊天页面
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+    UIViewController *rootVC = [self.navigationController.viewControllers firstObject];
+    if ([rootVC isKindOfClass:[MessagesViewController class]]) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"CurrentChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+        
+        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        MyFriendUser *user = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
+        ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+        [self.navigationController pushViewController:chatVC animated:YES];
+        
+        //替换中间的内容
+        NSMutableArray *contros = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [contros removeObjectsInRange:NSMakeRange(1, contros.count - 1) ];
+        [contros addObject:chatVC];
+        
+        [self.navigationController setViewControllers:contros animated:YES];
+    }else{
+        //进入聊天页面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+//重新右侧按钮方法
+- (void)rightBtnClicked:(UIButton *)sender
+{
+    [self moreBtnClicked];
+}
+
+//设置右上角按钮
+- (void)setRightNavBtnWithUserInfoModel:(IBaseUserM *)userInfoModel
+{
+    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    if (userInfoModel.friendship.integerValue == 1) {
+        //设置右侧按钮
+        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
+        //更多操作
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
+    }
+}
+
+- (void)initUserInfo
+{
+    //取sqlite数据库用户信息
+    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:_baseUserModel.uid.stringValue fromTable:KWLUserInfoTableName];
+    if (item) {
+        [self getUserInfoWith:item.itemObject];
+    }
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
+        [self getUserInfoWith:JSON];
+    } fail:^(NSError *error) {
+        
+    }];
 }
 
 - (void)getUserInfoWith:(NSDictionary *)dataDic
 {
     // 详细信息
     NSDictionary *profile = [dataDic objectForKey:@"profile"];
-    UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+    IBaseUserM *profileM = [IBaseUserM objectWithKeyValues:profile];
+    
+    //保存到sqlite数据库
+    [[WLDataDBTool sharedService] putObject:dataDic withId:profileM.uid.stringValue intoTable:KWLUserInfoTableName];
     
     //设置用户信息
-    _userInfoView.baseUserModel = profileM;
+    self.baseUserModel = profileM;
+    _userInfoView.baseUserModel = _baseUserModel;
     
     //设置操作按钮
     if (_operateType) {
         _userInfoView.operateType = _operateType;
     }
     
-    [self setRightNavBtnWithUserInfoModel:profileM];
+    [self setRightNavBtnWithUserInfoModel:_baseUserModel];
     
     //设置好友数量
     _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? (profileM.feedcount.integerValue > 1000 ? @"999+" : profileM.friendcount.stringValue) : @"",profileM.samefriendscount.stringValue ? (profileM.samefriendscount.integerValue > 99 ? @"99+" : profileM.samefriendscount.stringValue) : @""];
@@ -1112,65 +1168,6 @@ static NSString *fridcellid = @"fridcellid";
     
     //检查
     [self checkNoteInfoLoad:YES];
-}
-
-//重新右侧按钮方法
-- (void)rightBtnClicked:(UIButton *)sender
-{
-    [self moreBtnClicked];
-}
-
-//设置右上角按钮
-- (void)setRightNavBtnWithUserInfoModel:(UserInfoModel *)userInfoModel
-{
-    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    if (userInfoModel.friendship.integerValue == 1) {
-        //设置右侧按钮
-        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
-        //更多操作
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
-    }
-}
-
-- (void)initUserInfo
-{
-    //    if (!([mode.uid integerValue]==[_userMode.uid integerValue])&&[usermode.friendship integerValue]==1) {
-    //        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
-    //    }
-    //    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLUserInfoTableName];
-    //    if (item) {
-    //        _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:item.itemObject]];
-    //        _userMode = [_dataDicM objectForKey:@"profile"];
-    //        [self.tableView reloadData];
-    //    }
-    //
-    //    YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLSamefriendsTableName];
-    //    if (sameFitem) {
-    //        _sameFriendArry = [self getSameFriendsWith:sameFitem.itemObject];
-    //        [self.tableView reloadData];
-    //    }
-    
-    [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
-        [self getUserInfoWith:JSON];
-        //        self.infoDict = [self getUserInfoWith:JSON];
-        //        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
-        //        _userMode = [_dataDicM objectForKey:@"profile"];
-        //        if (!isask) {
-        //            if ([_userMode.friendship integerValue]==-1) {
-        //
-        //            }else if ([_userMode.friendship integerValue]==1) {
-        //                [MyFriendUser createMyFriendUserModel:_userMode];
-        //                if (!_isHideSendMsgBtn) {
-        //                    [self.tableView setTableFooterView:self.sendView];
-        //                }
-        //            }else {
-        //                [[mode getMyfriendUserWithUid:_userMode.uid] MR_deleteEntity];
-        //                [self.tableView setTableFooterView:self.addFriendView];
-        //            }
-        //        }
-    } fail:^(NSError *error) {
-        
-    }];
 }
 
 @end

@@ -26,7 +26,7 @@
 }
 
 //创建新收据
-+ (SchoolModel *)createCompanyModel:(ISchoolResult *)iSchool
++ (SchoolModel *)createSchoolModel:(ISchoolResult *)iSchool
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     SchoolModel *schoolM = [loginUser getSchoolModelWithUcid:iSchool.usid];

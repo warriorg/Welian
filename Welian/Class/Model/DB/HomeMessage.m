@@ -88,6 +88,13 @@
     
 }
 
+//改变所有未读消息状态为已读
+- (void)updateHomeMessageIsLook
+{
+    self.isLook = @(YES);
+    [self.managedObjectContext MR_saveToPersistentStoreAndWait];
+}
+
 //// 获取未读消息
 //+ (NSArray *)getIsLookNotMessages
 //{

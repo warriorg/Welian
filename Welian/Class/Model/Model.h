@@ -21,6 +21,8 @@
 #import "ChatMessage.h"
 #import "HomeMessage.h"
 #import "NeedAddUser.h"
+#import "CompanyModel.h"
+#import "SchoolModel.h"
 
 
 #pragma mark - Interface

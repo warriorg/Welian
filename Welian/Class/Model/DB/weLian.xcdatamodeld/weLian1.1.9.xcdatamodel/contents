@@ -60,7 +60,7 @@
         <attribute name="localPositionPhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="msgId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="originPhotoUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -172,7 +172,7 @@
         <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isAgree" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isLook" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="msg" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="operateType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="pushType" optional="YES" attributeType="String" syncable="YES"/>

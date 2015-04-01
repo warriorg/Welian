@@ -13,8 +13,9 @@ typedef enum {
     WLCompany = 2,  // 工作
 } WLUserLoadType;
 
+#import "BasicViewController.h"
 
-@interface WorksListController : UIViewController
+@interface WorksListController : BasicViewController
 
 - (instancetype)init;
 

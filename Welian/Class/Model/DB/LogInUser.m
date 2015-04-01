@@ -609,10 +609,18 @@
 - (NSString *)getMaxNewFriendUserMessageId
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsLogInUser",self];
-    NewFriendUser *newFriend = [NewFriendUser MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO];
+//    NewFriendUser *newFriend = [NewFriendUser MR_findFirstWithPredicate:pre sortedBy:@"messageid" ascending:NO];
+    NSArray *NewFriendUsers = [NewFriendUser MR_findAllWithPredicate:pre inContext:self.managedObjectContext];
+    NewFriendUser *newFriend = nil;
+    if (NewFriendUsers.count > 0) {
+        NSArray *sortMessages = [NewFriendUsers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [[obj1 messageid] integerValue] > [[obj2 messageid] integerValue];
+        }];
+        newFriend = [sortMessages lastObject];
+    }
     
-    if (newFriend.messageId.length > 0) {
-        return newFriend.messageId;
+    if (newFriend.messageid.length > 0) {
+        return newFriend.messageid;
     }else{
         return @"0";
     }
