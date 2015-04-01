@@ -493,6 +493,38 @@
     return loginuser;
 }
 
+//获取最新的履历信息
+- (NSString *)displayMyNewLvliInfo
+{
+    // 工作经历列表
+    NSMutableArray *lvliArray = [NSMutableArray array];
+    NSArray *usercompanys = self.rsCompanys.allObjects;
+    [lvliArray addObjectsFromArray:usercompanys];
+    
+    // 教育经历列表
+    NSArray *userschools = self.rsSchools.allObjects;
+    [lvliArray addObjectsFromArray:userschools];
+    
+    NSString *detailInfo = @"";
+    if(lvliArray.count > 0)
+    {
+        NSSortDescriptor *sortByMonth= [NSSortDescriptor sortDescriptorWithKey:@"startmonth" ascending:NO];
+        [lvliArray sortUsingDescriptors:[NSArray arrayWithObject:sortByMonth]];
+        NSSortDescriptor *sortByYear= [NSSortDescriptor sortDescriptorWithKey:@"startyear" ascending:NO];
+        [lvliArray sortUsingDescriptors:[NSArray arrayWithObject:sortByYear]];
+        NSObject *info = [lvliArray firstObject];
+        
+        if ([info isKindOfClass:[CompanyModel class]]) {
+            CompanyModel *result = (CompanyModel *)info;
+            detailInfo = [NSString stringWithFormat:@"%@ %@",result.jobname.length ? result.jobname : @"",result.companyname];
+        }else{
+            SchoolModel *result = (SchoolModel *)info;
+            detailInfo = [NSString stringWithFormat:@"%@ %@",result.specialtyname.length ? result.specialtyname : @"",result.schoolname];
+        }
+    }
+    return detailInfo;
+}
+
 //获取正在聊天的好友列表
 - (NSArray *)chatUsers
 {

@@ -66,6 +66,10 @@ static NSString *fridcellid = @"fridcellid";
     if (!_wlNoteInfoView) {
         _wlNoteInfoView = [[WLNoteInfoView alloc] initWithFrame:CGRectMake(0.f, kTableViewHeaderViewHeight, self.view.width, self.view.height - kTableViewHeaderViewHeight)];
     }
+    WEAKSELF
+    [_wlNoteInfoView setReloadBlock:^(){
+        [weakSelf selectIndexChanged:weakSelf.selectType];
+    }];
     return _wlNoteInfoView;
 }
 
@@ -547,6 +551,7 @@ static NSString *fridcellid = @"fridcellid";
     self.selectType = index;
     [self checkNoteInfoLoad:NO];
     [_tableView setFooterHidden:YES];
+    _wlNoteInfoView.loadFailed = NO;
     switch (index) {
         case 0:
         {
@@ -691,7 +696,7 @@ static NSString *fridcellid = @"fridcellid";
         //检查
         [self checkNoteInfoLoad:YES];
     } fail:^(NSError *error) {
-        
+        _wlNoteInfoView.loadFailed = YES;
     }];
 }
 
@@ -760,7 +765,8 @@ static NSString *fridcellid = @"fridcellid";
                                   }
                               } fail:^(NSError *error) {
                                   //        [self.refreshControl endRefreshing];
-                                  [_tableView footerEndRefreshing];
+//                                  [_tableView footerEndRefreshing];
+                                  _wlNoteInfoView.loadFailed = YES;
                               }];
 }
 
@@ -1071,7 +1077,7 @@ static NSString *fridcellid = @"fridcellid";
     [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
         [self getUserInfoWith:JSON];
     } fail:^(NSError *error) {
-        
+        _wlNoteInfoView.loadFailed = YES;
     }];
 }
 

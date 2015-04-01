@@ -782,7 +782,7 @@
 //        }
     succeBlock(dataDic);
     } failure:^(NSError *error) {
-        [WLHUDView showErrorHUD:@""];
+//        [WLHUDView showErrorHUD:@""];
         failurBlock(error);
     } withHUD:NO andDim:NO];
 }
