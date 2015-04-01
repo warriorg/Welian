@@ -509,6 +509,7 @@
                 //循环添加数据库数据
                 for (NSDictionary *modic in json) {
                     FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                    friendM.friendship = @(1);
                     
                     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
                     MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];

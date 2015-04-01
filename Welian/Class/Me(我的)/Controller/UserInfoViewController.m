@@ -19,7 +19,7 @@
 #import "WLNoteInfoView.h"
 #import "MJRefresh.h"
 
-#define kTableViewHeaderViewHeight 198.f
+#define kTableViewHeaderViewHeight 298.f
 
 #define kTableViewCellHeight 60.f
 #define kTableViewHeaderHeight 60.f
@@ -35,7 +35,7 @@
 @property (strong,nonatomic) IBaseUserM *baseUserModel;
 @property (assign,nonatomic) UserInfoView *userInfoView;
 @property (strong,nonatomic) WLNoteInfoView *wlNoteInfoView;//状态提醒
-@property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证
+@property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证    10:隐藏
 @property (assign,nonatomic) NSInteger pageIndex;//默认选择动态页数
 
 @end
@@ -50,6 +50,8 @@ static NSString *fridcellid = @"fridcellid";
     _datasource2 = nil;
     _datasource3 = nil;
     _baseUserModel = nil;
+    _operateType = nil;
+    _wlNoteInfoView = nil;
 }
 
 - (NSString *)title
@@ -93,6 +95,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     self = [super init];
     if (self) {
+        self.showCustomNavHeader = YES;
         self.selectType = 0;
         self.pageIndex = 1;//默认第一页
         self.baseUserModel = iBaseUserModel;
@@ -104,27 +107,30 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+    [self initUserInfo];
+//    [self scrollViewDidScroll:_tableView];
+//    
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar reset];
+//    [self.navigationController.navigationBar reset];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    UIColor *color = kNavBgColor;
-    if (offsetY > kTableViewHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-        
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-    } else {
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//    UIColor *color = kNavBgColor;
+//    if (offsetY > kTableViewHeaderViewHeight/2) {
+//        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
+//        
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+//    } else {
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -133,14 +139,12 @@ static NSString *fridcellid = @"fridcellid";
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    //更多操作
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-    //    tableView.contentInset = UIEdgeInsetsMake(-120,0, 0,0);
+    tableView.contentInset = UIEdgeInsetsMake(-100,0, 0,0);
     [self.view addSubview:tableView];
+    [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
     
     
@@ -148,6 +152,9 @@ static NSString *fridcellid = @"fridcellid";
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 38.f)];
     userInfoView.baseUserModel = _baseUserModel;
+    if (_operateType) {
+        userInfoView.operateType = _operateType;
+    }
     self.userInfoView = userInfoView;
     [headerView addSubview:userInfoView];
     
@@ -430,8 +437,9 @@ static NSString *fridcellid = @"fridcellid";
         case 2:
         {
             UserInfoModel *modeIM = _datasource3[indexPath.row];
-            UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
-            [self.navigationController pushViewController:userinfVC animated:YES];
+//            UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil];
+            [self.navigationController pushViewController:userInfoVC animated:YES];
         }
             break;
         default:
@@ -952,7 +960,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)operateBtnClicked
 {
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    if (_baseUserModel.friendship.integerValue == 1) {
+    if (_baseUserModel.friendship.integerValue == 1 || _operateType.integerValue == 2) {
         //好友
         [self chatBtnClicked:nil];
     }else{
@@ -1023,6 +1031,13 @@ static NSString *fridcellid = @"fridcellid";
     //设置用户信息
     _userInfoView.baseUserModel = profileM;
     
+    //设置操作按钮
+    if (_operateType) {
+        _userInfoView.operateType = _operateType;
+    }
+    
+    [self setRightNavBtnWithUserInfoModel:profileM];
+    
     //设置好友数量
     _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? (profileM.feedcount.integerValue > 1000 ? @"999+" : profileM.friendcount.stringValue) : @"",profileM.samefriendscount.stringValue ? (profileM.samefriendscount.integerValue > 99 ? @"99+" : profileM.samefriendscount.stringValue) : @""];
     
@@ -1063,23 +1078,28 @@ static NSString *fridcellid = @"fridcellid";
     
     NSMutableArray *infos = [NSMutableArray array];
     //me_touzi.png   me_lvli.png me_xiangmu.png
-    if (investorM.items.count > 0 || investorM.industry.count > 0 || investorM.stages.count > 0) {
-        //投资阶段
-        NSMutableArray *types = [NSMutableArray array];
-        if (investorM.stages.count > 0) {
-            [types addObject:@{@"type":@(0)}];
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    /**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
+    if (loginUser.investorauth.integerValue == 1) {
+        if (investorM.items.count > 0 || investorM.industry.count > 0 || investorM.stages.count > 0) {
+            //投资阶段
+            NSMutableArray *types = [NSMutableArray array];
+            if (investorM.stages.count > 0) {
+                [types addObject:@{@"type":@(0)}];
+            }
+            //投资领域
+            if (investorM.industry.count > 0) {
+                [types addObject:@{@"type":@(1)}];
+            }
+            //投资案例
+            if (investorM.items.count > 0) {
+                [types addObject:@{@"type":@(2)}];
+            }
+            NSDictionary *infoData = @{@"info":investorM,@"types":types};
+            [infos addObject:@{@"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":infoData}];
         }
-        //投资领域
-        if (investorM.industry.count > 0) {
-            [types addObject:@{@"type":@(1)}];
-        }
-        //投资案例
-        if (investorM.items.count > 0) {
-            [types addObject:@{@"type":@(2)}];
-        }
-        NSDictionary *infoData = @{@"info":investorM,@"types":types};
-        [infos addObject:@{@"icon":@"me_touzi",@"title":@"投资信息",@"type":@(0),@"info":infoData}];
     }
+    
     if (projectsArrayM.count > 0) {
         [infos addObject:@{@"icon":@"me_xiangmu",@"title":@"项目",@"type":@(1),@"info":projectsArrayM}];
     }
@@ -1091,6 +1111,24 @@ static NSString *fridcellid = @"fridcellid";
     
     //检查
     [self checkNoteInfoLoad:YES];
+}
+
+//重新右侧按钮方法
+- (void)rightBtnClicked:(UIButton *)sender
+{
+    [self moreBtnClicked];
+}
+
+//设置右上角按钮
+- (void)setRightNavBtnWithUserInfoModel:(UserInfoModel *)userInfoModel
+{
+    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    if (userInfoModel.friendship.integerValue == 1) {
+        //设置右侧按钮
+        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
+        //更多操作
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreBtnClicked)];
+    }
 }
 
 - (void)initUserInfo

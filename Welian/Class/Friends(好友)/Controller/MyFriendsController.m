@@ -7,25 +7,26 @@
 //
 
 #import "MyFriendsController.h"
-#import "NewFriendsCell.h"
-#import "FriendCell.h"
+#import "NewFriendController.h"
 #import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
+#import "FriendsFriendController.h"
+#import "NewFriendViewController.h"
+#import "AddFriendViewController.h"
+#import "AddFriendTypeListViewController.h"
+#import "UserInfoViewController.h"
+
+#import "NewFriendsCell.h"
+#import "FriendCell.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "NewFriendModel.h"
 #import "MJExtension.h"
-#import "NewFriendController.h"
-#import "FriendsFriendController.h"
 #import "MyFriendsOperateViewCell.h"
-#import "NewFriendViewController.h"
-#import "AddFriendViewController.h"
-#import "AddFriendTypeListViewController.h"
 #import "UIImage+ImageEffects.h"
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
-#import "UserInfoViewController.h"
 
 @interface MyFriendsController () <UISearchBarDelegate,UISearchDisplayDelegate,ABPeoplePickerNavigationControllerDelegate>//,WLSegmentedControlDelegate>
 
@@ -174,6 +175,7 @@ static NSString *fridcellid = @"fridcellid";
             //循环添加数据库数据
             for (NSDictionary *modic in json) {
                 FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+                friendM.friendship = @(1);
                 
                 NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
                 MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];

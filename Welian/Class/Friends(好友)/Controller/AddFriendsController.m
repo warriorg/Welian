@@ -7,10 +7,12 @@
 //
 
 #import "AddFriendsController.h"
+#import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
 #import "WLTool.h"
 #import "AddWXFriendCell.h"
 #import "FriendCell.h"
-#import "UserInfoBasicVC.h"
 #import "ShareEngine.h"
 #import <MessageUI/MessageUI.h>
 #import "UIImageView+WebCache.h"
@@ -287,8 +289,10 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         
         UserInfoModel *mode = self.filterArray[indexPath.row];
-        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-        [self.navigationController pushViewController:userBasic animated:YES];
+//        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//        [self.navigationController pushViewController:userBasic animated:YES];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 

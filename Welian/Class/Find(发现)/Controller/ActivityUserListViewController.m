@@ -7,9 +7,11 @@
 //
 
 #import "ActivityUserListViewController.h"
+#import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
 #import "MJRefresh.h"
 #import "ActivityUserViewCell.h"
-#import "UserInfoBasicVC.h"
 #import "NotstringView.h"
 
 @interface ActivityUserListViewController ()
@@ -129,7 +131,11 @@
         baseUser.uid = info[@"uid"];
         baseUser.friendship = @([info[@"friendship"] integerValue]);
         //系统联系人
-        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:baseUser isAsk:NO];
+//        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:baseUser isAsk:NO];
+        
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:baseUser OperateType:nil];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
+        
         //添加好友成功
         [userInfoVC setAddFriendBlock:^(){
             NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
@@ -140,7 +146,6 @@
             //刷新列表
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
-        [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 

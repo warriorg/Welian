@@ -9,10 +9,12 @@
 #import "AddFriendTypeListViewController.h"
 #import "AddFriendViewController.h"
 #import "BSearchFriendsController.h"
-#import "NewFriendViewCell.h"
 #import "UserInfoBasicVC.h"
-#import "UIImage+ImageEffects.h"
 #import "NavViewController.h"
+#import "UserInfoViewController.h"
+
+#import "UIImage+ImageEffects.h"
+#import "NewFriendViewCell.h"
 
 @interface AddFriendTypeListViewController ()<UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -110,8 +112,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _searchDisplayVC.searchResultsTableView) {
         UserInfoModel *mode = _filterArray[indexPath.row];
-        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-        [self.navigationController pushViewController:userBasic animated:YES];
+//        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//        [self.navigationController pushViewController:userBasic animated:YES];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil];
+        [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
         switch (indexPath.row) {
             case 0:

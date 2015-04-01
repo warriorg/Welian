@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "UserInfoBasicVC.h"
 #import "UIImage+ImageEffects.h"
+#import "UserInfoViewController.h"
 
 
 #define KIconX 10
@@ -213,8 +214,10 @@
     [mode setAvatar:user.avatar];
     [mode setName:user.name];
     
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-    [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];
+//    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//    [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+    [self.controllVC.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 

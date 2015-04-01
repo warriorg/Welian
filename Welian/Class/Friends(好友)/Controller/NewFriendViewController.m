@@ -10,12 +10,14 @@
 #import "WLSegmentedControl.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
+#import "AddFriendTypeListViewController.h"
+#import "AddFriendViewController.h"
+#import "UserInfoViewController.h"
+
 #import "FriendsNewCell.h"
 #import "UserInfoBasicVC.h"
 #import "NotstringView.h"
 #import "NewFriendViewCell.h"
-#import "AddFriendTypeListViewController.h"
-#import "AddFriendViewController.h"
 #import "MyFriendUser.h"
 
 static NSString *cellIdentifier = @"frnewCellid";
@@ -107,16 +109,16 @@ static NSString *cellIdentifier = @"frnewCellid";
     if ([friendM.operateType integerValue] == 1 ||[friendM.pushType isEqualToString:@"friendCommand"]) {
         isask = YES;
     }
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-    [userInfoVC setNeedlessCancel:YES];
+//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:@(10)];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
+//    [userInfoVC setNeedlessCancel:YES];
     WEAKSELF
     userInfoVC.acceptFriendBlock = ^(){
         [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];
 //        [weakUserInfoVC addSucceed];
     };
     self.userBasicVC = userInfoVC;
-    [self.navigationController pushViewController:userInfoVC animated:YES];
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

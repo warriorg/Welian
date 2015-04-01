@@ -256,11 +256,18 @@
     NSString *created = dict[@"created"];
     NSInteger type = [dict[@"type"] integerValue];
     NSString *msg = dict[@"msg"];
+    NSString *messageid = dict[@"messageid"];
     
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
-    ChatMessage *chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
+    ChatMessage *chatMsg = [self getChatMsgWithMessageId:messageid];
+    //如果存在对应messageId的聊天消息，则不提醒
+    if (chatMsg) {
+        return;
+    }else{
+        chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
+    }
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);
@@ -334,6 +341,7 @@
         }
             break;
     }
+    chatMsg.messageId = messageid;//消息编号
     chatMsg.timestamp = [created dateFromNormalString];
     chatMsg.avatorUrl = friendUser.avatar;
     chatMsg.isRead = @(NO);
@@ -374,6 +382,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
     //调用获取收到新消息，刷新正在聊天的列表
     [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+    //聊天状态发送改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
 }
 
 //创建特殊自定义聊天类型
@@ -427,17 +437,26 @@
     return chatMsg;
 }
 
+//获取对应messageId的消息
++ (ChatMessage *)getChatMsgWithMessageId:(NSString *)messageId
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser.rsLogInUser",loginUser,@"messageId",messageId];
+    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre inContext:loginUser.managedObjectContext];
+    return chatMessage;
+}
+
 //获取当前最大的消息ID
-+ (NSNumber *)getMaxChatMessageId
++ (NSString *)getMaxChatMessageId
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser.rsLogInUser",loginUser];
     ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO inContext:loginUser.managedObjectContext];
     
-    if (chatMessage) {
-        return chatMessage.msgId;
+    if (chatMessage.messageId.length > 0) {
+        return chatMessage.messageId;
     }else{
-        return @(0);
+        return @"0";
     }
 }
 

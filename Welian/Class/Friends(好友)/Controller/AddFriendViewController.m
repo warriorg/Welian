@@ -7,13 +7,15 @@
 //
 
 #import "AddFriendViewController.h"
+#import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
 #import "NewFriendViewCell.h"
 #import "NotstringView.h"
 #import "ShareEngine.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "WLTool.h"
-#import "UserInfoBasicVC.h"
 #import <MessageUI/MessageUI.h>
 #import "SEImageCache.h"
 #import "NSString+val.h"
@@ -192,20 +194,23 @@
         if(needAddUser.friendship.integerValue != 0 || needAddUser.uid != nil){
             //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
 //            if (needAddUser.userType.integerValue == 1) {
-                //手机联系人
-                BOOL isask = NO;
-                if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
-                    isask = NO;
-                }
-                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
+            //手机联系人
+            BOOL isask = NO;
+            if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
+                isask = NO;
+            }
+//                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
+            
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)needAddUser OperateType:nil];
+            [self.navigationController pushViewController:userInfoVC animated:YES];
                 //    __weak NewFriendController *newFVC = self;
 //                __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;
-                WEAKSELF
-                userInfoVC.acceptFriendBlock = ^(){
-                    [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
+            WEAKSELF
+            userInfoVC.acceptFriendBlock = ^(){
+                [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
 //                    [weakUserInfoVC addSucceed];
-                };
-                [self.navigationController pushViewController:userInfoVC animated:YES];
+            };
+            
 //            }else{
 //                //微信好友
 //                

@@ -7,6 +7,10 @@
 //
 
 #import "FriendsFriendController.h"
+#import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
+#import "NotstringView.h"
 #import "MJRefresh.h"
 #import "InvestorUserCell.h"
 #import "UIImageView+WebCache.h"
@@ -14,8 +18,6 @@
 #import "FriendsFriendModel.h"
 #import "MJExtension.h"
 #import "UIImageView+WebCache.h"
-#import "UserInfoBasicVC.h"
-#import "NotstringView.h"
 
 @interface FriendsFriendController ()
 {
@@ -176,8 +178,10 @@ static NSString *identifier = @"investorcellid";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
     
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
-    [self.navigationController pushViewController:userinfoVC animated:YES];
+//    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
+//    [self.navigationController pushViewController:userinfoVC animated:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:friendinfoM OperateType:nil];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 

@@ -7,8 +7,10 @@
 //
 
 #import "CommonFriendsController.h"
-#import "FriendCell.h"
 #import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
+
+#import "FriendCell.h"
 
 @interface CommonFriendsController ()
 {
@@ -65,8 +67,10 @@ static NSString *fridcellid = @"fridcellid";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserInfoModel *modeIM = _friendsA[indexPath.row];
-    UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
-    [self.navigationController pushViewController:userinfVC animated:YES];
+//    UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
+//    [self.navigationController pushViewController:userinfVC animated:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil];
+    [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 /*

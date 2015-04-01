@@ -8,15 +8,106 @@
 
 #import "BasicViewController.h"
 
-@interface BasicViewController () <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+#define kHeaderViewHeight 300.f
+
+@interface BasicViewController () <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIGestureRecognizerDelegate>
+
+//@property (assign,nonatomic) WLNavHeaderView *navHeaderView;
 
 @end
 
 @implementation BasicViewController
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (_showCustomNavHeader) {
+        //代理置空，否则会闪退 设置手势滑动返回
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+        }
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    //开启滑动手势
+    if (_showCustomNavHeader) {
+        if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            navigationController.interactivePopGestureRecognizer.enabled = YES;
+        }
+    }
+//    else{
+//        navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //隐藏导航条
+    if (_showCustomNavHeader) {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }else{
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_showCustomNavHeader) {
+        [self scrollViewDidScroll:nil];
+        
+        //开启iOS7的滑动返回效果
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            //只有在二级页面生效
+            if ([self.navigationController.viewControllers count] > 1) {
+                self.navigationController.interactivePopGestureRecognizer.delegate = self;
+            }
+        }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_showCustomNavHeader) {
+        CGFloat offsetY = scrollView.contentOffset.y;
+        UIColor *color = kNavBgColor;
+        if (offsetY > kHeaderViewHeight/2) {
+            CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+            _navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
+            //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+        } else {
+            _navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
+            //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    if (_showCustomNavHeader) {
+        WLNavHeaderView *navHeaderView = [[WLNavHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ViewCtrlTopBarHeight)];
+        navHeaderView.backgroundColor = kNavBgColor;
+        navHeaderView.titleInfo = self.title;
+        
+        [self.view addSubview:navHeaderView];
+        self.navHeaderView = navHeaderView;
+        [self.view bringSubviewToFront:_navHeaderView];
+//        [navHeaderView setDebug:YES];
+        
+        WEAKSELF
+        [navHeaderView setLeftClickecBlock:^(void){
+            [weakSelf leftBtnClicked:nil];
+        }];
+        
+        [navHeaderView setRightClickecBlock:^(void){
+            [weakSelf rightBtnClicked:nil];
+        }];
+    }
 }
 
 #pragma mark - 选取头像照片
@@ -80,6 +171,18 @@
     
 }
 
+- (void)leftBtnClicked:(UIButton *)sender
+{
+    DLog(@"%@ ------  leftBtnClicked",[self class]);
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)rightBtnClicked:(UIButton *)sender
+{
+    DLog(@"%@ ------  rightBtnClicked",[self class]);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

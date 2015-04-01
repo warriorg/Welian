@@ -63,6 +63,7 @@
 {
     self = [super init];
     if (self) {
+        self.showCustomNavHeader = YES;
         self.activityInfo = activityInfo;
         self.activityId = _activityInfo.activeid;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
@@ -74,6 +75,7 @@
 {
     self = [super init];
     if (self) {
+        self.showCustomNavHeader = YES;
         self.activityId = activityId;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
@@ -96,27 +98,28 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+//    [self scrollViewDidScroll:_tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar reset];
+//    [self.navigationController.navigationBar reset];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [super scrollViewDidScroll:scrollView];
     [self.tableView shouldPositionParallaxHeader];
-    CGFloat offsetY = scrollView.contentOffset.y;
-    UIColor *color = RGB(74.f, 117.f, 183.f);
-    if (offsetY > kHeaderImageHeight/3.f) {
-        CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
-        
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-    } else {
-        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-    }
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//    UIColor *color = RGB(74.f, 117.f, 183.f);
+//    if (offsetY > kHeaderImageHeight/3.f) {
+//        CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
+//        
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+//    } else {
+//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+//    }
 }
 
 
@@ -137,6 +140,7 @@
     //隐藏表格分割线
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
+    [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
 //    [tableView registerNib:[UINib nibWithNibName:@"NoCommentCell" bundle:nil] forCellReuseIdentifier:noCommentCell];
     
@@ -435,12 +439,20 @@
 }
 
 #pragma mark - Private
+- (void)rightBtnClicked:(UIButton *)sender
+{
+    [self shareBtnClicked];
+}
+
 //检测分享按钮是否显示
 - (void)checkShareBtn
 {
     //添加分享按钮 navbar_share
     if(_activityInfo.shareurl.length > 0){
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+        //设置右侧按钮
+        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
+        
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
     }
 }
 

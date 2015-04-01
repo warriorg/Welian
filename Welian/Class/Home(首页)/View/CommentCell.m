@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
 #import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
 
 @interface CommentCell() <MLEmojiLabelDelegate>
 {
@@ -111,8 +112,10 @@
     [mode setUid:user.uid];
     [mode setAvatar:user.avatar];
     [mode setName:user.name];
-    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-    [self.commentVC.navigationController pushViewController:userinfoVC animated:YES];
+//    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//    [self.commentVC.navigationController pushViewController:userinfoVC animated:YES];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+    [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
 }
 
 - (void)setCommentCellFrame:(CommentCellFrame *)commentCellFrame

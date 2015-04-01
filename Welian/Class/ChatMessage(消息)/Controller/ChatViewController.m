@@ -17,6 +17,7 @@
 #import "ProjectDetailsViewController.h"
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
+#import "UserInfoViewController.h"
 
 #import "WLPhotoView.h"
 #import "MJPhoto.h"
@@ -1228,17 +1229,22 @@
     //自己发送
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (message.bubbleMessageType == WLBubbleMessageTypeSending) {
-        userMode.uid = loginUser.uid;
-        userMode.name = loginUser.name;
+//        userMode.uid = loginUser.uid;
+//        userMode.name = loginUser.name;
+//        userMode.friendship = @(-1);
+        userMode = (IBaseUserM *)loginUser;
     }else{
         //好友头像
         MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:@(message.uid.integerValue)];
-        userMode.uid = friendUser.uid;
-        userMode.name = friendUser.name;
+//        userMode.uid = friendUser.uid;
+//        userMode.name = friendUser.name;
+//        userMode.friendship = friendUser.friendship;
+        userMode = (IBaseUserM *)friendUser;
     }
     
-    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
-    userInfoVC.isHideSendMsgBtn = YES;
+//    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
+//    userInfoVC.isHideSendMsgBtn = YES;
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode OperateType:userMode.friendship.integerValue == 1 ? @(10) : nil];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

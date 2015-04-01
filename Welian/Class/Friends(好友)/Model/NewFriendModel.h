@@ -28,4 +28,7 @@
 //操作类型
 @property (nonatomic, retain) NSNumber * operateType;
 
+//好友的最新消息Id
+@property (nonatomic, retain) NSString * messageId;
+
 @end

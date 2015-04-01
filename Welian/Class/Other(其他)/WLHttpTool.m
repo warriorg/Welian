@@ -1051,7 +1051,7 @@
 #pragma mark - 取活动报名用户列表
 + (void)loadActiveRecordsParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
-    NSDictionary *dic = @{@"type":@"loadMessages",@"data":parameterDic};
+    NSDictionary *dic = @{@"type":@"loadActiveRecords",@"data":parameterDic};
     [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
         succeBlock(JSON);
     } failure:^(NSError *error) {

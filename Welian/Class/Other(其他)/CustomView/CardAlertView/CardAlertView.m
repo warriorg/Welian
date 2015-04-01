@@ -23,7 +23,7 @@
 @property (assign,nonatomic) WLMessageTextView *textView;
 @property (assign,nonatomic) UIButton *cancelBtn;
 @property (assign,nonatomic) UIButton *sendBtn;
-@property (assign,nonatomic) MyFriendUser *selectFriendUser;
+@property (strong,nonatomic) MyFriendUser *selectFriendUser;
 
 @end
 
@@ -31,6 +31,8 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _cardModel = nil;
+    _selectFriendUser = nil;
 }
 
 - (instancetype)initWithCardModel:(CardStatuModel *)cardModel Friend:(MyFriendUser *)friendUser
@@ -172,7 +174,7 @@
 //发送卡片消息给好友
 - (void)sendCardMessageToFriend
 {
-    _cardModel.content = _textView.text;
+    _cardModel.content = _textView.text.length > 0 ? _textView.text : @"";
     NSDictionary *cardDic = [_cardModel keyValues];
     NSDictionary *param = @{@"type":@(51),@"touser":_selectFriendUser.uid,@"card":cardDic,@"msg":_cardModel.content};
     [WLHttpTool sendMessageParameterDic:param success:^(id JSON) {

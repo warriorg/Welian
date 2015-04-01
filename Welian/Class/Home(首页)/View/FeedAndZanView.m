@@ -9,6 +9,7 @@
 #import "FeedAndZanView.h"
 #import "M80AttributedLabel.h"
 #import "UserInfoBasicVC.h"
+#import "UserInfoViewController.h"
 
 @interface FeedAndZanView() <M80AttributedLabelDelegate>
 {
@@ -127,8 +128,10 @@
             }
         }
         if (!mode) return;
-        UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-        [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
+//        UserInfoBasicVC *userbasVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
+//        [self.commentVC.navigationController pushViewController:userbasVC animated:YES];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+        [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
 

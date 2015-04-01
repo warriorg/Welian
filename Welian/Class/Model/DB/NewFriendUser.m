@@ -30,6 +30,7 @@
         newFriend = [NewFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     
+    newFriend.messageId = userInfoM.messageId;
     newFriend.uid = userInfoM.uid;
     newFriend.mobile = userInfoM.mobile;
     newFriend.position = userInfoM.position;

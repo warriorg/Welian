@@ -10,6 +10,10 @@
 
 #define kMarginLeft 20.f
 #define kBottomHeight 5.f
+#define kTicketNumWidth 30.f
+
+#define kMarginTop 10.f
+#define kMarginInEdge 5.f
 
 @interface ActivityLookTicketViewCell ()
 
@@ -51,13 +55,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    [_ticketNumLabel sizeToFit];
-    _ticketNumLabel.right = self.contentView.width - kMarginLeft;
-    _ticketNumLabel.centerY = self.contentView.height / 2.f;
-    
-    _bgImageView.size = CGSizeMake(self.contentView.width - kMarginLeft * 3 - _ticketNumLabel.width, self.contentView.height - kBottomHeight);
+    _bgImageView.size = CGSizeMake(self.contentView.width - kMarginLeft * 3 - kTicketNumWidth,self.contentView.height - kBottomHeight);
     _bgImageView.top = 0.;
     _bgImageView.left = kMarginLeft;
+    
+    _ticketNumLabel.size = CGSizeMake(kTicketNumWidth + kMarginLeft, _bgImageView.height);
+    _ticketNumLabel.right = self.contentView.width - kMarginLeft;
+    _ticketNumLabel.centerY = self.contentView.height / 2.f;
     
     _moneyLabel.size = CGSizeMake(72.f, _bgImageView.height - 20.f);
     _moneyLabel.right = _bgImageView.width;
@@ -66,15 +70,23 @@
     _moneyLabel.layer.borderColorFromUIColor = RGB(229.f, 229.f, 229.f);
     _moneyLabel.layer.borderWidths = @"{0,0,0,0.8}";
     
-    _nameLabel.width = _bgImageView.width - _moneyLabel.width - kMarginLeft;
-    [_nameLabel sizeToFit];
-    _nameLabel.left = kMarginLeft;
-    _nameLabel.bottom = _bgImageView.height / 2.f - 2.f;
-    
     _infoLabel.width = _bgImageView.width - _moneyLabel.width - kMarginLeft;
     [_infoLabel sizeToFit];
     _infoLabel.left = kMarginLeft;
-    _infoLabel.top = _bgImageView.height / 2.f + (_infoLabel.height < 20 ? 3 : -2.f);
+    if (_iActivityTicket.name.length > 0) {
+        _infoLabel.bottom = self.height - kMarginTop;
+    }else{
+        _infoLabel.centerY = _bgImageView.height / 2.f;
+    }
+    
+    _nameLabel.width = _bgImageView.width - _moneyLabel.width - kMarginLeft;
+    [_nameLabel sizeToFit];
+    _nameLabel.left = kMarginLeft;
+    if (_iActivityTicket.intro.length > 0) {
+        _nameLabel.bottom = _infoLabel.top - kMarginInEdge;
+    }else{
+        _nameLabel.centerY = _bgImageView.height / 2.f;
+    }
 }
 
 #pragma mark - Private
@@ -91,8 +103,9 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = kTitleNormalTextColor;
-    nameLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    nameLabel.font = [UIFont boldSystemFontOfSize:14.f];
     nameLabel.text = @"VIP门票";
+    nameLabel.numberOfLines = 0;
     [bgImageView addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -102,7 +115,7 @@
     infoLabel.textColor = kNormalTextColor;
     infoLabel.font = [UIFont systemFontOfSize:13.f];
     infoLabel.text = @"参加贵宾晚宴";
-    infoLabel.numberOfLines = 2;
+    infoLabel.numberOfLines = 0;
     [bgImageView addSubview:infoLabel];
     self.infoLabel = infoLabel;
     
@@ -135,6 +148,22 @@
     NSRange searchRange = [str rangeOfString:searchStr options:NSCaseInsensitiveSearch];
     [attrstr addAttributes:attrsDic range:searchRange];
     return attrstr;
+}
+
+//返回cell的高度
++ (CGFloat)configureWithName:(NSString *)name DetailInfo:(NSString *)detailInfo
+{
+    float maxWidth = [[UIScreen mainScreen] bounds].size.width - kMarginLeft * 3 - kTicketNumWidth;
+    //计算第一个label的高度
+    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:13.f]];
+    
+    float height = (name.length > 0 ? size1.height : 0) + (detailInfo.length > 0 ? size2.height + kMarginInEdge : 0) + kMarginTop * 2.f + kBottomHeight;
+    if (height > 69.f) {
+        return height;
+    }else{
+        return 69.f;
+    }
 }
 
 @end
