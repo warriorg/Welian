@@ -80,6 +80,9 @@
         //如果是从好友列表进入聊天，首页变换
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
         
+        //如果是从当前VC进入聊天
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentChatFromUserInfo:) name:@"CurrentChatFromUserInfo" object:nil];
+        
         self.selectType= 0;
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     }
@@ -109,13 +112,14 @@
     [self badgeInfoChanged];
     
     //表格
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f, ViewCtrlTopBarHeight, self.view.width, self.view.height - ViewCtrlTopBarHeight) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f, ViewCtrlTopBarHeight, self.view.width, self.view.height - ViewCtrlTopBarHeight - TabBarHeight) style:UITableViewStylePlain];
     tableView.dataSource = self;
     tableView.delegate  = self;
     //隐藏分割线
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     self.tableView = tableView;
+//    [tableView setDebug:YES];
     
     //设置默认选择的
     [self selectIndexChanged:_selectType];
@@ -183,6 +187,9 @@
         {
             MessageFrameModel *messageFrameModel = _datasource[indexPath.row];
             HomeMessage *messagedata = messageFrameModel.messageDataM;
+            //更新查看状态
+            [messagedata updateHomeMessageIsLook];
+            [self selectIndexChanged:1];
             if ([messagedata.type isEqualToString:@"projectComment"]||[messagedata.type isEqualToString:@"projectCommentZan"]) {
                 //进入项目详情
                 //查询数据库是否存在
@@ -396,12 +403,13 @@
     NSArray *messages = [[LogInUser getCurrentLoginUser] getAllMessages];
     NSMutableArray *messageModels = [NSMutableArray array];
     for (HomeMessage *homeM  in messages) {
-        if (!homeM.isLook.boolValue) {
-//            homeM.isLook = @(1);
-            MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
-            messageFrameM.messageDataM = homeM;
-            [messageModels addObject:messageFrameM];
-        }
+//        if (!homeM.isLook.boolValue) {
+////            homeM.isLook = @(1);
+//            
+//        }
+        MessageFrameModel *messageFrameM = [[MessageFrameModel alloc] init];
+        messageFrameM.messageDataM = homeM;
+        [messageModels addObject:messageFrameM];
     }
     self.datasource = [NSArray arrayWithArray:messageModels];
     
@@ -449,6 +457,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
     
     //切换到聊天列表也没
+    [_wlSegmentedControl setSelectedSegmentIndex:0];
     [self selectIndexChanged:0];
     
     NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
@@ -456,6 +465,20 @@
     MyFriendUser *user = [loginUser getMyfriendUserWithUid:uid];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
     [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+//当前VC tab切换聊天
+- (void)currentChatFromUserInfo:(NSNotification *)notification
+{
+    //切换到聊天列表也没
+    [_wlSegmentedControl setSelectedSegmentIndex:0 animated:YES];
+    [self selectIndexChanged:0];
+    
+//    NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
+//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+//    MyFriendUser *user = [loginUser getMyfriendUserWithUid:uid];
+//    ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+//    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 //角标改变

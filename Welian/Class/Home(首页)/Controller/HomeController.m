@@ -486,9 +486,10 @@
                     //判断是否包含对应的
                     return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
                 }];
+                //删除新的好友本地数据库
+                NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
+                //本地不存在，不是好友关系
                 if(!isHave){
-                    //删除新的好友本地数据库
-                    NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
                     if (newFuser) {
                         //更新好友请求列表数据为 添加
                         [newFuser updateOperateType:0];
@@ -497,7 +498,15 @@
                     //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
                     if(myFriendUser.uid.integerValue > 100){
                         //不包含，删除当前数据
-                        [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+                        //                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+                        //更新设置为不是我的好友
+                        [myFriendUser updateIsNotMyFriend];
+                    }
+                }else{
+                    //好友
+                    if (newFuser) {
+                        //更新好友请求列表数据为 添加
+                        [newFuser updateOperateType:2];
                     }
                 }
             }

@@ -12,7 +12,7 @@
 
 @implementation NewFriendUser
 
-@dynamic messageId;
+@dynamic messageid;
 @dynamic created;
 @dynamic isLook;
 @dynamic pushType;
@@ -30,7 +30,7 @@
         newFriend = [NewFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
     }
     
-    newFriend.messageId = userInfoM.messageId;
+    newFriend.messageid = userInfoM.messageid;
     newFriend.uid = userInfoM.uid;
     newFriend.mobile = userInfoM.mobile;
     newFriend.position = userInfoM.position;
@@ -71,6 +71,7 @@
 //更新操作按钮状态
 - (NewFriendUser *)updateOperateType:(NSInteger)type
 {
+    //操作类型0：添加 1：接受  2:已添加 3：待验证
     self.operateType = @(type);
 //    [MOC save];
     [[self managedObjectContext] MR_saveToPersistentStoreAndWait];

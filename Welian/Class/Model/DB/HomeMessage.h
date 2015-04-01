@@ -32,6 +32,9 @@
 //创建项目推送数据
 + (HomeMessage *)createHomeMessageProjectModel:(NSDictionary *)dict;
 
+//改变所有未读消息状态为已读
+- (void)updateHomeMessageIsLook;
+
 // //通过commentid查询
 //+ (HomeMessage *)getHomeMessageWithUid:(NSNumber *)commentid;
 //

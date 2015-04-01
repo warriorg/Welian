@@ -14,7 +14,7 @@
 @implementation ChatMessage
 
 @dynamic msgId;
-@dynamic messageId;
+@dynamic messageid;
 @dynamic message;
 @dynamic messageType;
 @dynamic timestamp;
@@ -341,7 +341,7 @@
         }
             break;
     }
-    chatMsg.messageId = messageid;//消息编号
+    chatMsg.messageid = messageid;//消息编号
     chatMsg.timestamp = [created dateFromNormalString];
     chatMsg.avatorUrl = friendUser.avatar;
     chatMsg.isRead = @(NO);
@@ -441,7 +441,7 @@
 + (ChatMessage *)getChatMsgWithMessageId:(NSString *)messageId
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser.rsLogInUser",loginUser,@"messageId",messageId];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsMyFriendUser.rsLogInUser",loginUser,@"messageid",messageId];
     ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre inContext:loginUser.managedObjectContext];
     return chatMessage;
 }
@@ -451,10 +451,17 @@
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"rsMyFriendUser.rsLogInUser",loginUser];
-    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"messageId" ascending:NO inContext:loginUser.managedObjectContext];
-    
-    if (chatMessage.messageId.length > 0) {
-        return chatMessage.messageId;
+    NSArray *chatMsgs = [ChatMessage MR_findAllWithPredicate:pre inContext:loginUser.managedObjectContext];
+    ChatMessage *chatMessage = nil;
+    if (chatMsgs.count > 0) {
+        NSArray *sortMessages = [chatMsgs sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [[obj1 messageid] integerValue] > [[obj2 messageid] integerValue];
+        }];
+        chatMessage = [sortMessages lastObject];
+    }
+//    ChatMessage *chatMessage = [ChatMessage MR_findFirstWithPredicate:pre sortedBy:@"messageid" ascending:NO inContext:loginUser.managedObjectContext];
+    if (chatMessage.messageid.length > 0) {
+        return chatMessage.messageid;
     }else{
         return @"0";
     }

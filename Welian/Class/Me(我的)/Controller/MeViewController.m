@@ -43,6 +43,12 @@
 static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 @implementation MeViewController
 
+- (void)dealloc
+{
+    _wlSegmentedControl = nil;
+    _infoDict = nil;
+}
+
 - (NSString *)title
 {
     return @"个人中心";
@@ -529,40 +535,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)initUserInfo
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-//    if (!([mode.uid integerValue]==[_userMode.uid integerValue])&&[usermode.friendship integerValue]==1) {
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(moreItmeClick:)];
-//    }
-//    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLUserInfoTableName];
-//    if (item) {
-//        _dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:item.itemObject]];
-//        _userMode = [_dataDicM objectForKey:@"profile"];
-//        [self.tableView reloadData];
-//    }
-//    
-//    YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:usermode.uid.stringValue fromTable:KWLSamefriendsTableName];
-//    if (sameFitem) {
-//        _sameFriendArry = [self getSameFriendsWith:sameFitem.itemObject];
-//        [self.tableView reloadData];
-//    }
-    
     [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
         
         self.infoDict = [self getUserInfoWith:JSON];
-//        NSMutableDictionary *dataDicM = [NSMutableDictionary dictionaryWithDictionary:[self getUserInfoWith:JSON]];
-//        _userMode = [_dataDicM objectForKey:@"profile"];
-//        if (!isask) {
-//            if ([_userMode.friendship integerValue]==-1) {
-//                
-//            }else if ([_userMode.friendship integerValue]==1) {
-//                [MyFriendUser createMyFriendUserModel:_userMode];
-//                if (!_isHideSendMsgBtn) {
-//                    [self.tableView setTableFooterView:self.sendView];
-//                }
-//            }else {
-//                [[mode getMyfriendUserWithUid:_userMode.uid] MR_deleteEntity];
-//                [self.tableView setTableFooterView:self.addFriendView];
-//            }
-//        }
         [_tableView reloadData];
     } fail:^(NSError *error) {
         

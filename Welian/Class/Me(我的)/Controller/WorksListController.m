@@ -27,6 +27,10 @@
 static NSString *cellid = @"workscellid";
 @implementation WorksListController
 
+- (NSString *)title
+{
+    return @"履历";
+}
 
 - (UIView *)footView
 {
