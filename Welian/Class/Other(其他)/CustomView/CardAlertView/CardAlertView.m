@@ -14,7 +14,7 @@
 #define kCardViewHeight 56.f
 #define kMarginLeft 15.f
 
-@interface CardAlertView ()<UIGestureRecognizerDelegate>
+@interface CardAlertView ()<UIGestureRecognizerDelegate,UITextViewDelegate>
 
 @property (strong,nonatomic) CardStatuModel *cardModel;
 @property (assign,nonatomic) UIImageView *bgImageView;
@@ -109,16 +109,15 @@
     //文本输入框
     // 初始化输入框
     WLMessageTextView *textView = [[WLMessageTextView  alloc] initWithFrame:CGRectZero];
-    textView.returnKeyType = UIReturnKeySend;
-    textView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
+    textView.returnKeyType = UIReturnKeyDone;
+//    textView.enablesReturnKeyAutomatically = NO; // UITextView内部判断send按钮是否可以用
     textView.layer.borderColor = WLRGB(220, 220, 220).CGColor;
     textView.layer.borderWidth = 0.4f;
     textView.layer.cornerRadius = 5.f;
     textView.layer.masksToBounds = YES;
     textView.textColor = kTitleNormalTextColor;
     textView.placeHolder = @"给朋友留言";
-//    textView.delegate = self;
-    
+    textView.delegate = self;
     [contentView addSubview:textView];
     self.textView = textView;
     
@@ -214,6 +213,16 @@
 {
     [[self findFirstResponder] resignFirstResponder];
     [self fadeOut];
+}
+
+//回车隐藏键盘
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - KeyboardNoti
