@@ -41,6 +41,7 @@ static NSString *cellid = @"workscellid";
         [schoolBut setTitle:@"教育背景" forState:UIControlStateNormal];
         [schoolBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         schoolBut.titleLabel.font = WLFONT(16);
+        schoolBut.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0);
         [schoolBut addTarget:self action:@selector(addSchoolExperience) forControlEvents:UIControlEventTouchUpInside];
         [_footView addSubview:schoolBut];
         
@@ -49,6 +50,7 @@ static NSString *cellid = @"workscellid";
         [companyBut setTitle:@"工作经历" forState:UIControlStateNormal];
         [companyBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         companyBut.titleLabel.font = WLFONT(16);
+        companyBut.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0);
         [companyBut addTarget:self action:@selector(addWorkExperience) forControlEvents:UIControlEventTouchUpInside];
         [_footView addSubview:companyBut];
         UIView *lieView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, 1)];
@@ -78,14 +80,20 @@ static NSString *cellid = @"workscellid";
     self = [super init];
     if (self) {
         
-        self.dataArray = [NSMutableArray array];
-        [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
-        [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
-        NSSortDescriptor *sortByName= [NSSortDescriptor sortDescriptorWithKey:@"startyear" ascending:NO];
-        [self.dataArray sortUsingDescriptors:[NSArray arrayWithObject:sortByName]];
+        [self reladData];
     }
     return self;
 }
+
+- (void)reladData
+{
+    self.dataArray = [NSMutableArray array];
+    [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsCompanys.allObjects];
+    [self.dataArray addObjectsFromArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+    NSSortDescriptor *sortByName= [NSSortDescriptor sortDescriptorWithKey:@"startyear" ascending:NO];
+    [self.dataArray sortUsingDescriptors:[NSArray arrayWithObject:sortByName]];
+}
+
 
 - (NoListView*)nolistView
 {
@@ -235,7 +243,7 @@ static NSString *cellid = @"workscellid";
     }
     
     addWkOrEdVC.recorBlock = ^(){
-        self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+        [self reladData];
         [self.tableView reloadData];
     };
     [self.navigationController pushViewController:addWkOrEdVC animated:YES];
@@ -314,7 +322,7 @@ static NSString *cellid = @"workscellid";
 {
     AddWorkOrEducationController *addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:1 isNew:YES];
     addWkOrEdVC.recorBlock = ^(){
-        self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+        [self reladData];
         [self.tableView reloadData];
     };
     [self.navigationController pushViewController:addWkOrEdVC animated:YES];
@@ -326,7 +334,7 @@ static NSString *cellid = @"workscellid";
 {
     AddWorkOrEducationController *addWkOrEdVC = [[AddWorkOrEducationController alloc] initWithStyle:UITableViewStyleGrouped withType:2 isNew:YES];
     addWkOrEdVC.recorBlock = ^(){
-        self.dataArray = [NSMutableArray arrayWithArray:[LogInUser getCurrentLoginUser].rsSchools.allObjects];
+        [self reladData];
         [self.tableView reloadData];
     };
     [self.navigationController pushViewController:addWkOrEdVC animated:YES];

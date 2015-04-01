@@ -47,7 +47,7 @@
     
     if (_progressView == nil) {
         _progressView = [[MJPhotoProgressView alloc] init];
-        _progressView.bounds = CGRectMake( 0, 0, 60, 60);
+        _progressView.bounds = CGRectMake( 0, 0, 40, 40);
         _progressView.center = self.center;
     }
     _progressView.progress = kMinProgress;
