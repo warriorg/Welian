@@ -478,12 +478,15 @@ BMKMapManager* _mapManager;
 // 退出登录
 - (void)logout
 {
+    if ([self.window.rootViewController isKindOfClass:[LoginGuideController class]])
+        return;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
+    [UserDefaults removeObjectForKey:@"sessionid"];
+    [LogInUser setUserisNow:NO];
+    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
         [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-            [UserDefaults removeObjectForKey:@"sessionid"];
-            [LogInUser setUserisNow:NO];
-            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+            
         } fail:^(NSError *error) {
             
         }];

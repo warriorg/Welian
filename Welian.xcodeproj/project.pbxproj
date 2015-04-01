@@ -3050,6 +3050,14 @@
 		F55EB1011AC9303B00FFB3BE /* me_lvli_line_end@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55EB0FF1AC9303B00FFB3BE /* me_lvli_line_end@2x.png */; };
 		F55EB1021AC9303B00FFB3BE /* me_lvli_line_end@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55EB0FF1AC9303B00FFB3BE /* me_lvli_line_end@2x.png */; };
 		F55EB1031AC9303B00FFB3BE /* me_lvli_line_end@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55EB0FF1AC9303B00FFB3BE /* me_lvli_line_end@2x.png */; };
+		F55EB10E1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */; };
+		F55EB10F1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */; };
+		F55EB1101ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */; };
+		F55EB1111ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */; };
+		F55EB1121ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */; };
+		F55EB1131ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */; };
+		F55EB1141ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */; };
+		F55EB1151ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */; };
 		F55ED9E71A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
 		F55ED9E81A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
 		F55ED9E91A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */; };
@@ -5759,6 +5767,10 @@
 		F55786411A639CA000630A46 /* weLian1.1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.5.xcdatamodel; sourceTree = "<group>"; };
 		F55EB0FA1AC9271A00FFB3BE /* me_renzheng_phone_failed_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_renzheng_phone_failed_bg@2x.png"; sourceTree = "<group>"; };
 		F55EB0FF1AC9303B00FFB3BE /* me_lvli_line_end@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_lvli_line_end@2x.png"; sourceTree = "<group>"; };
+		F55EB10A1ACB9FE400FFB3BE /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		F55EB10C1ACB9FE400FFB3BE /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		F55ED9E51A58D7BB00C4AB93 /* BasicPlainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPlainTableViewController.h; sourceTree = "<group>"; };
 		F55ED9E61A58D7BB00C4AB93 /* BasicPlainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicPlainTableViewController.m; sourceTree = "<group>"; };
 		F55ED9EA1A58D7D600C4AB93 /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
@@ -8396,6 +8408,17 @@
 			path = "登录images";
 			sourceTree = "<group>";
 		};
+		F55EB1091ACB9FE400FFB3BE /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				F55EB10A1ACB9FE400FFB3BE /* HPGrowingTextView.h */,
+				F55EB10B1ACB9FE400FFB3BE /* HPGrowingTextView.m */,
+				F55EB10C1ACB9FE400FFB3BE /* HPTextViewInternal.h */,
+				F55EB10D1ACB9FE400FFB3BE /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 		F579097E19C2E3F2009DB1B2 /* 首页images */ = {
 			isa = PBXGroup;
 			children = (
@@ -9128,6 +9151,7 @@
 		F5CE863619BFF44100A9D14C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F55EB1091ACB9FE400FFB3BE /* HPGrowingTextView */,
 				F5D04C401AC104A6004DE412 /* ACEExpandableTextCell */,
 				F5D04C461AC104A6004DE412 /* WUEmoticonsKeyboard */,
 				F5CE86D019C0162200A9D14C /* HomeController.h */,
@@ -12671,6 +12695,7 @@
 				A49C7CE01A70D42700F2AEC5 /* WLContentCellFrame.m in Sources */,
 				A49C7CE11A70D42700F2AEC5 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				A49C7CE21A70D42700F2AEC5 /* CityLocationController.m in Sources */,
+				F55EB1111ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D71AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				A49C7CE31A70D42700F2AEC5 /* MJRefreshFooterView.m in Sources */,
 				A49C7CE41A70D42700F2AEC5 /* NSString+XHMD5.m in Sources */,
@@ -12733,6 +12758,7 @@
 				A49C7D0F1A70D42700F2AEC5 /* AddFriendTypeListViewController.m in Sources */,
 				A49C7D101A70D42700F2AEC5 /* CommentCell.m in Sources */,
 				A49C7D111A70D42700F2AEC5 /* NSNumber+MagicalDataImport.m in Sources */,
+				F55EB1151ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */,
 				A49C7D121A70D42700F2AEC5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B391A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
 				A49C7D131A70D42700F2AEC5 /* DaiDodgeKeyboard+Animation.m in Sources */,
@@ -13193,6 +13219,7 @@
 				F53DC3561A49192600F5F712 /* WLContentCellFrame.m in Sources */,
 				A4A2EB021A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				F53DC3571A49192600F5F712 /* CityLocationController.m in Sources */,
+				F55EB1101ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D61AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				F53DC3581A49192600F5F712 /* MJRefreshFooterView.m in Sources */,
 				A4C1406D1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
@@ -13255,6 +13282,7 @@
 				A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
 				A4A2EAE71A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
+				F55EB1141ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */,
 				A4C140971A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B381A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
 				F58CA99C1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
@@ -13715,6 +13743,7 @@
 				F5664A211A2AFD56008A5830 /* CityLocationController.m in Sources */,
 				A4A2EB001A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				F5664A221A2AFD56008A5830 /* MJRefreshFooterView.m in Sources */,
+				F55EB10E1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D41AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				F5664A231A2AFD56008A5830 /* MessageController.m in Sources */,
 				F5664A241A2AFD56008A5830 /* WLUserStatusesResult.m in Sources */,
@@ -13777,6 +13806,7 @@
 				A4A2EAE51A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
 				A47F1B361A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
+				F55EB1121ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */,
 				F58CA99A1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,
 				F55078781A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F5664A3D1A2AFD56008A5830 /* MyFriendsController.m in Sources */,
@@ -14237,6 +14267,7 @@
 				F5664CDA1A2AFDD5008A5830 /* WLContentCellFrame.m in Sources */,
 				A4A2EB011A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				F5664CDB1A2AFDD5008A5830 /* CityLocationController.m in Sources */,
+				F55EB10F1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D51AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				F5664CDC1A2AFDD5008A5830 /* MJRefreshFooterView.m in Sources */,
 				A4C1406C1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
@@ -14299,6 +14330,7 @@
 				A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
 				A4A2EAE61A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
+				F55EB1131ACB9FE400FFB3BE /* HPTextViewInternal.m in Sources */,
 				A4C140961A4BEA8500C9BAB5 /* WLBaseTableViewCell.m in Sources */,
 				A47F1B371A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
 				F58CA99B1A5D4F9100988A61 /* DaiDodgeKeyboard+Animation.m in Sources */,

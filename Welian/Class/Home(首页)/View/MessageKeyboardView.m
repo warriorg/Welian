@@ -10,7 +10,7 @@
 #import "ZBMessageManagerFaceView.h"
 #import "WUDemoKeyboardBuilder.h"
 
-@interface MessageKeyboardView() <UITextViewDelegate,UIScrollViewDelegate>
+@interface MessageKeyboardView() <UITextViewDelegate,UIScrollViewDelegate,HPGrowingTextViewDelegate>
 {
     UIButton *_emojiBut;
     MessageCommeBlock _messageBlock;
@@ -48,14 +48,18 @@
         [_emojiBut addTarget:self action:@selector(switchKeyboard:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_emojiBut];
         
-        _commentTextView = [[WLMessageTextView alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
+        _commentTextView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(IWCellBorderWidth, 7, _emojiBut.frame.origin.x-IWCellBorderWidth, 35)];
+        _commentTextView.animateHeightChange = NO;
+        _commentTextView.animationDuration = 0.01;
+        _commentTextView.minNumberOfLines = 1;
+        _commentTextView.maxNumberOfLines = 3;
         [_commentTextView.layer setMasksToBounds:YES];
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
         [_commentTextView.layer setBorderColor:[WLLineColor CGColor]];
         [_commentTextView setFont:[UIFont systemFontOfSize:17]];
         [_commentTextView setReturnKeyType:UIReturnKeySend];
-        [_commentTextView setPlaceHolder:@"写评论..."];
+        [_commentTextView setPlaceholder:@"写评论..."];
         [_commentTextView setDelegate:self];
         [self addSubview:_commentTextView];
         
@@ -76,50 +80,65 @@
 
 - (void)textviewChangeHigh:(CGSize)size withTextView:(UITextView *)textView
 {
-    size.height -= 2;
-    if ( size.height >= 58 ) {
-        
-        size.height = 58;
-    }
-    else if ( size.height <= 35 ) {
-        
-        size.height = 35;
-    }
-    
-    if ( size.height != textView.frame.size.height ) {
-        
-        CGFloat span = size.height - textView.frame.size.height;
-        
-        CGRect frame = self.frame;
-        frame.origin.y -= span;
-        frame.size.height += span;
-        self.frame = frame;
-        
-        CGFloat centerY = frame.size.height / 2;
-        
-        frame = textView.frame;
-        frame.size = size;
-        textView.frame = frame;
-        
-        CGPoint center = textView.center;
-        center.y = centerY;
-        textView.center = center;
-    }
+//    size.height -= 2;
+//    if ( size.height >= 58 ) {
+//        
+//        size.height = 58;
+//    }
+//    else if ( size.height <= 35 ) {
+//        
+//        size.height = 35;
+//    }
+//    
+//    if ( size.height != textView.frame.size.height ) {
+//        
+//        CGFloat span = size.height - textView.frame.size.height;
+//        
+//        CGRect frame = self.frame;
+//        frame.origin.y -= span;
+//        frame.size.height += span;
+//        self.frame = frame;
+//        
+//        CGFloat centerY = frame.size.height / 2;
+//        
+//        frame = textView.frame;
+//        frame.size = size;
+//        textView.frame = frame;
+//        
+//        CGPoint center = textView.center;
+//        center.y = centerY;
+//        textView.center = center;
+//    }
 
 }
 
-- (void)textViewDidChange:(UITextView *)textView
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
 {
-    CGSize size = textView.contentSize;
-    [self textviewChangeHigh:size withTextView:textView];
+    
 }
 
+- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
+{
+    float bottom = self.bottom;
+    if ([growingTextView.text length] == 0)
+    {
+        [self setHeight:height + 13];
+    }
+    else
+    {
+        [self setHeight:height + 13];
+    }
+    [self setBottom:bottom];
+    if (self.textHighBlock) {
+        self.textHighBlock(self.height);
+    }
+}
 
 - (void)switchKeyboard:(UIButton *)sender {
     [_emojiBut setSelected:!_emojiBut.selected];
     WEAKSELF
-    if (_commentTextView.isFirstResponder) {
-        if (_commentTextView.emoticonsKeyboard) [_commentTextView switchToDefaultKeyboard];
+    if (_commentTextView.internalTextView.isFirstResponder) {
+        if (_commentTextView.internalTextView.emoticonsKeyboard) [_commentTextView.internalTextView switchToDefaultKeyboard];
         else {
             WUEmoticonsKeyboard *keyboard = [WUDemoKeyboardBuilder sharedEmoticonsKeyboard];
             [keyboard setHideSendBut:NO];
@@ -127,7 +146,7 @@
 //                _messageBlock(_commentTextView.text);
                 [weakSelf sendMessgeText];
             }];
-            [_commentTextView switchToEmoticonsKeyboard:keyboard];
+            [_commentTextView.internalTextView switchToEmoticonsKeyboard:keyboard];
 
 //            [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
         }
@@ -137,9 +156,9 @@
         [keyboard setSpaceButtonTappedBlock:^{
             [weakSelf sendMessgeText];
         }];
-        [_commentTextView switchToEmoticonsKeyboard:keyboard];
+        [_commentTextView.internalTextView switchToEmoticonsKeyboard:keyboard];
 //        [_commentTextView switchToEmoticonsKeyboard:[WUDemoKeyboardBuilder sharedEmoticonsKeyboard]];
-        [_commentTextView becomeFirstResponder];
+        [_commentTextView.internalTextView becomeFirstResponder];
     }
 }
 
@@ -151,8 +170,8 @@
         self.frame = CGRectMake(0, _theSuperView.frame.size.height-self.frame.size.height,  _theSuperView.bounds.size.width,self.frame.size.height);
     }];
     [_emojiBut setSelected:NO];
-    [_commentTextView switchToDefaultKeyboard];
-    [_commentTextView resignFirstResponder];
+    [_commentTextView.internalTextView switchToDefaultKeyboard];
+    [_commentTextView.internalTextView resignFirstResponder];
 }
 
 #pragma mark 监听键盘的显示与隐藏
@@ -197,22 +216,23 @@
 - (void)startCompile:(WLBasicTrends *)touser
 {
     if (!touser) {
-        [_commentTextView setPlaceHolder:@"写评论..."];
+        [_commentTextView setPlaceholder:@"写评论..."];
         return;
     }
     [_commentTextView becomeFirstResponder];
-    [_commentTextView setPlaceHolder:[NSString stringWithFormat:@"回复%@:",touser.name]];
+    [_commentTextView setPlaceholder:[NSString stringWithFormat:@"回复%@:",touser.name]];
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         [self sendMessgeText];
-//        if (textView.text.length) {
-//            _messageBlock(textView.text);
-//            [textView setText:nil];
-//        }
-//        [self textviewChangeHigh:CGSizeMake(textView.bounds.size.width, 35) withTextView:textView];
-//        [self dismissKeyBoard];
+        //        if (textView.text.length) {
+        //            _messageBlock(textView.text);
+        //            [textView setText:nil];
+        //        }
+        //        [self textviewChangeHigh:CGSizeMake(textView.bounds.size.width, 35) withTextView:textView];
+        //        [self dismissKeyBoard];
         //在这里做你响应return键的代码
         return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
@@ -226,7 +246,6 @@
         _messageBlock(_commentTextView.text);
         [_commentTextView setText:nil];
     }
-    [self textviewChangeHigh:CGSizeMake(_commentTextView.bounds.size.width, 35) withTextView:_commentTextView];
     [self dismissKeyBoard];
 }
 - (void)dealloc

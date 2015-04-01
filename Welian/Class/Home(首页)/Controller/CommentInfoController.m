@@ -220,6 +220,9 @@ static NSString *noCommentCell = @"NoCommentCell";
             
         }];
     }];
+    self.messageView.textHighBlock = ^(CGFloat textHeigh){
+        [weakSelf.tableView setFrame:CGRectMake(0, 0, SuperSize.width, SuperSize.height-textHeigh)];
+    };
     
     [self.view addSubview:self.messageView];
     if (_beginEdit) {
