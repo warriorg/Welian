@@ -91,7 +91,7 @@
     [self.contentView addSubview:_nameLabel];
     
     _commentLabel = [[MLEmojiLabel alloc]init];
-    _commentLabel.emojiDelegate = self;
+    _commentLabel.delegate = self;
     _commentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _commentLabel.isNeedAtAndPoundSign = YES;
     _commentLabel.font = WLFONT(14);
@@ -114,7 +114,7 @@
     
     _trendsLabel = [[MLEmojiLabel alloc]init];
     _trendsLabel.numberOfLines = 0;
-    _trendsLabel.emojiDelegate = self;
+    _trendsLabel.delegate = self;
     _trendsLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _trendsLabel.isNeedAtAndPoundSign = YES;
     _trendsLabel.font = WLFONT(12);
@@ -143,8 +143,6 @@
     if ([messageDataM.type isEqualToString:@"feedComment"] || [messageDataM.type isEqualToString:@"projectComment"]) {
         [_zanfeedImage setHidden:YES];
         [_commentLabel setHidden:NO];
-        _commentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-        _commentLabel.customEmojiPlistName = @"expressionImage_custom";
         [_commentLabel setFrame:messageFrameModel.commentLabelF];
         [_commentLabel setText:messageDataM.msg];
 
@@ -171,8 +169,6 @@
     }else if(messageDataM.feedcontent.length){
         [_trendsLabel setHidden:NO];
         [_photImage setImage:[UIImage resizedImage:@"repost_bg"]];
-        _trendsLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-        _trendsLabel.customEmojiPlistName = @"expressionImage_custom";
         [_trendsLabel setFrame:messageFrameModel.trendsLabelF];
         [_trendsLabel setText:messageDataM.feedcontent];
         [_trendsLabel sizeToFit];

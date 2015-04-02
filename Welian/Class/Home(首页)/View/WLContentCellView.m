@@ -61,7 +61,7 @@
     // 5.内容
     _contentLabel = [[MLEmojiLabel alloc]init];
     _contentLabel.numberOfLines = 0;
-    _contentLabel.emojiDelegate = self;
+    _contentLabel.delegate = self;
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _contentLabel.font = WLFONT(15);
     _contentLabel.textColor = WLRGB(51, 51, 51);
@@ -154,8 +154,6 @@
     }else{
         _contentLabel.hidden = NO;
         // 3.正文
-        _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-        _contentLabel.customEmojiPlistName = @"expressionImage_custom";
         CGRect textFrame = contenFrame.contentLabelF;
         
         _contentLabel.frame = textFrame;

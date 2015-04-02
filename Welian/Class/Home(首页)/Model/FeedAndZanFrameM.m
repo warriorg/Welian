@@ -7,22 +7,23 @@
 //
 
 #import "FeedAndZanFrameM.h"
-#import "M80AttributedLabel.h"
+#import "MLEmojiLabel.h"
 
 @interface FeedAndZanFrameM()
 {
     CGFloat _cellWidth;
 }
-@property (nonatomic, strong) M80AttributedLabel *HBlabel;
+@property (nonatomic, strong) MLEmojiLabel *HBlabel;
 @end
 
 @implementation FeedAndZanFrameM
 
-- (M80AttributedLabel *)HBlabel
+- (MLEmojiLabel *)HBlabel
 {
     if (_HBlabel == nil) {
-        _HBlabel = [[M80AttributedLabel alloc] init];
+        _HBlabel = [[MLEmojiLabel alloc] init];
         [_HBlabel setFont:WLFONT(13)];
+        [_HBlabel setLineSpacing:3];
     }
     return _HBlabel;
 }
@@ -61,7 +62,6 @@
     if (zanArray.count) {
         for (UserInfoModel *zanModel  in zanArray) {
             if (zanModel != zanArray.lastObject) {
-                
                 [zanStrM appendFormat:@"%@，",zanModel.name];
             }else{
                 [zanStrM appendFormat:@"%@",zanModel.name];
@@ -101,7 +101,7 @@
 - (CGFloat)textViewHeightForAttributedText:(NSString *)text andWidth:(CGFloat)width
 {
     [self.HBlabel setText:text];
-    CGSize size = [self.HBlabel sizeThatFits:CGSizeMake(width, FLT_MAX)];
+    CGSize size = [self.HBlabel preferredSizeWithMaxWidth:width];
     return size.height;
 }
 

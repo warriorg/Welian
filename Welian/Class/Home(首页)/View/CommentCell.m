@@ -87,7 +87,7 @@
     // 5.内容
     _contentLabel = [[MLEmojiLabel alloc] init];
     _contentLabel.numberOfLines = 0;
-    _contentLabel.emojiDelegate = self;
+    _contentLabel.delegate = self;
     _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _contentLabel.isNeedAtAndPoundSign = YES;
@@ -140,8 +140,6 @@
     _timeLabel.frame = commentCellFrame.timeLabelF;
     
     // 6.正文
-    _contentLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    _contentLabel.customEmojiPlistName = @"expressionImage_custom";
     _contentLabel.frame = commentCellFrame.contentLabelF;
     NSString *labelstr = commentM.comment;
     if (commentM.touser) {

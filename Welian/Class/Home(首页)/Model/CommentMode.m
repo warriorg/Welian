@@ -10,13 +10,19 @@
 
 @implementation CommentMode
 
-//- (void)setTouser:(WLBasicTrends *)touser
-//{
-//    _touser = touser;
-//    if (touser) {
-//        _comment = [NSString stringWithFormat:@"回复 %@ :%@",touser.name,_comment];
-//    }
-//}
+- (void)setTouser:(WLBasicTrends *)touser
+{
+    _touser = touser;
+    _commentAndName = [NSString stringWithFormat:@"%@ 回复 %@ : %@",_user.name,touser.name,_comment];
+}
+
+- (void)setUser:(WLBasicTrends *)user
+{
+    _user = user;
+    _commentAndName = [NSString stringWithFormat:@"%@ : %@",_user.name,_comment];
+}
+
+
 
 - (NSString *)created
 {

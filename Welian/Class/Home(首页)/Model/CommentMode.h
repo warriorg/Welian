@@ -26,4 +26,7 @@
 /**  对该评论的评论人   */
 @property (nonatomic, strong) WLBasicTrends *touser;
 
+
+@property (nonatomic, strong) NSString *commentAndName;
+
 @end

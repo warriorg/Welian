@@ -76,9 +76,6 @@
     _titelLabel.lineBreakMode = NSLineBreakByCharWrapping;
     [_titelLabel setTextColor:[UIColor darkGrayColor]];
     // 5.2.正文
-    _titelLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    _titelLabel.customEmojiPlistName = @"expressionImage_custom";
-    
     [_titelLabel setText:statusM.content];
     
 }

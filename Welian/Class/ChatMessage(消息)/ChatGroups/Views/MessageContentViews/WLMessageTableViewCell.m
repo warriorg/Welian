@@ -266,7 +266,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             //发送失败点击按钮
             [messageBubbleView.sendFailedBtn addTarget:self action:@selector(sendFailedBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
 //            messageBubbleView.displayTextView.delegate = self;
-            messageBubbleView.displayLabel.emojiDelegate = self;
+            messageBubbleView.displayLabel.delegate = self;
             [self.contentView addSubview:messageBubbleView];
 //            [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
@@ -278,7 +278,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
             WLMessageSpecialView *messageSpecialView = [[WLMessageSpecialView alloc] initWithFrame:CGRectMake(kWLMessageSpecialViewPaddingX, 10.f,  CGRectGetWidth(self.bounds) - kWLMessageSpecialViewPaddingX * 2.f, [WLMessageSpecialView calculateCellHeightWithMessage:message] + (self.displayTimestamp ? (kWLTimeStampLabelHeight + kWLLabelPadding) : kWLLabelPadding)) message:message];
             messageSpecialView.hidden = YES;
 //            messageSpecialView.specialTextView.delegate = self;
-            messageSpecialView.displayLabel.emojiDelegate = self;
+            messageSpecialView.displayLabel.delegate = self;
             [self.contentView addSubview:messageSpecialView];
 //            [self.contentView sendSubviewToBack:messageSpecialView];
 //            [self.contentView bringSubviewToFront:messageSpecialView];

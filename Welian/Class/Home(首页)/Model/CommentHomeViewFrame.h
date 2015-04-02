@@ -21,16 +21,6 @@
 @property (nonatomic, assign, readonly) CGRect moreLabelFrame;
 
 /**  <#Description#>   */
-@property (nonatomic, strong, readonly) NSString *oneLabelStr;
-/**  <#Description#>   */
-@property (nonatomic, strong, readonly) NSString *twoLabelStr;
-/**  <#Description#>   */
-@property (nonatomic, strong, readonly) NSString *threeLabelStr;
-/**  <#Description#>   */
-@property (nonatomic, strong, readonly) NSString *fourLabelStr;
-/**  <#Description#>   */
-@property (nonatomic, strong, readonly) NSString *fiveLabelStr;
-/**  <#Description#>   */
 @property (nonatomic, strong, readonly) NSString *moreLabelStr;
 
 @property (nonatomic, assign ,readonly) CGFloat cellHigh;

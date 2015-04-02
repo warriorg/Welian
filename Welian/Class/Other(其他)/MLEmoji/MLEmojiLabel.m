@@ -28,9 +28,9 @@ return _##regularExpression;\
 
 REGULAREXPRESSION(URLRegularExpression,@"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)")
 
-//REGULAREXPRESSION(PhoneNumerRegularExpression, @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}")
+REGULAREXPRESSION(PhoneNumerRegularExpression, @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}")
 
-//REGULAREXPRESSION(EmailRegularExpression, @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}")
+REGULAREXPRESSION(EmailRegularExpression, @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}")
 
 REGULAREXPRESSION(AtRegularExpression, @"@[\\u4e00-\\u9fa5\\w\\-]+")
 
@@ -42,20 +42,17 @@ REGULAREXPRESSION_OPTION(PoundSignRegularExpression, @"#([\\u4e00-\\u9fa5\\w\\-]
 //REGULAREXPRESSION(EmojiRegularExpression, @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]")
 
 //@"/:[\\w:~!@$&*()|+<>',?-]{1,8}" , // @"/:[\\x21-\\x2E\\x30-\\x7E]{1,8}" ，经过检测发现\w会匹配中文，好奇葩。
-REGULAREXPRESSION(SlashEmojiRegularExpression, @"/:[\\x21-\\x2E\\x30-\\x7E]{1,8}")
+REGULAREXPRESSION(SlashEmojiRegularExpression, @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]")
 
-const CGFloat kLineSpacing = 4.0;
+const CGFloat kLineSpacing = 5.0;
 const CGFloat kAscentDescentScale = 0.25; //在这里的话无意义，高度的结局都是和宽度一样
 
-const CGFloat kEmojiWidthRatioWithLineHeight = 1.25;//和字体高度的比例
+const CGFloat kEmojiWidthRatioWithLineHeight = 1.15;//和字体高度的比例
 
 const CGFloat kEmojiOriginYOffsetRatioWithLineHeight = 0.10; //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
 NSString *const kCustomGlyphAttributeImageName = @"CustomGlyphAttributeImageName";
 
 #define kEmojiReplaceCharacter @"\uFFFC"
-
-//#define kURLActionCount 5
-//NSString * const kURLActions[] = {@"url->",@"email->",@"phoneNumber->",@"at->",@"poundSign->"};
 
 #define kURLActionCount 3
 NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
@@ -86,18 +83,18 @@ NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
 #pragma mark - getter
 - (NSMutableDictionary *)emojiDictRecords
 {
-	if (!_emojiDictRecords) {
-		_emojiDictRecords = [NSMutableDictionary new];
-	}
-	return _emojiDictRecords;
+    if (!_emojiDictRecords) {
+        _emojiDictRecords = [NSMutableDictionary new];
+    }
+    return _emojiDictRecords;
 }
 
 - (NSMutableDictionary *)emojiRegularExpressions
 {
-	if (!_emojiRegularExpressions) {
-		_emojiRegularExpressions = [NSMutableDictionary new];
-	}
-	return _emojiRegularExpressions;
+    if (!_emojiRegularExpressions) {
+        _emojiRegularExpressions = [NSMutableDictionary new];
+    }
+    return _emojiRegularExpressions;
 }
 
 #pragma mark - common
@@ -109,7 +106,7 @@ NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
         return self.emojiDictRecords[key];
     }
     
-   
+    
     NSString *emojiFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:key];
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:emojiFilePath];
     NSAssert(dict,@"表情字典%@找不到",key);
@@ -129,15 +126,15 @@ NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
     NSRegularExpression *re = [[NSRegularExpression alloc] initWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
     
     NSAssert(re,@"正则%@有误",regex);
-    self.emojiDictRecords[regex] = re;
+    self.emojiRegularExpressions[regex] = re;
     
-    return self.emojiDictRecords[regex];
+    return self.emojiRegularExpressions[regex];
 }
 
 @end
 
 
-@interface MLEmojiLabel()<TTTAttributedLabelDelegate>
+@interface MLEmojiLabel()
 
 @property (nonatomic, weak) NSRegularExpression *customEmojiRegularExpression;
 @property (nonatomic, weak) NSDictionary *customEmojiDictionary; //这玩意如果有也是在MLEmojiLabelPlistManager单例里面存着
@@ -155,11 +152,11 @@ NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
 + (NSDictionary *)emojiDictionary {
     static NSDictionary *emojiDictionary = nil;
     static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-	    NSString *emojiFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"expressionImage.plist"];
-	    emojiDictionary = [[NSDictionary alloc] initWithContentsOfFile:emojiFilePath];
-	});
-	return emojiDictionary;
+    dispatch_once(&onceToken, ^{
+        NSString *emojiFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"expressionImage_custom.plist"];
+        emojiDictionary = [[NSDictionary alloc] initWithContentsOfFile:emojiFilePath];
+    });
+    return emojiDictionary;
 }
 
 #pragma mark - 表情 callback
@@ -170,47 +167,43 @@ typedef struct CustomGlyphMetrics {
 } CustomGlyphMetrics, *CustomGlyphMetricsRef;
 
 static void deallocCallback(void *refCon) {
-	free(refCon), refCon = NULL;
+    free(refCon), refCon = NULL;
 }
 
 static CGFloat ascentCallback(void *refCon) {
-	CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
-	return metrics->ascent;
+    CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
+    return metrics->ascent;
 }
 
 static CGFloat descentCallback(void *refCon) {
-	CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
-	return metrics->descent;
+    CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
+    return metrics->descent;
 }
 
 static CGFloat widthCallback(void *refCon) {
-	CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
-	return metrics->width;
+    CustomGlyphMetricsRef metrics = (CustomGlyphMetricsRef)refCon;
+    return metrics->width;
 }
 
 #pragma mark - 初始化和TTT的一些修正
 /**
+ *  下面这个方法覆盖TTT里的，因为个别设置与其不同
  *  TTT很鸡巴。commonInit是被调用了两回。如果直接init的话，因为init其中会调用initWithFrame
- *  PS.已经在里面把init里的修改掉了
+ *  PS.此问题已经向matt提交issue，他已经修正。
  */
 - (void)commonInit {
     
-    //这个是用来生成plist时候用到
-//    [self initPlist];
+    //这个是用来生成plist时候用到，为了执行此方法找个地罢了
+    //    [self initPlist];
     
     self.userInteractionEnabled = YES;
     self.multipleTouchEnabled = NO;
     
-    self.delegate = self;
     self.numberOfLines = 0;
-    self.font = [UIFont systemFontOfSize:15.0];
+    self.font = [UIFont systemFontOfSize:14.0];
     self.textColor = [UIColor blackColor];
     self.backgroundColor = [UIColor clearColor];
     
-    /**
-     *  PS:这里需要注意，TTT里默认把numberOfLines不为1的情况下实际绘制的lineBreakMode是以word方式。
-     *  而默认UILabel似乎也是这样处理的。我不知道为何。已经做修改。
-     */
     self.lineBreakMode = NSLineBreakByCharWrapping;
     
     self.textInsets = UIEdgeInsetsZero;
@@ -228,10 +221,10 @@ static CGFloat widthCallback(void *refCon) {
     NSMutableDictionary *mutableInactiveLinkAttributes = [NSMutableDictionary dictionary];
     [mutableInactiveLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
     
-    UIColor *commonLinkColor = [UIColor colorWithRed:0.112 green:0.000 blue:0.791 alpha:1.000];
+    UIColor *commonLinkColor = [UIColor colorWithRed:68/255.0 green:127/255.0 blue:190 alpha:1.000];
     
     //点击时候的背景色
-    [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor colorWithWhite:0.631 alpha:1.000] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
+    [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor colorWithWhite:0.98 alpha:1.000] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
     
     if ([NSMutableParagraphStyle class]) {
         [mutableLinkAttributes setObject:commonLinkColor forKey:(NSString *)kCTForegroundColorAttributeName];
@@ -264,7 +257,7 @@ static CGFloat widthCallback(void *refCon) {
     }
     
     CGSize rSize = [super sizeThatFits:size];
-    rSize.height +=1;
+    rSize.height +=1.5;
     return rSize;
 }
 
@@ -288,56 +281,95 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
                          context:(CGContextRef)c
 {
     //PS:这个是在TTT里drawFramesetter....方法最后做了修改的基础上。
-    
+    CGFloat emojiWith = self.font.lineHeight*kEmojiWidthRatioWithLineHeight;
     CGFloat emojiOriginYOffset = self.font.lineHeight*kEmojiOriginYOffsetRatioWithLineHeight;
-    
-    //找到行
-    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-    //找到每行的origin，保存起来
-    CGPoint origins[[lines count]];
-    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origins);
     
     //修正绘制offset，根据当前设置的textAlignment
     CGFloat flushFactor = TTTFlushFactorForTextAlignment(self.textAlignment);
     
-    CFIndex lineIndex = 0;
-    for (id line in lines) {
-        //获取当前行的宽度和高度，并且设置对应的origin进去，就获得了这行的bounds
-        CGFloat ascent = 0.0f, descent = 0.0f, leading = 0.0f;
-        CGFloat width = (CGFloat)CTLineGetTypographicBounds((__bridge CTLineRef)line, &ascent, &descent, &leading) ;
-        CGRect lineBounds = CGRectMake(0.0f, 0.0f, width, ascent + descent + leading) ;
-        lineBounds.origin.x = origins[lineIndex].x;
-        lineBounds.origin.y = origins[lineIndex].y;
+    CFArrayRef lines = CTFrameGetLines(frame);
+    NSInteger numberOfLines = self.numberOfLines > 0 ? MIN(self.numberOfLines, CFArrayGetCount(lines)) : CFArrayGetCount(lines);
+    CGPoint lineOrigins[numberOfLines];
+    CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), lineOrigins);
+    
+    BOOL truncateLastLine = (self.lineBreakMode == NSLineBreakByTruncatingHead || self.lineBreakMode == NSLineBreakByTruncatingMiddle || self.lineBreakMode == NSLineBreakByTruncatingTail);
+    CFRange textRange = CFRangeMake(0, (CFIndex)[self.attributedText length]);
+    
+    for (CFIndex lineIndex = 0; lineIndex < numberOfLines; lineIndex++) {
+        CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
         
         //这里其实是能获取到当前行的真实origin.x，根据textAlignment，而lineBounds.origin.x其实是默认一直为0的(不会受textAlignment影响)
-        CGFloat penOffset = (CGFloat)CTLineGetPenOffsetForFlush((__bridge CTLineRef)line, flushFactor, rect.size.width);
+        CGFloat penOffset = (CGFloat)CTLineGetPenOffsetForFlush(line, flushFactor, rect.size.width);
+        
+        CFIndex truncationAttributePosition = -1;
+        //检测如果是最后一行，是否有替换...
+        if (lineIndex == numberOfLines - 1 && truncateLastLine) {
+            // Check if the range of text in the last line reaches the end of the full attributed string
+            CFRange lastLineRange = CTLineGetStringRange(line);
+            
+            if (!(lastLineRange.length == 0 && lastLineRange.location == 0) && lastLineRange.location + lastLineRange.length < textRange.location + textRange.length) {
+                // Get correct truncationType and attribute position
+                truncationAttributePosition = lastLineRange.location;
+                NSLineBreakMode lineBreakMode = self.lineBreakMode;
+                
+                // Multiple lines, only use UILineBreakModeTailTruncation
+                if (numberOfLines != 1) {
+                    lineBreakMode = NSLineBreakByTruncatingTail;
+                }
+                
+                switch (lineBreakMode) {
+                    case NSLineBreakByTruncatingHead:
+                        break;
+                    case NSLineBreakByTruncatingMiddle:
+                        truncationAttributePosition += (lastLineRange.length / 2);
+                        break;
+                    case NSLineBreakByTruncatingTail:
+                    default:
+                        truncationAttributePosition += (lastLineRange.length - 1);
+                        break;
+                }
+                
+                //如果要在truncationAttributePosition这个位置画表情需要忽略
+            }
+        }
         
         //找到当前行的每一个要素，姑且这么叫吧。可以理解为有单独的attr属性的各个range。
-        for (id glyphRun in (__bridge NSArray *)CTLineGetGlyphRuns((__bridge CTLineRef)line)) {
+        for (id glyphRun in (__bridge NSArray *)CTLineGetGlyphRuns(line)) {
             //找到此要素所对应的属性
             NSDictionary *attributes = (__bridge NSDictionary *)CTRunGetAttributes((__bridge CTRunRef) glyphRun);
             //判断是否有图像，如果有就绘制上去
             NSString *imageName = attributes[kCustomGlyphAttributeImageName];
             if (imageName) {
+                CFRange glyphRange = CTRunGetStringRange((__bridge CTRunRef)glyphRun);
+                if (glyphRange.location == truncationAttributePosition) {
+                    //这里因为glyphRange的length肯定为1，所以只做这一个判断足够
+                    continue;
+                }
+                
                 CGRect runBounds = CGRectZero;
                 CGFloat runAscent = 0.0f;
                 CGFloat runDescent = 0.0f;
                 
                 runBounds.size.width = (CGFloat)CTRunGetTypographicBounds((__bridge CTRunRef)glyphRun, CFRangeMake(0, 0), &runAscent, &runDescent, NULL);
+                
+                if (runBounds.size.width!=emojiWith) {
+                    //这一句是为了在某些情况下，例如单行省略号模式下，默认行为会将个别表情的runDelegate改变，也就改变了其大小。这时候会引起界面上错乱，这里做下检测(浮点数做等于判断似乎有点操蛋啊。。)
+                    continue;
+                }
+                
                 runBounds.size.height = runAscent + runDescent;
                 
                 CGFloat xOffset = 0.0f;
-                CFRange glyphRange = CTRunGetStringRange((__bridge CTRunRef)glyphRun);
                 switch (CTRunGetStatus((__bridge CTRunRef)glyphRun)) {
                     case kCTRunStatusRightToLeft:
-                        xOffset = CTLineGetOffsetForStringIndex((__bridge CTLineRef)line, glyphRange.location + glyphRange.length, NULL);
+                        xOffset = CTLineGetOffsetForStringIndex(line, glyphRange.location + glyphRange.length, NULL);
                         break;
                     default:
-                        xOffset = CTLineGetOffsetForStringIndex((__bridge CTLineRef)line, glyphRange.location, NULL);
+                        xOffset = CTLineGetOffsetForStringIndex(line, glyphRange.location, NULL);
                         break;
                 }
                 runBounds.origin.x = penOffset + xOffset;
-                runBounds.origin.y = origins[lineIndex].y;
+                runBounds.origin.y = lineOrigins[lineIndex].y;
                 runBounds.origin.y -= runDescent;
                 
                 UIImage *image = [UIImage imageNamed:imageName];
@@ -345,8 +377,6 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
                 CGContextDrawImage(c, runBounds, image.CGImage);
             }
         }
-        
-        lineIndex++;
     }
     
 }
@@ -359,21 +389,21 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
 - (NSMutableAttributedString*)mutableAttributeStringWithEmojiText:(NSAttributedString *)emojiText
 {
     //获取所有表情的位置
-//    NSArray *emojis = [kEmojiRegularExpression() matchesInString:emojiText
-//                                                         options:NSMatchingWithTransparentBounds
-//                                                           range:NSMakeRange(0, [emojiText length])];
-
+    //    NSArray *emojis = [kEmojiRegularExpression() matchesInString:emojiText
+    //                                                         options:NSMatchingWithTransparentBounds
+    //                                                           range:NSMakeRange(0, [emojiText length])];
+    
     NSArray *emojis = nil;
     
     if (self.customEmojiRegularExpression) {
         //自定义表情正则
         emojis = [self.customEmojiRegularExpression matchesInString:emojiText.string
-                        options:NSMatchingWithTransparentBounds
-                        range:NSMakeRange(0, [emojiText length])];
+                                                            options:NSMatchingWithTransparentBounds
+                                                              range:NSMakeRange(0, [emojiText length])];
     }else{
         emojis = [kSlashEmojiRegularExpression() matchesInString:emojiText.string
-                                                options:NSMatchingWithTransparentBounds
-                                                  range:NSMakeRange(0, [emojiText length])];
+                                                         options:NSMatchingWithTransparentBounds
+                                                           range:NSMakeRange(0, [emojiText length])];
     }
     
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
@@ -384,71 +414,69 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     for (NSTextCheckingResult *result in emojis) {
         NSRange range = result.range;
         NSAttributedString *attSubStr = [emojiText attributedSubstringFromRange:NSMakeRange(location, range.location - location)];
-		[attrStr appendAttributedString:attSubStr];
+        [attrStr appendAttributedString:attSubStr];
         
-		location = range.location + range.length;
+        location = range.location + range.length;
         
-		NSString *emojiKey = [emojiText.string substringWithRange:range];
-        
+        NSAttributedString *emojiKey = [emojiText attributedSubstringFromRange:range];
         
         NSDictionary *emojiDict = self.customEmojiRegularExpression?self.customEmojiDictionary:[MLEmojiLabel emojiDictionary];
         
         //如果当前获得key后面有多余的，这个需要记录下
-        NSMutableAttributedString *otherAppendStr = nil;
+        NSAttributedString *otherAppendStr = nil;
         
-		NSString *imageName = emojiDict[emojiKey];
+        NSString *imageName = emojiDict[emojiKey.string];
         if (!self.customEmojiRegularExpression) {
             //微信的表情没有结束符号,所以有可能会发现过长的只有头部才是表情的段，需要循环检测一次。微信最大表情特殊字符是8个长度，检测8次即可
             if (!imageName&&emojiKey.length>2) {
                 NSUInteger maxDetctIndex = emojiKey.length>8+2?8:emojiKey.length-2;
                 //从头开始检测是否有对应的
                 for (NSUInteger i=0; i<maxDetctIndex; i++) {
-                    //                NSLog(@"%@",[emojiKey substringToIndex:3+i]);
-                    imageName = emojiDict[[emojiKey substringToIndex:3+i]];
+                    //                NSLog(@"%@",[emojiKey.string substringToIndex:3+i]);
+                    imageName = emojiDict[[emojiKey.string substringToIndex:3+i]];
                     if (imageName) {
-                        otherAppendStr  = [[NSMutableAttributedString alloc]initWithString:[emojiKey substringFromIndex:3+i]];
+                        otherAppendStr = [emojiKey attributedSubstringFromRange:NSMakeRange(3+i, emojiKey.length-3-i)];
                         break;
                     }
                 }
             }
         }
         
-		if (imageName) {
-			// 这里不用空格，空格有个问题就是连续空格的时候只显示在一行
-			NSMutableAttributedString *replaceStr = [[NSMutableAttributedString alloc] initWithString:kEmojiReplaceCharacter];
-			NSRange __range = NSMakeRange([attrStr length], 1);
-			[attrStr appendAttributedString:replaceStr];
+        if (imageName) {
+            // 这里不用空格，空格有个问题就是连续空格的时候只显示在一行
+            NSMutableAttributedString *replaceStr = [[NSMutableAttributedString alloc] initWithString:kEmojiReplaceCharacter];
+            NSRange __range = NSMakeRange([attrStr length], 1);
+            [attrStr appendAttributedString:replaceStr];
             if (otherAppendStr) { //有其他需要添加的
                 [attrStr appendAttributedString:otherAppendStr];
             }
             
-			// 定义回调函数
-			CTRunDelegateCallbacks callbacks;
-			callbacks.version = kCTRunDelegateCurrentVersion;
-			callbacks.getAscent = ascentCallback;
-			callbacks.getDescent = descentCallback;
-			callbacks.getWidth = widthCallback;
-			callbacks.dealloc = deallocCallback;
+            // 定义回调函数
+            CTRunDelegateCallbacks callbacks;
+            callbacks.version = kCTRunDelegateCurrentVersion;
+            callbacks.getAscent = ascentCallback;
+            callbacks.getDescent = descentCallback;
+            callbacks.getWidth = widthCallback;
+            callbacks.dealloc = deallocCallback;
             
-			// 这里设置下需要绘制的图片的大小，这里我自定义了一个结构体以便于存储数据
-			CustomGlyphMetricsRef metrics = malloc(sizeof(CustomGlyphMetrics));
+            // 这里设置下需要绘制的图片的大小，这里我自定义了一个结构体以便于存储数据
+            CustomGlyphMetricsRef metrics = malloc(sizeof(CustomGlyphMetrics));
             metrics->width = emojiWith;
-			metrics->ascent = 1/(1+kAscentDescentScale)*metrics->width;
-			metrics->descent = metrics->ascent*kAscentDescentScale;
-			CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, metrics);
-			[attrStr addAttribute:(NSString *)kCTRunDelegateAttributeName
+            metrics->ascent = 1/(1+kAscentDescentScale)*metrics->width;
+            metrics->descent = metrics->ascent*kAscentDescentScale;
+            CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, metrics);
+            [attrStr addAttribute:(NSString *)kCTRunDelegateAttributeName
                             value:(__bridge id)delegate
                             range:__range];
-			CFRelease(delegate);
+            CFRelease(delegate);
             
-			// 设置自定义属性，绘制的时候需要用到
-			[attrStr addAttribute:kCustomGlyphAttributeImageName
+            // 设置自定义属性，绘制的时候需要用到
+            [attrStr addAttribute:kCustomGlyphAttributeImageName
                             value:imageName
                             range:__range];
-		} else {
-			NSMutableAttributedString *originalStr = [[NSMutableAttributedString alloc] initWithString:emojiKey];
-			[attrStr appendAttributedString:originalStr];
-		}
+        } else {
+            [attrStr appendAttributedString:emojiKey];
+        }
     }
     if (location < [emojiText length]) {
         NSRange range = NSMakeRange(location, [emojiText length] - location);
@@ -481,7 +509,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     
     if (self.disableEmoji) {
         mutableAttributedString = [text isKindOfClass:[NSAttributedString class]]?[text mutableCopy]:[[NSMutableAttributedString alloc]initWithString:text];
-        //直接设置text即可,这里text可能为attrString，也可能为String
+        //直接设置text即可,这里text可能为attrString，也可能为String,使用TTT的默认行为
         [super setText:text];
     }else{
         //如果是String，必须通过setText:afterInheritingLabelAttributesAndConfiguringWithBlock:来添加一些默认属性，例如字体颜色。这是TTT的做法，不可避免
@@ -499,9 +527,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     }
     
     NSRange stringRange = NSMakeRange(0, mutableAttributedString.length);
-
-    #pragma mark ---禁用电话和邮箱
-//    NSRegularExpression * const regexps[] = {kURLRegularExpression(),kEmailRegularExpression(),kPhoneNumerRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
+    
     NSRegularExpression * const regexps[] = {kURLRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
     
     NSMutableArray *results = [NSMutableArray array];
@@ -542,8 +568,8 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
 #pragma mark - size fit result
 - (CGSize)preferredSizeWithMaxWidth:(CGFloat)maxWidth
 {
-    CGSize size = [MLEmojiLabel sizeThatFitsAttributedString:self.attributedText withConstraints:CGSizeMake(maxWidth, CGFLOAT_MAX) limitedToNumberOfLines:self.numberOfLines];
-    return size;
+    maxWidth = maxWidth - self.textInsets.left - self.textInsets.right;
+    return [self sizeThatFits:CGSizeMake(maxWidth, CGFLOAT_MAX)];
 }
 
 #pragma mark - setter
@@ -593,7 +619,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     _customEmojiPlistName = customEmojiPlistName;
     
     if (customEmojiPlistName&&customEmojiPlistName.length>0) {
-	    self.customEmojiDictionary = [[MLEmojiLabelRegexPlistManager sharedInstance]emojiDictForKey:customEmojiPlistName];
+        self.customEmojiDictionary = [[MLEmojiLabelRegexPlistManager sharedInstance]emojiDictForKey:customEmojiPlistName];
     }else{
         self.customEmojiDictionary = nil;
     }
@@ -607,25 +633,6 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     self.text = self.emojiText; //简单重新绘制处理下
 }
 
-#pragma mark - delegate
-- (void)attributedLabel:(TTTAttributedLabel *)label
-didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
-{
-    if (result.resultType == NSTextCheckingTypeCorrection) {
-        //判断消息类型
-        for (NSUInteger i=0; i<kURLActionCount; i++) {
-            if ([result.replacementString hasPrefix:kURLActions[i]]) {
-                NSString *content = [result.replacementString substringFromIndex:kURLActions[i].length];
-                if(self.emojiDelegate&&[self.emojiDelegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
-                    //type的数组和i刚好对应
-                    [self.emojiDelegate mlEmojiLabel:self didSelectLink:content withType:i];
-                    
-                }
-            }
-        }
-    }
-}
-
 #pragma mark - select link override
 //PS:此处是在TTT代码里添加一个供继承的行为
 - (BOOL)didSelectLinkWithTextCheckingResult:(NSTextCheckingResult*)result
@@ -635,9 +642,9 @@ didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
         for (NSUInteger i=0; i<kURLActionCount; i++) {
             if ([result.replacementString hasPrefix:kURLActions[i]]) {
                 NSString *content = [result.replacementString substringFromIndex:kURLActions[i].length];
-                if(self.emojiDelegate&&[self.emojiDelegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
+                if(self.delegate&&[self.delegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
                     //type的数组和i刚好对应
-                    [self.emojiDelegate mlEmojiLabel:self didSelectLink:content withType:i];
+                    [self.delegate mlEmojiLabel:self didSelectLink:content withType:i];
                     return YES;
                 }
                 return NO;
@@ -645,19 +652,6 @@ didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result;
         }
     }
     return NO;
-}
-
-//自定义特殊类型选中
-- (void)attributedLabel:(TTTAttributedLabel *)label
-didSelectLinkWithCorrectionCheckingResult:(NSString *)components
-{
-    if([self.emojiDelegate respondsToSelector:@selector(attributedLabel:didSelectLinkWithCorrectionCheckingResult:)]){
-        [self.emojiDelegate attributedLabel:label didSelectLinkWithCorrectionCheckingResult:components];
-    }
-//    CustomLinkType linkType = components.integerValue;
-//    if ([self.delegate respondsToSelector:@selector(didSelectedCustomLinkTextOnMessage:type:atIndexPath:)]) {
-//        [self.delegate didSelectedCustomLinkTextOnMessage:self.messageSpecialView.message type:linkType atIndexPath:self.indexPath];
-//    }
 }
 
 #pragma mark - UIResponderStandardEditActions
@@ -673,54 +667,17 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
     }
 }
 
-#pragma mark - other
-//为了生成plist方便的一个方法罢了
-- (void)initPlist
+//自定义特殊类型选中
+- (void)attributedLabel:(TTTAttributedLabel *)label
+didSelectLinkWithCorrectionCheckingResult:(NSString *)components
 {
-//    NSString *testString = @"/::)/::~/::B/::|/:8-)/::</::$/::X/::Z/::'(/::-|/::@/::P/::D/::O/::(/::+/:--b/::Q/::T/:,@P/:,@-D/::d/:,@o/::g/:|-)/::!/::L/::>/::,@/:,@f/::-S/:?/:,@x/:,@@/::8/:,@!/:!!!/:xx/:bye/:wipe/:dig/:handclap/:&-(/:B-)/:<@/:@>/::-O/:>-|/:P-(/::'|/:X-)/::*/:@x/:8*/:pd/:<W>/:beer/:basketb/:oo/:coffee/:eat/:pig/:rose/:fade/:showlove/:heart/:break/:cake/:li/:bome/:kn/:footb/:ladybug/:shit/:moon/:sun/:gift/:hug/:strong/:weak/:share/:v/:@)/:jj/:@@/:bad/:lvu/:no/:ok/:love/:<L>/:jump/:shake/:<O>/:circle/:kotow/:turn/:skip/:oY";
-//    NSMutableArray *testArray = [NSMutableArray array];
-//    NSMutableDictionary *testDict = [NSMutableDictionary dictionary];
-//    [kSlashEmojiRegularExpression() enumerateMatchesInString:testString options:0 range:NSMakeRange(0, testString.length) usingBlock:^(NSTextCheckingResult *result, __unused NSMatchingFlags flags, __unused BOOL *stop) {
-//        [testArray addObject:[testString substringWithRange:result.range]];
-//        [testDict setObject:[NSString stringWithFormat:@"Expression_%u",testArray.count] forKey:[testString substringWithRange:result.range]];
-//    }];
-//    
-//    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    NSString *doc = [NSString stringWithFormat:@"%@/expression.plist",documentDir];
-//    NSLog(@"%@,length:%u",doc,testArray.count);
-//    if ([testArray writeToFile:doc atomically:YES]) {
-//        NSLog(@"归档expression.plist成功");
-//    }
-//    doc = [NSString stringWithFormat:@"%@/expressionImage.plist",documentDir];
-//    if ([testDict writeToFile:doc atomically:YES]) {
-//        NSLog(@"归档到expressionImage.plist成功");
-//    }
-    
-//        NSString *testString = @"[微笑][撇嘴][色][发呆][得意][流泪][害羞][闭嘴][睡][大哭][尴尬][发怒][调皮][呲牙][惊讶][难过][酷][冷汗][抓狂][吐][偷笑][愉快][白眼][傲慢][饥饿][困][惊恐][流汗][憨笑][悠闲][奋斗][咒骂][疑问][嘘][晕][疯了][衰][骷髅][敲打][再见][擦汗][抠鼻][鼓掌][糗大了][坏笑][左哼哼][右哼哼][哈欠][鄙视][委屈][快哭了][阴险][亲亲][吓][可怜][菜刀][西瓜][啤酒][篮球][乒乓][咖啡][饭][猪头][玫瑰][凋谢][嘴唇][爱心][心碎][蛋糕][闪电][炸弹][刀][足球][瓢虫][便便][月亮][太阳][礼物][拥抱][强][弱][握手][胜利][抱拳][勾引][拳头][差劲][爱你][NO][OK][爱情][飞吻][跳跳][发抖][怄火][转圈][磕头][回头][跳绳][投降]";
-//        NSMutableArray *testArray = [NSMutableArray array];
-//        NSMutableDictionary *testDict = [NSMutableDictionary dictionary];
-//    
-//        [kSlashEmojiRegularExpression() enumerateMatchesInString:testString options:0 range:NSMakeRange(0, testString.length) usingBlock:^(NSTextCheckingResult *result, __unused NSMatchingFlags flags, __unused BOOL *stop) {
-//            [testArray addObject:[testString substringWithRange:result.range]];
-//            [testDict setObject:[NSString stringWithFormat:@"Expression_%u",testArray.count] forKey:[testString substringWithRange:result.range]];
-//        }];
-//
-////        [kEmojiRegularExpression() enumerateMatchesInString:testString options:0 range:NSMakeRange(0, testString.length) usingBlock:^(NSTextCheckingResult *result, __unused NSMatchingFlags flags, __unused BOOL *stop) {
-////            [testArray addObject:[testString substringWithRange:result.range]];
-////            [testDict setObject:[NSString stringWithFormat:@"Expression_%ld",testArray.count] forKey:[testString substringWithRange:result.range]];
-////        }];
-//        NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//        NSString *doc = [NSString stringWithFormat:@"%@/expression.plist",documentDir];
-//        NSLog(@"%@,length:%ld",doc,(unsigned long)testArray.count);
-//        if ([testArray writeToFile:doc atomically:YES]) {
-//            NSLog(@"归档expression.plist成功");
-//        }
-//        doc = [NSString stringWithFormat:@"%@/expressionImage.plist",documentDir];
-//        if ([testDict writeToFile:doc atomically:YES]) {
-//            NSLog(@"归档到expressionImage.plist成功");
-//        }
-    
-    
+    if([self.delegate respondsToSelector:@selector(attributedLabel:didSelectLinkWithCorrectionCheckingResult:)]){
+        [self.delegate attributedLabel:label didSelectLinkWithCorrectionCheckingResult:components];
+    }
+    //    CustomLinkType linkType = components.integerValue;
+    //    if ([self.delegate respondsToSelector:@selector(didSelectedCustomLinkTextOnMessage:type:atIndexPath:)]) {
+    //        [self.delegate didSelectedCustomLinkTextOnMessage:self.messageSpecialView.message type:linkType atIndexPath:self.indexPath];
+    //    }
 }
 
 @end
