@@ -112,15 +112,53 @@ static NSString *fridcellid = @"fridcellid";
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    [self scrollViewDidScroll:_tableView];
+//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+////    self.navigationController.navigationBar.alpha = 1;  //调整navigation bar的透明度
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    self.navigationController.navigationBar.translucent = YES;
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+//    [self.navigationController.navigationBar reset];
+//    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+//    
+//    [self.navigationController.navigationBar setShadowImage:nil];
+//    
+//
+//    self.navigationController.navigationBar.translucent = YES;
+//
+//    [[UINavigationBar appearance] setBarTintColor:KBasesColor];
+//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//    [self.navigationController.navigationBar setTranslucent:YES];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    self.navigationController.view.backgroundColor = [UIColor clearColor];
+//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+//    self.navigationController.navigationBar.translucent = NO; //将navigation bar设置为半透明
+//    
+//    self.navigationController.navigationBar.alpha = 0.6;  //调整navigation bar的透明度
+//    
+//    
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = nil;//[UIImage new];
+//    self.navigationController.navigationBar.translucent = YES;
     //代理置空，否则会闪退 设置手势滑动返回
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
 }
-
+//
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     //开启滑动手势
     if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -133,6 +171,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self scrollViewDidScroll:_tableView];
+    
     [self initUserInfo];
     
     //开启iOS7的滑动返回效果
@@ -150,12 +190,29 @@ static NSString *fridcellid = @"fridcellid";
 //    UIColor *color = kNavBgColor;
 //    if (offsetY > kTableViewHeaderViewHeight/2) {
 //        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-//        
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+//        self.navigationController.navigationBar.backgroundColor = [color colorWithAlphaComponent:alpha];
+////        [self.navigationController.navigationBar setBarTintColor:[color colorWithAlphaComponent:alpha]];
+////        [[UINavigationBar appearance] setBarTintColor:[color colorWithAlphaComponent:alpha]];
+////        [[UINavigationBar appearance] setTintColor:[color colorWithAlphaComponent:alpha]];
+////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
 //    } else {
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
 //    }
 //}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = kNavBgColor;
+    if (offsetY > kHeaderViewHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -168,6 +225,9 @@ static NSString *fridcellid = @"fridcellid";
     tableView.dataSource = self;
     tableView.delegate = self;
     tableView.contentInset = UIEdgeInsetsMake(-100,0, 0,0);
+    tableView.backgroundColor = [UIColor whiteColor];
+    //隐藏表格分割线
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
@@ -323,6 +383,8 @@ static NSString *fridcellid = @"fridcellid";
             FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
             UserInfoModel *modeIM = _datasource3[indexPath.row];
             [cell setUserMode:(FriendsUserModel *)modeIM];
+            cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+            cell.layer.borderWidths = @"{0,0,0.5,0}";
             return cell;
         }
             break;
@@ -350,6 +412,10 @@ static NSString *fridcellid = @"fridcellid";
                     
                     NSDictionary *infoData = [_datasource1[indexPath.section] objectForKey:@"info"];
                     NSArray *types = [infoData objectForKey:@"types"];
+                    //是否隐藏下划线
+                    if (indexPath.row == types.count - 1) {
+                        cell.hidBottomLine = YES;
+                    }
                     IIMeInvestAuthModel *investModel = [infoData objectForKey:@"info"];
                     NSNumber *investType = [[types objectAtIndex:indexPath.row] objectForKey:@"type"];
                     switch (investType.integerValue) {
@@ -383,6 +449,10 @@ static NSString *fridcellid = @"fridcellid";
                 {
                     //项目
                     NSArray *infos = [_datasource1[indexPath.section] objectForKey:@"info"];
+                    //是否隐藏下划线
+                    if (indexPath.row == infos.count - 1) {
+                        cell.hidBottomLine = YES;
+                    }
                     IProjectInfo *projectInfo = [infos objectAtIndex:indexPath.row];
                     cell.textLabel.text = projectInfo.name;
                     cell.textLabel.font = [UIFont systemFontOfSize:14.f];
@@ -399,6 +469,10 @@ static NSString *fridcellid = @"fridcellid";
                 {
                     NSArray *infos = [_datasource1[indexPath.section] objectForKey:@"info"];
                     NSObject *info = [infos objectAtIndex:indexPath.row];
+                    //是否隐藏下划线
+                    if (indexPath.row == infos.count - 1) {
+                        cell.hidBottomLine = YES;
+                    }
                     //履历
                     NSString *titleInfo = @"";
                     NSString *detailInfo = @"";
@@ -574,8 +648,6 @@ static NSString *fridcellid = @"fridcellid";
     switch (index) {
         case 0:
         {
-            //隐藏表格分割线
-            _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             [self initUserInfo];
         }
             break;
@@ -583,7 +655,6 @@ static NSString *fridcellid = @"fridcellid";
         {
             //隐藏表格分割线
             [_tableView setFooterHidden:NO];
-            _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             if (_datasource2.count <= 0) {
                 [self getUserFeedsData];
             }
@@ -594,9 +665,6 @@ static NSString *fridcellid = @"fridcellid";
             break;
         case 2:
         {
-            //隐藏表格分割线
-            _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-            
             [self getSameFriendData];
         }
             break;
@@ -1130,7 +1198,7 @@ static NSString *fridcellid = @"fridcellid";
     [self setRightNavBtnWithUserInfoModel:_baseUserModel];
     
     //设置好友数量
-    _wlSegmentedControl.sectionDetailTitles = @[@"",profileM.feedcount.stringValue ? (profileM.feedcount.integerValue > 1000 ? @"999+" : profileM.friendcount.stringValue) : @"",profileM.samefriendscount.stringValue ? (profileM.samefriendscount.integerValue > 99 ? @"99+" : profileM.samefriendscount.stringValue) : @""];
+    _wlSegmentedControl.sectionDetailTitles = @[@"",_baseUserModel.feedcount.stringValue.length > 0 ? (_baseUserModel.feedcount.integerValue > 1000 ? @"999+" : _baseUserModel.feedcount.stringValue) : @"",_baseUserModel.samefriendscount.stringValue.length > 0 ? (_baseUserModel.samefriendscount.integerValue > 99 ? @"99+" : _baseUserModel.samefriendscount.stringValue) : @""];
     
     // 动态
     //    NSDictionary *feed = [dataDic objectForKey:@"feed"];

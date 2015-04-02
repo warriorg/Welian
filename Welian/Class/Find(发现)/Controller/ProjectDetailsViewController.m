@@ -566,6 +566,7 @@ static NSString *noCommentCell = @"NoCommentCell";
             if (_projectDetailInfo.website.length > 0) {
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:_projectDetailInfo.website];
                 webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                webVC.showRightShareBtn = YES;//现实右上角分享按钮
                 [self.navigationController pushViewController:webVC animated:YES];
             }
         }

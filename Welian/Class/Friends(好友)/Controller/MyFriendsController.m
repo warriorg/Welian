@@ -56,8 +56,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //刷新角标
-//    [self loadNewFriendsList];
+    //加载好友
+    [self loadMyAllFriends];
 }
 
 - (void)viewDidLoad {
@@ -88,11 +88,12 @@ static NSString *fridcellid = @"fridcellid";
 {
     self.filterArray = [NSMutableArray array];
     
-    //右侧添加按钮
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加好友"
-//                                                                              style:UIBarButtonItemStylePlain
-//                                                                             target:self
-//                                                                             action:@selector(addFriendClick)];
+    //添加好友
+    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_add_friend"]
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(addFriendClick)];
+    self.navigationItem.rightBarButtonItem = rightBtnItem;
     
     //搜索栏
     self.searchBar = [[UISearchBar alloc] init];
@@ -230,7 +231,7 @@ static NSString *fridcellid = @"fridcellid";
     }];
 }
 
-
+//添加好友
 - (void)addFriendClick
 {
     AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];

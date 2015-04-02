@@ -14,6 +14,8 @@
 #import "MJRefresh.h"
 #import "NotstringView.h"
 
+#define kSegementHeight 50.f
+
 @interface MyProjectViewController () <UITableViewDelegate,UITableViewDataSource>
 {
     NSInteger _pageIndex;
@@ -51,7 +53,7 @@
 - (HMSegmentedControl *)segmentedControl
 {
     if (_segmentedControl == nil) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SuperSize.width, 50)];
+        _segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, ViewCtrlTopBarHeight, SuperSize.width, kSegementHeight)];
         _segmentedControl.sectionTitles = @[@"我收藏的", @"我创建的"];
         _segmentedControl.selectedTextColor = KBasesColor;
         [_segmentedControl setTextColor:kTitleNormalTextColor];
@@ -69,7 +71,7 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        CGFloat Xh = 50+64;
+        CGFloat Xh = kSegementHeight + ViewCtrlTopBarHeight;
         if (_uid) {
             Xh = 0;
         }

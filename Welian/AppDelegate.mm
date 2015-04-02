@@ -432,7 +432,13 @@ BMKMapManager* _mapManager;
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友
         //操作类型0：添加 1：接受  2:已添加 3：待验证
-//        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
+        MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
+        if(myFriendUser.isMyFriend.boolValue){
+            [newfrendM setOperateType:@(2)];
+        }else{
+            //设置不是我的好友
+            [myFriendUser updateIsNotMyFriend];
+        }
         
         if ([type isEqualToString:@"friendRequest"]) {
             //如果是好友，设置为已添加

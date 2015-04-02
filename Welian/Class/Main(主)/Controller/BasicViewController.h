@@ -10,6 +10,8 @@
 #import "DaiDodgeKeyboard.h"
 #import "WLNavHeaderView.h"
 
+#define kHeaderViewHeight 300.f
+
 @interface BasicViewController : UIViewController
 
 @property (nonatomic, assign) BOOL needlessCancel;
@@ -19,7 +21,6 @@
 
 - (void)leftBtnClicked:(UIButton *)sender;
 - (void)rightBtnClicked:(UIButton *)sender;
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 
 #pragma mark - 选取头像照片
 - (void)choosePicture;

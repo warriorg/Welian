@@ -1010,7 +1010,7 @@
             NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
             //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
             [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
-                
+                [WLHUDView showSuccessHUD:@"好友请求已发送"];
             } fail:^(NSError *error) {
                 
             }];
