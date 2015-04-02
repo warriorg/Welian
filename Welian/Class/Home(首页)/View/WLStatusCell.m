@@ -177,7 +177,7 @@
             [_tuiUserLabel setText:status.commandmsg];
         }else if (status.type ==6||status.type ==4){  // 修改背景
             [_imageV setImage:[UIImage imageNamed:@"xiugai"]];
-            [_tuiUserLabel setText:[NSString stringWithFormat:@"%@　修改了自己的背景",status.user.name]];
+            [_tuiUserLabel setText:[NSString stringWithFormat:@"%@　修改了自己的履历",status.user.name]];
         }
     }else{
         y= 0;

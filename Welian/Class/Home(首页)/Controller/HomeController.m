@@ -26,6 +26,7 @@
 #import "MainViewController.h"
 #import <ShareSDK/ShareSDK.h>
 #import "AFNetworkReachabilityManager.h"
+#import "NotstringView.h"
 
 @interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -37,15 +38,28 @@
 }
 @property (nonatomic, strong) HomeView *homeView;
 
+@property (nonatomic, strong) NotstringView *notDataView;
+
 @end
 
 @implementation HomeController
+
+- (NotstringView *)notDataView
+{
+    if (_notDataView == nil) {
+        _notDataView = [[NotstringView alloc] initWithFrame:self.tableView.frame withTitleStr:@"你还没发布过动态"];
+        [_notDataView setHidden:YES];
+        [self.tableView addSubview:_notDataView];
+    }
+    return _notDataView;
+}
 
 - (HomeView *)homeView
 {
     if (_homeView == nil) {
         _homeView = [[HomeView alloc] initWithFrame:self.tableView.frame];
         [_homeView setHomeController:self];
+        [_homeView setHidden:YES];
         [self.view addSubview:_homeView];
     }
     return _homeView;
@@ -123,6 +137,12 @@
             }else{
                 [self.homeView setHidden:YES];
             }
+        }else if(_uid.integerValue == 0){
+            if (!_dataArry.count) {
+                [self.notDataView setHidden:NO];
+            }else{
+                [self.notDataView setHidden:YES];
+            }
         }
         [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
@@ -171,20 +191,22 @@
             [commentArrayM addObject:commMode];
         }
     }
+    
     [statusM setCommentsArray:commentArrayM];
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
-    if (joinedusers.count) {
+    if (statusM.type==5||statusM.type==12) {
         UserInfoModel *meInfoM = [[UserInfoModel alloc] init];
         meInfoM.name = statusM.user.name;
         meInfoM.uid = statusM.user.uid;
         meInfoM.avatar = statusM.user.avatar;
         [joinArrayM addObject:meInfoM];
-    }
-    if (joinedusers.count) {
-        for (NSDictionary *joDic in joinedusers) {
-            UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
-            [joinArrayM addObject:joMode];
+        
+        if (joinedusers.count) {
+            for (NSDictionary *joDic in joinedusers) {
+                UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
+                [joinArrayM addObject:joMode];
+            }
         }
     }
     [statusM setJoineduserArray:joinArrayM];
@@ -280,7 +302,7 @@
 #pragma mark 设置界面属性
 - (void)buildUI
 {
-    if (!_uid) {
+    if (!_uid||(_uid!=nil &&_uid.integerValue==0)) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
         
         UIImage *image = [UIImage imageNamed:@"navbar_remind"];
@@ -409,6 +431,11 @@
             
             [_dataArry removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
+            if (_uid) {
+                 [self.notDataView setHidden:_dataArry.count];
+            }else{
+                [self.homeView setHidden:_dataArry.count];
+            }
         } fail:^(NSError *error) {
             
         }];

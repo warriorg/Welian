@@ -76,6 +76,7 @@ static NSString *picCellid = @"PicCellID";
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width, SuperSize.height-INPUT_HEIGHT) style:UITableViewStylePlain];
         [_tableView setDelegate:self];
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_tableView setDataSource:self];
     }
     return _tableView;
@@ -187,7 +188,7 @@ static NSString *picCellid = @"PicCellID";
     if (_publishType == PublishTypeNomel) {
         
         // 选择照片
-        UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(90, 0, 44, 44)];
+        UIButton *but = [[UIButton alloc] initWithFrame:CGRectMake(70, 0, 44, 44)];
         [but addTarget:self action:@selector(showPicVC:) forControlEvents:UIControlEventTouchUpInside];
         [but setImage:[UIImage imageNamed:@"home_new_picture"] forState:UIControlStateNormal];
         [self.inputttView addSubview:but];
