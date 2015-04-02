@@ -8,8 +8,6 @@
 
 #import "BasicViewController.h"
 
-#define kHeaderViewHeight 300.f
-
 @interface BasicViewController () <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 //@property (assign,nonatomic) WLNavHeaderView *navHeaderView;
@@ -55,9 +53,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_showCustomNavHeader) {
-        [self scrollViewDidScroll:nil];
-        
+//    if (_showCustomNavHeader) {
+    
         //开启iOS7的滑动返回效果
 //        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
 //            //只有在二级页面生效
@@ -65,23 +62,7 @@
 //                self.navigationController.interactivePopGestureRecognizer.delegate = self;
 //            }
 //        }
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (_showCustomNavHeader) {
-        CGFloat offsetY = scrollView.contentOffset.y;
-        UIColor *color = kNavBgColor;
-        if (offsetY > kHeaderViewHeight/2) {
-            CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
-            _navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
-            //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-        } else {
-            _navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
-            //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-        }
-    }
+//    }
 }
 
 - (void)viewDidLoad {

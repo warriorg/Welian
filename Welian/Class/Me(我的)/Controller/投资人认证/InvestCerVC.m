@@ -38,7 +38,7 @@ static NSString *itemscellid = @"itemscellid";
 
 - (NSString *)title
 {
-    return @"我是投资人";
+    return @"投资信息";
 }
 
 - (UILabel *)headLabel
@@ -184,6 +184,7 @@ static NSString *itemscellid = @"itemscellid";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:seeltwocellid];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:15.f];
         if (indexPath.row ==0) {      // 投资领域
             [cell.textLabel setText:@"投资领域"];
             NSMutableString *industryStr = [NSMutableString string];

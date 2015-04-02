@@ -104,6 +104,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self scrollViewDidScroll:_tableView];
+    
     //开启iOS7的滑动返回效果
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         //只有在二级页面生效
@@ -115,19 +117,20 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [super scrollViewDidScroll:scrollView];
+//    [super scrollViewDidScroll:scrollView];
     [self.tableView shouldPositionParallaxHeader];
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    UIColor *color = RGB(74.f, 117.f, 183.f);
-//    if (offsetY > kHeaderImageHeight/3.f) {
-//        CGFloat alpha = 1 - ((kHeaderImageHeight/3.f + 64 - offsetY) / 64);
-//        
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-//        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-//    }
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = kNavBgColor;
+    if (offsetY > kHeaderViewHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];

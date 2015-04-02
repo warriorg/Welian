@@ -26,6 +26,6 @@
 //身份证号
 + (BOOL) validateIdentityCard: (NSString *)identityCard;
 
-- (CGSize)sizeWithFont:(UIFont*)font constrainedToSize:(CGSize)size;
+- (CGSize)sizeWithCustomFont:(UIFont*)font constrainedToSize:(CGSize)size;
 
 @end

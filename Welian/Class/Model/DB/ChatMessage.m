@@ -189,7 +189,7 @@
 + (ChatMessage *)createChatMessageForAddFriend:(MyFriendUser *)friendUser
 {
     //接受后，本地创建一条消息
-    WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"我们已经成为微链好友,现在可以开始聊聊创业那些事了"] sender:friendUser.name timestamp:[NSDate date]];
+    WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已添加我为好友,现在可以聊聊创业那些事了"] sender:friendUser.name timestamp:[NSDate date]];
     textMessage.avatorUrl = friendUser.avatar;
     textMessage.sender = nil;
     //是否读取
@@ -261,11 +261,18 @@
     //是否显示时间戳
     ChatMessage *lastChatMsg = [friendUser getTheLastChatMessage];
     
-    ChatMessage *chatMsg = [self getChatMsgWithMessageId:messageid];
-    //如果存在对应messageId的聊天消息，则不提醒
-    if (chatMsg) {
-        return;
+    ChatMessage *chatMsg = nil;
+    //非系统推送消息
+    if (friendUser.uid.integerValue > 100) {
+        chatMsg = [self getChatMsgWithMessageId:messageid];
+        //如果存在对应messageId的聊天消息，则不提醒
+        if (chatMsg) {
+            return;
+        }else{
+            chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
+        }
     }else{
+        //系统推送消息
         chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     }
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];

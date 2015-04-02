@@ -137,7 +137,7 @@
 
 + (CGFloat)neededWidthForText:(NSString *)text {
     CGSize stringSize;
-    stringSize = [text sizeWithFont:[[WLMessageSpecialView appearance] font]
+    stringSize = [text sizeWithCustomFont:[[WLMessageSpecialView appearance] font]
                   constrainedToSize:CGSizeMake(MAXFLOAT, 19)];
     return roundf(stringSize.width);
 }

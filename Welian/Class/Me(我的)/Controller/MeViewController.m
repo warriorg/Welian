@@ -57,7 +57,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (WLCustomSegmentedControl *)wlSegmentedControl
 {
     if (!_wlSegmentedControl) {
-        _wlSegmentedControl = [[WLCustomSegmentedControl alloc] initWithSectionTitles:@[@"一度好友", @"二度好友"]];
+        _wlSegmentedControl = [[WLCustomSegmentedControl alloc] initWithSectionTitles:@[@"好友", @"好友的好友"]];
         _wlSegmentedControl.frame = CGRectMake(0, kTableViewHeaderViewHeight-60.f, self.view.width, 60.f);
         _wlSegmentedControl.selectedTextColor = kTitleNormalTextColor;
         _wlSegmentedControl.textColor = kTitleNormalTextColor;
@@ -113,7 +113,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [self scrollViewDidScroll:nil];
+    [self scrollViewDidScroll:_tableView];
 }
 
 //- (void)viewWillDisappear:(BOOL)animated
@@ -130,6 +130,20 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 ////    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 //}
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    UIColor *color = kNavBgColor;
+    if (offsetY > kHeaderViewHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
+        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -145,13 +159,13 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     //设置右侧按钮
     [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_set"]];
     
-    //添加好友
+//    //添加好友
 //    UIBarButtonItem *leftBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_add_friend"]
 //                                                                    style:UIBarButtonItemStylePlain
 //                                                                   target:self
 //                                                                   action:@selector(addFriendBtnClick)];
 //    self.navigationItem.leftBarButtonItem = leftBtnItem;
-//    
+//
 //    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_set"]
 //                                                                    style:UIBarButtonItemStylePlain
 //                                                                   target:self

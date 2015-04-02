@@ -38,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"我是投资人"];
+    [self setTitle:@"投资信息"];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     if (self.iimeInvestM.auth.integerValue==1) {  // 是认证投资人
         [self.tableView setContentInset:UIEdgeInsetsMake(KTableRowH, 0, 0, 0)];
