@@ -1171,7 +1171,7 @@ static NSString *fridcellid = @"fridcellid";
     //me_touzi.png   me_lvli.png me_xiangmu.png
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     /**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
-    if (loginUser.investorauth.integerValue == 1) {
+    if (_baseUserModel.investorauth.integerValue == 1 || _baseUserModel.uid.integerValue == loginUser.uid.integerValue) {
         if (investorM.items.count > 0 || investorM.industry.count > 0 || investorM.stages.count > 0) {
             //投资阶段
             NSMutableArray *types = [NSMutableArray array];

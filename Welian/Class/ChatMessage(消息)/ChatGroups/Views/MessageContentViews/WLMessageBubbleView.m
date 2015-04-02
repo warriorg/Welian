@@ -74,7 +74,7 @@
 
 + (CGFloat)neededWidthForText:(NSString *)text {
     CGSize stringSize;
-    stringSize = [text sizeWithFont:[[WLMessageBubbleView appearance] font]
+    stringSize = [text sizeWithCustomFont:[[WLMessageBubbleView appearance] font]
                   constrainedToSize:CGSizeMake(MAXFLOAT, 19)];
     return roundf(stringSize.width);
 }
@@ -82,7 +82,7 @@
 + (CGSize)neededSizeForText:(NSString *)text {
     CGFloat maxWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.8 : 0.6);
     
-    CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
+//    CGFloat dyWidth = [WLMessageBubbleView neededWidthForText:text];
     
 //    CGSize textSize = [SETextView frameRectWithAttributtedString:[[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:text] constraintSize:CGSizeMake(maxWidth, MAXFLOAT) lineSpacing:kWLTextLineSpacing font:[[WLMessageBubbleView appearance] font]].size;
     
@@ -98,7 +98,8 @@
     
     CGSize textSize = [displayLabel preferredSizeWithMaxWidth:maxWidth];
     
-    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight + kWLArrowMarginWidth, textSize.height + kMarginTop);
+    return CGSizeMake(textSize.width + kBubblePaddingRight + kWLArrowMarginWidth, textSize.height + kMarginTop);
+//    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight + kWLArrowMarginWidth, textSize.height + kMarginTop);
 //    return CGSizeMake((dyWidth > textSize.width ? textSize.width : dyWidth) + kBubblePaddingRight * 2 + kWLArrowMarginWidth, textSize.height + kMarginTop);
 }
 
@@ -372,24 +373,27 @@
 - (void)configureMessageDisplayMediaWithMessage:(id <WLMessageModel>)message {
     switch (message.messageMediaType) {
         case WLBubbleMessageMediaTypeText:
+        {
             // 设置表情
-//            _displayLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-//            _displayLabel.customEmojiPlistName = @"expressionImage_custom";
-//            _displayLabel.frame = textFrame;
+            //            _displayLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+            //            _displayLabel.customEmojiPlistName = @"expressionImage_custom";
+            //            _displayLabel.frame = tex2tFrame;
             //设置文字
             _displayLabel.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? kTitleNormalTextColor : [UIColor whiteColor];
+            _displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
             _displayLabel.text = message.text;
             
-//            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text] withTextColor:[UIColor blackColor]];
-//            //设置字体颜色
-//            _displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
-//            _displayTextView.attributedText = [[NSAttributedString alloc] initWithString:@"发送好友请求"];
+            //            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text] withTextColor:[UIColor blackColor]];
+            //            //设置字体颜色
+            //            _displayTextView.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? [UIColor blackColor] : [UIColor whiteColor];
+            //            _displayTextView.attributedText = [[NSAttributedString alloc] initWithString:@"发送好友请求"];
             //链接颜色
-//            _displayTextView.linkHighlightColor = [UIColor blueColor];
-//            _displayTextView.linkRolloverEffectColor = [UIColor blueColor];
-//            _displayTextView.selectedTextBackgroundColor = [UIColor blueColor];
-//            _displayTextView.highlightedTextColor = [UIColor redColor];
-//            _displayTextView.textColor = [UIColor redColor];
+            //            _displayTextView.linkHighlightColor = [UIColor blueColor];
+            //            _displayTextView.linkRolloverEffectColor = [UIColor blueColor];
+            //            _displayTextView.selectedTextBackgroundColor = [UIColor blueColor];
+            //            _displayTextView.highlightedTextColor = [UIColor redColor];
+            //            _displayTextView.textColor = [UIColor redColor];
+        }
             break;
         case WLBubbleMessageMediaTypePhoto:
             [_bubblePhotoImageView configureMessagePhoto:message.photo thumbnailUrl:nil originPhotoUrl:message.originPhotoUrl onBubbleMessageType:self.message.bubbleMessageType];
@@ -516,6 +520,7 @@
             displayLabel.numberOfLines = 0;
 //            displayLabel.emojiDelegate = self;
             displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            displayLabel.isNeedAtAndPoundSign = YES;
             displayLabel.font = [[WLMessageBubbleView appearance] font];
             displayLabel.backgroundColor = [UIColor clearColor];
             [self addSubview:displayLabel];

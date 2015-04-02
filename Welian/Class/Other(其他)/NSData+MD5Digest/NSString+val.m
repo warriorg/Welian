@@ -77,7 +77,7 @@
     return [identityCardPredicate evaluateWithObject:identityCard];
 }
 
-- (CGSize)sizeWithFont:(UIFont*)font constrainedToSize:(CGSize)size
+- (CGSize)sizeWithCustomFont:(UIFont*)font constrainedToSize:(CGSize)size
 {
     NSDictionary *attribute = @{NSFontAttributeName:font};
     NSInteger options = NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin;
