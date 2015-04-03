@@ -17,8 +17,8 @@
 @interface CardAlertView ()<UIGestureRecognizerDelegate,UITextViewDelegate>
 
 @property (strong,nonatomic) CardStatuModel *cardModel;
-@property (assign,nonatomic) UIImageView *bgImageView;
-@property (assign,nonatomic) UIView *contentView;
+@property (strong,nonatomic) UIImageView *bgImageView;
+@property (strong,nonatomic) UIView *contentView;
 @property (assign,nonatomic) WLCellCardView *cardView;
 @property (assign,nonatomic) WLMessageTextView *textView;
 @property (assign,nonatomic) UIButton *cancelBtn;
@@ -33,6 +33,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _cardModel = nil;
     _selectFriendUser = nil;
+    _bgImageView = nil;
+    _contentView = nil;
 }
 
 - (instancetype)initWithCardModel:(CardStatuModel *)cardModel Friend:(MyFriendUser *)friendUser

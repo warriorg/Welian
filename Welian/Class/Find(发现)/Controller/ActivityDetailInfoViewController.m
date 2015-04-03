@@ -143,6 +143,9 @@
     //设置头部背景透明
 //    [self.navigationController.navigationBar useBackgroundColor:[UIColor clearColor]];
     
+    //设置左侧按钮
+    [self.navHeaderView setLeftBtnTitle:nil LeftBtnImage:[UIImage imageNamed:@"activity_back"]];
+    
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - toolBarHeight)];
     tableView.dataSource = self;
     tableView.delegate = self;
@@ -459,7 +462,10 @@
     //添加分享按钮 navbar_share
     if(_activityInfo.shareurl.length > 0){
         //设置右侧按钮
-        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
+//        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
+        
+        //设置右侧按钮
+        [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"activity_share"]];
         
 //        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
     }

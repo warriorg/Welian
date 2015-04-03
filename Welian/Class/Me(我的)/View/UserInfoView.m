@@ -89,11 +89,6 @@
     _touZiRenBtn.hidden = _baseUserModel.investorauth.integerValue == 1 ? NO : YES;
     //手机是否通过认证
     _phoneRZImageView.image = [UIImage imageNamed:_baseUserModel.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];
-//    if (_baseUserModel.checked) {
-//        
-//    }else{
-//        _phoneRZImageView.image = [UIImage imageNamed:@"me_phone_no"];
-//    }
     
     if (_baseUserModel.cityname.length > 0) {
         _cityBtn.hidden = NO;
@@ -236,7 +231,7 @@
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.font = [UIFont systemFontOfSize:14.f];
-    nameLabel.text = @"陈日沙";
+    nameLabel.text = @"";
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -245,7 +240,7 @@
     companyLabel.backgroundColor = [UIColor clearColor];
     companyLabel.textColor = [UIColor colorWithWhite:1 alpha:0.5];
     companyLabel.font = [UIFont systemFontOfSize:12.f];
-    companyLabel.text = @"产品经理　杭州传送门网络技术有限公司asdfasdf";
+    companyLabel.text = @"";
     [self addSubview:companyLabel];
     self.companyLabel = companyLabel;
     

@@ -448,10 +448,10 @@ BMKMapManager* _mapManager;
         if([type isEqualToString:@"friendCommand"]){
             [newfrendM setOperateType:@(0)];
         }
-        if (!newfrendM.created) {
-            //创建的时间
-            newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-        }
+        
+        //创建的时间
+        newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
         if (!([newFriendUser.operateType integerValue]==2)) {
             //不是好友，添加角标
             NSInteger badge = [loginUser.newfriendbadge integerValue];
