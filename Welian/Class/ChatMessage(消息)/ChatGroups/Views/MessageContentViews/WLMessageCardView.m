@@ -47,10 +47,10 @@
     [super layoutSubviews];
     _titleLabel.width = self.width - kMarginLeft * 2.f;
 //    [_titleLabel sizeToFit];
-    CGSize titleSize = [_titleLabel preferredSizeWithMaxWidth:(InfoMaxWidth - 1.f - kMarginLeft * 2)];
-    _titleLabel.size = CGSizeMake(titleSize.width, titleSize.height);
-//    _titleLabel.left = kMarginLeft;
-    _titleLabel.centerX = self.width / 2.f;
+    CGSize titleSize = [_titleLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)];
+    _titleLabel.size = CGSizeMake(self.width - kMarginLeft * 2, titleSize.height);
+    _titleLabel.left = kMarginLeft;
+//    _titleLabel.centerX = self.width / 2.f;
     _titleLabel.top = kPaddingTop;
     
     _cardView.size = CGSizeMake(self.width, kCardViewHeight);
@@ -76,6 +76,7 @@
     titleLabel.font = [UIFont systemFontOfSize:16.f];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor  = kTitleNormalTextColor;
+//    titleLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:titleLabel];
     self.titleLabel = titleLabel;
 //    [titleLabel setDebug:YES];
@@ -116,7 +117,7 @@
         displayLabel.font = [UIFont systemFontOfSize:16.f];
         displayLabel.text = message.cardMsg;
         
-        textHeight = [displayLabel preferredSizeWithMaxWidth:(InfoMaxWidth - 1.f - kMarginLeft * 2)].height + 5.f;
+        textHeight = [displayLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)].height + 5.f;
     }else{
         textHeight = -kPaddingTop;
     }

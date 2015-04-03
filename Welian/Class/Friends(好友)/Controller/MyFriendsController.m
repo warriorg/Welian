@@ -50,7 +50,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (NSString *)title
 {
-    return @"一度好友";
+    return @"好友";
 }
 
 - (void)viewWillAppear:(BOOL)animated

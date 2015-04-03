@@ -113,6 +113,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self scrollViewDidScroll:_tableView];
 }
 

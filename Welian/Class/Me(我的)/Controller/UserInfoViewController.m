@@ -55,6 +55,7 @@ static NSString *fridcellid = @"fridcellid";
     _baseUserModel = nil;
     _operateType = nil;
     _wlNoteInfoView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSString *)title
@@ -171,6 +172,9 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    //隐藏导航条
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     [self scrollViewDidScroll:_tableView];
     
     [self initUserInfo];
@@ -220,6 +224,9 @@ static NSString *fridcellid = @"fridcellid";
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+    //添加同意好友请求成功监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addSucceed) name:[NSString stringWithFormat:@"Accepte%@",_baseUserModel.uid]  object:nil];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
@@ -1116,6 +1123,15 @@ static NSString *fridcellid = @"fridcellid";
                 break;
         }
     }
+}
+
+//添加成功
+- (void)addSucceed
+{
+//    NewFriendUser *friendM = [[LogInUser getCurrentLoginUser] getNewFriendUserWithUid:_baseUserModel.uid];
+    self.baseUserModel.friendship = @(1);
+    //设置用户信息
+    _userInfoView.baseUserModel = _baseUserModel;
 }
 
 //进入聊天页面

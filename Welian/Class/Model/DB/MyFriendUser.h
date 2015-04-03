@@ -26,7 +26,7 @@
 + (MyFriendUser *)createMyFriendUserModel:(FriendsUserModel *)userInfoM;
 
 //创建新的同意好意请求数据
-+ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM;
++ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM LogInUser:(LogInUser *)loginUser;
 + (MyFriendUser *)createWithNewFriendUser:(NewFriendUser *)newFriendUser;
 
 //创建接收消息的聊天对象
