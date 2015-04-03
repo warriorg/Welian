@@ -58,9 +58,9 @@
 }
 
 //创建新的同意好意请求数据
-+ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM
++ (MyFriendUser *)createMyFriendNewFriendModel:(NewFriendModel *)userInfoM LogInUser:(LogInUser *)loginUser
 {
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:userInfoM.uid];
     if (!myFriend) {
         myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];

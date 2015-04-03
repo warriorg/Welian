@@ -269,6 +269,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageHomenotif) name:KMessageHomeNotif object:nil];
     
+    //刷新所有好友通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
+    
     if (_uid) {
       [self beginPullDownRefreshing];
     }else{

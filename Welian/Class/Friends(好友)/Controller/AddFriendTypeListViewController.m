@@ -26,11 +26,18 @@
 
 @implementation AddFriendTypeListViewController
 
+- (NSString *)title
+{
+    return @"添加好友";
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"添加好友";
+    //显示导航条
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //搜索栏

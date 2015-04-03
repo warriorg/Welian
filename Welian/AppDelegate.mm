@@ -351,7 +351,7 @@ BMKMapManager* _mapManager;
          type = friendRequest;
          */
         // 好友消息推送
-        [self getNewFriendMessage:dataDic];
+        [self getNewFriendMessage:dataDic LoginUserId:nil];
         // 振动和声音提示
 //        [[MsgPlaySound sharedMsgPlaySound] playSystemShakeAndSoundWithName:@"1"];
     }else if([type isEqualToString:@"IM"]){
@@ -388,11 +388,17 @@ BMKMapManager* _mapManager;
 }
 
 // 接受新的好友请求消息
-- (void)getNewFriendMessage:(NSDictionary *)dataDic
+- (void)getNewFriendMessage:(NSDictionary *)dataDic LoginUserId:(NSNumber *)userId
 {
     NSString *type = [dataDic objectForKey:@"type"];
     NewFriendModel *newfrendM = [NewFriendModel objectWithKeyValues:dataDic];
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    LogInUser *loginUser = nil;
+    if (userId) {
+        //接口获取
+        loginUser = [LogInUser getLogInUserWithUid:userId];
+    }else{
+        loginUser = [LogInUser getCurrentLoginUser];;
+    }
     //判断当前是否已经是好友
     NewFriendUser *newFriendUser = [loginUser getNewFriendUserWithUid:newfrendM.uid];
     if ([type isEqualToString:@"friendAdd"]) {
@@ -402,7 +408,7 @@ BMKMapManager* _mapManager;
         [newfrendM setOperateType:@(2)];
         
         //创建本地数据库好友
-        MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM];
+        MyFriendUser *friendUser = [MyFriendUser createMyFriendNewFriendModel:newfrendM LogInUser:loginUser];
         
         //修改需要添加的用户的状态
         NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:friendUser.uid];
@@ -662,6 +668,13 @@ BMKMapManager* _mapManager;
                                            success:^(id JSON) {
                                                if ([JSON count] > 0) {
                                                    for(NSDictionary *chatDic in JSON){
+                                                       NSNumber *toUser = chatDic[@"uid"];
+                                                       LogInUser *loginUser = [LogInUser getLogInUserWithUid:toUser];
+                                                       //如果本地数据库没有当前登陆用户，不处理
+                                                       if (loginUser == nil) {
+                                                           return;
+                                                       }
+                                                       
                                                        [self getIMGTMessage:chatDic];
                                                    }
                                                }
@@ -705,7 +718,7 @@ BMKMapManager* _mapManager;
                                                        [dictData setObject:userDict[@"avatar"] forKey:@"avatar"];
                                                        
                                                        //别人请求的
-                                                       [self getNewFriendMessage:dictData];
+                                                       [self getNewFriendMessage:dictData LoginUserId:toUser];
                                                    }
                                                }
                                            } fail:^(NSError *error) {

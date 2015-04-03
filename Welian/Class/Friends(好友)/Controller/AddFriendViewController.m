@@ -98,11 +98,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    //返回不取消接口调用
-    self.needlessCancel = YES;
     
     self.datasource = [NSMutableArray array];
     self.localPhoneArray = [NSMutableArray array];
@@ -289,8 +287,8 @@
 {
     //刷新动画
 //    [self refreshAnimation];
-//    [self reloadUIData];
-    
+    //默认加载的数据
+    [self reloadUIData];
     //调用接口
     if (_selectIndex == 0) {
         //通讯录
@@ -302,6 +300,7 @@
             self.canOpenAddress = greanted;
             
             //默认加载的数据
+//            [self reloadUIData];
             if (_canOpenAddress) {
                 //获取通讯录好友
                 [self getPhoneAllFriends];

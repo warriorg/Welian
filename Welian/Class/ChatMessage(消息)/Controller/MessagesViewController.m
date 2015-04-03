@@ -571,6 +571,9 @@
             //刷新好友列表
             [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
             
+            //通知接受好友请求
+            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"Accepte%@",newFriendUser.uid] object:nil];
+            
             //接受后，本地创建一条消息
             //本地创建好像
             [ChatMessage createChatMessageForAddFriend:myFriendUser];
