@@ -203,7 +203,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     
     //切换按钮
     [headerView addSubview:self.wlSegmentedControl];
-    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount.stringValue,loginUser.friend2count.stringValue];
+    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
     
     [_tableView setTableHeaderView:headerView];
 //    [self.tableView setParallaxHeaderView:headerView
@@ -507,7 +507,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     //设置用户信息
     _userInfoView.loginUser = loginUser;
     //设置好友数量
-    _wlSegmentedControl.sectionDetailTitles = @[profileM.friendcount.stringValue,profileM.friend2count.stringValue];
+    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
     
     // 动态
     NSDictionary *feed = [dataDic objectForKey:@"feed"];
