@@ -183,7 +183,7 @@
 {
     MLEmojiLabel *HBlabel = [[MLEmojiLabel alloc] init];
     [HBlabel setTextColor:[UIColor colorWithWhite:0.25 alpha:1.0]];
-    HBlabel.font = WLFONT(13);
+    HBlabel.font = WLFONT(14);
     [HBlabel setDelegate:self];
     [HBlabel setLineSpacing:1];
     HBlabel.backgroundColor = [UIColor clearColor];

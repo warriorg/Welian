@@ -22,7 +22,7 @@
 {
     if (_HBlabel == nil) {
         _HBlabel = [[MLEmojiLabel alloc] init];
-        [_HBlabel setFont:WLFONT(13)];
+        [_HBlabel setFont:WLFONT(14)];
         [_HBlabel setLineSpacing:1];
     }
     return _HBlabel;

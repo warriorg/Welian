@@ -40,7 +40,7 @@
         [_zanLabel setTextColor:[UIColor darkGrayColor]];
         [_zanLabel setDelegate:self];
         [_zanLabel setLineSpacing:1];
-        _zanLabel.font = WLFONT(13);
+        _zanLabel.font = WLFONT(14);
         _zanLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_zanLabel];
         
@@ -48,7 +48,7 @@
         [_feedLabel setTextColor:[UIColor darkGrayColor]];
         [_feedLabel setDelegate:self];
         [_feedLabel setLineSpacing:1];
-        _feedLabel.font = WLFONT(13);
+        _feedLabel.font = WLFONT(14);
         _feedLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_feedLabel];
     }
