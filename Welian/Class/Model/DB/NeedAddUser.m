@@ -18,57 +18,57 @@
 @dynamic rsLoginUser;
 
 //创建需要添加的好友对象
-+ (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type
-{
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    for (NSDictionary *info in users) {
-        NSNumber *uid = info[@"uid"] == nil ? nil : @([info[@"uid"] integerValue]);
-        NSString *name = info[@"name"];
-        NSString *wlName = info[@"wlname"];
-        NSString *mobile = info[@"mobile"];
-        NSString *avatar = info[@"avatar"];
-        NSString *company = info[@"company"];
-        NSString *position = info[@"position"];
-        //是否投资认证人
-        NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
-        NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
-        //如果未返回uid的微信好友，不展示
-        if (!uid && type == 2) {
-            //设置为好友
-            friendship = @(1);
-            return;
-        }
-        if (friendship.integerValue == -1) {
-            //自己
-            return;
-        }
-        
-        NSPredicate *pre = nil;
-        if (uid != nil) {
-            pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" , uid];
-        }else{
-            pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile];
-        }
-        
-        NeedAddUser *needAddUser = [NeedAddUser MR_findFirstWithPredicate:pre];;
-        if (!needAddUser) {
-            needAddUser = [NeedAddUser MR_createEntity];
-        }
-        needAddUser.uid = uid;
-        needAddUser.avatar = avatar;
-        needAddUser.friendship = friendship;
-        needAddUser.mobile = mobile;
-        needAddUser.name = name.length > 0 ? name : (wlName.length > 0 ? wlName : @"未知");
-        needAddUser.wlname = wlName.length > 0 ? wlName : (name.length > 0 ? name : @"未知");
-        needAddUser.pinyin = [needAddUser.name getHanziFirstString];
-        needAddUser.userType = @(type);
-        needAddUser.company = company;
-        needAddUser.position = position;
-        needAddUser.investorauth = investorauth;
-        [loginUser addRsNeedAddUsersObject:needAddUser];
-    }
-    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
-}
+//+ (void)createNeedAddUserWithInfo:(NSArray *)users withType:(NSInteger)type
+//{
+//    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+//    for (NSDictionary *info in users) {
+//        NSNumber *uid = info[@"uid"] == nil ? nil : @([info[@"uid"] integerValue]);
+//        NSString *name = info[@"name"];
+//        NSString *wlName = info[@"wlname"];
+//        NSString *mobile = info[@"mobile"];
+//        NSString *avatar = info[@"avatar"];
+//        NSString *company = info[@"company"];
+//        NSString *position = info[@"position"];
+//        //是否投资认证人
+//        NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
+//        NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
+//        //如果未返回uid的微信好友，不展示
+////        if (!uid && type == 2) {
+////            //设置为好友
+////            friendship = @(1);
+////            return;
+////        }
+//        if (friendship.integerValue == -1) {
+//            //自己
+//            return;
+//        }
+//        
+//        NSPredicate *pre = nil;
+//        if (uid != nil) {
+//            pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" , uid];
+//        }else{
+//            pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile];
+//        }
+//        
+//        NeedAddUser *needAddUser = [NeedAddUser MR_findFirstWithPredicate:pre];;
+//        if (!needAddUser) {
+//            needAddUser = [NeedAddUser MR_createEntity];
+//        }
+//        needAddUser.uid = uid;
+//        needAddUser.avatar = avatar;
+//        needAddUser.friendship = friendship;
+//        needAddUser.mobile = mobile;
+//        needAddUser.name = name.length > 0 ? name : (wlName.length > 0 ? wlName : @"未知");
+//        needAddUser.wlname = wlName.length > 0 ? wlName : (name.length > 0 ? name : @"未知");
+//        needAddUser.pinyin = [needAddUser.name getHanziFirstString];
+//        needAddUser.userType = @(type);
+//        needAddUser.company = company;
+//        needAddUser.position = position;
+//        needAddUser.investorauth = investorauth;
+//        [loginUser addRsNeedAddUsersObject:needAddUser];
+//    }
+//    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
+//}
 
 
 //获取排序后的通讯录联系人
@@ -77,16 +77,18 @@
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     //系统非好友联系人
-    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != nil && %K != %@", @"rsLoginUser",loginUser,@"userType",@(type),@"uid", @"friendship",@"1"];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != nil && %K != %@", @"rsLoginUser",loginUser,@"userType",@(type),@"uid", @"friendship",@(1)];
+//     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != %@", @"rsLoginUser",loginUser,@"userType",@(type), @"friendship",@(1)];
     NSArray *systemNoFriendArray = [NeedAddUser MR_findAllSortedBy:@"pinyin" ascending:YES withPredicate:pre inContext:[loginUser managedObjectContext]];
     
     //系统好友联系人
-    NSPredicate *pre1 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != nil && %K == %@", @"rsLoginUser",loginUser,@"userType",@(type),@"uid", @"friendship",@"1"];
-    
+    NSPredicate *pre1 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K != nil && %K == %@", @"rsLoginUser",loginUser,@"userType",@(type),@"uid", @"friendship",@(1)];
+//    NSPredicate *pre1 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"userType",@(type), @"friendship",@(1)];
     NSArray *systemFriendArray = [NeedAddUser MR_findAllSortedBy:@"pinyin" ascending:YES withPredicate:pre1 inContext:[loginUser managedObjectContext]];
     
     //获取按照首字母排序的，非系统的联系人
     NSPredicate *pre2 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == nil", @"rsLoginUser",loginUser,@"userType",@(type),@"uid"];
+//    NSPredicate *pre2 = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"userType",@(type)];
     NSArray *otherUserArray = [NeedAddUser MR_findAllSortedBy:@"pinyin" ascending:YES withPredicate:pre2 inContext:[loginUser managedObjectContext]];
     
     //排序
