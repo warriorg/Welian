@@ -227,10 +227,14 @@
         }
     }else{
         //非系统好友
-        [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
-        [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
-        _operateBtn.backgroundColor = [UIColor clearColor];
-        [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        if (_needAddUser.mobile.length > 0) {
+            [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
+            [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
+            _operateBtn.backgroundColor = [UIColor clearColor];
+            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            _operateBtn.hidden = YES;
+        }
     }
 }
 

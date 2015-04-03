@@ -392,6 +392,7 @@
     //加载数据
     self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getCurrentLoginUser] allMyNewFriends]];
     if (_datasource.count > 0) {
+        _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
         [_tableView addSubview:self.notHasDataView];
@@ -417,6 +418,7 @@
     self.datasource = [NSArray arrayWithArray:messageModels];
     
     if (_datasource.count > 0) {
+        _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
         [self.tableView addSubview:self.notHasDataView];
@@ -431,6 +433,7 @@
     self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
+        _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
         [self.tableView addSubview:self.notHasDataView];

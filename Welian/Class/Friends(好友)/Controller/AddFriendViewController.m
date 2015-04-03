@@ -208,14 +208,9 @@
                 [weakSelf needAddClickedWith:2 needAddUser:needAddUser indexPath:indexPath];
 //                    [weakUserInfoVC addSucceed];
             };
-            
-//            }else{
-//                //微信好友
-//                
-//            }
         }else{
             //邀请手机通讯录
-            if (needAddUser.userType.integerValue == 1) {
+            if (needAddUser.mobile.length > 0) {
                 //手机联系人  发送短信邀请
                 [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
             }
@@ -411,11 +406,11 @@
             NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
             NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
             //如果未返回uid的微信好友，不展示
-            if (!uid && type == 2) {
-                //设置为好友
-                friendship = @(1);
-                return;
-            }
+//            if (!uid && type == 2) {
+//                //设置为好友
+//                friendship = @(1);
+//                return;
+//            }
             if (friendship.integerValue == -1) {
                 //自己
                 return;
@@ -423,9 +418,9 @@
             
             NSPredicate *pre = nil;
             if (uid != nil) {
-                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" , uid];
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" ,uid,@"userType" ,@(type)];
             }else{
-                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile];
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile,@"userType" ,@(type)];
             }
             
             NeedAddUser *needAddUser = [NeedAddUser MR_findFirstWithPredicate:pre inContext:localContext];
@@ -474,7 +469,7 @@
                                          //判断返回的数组是否包含
                                          BOOL isHave = [JSON bk_any:^BOOL(id obj) {
                                              //判断是否包含对应的
-                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue;
+                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
                                          }];
                                          if(!isHave){
                                              //删除
