@@ -122,9 +122,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-#define WLHttpServer  @"http://test.welian.com:8080"
+//#define WLHttpServer  @"http://test.welian.com:8080"
 
-//#define WLHttpServer @"http://sev.welian.com:80"
+#define WLHttpServer @"http://sev.welian.com:80"
 
 //本地调试
 //#define WLHttpServer  @"http://192.168.1.122:80"
@@ -211,7 +211,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 //#define KFirstFID @"firstFid"
 
 // 主色透明效果
-#define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.98]
+#define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.7]
 
 /**
  *  系统字体

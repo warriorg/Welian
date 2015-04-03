@@ -182,10 +182,10 @@
 - (MLEmojiLabel *)newHBVLabel
 {
     MLEmojiLabel *HBlabel = [[MLEmojiLabel alloc] init];
-    [HBlabel setTextColor:[UIColor colorWithWhite:0.15 alpha:1.0]];
-    HBlabel.font = WLFONT(14);
+    [HBlabel setTextColor:[UIColor colorWithWhite:0.25 alpha:1.0]];
+    HBlabel.font = WLFONT(13);
     [HBlabel setDelegate:self];
-    [HBlabel setLineSpacing:3];
+    [HBlabel setLineSpacing:1];
     HBlabel.backgroundColor = [UIColor clearColor];
     [self addSubview:HBlabel];
     // 长按手势 复制
