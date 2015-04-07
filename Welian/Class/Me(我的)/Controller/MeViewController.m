@@ -557,9 +557,13 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
-        
-        self.infoDict = [self getUserInfoWith:JSON];
-        [_tableView reloadData];
+        WEAKSELF
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            weakSelf.infoDict = [self getUserInfoWith:JSON];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+            });
+        });
     } fail:^(NSError *error) {
         
     }];
