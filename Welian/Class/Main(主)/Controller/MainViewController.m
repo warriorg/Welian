@@ -207,6 +207,7 @@ single_implementation(MainViewController)
     
     //添加聊天用户改变监听
     [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
+    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:@"UpdateMainMessageBadge" object:nil];
     
     //如果是从好友列表进入聊天，首页变换
     [KNSNotification addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];

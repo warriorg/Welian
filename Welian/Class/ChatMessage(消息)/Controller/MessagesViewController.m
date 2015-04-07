@@ -108,9 +108,6 @@
         [weakSelf selectIndexChanged:index];
     }];
     
-    //设置角标
-    [self badgeInfoChanged];
-    
     //表格
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.f, ViewCtrlTopBarHeight, self.view.width, self.view.height - ViewCtrlTopBarHeight - TabBarHeight) style:UITableViewStylePlain];
     tableView.dataSource = self;
@@ -121,8 +118,9 @@
     self.tableView = tableView;
 //    [tableView setDebug:YES];
     
-    //设置默认选择的
-    [self selectIndexChanged:_selectType];
+    //设置默认选择的和设置角标
+    [self badgeInfoChanged];
+//    [self selectIndexChanged:_selectType];
 }
 
 #pragma mark - Table view data source
@@ -360,7 +358,8 @@
         {
             //更新角标
             loginUser.homemessagebadge = @(0);
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+            //更新角标
+            [self currentBadgeChanged];
             [self loadMessageData];
         }
             break;
@@ -383,7 +382,17 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLookAtNewFriendVC"];
     //设置新的好友角标
     [LogInUser setUserNewfriendbadge:@(0)];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    [self currentBadgeChanged];
+}
+
+//当前页面角标改变
+- (void)currentBadgeChanged
+{
+    //更新主页面总的角标
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateMainMessageBadge" object:nil];
+    //更新当前列表角标
+    [self updateCurrentBadgeInfo];
 }
 
 //获取好友消息
@@ -395,6 +404,7 @@
         _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
+        _notHasDataView.hidden = NO;
         [_tableView addSubview:self.notHasDataView];
         [_tableView sendSubviewToBack:self.notHasDataView];
     }
@@ -421,6 +431,7 @@
         _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
+        _notHasDataView.hidden = NO;
         [self.tableView addSubview:self.notHasDataView];
         [self.tableView sendSubviewToBack:_notHasDataView];
     }
@@ -436,6 +447,7 @@
         _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
+        _notHasDataView.hidden = NO;
         [self.tableView addSubview:self.notHasDataView];
         [self.tableView sendSubviewToBack:_notHasDataView];
     }
@@ -448,8 +460,10 @@
     self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     
     if (_datasource.count > 0) {
+        _notHasDataView.hidden = YES;
         [_notHasDataView removeFromSuperview];
     }else{
+        _notHasDataView.hidden = NO;
         [_tableView addSubview:self.notHasDataView];
         [_tableView sendSubviewToBack:_notHasDataView];
     }
@@ -490,30 +504,19 @@
 //角标改变
 - (void)badgeInfoChanged
 {
+    //更新角标
+    [self updateCurrentBadgeInfo];
+    //更新数据
+    [self selectIndexChanged:_selectType];
+}
+
+- (void)updateCurrentBadgeInfo
+{
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     //聊天
     NSInteger unReadChatMsg = [loginUser allUnReadChatMessageNum];
     //设置角标
     _wlSegmentedControl.sectionBadges = @[@(unReadChatMsg),loginUser.homemessagebadge,loginUser.newfriendbadge];
-    switch (_selectType) {
-        case 0:
-        {
-            [self loadChatMessageData];
-        }
-            break;
-        case 1:
-        {
-            [self loadMessageData];
-        }
-            break;
-        case 2:
-        {
-            [self loadNewFriendData];
-        }
-            break;
-        default:
-            break;
-    }
 }
 
 /**
