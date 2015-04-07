@@ -367,6 +367,7 @@
     [friendUser addRsChatMessagesObject:chatMsg];
     //更新未读消息数量
     friendUser.unReadChatMsg = @(friendUser.unReadChatMsg.integerValue + 1);
+    friendUser.lastChatTime = chatMsg.timestamp;//更新好友的聊天时间
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -383,7 +384,7 @@
     [friendUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新好友的聊天时间
-    [friendUser updateLastChatTime:chatMsg.timestamp];
+//    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     //更新总的聊天消息数量
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
@@ -422,6 +423,7 @@
 //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
     friendUser.unReadChatMsg = @(0);
+    friendUser.lastChatTime = chatMsg.timestamp;//更新好友的聊天时间
     
     //是否显示时间戳
     if (lastChatMsg) {
@@ -439,7 +441,7 @@
 //    [MOC save];
     
     //更新好友的聊天时间
-    [friendUser updateLastChatTime:chatMsg.timestamp];
+//    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     return chatMsg;
 }

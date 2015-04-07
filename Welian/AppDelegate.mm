@@ -439,20 +439,32 @@ BMKMapManager* _mapManager;
         //别人请求加我为好友
         //操作类型0：添加 1：接受  2:已添加 3：待验证
         MyFriendUser *myFriendUser = [loginUser getMyfriendUserWithUid:newfrendM.uid];
-        if(myFriendUser.isMyFriend.boolValue){
-            [newfrendM setOperateType:@(2)];
+        if (myFriendUser) {
+            if(myFriendUser.isMyFriend.boolValue){
+                [newfrendM setOperateType:@(2)];
+            }else{
+                //设置不是我的好友
+                [myFriendUser updateIsNotMyFriend];
+                
+                if ([type isEqualToString:@"friendRequest"]) {
+                    //如果是好友，设置为已添加
+                    [newfrendM setOperateType:@(1)];
+                }
+                //推荐的
+                if([type isEqualToString:@"friendCommand"]){
+                    [newfrendM setOperateType:@(0)];
+                }
+            }
         }else{
-            //设置不是我的好友
-            [myFriendUser updateIsNotMyFriend];
-        }
-        
-        if ([type isEqualToString:@"friendRequest"]) {
-            //如果是好友，设置为已添加
-            [newfrendM setOperateType:@(1)];
-        }
-        //推荐的
-        if([type isEqualToString:@"friendCommand"]){
-            [newfrendM setOperateType:@(0)];
+            //不是我的好友
+            if ([type isEqualToString:@"friendRequest"]) {
+                //如果是好友，设置为已添加
+                [newfrendM setOperateType:@(1)];
+            }
+            //推荐的
+            if([type isEqualToString:@"friendCommand"]){
+                [newfrendM setOperateType:@(0)];
+            }
         }
         
         //创建的时间

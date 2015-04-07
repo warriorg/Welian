@@ -91,8 +91,9 @@
                         NSDictionary *dic = [citys firstObject];
                         locationCityDic = @{@"cityid":dic[@"cid"],@"name":cityStr};
                     }
-                    
-                    [all replaceObjectAtIndex:0 withObject:locationCityDic];
+                    if(locationCityDic){
+                        [all replaceObjectAtIndex:0 withObject:locationCityDic];
+                    }
                     
                     self.datasource = [NSArray arrayWithArray:all];
                     //刷新第一行
