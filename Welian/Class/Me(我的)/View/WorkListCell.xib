@@ -17,16 +17,17 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2I-TQ-u2V">
                         <rect key="frame" x="30" y="29" width="275" height="50.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxJ-eT-rHz">
-                        <rect key="frame" x="30" y="15" width="275" height="14"/>
+                        <rect key="frame" x="30" y="15" width="120" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="4vB-18-kpy"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="LD5-Ld-FLO"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8a9-Ht-Mrk">
@@ -35,14 +36,23 @@
                             <constraint firstAttribute="width" constant="3" id="qGv-Lt-kCQ"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_lvli_bianji.png" translatesAutoresizingMaskIntoConstraints="NO" id="Z9y-ZF-Vw9">
+                        <rect key="frame" x="160" y="15" width="15" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="JPU-eu-Aa7"/>
+                            <constraint firstAttribute="height" constant="14" id="fPH-dK-hP6"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8a9-Ht-Mrk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="5Ii-e2-UmJ"/>
                     <constraint firstItem="8a9-Ht-Mrk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6zX-ZK-HnQ"/>
                     <constraint firstItem="v2I-TQ-u2V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="AB3-FA-F2a"/>
-                    <constraint firstAttribute="trailing" secondItem="bxJ-eT-rHz" secondAttribute="trailing" constant="15" id="Hhw-TR-e20"/>
+                    <constraint firstItem="v2I-TQ-u2V" firstAttribute="top" secondItem="Z9y-ZF-Vw9" secondAttribute="bottom" id="Ezx-9T-C0m"/>
+                    <constraint firstItem="Z9y-ZF-Vw9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="J7l-dW-LSv"/>
                     <constraint firstItem="v2I-TQ-u2V" firstAttribute="top" secondItem="bxJ-eT-rHz" secondAttribute="bottom" id="Pjo-a6-uyI"/>
                     <constraint firstItem="bxJ-eT-rHz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="WPT-zM-NW7"/>
+                    <constraint firstItem="Z9y-ZF-Vw9" firstAttribute="leading" secondItem="bxJ-eT-rHz" secondAttribute="trailing" constant="10" id="cdK-2s-Jc2"/>
                     <constraint firstAttribute="bottom" secondItem="v2I-TQ-u2V" secondAttribute="bottom" id="cmE-dn-kPb"/>
                     <constraint firstAttribute="bottom" secondItem="8a9-Ht-Mrk" secondAttribute="bottom" constant="0.5" id="mxy-VU-Kju"/>
                     <constraint firstAttribute="trailing" secondItem="v2I-TQ-u2V" secondAttribute="trailing" constant="15" id="n87-QN-DgH"/>
@@ -57,4 +67,7 @@
             <point key="canvasLocation" x="173" y="293"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="me_lvli_bianji.png" width="15" height="13"/>
+    </resources>
 </document>

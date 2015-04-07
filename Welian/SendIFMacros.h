@@ -211,7 +211,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 //#define KFirstFID @"firstFid"
 
 // 主色透明效果
-#define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.7]
+#define KBasesColor [UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:1.0]
 
 /**
  *  系统字体

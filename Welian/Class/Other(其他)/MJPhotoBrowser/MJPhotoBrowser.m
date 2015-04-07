@@ -68,7 +68,7 @@
 #pragma mark 创建工具条
 - (void)createToolbar
 {
-    CGFloat barHeight = 44;
+    CGFloat barHeight = 40;
     CGFloat barY = self.view.frame.size.height - barHeight;
     _toolbar = [[MJPhotoToolbar alloc] init];
     _toolbar.isDelete = self.isDelete;

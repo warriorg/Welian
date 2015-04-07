@@ -113,6 +113,7 @@ static NSString *identifier = @"investorcellid";
     [self.searchDisplayVC setDelegate:self];
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
+    self.searchDisplayVC.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setTableHeaderView:self.searchBar];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
@@ -246,7 +247,7 @@ static NSString *identifier = @"investorcellid";
 - (void)loadSearchDataArray:(NSString *)searchString
 {
     
-    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(200000),@"keyword":searchString} success:^(id JSON) {
+    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(1),@"size":@(2000),@"keyword":searchString} success:^(id JSON) {
         
         [self.filterArray removeAllObjects];
         self.filterArray = [NSMutableArray arrayWithArray:JSON];

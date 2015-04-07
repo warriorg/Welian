@@ -37,33 +37,36 @@
 - (void)setPhotos:(NSArray *)photos
 {
     _photos = photos;
+    CGFloat btnWidth = self.bounds.size.height;
+    // 保存图片按钮
+    self.saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.saveImageBtn.frame = CGRectMake(20, 0, btnWidth-3, btnWidth-3);
+    self.saveImageBtn.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     
     if (_photos.count > 1) {
         _indexLabel = [[UILabel alloc] init];
         _indexLabel.font = [UIFont boldSystemFontOfSize:16];
         _indexLabel.frame = self.bounds;
-        _indexLabel.backgroundColor = [UIColor clearColor];
+//        CGRectMake(self.bounds.size.width*0.5-40, 15, 80, 25);
+//        _indexLabel.backgroundColor = [UIColor clearColor];
         _indexLabel.textColor = [UIColor whiteColor];
         _indexLabel.textAlignment = NSTextAlignmentCenter;
         _indexLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [_indexLabel setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.4]];
         [self addSubview:_indexLabel];
+        [self.saveImageBtn setBackgroundColor:[UIColor clearColor]];
+    }else{
+        [self.saveImageBtn setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.4]];
     }
-    // 保存图片按钮
-    CGFloat btnWidth = self.bounds.size.height;
-    self.saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.saveImageBtn.frame = CGRectMake(20, 0, btnWidth-5, btnWidth-5);
-    self.saveImageBtn.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    [self.saveImageBtn setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
+    
     [self addSubview:self.saveImageBtn];
     
     
     if (_isDelete) {
         [self.saveImageBtn setImage:[UIImage imageNamed:@"home_new_upload_picture_enlarge_delete.png"] forState:UIControlStateNormal];
-//        [self.saveImageBtn setImage:[UIImage imageNamed:@"home_new_upload_picture_enlarge_delete.png"] forState:UIControlStateHighlighted];
     }else{
         
         [self.saveImageBtn setImage:[UIImage imageNamed:@"home_picture_enlarge_download.png"] forState:UIControlStateNormal];
-//        [self.saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
         [self.saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     }
     
