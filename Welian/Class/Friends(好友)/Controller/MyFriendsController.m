@@ -218,11 +218,9 @@ static NSString *fridcellid = @"fridcellid";
             NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
             self.allArray = [WLHttpTool getChineseStringArr:myFriends];
             _count = myFriends.count;
-            if (self.allArray.count) {
-                UILabel *fff = (UILabel*)self.tableView.tableFooterView;
-                [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
-                [self.tableView reloadData];
-            }
+            UILabel *fff = (UILabel*)self.tableView.tableFooterView;
+            [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
+            [self.tableView reloadData];
         }];
         
     } fail:^(NSError *error) {

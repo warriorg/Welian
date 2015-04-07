@@ -28,4 +28,6 @@
  */
 + (CGFloat)calculateCellHeightWithMessage:(id <WLMessageModel>)message;
 
++ (CGSize)calculateCellSizeWithMessage:(id <WLMessageModel>)message;
+
 @end

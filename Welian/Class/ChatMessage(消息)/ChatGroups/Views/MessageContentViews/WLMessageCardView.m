@@ -8,7 +8,8 @@
 
 #import "WLMessageCardView.h"
 
-#define InfoMaxWidth (CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.55 : 0.7))
+#define InfoMaxWidth CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.8 : 0.69)
+// (CGRectGetWidth([[UIScreen mainScreen] bounds]) * (kIsiPad ? 0.55 : 0.7))
 #define kCardViewHeight 56.f
 #define kPaddingTop 8.0f
 #define kMarginLeft 8.f
@@ -48,9 +49,14 @@
     _titleLabel.width = self.width - kMarginLeft * 2.f;
 //    [_titleLabel sizeToFit];
     CGSize titleSize = [_titleLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)];
-    _titleLabel.size = CGSizeMake(self.width - kMarginLeft * 2, titleSize.height);
-    _titleLabel.left = kMarginLeft;
-//    _titleLabel.centerX = self.width / 2.f;
+    _titleLabel.size = CGSizeMake(titleSize.width, titleSize.height);
+//    CGFloat leftWith = (self.width - titleSize.width) / 2.f ;
+//    _titleLabel.left = leftWith > 12.f ? kMarginLeft : leftWith;
+//    if (titleSize.width < self.width - kMarginLeft * 2) {
+        _titleLabel.left = kMarginLeft;
+//    }else{
+//        _titleLabel.centerX = self.width / 2.f;
+//    }
     _titleLabel.top = kPaddingTop;
     
     _cardView.size = CGSizeMake(self.width, kCardViewHeight);
@@ -69,6 +75,7 @@
 #pragma mark - Private
 - (void)setup
 {
+//    [self setDebug:YES];
     MLEmojiLabel *titleLabel = [[MLEmojiLabel alloc]init];
     titleLabel.numberOfLines = 0;
     //            displayLabel.emojiDelegate = self;
@@ -122,6 +129,28 @@
         textHeight = -kPaddingTop;
     }
     return textHeight + kCardViewHeight;
+}
+
++ (CGSize)calculateCellSizeWithMessage:(id <WLMessageModel>)message
+{
+    CGFloat textHeight = 0.f;
+    CGFloat textWidth = 0.f;
+    if (message.cardMsg.length > 0) {
+        MLEmojiLabel *displayLabel = [[MLEmojiLabel alloc]init];
+        displayLabel.numberOfLines = 0;
+        //    displayLabel.emojiDelegate = self;
+        displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        displayLabel.font = [UIFont systemFontOfSize:16.f];
+        displayLabel.text = message.cardMsg;
+        
+        CGSize textSize = [displayLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)];
+        textHeight = textSize.height + 5.f;
+        textWidth = textSize.width;
+    }else{
+        textHeight = -kPaddingTop;
+    }
+    return CGSizeMake(InfoMaxWidth , textHeight + kCardViewHeight);
+//    return CGSizeMake(textWidth == 0 ? (InfoMaxWidth - kMarginLeft * 2) : textWidth, textHeight + kCardViewHeight);
 }
 
 @end
