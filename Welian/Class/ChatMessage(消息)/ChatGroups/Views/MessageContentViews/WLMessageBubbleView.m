@@ -141,7 +141,8 @@
                 case WLBubbleMessageCardTypeActivity:
                 case WLBubbleMessageCardTypeProject:
                 case WLBubbleMessageCardTypeWeb:
-                    bubbleSize = CGSizeMake(InfoMaxWidth, [WLMessageCardView calculateCellHeightWithMessage:message]);
+//                    bubbleSize = CGSizeMake(InfoMaxWidth, [WLMessageCardView calculateCellHeightWithMessage:message]);
+                    bubbleSize = [WLMessageCardView calculateCellSizeWithMessage:message];
                     break;
                 default:
                     //其他展示文本类型
@@ -713,8 +714,8 @@
 - (void)resetDisplayCardViewFrameWithBubbleFrame:(CGRect)bubbleFrame
 {
     CGRect cardFrame = bubbleFrame;
-    cardFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x : 7.f);
-    cardFrame.size = CGSizeMake(bubbleFrame.size.width - kPaddingTop,bubbleFrame.size.height);
+    cardFrame.origin.x = (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? bubbleFrame.origin.x + 2 : 7.f);
+    cardFrame.size = CGSizeMake(bubbleFrame.size.width - (self.message.bubbleMessageType == WLBubbleMessageTypeSending ? 10.f : kPaddingTop),bubbleFrame.size.height);
     _displayCardView.frame = cardFrame;
     _displayCardView.centerY = _bubbleImageView.centerY;
 }
