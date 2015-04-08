@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import "BasicPlainTableViewController.h"
+//#import "BasicPlainTableViewController.h"
 
-@interface MyFriendsController : BasicPlainTableViewController
+@interface MyFriendsController : UITableViewController
 
 @end

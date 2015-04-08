@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UISearchDisplayController *searchDisplayVC;
 @property (strong, nonatomic) NSArray *datasource;
 @property (strong, nonatomic) NSMutableArray *filterArray;//搜索出来的数据数组
+@property (assign, nonatomic) BOOL isFromMeVC;
 
 @end
 
@@ -31,12 +32,23 @@
     return @"添加好友";
 }
 
+- (instancetype)initWithStyle:(UITableViewStyle)style fromMe:(BOOL)isFromMeVC
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        self.isFromMeVC = isFromMeVC;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     //显示导航条
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    if (_isFromMeVC) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
     
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -10,4 +10,6 @@
 
 @interface AddFriendTypeListViewController : UITableViewController
 
+- (instancetype)initWithStyle:(UITableViewStyle)style fromMe:(BOOL)isFromMeVC;
+
 @end

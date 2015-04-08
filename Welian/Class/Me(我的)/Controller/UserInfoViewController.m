@@ -115,7 +115,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self scrollViewDidScroll:_tableView];
+    [self scrollViewDidScroll:_tableView];
 //    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 ////    self.navigationController.navigationBar.alpha = 1;  //调整navigation bar的透明度
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
