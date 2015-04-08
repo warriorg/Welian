@@ -131,10 +131,12 @@
     }
     
     [self.view addSubview:self.tableView];
-    // 上拉加载更多
-    [self.tableView addFooterWithTarget:self action:@selector(laodMoreData)];
-    [self.tableView setFooterHidden:YES];
-//    [self refreshdata];
+   
+    //上提加载更多
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(laodMoreData)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
 }
 
 #pragma mark - 刷新数据
@@ -150,7 +152,7 @@
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
         [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
                 NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
                 if (!_uid) {
@@ -167,16 +169,16 @@
                 self.collectDataArray = [NSMutableArray arrayWithArray:projects];
                 [self.tableView reloadData];
                 if (projects.count != KCellConut) {
-                    [self.tableView setFooterHidden:YES];
+                    self.tableView.footer.hidden = YES;
                 }else{
-                    [self.tableView setFooterHidden:NO];
+                    self.tableView.footer.hidden = NO;
                     _pageIndex++;
                 }
             }
             
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
     }else if (self.segmentedControl.selectedSegmentIndex ==1){
         if (_uid) {
@@ -188,7 +190,7 @@
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
         [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
                 NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
                 if (!_uid) {
@@ -205,15 +207,15 @@
                 self.createDataArray = [NSMutableArray arrayWithArray:projects];
                 [self.tableView reloadData];
                 if (projects.count != KCellConut) {
-                    [self.tableView setFooterHidden:YES];
+                    self.tableView.footer.hidden = YES;
                 }else{
-                    [self.tableView setFooterHidden:NO];
+                    self.tableView.footer.hidden = NO;
                     _pageIndex++;
                 }
             }
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
     }
     
@@ -233,7 +235,7 @@
         }
         [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
                 if (JSON) {
                     NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
@@ -245,23 +247,23 @@
                     [self.collectDataArray addObjectsFromArray:projects];
                     [self.tableView reloadData];
                     if (projects.count != KCellConut) {
-                        [self.tableView setFooterHidden:YES];
+                        self.tableView.footer.hidden = YES;
                     }else{
-                        [self.tableView setFooterHidden:NO];
+                        self.tableView.footer.hidden = NO;
                         _pageIndex++;
                     }
                 }
             }
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
     }else if (self.segmentedControl.selectedSegmentIndex ==1){
         [_getProjectDic setObject:@(-1) forKey:@"uid"];
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
         [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
             if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
                 if (JSON) {
                     NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
@@ -273,16 +275,16 @@
                     [self.createDataArray addObjectsFromArray:projects];
                     [self.tableView reloadData];
                     if (projects.count != KCellConut) {
-                        [self.tableView setFooterHidden:YES];
+                        self.tableView.footer.hidden = YES;
                     }else{
-                        [self.tableView setFooterHidden:NO];
+                        self.tableView.footer.hidden = NO;
                         _pageIndex++;
                     }
                 }
             }
         } fail:^(NSError *error) {
             [self.refreshControl endRefreshing];
-            [self.tableView footerEndRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
     }
     

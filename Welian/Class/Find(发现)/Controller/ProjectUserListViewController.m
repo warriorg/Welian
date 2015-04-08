@@ -71,7 +71,10 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //上提加载更多
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
     
     //获取数据
     [self initData];
@@ -164,10 +167,11 @@
     }
     if (_pageIndex * _pageSize >= total) {
         //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
+        [self.tableView.footer endRefreshing];
+        self.tableView.footer.hidden = YES;
     }else{
         _pageIndex++;
+        self.tableView.footer.hidden = NO;
         [self initData];
     }
 }
@@ -193,7 +197,7 @@
     [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                        success:^(id JSON) {
                                            //隐藏加载更多动画
-                                           [self.tableView footerEndRefreshing];
+                                           [self.tableView.footer endRefreshing];
                                            
                                            self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                            [self.tableView reloadData];
@@ -208,7 +212,7 @@
     [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
-                                          [self.tableView footerEndRefreshing];
+                                          [self.tableView.footer endRefreshing];
                                           
                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];

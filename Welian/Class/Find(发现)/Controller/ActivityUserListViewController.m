@@ -90,7 +90,10 @@
     [self initData];
     
     //上提加载更多
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
 }
 
 #pragma mark - Table view data source
@@ -176,7 +179,7 @@
     [WLHttpTool loadActiveRecordsParameterDic:@{@"activeid":_activeId,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
-                                          [self.tableView footerEndRefreshing];
+                                          [self.tableView.footer endRefreshing];
                                           NSInteger count = [JSON[@"count"] integerValue];
                                           NSArray *records = JSON[@"records"];
                                           if (count > 0) {
@@ -192,7 +195,7 @@
                                           }
                                       } fail:^(NSError *error) {
                                           //隐藏加载更多动画
-                                          [self.tableView footerEndRefreshing];
+                                          [self.tableView.footer endRefreshing];
 //                                          [UIAlertView showWithError:error];
                                       }];
 }
@@ -202,11 +205,12 @@
 {
     if (_pageIndex < _allPages) {
         _pageIndex ++;
+        self.tableView.footer.hidden = NO;
         [self initData];
     }else{
         //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
+        [self.tableView.footer endRefreshing];
+        self.tableView.footer.hidden = YES;
     }
 }
 

@@ -54,7 +54,11 @@ static NSString *identifier = @"investorcellid";
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         
         [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
-        [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+        //上提加载更多
+        // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+        [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+        // 隐藏当前的上拉刷新控件
+        self.tableView.footer.hidden = YES;
     }
     return self;
 }
@@ -70,14 +74,14 @@ static NSString *identifier = @"investorcellid";
 - (void)hideRefreshView
 {
     [self.refreshControl endRefreshing];
-    [self.tableView footerEndRefreshing];
+    [self.tableView.footer endRefreshing];
 }
 
 
 // 刷新数据
 - (void)loadNewDataArray
 {
-    [self.tableView setFooterHidden:YES];
+    self.tableView.footer.hidden = YES;
     page = 1;
     [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
         [self.allArray removeAllObjects];
@@ -89,7 +93,7 @@ static NSString *identifier = @"investorcellid";
         [self.tableView reloadData];
         [self hideRefreshView];
         if (friendsM.friends.count>=15) {
-            [self.tableView setFooterHidden:NO];
+            self.tableView.footer.hidden = NO;
         }
         page++;
         if (!self.allArray.count) {
@@ -111,9 +115,9 @@ static NSString *identifier = @"investorcellid";
         [self.tableView reloadData];
 
         if (friendsM.friends.count<15) {
-            [self.tableView setFooterHidden:YES];
+            self.tableView.footer.hidden = YES;
         }else{
-            [self.tableView setFooterHidden:NO];
+            self.tableView.footer.hidden = NO;
         }
         [self hideRefreshView];
         page++;

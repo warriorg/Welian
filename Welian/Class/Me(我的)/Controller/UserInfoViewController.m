@@ -19,7 +19,6 @@
 #import "UserInfoViewCell.h"
 #import "UserInfoBasicVC.h"
 #import "WLNoteInfoView.h"
-#import "MJRefresh.h"
 
 #define kTableViewHeaderViewHeight 298.f
 
@@ -268,7 +267,10 @@ static NSString *fridcellid = @"fridcellid";
     
     [_tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
     //上提加载更多
-    [_tableView addFooterWithTarget:self action:@selector(loadMoreData)];
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    // 隐藏当前的上拉刷新控件
+    _tableView.footer.hidden = YES;
     
     //设置默认选择
     [self selectIndexChanged:_selectType];
@@ -651,7 +653,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     self.selectType = index;
     [self checkNoteInfoLoad:NO];
-    [_tableView setFooterHidden:YES];
+    _tableView.footer.hidden = YES;
     _wlNoteInfoView.loadFailed = NO;
     switch (index) {
         case 0:
@@ -662,12 +664,13 @@ static NSString *fridcellid = @"fridcellid";
         case 1:
         {
             //隐藏表格分割线
-            [_tableView setFooterHidden:NO];
+//            [_tableView setFooterHidden:NO];
+//            _tableView.footer.hidden = NO;
             if (_datasource2.count <= 0) {
                 [self getUserFeedsData];
             }
             if(!_canLoadMore){
-                [_tableView setFooterHidden:YES];
+                _tableView.footer.hidden = YES;
             }
         }
             break;
@@ -862,18 +865,19 @@ static NSString *fridcellid = @"fridcellid";
                                   //检查
                                   [self checkNoteInfoLoad:YES];
                                   
-                                  //        [self.refreshControl endRefreshing];
-                                  [_tableView footerEndRefreshing];
+                                  [_tableView.footer endRefreshing];
                                   if (jsonarray.count<KCellConut) {
-                                      [_tableView setFooterHidden:YES];
+                                      // 隐藏当前的上拉刷新控件
+                                      _tableView.footer.hidden = YES;
                                       _canLoadMore = NO;
                                   }else{
                                       _pageIndex++;
                                       _canLoadMore = YES;
+                                      // 隐藏当前的上拉刷新控件
+                                      _tableView.footer.hidden = NO;
                                   }
                               } fail:^(NSError *error) {
-                                  //        [self.refreshControl endRefreshing];
-                                  [_tableView footerEndRefreshing];
+                                  [_tableView.footer endRefreshing];
                                   _wlNoteInfoView.loadFailed = YES;
                               }];
 }
@@ -915,18 +919,19 @@ static NSString *fridcellid = @"fridcellid";
             //检查
             [self checkNoteInfoLoad:YES];
             
-            //            [self.refreshControl endRefreshing];
-            [_tableView footerEndRefreshing];
+            [_tableView.footer endRefreshing];
             if (jsonarray.count<KCellConut) {
-                [_tableView setFooterHidden:YES];
+                // 隐藏当前的上拉刷新控件
+                _tableView.footer.hidden = YES;
                 _canLoadMore = NO;
             }else{
                 _pageIndex++;
                 _canLoadMore = YES;
+                // 隐藏当前的上拉刷新控件
+                _tableView.footer.hidden = NO;
             }
         } fail:^(NSError *error) {
-//            [self.refreshControl endRefreshing];
-            [_tableView footerEndRefreshing];
+            [_tableView.footer endRefreshing];
         }];
     }
 }
