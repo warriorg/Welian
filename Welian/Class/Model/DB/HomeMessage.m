@@ -44,7 +44,8 @@
     homeMessage.feedpic = messageM.feedpic;
     homeMessage.msg = messageM.msg;
     homeMessage.type = messageM.type;
-    homeMessage.created = messageM.created;
+//    homeMessage.created = messageM.created;
+    homeMessage.created = messageM.created.length > 0 ? messageM.created : [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     [loginUser addRsHomeMessagesObject:homeMessage];
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];

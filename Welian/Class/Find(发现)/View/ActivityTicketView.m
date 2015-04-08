@@ -50,7 +50,7 @@
     _isBuyTicket = isBuyTicket;
     [super didChangeValueForKey:@"isBuyTicket"];
     if (_isBuyTicket) {
-        [_operateBtn setTitle:@"确认购票" forState:UIControlStateNormal];
+        [_operateBtn setTitle:@"我要购票" forState:UIControlStateNormal];
     }else{
         [_operateBtn setTitle:@"返　　回" forState:UIControlStateNormal];
     }

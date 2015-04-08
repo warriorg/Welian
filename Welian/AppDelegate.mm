@@ -467,9 +467,6 @@ BMKMapManager* _mapManager;
             }
         }
         
-        //创建的时间
-        newfrendM.created = [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-        
         if (!([newFriendUser.operateType integerValue]==2)) {
             //不是好友，添加角标
             NSInteger badge = [loginUser.newfriendbadge integerValue];
@@ -482,19 +479,15 @@ BMKMapManager* _mapManager;
             }
         }
     }
+    
+    //创建的时间
+    newfrendM.created = newfrendM.created.length > 0 ? newfrendM.created : [[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     [NewFriendUser createNewFriendUserModel:newfrendM];
 }
 
 // 接收聊天消息
 - (void)getIMGTMessage:(NSDictionary *)dataDic
 {
-    NSNumber *toUser = dataDic[@"uid"];
-    LogInUser *loginUser = [LogInUser getLogInUserWithUid:toUser];
-    //如果本地数据库没有当前登陆用户，不处理
-    if (loginUser == nil) {
-        return;
-    }
-    
     //添加数据
     [ChatMessage createReciveMessageWithDict:dataDic];
 }

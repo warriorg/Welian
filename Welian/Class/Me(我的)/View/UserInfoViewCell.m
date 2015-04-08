@@ -43,7 +43,11 @@
         }
         
     }else{
+        self.detailTextLabel.width = self.width - kMarginLeft - self.textLabel.left;
         [self.detailTextLabel sizeToFit];
+        if (self.detailTextLabel.width > self.width - kMarginLeft - self.textLabel.left) {
+            self.detailTextLabel.width = self.width - kMarginLeft - self.textLabel.left;
+        }
         self.detailTextLabel.top = self.textLabel.bottom + 3.f;
         self.detailTextLabel.left = kMarginLeft;
     }

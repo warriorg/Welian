@@ -790,7 +790,7 @@
                     //收费活动
                     if(_activityInfo.limited.integerValue > 0){
                         _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-                        [_joinBtn setTitle:@"我要购票" forState:UIControlStateNormal];
+                        [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
                     }else{
                         [_joinBtn setTitle:@"已售罄" forState:UIControlStateNormal];
                     }
