@@ -229,8 +229,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         
         [self.messageView.commentTextView becomeFirstResponder];
     }
-    
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreCommentData)];
 }
 
 
@@ -349,7 +348,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)loadNewCommentListData
 {
-    [self.tableView setFooterHidden:YES];
+    [self.tableView.footer setHidden:YES];
     [self.reqestDic setObject:@(self.statusM.fid) forKey:@"fid"];
     [self.reqestDic setObject:@(KCellConut) forKey:@"size"];
     [self.reqestDic setObject:@(1) forKey:@"page"];
@@ -416,9 +415,6 @@ static NSString *noCommentCell = @"NoCommentCell";
         [_dataArrayM addObjectsFromArray:[self commentFrameArray:dataarr]];
         
         [self hiddenRefresh];
-        if (dataarr.count<KCellConut) {
-            self.tableView.footerHidden = YES;
-        }
         [self.tableView reloadData];
     } fail:^(NSError *error) {
         
@@ -436,15 +432,15 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)hiddenRefresh
 {
     [self.refreshControl endRefreshing];
-    [self.tableView footerEndRefreshing];
+    [self.tableView.footer endRefreshing];
     
     if (_dataArrayM.count<KCellConut) {
-        [self.tableView setFooterHidden:YES];
+        [self.tableView.footer setHidden:YES];
     }else{
         NSInteger page = [[self.reqestDic objectForKey:@"page"] integerValue];
         page++;
         [self.reqestDic setObject:@(page) forKey:@"page"];
-        [self.tableView setFooterHidden:NO];
+        [self.tableView.footer setHidden:NO];
     }
 }
 
