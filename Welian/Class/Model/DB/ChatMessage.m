@@ -388,6 +388,7 @@
     //更新未读消息数量
     friendUser.unReadChatMsg = friendUser.isMyFriend.boolValue ? @(friendUser.unReadChatMsg.integerValue + 1) : @(0);
     friendUser.lastChatTime = chatMsg.timestamp;//更新好友的聊天时间
+    friendUser.isChatNow = @(YES);
     
     //是否显示时间戳
     if (lastChatMsg) {
