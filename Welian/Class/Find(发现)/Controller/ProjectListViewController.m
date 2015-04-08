@@ -260,6 +260,13 @@
 //                                        [self.tableView reloadData];
                                     }
                                     
+                                    //设置是否可以下拉刷新
+                                    if ([JSON count] != KCellConut) {
+                                        self.tableView.footer.hidden = YES;
+                                    }else{
+                                        self.tableView.footer.hidden = NO;
+                                    }
+                                    
                                     if(_allDataSource.count == 0){
                                         [self.tableView addSubview:self.notView];
                                         [self.tableView sendSubviewToBack:self.notView];

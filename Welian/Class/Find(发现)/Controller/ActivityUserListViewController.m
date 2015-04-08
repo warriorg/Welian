@@ -182,9 +182,12 @@
                                           [self.tableView.footer endRefreshing];
                                           NSInteger count = [JSON[@"count"] integerValue];
                                           NSArray *records = JSON[@"records"];
-                                          if (count > 0) {
-                                              [self.datasource addObjectsFromArray:records];
-                                              [self.tableView reloadData];
+                                          
+                                          //设置是否可以下拉刷新
+                                          if ([JSON count] != KCellConut) {
+                                              self.tableView.footer.hidden = YES;
+                                          }else{
+                                              self.tableView.footer.hidden = NO;
                                           }
                                           
                                           if (_datasource.count > 0) {
@@ -192,6 +195,11 @@
                                           }else{
                                               [self.tableView addSubview:self.noDataNotView];
                                               [self.tableView sendSubviewToBack:self.noDataNotView];
+                                          }
+                                          
+                                          if (count > 0) {
+                                              [self.datasource addObjectsFromArray:records];
+                                              [self.tableView reloadData];
                                           }
                                       } fail:^(NSError *error) {
                                           //隐藏加载更多动画

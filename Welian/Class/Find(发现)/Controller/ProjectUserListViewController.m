@@ -200,6 +200,14 @@
                                            [self.tableView.footer endRefreshing];
                                            
                                            self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+                                          
+                                           //设置是否可以下拉刷新
+                                           if ([JSON count] != KCellConut) {
+                                               self.tableView.footer.hidden = YES;
+                                           }else{
+                                               self.tableView.footer.hidden = NO;
+                                           }
+                                           
                                            [self.tableView reloadData];
                                        } fail:^(NSError *error) {
 //                                           [UIAlertView showWithError:error];
@@ -213,6 +221,13 @@
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
                                           [self.tableView.footer endRefreshing];
+                                          
+                                          //设置是否可以下拉刷新
+                                          if ([JSON count] != KCellConut) {
+                                              self.tableView.footer.hidden = YES;
+                                          }else{
+                                              self.tableView.footer.hidden = NO;
+                                          }
                                           
                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];
