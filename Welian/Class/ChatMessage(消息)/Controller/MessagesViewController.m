@@ -142,8 +142,8 @@
             MessageCell *cell = [MessageCell cellWithTableView:tableView];
             MessageFrameModel *messageFrameModel = _datasource[indexPath.row];
             cell.messageFrameModel = messageFrameModel;
-            cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-            cell.layer.borderWidths = @"{0,0,0.5,0}";
+//            cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+//            cell.layer.borderWidths = @"{0,0,0.5,0}";
             return cell;
         }
             break;

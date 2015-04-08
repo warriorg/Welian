@@ -65,6 +65,11 @@
     return _homeView;
 }
 
+- (void)beginRefreshing
+{
+    [self.tableView.header beginRefreshing];
+}
+
 - (instancetype)initWithUid:(NSNumber *)uid
 {
     _uid = uid;
@@ -75,10 +80,13 @@
         [self.tableView setDataSource:self];
         [self.tableView setDelegate:self];
         [self.view addSubview:self.tableView];
-        self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(beginPullDownRefreshing) forControlEvents:UIControlEventValueChanged];
-        [self.tableView addSubview:self.refreshControl];
-        [self.refreshControl beginRefreshing];
+        [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(beginPullDownRefreshing)];
+        self.tableView.header.updatedTimeHidden = YES;
+//        self.tableView.header.stateHidden = YES;
+        [self.tableView.header beginRefreshing];
+        [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+        self.tableView.footer.hidden = YES;
+
         _dataArry = [NSMutableArray array];
         if (!_uid) {
             NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
@@ -90,8 +98,6 @@
             
             [self loadFirstFID];    
         }
-        
-        [self.tableView addFooterWithTarget:self action:@selector(loadMoreData)];
     }
     return self;
 }
@@ -104,6 +110,11 @@
     [LogInUser setUserFirststustid:@(startf.status.fid)];
 }
 
+- (void)endRefreshing
+{
+    [self.tableView.header endRefreshing];
+    [self.tableView.footer endRefreshing];
+}
 
 - (void)beginPullDownRefreshing
 {
@@ -147,14 +158,14 @@
         [[MainViewController sharedMainViewController] updataItembadge];
         [self.tableView reloadData];
 
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
+        [self endRefreshing];
         if (jsonarray.count<KCellConut) {
-            [self.tableView setFooterHidden:YES];
+            [self.tableView.footer setHidden:YES];
+        }else{
+            [self.tableView.footer setHidden:NO];
         }
     } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
+        [self endRefreshing];
     }];
 }
 
@@ -247,16 +258,12 @@
         
         [self.tableView reloadData];
         
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
-        
+        [self endRefreshing];
         if (jsonarray.count<KCellConut) {
-            [self.tableView setFooterHidden:YES];
+            [self.tableView.footer setHidden:YES];
         }
-        
     } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
-        [self.tableView footerEndRefreshing];
+        [self endRefreshing];
     }];
 
 }
@@ -271,12 +278,6 @@
     
     //刷新所有好友通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
-    
-    if (_uid) {
-      [self beginPullDownRefreshing];
-    }else{
-        [self performSelector:@selector(beginPullDownRefreshing) withObject:nil afterDelay:3.0];
-    }
     
     // 1.设置界面属性
     [self buildUI];

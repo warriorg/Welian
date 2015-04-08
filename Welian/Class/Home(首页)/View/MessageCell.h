@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MessageFrameModel.h"
+#import "BaseTableViewCell.h"
 
-@interface MessageCell : UITableViewCell
+@interface MessageCell : BaseTableViewCell
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

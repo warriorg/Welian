@@ -745,7 +745,6 @@
 		A49C7BE11A70D42700F2AEC5 /* AddImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D0FD19F8FA6B000610A1 /* AddImageCollectionCell.m */; };
 		A49C7BE31A70D42700F2AEC5 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6919F4EDC700D9E696 /* PinyinHelper.m */; };
 		A49C7BE41A70D42700F2AEC5 /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
-		A49C7BE51A70D42700F2AEC5 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */; };
 		A49C7BE61A70D42700F2AEC5 /* NeedAddUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A482A2461A5FD16F004AABE5 /* NeedAddUser.m */; };
 		A49C7BE71A70D42700F2AEC5 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E419D3BACE003987CC /* MJPhotoProgressView.m */; };
 		A49C7BE81A70D42700F2AEC5 /* NSManagedObject+MagicalAggregation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAAF1A6CF7C8006ADA55 /* NSManagedObject+MagicalAggregation.m */; };
@@ -812,7 +811,6 @@
 		A49C7C2A1A70D42700F2AEC5 /* WLMessageSpecialView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437CEF41A541BF300B54E68 /* WLMessageSpecialView.m */; };
 		A49C7C2B1A70D42700F2AEC5 /* ShareEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB9EB19EE948F00D85D7F /* ShareEngine.m */; };
 		A49C7C2C1A70D42700F2AEC5 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE980A19CC2F2D007BEE6C /* HttpTool.m */; };
-		A49C7C2D1A70D42700F2AEC5 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */; };
 		A49C7C2E1A70D42700F2AEC5 /* AddWorkOrEducationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */; };
 		A49C7C2F1A70D42700F2AEC5 /* CommentHomeViewFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */; };
 		A49C7C301A70D42700F2AEC5 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA21A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -870,7 +868,6 @@
 		A49C7C671A70D42700F2AEC5 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		A49C7C681A70D42700F2AEC5 /* WLBasicTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0E19D1895400CF89FE /* WLBasicTrends.m */; };
 		A49C7C691A70D42700F2AEC5 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
-		A49C7C6A1A70D42700F2AEC5 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */; };
 		A49C7C6B1A70D42700F2AEC5 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
 		A49C7C6C1A70D42700F2AEC5 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		A49C7C6D1A70D42700F2AEC5 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
@@ -899,7 +896,6 @@
 		A49C7C851A70D42700F2AEC5 /* BadgeBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55786391A63749500630A46 /* BadgeBaseCell.m */; };
 		A49C7C861A70D42700F2AEC5 /* BindingPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA96D1A5CE3CD00988A61 /* BindingPhoneController.m */; };
 		A49C7C871A70D42700F2AEC5 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
-		A49C7C881A70D42700F2AEC5 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */; };
 		A49C7C891A70D42700F2AEC5 /* InvestItemM.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C779731A53935F0098BC29 /* InvestItemM.m */; };
 		A49C7C8A1A70D42700F2AEC5 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9519CFF84000E753E4 /* ALAsset+isEqual.m */; };
 		A49C7C8B1A70D42700F2AEC5 /* NSObject+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA81A6CF7C8006ADA55 /* NSObject+MagicalDataImport.m */; };
@@ -988,7 +984,6 @@
 		A49C7CE01A70D42700F2AEC5 /* WLContentCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF48E1A1F68D600AB19E8 /* WLContentCellFrame.m */; };
 		A49C7CE11A70D42700F2AEC5 /* NSManagedObjectContext+MagicalChainSave.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EABA1A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m */; };
 		A49C7CE21A70D42700F2AEC5 /* CityLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1A71719E9543C003773F1 /* CityLocationController.m */; };
-		A49C7CE31A70D42700F2AEC5 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */; };
 		A49C7CE41A70D42700F2AEC5 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140341A4BEA8500C9BAB5 /* NSString+XHMD5.m */; };
 		A49C7CE61A70D42700F2AEC5 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE260C1A14BCF600B0E836 /* MessageController.m */; };
 		A49C7CE71A70D42700F2AEC5 /* WLUserStatusesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */; };
@@ -1018,7 +1013,6 @@
 		A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		A49C7D031A70D42700F2AEC5 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		A49C7D041A70D42700F2AEC5 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
-		A49C7D051A70D42700F2AEC5 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */; };
 		A49C7D061A70D42700F2AEC5 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E019D3BACE003987CC /* MJPhotoBrowser.m */; };
 		A49C7D071A70D42700F2AEC5 /* ForwardPublishView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB7F619EE548200D85D7F /* ForwardPublishView.m */; };
 		A49C7D081A70D42700F2AEC5 /* NSString+PinYin4Cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6419F4EDC700D9E696 /* NSString+PinYin4Cocoa.m */; };
@@ -1086,7 +1080,6 @@
 		A49C7D471A70D42700F2AEC5 /* IWTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86319D292BC00110C07 /* IWTextView.m */; };
 		A49C7D481A70D42700F2AEC5 /* NSString+val.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AA219CEA9F500FE9273 /* NSString+val.m */; };
 		A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
-		A49C7D4A1A70D42700F2AEC5 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */; };
 		A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
 		A49C7D4C1A70D42700F2AEC5 /* XHWaterDropRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C1410D1A4BEF5700C9BAB5 /* XHWaterDropRefresh.m */; };
 		A49C7D4D1A70D42700F2AEC5 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
@@ -1348,7 +1341,6 @@
 		A49C7EE51A70D42700F2AEC5 /* me_mywriten_repeat_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8131A31B36D00B677B0 /* me_mywriten_repeat_no@2x.png */; };
 		A49C7EE71A70D42700F2AEC5 /* home_picture_add_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099119C2E3F2009DB1B2 /* home_picture_add_unselected@2x.png */; };
 		A49C7EEA1A70D42700F2AEC5 /* repost_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8001A31B2FE00B677B0 /* repost_small@2x.png */; };
-		A49C7EEB1A70D42700F2AEC5 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */; };
 		A49C7EEC1A70D42700F2AEC5 /* home_empty_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EE25FB1A13300100B0E836 /* home_empty_button@2x.png */; };
 		A49C7EF01A70D42700F2AEC5 /* city.db in Resources */ = {isa = PBXBuildFile; fileRef = F5A1A71019E918A5003773F1 /* city.db */; };
 		A49C7EF31A70D42700F2AEC5 /* circle_chat_bg_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C1447A1A4C3EC600C9BAB5 /* circle_chat_bg_blue@2x.png */; };
@@ -2484,7 +2476,6 @@
 		F53DC2B11A49192600F5F712 /* AddImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D0FD19F8FA6B000610A1 /* AddImageCollectionCell.m */; };
 		F53DC2B21A49192600F5F712 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6919F4EDC700D9E696 /* PinyinHelper.m */; };
 		F53DC2B41A49192600F5F712 /* ICompanyResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E761E1A411E4C0028FBAF /* ICompanyResult.m */; };
-		F53DC2B51A49192600F5F712 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */; };
 		F53DC2B61A49192600F5F712 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E419D3BACE003987CC /* MJPhotoProgressView.m */; };
 		F53DC2B71A49192600F5F712 /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCD119C7E492005B887D /* UserInfoModel.m */; };
 		F53DC2B91A49192600F5F712 /* NSUserDefaults+Standard.m in Sources */ = {isa = PBXBuildFile; fileRef = 10389B5A1A3EC789001A785C /* NSUserDefaults+Standard.m */; };
@@ -2527,7 +2518,6 @@
 		F53DC2DE1A49192600F5F712 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D10A19F9F7F8000610A1 /* FMDatabaseAdditions.m */; };
 		F53DC2DF1A49192600F5F712 /* ShareEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB9EB19EE948F00D85D7F /* ShareEngine.m */; };
 		F53DC2E01A49192600F5F712 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE980A19CC2F2D007BEE6C /* HttpTool.m */; };
-		F53DC2E11A49192600F5F712 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */; };
 		F53DC2E21A49192600F5F712 /* AddWorkOrEducationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */; };
 		F53DC2E31A49192600F5F712 /* CommentHomeViewFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */; };
 		F53DC2E41A49192600F5F712 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC819CF017600FE9273 /* UIImageView+WebCache.m */; };
@@ -2561,7 +2551,6 @@
 		F53DC3021A49192600F5F712 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F53DC3031A49192600F5F712 /* WLBasicTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0E19D1895400CF89FE /* WLBasicTrends.m */; };
 		F53DC3041A49192600F5F712 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
-		F53DC3051A49192600F5F712 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */; };
 		F53DC3061A49192600F5F712 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
 		F53DC3071A49192600F5F712 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F53DC3081A49192600F5F712 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
@@ -2580,7 +2569,6 @@
 		F53DC3151A49192600F5F712 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11319F9F7F8000610A1 /* YTKKeyValueStore.m */; };
 		F53DC3161A49192600F5F712 /* WLPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C8AF19D2BE8200110C07 /* WLPhotoView.m */; };
 		F53DC3171A49192600F5F712 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
-		F53DC3181A49192600F5F712 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */; };
 		F53DC3191A49192600F5F712 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9519CFF84000E753E4 /* ALAsset+isEqual.m */; };
 		F53DC31A1A49192600F5F712 /* IFBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75EF1A4059D00028FBAF /* IFBase.m */; };
 		F53DC31B1A49192600F5F712 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E219D3BACE003987CC /* MJPhotoLoadingView.m */; };
@@ -2642,7 +2630,6 @@
 		F53DC3551A49192600F5F712 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6019F4EDC700D9E696 /* ChineseToPinyinResource.m */; };
 		F53DC3561A49192600F5F712 /* WLContentCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF48E1A1F68D600AB19E8 /* WLContentCellFrame.m */; };
 		F53DC3571A49192600F5F712 /* CityLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1A71719E9543C003773F1 /* CityLocationController.m */; };
-		F53DC3581A49192600F5F712 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */; };
 		F53DC3591A49192600F5F712 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE260C1A14BCF600B0E836 /* MessageController.m */; };
 		F53DC35A1A49192600F5F712 /* WLUserStatusesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */; };
 		F53DC35B1A49192600F5F712 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677EA19D3BACE003987CC /* SDWebImageManager+MJ.m */; };
@@ -2660,7 +2647,6 @@
 		F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F53DC36A1A49192600F5F712 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F53DC36B1A49192600F5F712 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
-		F53DC36C1A49192600F5F712 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */; };
 		F53DC36D1A49192600F5F712 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E019D3BACE003987CC /* MJPhotoBrowser.m */; };
 		F53DC36E1A49192600F5F712 /* ForwardPublishView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB7F619EE548200D85D7F /* ForwardPublishView.m */; };
 		F53DC36F1A49192600F5F712 /* NSString+PinYin4Cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6419F4EDC700D9E696 /* NSString+PinYin4Cocoa.m */; };
@@ -2701,7 +2687,6 @@
 		F53DC3921A49192600F5F712 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCEA19C8694B005B887D /* AFHTTPSessionManager.m */; };
 		F53DC3931A49192600F5F712 /* IWTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86319D292BC00110C07 /* IWTextView.m */; };
 		F53DC3941A49192600F5F712 /* NSString+val.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AA219CEA9F500FE9273 /* NSString+val.m */; };
-		F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */; };
 		F53DC3961A49192600F5F712 /* DKPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75E71A4059D00028FBAF /* DKPredicate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F53DC3971A49192600F5F712 /* UIColor+_6jinzhi.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B88FE01A35793200290B4F /* UIColor+_6jinzhi.m */; };
 		F53DC3981A49192600F5F712 /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC019CF017600FE9273 /* UIImage+GIF.m */; };
@@ -2834,7 +2819,6 @@
 		F53DC4D31A49192600F5F712 /* me_mywriten_repeat_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8131A31B36D00B677B0 /* me_mywriten_repeat_no@2x.png */; };
 		F53DC4D51A49192600F5F712 /* home_picture_add_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099119C2E3F2009DB1B2 /* home_picture_add_unselected@2x.png */; };
 		F53DC4D81A49192600F5F712 /* repost_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8001A31B2FE00B677B0 /* repost_small@2x.png */; };
-		F53DC4D91A49192600F5F712 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */; };
 		F53DC4DA1A49192600F5F712 /* home_empty_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EE25FB1A13300100B0E836 /* home_empty_button@2x.png */; };
 		F53DC4DF1A49192600F5F712 /* city.db in Resources */ = {isa = PBXBuildFile; fileRef = F5A1A71019E918A5003773F1 /* city.db */; };
 		F53DC4E21A49192600F5F712 /* home_repost_cancel_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099419C2E3F2009DB1B2 /* home_repost_cancel_bg@2x.png */; };
@@ -3111,7 +3095,6 @@
 		F566498D1A2AFD56008A5830 /* TQRichTextBaseRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86E19D2961600110C07 /* TQRichTextBaseRun.m */; };
 		F566498E1A2AFD56008A5830 /* AddImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D0FD19F8FA6B000610A1 /* AddImageCollectionCell.m */; };
 		F566498F1A2AFD56008A5830 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6919F4EDC700D9E696 /* PinyinHelper.m */; };
-		F56649911A2AFD56008A5830 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */; };
 		F56649921A2AFD56008A5830 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E419D3BACE003987CC /* MJPhotoProgressView.m */; };
 		F56649931A2AFD56008A5830 /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCD119C7E492005B887D /* UserInfoModel.m */; };
 		F56649951A2AFD56008A5830 /* FindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254EE19C01C0800809D0B /* FindViewController.m */; };
@@ -3151,7 +3134,6 @@
 		F56649B71A2AFD56008A5830 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D10A19F9F7F8000610A1 /* FMDatabaseAdditions.m */; };
 		F56649B81A2AFD56008A5830 /* ShareEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB9EB19EE948F00D85D7F /* ShareEngine.m */; };
 		F56649B91A2AFD56008A5830 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE980A19CC2F2D007BEE6C /* HttpTool.m */; };
-		F56649BA1A2AFD56008A5830 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */; };
 		F56649BB1A2AFD56008A5830 /* AddWorkOrEducationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */; };
 		F56649BC1A2AFD56008A5830 /* CommentHomeViewFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */; };
 		F56649BD1A2AFD56008A5830 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC819CF017600FE9273 /* UIImageView+WebCache.m */; };
@@ -3181,7 +3163,6 @@
 		F56649D81A2AFD56008A5830 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F56649D91A2AFD56008A5830 /* WLBasicTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0E19D1895400CF89FE /* WLBasicTrends.m */; };
 		F56649DA1A2AFD56008A5830 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
-		F56649DB1A2AFD56008A5830 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */; };
 		F56649DC1A2AFD56008A5830 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
 		F56649DD1A2AFD56008A5830 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F56649DE1A2AFD56008A5830 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
@@ -3198,7 +3179,6 @@
 		F56649E91A2AFD56008A5830 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C89B19D2AA6000110C07 /* NSObject+MJMember.m */; };
 		F56649EA1A2AFD56008A5830 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11319F9F7F8000610A1 /* YTKKeyValueStore.m */; };
 		F56649EB1A2AFD56008A5830 /* WLPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C8AF19D2BE8200110C07 /* WLPhotoView.m */; };
-		F56649EC1A2AFD56008A5830 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */; };
 		F56649ED1A2AFD56008A5830 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9519CFF84000E753E4 /* ALAsset+isEqual.m */; };
 		F56649EE1A2AFD56008A5830 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E219D3BACE003987CC /* MJPhotoLoadingView.m */; };
 		F56649EF1A2AFD56008A5830 /* InvestorController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCDC19C80B7F005B887D /* InvestorController.m */; };
@@ -3249,7 +3229,6 @@
 		F5664A1F1A2AFD56008A5830 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6019F4EDC700D9E696 /* ChineseToPinyinResource.m */; };
 		F5664A201A2AFD56008A5830 /* WLContentCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF48E1A1F68D600AB19E8 /* WLContentCellFrame.m */; };
 		F5664A211A2AFD56008A5830 /* CityLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1A71719E9543C003773F1 /* CityLocationController.m */; };
-		F5664A221A2AFD56008A5830 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */; };
 		F5664A231A2AFD56008A5830 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE260C1A14BCF600B0E836 /* MessageController.m */; };
 		F5664A241A2AFD56008A5830 /* WLUserStatusesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */; };
 		F5664A251A2AFD56008A5830 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677EA19D3BACE003987CC /* SDWebImageManager+MJ.m */; };
@@ -3267,7 +3246,6 @@
 		F5664A331A2AFD56008A5830 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
-		F5664A361A2AFD56008A5830 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */; };
 		F5664A381A2AFD56008A5830 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E019D3BACE003987CC /* MJPhotoBrowser.m */; };
 		F5664A391A2AFD56008A5830 /* ForwardPublishView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB7F619EE548200D85D7F /* ForwardPublishView.m */; };
 		F5664A3A1A2AFD56008A5830 /* NSString+PinYin4Cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6419F4EDC700D9E696 /* NSString+PinYin4Cocoa.m */; };
@@ -3305,7 +3283,6 @@
 		F5664A5A1A2AFD56008A5830 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCEA19C8694B005B887D /* AFHTTPSessionManager.m */; };
 		F5664A5B1A2AFD56008A5830 /* IWTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86319D292BC00110C07 /* IWTextView.m */; };
 		F5664A5C1A2AFD56008A5830 /* NSString+val.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AA219CEA9F500FE9273 /* NSString+val.m */; };
-		F5664A5D1A2AFD56008A5830 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */; };
 		F5664A5E1A2AFD56008A5830 /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC019CF017600FE9273 /* UIImage+GIF.m */; };
 		F5664A5F1A2AFD56008A5830 /* PinyinFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6719F4EDC700D9E696 /* PinyinFormatter.m */; };
 		F5664A601A2AFD56008A5830 /* StaurCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B8A19F6409C00D9E696 /* StaurCell.m */; };
@@ -3411,7 +3388,6 @@
 		F5664B841A2AFD56008A5830 /* NoListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B1238F19E7AA79002B9E58 /* NoListView.xib */; };
 		F5664B851A2AFD56008A5830 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5C677DE19D3BACE003987CC /* MJPhotoBrowser.bundle */; };
 		F5664B881A2AFD56008A5830 /* home_picture_add_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099119C2E3F2009DB1B2 /* home_picture_add_unselected@2x.png */; };
-		F5664B8B1A2AFD56008A5830 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */; };
 		F5664B8C1A2AFD56008A5830 /* home_empty_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EE25FB1A13300100B0E836 /* home_empty_button@2x.png */; };
 		F5664B911A2AFD56008A5830 /* city.db in Resources */ = {isa = PBXBuildFile; fileRef = F5A1A71019E918A5003773F1 /* city.db */; };
 		F5664B941A2AFD56008A5830 /* home_repost_cancel_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099419C2E3F2009DB1B2 /* home_repost_cancel_bg@2x.png */; };
@@ -3464,7 +3440,6 @@
 		F5664C471A2AFDD5008A5830 /* TQRichTextBaseRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86E19D2961600110C07 /* TQRichTextBaseRun.m */; };
 		F5664C481A2AFDD5008A5830 /* AddImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D0FD19F8FA6B000610A1 /* AddImageCollectionCell.m */; };
 		F5664C491A2AFDD5008A5830 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6919F4EDC700D9E696 /* PinyinHelper.m */; };
-		F5664C4B1A2AFDD5008A5830 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */; };
 		F5664C4C1A2AFDD5008A5830 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E419D3BACE003987CC /* MJPhotoProgressView.m */; };
 		F5664C4D1A2AFDD5008A5830 /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCD119C7E492005B887D /* UserInfoModel.m */; };
 		F5664C4F1A2AFDD5008A5830 /* FindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254EE19C01C0800809D0B /* FindViewController.m */; };
@@ -3504,7 +3479,6 @@
 		F5664C711A2AFDD5008A5830 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D10A19F9F7F8000610A1 /* FMDatabaseAdditions.m */; };
 		F5664C721A2AFDD5008A5830 /* ShareEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB9EB19EE948F00D85D7F /* ShareEngine.m */; };
 		F5664C731A2AFDD5008A5830 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE980A19CC2F2D007BEE6C /* HttpTool.m */; };
-		F5664C741A2AFDD5008A5830 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */; };
 		F5664C751A2AFDD5008A5830 /* AddWorkOrEducationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */; };
 		F5664C761A2AFDD5008A5830 /* CommentHomeViewFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F56A6D831A21C5CB0024591E /* CommentHomeViewFrame.m */; };
 		F5664C771A2AFDD5008A5830 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC819CF017600FE9273 /* UIImageView+WebCache.m */; };
@@ -3534,7 +3508,6 @@
 		F5664C921A2AFDD5008A5830 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F5664C931A2AFDD5008A5830 /* WLBasicTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = F5477B0E19D1895400CF89FE /* WLBasicTrends.m */; };
 		F5664C941A2AFDD5008A5830 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
-		F5664C951A2AFDD5008A5830 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */; };
 		F5664C961A2AFDD5008A5830 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
 		F5664C971A2AFDD5008A5830 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F5664C981A2AFDD5008A5830 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
@@ -3551,7 +3524,6 @@
 		F5664CA31A2AFDD5008A5830 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C89B19D2AA6000110C07 /* NSObject+MJMember.m */; };
 		F5664CA41A2AFDD5008A5830 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11319F9F7F8000610A1 /* YTKKeyValueStore.m */; };
 		F5664CA51A2AFDD5008A5830 /* WLPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C8AF19D2BE8200110C07 /* WLPhotoView.m */; };
-		F5664CA61A2AFDD5008A5830 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */; };
 		F5664CA71A2AFDD5008A5830 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9519CFF84000E753E4 /* ALAsset+isEqual.m */; };
 		F5664CA81A2AFDD5008A5830 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E219D3BACE003987CC /* MJPhotoLoadingView.m */; };
 		F5664CA91A2AFDD5008A5830 /* InvestorController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCDC19C80B7F005B887D /* InvestorController.m */; };
@@ -3602,7 +3574,6 @@
 		F5664CD91A2AFDD5008A5830 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6019F4EDC700D9E696 /* ChineseToPinyinResource.m */; };
 		F5664CDA1A2AFDD5008A5830 /* WLContentCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF48E1A1F68D600AB19E8 /* WLContentCellFrame.m */; };
 		F5664CDB1A2AFDD5008A5830 /* CityLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A1A71719E9543C003773F1 /* CityLocationController.m */; };
-		F5664CDC1A2AFDD5008A5830 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */; };
 		F5664CDD1A2AFDD5008A5830 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE260C1A14BCF600B0E836 /* MessageController.m */; };
 		F5664CDE1A2AFDD5008A5830 /* WLUserStatusesResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5419FD60AF00FAA5B6 /* WLUserStatusesResult.m */; };
 		F5664CDF1A2AFDD5008A5830 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677EA19D3BACE003987CC /* SDWebImageManager+MJ.m */; };
@@ -3620,7 +3591,6 @@
 		F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F511F0D519ECFF5500B1A356 /* ZBFaceView.m */; };
 		F5664CEE1A2AFDD5008A5830 /* CTAssetsGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9F19CFF84000E753E4 /* CTAssetsGroupViewController.m */; };
 		F5664CEF1A2AFDD5008A5830 /* CTAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAA19CFF84000E753E4 /* CTAssetsViewCell.m */; };
-		F5664CF01A2AFDD5008A5830 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */; };
 		F5664CF21A2AFDD5008A5830 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E019D3BACE003987CC /* MJPhotoBrowser.m */; };
 		F5664CF31A2AFDD5008A5830 /* ForwardPublishView.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FB7F619EE548200D85D7F /* ForwardPublishView.m */; };
 		F5664CF41A2AFDD5008A5830 /* NSString+PinYin4Cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6419F4EDC700D9E696 /* NSString+PinYin4Cocoa.m */; };
@@ -3658,7 +3628,6 @@
 		F5664D141A2AFDD5008A5830 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCEA19C8694B005B887D /* AFHTTPSessionManager.m */; };
 		F5664D151A2AFDD5008A5830 /* IWTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86319D292BC00110C07 /* IWTextView.m */; };
 		F5664D161A2AFDD5008A5830 /* NSString+val.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AA219CEA9F500FE9273 /* NSString+val.m */; };
-		F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */; };
 		F5664D181A2AFDD5008A5830 /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AC019CF017600FE9273 /* UIImage+GIF.m */; };
 		F5664D191A2AFDD5008A5830 /* PinyinFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B6719F4EDC700D9E696 /* PinyinFormatter.m */; };
 		F5664D1A1A2AFDD5008A5830 /* StaurCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B8A19F6409C00D9E696 /* StaurCell.m */; };
@@ -3764,7 +3733,6 @@
 		F5664E3E1A2AFDD5008A5830 /* NoListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B1238F19E7AA79002B9E58 /* NoListView.xib */; };
 		F5664E3F1A2AFDD5008A5830 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5C677DE19D3BACE003987CC /* MJPhotoBrowser.bundle */; };
 		F5664E421A2AFDD5008A5830 /* home_picture_add_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099119C2E3F2009DB1B2 /* home_picture_add_unselected@2x.png */; };
-		F5664E451A2AFDD5008A5830 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */; };
 		F5664E461A2AFDD5008A5830 /* home_empty_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EE25FB1A13300100B0E836 /* home_empty_button@2x.png */; };
 		F5664E4B1A2AFDD5008A5830 /* city.db in Resources */ = {isa = PBXBuildFile; fileRef = F5A1A71019E918A5003773F1 /* city.db */; };
 		F5664E4E1A2AFDD5008A5830 /* home_repost_cancel_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099419C2E3F2009DB1B2 /* home_repost_cancel_bg@2x.png */; };
@@ -3913,6 +3881,54 @@
 		F58CA9A31A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
 		F58CA9A41A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
 		F58CA9A51A5D4F9100988A61 /* UIView+FirstResponderNotify.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */; };
+		F5933F861AD4F4030088C70D /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */; };
+		F5933F871AD4F4030088C70D /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */; };
+		F5933F881AD4F4030088C70D /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */; };
+		F5933F891AD4F4030088C70D /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */; };
+		F5933F8A1AD4F4030088C70D /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F711AD4F4020088C70D /* MJRefreshComponent.m */; };
+		F5933F8B1AD4F4030088C70D /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F711AD4F4020088C70D /* MJRefreshComponent.m */; };
+		F5933F8C1AD4F4030088C70D /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F711AD4F4020088C70D /* MJRefreshComponent.m */; };
+		F5933F8D1AD4F4030088C70D /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F711AD4F4020088C70D /* MJRefreshComponent.m */; };
+		F5933F8E1AD4F4030088C70D /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F731AD4F4020088C70D /* MJRefreshConst.m */; };
+		F5933F8F1AD4F4030088C70D /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F731AD4F4020088C70D /* MJRefreshConst.m */; };
+		F5933F901AD4F4030088C70D /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F731AD4F4020088C70D /* MJRefreshConst.m */; };
+		F5933F911AD4F4030088C70D /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F731AD4F4020088C70D /* MJRefreshConst.m */; };
+		F5933F921AD4F4030088C70D /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F751AD4F4020088C70D /* MJRefreshFooter.m */; };
+		F5933F931AD4F4030088C70D /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F751AD4F4020088C70D /* MJRefreshFooter.m */; };
+		F5933F941AD4F4030088C70D /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F751AD4F4020088C70D /* MJRefreshFooter.m */; };
+		F5933F951AD4F4030088C70D /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F751AD4F4020088C70D /* MJRefreshFooter.m */; };
+		F5933F961AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */; };
+		F5933F971AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */; };
+		F5933F981AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */; };
+		F5933F991AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */; };
+		F5933F9A1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */; };
+		F5933F9B1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */; };
+		F5933F9C1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */; };
+		F5933F9D1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */; };
+		F5933F9E1AD4F4030088C70D /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */; };
+		F5933F9F1AD4F4030088C70D /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */; };
+		F5933FA01AD4F4030088C70D /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */; };
+		F5933FA11AD4F4030088C70D /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */; };
+		F5933FA21AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */; };
+		F5933FA31AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */; };
+		F5933FA41AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */; };
+		F5933FA51AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */; };
+		F5933FA61AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */; };
+		F5933FA71AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */; };
+		F5933FA81AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */; };
+		F5933FA91AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */; };
+		F5933FAA1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */; };
+		F5933FAB1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */; };
+		F5933FAC1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */; };
+		F5933FAD1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */; };
+		F5933FAE1AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */; };
+		F5933FAF1AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */; };
+		F5933FB01AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */; };
+		F5933FB11AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */; };
+		F5933FB21AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
+		F5933FB31AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
+		F5933FB41AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
+		F5933FB51AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
 		F59E75F01A4059D00028FBAF /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
 		F59E75F11A4059D00028FBAF /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
 		F59E75F21A4059D00028FBAF /* e0571CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75DC1A4059D00028FBAF /* e0571CoreDataManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -5913,6 +5929,30 @@
 		F58CA9941A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaiDodgeKeyboardObjects.m; sourceTree = "<group>"; };
 		F58CA9951A5D4F9100988A61 /* UIView+FirstResponderNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FirstResponderNotify.h"; sourceTree = "<group>"; };
 		F58CA9961A5D4F9100988A61 /* UIView+FirstResponderNotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FirstResponderNotify.m"; sourceTree = "<group>"; };
+		F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		F5933F6F1AD4F4020088C70D /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		F5933F701AD4F4020088C70D /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
+		F5933F711AD4F4020088C70D /* MJRefreshComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshComponent.m; sourceTree = "<group>"; };
+		F5933F721AD4F4020088C70D /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		F5933F731AD4F4020088C70D /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		F5933F741AD4F4020088C70D /* MJRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooter.h; sourceTree = "<group>"; };
+		F5933F751AD4F4020088C70D /* MJRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooter.m; sourceTree = "<group>"; };
+		F5933F761AD4F4020088C70D /* MJRefreshGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshGifFooter.h; sourceTree = "<group>"; };
+		F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshGifFooter.m; sourceTree = "<group>"; };
+		F5933F781AD4F4020088C70D /* MJRefreshGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshGifHeader.h; sourceTree = "<group>"; };
+		F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshGifHeader.m; sourceTree = "<group>"; };
+		F5933F7A1AD4F4020088C70D /* MJRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeader.h; sourceTree = "<group>"; };
+		F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeader.m; sourceTree = "<group>"; };
+		F5933F7C1AD4F4020088C70D /* MJRefreshLegendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshLegendFooter.h; sourceTree = "<group>"; };
+		F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshLegendFooter.m; sourceTree = "<group>"; };
+		F5933F7E1AD4F4020088C70D /* MJRefreshLegendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshLegendHeader.h; sourceTree = "<group>"; };
+		F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshLegendHeader.m; sourceTree = "<group>"; };
+		F5933F801AD4F4020088C70D /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
+		F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
+		F5933F821AD4F4020088C70D /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		F5933F841AD4F4030088C70D /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
+		F5933F851AD4F4030088C70D /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		F59E75D81A4059D00028FBAF /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		F59E75D91A4059D00028FBAF /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		F59E75DA1A4059D00028FBAF /* e0571CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = e0571CoreData.h; sourceTree = "<group>"; };
@@ -6368,22 +6408,6 @@
 		F5EE26231A15CE7100B0E836 /* MessageHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageHomeModel.m; sourceTree = "<group>"; };
 		F5EE980919CC2F2D007BEE6C /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
 		F5EE980A19CC2F2D007BEE6C /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
-		F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
-		F5F3C84B19D28EF100110C07 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
-		F5F3C84C19D28EF100110C07 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
-		F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
-		F5F3C84E19D28EF100110C07 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
-		F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
-		F5F3C85019D28EF100110C07 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
-		F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
-		F5F3C85219D28EF100110C07 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
-		F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
-		F5F3C85419D28EF100110C07 /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
-		F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
-		F5F3C85619D28EF100110C07 /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
-		F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
-		F5F3C85819D28EF100110C07 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
-		F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		F5F3C86219D292BC00110C07 /* IWTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWTextView.h; sourceTree = "<group>"; };
 		F5F3C86319D292BC00110C07 /* IWTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWTextView.m; sourceTree = "<group>"; };
 		F5F3C86819D294AF00110C07 /* WLStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLStatusCell.h; sourceTree = "<group>"; };
@@ -8574,6 +8598,37 @@
 			path = DaiDodgeKeyboard;
 			sourceTree = "<group>";
 		};
+		F5933F6D1AD4F4020088C70D /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				F5933F6E1AD4F4020088C70D /* MJRefresh.bundle */,
+				F5933F6F1AD4F4020088C70D /* MJRefresh.h */,
+				F5933F701AD4F4020088C70D /* MJRefreshComponent.h */,
+				F5933F711AD4F4020088C70D /* MJRefreshComponent.m */,
+				F5933F721AD4F4020088C70D /* MJRefreshConst.h */,
+				F5933F731AD4F4020088C70D /* MJRefreshConst.m */,
+				F5933F741AD4F4020088C70D /* MJRefreshFooter.h */,
+				F5933F751AD4F4020088C70D /* MJRefreshFooter.m */,
+				F5933F761AD4F4020088C70D /* MJRefreshGifFooter.h */,
+				F5933F771AD4F4020088C70D /* MJRefreshGifFooter.m */,
+				F5933F781AD4F4020088C70D /* MJRefreshGifHeader.h */,
+				F5933F791AD4F4020088C70D /* MJRefreshGifHeader.m */,
+				F5933F7A1AD4F4020088C70D /* MJRefreshHeader.h */,
+				F5933F7B1AD4F4020088C70D /* MJRefreshHeader.m */,
+				F5933F7C1AD4F4020088C70D /* MJRefreshLegendFooter.h */,
+				F5933F7D1AD4F4020088C70D /* MJRefreshLegendFooter.m */,
+				F5933F7E1AD4F4020088C70D /* MJRefreshLegendHeader.h */,
+				F5933F7F1AD4F4020088C70D /* MJRefreshLegendHeader.m */,
+				F5933F801AD4F4020088C70D /* UIScrollView+MJExtension.h */,
+				F5933F811AD4F4020088C70D /* UIScrollView+MJExtension.m */,
+				F5933F821AD4F4020088C70D /* UIScrollView+MJRefresh.h */,
+				F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */,
+				F5933F841AD4F4030088C70D /* UIView+MJExtension.h */,
+				F5933F851AD4F4030088C70D /* UIView+MJExtension.m */,
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
 		F59E75D61A4059D00028FBAF /* CoreDataComment */ = {
 			isa = PBXGroup;
 			children = (
@@ -9445,6 +9500,7 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				F5933F6D1AD4F4020088C70D /* MJRefresh */,
 				A4D43A9F1AC55A7100713295 /* VGParallaxHeader */,
 				F5D04C8B1AC1056F004DE412 /* MLEmoji */,
 				10389B611A3EC8E3001A785C /* Other.h */,
@@ -9480,7 +9536,6 @@
 				F5C677DB19D3BACE003987CC /* MJPhotoBrowser */,
 				F5F3C88819D2AA6000110C07 /* MJExtension */,
 				F5F3C86B19D2961600110C07 /* TQRichTextView */,
-				F5F3C84919D28EF100110C07 /* MJRefresh */,
 				F520ED8F19CFF84000E753E4 /* CTAssetsPickerController */,
 				F520ED8419CFC13C00E753E4 /* MBProgressHUD */,
 				F5188AA919CF017600FE9273 /* SDWebImage */,
@@ -9850,29 +9905,6 @@
 				F5EE26121A14D19600B0E836 /* UIButton+Badge.m */,
 			);
 			path = "UIBarButtonItem-Badge";
-			sourceTree = "<group>";
-		};
-		F5F3C84919D28EF100110C07 /* MJRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				F5F3C84A19D28EF100110C07 /* MJRefresh.bundle */,
-				F5F3C84B19D28EF100110C07 /* MJRefresh.h */,
-				F5F3C84C19D28EF100110C07 /* MJRefreshBaseView.h */,
-				F5F3C84D19D28EF100110C07 /* MJRefreshBaseView.m */,
-				F5F3C84E19D28EF100110C07 /* MJRefreshConst.h */,
-				F5F3C84F19D28EF100110C07 /* MJRefreshConst.m */,
-				F5F3C85019D28EF100110C07 /* MJRefreshFooterView.h */,
-				F5F3C85119D28EF100110C07 /* MJRefreshFooterView.m */,
-				F5F3C85219D28EF100110C07 /* MJRefreshHeaderView.h */,
-				F5F3C85319D28EF100110C07 /* MJRefreshHeaderView.m */,
-				F5F3C85419D28EF100110C07 /* UIScrollView+MJExtension.h */,
-				F5F3C85519D28EF100110C07 /* UIScrollView+MJExtension.m */,
-				F5F3C85619D28EF100110C07 /* UIScrollView+MJRefresh.h */,
-				F5F3C85719D28EF100110C07 /* UIScrollView+MJRefresh.m */,
-				F5F3C85819D28EF100110C07 /* UIView+MJExtension.h */,
-				F5F3C85919D28EF100110C07 /* UIView+MJExtension.m */,
-			);
-			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 		F5F3C86B19D2961600110C07 /* TQRichTextView */ = {
@@ -10331,6 +10363,7 @@
 				A49C7E691A70D42700F2AEC5 /* VoiceBtn_BlackHL@2x.png in Resources */,
 				A49C7E6B1A70D42700F2AEC5 /* tabbar_home_selected_prompt@2x.png in Resources */,
 				A409A21D1AC2E1AF0033A31D /* me_mycard_emaillogo@2x.png in Resources */,
+				F5933F891AD4F4030088C70D /* MJRefresh.bundle in Resources */,
 				A49C7E6D1A70D42700F2AEC5 /* circle_chat_sendfailed@2x.png in Resources */,
 				A4E731A61A8C972700980676 /* discovery_activity_detail_more@2x.png in Resources */,
 				A49C7E6F1A70D42700F2AEC5 /* discovery_tou@2x.png in Resources */,
@@ -10462,7 +10495,6 @@
 				A49C7EE51A70D42700F2AEC5 /* me_mywriten_repeat_no@2x.png in Resources */,
 				A49C7EE71A70D42700F2AEC5 /* home_picture_add_unselected@2x.png in Resources */,
 				A49C7EEA1A70D42700F2AEC5 /* repost_small@2x.png in Resources */,
-				A49C7EEB1A70D42700F2AEC5 /* MJRefresh.bundle in Resources */,
 				A49C7EEC1A70D42700F2AEC5 /* home_empty_button@2x.png in Resources */,
 				A49C7EF01A70D42700F2AEC5 /* city.db in Resources */,
 				A49C7EF31A70D42700F2AEC5 /* circle_chat_bg_blue@2x.png in Resources */,
@@ -10802,6 +10834,7 @@
 				F53DC4271A49192600F5F712 /* login_user@2x.png in Resources */,
 				A4C143C31A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				F53DC42A1A49192600F5F712 /* FriendsNewCell.xib in Resources */,
+				F5933F881AD4F4030088C70D /* MJRefresh.bundle in Resources */,
 				F53DC42B1A49192600F5F712 /* Icon-29@3x.png in Resources */,
 				A4C1437E1A4C0A6B00C9BAB5 /* section0_emotion14@2x.png in Resources */,
 				A4C144851A4C3EC600C9BAB5 /* chat_to_send@2x.png in Resources */,
@@ -11046,7 +11079,6 @@
 				A409A1941AC2E1AF0033A31D /* bluebuttton_pressed@2x.png in Resources */,
 				F53DC4D51A49192600F5F712 /* home_picture_add_unselected@2x.png in Resources */,
 				F53DC4D81A49192600F5F712 /* repost_small@2x.png in Resources */,
-				F53DC4D91A49192600F5F712 /* MJRefresh.bundle in Resources */,
 				F53DC4DA1A49192600F5F712 /* home_empty_button@2x.png in Resources */,
 				F53DC4DF1A49192600F5F712 /* city.db in Resources */,
 				A4C1448B1A4C3EC600C9BAB5 /* circle_chat_bg_blue@2x.png in Resources */,
@@ -11398,6 +11430,7 @@
 				A409A2661AC2E1AF0033A31D /* me_mywriten_with.@2xpng.png in Resources */,
 				F5CBE4B71AC4351A00F4C884 /* Expression_83@2x.png in Resources */,
 				F5CBE4231AC4351A00F4C884 /* Expression_46@2x.png in Resources */,
+				F5933F861AD4F4030088C70D /* MJRefresh.bundle in Resources */,
 				A409A2AA1AC2E1AF0033A31D /* remind_big_nostring@2x.png in Resources */,
 				F557731F1A5AB04200693279 /* login_guide2@2x.png in Resources */,
 				A4C770BA1A806A48005ABC7F /* discovery_xiangmu_detail_link@2x.png in Resources */,
@@ -11608,7 +11641,6 @@
 				F55773121A5AA3E200693279 /* search_bg_pre@2x.png in Resources */,
 				F534DB6D1A51893400B6A725 /* InvestStagePlist.plist in Resources */,
 				F5CBE4F31AC4351A00F4C884 /* Expression_98@2x.png in Resources */,
-				F5664B8B1A2AFD56008A5830 /* MJRefresh.bundle in Resources */,
 				F5664B8C1A2AFD56008A5830 /* home_empty_button@2x.png in Resources */,
 				A4C143791A4C0A6B00C9BAB5 /* section0_emotion13@2x.png in Resources */,
 				A4C144511A4C0A6B00C9BAB5 /* RecordingSignal002@2x.png in Resources */,
@@ -11947,6 +11979,7 @@
 				F5664D9D1A2AFDD5008A5830 /* login_user@2x.png in Resources */,
 				A4C143C21A4C0A6B00C9BAB5 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				F5664DA01A2AFDD5008A5830 /* FriendsNewCell.xib in Resources */,
+				F5933F871AD4F4030088C70D /* MJRefresh.bundle in Resources */,
 				F5664DA11A2AFDD5008A5830 /* Icon-29@3x.png in Resources */,
 				A4C1437D1A4C0A6B00C9BAB5 /* section0_emotion14@2x.png in Resources */,
 				A4C144841A4C3EC600C9BAB5 /* chat_to_send@2x.png in Resources */,
@@ -12191,7 +12224,6 @@
 				A409A1931AC2E1AF0033A31D /* bluebuttton_pressed@2x.png in Resources */,
 				F5664E421A2AFDD5008A5830 /* home_picture_add_unselected@2x.png in Resources */,
 				F569A8021A31B2FE00B677B0 /* repost_small@2x.png in Resources */,
-				F5664E451A2AFDD5008A5830 /* MJRefresh.bundle in Resources */,
 				F5664E461A2AFDD5008A5830 /* home_empty_button@2x.png in Resources */,
 				F5664E4B1A2AFDD5008A5830 /* city.db in Resources */,
 				A4C1448A1A4C3EC600C9BAB5 /* circle_chat_bg_blue@2x.png in Resources */,
@@ -12425,6 +12457,7 @@
 				A49C7BD21A70D42700F2AEC5 /* UIImage+WebP.m in Sources */,
 				A4E7319B1A8C8C8600980676 /* ActivityCustomViewCell.m in Sources */,
 				A49C7BD31A70D42700F2AEC5 /* NewFriendUser.m in Sources */,
+				F5933F911AD4F4030088C70D /* MJRefreshConst.m in Sources */,
 				A49C7BD41A70D42700F2AEC5 /* MeSttingCell.m in Sources */,
 				A49C7BD61A70D42700F2AEC5 /* HBVLinkedTextView.m in Sources */,
 				A49C7BD71A70D42700F2AEC5 /* NSMutableAttributedString+M80.m in Sources */,
@@ -12442,7 +12475,6 @@
 				A49C7BE11A70D42700F2AEC5 /* AddImageCollectionCell.m in Sources */,
 				A49C7BE31A70D42700F2AEC5 /* PinyinHelper.m in Sources */,
 				A49C7BE41A70D42700F2AEC5 /* ICompanyResult.m in Sources */,
-				A49C7BE51A70D42700F2AEC5 /* MJRefreshHeaderView.m in Sources */,
 				F5353E731A73AB8600515BDD /* LocationTool.m in Sources */,
 				A49C7BE61A70D42700F2AEC5 /* NeedAddUser.m in Sources */,
 				A49C7BE71A70D42700F2AEC5 /* MJPhotoProgressView.m in Sources */,
@@ -12526,7 +12558,6 @@
 				A49C7C2A1A70D42700F2AEC5 /* WLMessageSpecialView.m in Sources */,
 				A49C7C2B1A70D42700F2AEC5 /* ShareEngine.m in Sources */,
 				A49C7C2C1A70D42700F2AEC5 /* HttpTool.m in Sources */,
-				A49C7C2D1A70D42700F2AEC5 /* MJRefreshConst.m in Sources */,
 				A49C7C2E1A70D42700F2AEC5 /* AddWorkOrEducationController.m in Sources */,
 				A49C7C2F1A70D42700F2AEC5 /* CommentHomeViewFrame.m in Sources */,
 				A49C7C301A70D42700F2AEC5 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -12554,6 +12585,7 @@
 				A49C7C421A70D42700F2AEC5 /* InvestIndustry.m in Sources */,
 				A49C7C431A70D42700F2AEC5 /* WLLocationHelper.m in Sources */,
 				F56C305D1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F5933F8D1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				A49C7C441A70D42700F2AEC5 /* UILabel+AttributedLabel.m in Sources */,
 				A49C7C451A70D42700F2AEC5 /* MagicalRecord+Actions.m in Sources */,
 				A49C805F1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
@@ -12602,7 +12634,6 @@
 				A49C7C681A70D42700F2AEC5 /* WLBasicTrends.m in Sources */,
 				A49FF3C11AC2671B009982E2 /* UserInfoView.m in Sources */,
 				A49C7C691A70D42700F2AEC5 /* TQRichTextURLRun.m in Sources */,
-				A49C7C6A1A70D42700F2AEC5 /* UIScrollView+MJRefresh.m in Sources */,
 				A49C7C6B1A70D42700F2AEC5 /* MessageCell.m in Sources */,
 				A49C7C6C1A70D42700F2AEC5 /* UserCardController.m in Sources */,
 				A49C7C6D1A70D42700F2AEC5 /* MeViewController.m in Sources */,
@@ -12633,7 +12664,6 @@
 				A49C7C851A70D42700F2AEC5 /* BadgeBaseCell.m in Sources */,
 				A49C7C861A70D42700F2AEC5 /* BindingPhoneController.m in Sources */,
 				A49C7C871A70D42700F2AEC5 /* BaseModel.m in Sources */,
-				A49C7C881A70D42700F2AEC5 /* UIView+MJExtension.m in Sources */,
 				A49C7C891A70D42700F2AEC5 /* InvestItemM.m in Sources */,
 				A49C7C8A1A70D42700F2AEC5 /* ALAsset+isEqual.m in Sources */,
 				A49C7C8B1A70D42700F2AEC5 /* NSObject+MagicalDataImport.m in Sources */,
@@ -12671,6 +12701,7 @@
 				A49C7CA81A70D42700F2AEC5 /* DTTimePeriodChain.m in Sources */,
 				A49C7CA91A70D42700F2AEC5 /* InvestorUserM.m in Sources */,
 				A49C7CAA1A70D42700F2AEC5 /* WLMessageTableViewCell.m in Sources */,
+				F5933FB11AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */,
 				A4743E981A7F619D00645998 /* ProjectDetailView.m in Sources */,
 				A49C7CAB1A70D42700F2AEC5 /* UIView+Extend.m in Sources */,
 				F55078811A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
@@ -12742,7 +12773,6 @@
 				A49C7CE21A70D42700F2AEC5 /* CityLocationController.m in Sources */,
 				F55EB1111ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D71AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
-				A49C7CE31A70D42700F2AEC5 /* MJRefreshFooterView.m in Sources */,
 				A49C7CE41A70D42700F2AEC5 /* NSString+XHMD5.m in Sources */,
 				A49C7CE61A70D42700F2AEC5 /* MessageController.m in Sources */,
 				A4C770FB1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
@@ -12755,6 +12785,7 @@
 				A49C7CEB1A70D42700F2AEC5 /* AFURLConnectionOperation.m in Sources */,
 				F55078D21A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				A49C7CEC1A70D42700F2AEC5 /* DaiDodgeKeyboardObjects.m in Sources */,
+				F5933FAD1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */,
 				A49C7CED1A70D42700F2AEC5 /* WLShareMenuItem.m in Sources */,
 				A49C7CEE1A70D42700F2AEC5 /* WithOb.m in Sources */,
 				A49C7CEF1A70D42700F2AEC5 /* NSObject+MJCoding.m in Sources */,
@@ -12770,6 +12801,7 @@
 				F55078BE1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				F5933FA91AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A49C7CFA1A70D42700F2AEC5 /* ActivityDetailViewController.m in Sources */,
 				A472DBE21A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -12778,6 +12810,8 @@
 				A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */,
 				A49C7CFD1A70D42700F2AEC5 /* DTTimePeriodCollection.m in Sources */,
 				A49C7CFE1A70D42700F2AEC5 /* CALayer+XibConfiguration.m in Sources */,
+				F5933FA51AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */,
+				F5933F951AD4F4030088C70D /* MJRefreshFooter.m in Sources */,
 				A4D43AB71AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C861AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */,
@@ -12786,7 +12820,6 @@
 				A49C7D021A70D42700F2AEC5 /* ZBFaceView.m in Sources */,
 				A49C7D031A70D42700F2AEC5 /* CTAssetsGroupViewController.m in Sources */,
 				A49C7D041A70D42700F2AEC5 /* CTAssetsViewCell.m in Sources */,
-				A49C7D051A70D42700F2AEC5 /* UIScrollView+MJExtension.m in Sources */,
 				A49C7D061A70D42700F2AEC5 /* MJPhotoBrowser.m in Sources */,
 				A49C7D071A70D42700F2AEC5 /* ForwardPublishView.m in Sources */,
 				A489E7CC1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
@@ -12800,6 +12833,7 @@
 				A49C7D0C1A70D42700F2AEC5 /* NSString+MessageInputView.m in Sources */,
 				A49C7D0D1A70D42700F2AEC5 /* MyFriendsController.m in Sources */,
 				A49C7D0E1A70D42700F2AEC5 /* UIButton+WebCache.m in Sources */,
+				F5933FB51AD4F4030088C70D /* UIView+MJExtension.m in Sources */,
 				A49C7D0F1A70D42700F2AEC5 /* AddFriendTypeListViewController.m in Sources */,
 				A49C7D101A70D42700F2AEC5 /* CommentCell.m in Sources */,
 				A49C7D111A70D42700F2AEC5 /* NSNumber+MagicalDataImport.m in Sources */,
@@ -12812,6 +12846,7 @@
 				A49C7D151A70D42700F2AEC5 /* ALAsset+assetType.m in Sources */,
 				A4D43AB31AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				A49C7D161A70D42700F2AEC5 /* MeinfoCell.m in Sources */,
+				F5933F991AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A49C7D171A70D42700F2AEC5 /* SEImageCache.m in Sources */,
 				A49C7D181A70D42700F2AEC5 /* CommentHeadView.m in Sources */,
 				A49C7D191A70D42700F2AEC5 /* BaseTableViewCell.m in Sources */,
@@ -12826,6 +12861,7 @@
 				A489E7BA1AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779EA1A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A49C7D1F1A70D42700F2AEC5 /* NewFriendViewController.m in Sources */,
+				F5933F9D1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */,
 				A47F1B1E1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
 				A489E7C11AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F57F31DD1AA71A4E00B8EF72 /* ListItem.m in Sources */,
@@ -12880,7 +12916,6 @@
 				A46FAE531A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80671A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */,
-				A49C7D4A1A70D42700F2AEC5 /* MJRefreshBaseView.m in Sources */,
 				A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */,
 				A49C7D4C1A70D42700F2AEC5 /* XHWaterDropRefresh.m in Sources */,
 				A49C7D4D1A70D42700F2AEC5 /* BSearchFriendsController.m in Sources */,
@@ -12914,6 +12949,7 @@
 				A49C7D631A70D42700F2AEC5 /* DTError.m in Sources */,
 				F500B1C11AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A49C7D641A70D42700F2AEC5 /* XHHTTPClient.m in Sources */,
+				F5933FA11AD4F4030088C70D /* MJRefreshHeader.m in Sources */,
 				A49C7D661A70D42700F2AEC5 /* WLMessageTableViewController.m in Sources */,
 				A49C7D671A70D42700F2AEC5 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				A49C7D681A70D42700F2AEC5 /* UIColor+HBVHarmonies.m in Sources */,
@@ -12949,6 +12985,7 @@
 				F53DC2A71A49192600F5F712 /* UIImage+WebP.m in Sources */,
 				A4E7319A1A8C8C8600980676 /* ActivityCustomViewCell.m in Sources */,
 				F53D4E491A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
+				F5933F901AD4F4030088C70D /* MJRefreshConst.m in Sources */,
 				F53DC2A81A49192600F5F712 /* MeSttingCell.m in Sources */,
 				F53DC2A91A49192600F5F712 /* HBVLinkedTextView.m in Sources */,
 				F53DC2AA1A49192600F5F712 /* NSMutableAttributedString+M80.m in Sources */,
@@ -12966,7 +13003,6 @@
 				F53DC2B11A49192600F5F712 /* AddImageCollectionCell.m in Sources */,
 				F53DC2B21A49192600F5F712 /* PinyinHelper.m in Sources */,
 				F53DC2B41A49192600F5F712 /* ICompanyResult.m in Sources */,
-				F53DC2B51A49192600F5F712 /* MJRefreshHeaderView.m in Sources */,
 				F5353E721A73AB8600515BDD /* LocationTool.m in Sources */,
 				A482A2491A5FD16F004AABE5 /* NeedAddUser.m in Sources */,
 				F53DC2B61A49192600F5F712 /* MJPhotoProgressView.m in Sources */,
@@ -13050,7 +13086,6 @@
 				A437CEF71A541BF300B54E68 /* WLMessageSpecialView.m in Sources */,
 				F53DC2DF1A49192600F5F712 /* ShareEngine.m in Sources */,
 				F53DC2E01A49192600F5F712 /* HttpTool.m in Sources */,
-				F53DC2E11A49192600F5F712 /* MJRefreshConst.m in Sources */,
 				F53DC2E21A49192600F5F712 /* AddWorkOrEducationController.m in Sources */,
 				F53DC2E31A49192600F5F712 /* CommentHomeViewFrame.m in Sources */,
 				A4A2EAE11A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -13078,6 +13113,7 @@
 				F534DB5C1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				A41CE1E81A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F56C305C1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F5933F8C1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F53328FC1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB1A1A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
 				A49C805E1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
@@ -13126,7 +13162,6 @@
 				F53DC3031A49192600F5F712 /* WLBasicTrends.m in Sources */,
 				A49FF3C01AC2671B009982E2 /* UserInfoView.m in Sources */,
 				F53DC3041A49192600F5F712 /* TQRichTextURLRun.m in Sources */,
-				F53DC3051A49192600F5F712 /* UIScrollView+MJRefresh.m in Sources */,
 				F53DC3061A49192600F5F712 /* MessageCell.m in Sources */,
 				F53DC3071A49192600F5F712 /* UserCardController.m in Sources */,
 				F53DC3081A49192600F5F712 /* MeViewController.m in Sources */,
@@ -13157,7 +13192,6 @@
 				F557863D1A63749500630A46 /* BadgeBaseCell.m in Sources */,
 				F58CA9701A5CE3CD00988A61 /* BindingPhoneController.m in Sources */,
 				F53DC3171A49192600F5F712 /* BaseModel.m in Sources */,
-				F53DC3181A49192600F5F712 /* UIView+MJExtension.m in Sources */,
 				F5C779761A53935F0098BC29 /* InvestItemM.m in Sources */,
 				F53DC3191A49192600F5F712 /* ALAsset+isEqual.m in Sources */,
 				A4A2EAEA1A6CF7C8006ADA55 /* NSObject+MagicalDataImport.m in Sources */,
@@ -13195,6 +13229,7 @@
 				A48CA6A91A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */,
 				F53DC32C1A49192600F5F712 /* InvestorUserM.m in Sources */,
 				A4C1409D1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
+				F5933FB01AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */,
 				A4743E971A7F619D00645998 /* ProjectDetailView.m in Sources */,
 				F53DC32D1A49192600F5F712 /* UIView+Extend.m in Sources */,
 				F55078801A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
@@ -13266,7 +13301,6 @@
 				F53DC3571A49192600F5F712 /* CityLocationController.m in Sources */,
 				F55EB1101ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D61AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
-				F53DC3581A49192600F5F712 /* MJRefreshFooterView.m in Sources */,
 				A4C1406D1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
 				F53DC3591A49192600F5F712 /* MessageController.m in Sources */,
 				A4C770FA1A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
@@ -13279,6 +13313,7 @@
 				F53DC35D1A49192600F5F712 /* AFURLConnectionOperation.m in Sources */,
 				F55078D11A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A21A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
+				F5933FAC1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */,
 				A41CE1B91A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
 				F53DC35E1A49192600F5F712 /* WithOb.m in Sources */,
 				F53DC35F1A49192600F5F712 /* NSObject+MJCoding.m in Sources */,
@@ -13294,6 +13329,7 @@
 				F55078BD1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				F5933FA81AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -13302,6 +13338,8 @@
 				F53DC3661A49192600F5F712 /* MJIvar.m in Sources */,
 				A48CA6AC1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94E1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
+				F5933FA41AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */,
+				F5933F941AD4F4030088C70D /* MJRefreshFooter.m in Sources */,
 				A4D43AB61AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C851AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F58CA9801A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
@@ -13310,7 +13348,6 @@
 				F53DC3691A49192600F5F712 /* ZBFaceView.m in Sources */,
 				F53DC36A1A49192600F5F712 /* CTAssetsGroupViewController.m in Sources */,
 				F53DC36B1A49192600F5F712 /* CTAssetsViewCell.m in Sources */,
-				F53DC36C1A49192600F5F712 /* UIScrollView+MJExtension.m in Sources */,
 				F53DC36D1A49192600F5F712 /* MJPhotoBrowser.m in Sources */,
 				F53DC36E1A49192600F5F712 /* ForwardPublishView.m in Sources */,
 				A489E7CB1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
@@ -13324,6 +13361,7 @@
 				A4C140671A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F53DC3721A49192600F5F712 /* MyFriendsController.m in Sources */,
 				F53DC3731A49192600F5F712 /* UIButton+WebCache.m in Sources */,
+				F5933FB41AD4F4030088C70D /* UIView+MJExtension.m in Sources */,
 				A47C5F561A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F53DC3741A49192600F5F712 /* CommentCell.m in Sources */,
 				A4A2EAE71A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
@@ -13336,6 +13374,7 @@
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				A4D43AB21AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
+				F5933F981AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F53DC3781A49192600F5F712 /* CommentHeadView.m in Sources */,
 				A403561C1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
@@ -13350,6 +13389,7 @@
 				A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779E91A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356171A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
+				F5933F9C1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */,
 				A47F1B1D1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
 				A489E7C01AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F57F31DC1AA71A4E00B8EF72 /* ListItem.m in Sources */,
@@ -13404,7 +13444,6 @@
 				A46FAE521A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80661A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
-				F53DC3951A49192600F5F712 /* MJRefreshBaseView.m in Sources */,
 				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141791A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				F58CA9531A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -13438,6 +13477,7 @@
 				A48CA6A31A4D044B009EBD04 /* DTError.m in Sources */,
 				F500B1C01AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A4C140BC1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
+				F5933FA01AD4F4030088C70D /* MJRefreshHeader.m in Sources */,
 				A4C1408E1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
 				A4A2EB291A6CF7C8006ADA55 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				F53DC3A71A49192600F5F712 /* UIColor+HBVHarmonies.m in Sources */,
@@ -13473,6 +13513,7 @@
 				F56649851A2AFD56008A5830 /* MeSttingCell.m in Sources */,
 				A4E731981A8C8C8600980676 /* ActivityCustomViewCell.m in Sources */,
 				A4C1411A1A4BEF5700C9BAB5 /* MLLetterIndexNavigationView.m in Sources */,
+				F5933F8E1AD4F4030088C70D /* MJRefreshConst.m in Sources */,
 				F5C7796A1A5392A00098BC29 /* IIMeInvestAuthModel.m in Sources */,
 				F56649861A2AFD56008A5830 /* HBVLinkedTextView.m in Sources */,
 				F56649871A2AFD56008A5830 /* NSMutableAttributedString+M80.m in Sources */,
@@ -13490,7 +13531,6 @@
 				F566498E1A2AFD56008A5830 /* AddImageCollectionCell.m in Sources */,
 				F566498F1A2AFD56008A5830 /* PinyinHelper.m in Sources */,
 				A4C140B41A4BEF0E00C9BAB5 /* XHCacheManager.m in Sources */,
-				F56649911A2AFD56008A5830 /* MJRefreshHeaderView.m in Sources */,
 				A4C8E9471A4ACA1A003A5A72 /* ChatMessageViewCell.m in Sources */,
 				A4C1446E1A4C2D3B00C9BAB5 /* WLMessageBubbleHelper.m in Sources */,
 				F5353E701A73AB8600515BDD /* LocationTool.m in Sources */,
@@ -13582,7 +13622,6 @@
 				F56649B91A2AFD56008A5830 /* HttpTool.m in Sources */,
 				F59E76131A4071330028FBAF /* CompanyModel.m in Sources */,
 				A4A2EADF1A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
-				F56649BA1A2AFD56008A5830 /* MJRefreshConst.m in Sources */,
 				F56649BB1A2AFD56008A5830 /* AddWorkOrEducationController.m in Sources */,
 				F52F966E1A56EA0A00BAA77B /* InvestInfoListVC.m in Sources */,
 				A4A2EB121A6CF7C8006ADA55 /* NSPersistentStore+MagicalRecord.m in Sources */,
@@ -13602,6 +13641,7 @@
 				A4C141141A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
 				F56649C51A2AFD56008A5830 /* SDWebImageDownloaderOperation.m in Sources */,
 				F56C305A1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F5933F8A1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F56649C61A2AFD56008A5830 /* NotstringView.m in Sources */,
 				A4C1407A1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				F56649C71A2AFD56008A5830 /* PublishStatusController.m in Sources */,
@@ -13651,7 +13691,6 @@
 				A49FF3BE1AC2671B009982E2 /* UserInfoView.m in Sources */,
 				F56649DA1A2AFD56008A5830 /* TQRichTextURLRun.m in Sources */,
 				A4272FC71A4E8AAD0019E440 /* ChatMessage.m in Sources */,
-				F56649DB1A2AFD56008A5830 /* UIScrollView+MJRefresh.m in Sources */,
 				F56649DC1A2AFD56008A5830 /* MessageCell.m in Sources */,
 				F56649DD1A2AFD56008A5830 /* UserCardController.m in Sources */,
 				F56649DE1A2AFD56008A5830 /* MeViewController.m in Sources */,
@@ -13675,7 +13714,6 @@
 				F56649EB1A2AFD56008A5830 /* WLPhotoView.m in Sources */,
 				F55078B71A7F5BE9009CE4F7 /* JKAssetsGroupCell.m in Sources */,
 				A460E4161ABC150B009DCF63 /* CardAlertView.m in Sources */,
-				F56649EC1A2AFD56008A5830 /* UIView+MJExtension.m in Sources */,
 				A4A2EB241A6CF7C8006ADA55 /* MagicalRecord+Setup.m in Sources */,
 				F56649ED1A2AFD56008A5830 /* ALAsset+isEqual.m in Sources */,
 				F59E760B1A405D170028FBAF /* weLian.xcdatamodeld in Sources */,
@@ -13719,6 +13757,7 @@
 				A4C141771A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				F5664A001A2AFD56008A5830 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				A4C140681A4BEA8500C9BAB5 /* NSString+XHDiskSizeTransfrom.m in Sources */,
+				F5933FAE1AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */,
 				F59E75F81A4059D00028FBAF /* DKArrayQuery.m in Sources */,
 				A4743E951A7F619D00645998 /* ProjectDetailView.m in Sources */,
 				A4C1416E1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
@@ -13787,7 +13826,6 @@
 				A4C1417C1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
 				F5664A211A2AFD56008A5830 /* CityLocationController.m in Sources */,
 				A4A2EB001A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
-				F5664A221A2AFD56008A5830 /* MJRefreshFooterView.m in Sources */,
 				F55EB10E1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D41AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				F5664A231A2AFD56008A5830 /* MessageController.m in Sources */,
@@ -13803,6 +13841,7 @@
 				F55078CF1A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A01A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
 				A41CE1B71A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
+				F5933FAA1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */,
 				F5A3F8F61A41855900F06DDD /* ISchoolResult.m in Sources */,
 				F5664A271A2AFD56008A5830 /* AFURLConnectionOperation.m in Sources */,
 				F5664A281A2AFD56008A5830 /* WithOb.m in Sources */,
@@ -13818,6 +13857,7 @@
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
+				F5933FA61AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				F5664A2F1A2AFD56008A5830 /* MessageFrameModel.m in Sources */,
@@ -13826,6 +13866,8 @@
 				F5664A301A2AFD56008A5830 /* MJIvar.m in Sources */,
 				F53D4E551A4AB62600CA06C8 /* LoginUserModel.m in Sources */,
 				F58CA97E1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
+				F5933FA21AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */,
+				F5933F921AD4F4030088C70D /* MJRefreshFooter.m in Sources */,
 				A4D43AB41AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C831AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F55078B31A7F5BE9009CE4F7 /* JKAssetsCollectionFooterView.m in Sources */,
@@ -13840,7 +13882,6 @@
 				F5664A341A2AFD56008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F55078DB1A7F5BE9009CE4F7 /* PhotoAlbumManager.m in Sources */,
 				F5664A351A2AFD56008A5830 /* CTAssetsViewCell.m in Sources */,
-				F5664A361A2AFD56008A5830 /* UIScrollView+MJExtension.m in Sources */,
 				A4D43AAC1AC55A7200713295 /* ALView+PureLayout.m in Sources */,
 				F5664A381A2AFD56008A5830 /* MJPhotoBrowser.m in Sources */,
 				F5664A391A2AFD56008A5830 /* ForwardPublishView.m in Sources */,
@@ -13848,6 +13889,7 @@
 				F5664A3B1A2AFD56008A5830 /* FriendsFriendModel.m in Sources */,
 				A47C5F541A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664A3C1A2AFD56008A5830 /* SignInPhoneController.m in Sources */,
+				F5933FB21AD4F4030088C70D /* UIView+MJExtension.m in Sources */,
 				A4A2EAE51A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
 				A4C140B71A4BEF0E00C9BAB5 /* XHFileAttribute.m in Sources */,
 				A47F1B361A7F54E300CB4D9F /* ProjectInfoView.m in Sources */,
@@ -13860,6 +13902,7 @@
 				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				A4D43AB01AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5664A401A2AFD56008A5830 /* WLStatusM.m in Sources */,
+				F5933F961AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A403561A1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F5664A411A2AFD56008A5830 /* ALAsset+assetType.m in Sources */,
 				F5664A421A2AFD56008A5830 /* MeinfoCell.m in Sources */,
@@ -13874,6 +13917,7 @@
 				A40356151A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
 				A47F1B1B1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
 				A489E7BE1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
+				F5933F9A1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */,
 				F57F31DA1AA71A4E00B8EF72 /* ListItem.m in Sources */,
 				F5664A441A2AFD56008A5830 /* main.m in Sources */,
 				F5664A451A2AFD56008A5830 /* AFURLRequestSerialization.m in Sources */,
@@ -13927,7 +13971,6 @@
 				A46FAE501A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80641A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
-				F5664A5D1A2AFD56008A5830 /* MJRefreshBaseView.m in Sources */,
 				F59E75F41A4059D00028FBAF /* NSManagedObject+e0571.m in Sources */,
 				F5664A5E1A2AFD56008A5830 /* UIImage+GIF.m in Sources */,
 				F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -13962,6 +14005,7 @@
 				F5B88FE11A35793200290B4F /* UIColor+_6jinzhi.m in Sources */,
 				F5664A6E1A2AFD56008A5830 /* UIColor+HBVHarmonies.m in Sources */,
 				10389B681A3F0740001A785C /* NSString+Extend.m in Sources */,
+				F5933F9E1AD4F4030088C70D /* MJRefreshHeader.m in Sources */,
 				A4A2EB271A6CF7C8006ADA55 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				F53D4DFC1A4A771300CA06C8 /* BaseUser.m in Sources */,
 				A4A2EB151A6CF7C8006ADA55 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
@@ -13997,6 +14041,7 @@
 				F5664C3E1A2AFDD5008A5830 /* UIImage+WebP.m in Sources */,
 				A4E731991A8C8C8600980676 /* ActivityCustomViewCell.m in Sources */,
 				F53D4E481A4AABE800CA06C8 /* NewFriendUser.m in Sources */,
+				F5933F8F1AD4F4030088C70D /* MJRefreshConst.m in Sources */,
 				F5664C3F1A2AFDD5008A5830 /* MeSttingCell.m in Sources */,
 				F5664C401A2AFDD5008A5830 /* HBVLinkedTextView.m in Sources */,
 				F5664C411A2AFDD5008A5830 /* NSMutableAttributedString+M80.m in Sources */,
@@ -14014,7 +14059,6 @@
 				F5664C481A2AFDD5008A5830 /* AddImageCollectionCell.m in Sources */,
 				F5664C491A2AFDD5008A5830 /* PinyinHelper.m in Sources */,
 				F59E76201A411E4C0028FBAF /* ICompanyResult.m in Sources */,
-				F5664C4B1A2AFDD5008A5830 /* MJRefreshHeaderView.m in Sources */,
 				F5353E711A73AB8600515BDD /* LocationTool.m in Sources */,
 				A482A2481A5FD16F004AABE5 /* NeedAddUser.m in Sources */,
 				F5664C4C1A2AFDD5008A5830 /* MJPhotoProgressView.m in Sources */,
@@ -14098,7 +14142,6 @@
 				A437CEF61A541BF300B54E68 /* WLMessageSpecialView.m in Sources */,
 				F5664C721A2AFDD5008A5830 /* ShareEngine.m in Sources */,
 				F5664C731A2AFDD5008A5830 /* HttpTool.m in Sources */,
-				F5664C741A2AFDD5008A5830 /* MJRefreshConst.m in Sources */,
 				F5664C751A2AFDD5008A5830 /* AddWorkOrEducationController.m in Sources */,
 				F5664C761A2AFDD5008A5830 /* CommentHomeViewFrame.m in Sources */,
 				A4A2EAE01A6CF7C8006ADA55 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -14126,6 +14169,7 @@
 				F534DB5B1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				A41CE1E71A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F56C305B1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F5933F8B1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F53328FB1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB191A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
 				A49C805D1A71041000F2AEC5 /* openssl_wrapper.m in Sources */,
@@ -14174,7 +14218,6 @@
 				F5664C931A2AFDD5008A5830 /* WLBasicTrends.m in Sources */,
 				A49FF3BF1AC2671B009982E2 /* UserInfoView.m in Sources */,
 				F5664C941A2AFDD5008A5830 /* TQRichTextURLRun.m in Sources */,
-				F5664C951A2AFDD5008A5830 /* UIScrollView+MJRefresh.m in Sources */,
 				F5664C961A2AFDD5008A5830 /* MessageCell.m in Sources */,
 				F5664C971A2AFDD5008A5830 /* UserCardController.m in Sources */,
 				F5664C981A2AFDD5008A5830 /* MeViewController.m in Sources */,
@@ -14205,7 +14248,6 @@
 				F557863C1A63749500630A46 /* BadgeBaseCell.m in Sources */,
 				F58CA96F1A5CE3CD00988A61 /* BindingPhoneController.m in Sources */,
 				F59E75F11A4059D00028FBAF /* BaseModel.m in Sources */,
-				F5664CA61A2AFDD5008A5830 /* UIView+MJExtension.m in Sources */,
 				F5C779751A53935F0098BC29 /* InvestItemM.m in Sources */,
 				F5664CA71A2AFDD5008A5830 /* ALAsset+isEqual.m in Sources */,
 				A4A2EAE91A6CF7C8006ADA55 /* NSObject+MagicalDataImport.m in Sources */,
@@ -14243,6 +14285,7 @@
 				A48CA6A81A4D044B009EBD04 /* DTTimePeriodChain.m in Sources */,
 				F5664CB51A2AFDD5008A5830 /* InvestorUserM.m in Sources */,
 				A4C1409C1A4BEA8500C9BAB5 /* WLMessageTableViewCell.m in Sources */,
+				F5933FAF1AD4F4030088C70D /* UIScrollView+MJRefresh.m in Sources */,
 				A4743E961A7F619D00645998 /* ProjectDetailView.m in Sources */,
 				10389B601A3EC789001A785C /* UIView+Extend.m in Sources */,
 				F550787F1A7F2BE0009CE4F7 /* CreateProjectFootView.m in Sources */,
@@ -14314,7 +14357,6 @@
 				F5664CDB1A2AFDD5008A5830 /* CityLocationController.m in Sources */,
 				F55EB10F1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D51AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
-				F5664CDC1A2AFDD5008A5830 /* MJRefreshFooterView.m in Sources */,
 				A4C1406C1A4BEA8500C9BAB5 /* NSString+XHMD5.m in Sources */,
 				F5664CDD1A2AFDD5008A5830 /* MessageController.m in Sources */,
 				A4C770F91A80BC9A005ABC7F /* ProjectFavorteItemView.m in Sources */,
@@ -14327,6 +14369,7 @@
 				F5664CE11A2AFDD5008A5830 /* AFURLConnectionOperation.m in Sources */,
 				F55078D01A7F5BE9009CE4F7 /* JKPhotoBrowserCell.m in Sources */,
 				F58CA9A11A5D4F9100988A61 /* DaiDodgeKeyboardObjects.m in Sources */,
+				F5933FAB1AD4F4030088C70D /* UIScrollView+MJExtension.m in Sources */,
 				A41CE1B81A6F8EA0004F17E7 /* WLShareMenuItem.m in Sources */,
 				F5664CE21A2AFDD5008A5830 /* WithOb.m in Sources */,
 				F5664CE31A2AFDD5008A5830 /* NSObject+MJCoding.m in Sources */,
@@ -14342,6 +14385,7 @@
 				F55078BC1A7F5BE9009CE4F7 /* JKAssetsGroupsView.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				F5933FA71AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -14350,6 +14394,8 @@
 				F5664CEA1A2AFDD5008A5830 /* MJIvar.m in Sources */,
 				A48CA6AB1A4D044B009EBD04 /* DTTimePeriodCollection.m in Sources */,
 				A4C8E94D1A4ACECC003A5A72 /* CALayer+XibConfiguration.m in Sources */,
+				F5933FA31AD4F4030088C70D /* MJRefreshLegendFooter.m in Sources */,
+				F5933F931AD4F4030088C70D /* MJRefreshFooter.m in Sources */,
 				A4D43AB51AC55A7200713295 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				F5D04C841AC104A6004DE412 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				F58CA97F1A5CFCB800988A61 /* CompotAndPostController.m in Sources */,
@@ -14358,7 +14404,6 @@
 				F5664CED1A2AFDD5008A5830 /* ZBFaceView.m in Sources */,
 				F5664CEE1A2AFDD5008A5830 /* CTAssetsGroupViewController.m in Sources */,
 				F5664CEF1A2AFDD5008A5830 /* CTAssetsViewCell.m in Sources */,
-				F5664CF01A2AFDD5008A5830 /* UIScrollView+MJExtension.m in Sources */,
 				F5664CF21A2AFDD5008A5830 /* MJPhotoBrowser.m in Sources */,
 				F5664CF31A2AFDD5008A5830 /* ForwardPublishView.m in Sources */,
 				A489E7CA1AA587ED00F7BE9F /* IActivityInfo.m in Sources */,
@@ -14372,6 +14417,7 @@
 				A4C140661A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F5664CF71A2AFDD5008A5830 /* MyFriendsController.m in Sources */,
 				F5664CF81A2AFDD5008A5830 /* UIButton+WebCache.m in Sources */,
+				F5933FB31AD4F4030088C70D /* UIView+MJExtension.m in Sources */,
 				A47C5F551A5E663100E63737 /* AddFriendTypeListViewController.m in Sources */,
 				F5664CF91A2AFDD5008A5830 /* CommentCell.m in Sources */,
 				A4A2EAE61A6CF7C8006ADA55 /* NSNumber+MagicalDataImport.m in Sources */,
@@ -14384,6 +14430,7 @@
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				A4D43AB11AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
+				F5933F971AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				F5664CFD1A2AFDD5008A5830 /* CommentHeadView.m in Sources */,
 				A403561B1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
@@ -14398,6 +14445,7 @@
 				A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */,
 				A44779E81A76393B0085AE3C /* NSFileManager+DoNotBackup.m in Sources */,
 				A40356161A5D4F61006AE52C /* NewFriendViewController.m in Sources */,
+				F5933F9B1AD4F4030088C70D /* MJRefreshGifHeader.m in Sources */,
 				A47F1B1C1A7F215E00CB4D9F /* ProjectListViewController.m in Sources */,
 				A489E7BF1AA1A54400F7BE9F /* MyActivityViewController.m in Sources */,
 				F57F31DB1AA71A4E00B8EF72 /* ListItem.m in Sources */,
@@ -14452,7 +14500,6 @@
 				A46FAE511A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A49C80651A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
 				A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
-				F5664D171A2AFDD5008A5830 /* MJRefreshBaseView.m in Sources */,
 				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141781A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				F58CA9521A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -14486,6 +14533,7 @@
 				A48CA6A21A4D044B009EBD04 /* DTError.m in Sources */,
 				F500B1BF1AADBBFD00A7AD35 /* CardStatuModel.m in Sources */,
 				A4C140BB1A4BEF0E00C9BAB5 /* XHHTTPClient.m in Sources */,
+				F5933F9F1AD4F4030088C70D /* MJRefreshHeader.m in Sources */,
 				A4C1408D1A4BEA8500C9BAB5 /* WLMessageTableViewController.m in Sources */,
 				A4A2EB281A6CF7C8006ADA55 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				F5664D281A2AFDD5008A5830 /* UIColor+HBVHarmonies.m in Sources */,

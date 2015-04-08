@@ -15,6 +15,6 @@
 //* 有uid时按uid查 （0）为自己   不传uid 首页所有  *//
 - (instancetype)initWithUid:(NSNumber *)uid;
 
-- (void)beginPullDownRefreshing;
+- (void)beginRefreshing;
 
 @end

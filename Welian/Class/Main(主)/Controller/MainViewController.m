@@ -343,15 +343,16 @@ single_implementation(MainViewController)
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     if (selectItem == homeItem && item == homeItem) {
-        [homeVC.refreshControl beginRefreshing];
-        [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];
-        // 延迟0.5秒执行：
-        double delayInSeconds = 0.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            // code to be executed on the main queue after delay
-            [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
-        });
+        [homeVC beginRefreshing];
+//        [homeVC.refreshControl beginRefreshing];
+//        [homeVC.tableView setContentOffset:CGPointMake(0,-homeVC.refreshControl.frame.size.height-64) animated:YES];
+//        // 延迟0.5秒执行：
+//        double delayInSeconds = 0.5;
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            // code to be executed on the main queue after delay
+//            [homeVC.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
+//        });
     }
     selectItem = item;
 }
