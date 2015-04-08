@@ -350,7 +350,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
     
     //上提加载更多
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreCommentData)];
+    self.tableView.footer.hidden = YES;
+//    [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
 }
 
 //获取按钮对象
@@ -1001,6 +1003,11 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              [dataAM addObject:commentFrame];
                                          }
                                          self.datasource = dataAM;
+                                         if (dataAM.count >= detailInfo.commentcount.integerValue) {
+                                             [self.tableView.footer setHidden:YES];
+                                         }else{
+                                             [self.tableView.footer setHidden:NO];
+                                         }
                                          [_tableView reloadData];
                                          
                                          [self updateUI];
@@ -1130,19 +1137,10 @@ static NSString *noCommentCell = @"NoCommentCell";
 //加载更多评论
 - (void)loadMoreCommentData
 {
-    if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
-        //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
-        return;
-    }
-    if (_datasource.count < _iProjectDetailInfo.commentcount.integerValue) {
-        _pageIndex++;
+//    if (_datasource.count < _iProjectDetailInfo.commentcount.integerValue) {
+       _pageIndex++;
         [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                            success:^(id JSON) {
-                                               //隐藏加载更多动画
-                                               [self.tableView footerEndRefreshing];
-                                               
                                                if (JSON) {
                                                    NSArray *comments = [ICommentInfo objectsWithInfo:JSON];
                                                    
@@ -1177,13 +1175,20 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                        
                                                        [_datasource addObject:commentFrame];
                                                    }
+                                                 //隐藏加载更多动画
+                                                  [self.tableView.footer endRefreshing];
+                                                   if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
+                                                       [self.tableView.footer setHidden:YES];
+                                                   }else{
+                                                       [self.tableView.footer setHidden:NO];
+                                                   }
                                                    //刷新列表
                                                    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                                                }
                                            } fail:^(NSError *error) {
                                                
                                            }];
-    }
+//    }
 }
 
 //隐藏键盘

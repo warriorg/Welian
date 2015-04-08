@@ -71,7 +71,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //上提加载更多
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    
+//    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
     
     //获取数据
     [self initData];
