@@ -408,7 +408,6 @@ static NSString *fridcellid = @"fridcellid";
             NSNumber *type = (NSNumber *)[_datasource1[indexPath.section] objectForKey:@"type"];
             
             cell.imageView.image = nil;
-            cell.detailTextLabel.numberOfLines = 1.f;
             cell.hidBottomLine = NO;
             cell.isInTwoLine = NO;
             switch (type.integerValue) {
@@ -466,6 +465,7 @@ static NSString *fridcellid = @"fridcellid";
                     cell.textLabel.textColor = kTitleTextColor;
                     
                     cell.detailTextLabel.text = projectInfo.intro;
+                    cell.detailTextLabel.numberOfLines = 1.f;
                     cell.detailTextLabel.font = [UIFont systemFontOfSize:12.f];
                     cell.detailTextLabel.textColor = kNormalTextColor;
                     
@@ -488,12 +488,12 @@ static NSString *fridcellid = @"fridcellid";
                         ICompanyResult *result = (ICompanyResult *)info;
                         endTime = result.endyear.integerValue == -1 ? @"至今" : [NSString stringWithFormat:@"%@/%@",result.endyear,result.endmonth];
                         titleInfo = [NSString stringWithFormat:@"%@/%@—/%@",result.startyear,result.startmonth,endTime];
-                        detailInfo = [NSString stringWithFormat:@"%@ %@",result.jobname.length ? result.jobname : @"",result.companyname];
+                        detailInfo = [NSString stringWithFormat:@"%@%@",result.jobname.length > 0 ? [NSString stringWithFormat:@"%@ ",[result.jobname deleteTopAndBottomKonggeAndHuiche]] : @"",[result.companyname deleteTopAndBottomKonggeAndHuiche]];
                     }else{
                         ISchoolResult *result = (ISchoolResult *)info;
                         endTime = result.endyear.integerValue == -1 ? @"至今" : [NSString stringWithFormat:@"%@/%@",result.endyear,result.endmonth];
                         titleInfo = [NSString stringWithFormat:@"%@/%@—/%@",result.startyear,result.startmonth,endTime];
-                        detailInfo = [NSString stringWithFormat:@"%@ %@",result.specialtyname.length ? result.specialtyname : @"",result.schoolname];
+                        detailInfo = [NSString stringWithFormat:@"%@%@",result.specialtyname.length > 0 ? [NSString stringWithFormat:@"%@ ",[result.specialtyname deleteTopAndBottomKonggeAndHuiche]] : @"",[result.schoolname deleteTopAndBottomKonggeAndHuiche]];
                     }
                     
                     
@@ -505,6 +505,7 @@ static NSString *fridcellid = @"fridcellid";
                     
                     cell.detailTextLabel.text = detailInfo;
                     cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+                    cell.detailTextLabel.numberOfLines = 0.f;
                     cell.detailTextLabel.textColor = kTitleNormalTextColor;
                     cell.imageView.image = [UIImage imageNamed:@"me_lvli_line"];
                 }
@@ -749,6 +750,9 @@ static NSString *fridcellid = @"fridcellid";
 {
     [WLHttpTool deleteFriendParameterDic:@{@"fid":_baseUserModel.uid} success:^(id JSON) {
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+        //更新数据库好友的数量
+        loginUser.friendcount = @(loginUser.friendcount.integerValue - 1);
+        
         MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
         //数据库删除当前好友
         //        [loginUser removeRsMyFriendsObject:friendUser];
@@ -756,6 +760,9 @@ static NSString *fridcellid = @"fridcellid";
         [friendUser updateIsNotMyFriend];
         //聊天状态发送改变
         [friendUser updateIsChatStatus:NO];
+        //更新未读消息数量
+        [friendUser updateUnReadMessageNumber:@(0)];
+        
         
         //删除新的好友本地数据库
         NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_baseUserModel.uid];

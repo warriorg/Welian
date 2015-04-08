@@ -224,7 +224,27 @@
      type = IM;
      }
      */
-    MyFriendUser *friendUser = [MyFriendUser createMyFriendFromReceive:dict];
+    NSNumber *toUser = dict[@"uid"];
+    LogInUser *loginUser = [LogInUser getLogInUserWithUid:toUser];
+    //如果本地数据库没有当前登陆用户，不处理
+    if (loginUser == nil) {
+        return;
+    }
+    
+    NSNumber *fromUid = [[dict objectForKey:@"fromuser"] objectForKey:@"uid"];
+    MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:fromUid];
+    if(friendUser){
+    }else{
+        if (fromUid.integerValue <= 100) {
+            //系统定义的好友，推来消息，自动设置好友关系
+            friendUser = [MyFriendUser createMyFriendFromReceive:dict];
+        }else{
+            //其他的不设置聊天信息
+            return;
+        }
+    }
+    
+//    MyFriendUser *friendUser = [MyFriendUser createMyFriendFromReceive:dict];
     NSInteger type = [dict[@"type"] integerValue];
     NSString *msg = dict[@"msg"];
     
@@ -349,7 +369,7 @@
             break;
     }
     chatMsg.messageid = messageid;//消息编号
-    chatMsg.timestamp = [created dateFromNormalString];
+    chatMsg.timestamp = created.length > 0 ? [created dateFromNormalString] : [NSDate date];
     chatMsg.avatorUrl = friendUser.avatar;
     chatMsg.isRead = @(NO);
     chatMsg.sendStatus = @(1);
@@ -366,7 +386,7 @@
     //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
     //更新未读消息数量
-    friendUser.unReadChatMsg = @(friendUser.unReadChatMsg.integerValue + 1);
+    friendUser.unReadChatMsg = friendUser.isMyFriend.boolValue ? @(friendUser.unReadChatMsg.integerValue + 1) : @(0);
     friendUser.lastChatTime = chatMsg.timestamp;//更新好友的聊天时间
     
     //是否显示时间戳

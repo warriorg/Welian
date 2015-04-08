@@ -210,9 +210,17 @@
             };
         }else{
             //邀请手机通讯录
-            if (needAddUser.mobile.length > 0) {
-                //手机联系人  发送短信邀请
-                [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+            //非系统好友 userType;//1：手机好友  2：微信好友
+            if (needAddUser.userType.integerValue == 1 && _selectIndex == 0) {
+                if (needAddUser.mobile.length > 0) {
+                    //手机联系人  发送短信邀请
+                    [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+                }
+            }else{
+                if (needAddUser.wxid.integerValue > 0 && _selectIndex == 1) {
+                    //邀请微信好友
+                    [self inviteWxFriendWithNeedAddUser:needAddUser indexPath:indexPath];
+                }
             }
         }
     }
@@ -405,6 +413,7 @@
             //是否投资认证人
             NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
             NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
+            NSNumber *wxid = info[@"wxid"];
             //如果未返回uid的微信好友，不展示
 //            if (!uid && type == 2) {
 //                //设置为好友
@@ -428,6 +437,7 @@
                 needAddUser = [NeedAddUser MR_createEntityInContext:localContext];
             }
             needAddUser.uid = uid;
+            needAddUser.wxid = wxid;
             needAddUser.avatar = avatar;
             needAddUser.friendship = friendship;
             needAddUser.mobile = mobile;
@@ -484,6 +494,26 @@
                                  }];
 }
 
+//邀请微信好友
+- (void)inviteWxFriendWithNeedAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
+{
+    [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
+    [WLHttpTool inviteWxFriendParameterDic:@{@"wxid":needAddUser.wxid}
+                                   success:^(id JSON) {
+                                       //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
+                                       NeedAddUser *addUser = [needAddUser updateFriendShip:5];
+                                       //改变数组，刷新列表
+                                       [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                                       //刷新列表
+                                       [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                       [WLHUDView hiddenHud];
+                                       [WLHUDView showSuccessHUD:@"好友请求已发送"];
+                                   } fail:^(NSError *error) {
+                                       [WLHUDView hiddenHud];
+                                       [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                   }];
+}
+
 /**
  *  需要添加的好友操作
  *
@@ -493,7 +523,7 @@
  */
 - (void)needAddClickedWith:(NSInteger)type needAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
-    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
     if(needAddUser.uid){
         if(type != 1){
             //添加
@@ -522,11 +552,21 @@
     }else{
         //非系统好友 发送邀请
         DLog(@"发送邀请");
+        //邀请手机通讯录
+        //非系统好友 userType;//1：手机好友  2：微信好友
+        if (needAddUser.userType.integerValue == 1 && _selectIndex == 0) {
+            if (needAddUser.mobile.length > 0) {
+                //手机联系人  发送短信邀请
+                [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
+            }
+        }else{
+            if (needAddUser.wxid.integerValue > 0 && _selectIndex == 1) {
+                //邀请微信好友
+                [self inviteWxFriendWithNeedAddUser:needAddUser indexPath:indexPath];
+            }
+        }
         //手机联系人  发送短信邀请
-        [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
-//        if (needAddUser.userType.integerValue == 1) {
-//            
-//        }
+//        [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
     }
 }
 

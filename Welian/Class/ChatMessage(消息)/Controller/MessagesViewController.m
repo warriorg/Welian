@@ -118,6 +118,10 @@
     self.tableView = tableView;
 //    [tableView setDebug:YES];
     
+    //添加提醒页面
+    [self.tableView addSubview:self.notHasDataView];
+    [self.tableView sendSubviewToBack:self.notHasDataView];
+    
     //设置默认选择的和设置角标
     [self badgeInfoChanged];
 //    [self selectIndexChanged:_selectType];
@@ -404,11 +408,8 @@
     self.datasource = [NSMutableArray arrayWithArray:[[LogInUser getCurrentLoginUser] allMyNewFriends]];
     if (_datasource.count > 0) {
         _notHasDataView.hidden = YES;
-        [_notHasDataView removeFromSuperview];
     }else{
         _notHasDataView.hidden = NO;
-        [_tableView addSubview:self.notHasDataView];
-        [_tableView sendSubviewToBack:self.notHasDataView];
     }
     [_tableView reloadData];
 }
@@ -431,11 +432,8 @@
     
     if (_datasource.count > 0) {
         _notHasDataView.hidden = YES;
-        [_notHasDataView removeFromSuperview];
     }else{
         _notHasDataView.hidden = NO;
-        [self.tableView addSubview:self.notHasDataView];
-        [self.tableView sendSubviewToBack:_notHasDataView];
     }
     [_tableView reloadData];
 }
@@ -447,11 +445,8 @@
     
     if (_datasource.count > 0) {
         _notHasDataView.hidden = YES;
-        [_notHasDataView removeFromSuperview];
     }else{
         _notHasDataView.hidden = NO;
-        [self.tableView addSubview:self.notHasDataView];
-        [self.tableView sendSubviewToBack:_notHasDataView];
     }
     [_tableView reloadData];
 }
@@ -463,11 +458,8 @@
     
     if (_datasource.count > 0) {
         _notHasDataView.hidden = YES;
-        [_notHasDataView removeFromSuperview];
     }else{
         _notHasDataView.hidden = NO;
-        [_tableView addSubview:self.notHasDataView];
-        [_tableView sendSubviewToBack:_notHasDataView];
     }
     [_tableView reloadData];
 }

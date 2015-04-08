@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * pinyin;
 @property (nonatomic, retain) NSString * wlname;
 @property (nonatomic, retain) NSNumber * userType;//1：手机好友  2：微信好友
+@property (nonatomic, retain) NSNumber * wxid;////在微链存储id
 @property (nonatomic, retain) LogInUser * rsLoginUser;
 
 //创建需要添加的好友对象

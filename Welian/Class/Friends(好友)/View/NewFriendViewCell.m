@@ -190,7 +190,7 @@
     //重置边框颜色
     _operateBtn.layer.borderWidth = 0.f;
     _operateBtn.layer.borderColor = [UIColor clearColor].CGColor;
-    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
     if (_needAddUser.uid) {
         switch (_needAddUser.friendship.integerValue) {
             case 1:
@@ -222,18 +222,50 @@
                 _operateBtn.backgroundColor = [UIColor clearColor];
             }
                 break;
+            case 5:
+            {
+                [_operateBtn setTitle:@"已发送" forState:UIControlStateNormal];
+                [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                _operateBtn.backgroundColor = [UIColor clearColor];
+            }
+                break;
             default:
                 break;
         }
     }else{
-        //非系统好友
-        if (_needAddUser.mobile.length > 0) {
-            [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
-            [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
-            _operateBtn.backgroundColor = [UIColor clearColor];
-            [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        //非系统好友 userType;//1：手机好友  2：微信好友
+        if (_needAddUser.userType.integerValue == 1) {
+            if (_needAddUser.mobile.length > 0) {
+                [_operateBtn setTitle:@"邀请" forState:UIControlStateNormal];
+                [_operateBtn setTitleColor:BtnJieShouColor forState:UIControlStateNormal];
+                _operateBtn.backgroundColor = [UIColor clearColor];
+                [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            }else{
+                _operateBtn.hidden = YES;
+            }
         }else{
-            _operateBtn.hidden = YES;
+            //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
+            if (_needAddUser.wxid.integerValue > 0) {
+                //存在
+                if(_needAddUser.friendship.integerValue == 5){
+                    [_operateBtn setTitle:@"已发送" forState:UIControlStateNormal];
+                    [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    _operateBtn.backgroundColor = [UIColor clearColor];
+                }else{
+                    //添加
+                    [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
+                    [_operateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    //圆角
+                    _operateBtn.layer.cornerRadius = 5.f;
+                    _operateBtn.layer.masksToBounds = YES;
+                    _operateBtn.layer.borderWidth = 0.5;
+                    _operateBtn.layer.borderColor = LayerBorderColor.CGColor;
+                    _operateBtn.backgroundColor = BtnTianJiaColor;
+                    [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                }
+            }else{
+                _operateBtn.hidden = YES;
+            }
         }
     }
 }

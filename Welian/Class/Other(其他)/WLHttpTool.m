@@ -173,6 +173,18 @@
     } withHUD:NO andDim:NO];
 }
 
+#pragma mark - 发送微信邀请请求
++ (void)inviteWxFriendParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
+{
+    NSDictionary *dic = @{@"type":@"inviteWxFriend",@"data":parameterDic};
+    
+    [[HttpTool sharedService] reqestWithSessIDParameters:dic successBlock:^(id JSON) {
+        succeBlock (JSON);
+    } failure:^(NSError *error) {
+        failurBlock (error);
+    } withHUD:NO andDim:NO];
+}
+
 #pragma mark - 修改用户信息
 + (void)saveProfileParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock
 {
