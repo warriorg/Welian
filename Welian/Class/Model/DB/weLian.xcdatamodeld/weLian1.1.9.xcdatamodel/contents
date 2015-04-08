@@ -166,6 +166,7 @@
         <attribute name="pinyin" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="wlname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wxid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="rsLoginUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogInUser" inverseName="rsNeedAddUsers" inverseEntity="LogInUser" syncable="YES"/>
     </entity>
     <entity name="NewFriendUser" representedClassName="NewFriendUser" parentEntity="BaseUser" syncable="YES">
@@ -252,7 +253,7 @@
         <element name="InvestStages" positionX="-1341" positionY="-378" width="128" height="88"/>
         <element name="LogInUser" positionX="-218" positionY="-193" width="128" height="480"/>
         <element name="MyFriendUser" positionX="-650" positionY="-387" width="128" height="150"/>
-        <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="103"/>
+        <element name="NeedAddUser" positionX="-1359" positionY="-396" width="128" height="120"/>
         <element name="NewFriendUser" positionX="-623" positionY="-270" width="128" height="165"/>
         <element name="PhotoInfos" positionX="-1359" positionY="-396" width="128" height="103"/>
         <element name="ProjectDetailInfo" positionX="-1350" positionY="-387" width="128" height="360"/>

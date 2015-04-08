@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSNumber * uid;
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSString * email;
-//friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+//friendship /** 好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
 @property (nonatomic, retain) NSNumber * friendship; 
 @property (nonatomic, retain) NSNumber * investorauth;/**  投资者认证  0 默认状态  1  认证成功  -2 正在审核  -1 认证失败 */
 @property (nonatomic, retain) NSString * inviteurl;

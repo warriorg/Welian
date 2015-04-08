@@ -15,6 +15,7 @@
 @dynamic pinyin;
 @dynamic wlname;
 @dynamic userType;
+@dynamic wxid;
 @dynamic rsLoginUser;
 
 //创建需要添加的好友对象
