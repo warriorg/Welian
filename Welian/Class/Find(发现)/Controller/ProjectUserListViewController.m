@@ -166,10 +166,11 @@
     }
     if (_pageIndex * _pageSize >= total) {
         //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
+        [self.tableView.footer endRefreshing];
+        self.tableView.footer.hidden = YES;
     }else{
         _pageIndex++;
+        self.tableView.footer.hidden = NO;
         [self initData];
     }
 }
@@ -195,9 +196,17 @@
     [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                        success:^(id JSON) {
                                            //隐藏加载更多动画
-                                           [self.tableView footerEndRefreshing];
+                                           [self.tableView.footer endRefreshing];
                                            
                                            self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+                                          
+                                           //设置是否可以下拉刷新
+                                           if ([JSON count] != KCellConut) {
+                                               self.tableView.footer.hidden = YES;
+                                           }else{
+                                               self.tableView.footer.hidden = NO;
+                                           }
+                                           
                                            [self.tableView reloadData];
                                        } fail:^(NSError *error) {
 //                                           [UIAlertView showWithError:error];
@@ -210,7 +219,14 @@
     [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
-                                          [self.tableView footerEndRefreshing];
+                                          [self.tableView.footer endRefreshing];
+                                          
+                                          //设置是否可以下拉刷新
+                                          if ([JSON count] != KCellConut) {
+                                              self.tableView.footer.hidden = YES;
+                                          }else{
+                                              self.tableView.footer.hidden = NO;
+                                          }
                                           
                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];

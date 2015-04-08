@@ -119,9 +119,11 @@
 //    [_refreshControl addTarget:self action:@selector(refreshdata) forControlEvents:UIControlEventValueChanged];
 //    [tableView addSubview:_refreshControl];
     
-    //上提加载更多
-    [_tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
-    [_tableView setFooterHidden:YES];
+    //上提加载更
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
     
     [self loadReflshData];
 }
@@ -192,7 +194,7 @@
                                  success:^(id JSON) {
                                      //隐藏加载更多动画
                                      [self.refreshControl endRefreshing];
-                                     [_tableView footerEndRefreshing];
+                                     [_tableView.footer endRefreshing];
                                      
                                      DLog(@"---json:%@",JSON);
                                      if (JSON) {
@@ -213,9 +215,9 @@
                                      
                                      //设置是否可以下拉刷新
                                      if ([JSON count] != KCellConut) {
-                                         [self.tableView setFooterHidden:YES];
+                                         self.tableView.footer.hidden = YES;
                                      }else{
-                                         [self.tableView setFooterHidden:NO];
+                                         self.tableView.footer.hidden = NO;
                                          _pageIndex++;
                                      }
                                      
@@ -228,7 +230,7 @@
                                  } fail:^(NSError *error) {
                                      [self.refreshControl endRefreshing];
                                      //隐藏加载更多动画
-                                     [self.tableView footerEndRefreshing];
+                                     [self.tableView.footer endRefreshing];
                                      DLog(@"getMyActivesParameterDic error:%@",error.description);
                                  }];
 }

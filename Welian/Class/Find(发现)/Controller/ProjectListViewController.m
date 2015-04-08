@@ -82,8 +82,10 @@
     [self loadReflshData];
     
     //上提加载更多
-//    [self.tableView addHeaderWithTarget:self action:@selector(loadReflshData)];
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -191,10 +193,11 @@
 {
     if (_pageIndex * _pageSize > _allDataSource.count) {
         //隐藏加载更多动画
-        [self.tableView footerEndRefreshing];
-        [self.tableView setFooterHidden:YES];
+        [self.tableView.footer endRefreshing];
+        self.tableView.footer.hidden = YES;
     }else{
         _pageIndex++;
+        self.tableView.footer.hidden = NO;
         [self initData];
     }
 }
@@ -210,7 +213,7 @@
                                     //隐藏加载更多动画
                                     [self.refreshControl endRefreshing];
 //                                    [self.tableView headerEndRefreshing];
-                                    [self.tableView footerEndRefreshing];
+                                    [self.tableView.footer endRefreshing];
                                     
                                     if (JSON) {
                                         if (_pageIndex == 1) {
@@ -257,6 +260,13 @@
 //                                        [self.tableView reloadData];
                                     }
                                     
+                                    //设置是否可以下拉刷新
+                                    if ([JSON count] != KCellConut) {
+                                        self.tableView.footer.hidden = YES;
+                                    }else{
+                                        self.tableView.footer.hidden = NO;
+                                    }
+                                    
                                     if(_allDataSource.count == 0){
                                         [self.tableView addSubview:self.notView];
                                         [self.tableView sendSubviewToBack:self.notView];
@@ -266,7 +276,7 @@
                                 } fail:^(NSError *error) {
                                     [self.refreshControl endRefreshing];
                                     //隐藏加载更多动画
-                                    [self.tableView footerEndRefreshing];
+                                    [self.tableView.footer endRefreshing];
 //                                    [UIAlertView showWithError:error];
                                 }];
 }
