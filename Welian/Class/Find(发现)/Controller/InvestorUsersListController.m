@@ -50,9 +50,9 @@ static NSString *identifier = @"investorcellid";
         self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
         [self.tableView reloadData];
         if (arr.count<20) {
-            [self.tableView setFooterHidden:YES];
+            self.tableView.footer.hidden = YES;
         }else{
-            [self.tableView setFooterHidden:NO];
+            self.tableView.footer.hidden = NO;
         }
         page++;
     } fail:^(NSError *error) {
@@ -71,9 +71,9 @@ static NSString *identifier = @"investorcellid";
         [self.tableView reloadData];
         NSArray *arr = JSON;
         if (arr.count<20) {
-            [self.tableView setFooterHidden:YES];
+            self.tableView.footer.hidden = YES;
         }else{
-            [self.tableView setFooterHidden:NO];
+            self.tableView.footer.hidden = NO;
         }
         page++;
     } fail:^(NSError *error) {
@@ -84,7 +84,7 @@ static NSString *identifier = @"investorcellid";
 - (void)hideRefreshView
 {
     [self.refreshControl endRefreshing];
-    [self.tableView footerEndRefreshing];
+    [self.tableView.footer endRefreshing];
 }
 
 
@@ -114,6 +114,7 @@ static NSString *identifier = @"investorcellid";
     [self.searchDisplayVC setSearchResultsDataSource:self];
     [self.searchDisplayVC setSearchResultsDelegate:self];
     self.searchDisplayVC.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.searchDisplayVC setActive:NO animated:YES];
     [self.tableView setTableHeaderView:self.searchBar];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadNewDataArray) forControlEvents:UIControlEventValueChanged];
@@ -121,8 +122,11 @@ static NSString *identifier = @"investorcellid";
     [self.refreshControl beginRefreshing];
 //    [self.tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     
-    [self.tableView addFooterWithTarget:self action:@selector(loadMoreDataArray)];
-    [self.tableView setFooterHidden:YES];
+    //上提加载更多
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
+    // 隐藏当前的上拉刷新控件
+    self.tableView.footer.hidden = YES;
     [self.tableView setBackgroundColor:WLLineColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestorUserCell" bundle:nil] forCellReuseIdentifier:identifier];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

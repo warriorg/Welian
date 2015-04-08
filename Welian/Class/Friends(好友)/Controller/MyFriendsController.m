@@ -106,6 +106,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                              forKey:@"_searchResultsTableViewStyle"];
+    [self.searchDisplayVC setActive:NO animated:YES];
     [self.tableView setTableHeaderView:self.searchBar];
     [self.searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
 

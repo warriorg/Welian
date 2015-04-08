@@ -80,6 +80,7 @@
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.searchDisplayVC setSearchResultsTitle:@"132"];
     [self.searchDisplayVC setDelegate:self];
+    [self.searchDisplayVC setActive:NO animated:YES];
     
 }
 

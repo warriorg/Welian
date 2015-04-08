@@ -65,6 +65,7 @@
     searchDisplayVC.searchResultsDelegate = self;
 //    [searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
 //                            forKey:@"_searchResultsTableViewStyle"];
+    [searchDisplayVC setActive:NO animated:YES];
     searchDisplayVC.searchResultsTableView.backgroundColor = WLLineColor;
     searchDisplayVC.searchResultsTableView.separatorInset = UIEdgeInsetsZero;
     self.searchDisplayVC = searchDisplayVC;
@@ -133,6 +134,7 @@
         UserInfoModel *mode = _filterArray[indexPath.row];
 //        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //        [self.navigationController pushViewController:userBasic animated:YES];
+//        [_searchDisplayVC.searchContentsController.navigationController setNavigationBarHidden:YES animated:YES];
         UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
