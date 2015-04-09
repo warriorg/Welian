@@ -95,6 +95,9 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
+    //设置用户信息
+    _userInfoView.loginUser = loginUser;
+    
     //获取用户信息
     [self initUserInfo];
     
