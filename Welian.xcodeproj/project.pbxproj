@@ -3929,6 +3929,8 @@
 		F5933FB31AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
 		F5933FB41AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
 		F5933FB51AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
+		F5933FB61AD65D6D0088C70D /* me_lvli_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A14F1AC2E1AE0033A31D /* me_lvli_add@2x.png */; };
+		F5933FB71AD65DC90088C70D /* me_lvli_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A14F1AC2E1AE0033A31D /* me_lvli_add@2x.png */; };
 		F59E75F01A4059D00028FBAF /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
 		F59E75F11A4059D00028FBAF /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75D91A4059D00028FBAF /* BaseModel.m */; };
 		F59E75F21A4059D00028FBAF /* e0571CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F59E75DC1A4059D00028FBAF /* e0571CoreDataManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -10704,6 +10706,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5933FB71AD65DC90088C70D /* me_lvli_add@2x.png in Resources */,
 				F534DB6F1A51893400B6A725 /* InvestStagePlist.plist in Resources */,
 				A409A2D01AC2E1AF0033A31D /* tabbar_discovery_selected@2x.png in Resources */,
 				F534DADB1A4E929500B6A725 /* InvestCardCell.xib in Resources */,
@@ -11849,6 +11852,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5933FB61AD65D6D0088C70D /* me_lvli_add@2x.png in Resources */,
 				F534DB6E1A51893400B6A725 /* InvestStagePlist.plist in Resources */,
 				A409A2CF1AC2E1AF0033A31D /* tabbar_discovery_selected@2x.png in Resources */,
 				F534DADA1A4E929500B6A725 /* InvestCardCell.xib in Resources */,

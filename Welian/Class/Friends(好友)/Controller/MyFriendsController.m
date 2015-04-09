@@ -58,15 +58,12 @@ static NSString *fridcellid = @"fridcellid";
     [super viewWillAppear:animated];
     //显示导航条
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //加载好友
-    [self loadMyAllFriends];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //新的好友改变通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewFriendsList) name:KNewFriendNotif object:nil];
     //刷新所有好友通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     //获取数据库好友信息
@@ -106,7 +103,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                              forKey:@"_searchResultsTableViewStyle"];
-    [self.searchDisplayVC setActive:NO animated:YES];
+//    [self.searchDisplayVC setActive:NO animated:YES];
     [self.tableView setTableHeaderView:self.searchBar];
     [self.searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
 
@@ -128,13 +125,6 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC.searchResultsTableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
 
     [self.tableView registerNib:[UINib nibWithNibName:@"FriendCell" bundle:nil] forCellReuseIdentifier:fridcellid];
-}
-
-//重新刷新好友信息数量
-- (void)loadNewFriendsList
-{
-    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)loadMyAllFriends
@@ -230,6 +220,7 @@ static NSString *fridcellid = @"fridcellid";
                     UILabel *fff = (UILabel*)self.tableView.tableFooterView;
                     [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
                     [weakSelf.tableView reloadData];
+                    [self.searchDisplayVC setActive:NO animated:NO];
                 }];
 
             });
@@ -273,23 +264,12 @@ static NSString *fridcellid = @"fridcellid";
     }
 }
 
-//解决加入索引图标混乱
-//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-//{
-//    if (index == 0) {
-////        [tableView scrollRectToVisible:tableView.tableHeaderView.frame animated:NO];
-//        [tableView scrollsToTop];
-//    }
-//    //返回的是section
-//    return index;
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         return 1;
     }else{
-//        return self.allArray.count+1;
          return self.allArray.count;
     }
 }
@@ -302,12 +282,6 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         NSDictionary *userF = self.allArray[section];
         return [[userF objectForKey:@"userF"] count];
-//        if (section==0) {
-//            return 1;
-//        }else{
-//            NSDictionary *userF = self.allArray[section-1];
-//            return [[userF objectForKey:@"userF"] count];
-//        }
     }
 }
 
@@ -410,20 +384,12 @@ static NSString *fridcellid = @"fridcellid";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (tableView == self.tableView&&indexPath.section==0) {
-    //        return 82.f;
-    //    }
     return 60.0;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    //    if (section==0&&tableView==self.tableView) {
-    //        return 0.0;
-    //    }else{
-    //        return 25.0;
-    //    }
     return 25.0;
 }
 
