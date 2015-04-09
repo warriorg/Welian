@@ -41,7 +41,7 @@ single_implementation(ShareEngine)
         [WLHUDView showErrorHUD:@"微信未安装！"];
         return;
     }
-    UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(180, 180)];
+    UIImage *scaledImage = [thumbImage scaleFromImage:thumbImage scaledToSize:CGSizeMake(100, 100)];
     
     NSData * imageData = UIImageJPEGRepresentation(scaledImage,1);
     NSInteger length = [imageData length]/1024;

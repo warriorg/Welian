@@ -55,7 +55,7 @@
         _wlSegmentedControl = [[WLCustomSegmentedControl alloc] initWithSectionTitles:@[@"聊天", @"消息",@"好友通知"]];
         _wlSegmentedControl.frame = CGRectMake(0, StatusBarHeight, self.view.width, NaviBarHeight - 0.5);
         _wlSegmentedControl.selectedTextColor = [UIColor whiteColor];
-        _wlSegmentedControl.textColor = [UIColor whiteColor];
+        _wlSegmentedControl.textColor = [UIColor colorWithWhite:0.8 alpha:1];
         _wlSegmentedControl.selectionIndicatorColor = [UIColor whiteColor];
         _wlSegmentedControl.selectionIndicatorHeight = 2;
         _wlSegmentedControl.backgroundColor = kNavBgColor;

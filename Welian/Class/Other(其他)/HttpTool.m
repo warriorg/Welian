@@ -102,18 +102,14 @@ static HttpTool *engine;
 
     [engine POST:path parameters:parmetDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-        DLog(@"%@",[operation responseString]);
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:0 error:nil];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         if (!dic) {
             [WLHUDView showErrorHUD:@"连接错误，请稍后再试"];
             failureBlock ([NSError errorWithMsg:nil]);
             return;
         }
-        NSData *doubi = responseObject;
-        NSString *shabi =  [[NSString alloc]initWithData:doubi encoding:NSUTF8StringEncoding];
-        
-        DLog(@"%@",shabi);
-        
+//        NSData *doubi = responseObject;
+//        NSString *shabi =  [[NSString alloc]initWithData:doubi encoding:NSUTF8StringEncoding];
         
         DLog(@"%@",dic);
         if ([[dic objectForKey:@"state"] integerValue]==0) { // 成功

@@ -134,6 +134,12 @@
             titleLabel.tag = kTagOfTitle + idx;
             [_scrollView addSubview:titleLabel];
         }
+        if (idx==_selectedSegmentIndex) {
+            [titleLabel setTextColor:_selectedTextColor];
+        }else{
+            [titleLabel setFont:_font];
+            [titleLabel setTextColor:_textColor];
+        }
         titleLabel.text = obj;
         [titleLabel sizeToFit];
         titleLabel.centerX = (_segmentWidth / 2.f) + _segmentWidth * idx;
@@ -202,6 +208,7 @@
                 [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
                 numBtn.tag = kTagOfBadge + idx;
+                numBtn.userInteractionEnabled = NO;
                 [_scrollView addSubview:numBtn];
             }
             if (badge.integerValue < 100) {
@@ -380,7 +387,7 @@
         _bottomLineView.left = self.segmentWidth * _selectedSegmentIndex;
         _bottomLineView.bottom = self.height;
     }
-    
+    [self setNeedsLayout];
     if (notify)
         [self notifyForSegmentChangeToIndex:index];
 }
