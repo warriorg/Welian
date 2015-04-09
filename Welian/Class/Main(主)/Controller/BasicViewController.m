@@ -27,8 +27,28 @@
 //    }
 //}
 
+//- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+//                                  animationControllerForOperation:(UINavigationControllerOperation)operation
+//                                               fromViewController:(UIViewController *)fromVC
+//                                                 toViewController:(UIViewController *)toVC
+//{
+//    if (operation == UINavigationControllerOperationPop) {
+////        if (self.popAnimator == nil) {
+////            self.popAnimator = [WQPopAnimator new];
+////        }
+////        return self.popAnimator;
+//        DLog(@"---->UINavigationControllerOperationPop");
+//    }else if(operation == UINavigationControllerOperationPush){
+//        DLog(@"----->UINavigationControllerOperationPush");
+//    }
+//    
+//    return self.navigationController.presentAnimation;
+//    
+//    return nil;
+//}
+
 //- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//    //开启滑动手势
+    //开启滑动手势
 //    if (_showCustomNavHeader) {
 //        if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
 //            navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -95,7 +115,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
+//    self.navigationController.delegate = self;
     if (_showCustomNavHeader) {
         WLNavHeaderView *navHeaderView = [[WLNavHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ViewCtrlTopBarHeight)];
         navHeaderView.backgroundColor = kNavBgColor;

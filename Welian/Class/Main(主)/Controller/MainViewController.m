@@ -309,15 +309,20 @@ single_implementation(MainViewController)
         CLPlacemark *placemark = [placemarks lastObject];
         if (placemark) {
             NSDictionary *addressDictionary = placemark.addressDictionary;
-            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-            NSString *geoLocations = [formattedAddressLines lastObject];
-            if (geoLocations) {
+//            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+//            NSString *geoLocations = [formattedAddressLines lastObject];
+            if (addressDictionary) {
                 //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
                 NSString *cityStr = addressDictionary[@"City"];
-                NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
-                DLog(@"当前城市：%@",city);
-                //定位的城市
-                [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                if (cityStr.length > 0) {
+                    NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+                    DLog(@"当前城市：%@",city);
+                    //定位的城市
+                    [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                }else{
+                    //定位的城市
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+                }
             }
         }
     }];
