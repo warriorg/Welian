@@ -56,6 +56,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBar.hidden = NO;
     //显示导航条
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }

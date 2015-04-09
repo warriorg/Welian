@@ -115,6 +115,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self scrollViewDidScroll:_tableView];
 //    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 ////    self.navigationController.navigationBar.alpha = 1;  //调整navigation bar的透明度
@@ -154,54 +155,41 @@ static NSString *fridcellid = @"fridcellid";
 //    self.navigationController.navigationBar.shadowImage = nil;//[UIImage new];
 //    self.navigationController.navigationBar.translucent = YES;
     //代理置空，否则会闪退 设置手势滑动返回
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+//    }
 }
 //
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    //开启滑动手势
-    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }else{
-        navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
-}
+//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    //开启滑动手势
+//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }else{
+//        navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
+//}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     //隐藏导航条
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    //设置push到当前VC
+    self.isJoindThisVC = YES;
     
     [self scrollViewDidScroll:_tableView];
     
     [self initUserInfo];
     
     //开启iOS7的滑动返回效果
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        //只有在二级页面生效
-        if ([self.navigationController.viewControllers count] > 1) {
-            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-        }
-    }
-}
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    UIColor *color = kNavBgColor;
-//    if (offsetY > kTableViewHeaderViewHeight/2) {
-//        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-//        self.navigationController.navigationBar.backgroundColor = [color colorWithAlphaComponent:alpha];
-////        [self.navigationController.navigationBar setBarTintColor:[color colorWithAlphaComponent:alpha]];
-////        [[UINavigationBar appearance] setBarTintColor:[color colorWithAlphaComponent:alpha]];
-////        [[UINavigationBar appearance] setTintColor:[color colorWithAlphaComponent:alpha]];
-////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        //只有在二级页面生效
+//        if ([self.navigationController.viewControllers count] > 1) {
+//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//        }
 //    }
-//}
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

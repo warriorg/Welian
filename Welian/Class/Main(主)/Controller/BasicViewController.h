@@ -16,6 +16,7 @@
 
 @property (nonatomic, assign) BOOL needlessCancel;
 @property (nonatomic, assign) BOOL showCustomNavHeader;
+@property (nonatomic, assign) BOOL isJoindThisVC;//进入过当前vc
 @property (assign,nonatomic) WLNavHeaderView *navHeaderView;
 
 

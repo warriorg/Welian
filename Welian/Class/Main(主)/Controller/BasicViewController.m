@@ -27,8 +27,28 @@
 //    }
 //}
 
+//- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+//                                  animationControllerForOperation:(UINavigationControllerOperation)operation
+//                                               fromViewController:(UIViewController *)fromVC
+//                                                 toViewController:(UIViewController *)toVC
+//{
+//    if (operation == UINavigationControllerOperationPop) {
+////        if (self.popAnimator == nil) {
+////            self.popAnimator = [WQPopAnimator new];
+////        }
+////        return self.popAnimator;
+//        DLog(@"---->UINavigationControllerOperationPop");
+//    }else if(operation == UINavigationControllerOperationPush){
+//        DLog(@"----->UINavigationControllerOperationPush");
+//    }
+//    
+//    return self.navigationController.presentAnimation;
+//    
+//    return nil;
+//}
+
 //- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//    //开启滑动手势
+    //开启滑动手势
 //    if (_showCustomNavHeader) {
 //        if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
 //            navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -44,15 +64,42 @@
     
     //隐藏导航条
     if (_showCustomNavHeader) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
+//        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        if (self.navigationController.viewControllers.count == 1) {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        }else{
+            if (_isJoindThisVC) {
+                self.navigationController.navigationBarHidden = NO;
+                self.navigationController.navigationBar.hidden = NO;
+            }else{
+                self.navigationController.navigationBarHidden = NO;
+                self.navigationController.navigationBar.hidden = YES;
+            }
+        }
+//        [self.navigationController.navigationBar setDebug:YES];
     }else{
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = NO;
+//        [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    //隐藏导航条
+    if (_isJoindThisVC  && self.navigationController.viewControllers.count > 1) {
+        //        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = YES;
+//        [self.navigationController.navigationBar setDebug:YES];
+    }
+//    else{
+//        self.navigationController.navigationBarHidden = NO;
+//        self.navigationController.navigationBar.hidden = NO;
+//        //        [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    }
 //    if (_showCustomNavHeader) {
     
         //开启iOS7的滑动返回效果
@@ -68,7 +115,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
+//    self.navigationController.delegate = self;
     if (_showCustomNavHeader) {
         WLNavHeaderView *navHeaderView = [[WLNavHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ViewCtrlTopBarHeight)];
         navHeaderView.backgroundColor = kNavBgColor;
