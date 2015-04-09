@@ -28,7 +28,7 @@
 	#define MB_TEXTSIZE(text, font) [text length] > 0 ? [text \
 		sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
 #else
-	#define MB_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithFont:font] : CGSizeZero;
+	#define MB_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithCustomFont:font] : CGSizeZero;
 #endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
@@ -37,7 +37,7 @@
 		attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
 #else
 	#define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
-		sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
+		sizeWithCustomFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #endif
 
 #ifndef kCFCoreFoundationVersionNumber_iOS_7_0

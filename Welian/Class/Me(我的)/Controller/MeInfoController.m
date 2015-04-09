@@ -243,6 +243,7 @@ static NSString *mobileCellid = @"MobileInfoCellid";
                 [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
                     PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
                     phoneVC.phoneChangeBlcok = ^{
+                        [WLHUDView showSuccessHUD:@"修改成功"];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     };
                     [self.navigationController pushViewController:phoneVC animated:YES];
@@ -251,6 +252,7 @@ static NSString *mobileCellid = @"MobileInfoCellid";
                 [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
                     PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
                     phoneVC.phoneChangeBlcok = ^{
+                        [WLHUDView showSuccessHUD:@"认证成功"];
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     };
                     [self.navigationController pushViewController:phoneVC animated:YES];

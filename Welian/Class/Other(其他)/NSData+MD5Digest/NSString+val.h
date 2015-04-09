@@ -28,4 +28,6 @@
 
 - (CGSize)sizeWithCustomFont:(UIFont*)font constrainedToSize:(CGSize)size;
 
+- (CGSize)sizeWithCustomFont:(UIFont*)font;
+
 @end

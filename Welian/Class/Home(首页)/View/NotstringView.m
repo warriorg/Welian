@@ -163,8 +163,8 @@
                 [opeateBtn setImage:[UIImage imageNamed:btnImageName] forState:UIControlStateNormal];
             }
             opeateBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
-            opeateBtn.frame = CGRectMake(30.f, top, frame.size.width - 40.f, 40.f);
-            opeateBtn.layer.borderWidth = 0.5;
+            opeateBtn.frame = CGRectMake(30.f, top, frame.size.width - 60.f, 40.f);
+            opeateBtn.layer.borderWidth = 1;
             opeateBtn.layer.borderColor = RGB(208.f, 209.f, 209.f).CGColor;
             opeateBtn.layer.cornerRadius = 3.f;
             opeateBtn.layer.masksToBounds = YES;

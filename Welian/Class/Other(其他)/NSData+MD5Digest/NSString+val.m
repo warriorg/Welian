@@ -88,4 +88,10 @@
     return labelsize;
 }
 
+- (CGSize)sizeWithCustomFont:(UIFont*)font
+{
+    NSDictionary *attribute = @{NSFontAttributeName:font};
+     return   [self sizeWithAttributes:attribute];
+}
+
 @end
