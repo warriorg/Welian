@@ -117,10 +117,11 @@ static NSString *financingCellid = @"financingCellid";
         return 0.1;
     }else if (section==1){
         NSString *str = @"融资项目将会直接推送给所有认证投资人，非认证投资人无法看到融资信息。";
-        return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
+        return [str sizeWithCustomFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }
     return 0;
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -129,7 +130,7 @@ static NSString *financingCellid = @"financingCellid";
         return 150;
     }else if (section==2){
         NSString *str = @"融资信息有效期为30天，30天之后将自动消失";
-        return [str sizeWithFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
+        return [str sizeWithCustomFont:WLFONT(14) constrainedToSize:CGSizeMake(SuperSize.width-30, 0)].height+20;
     }else if (section==1){
         return 25;
     }

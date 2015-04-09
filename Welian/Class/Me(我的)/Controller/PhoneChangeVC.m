@@ -142,7 +142,7 @@
 {
     [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
         if ([JSON objectForKey:@"checkcode"]) {
-            [WLHUDView showSuccessHUD:@"发送成功"];
+//            [WLHUDView showSuccessHUD:@"发送成功"];
         }
     } fail:^(NSError *error) {
         
