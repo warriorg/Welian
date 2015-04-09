@@ -668,7 +668,8 @@ BMKMapManager* _mapManager;
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (loginUser) {
-        NSString *maxChatNum = [ChatMessage getMaxChatMessageId];
+        NSString *localMaxChatNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaxChatMessageId"];
+        NSString *maxChatNum = localMaxChatNum.length > 0 ? localMaxChatNum : @"0";
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(0),@"topid":maxChatNum}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
                                                if ([JSON count] > 0) {
@@ -683,6 +684,9 @@ BMKMapManager* _mapManager;
                                                        [self getIMGTMessage:chatDic];
                                                    }
                                                }
+                                               
+                                               NSString *maxChatNum = [ChatMessage getMaxChatMessageId];
+                                               [[NSUserDefaults standardUserDefaults] setObject:maxChatNum forKey:@"MaxChatMessageId"];
                                            } fail:^(NSError *error) {
                                                DLog(@"service chatMsg error:%@",error.description);
                                            }];
@@ -700,7 +704,8 @@ BMKMapManager* _mapManager;
          type = friendRequest;
          uid = 10019;
          */
-        NSString *maxNewFriendId = [loginUser getMaxNewFriendUserMessageId];
+        NSString *localMaxNewFriendId = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaxNewFriendId"];
+        NSString *maxNewFriendId = localMaxNewFriendId.length > 0 ? localMaxNewFriendId : @"0";
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(1),@"topid":maxNewFriendId}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
                                                if ([JSON count] > 0) {
@@ -726,6 +731,10 @@ BMKMapManager* _mapManager;
                                                        [self getNewFriendMessage:dictData LoginUserId:toUser];
                                                    }
                                                }
+                                               
+                                               //保存最新的最大id
+                                               NSString *maxNewFriendId = [loginUser getMaxNewFriendUserMessageId];
+                                               [[NSUserDefaults standardUserDefaults] setObject:maxNewFriendId forKey:@"MaxNewFriendId"];
                                            } fail:^(NSError *error) {
                                                DLog(@"service friendMsg error:%@",error.description);
                                            }];
