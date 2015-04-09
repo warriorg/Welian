@@ -50,7 +50,7 @@
     self = [super initWithStyle:style];
     if (self) {
         self.pageIndex = 1;
-        self.pageSize = 15;
+        self.pageSize = KCellConut;
         self.activeId = activeInfo[0];
         self.totalNum = [activeInfo[1] integerValue];
         self.allPages = ceil((float)_totalNum/(float)_pageSize);
@@ -65,7 +65,7 @@
     self = [super initWithStyle:style];
     if (self) {
         self.pageIndex = 1;
-        self.pageSize = 15;
+        self.pageSize = KCellConut;
         self.activeId = activeInfo.activeid.stringValue;
         self.totalNum = activeInfo.joined.integerValue;
         self.allPages = ceil((float)_totalNum/(float)_pageSize);
@@ -86,14 +86,14 @@
         [self.tableView sendSubviewToBack:self.noDataNotView];
     }
     
-    //加载数据
-    [self initData];
-    
     //上提加载更多
     // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
     // 隐藏当前的上拉刷新控件
     self.tableView.footer.hidden = YES;
+    
+    //加载数据
+    [self initData];
 }
 
 #pragma mark - Table view data source
@@ -180,11 +180,15 @@
                                       success:^(id JSON) {
                                           //隐藏加载更多动画
                                           [self.tableView.footer endRefreshing];
-                                          NSInteger count = [JSON[@"count"] integerValue];
+//                                          NSInteger count = [JSON[@"count"] integerValue];
                                           NSArray *records = JSON[@"records"];
                                           
+                                          if (records.count > 0) {
+                                              [self.datasource addObjectsFromArray:records];
+                                          }
+                                          
                                           //设置是否可以下拉刷新
-                                          if ([JSON count] != KCellConut) {
+                                          if ([records count] != KCellConut) {
                                               self.tableView.footer.hidden = YES;
                                           }else{
                                               self.tableView.footer.hidden = NO;
@@ -197,10 +201,7 @@
                                               [self.tableView sendSubviewToBack:self.noDataNotView];
                                           }
                                           
-                                          if (count > 0) {
-                                              [self.datasource addObjectsFromArray:records];
-                                              [self.tableView reloadData];
-                                          }
+                                          [self.tableView reloadData];
                                       } fail:^(NSError *error) {
                                           //隐藏加载更多动画
                                           [self.tableView.footer endRefreshing];
