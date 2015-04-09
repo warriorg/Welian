@@ -158,16 +158,18 @@
         cell = [[NewFriendViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.indexPath = indexPath;
-    if (_selectIndex == 1 && indexPath.section == 0) {
-        //邀请好友
-        cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
-    }else{
-        cell.needAddUser = _datasource[indexPath.row];
-        WEAKSELF
-        [cell setNeedAddBlock:^(NSInteger type,NeedAddUser *needAddUser,NSIndexPath *indexPath){
-            [weakSelf needAddClickedWith:type needAddUser:needAddUser indexPath:indexPath];
-        }];
+    if (_datasource.count > 0) {
+        cell.indexPath = indexPath;
+        if (_selectIndex == 1 && indexPath.section == 0) {
+            //邀请好友
+            cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
+        }else{
+            cell.needAddUser = _datasource[indexPath.row];
+            WEAKSELF
+            [cell setNeedAddBlock:^(NSInteger type,NeedAddUser *needAddUser,NSIndexPath *indexPath){
+                [weakSelf needAddClickedWith:type needAddUser:needAddUser indexPath:indexPath];
+            }];
+        }
     }
     
     return cell;
