@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<true/>
 	<key>ShareSDKAppKey</key>
 	<string>507798c0a08e</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -55,12 +53,14 @@
 	<string>1272e0c65919830d1fffa9ca098f6a72</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>微链请求使用您的当前位置</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>微链请求使用您的当前位置</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

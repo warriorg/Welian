@@ -60,7 +60,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>YES</string>
+	<string>微链请求使用您的当前位置</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>微链请求使用您的当前位置</string>
 	<key>PartnerID</key>
 	<string>2088611088140964</string>
 	<key>RSA private key</key>

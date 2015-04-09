@@ -90,7 +90,7 @@
 
 - (CGSize)sizeWithCustomFont:(UIFont*)font
 {
-    NSDictionary *attribute = @{NSFontAttributeName:font};
+    NSDictionary *attribute = @{NSFontAttributeName:(font ? : [UIFont systemFontOfSize:16.f])};
      return   [self sizeWithAttributes:attribute];
 }
 

@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^NotstringViewBtnClickedBlock)();
+typedef void(^NotstringViewBtnClickedBlock)(void);
 
 @interface NotstringView : UIView
 
-@property (copy,nonatomic) NotstringViewBtnClickedBlock block;
+@property (strong,nonatomic) NotstringViewBtnClickedBlock BtnClickedBlock;
 
 //1个标题和图片
 - (instancetype)initWithFrame:(CGRect)frame
