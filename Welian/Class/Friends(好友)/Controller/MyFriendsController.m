@@ -59,7 +59,7 @@ static NSString *fridcellid = @"fridcellid";
 //    self.navigationController.navigationBarHidden = NO;
 //    self.navigationController.navigationBar.hidden = NO;
     //显示导航条
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 

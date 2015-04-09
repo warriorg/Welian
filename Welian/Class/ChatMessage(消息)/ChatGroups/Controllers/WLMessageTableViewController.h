@@ -6,8 +6,7 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
+#import "BasicViewController.h"
 //Model
 #import "WLMessageModel.h"
 
@@ -136,7 +135,7 @@
 
 @end
 
-@interface WLMessageTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate,WLShareMenuViewDelegate>
+@interface WLMessageTableViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate,WLMessageTableViewControllerDataSource,WLMessageTableViewControllerDelegate,WLMessageInputViewDelegate,WLMessageTableViewCellDelegate,WLShareMenuViewDelegate>
 
 @property (nonatomic, weak) id <WLMessageTableViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <WLMessageTableViewControllerDataSource> dataSource;
