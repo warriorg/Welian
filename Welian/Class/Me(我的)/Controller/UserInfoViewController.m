@@ -191,22 +191,6 @@ static NSString *fridcellid = @"fridcellid";
 //    }
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    UIColor *color = kNavBgColor;
-//    if (offsetY > kTableViewHeaderViewHeight/2) {
-//        CGFloat alpha = 1 - ((kTableViewHeaderViewHeight/2 + 64 - offsetY) / 64);
-//        self.navigationController.navigationBar.backgroundColor = [color colorWithAlphaComponent:alpha];
-////        [self.navigationController.navigationBar setBarTintColor:[color colorWithAlphaComponent:alpha]];
-////        [[UINavigationBar appearance] setBarTintColor:[color colorWithAlphaComponent:alpha]];
-////        [[UINavigationBar appearance] setTintColor:[color colorWithAlphaComponent:alpha]];
-////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-////        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
-//    }
-//}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
