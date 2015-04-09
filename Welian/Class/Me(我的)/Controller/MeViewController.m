@@ -479,7 +479,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 //添加好友
 - (void)addFriendBtnClick
 {
-    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped fromMe:YES];
     [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 

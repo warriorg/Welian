@@ -49,7 +49,7 @@
     self = [super init];
     if (self) {
         self.pageIndex = 1;
-        self.pageSize = 20;
+        self.pageSize = KCellConut;
     }
     return self;
 }
@@ -58,7 +58,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        
+        self.pageIndex = 1;
+        self.pageSize = KCellConut;
     }
     return self;
 }
@@ -69,6 +70,7 @@
     
     //隐藏tableiView分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.datasource = [NSMutableArray array];
     
     //上提加载更多
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
@@ -198,8 +200,11 @@
                                            //隐藏加载更多动画
                                            [self.tableView.footer endRefreshing];
                                            
-                                           self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
-                                          
+                                           if([JSON count] > 0){
+                                               NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+                                               [self.datasource addObjectsFromArray:users];
+                                           }
+                                           
                                            //设置是否可以下拉刷新
                                            if ([JSON count] != KCellConut) {
                                                self.tableView.footer.hidden = YES;
@@ -221,6 +226,11 @@
                                           //隐藏加载更多动画
                                           [self.tableView.footer endRefreshing];
                                           
+                                          if([JSON count] > 0){
+                                              NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+                                              [self.datasource addObjectsFromArray:users];
+                                          }
+                                          
                                           //设置是否可以下拉刷新
                                           if ([JSON count] != KCellConut) {
                                               self.tableView.footer.hidden = YES;
@@ -228,7 +238,6 @@
                                               self.tableView.footer.hidden = NO;
                                           }
                                           
-                                          self.datasource = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
                                           [self.tableView reloadData];
                                       } fail:^(NSError *error) {
 //                                          [UIAlertView showWithError:error];

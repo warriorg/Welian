@@ -56,6 +56,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //显示导航条
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     //加载好友
     [self loadMyAllFriends];
 }
@@ -104,6 +106,7 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setSearchResultsDelegate:self];
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                              forKey:@"_searchResultsTableViewStyle"];
+    [self.searchDisplayVC setActive:NO animated:YES];
     [self.tableView setTableHeaderView:self.searchBar];
     [self.searchBar setBackgroundImage:[UIImage resizedImage:@"searchbar_bg"]];
 
@@ -241,7 +244,7 @@ static NSString *fridcellid = @"fridcellid";
 //添加好友
 - (void)addFriendClick
 {
-    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    AddFriendTypeListViewController *addTypeListVC = [[AddFriendTypeListViewController alloc] initWithStyle:UITableViewStyleGrouped fromMe:NO];
     [self.navigationController pushViewController:addTypeListVC animated:YES];
 }
 

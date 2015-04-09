@@ -25,6 +25,9 @@
 {
     //类型
     NSMutableString *types = [NSMutableString string];
+    self.items = [self.items sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[obj1 itemid] integerValue] > [[obj2 itemid] integerValue];
+    }];
     if (self.items.count > 0) {
         [types appendFormat:@"%@",[[(InvestItemM *)self.items[0] item] deleteTopAndBottomKonggeAndHuiche]];
         if(self.items.count > 1){
@@ -44,6 +47,9 @@
 {
     //类型
     NSMutableString *types = [NSMutableString string];
+    self.industry = [self.industry sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[obj1 industryid] integerValue] > [[obj2 industryid] integerValue];
+    }];
     if (self.industry.count > 0) {
         [types appendFormat:@"%@",[[self.industry[0] industryname] deleteTopAndBottomKonggeAndHuiche]];
         if(self.industry.count > 1){
@@ -63,6 +69,9 @@
 {
     //类型
     NSMutableString *types = [NSMutableString string];
+    self.stages = [self.stages sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[obj1 stage] integerValue] > [[obj2 stage] integerValue];
+    }];
     if (self.stages.count > 0) {
         [types appendFormat:@"%@",[[self.stages[0] stagename] deleteTopAndBottomKonggeAndHuiche]];
         if(self.stages.count > 1){
