@@ -255,10 +255,12 @@
         if (self.shadowOfText) {
             CGContextSaveGState(context);
             CGContextSetShadowWithColor(context, self.shadowOffset, self.shadowBlur, self.shadowColor.CGColor);
-            [self.displayinText drawAtPoint:p withFont:self.font];
-            CGContextRestoreGState(context);            
+//            [self.displayinText drawAtPoint:p withFont:self.font];
+            [self.displayinText drawAtPoint:p withAttributes:@{NSFontAttributeName:self.font,NSForegroundColorAttributeName:self.textColor}];
+            CGContextRestoreGState(context);
         } else {
-            [self.displayinText drawAtPoint:p withFont:self.font];
+//            [self.displayinText drawAtPoint:p withFont:self.font];
+            [self.displayinText drawAtPoint:p withAttributes:@{NSFontAttributeName:self.font,NSForegroundColorAttributeName:self.textColor}];
         }
     }
     

@@ -58,10 +58,6 @@
                                                     BtnTitle:@"点击刷新"
                                                 BtnImageName:@"login_research"];
     }
-    WEAKSELF
-    [_phoneNotView setBlock:^{
-        [weakSelf changeDataWithIndex:0];
-    }];
     return _phoneNotView;
 }
 
@@ -114,6 +110,7 @@
     //设置默认选择的内容
     [segmentedControl setSelectedSegmentIndex:_selectIndex];
     self.navigationItem.titleView = segmentedControl;
+//    [self.tableView setTableHeaderView:segmentedControl];
     self.segmentedControl = segmentedControl;
     
     //下拉刷新
@@ -158,12 +155,12 @@
         cell = [[NewFriendViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    if (_datasource.count > 0) {
-        cell.indexPath = indexPath;
-        if (_selectIndex == 1 && indexPath.section == 0) {
-            //邀请好友
-            cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
-        }else{
+    cell.indexPath = indexPath;
+    if (_selectIndex == 1 && indexPath.section == 0) {
+        //邀请好友
+        cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
+    }else{
+        if (_datasource.count > 0) {
             cell.needAddUser = _datasource[indexPath.row];
             WEAKSELF
             [cell setNeedAddBlock:^(NSInteger type,NeedAddUser *needAddUser,NSIndexPath *indexPath){
@@ -302,17 +299,20 @@
         //这个只会在第一次访问时调用
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool greanted, CFErrorRef error){
             dispatch_semaphore_signal(sema);
-            self.canOpenAddress = greanted;
             
-            //默认加载的数据
-//            [self reloadUIData];
-            if (_canOpenAddress) {
-                //获取通讯录好友
-                [self getPhoneAllFriends];
-            }else{
-//                [self.refreshControl endRefreshing];
-                [self reloadUIData];
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.canOpenAddress = greanted;
+                
+                //默认加载的数据
+                //            [self reloadUIData];
+                if (_canOpenAddress) {
+                    //获取通讯录好友
+                    [self getPhoneAllFriends];
+                }else{
+                    //                [self.refreshControl endRefreshing];
+                    [self reloadUIData];
+                }
+            });
         });
     }else{
         //获取微信好友
@@ -334,7 +334,13 @@
         if(!_canOpenAddress){
             self.datasource = [NSMutableArray array];
             [self.view addSubview:self.phoneNotView];
-            [self.view sendSubviewToBack:_phoneNotView];
+            [self.view bringSubviewToFront:_phoneNotView];
+            [self.refreshControl endRefreshing];
+            
+            WEAKSELF
+            [_phoneNotView setBtnClickedBlock:^(void){
+                [weakSelf changeDataWithIndex:0];
+            }];
         }else{
             //手机通讯录
             self.datasource = [NeedAddUser allNeedAddUsersWithType:1];//[NeedAddUser allNeedAddUserWithType:1];
@@ -374,7 +380,8 @@
  */
 - (void)getPhoneAllFriends
 {
-    if([NeedAddUser allNeedAddUsersWithType:1].count <= 0){
+//    if([NeedAddUser allNeedAddUsersWithType:1].count <= 0){
+    if(_datasource.count <= 0){
         //通讯录联系人
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
@@ -467,7 +474,8 @@
  */
 - (void)getWxFriends
 {
-    if ([NeedAddUser allNeedAddUsersWithType:2].count <= 0) {
+//    if ([NeedAddUser allNeedAddUsersWithType:2].count <= 0) {
+    if (_datasource.count <= 0) {
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
