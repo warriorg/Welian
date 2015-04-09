@@ -87,19 +87,19 @@
 {
     [super viewWillDisappear:animated];
     //代理置空，否则会闪退 设置手势滑动返回
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+//    }
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    //开启滑动手势
-    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }else{
-        navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
-}
+//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    //开启滑动手势
+//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }else{
+//        navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -110,15 +110,19 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    //设置push到当前VC
+    self.isJoindThisVC = YES;
+    
     [self scrollViewDidScroll:_tableView];
     
     //开启iOS7的滑动返回效果
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        //只有在二级页面生效
-        if ([self.navigationController.viewControllers count] > 1) {
-            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-        }
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        //只有在二级页面生效
+//        if ([self.navigationController.viewControllers count] > 1) {
+//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//        }
+//    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

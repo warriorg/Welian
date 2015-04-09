@@ -48,6 +48,8 @@
     //显示导航条
     if (_isFromMeVC) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = NO;
     }
     
     //隐藏tableiView分割线

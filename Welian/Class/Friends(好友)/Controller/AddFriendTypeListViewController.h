@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-//#import "BasicPlainTableViewController.h"
+#import "BasicPlainTableViewController.h"
 
-@interface AddFriendTypeListViewController : UITableViewController
+@interface AddFriendTypeListViewController : BasicPlainTableViewController
 
 - (instancetype)initWithStyle:(UITableViewStyle)style fromMe:(BOOL)isFromMeVC;
 

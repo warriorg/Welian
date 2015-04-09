@@ -44,15 +44,42 @@
     
     //隐藏导航条
     if (_showCustomNavHeader) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
+//        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        if (self.navigationController.viewControllers.count == 1) {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        }else{
+            if (_isJoindThisVC) {
+                self.navigationController.navigationBarHidden = NO;
+                self.navigationController.navigationBar.hidden = NO;
+            }else{
+                self.navigationController.navigationBarHidden = NO;
+                self.navigationController.navigationBar.hidden = YES;
+            }
+        }
+//        [self.navigationController.navigationBar setDebug:YES];
     }else{
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = NO;
+//        [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    //隐藏导航条
+    if (_isJoindThisVC  && self.navigationController.viewControllers.count > 1) {
+        //        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBar.hidden = YES;
+//        [self.navigationController.navigationBar setDebug:YES];
+    }
+//    else{
+//        self.navigationController.navigationBarHidden = NO;
+//        self.navigationController.navigationBar.hidden = NO;
+//        //        [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    }
 //    if (_showCustomNavHeader) {
     
         //开启iOS7的滑动返回效果
