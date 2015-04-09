@@ -14762,7 +14762,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianAppDis-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianAppDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14811,7 +14811,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianAppDis-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianAppDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14859,7 +14859,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianDev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14908,7 +14908,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianDev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14956,7 +14956,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianDis-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15005,7 +15005,7 @@
 					"$(SRCROOT)/Welian/Class/Other(其他)/BlocksKit/**",
 					"$(SRCROOT)/Welian/Class/Other(其他)/alipay",
 				);
-				INFOPLIST_FILE = "weLianDis-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Welian/weLianDis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
