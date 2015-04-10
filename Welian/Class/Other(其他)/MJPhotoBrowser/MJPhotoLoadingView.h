@@ -6,7 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MJPhotoProgressView.h"
+//#import "MJPhotoProgressView.h"
+#import "UCZProgressView.h"
 
 #define kMinProgress 0.0001
 
@@ -16,7 +17,7 @@
 @interface MJPhotoLoadingView : UIView
 @property (nonatomic) float progress;
 
-@property (nonatomic, strong) MJPhotoProgressView *progressView;
+@property (nonatomic, strong) UCZProgressView *progressView;
 
 - (void)showLoading;
 - (void)showFailure;

@@ -112,7 +112,7 @@
         
         [_imageView sd_setImageWithPreviousCachedImageWithURL:_photo.url andPlaceholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             if (receivedSize > kMinProgress) {
-                loading.progress = (float)receivedSize/expectedSize;
+//                loading.progress = (float)receivedSize/expectedSize;
             }
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

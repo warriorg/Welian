@@ -46,11 +46,13 @@
     [_failureLabel removeFromSuperview];
     
     if (_progressView == nil) {
-        _progressView = [[MJPhotoProgressView alloc] init];
-        _progressView.bounds = CGRectMake( 0, 0, 40, 40);
+        _progressView = [[UCZProgressView alloc] initWithFrame:CGRectMake( 0, 0, 50, 50)];
         _progressView.center = self.center;
+        _progressView.tintColor = [UIColor whiteColor];
+        _progressView.radius = 13.0;
     }
-    _progressView.progress = kMinProgress;
+    _progressView.indeterminate = YES;
+//    _progressView.progress = kMinProgress;
     [self addSubview:_progressView];
 }
 
@@ -59,8 +61,8 @@
 {
     _progress = progress;
     _progressView.progress = progress;
-    if (progress >= 1.0) {
-        [_progressView removeFromSuperview];
-    }
+//    if (progress >= 1.0) {
+//        [_progressView removeFromSuperview];
+//    }
 }
 @end

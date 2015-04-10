@@ -3833,6 +3833,10 @@
 		F57F31EB1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
 		F57F31EC1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
 		F57F31ED1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
+		F583996A1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
+		F583996B1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
+		F583996C1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
+		F583996D1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
 		F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
 		F58CA9521A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
 		F58CA9531A5BE6E400988A61 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
@@ -5898,6 +5902,8 @@
 		F57F31E01AA7F38900B8EF72 /* ShareFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFriendsController.h; sourceTree = "<group>"; };
 		F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFriendsController.m; sourceTree = "<group>"; };
 		F57F31E91AA947F900B8EF72 /* ShareType.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ShareType.plist; sourceTree = "<group>"; };
+		F58399681AD7CDC7008A1A48 /* UCZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCZProgressView.h; sourceTree = "<group>"; };
+		F58399691AD7CDC7008A1A48 /* UCZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCZProgressView.m; sourceTree = "<group>"; };
 		F5874C151A1C842E009F7D83 /* WLCellHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCellHead.h; sourceTree = "<group>"; };
 		F5874C161A1C842E009F7D83 /* WLCellHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCellHead.m; sourceTree = "<group>"; };
 		F5874C181A1C8DA9009F7D83 /* me_mycard_chuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_chuang@2x.png"; sourceTree = "<group>"; };
@@ -8974,6 +8980,8 @@
 		F5C677DB19D3BACE003987CC /* MJPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				F58399681AD7CDC7008A1A48 /* UCZProgressView.h */,
+				F58399691AD7CDC7008A1A48 /* UCZProgressView.m */,
 				F5C677DC19D3BACE003987CC /* MJPhoto.h */,
 				F5C677DD19D3BACE003987CC /* MJPhoto.m */,
 				F5C677DE19D3BACE003987CC /* MJPhotoBrowser.bundle */,
@@ -12589,6 +12597,7 @@
 				A49C7C421A70D42700F2AEC5 /* InvestIndustry.m in Sources */,
 				A49C7C431A70D42700F2AEC5 /* WLLocationHelper.m in Sources */,
 				F56C305D1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F583996D1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */,
 				F5933F8D1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				A49C7C441A70D42700F2AEC5 /* UILabel+AttributedLabel.m in Sources */,
 				A49C7C451A70D42700F2AEC5 /* MagicalRecord+Actions.m in Sources */,
@@ -13117,6 +13126,7 @@
 				F534DB5C1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				A41CE1E81A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F56C305C1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F583996C1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */,
 				F5933F8C1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F53328FC1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB1A1A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
@@ -13645,6 +13655,7 @@
 				A4C141141A4BEF5700C9BAB5 /* LKBadgeView.m in Sources */,
 				F56649C51A2AFD56008A5830 /* SDWebImageDownloaderOperation.m in Sources */,
 				F56C305A1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F583996A1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */,
 				F5933F8A1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F56649C61A2AFD56008A5830 /* NotstringView.m in Sources */,
 				A4C1407A1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
@@ -14173,6 +14184,7 @@
 				F534DB5B1A5119A000B6A725 /* InvestIndustry.m in Sources */,
 				A41CE1E71A6FA64C004F17E7 /* WLLocationHelper.m in Sources */,
 				F56C305B1AC3E01D00EDF054 /* PhoneChangeVC.m in Sources */,
+				F583996B1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */,
 				F5933F8B1AD4F4030088C70D /* MJRefreshComponent.m in Sources */,
 				F53328FB1A5EBC0C001F48FA /* UILabel+AttributedLabel.m in Sources */,
 				A4A2EB191A6CF7C8006ADA55 /* MagicalRecord+Actions.m in Sources */,
