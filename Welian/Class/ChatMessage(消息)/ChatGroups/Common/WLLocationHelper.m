@@ -24,6 +24,11 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.distanceFilter = 5.0;
     
+    if (![CLLocationManager locationServicesEnabled]) {
+        DLog(@"定位服务当前可能尚未打开，请设置打开！");
+        return;
+    }
+    
     if(IsiOS8Later){
         [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
         [_locationManager requestAlwaysAuthorization];
@@ -61,31 +66,50 @@
 
 #pragma mark - CLLocationManager Delegate
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                [_locationManager requestAlwaysAuthorization];
+            }
+            break;
+        default:
+            break;
+    } 
+}
+
 // 代理方法实现
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     if(newLocation){
         CLGeocoder* geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:newLocation completionHandler:
-         ^(NSArray* placemarks, NSError* error) {
-             if (self.didGetGeolocationsCompledBlock) {
-                 self.didGetGeolocationsCompledBlock(placemarks);
-             }
+        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray* placemarks, NSError* error) {
+            if(!error){
+                if (self.didGetGeolocationsCompledBlock) {
+                    self.didGetGeolocationsCompledBlock(placemarks);
+                }
+                [manager stopUpdatingLocation];
+            }
          }];
-        [manager stopUpdatingLocation];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    if (locations) {
+    if (locations != nil && locations.count > 0) {
+        CLLocation *location = [locations firstObject];//取出第一个位置
+        CLLocationCoordinate2D coordinate = location.coordinate;//位置坐标
+        DLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+        
         CLGeocoder* geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:[locations objectAtIndex:0] completionHandler:
-         ^(NSArray* placemarks, NSError* error) {
-             if (self.didGetGeolocationsCompledBlock) {
-                 self.didGetGeolocationsCompledBlock(placemarks);
-             }
+        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray* placemarks, NSError* error) {
+            if(!error){
+                if (self.didGetGeolocationsCompledBlock) {
+                    self.didGetGeolocationsCompledBlock(placemarks);
+                }
+                [manager stopUpdatingLocation];
+            }
          }];
-        [manager stopUpdatingLocation];
     }
 }
 
