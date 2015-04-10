@@ -61,12 +61,24 @@
 
 #pragma mark - CLLocationManager Delegate
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                [_locationManager requestAlwaysAuthorization];
+            }
+            break;
+        default:
+            break;
+    } 
+}
+
 // 代理方法实现
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     if(newLocation){
         CLGeocoder* geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:newLocation completionHandler:
-         ^(NSArray* placemarks, NSError* error) {
+        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray* placemarks, NSError* error) {
              if (self.didGetGeolocationsCompledBlock) {
                  self.didGetGeolocationsCompledBlock(placemarks);
              }
@@ -77,10 +89,9 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    if (locations) {
+    if (locations.count > 0) {
         CLGeocoder* geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:[locations objectAtIndex:0] completionHandler:
-         ^(NSArray* placemarks, NSError* error) {
+        [geocoder reverseGeocodeLocation:[locations objectAtIndex:0] completionHandler:^(NSArray* placemarks, NSError* error) {
              if (self.didGetGeolocationsCompledBlock) {
                  self.didGetGeolocationsCompledBlock(placemarks);
              }
