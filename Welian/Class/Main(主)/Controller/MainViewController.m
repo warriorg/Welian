@@ -91,6 +91,7 @@
     HomeController *homeVC;
 }
 
+@property (strong,nonatomic) CLGeocoder* geocoder;
 @property (nonatomic, strong) NavTitleView *navTitleView;
 
 @end
@@ -305,29 +306,62 @@ single_implementation(MainViewController)
 //获取城市定位
 - (void)getCityLocationInfo
 {
-    [[WLLocationHelper sharedInstance] getCurrentGeolocationsCompled:^(NSArray *placemarks) {
-        if (placemarks.count > 0) {
-            CLPlacemark *placemark = [placemarks firstObject];
-            if (placemark) {
-                NSDictionary *addressDictionary = placemark.addressDictionary;
-                //            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-                //            NSString *geoLocations = [formattedAddressLines lastObject];
-                if (placemark.locality.length > 0 || addressDictionary != nil) {
-                    //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-                    NSString *cityStr = placemark.locality.length > 0 ? placemark.locality : addressDictionary[@"City"];
-                    if (cityStr.length > 0) {
-                        NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
-                        DLog(@"当前城市：%@ ---- placemark.locality:%@",city,placemark.locality);
-                        //定位的城市
-                        [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
-                    }else{
-                        //定位的城市
-                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+    // 定位
+    [[LocationTool sharedLocationTool] statLocationMy];
+    [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
+        if (!_geocoder) {
+            self.geocoder = [[CLGeocoder alloc] init];
+        }
+        [_geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray* placemarks, NSError* error) {
+            if(!error){
+                if (placemarks.count > 0) {
+                    CLPlacemark *placemark = [placemarks firstObject];
+                    if (placemark) {
+                        NSDictionary *addressDictionary = placemark.addressDictionary;
+                        //            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+                        //            NSString *geoLocations = [formattedAddressLines lastObject];
+                        if (placemark.locality.length > 0 || addressDictionary != nil) {
+                            //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+                            NSString *cityStr = placemark.locality.length > 0 ? placemark.locality : addressDictionary[@"City"];
+                            if (cityStr.length > 0) {
+                                NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+                                DLog(@"当前城市：%@ ---- placemark.locality:%@",city,placemark.locality);
+                                //定位的城市
+                                [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                            }else{
+                                //定位的城市
+                                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+                            }
+                        }
                     }
                 }
             }
-        }
-    }];
+        }];
+    };
+    
+//    [[WLLocationHelper sharedInstance] getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+//        if (placemarks.count > 0) {
+//            CLPlacemark *placemark = [placemarks firstObject];
+//            if (placemark) {
+//                NSDictionary *addressDictionary = placemark.addressDictionary;
+//                //            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+//                //            NSString *geoLocations = [formattedAddressLines lastObject];
+//                if (placemark.locality.length > 0 || addressDictionary != nil) {
+//                    //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+//                    NSString *cityStr = placemark.locality.length > 0 ? placemark.locality : addressDictionary[@"City"];
+//                    if (cityStr.length > 0) {
+//                        NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+//                        DLog(@"当前城市：%@ ---- placemark.locality:%@",city,placemark.locality);
+//                        //定位的城市
+//                        [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+//                    }else{
+//                        //定位的城市
+//                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+//                    }
+//                }
+//            }
+//        }
+//    }];
 }
 
 
