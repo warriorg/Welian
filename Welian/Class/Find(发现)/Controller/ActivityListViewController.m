@@ -86,9 +86,10 @@
         //活动当前定位的城市
         NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:@"LocationCity"];
         NSDictionary *localCity = nil;
-        if (city) {
+        if (city.length > 0) {
             localCity = [localCitys bk_match:^BOOL(id obj) {
-                return [[obj objectForKey:@"name"] isEqualToString:city];
+//                return [[obj objectForKey:@"name"] isEqualToString:city];
+                return [city isContainsString:[obj objectForKey:@"name"]];
             }];
         }
         

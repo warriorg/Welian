@@ -22,7 +22,7 @@ single_interface(LocationTool)
 @property (nonatomic, strong) BMKReverseGeoCodeOption *reverseGeoCodeSearchOption;
 @property (nonatomic, strong) BMKGeoCodeSearch *geoSearch;
 
-@property (nonatomic, copy) BKLocationBlock userLocationBlock;
+@property (nonatomic, strong) BKLocationBlock userLocationBlock;
 
 // 开始定位
 - (void)statLocationMy;

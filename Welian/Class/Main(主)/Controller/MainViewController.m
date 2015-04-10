@@ -287,7 +287,10 @@ single_implementation(MainViewController)
     
     // 定位
     [[LocationTool sharedLocationTool] statLocationMy];
-    [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
+    WEAKSELF
+    [[LocationTool sharedLocationTool] setUserLocationBlock:^(BMKUserLocation *userLocation){
+        //城市定位
+        [weakSelf getLoactionCityInfoWith:userLocation];
         CLLocationCoordinate2D coord2D = userLocation.location.coordinate;
         NSString *x = [NSString stringWithFormat:@"%f",coord2D.latitude];
         NSString *y = [NSString stringWithFormat:@"%f",coord2D.longitude];
@@ -297,47 +300,29 @@ single_implementation(MainViewController)
         } fail:^(NSError *error) {
             
         }];
-    };
+    }];
     
     //获取城市定位
-    [self getCityLocationInfo];
+//    [self getCityLocationInfo];
+}
+
+- (CLGeocoder*)geocoder
+{
+    if (_geocoder == nil) {
+        _geocoder = [[CLGeocoder alloc] init];
+    }
+    return _geocoder;
 }
 
 //获取城市定位
 - (void)getCityLocationInfo
 {
     // 定位
-    [[LocationTool sharedLocationTool] statLocationMy];
-    [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
-        if (!_geocoder) {
-            self.geocoder = [[CLGeocoder alloc] init];
-        }
-        [_geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray* placemarks, NSError* error) {
-            if(!error){
-                if (placemarks.count > 0) {
-                    CLPlacemark *placemark = [placemarks firstObject];
-                    if (placemark) {
-                        NSDictionary *addressDictionary = placemark.addressDictionary;
-                        //            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-                        //            NSString *geoLocations = [formattedAddressLines lastObject];
-                        if (placemark.locality.length > 0 || addressDictionary != nil) {
-                            //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-                            NSString *cityStr = placemark.locality.length > 0 ? placemark.locality : addressDictionary[@"City"];
-                            if (cityStr.length > 0) {
-                                NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
-                                DLog(@"当前城市：%@ ---- placemark.locality:%@",city,placemark.locality);
-                                //定位的城市
-                                [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
-                            }else{
-                                //定位的城市
-                                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
-                            }
-                        }
-                    }
-                }
-            }
-        }];
-    };
+//    [[LocationTool sharedLocationTool] statLocationMy];
+//    WEAKSELF
+//    [[LocationTool sharedLocationTool] setUserLocationBlock:^(BMKUserLocation *userLocation){
+//        [weakSelf getLoactionCityInfoWith:userLocation];
+//    }];
     
 //    [[WLLocationHelper sharedInstance] getCurrentGeolocationsCompled:^(NSArray *placemarks) {
 //        if (placemarks.count > 0) {
@@ -362,6 +347,56 @@ single_implementation(MainViewController)
 //            }
 //        }
 //    }];
+}
+
+- (void)getLoactionCityInfoWith:(BMKUserLocation *)userLocation
+{
+//  北京 116.300209,39.920026（北京市市辖区）    上海：121.391313,31.240517  台湾：(台湾省)120.434915,22.983245  121.603144,24.952727  香港：114.178428,22.274236（香港特別行政區）  澳门：113.566718,22.154318(澳门特别性质区)  和田区：79.909829,37.124486（和田地区）
+    DLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",userLocation.location.coordinate.longitude,userLocation.location.coordinate.latitude,userLocation.location.altitude,userLocation.location.course,userLocation.location.speed);
+    [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray* placemarks, NSError* error) {
+        if(!error){
+            if (placemarks.count > 0) {
+                CLPlacemark *placemark = [placemarks firstObject];
+                if (placemark) {
+                    NSDictionary *addressDictionary = placemark.addressDictionary;
+                    //            NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+                    //            NSString *geoLocations = [formattedAddressLines lastObject];
+                    if (addressDictionary != nil) {
+                        //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+//                        NSString *provinStr =[placemark.addressDictionary objectForKey:@"State"];
+                        NSString *cityStr = addressDictionary[@"City"];//市
+                        NSString *stateStr =  addressDictionary[@"State"];//省
+                        
+                        DLog(@"当前城市：%@ --省: %@-- placemark.locality:%@",cityStr,stateStr,placemark.locality);
+                        
+                        NSString * city = cityStr ? cityStr : stateStr;
+                        if(city.length > 0){
+//                            if ([cityStr containsString:@"市"]) {
+//                                //市
+//                                NSRange range = [cityStr rangeOfString:@"市"]; //现获取要截取的字符串位置
+//                                city = [cityStr substringToIndex:range.location]; //截取字符串
+//                            }else if([cityStr containsString:@"省"]){
+//                                //省
+//                                NSRange range = [cityStr rangeOfString:@"市"]; //现获取要截取的字符串位置
+//                                city = [cityStr substringToIndex:range.location]; //截取字符串
+//                            }else if ([cityStr containsString:@"特别行政"]){
+//                                //特别行政区
+//                                NSRange range = [cityStr rangeOfString:@"特别行政"]; //现获取要截取的字符串位置
+//                                city = [cityStr substringToIndex:range.location]; //截取字符串
+//                            }else if([cityStr containsString:@""]){
+//                            
+//                            }
+                            //定位的城市
+                            [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                        }else{
+                            //定位的城市
+                            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+                        }
+                    }
+                }
+            }
+        }
+    }];
 }
 
 
