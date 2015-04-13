@@ -1163,7 +1163,10 @@ static NSString *fridcellid = @"fridcellid";
 //重新右侧按钮方法
 - (void)rightBtnClicked:(UIButton *)sender
 {
-    [self moreBtnClicked];
+    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    if (_baseUserModel.friendship.integerValue == 1) {
+        [self moreBtnClicked];
+    }
 }
 
 //设置右上角按钮

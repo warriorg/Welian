@@ -21,21 +21,21 @@
 		</dict>
 	</array>
 	<array>
-        <dict>
-            <key>row</key>
-            <string>0</string>
-            <key>name</key>
-            <string>项目</string>
-            <key>icon</key>
-            <string>discovery_xiangmu.png</string>
-        </dict>
+		<dict>
+			<key>row</key>
+			<string>0</string>
+			<key>name</key>
+			<string>项目</string>
+			<key>icon</key>
+			<string>me_xiangmu.png</string>
+		</dict>
 		<dict>
 			<key>row</key>
 			<string>1</string>
 			<key>name</key>
 			<string>投资人</string>
 			<key>icon</key>
-			<string>discovery_tou.png</string>
+			<string>me_touzi.png</string>
 		</dict>
 	</array>
 </array>
