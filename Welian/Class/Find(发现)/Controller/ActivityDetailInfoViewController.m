@@ -463,7 +463,10 @@
 #pragma mark - Private
 - (void)rightBtnClicked:(UIButton *)sender
 {
-    [self shareBtnClicked];
+    //添加分享按钮 navbar_share
+    if(_activityInfo.shareurl.length > 0){
+        [self shareBtnClicked];
+    }
 }
 
 //检测分享按钮是否显示

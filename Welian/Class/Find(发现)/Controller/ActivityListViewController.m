@@ -382,8 +382,8 @@
 //创建活动
 - (void)createActivity
 {
-    [UIAlertView bk_showAlertViewWithTitle:@"创建活动"
-                                   message:@"创建活动请登录my.welian.com"
+    [UIAlertView bk_showAlertViewWithTitle:@""
+                                   message:@"创建活动请在PC登录my.welian.com。经微链推荐后就可在此页显示"
                          cancelButtonTitle:@"好的"
                          otherButtonTitles:nil
                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
