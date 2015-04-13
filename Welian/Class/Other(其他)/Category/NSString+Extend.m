@@ -11,6 +11,12 @@
 
 @implementation NSString (Extend)
 
+- (BOOL)isContainsString:(NSString *)string
+{
+    NSRange range = [self rangeOfString:string];
+    return range.location != NSNotFound;
+}
+
 - (CGSize)calculateSize:(CGSize)size font:(UIFont *)font {
     CGSize expectedLabelSize = CGSizeZero;
     

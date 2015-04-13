@@ -10,6 +10,8 @@
 
 @interface NSString (Extend)
 
+- (BOOL)isContainsString:(NSString *)string;
+
 - (CGSize)calculateSize:(CGSize)size font:(UIFont *)font;
 
 //将NSString转化为NSArray或者NSDictionary

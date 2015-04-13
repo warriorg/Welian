@@ -39,6 +39,14 @@
     _geocoder = nil;
 }
 
+- (CLGeocoder*)geocoder
+{
+    if (_geocoder == nil) {
+        _geocoder = [[CLGeocoder alloc] init];
+    }
+    return _geocoder;
+}
+
 - (WLLocationHelper *)locationHelper {
     if (!_locationHelper) {
         _locationHelper = [[WLLocationHelper alloc] init];
@@ -57,7 +65,7 @@
 
 // 筛选等级
 - (NSArray *)siftArray:(NSArray*)dicArray orderWithKey:(NSString *)key{
-    NSPredicate *pre = [NSPredicate predicateWithFormat:@"name=%@",key];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%@ CONTAINS name",key];
     return [dicArray filteredArrayUsingPredicate:pre];
 }
 
@@ -73,59 +81,12 @@
     if (_showLocation) {
         // 定位
         [[LocationTool sharedLocationTool] statLocationMy];
-        [LocationTool sharedLocationTool].userLocationBlock = ^(BMKUserLocation *userLocation){
-            if (!_geocoder) {
-                self.geocoder = [[CLGeocoder alloc] init];
-            }
-            [_geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray* placemarks, NSError* error) {
-                if(!error){
-                    if (placemarks.count > 0) {
-                        CLPlacemark *placemark = [placemarks firstObject];
-                        if (placemark) {
-                            NSDictionary *addressDictionary = placemark.addressDictionary;
-                            //                NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-                            //                NSString *geoLocations = [formattedAddressLines lastObject];
-                            if (placemark.locality.length > 0 || addressDictionary != nil) {
-                                //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-                                NSString *cityStr = placemark.locality.length > 0 ? placemark.locality : addressDictionary[@"City"];
-                                if (cityStr.length > 0) {
-                                    NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
-                                    DLog(@"当前城市：%@ ---- placemark.locality:%@",city,placemark.locality);
-                                    //定位的城市
-                                    [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
-                                    
-                                    NSMutableArray *all = [NSMutableArray arrayWithArray:_datasource];
-                                    //判断是否在城市列表中
-                                    NSDictionary *locationCityDic = nil;
-                                    NSArray *citys = [self siftArray:_cityArrayDic orderWithKey:city];
-                                    if (citys.count == 0) {
-                                        NSArray *provinces = [self siftArray:_provinceArrayDic orderWithKey:city];
-                                        if (provinces.count > 0) {
-                                            NSDictionary *dic = [provinces firstObject];
-                                            locationCityDic = @{@"cityid":dic[@"pid"],@"name":cityStr};
-                                        }
-                                    }else{
-                                        NSDictionary *dic = [citys firstObject];
-                                        locationCityDic = @{@"cityid":dic[@"cid"],@"name":cityStr};
-                                    }
-                                    if(locationCityDic){
-                                        [all replaceObjectAtIndex:0 withObject:locationCityDic];
-                                    }
-                                    self.datasource = [NSArray arrayWithArray:all];
-                                }
-                                
-                                //刷新第一行
-                                [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-                                
-                                NSInteger selectRow = [_datasource indexOfObject:_normalInfo];
-                                [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectRow inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-                            }
-                        }
-                    }
-                }
-            }];
-        };
         
+        WEAKSELF
+        [[LocationTool sharedLocationTool] setUserLocationBlock:^(BMKUserLocation *userLocation){
+            [weakSelf getLoactionCityInfoWith:userLocation];
+        }];
+    }
 //        [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
 //            if (placemarks.count > 0) {
 //                CLPlacemark *placemark = [placemarks firstObject];
@@ -166,7 +127,63 @@
 //                }
 //            }
 //        }];
-    }
+}
+
+- (void)getLoactionCityInfoWith:(BMKUserLocation *)userLocation
+{
+    [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray* placemarks, NSError* error) {
+        if(!error){
+            if (placemarks.count > 0) {
+                CLPlacemark *placemark = [placemarks firstObject];
+                if (placemark) {
+                    NSDictionary *addressDictionary = placemark.addressDictionary;
+                    //                NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+                    //                NSString *geoLocations = [formattedAddressLines lastObject];
+                    if (addressDictionary != nil) {
+                        //                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+                        NSString *cityStr = addressDictionary[@"City"];//市
+                        NSString *stateStr =  addressDictionary[@"State"];//省
+                        
+                        DLog(@"当前城市：%@ --省: %@-- placemark.locality:%@",cityStr,stateStr,placemark.locality);
+                        
+                        NSString * city = cityStr ? cityStr : stateStr;
+                        if (city.length > 0) {
+//                            NSRange range = [cityStr rangeOfString:@"市"]; //现获取要截取的字符串位置
+//                            NSString * city = [cityStr substringToIndex:range.location]; //截取字符串
+//                            NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
+                            //定位的城市
+                            [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                            
+                            NSMutableArray *all = [NSMutableArray arrayWithArray:_datasource];
+                            //判断是否在城市列表中
+                            NSDictionary *locationCityDic = nil;
+                            NSArray *citys = [self siftArray:_cityArrayDic orderWithKey:city];
+                            if (citys.count == 0) {
+                                NSArray *provinces = [self siftArray:_provinceArrayDic orderWithKey:city];
+                                if (provinces.count > 0) {
+                                    NSDictionary *dic = [provinces firstObject];
+                                    locationCityDic = @{@"cityid":dic[@"pid"],@"name":cityStr};
+                                }
+                            }else{
+                                NSDictionary *dic = [citys firstObject];
+                                locationCityDic = @{@"cityid":dic[@"cid"],@"name":cityStr};
+                            }
+                            if(locationCityDic){
+                                [all replaceObjectAtIndex:0 withObject:locationCityDic];
+                            }
+                            self.datasource = [NSArray arrayWithArray:all];
+                        }
+                        
+                        //刷新第一行
+                        [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                        
+                        NSInteger selectRow = [_datasource indexOfObject:_normalInfo];
+                        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectRow inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
+            }
+        }
+    }];
 }
 
 - (void)layoutSubviews

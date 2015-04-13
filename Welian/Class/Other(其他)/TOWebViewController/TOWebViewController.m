@@ -479,6 +479,10 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
 {
     [super viewWillAppear:animated];
     
+    //显示导航条
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.hidden = NO;
+    
     //see if we need to show the toolbar
     if (self.navigationController) {
         if (IPAD == NO) { //iPhone
