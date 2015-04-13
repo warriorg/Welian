@@ -516,10 +516,10 @@ static NSString *picCellid = @"PicCellID";
         if (self.statusCard) {
             NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
             if (_textCell.textView.text.length) {
-                if (_textCell.textView.text.length>300) {
-                    [WLHUDView showErrorHUD:@"不能超过300字"];
-                    return;
-                }
+//                if (_textCell.textView.text.length>300) {
+//                    [WLHUDView showErrorHUD:@"不能超过300字"];
+//                    return;
+//                }
                 [pubCardDic setObject:_textCell.textView.text forKey:@"content"];
             }
             [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
@@ -550,10 +550,10 @@ static NSString *picCellid = @"PicCellID";
         self.publishM.photos = [NSMutableArray array];
         NSMutableDictionary *reqDataDic = [NSMutableDictionary dictionary];
         if (self.publishM.content) {
-            if (_textCell.textView.text.length>300) {
-                [WLHUDView showErrorHUD:@"不能超过300字"];
-                return;
-            }
+//            if (_textCell.textView.text.length>300) {
+//                [WLHUDView showErrorHUD:@"不能超过300字"];
+//                return;
+//            }
             [reqDataDic setObject:self.publishM.content forKey:@"content"];
         }
         if (self.publishM.address) {
