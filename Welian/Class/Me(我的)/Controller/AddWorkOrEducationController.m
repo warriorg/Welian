@@ -109,6 +109,7 @@
         [_beginTextF setPlaceholder:@"请选择"];
         [_beginTextF setTextAlignment:NSTextAlignmentRight];
         [_beginTextF setTintColor:KBasesColor];
+        [_beginTextF setTextColor:WLRGB(178, 178, 178)];
         [_beginTextF setInputView:self.datePick];
         [_beginTextF setDelegate:self];
         [_beginTextF setInputAccessoryView:self.oneinputToolView];
@@ -133,6 +134,7 @@
         [_endTextF setPlaceholder:@"请选择"];
         [_endTextF setDelegate:self];
         [_endTextF setTintColor:KBasesColor];
+        [_endTextF setTextColor:WLRGB(178, 178, 178)];
         [_endTextF setInputView:self.datePick];
         [_endTextF setInputAccessoryView:self.inputToolView];
     }
@@ -354,7 +356,7 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        [cell.detailTextLabel setTextColor:[UIColor blackColor]];
+//        [cell.detailTextLabel setTextColor:[UIColor blackColor]];
     }
     
     if (_wlUserLoadType ==1) {

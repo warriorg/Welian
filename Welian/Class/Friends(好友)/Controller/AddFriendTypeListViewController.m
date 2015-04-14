@@ -12,7 +12,6 @@
 #import "UserInfoBasicVC.h"
 #import "NavViewController.h"
 #import "UserInfoViewController.h"
-
 #import "UIImage+ImageEffects.h"
 #import "NewFriendViewCell.h"
 
@@ -96,19 +95,6 @@
     }
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (tableView == _searchDisplayVC.searchResultsTableView && _filterArray.count == 0) {
-        UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
-        sectionHeader.backgroundColor = WLLineColor;
-        sectionHeader.font = [UIFont systemFontOfSize:15.f];
-        sectionHeader.textColor = [UIColor grayColor];
-        sectionHeader.text = [NSString stringWithFormat:@"点击键盘搜索"];
-        return sectionHeader;
-    }
-    return nil;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //微信联系人
@@ -125,7 +111,6 @@
     }else{
         cell.dicData = _datasource[indexPath.row];
     }
-    
     return cell;
 }
 
@@ -134,9 +119,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _searchDisplayVC.searchResultsTableView) {
         UserInfoModel *mode = _filterArray[indexPath.row];
-//        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-//        [self.navigationController pushViewController:userBasic animated:YES];
-//        [_searchDisplayVC.searchContentsController.navigationController setNavigationBarHidden:YES animated:YES];
+
         UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
@@ -163,19 +146,6 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (tableView == _searchDisplayVC.searchResultsTableView) {
-        if(_filterArray.count > 0){
-            return 0.01f;
-        }else{
-            return 25.0;
-        }
-    }else{
-        return 10.f;
-    }
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.01f;
@@ -196,22 +166,20 @@
 #pragma mark UISearchDisplayController相关代理
 //===============================================
 
-- (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    [self.filterArray removeAllObjects];
+    if ([self.filterArray count] == 0) {
+        UITableView *tableView1 = self.searchDisplayController.searchResultsTableView;
+        for( UIView *subview in tableView1.subviews ) {
+            if( [subview class] == [UILabel class] ) {
+                UILabel *lbl = (UILabel*)subview; // sv changed to subview.
+                lbl.text = @"";
+            }
+        }
+    }
     
-//    [self.filterArray removeAllObjects];
-//    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]                                       objectAtIndex:[self.searchDisplayController.searchBar                                                      selectedScopeButtonIndex]]];
     return YES;
-}
-
-///现在来实现当搜索文本改变时的回调函数。这个方法使用谓词进行比较，并讲匹配结果赋给searchResults数组:
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
-    
-//    NSPredicate *pre = [NSPredicate predicateWithFormat:@"name contains[cd] %@",searchText];
-//    
-//    for (NSDictionary *aaa in self.allArray) {
-//        [self.filterArray addObjectsFromArray:[aaa[@"userF"] filteredArrayUsingPredicate:pre]];
-//    }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

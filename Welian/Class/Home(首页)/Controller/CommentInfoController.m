@@ -560,9 +560,10 @@ static NSString *noCommentCell = @"NoCommentCell";
     }
     
     LogInUser *mode = [LogInUser getCurrentLoginUser];
-    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+    
     if ([_selecCommFrame.commentM.user.uid integerValue]==[mode.uid integerValue]) {
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+        [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
             [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
                 [_dataArrayM removeObject:_selecCommFrame];
@@ -585,11 +586,10 @@ static NSString *noCommentCell = @"NoCommentCell";
         }];
         [sheet showInView:self.view];
     }else{
-        [sheet bk_addButtonWithTitle:@"回复" handler:^{
-            [self.messageView startCompile:_selecCommFrame.commentM.user];
-        }];
-        
-        [sheet showInView:self.view];
+//        [sheet bk_addButtonWithTitle:@"回复" handler:^{
+//        }];
+//        [sheet showInView:self.view];
+        [self.messageView startCompile:_selecCommFrame.commentM.user];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
