@@ -11,7 +11,6 @@
 #import "UserInfoBasicVC.h"
 #import "FriendsUserModel.h"
 #import "TOWebViewController.h"
-#import "ActivityDetailViewController.h"
 #import "WLDisplayMediaViewController.h"
 #import "ActivityDetailInfoViewController.h"
 #import "ProjectDetailsViewController.h"

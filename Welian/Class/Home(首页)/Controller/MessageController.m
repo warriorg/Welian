@@ -73,9 +73,11 @@
 }
 
 - (void)cleacMessage
-{    
-    [LogInUser getCurrentLoginUser].rsHomeMessages = nil;
-    [MOC save];
+{
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    loginUser.rsHomeMessages = nil;
+//    [MOC save];
+    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
     [_messageDataArray removeAllObjects];
     [self.tableView reloadData];
     [self.tableView addSubview:self.notView];
