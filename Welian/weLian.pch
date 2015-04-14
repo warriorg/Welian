@@ -15,8 +15,8 @@
     #import <Foundation/Foundation.h>
     #import <MapKit/MapKit.h>
     #import <CoreLocation/CoreLocation.h>
-
-    #import "SendIFMacros.h"
+    
+    #import "Utils.h"
     #import "Other.h"
     #import "Model.h"
 #endif

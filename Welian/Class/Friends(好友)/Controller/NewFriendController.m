@@ -52,7 +52,8 @@ static NSString *frnewCellid = @"frnewCellid";
     [self.tableView setBackgroundColor:IWGlobalBg];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendClick)];
     
-    NSArray *newFarray = [LogInUser getCurrentLoginUser].rsNewFriends.allObjects;
+    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+    NSArray *newFarray = loginUser.rsNewFriends.allObjects;
     
     for (NewFriendUser *newfriend in newFarray) {
         newfriend.isLook = @(1);
@@ -63,7 +64,8 @@ static NSString *frnewCellid = @"frnewCellid";
 //            newfriend.isAgree = @(0);
 //        }
     }
-    [MOC save];
+//    [MOC save];
+    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
     
     NSSortDescriptor *bookNameDes=[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
     
