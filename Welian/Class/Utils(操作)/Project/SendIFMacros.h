@@ -142,7 +142,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define kTelNumber @"18658883913"
 
 
-#define KupdataMyAllFriends @"KupdataMyAllFriends"
+//#define KupdataMyAllFriends @"KupdataMyAllFriends"
 
 // 首页动态有 更新通知
 #define KNEWStustUpdate  @"KNEWStustUpdate"

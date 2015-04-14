@@ -283,18 +283,20 @@
     
     ChatMessage *chatMsg = nil;
     //非系统推送消息
-    if (friendUser.uid.integerValue > 100) {
-        chatMsg = [self getChatMsgWithMessageId:messageid];
-        //如果存在对应messageId的聊天消息，则不提醒
-        if (chatMsg) {
-            return;
-        }else{
-            chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
-        }
+    chatMsg = [self getChatMsgWithMessageId:messageid];
+    //如果存在对应messageId的聊天消息，则不提醒
+    if (chatMsg) {
+        return;
     }else{
-        //系统推送消息
         chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
     }
+//    if (friendUser.uid.integerValue > 100) {
+//        
+//    }else{
+//        //系统推送消息
+//        chatMsg = [ChatMessage MR_createEntityInContext:friendUser.managedObjectContext];
+//    }
+    
     NSNumber *maxMsgId = [friendUser getMaxChatMessageId];
     chatMsg.msgId = @(maxMsgId.integerValue + 1);
     chatMsg.messageType = @(type);

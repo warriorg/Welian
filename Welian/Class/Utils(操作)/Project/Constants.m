@@ -7,7 +7,8 @@
 //
 
 
-
+#pragma mark - NSUserDefaults Key
+NSString *const KupdataMyAllFriends = @"KupdataMyAllFriends";
 
 
 
