@@ -21,8 +21,6 @@
 #import "TOWebViewController.h"
 #import "MJExtension.h"
 #import "M80AttributedLabel.h"
-//#import "ActivityViewController.h"
-#import "ActivityDetailViewController.h"
 #import "WLCellCardView.h"
 #import "ActivityDetailInfoViewController.h"
 #import "ProjectDetailsViewController.h"

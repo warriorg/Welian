@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A40355F51A5D0A14006AE52C /* BaseCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */; };
-		A40355F61A5D0A14006AE52C /* BaseCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */; };
-		A40355F71A5D0A14006AE52C /* BaseCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */; };
 		A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
@@ -379,8 +376,6 @@
 		A409A2F11AC2E1AF0033A31D /* yellowbutton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1891AC2E1AF0033A31D /* yellowbutton_pressed@2x.png */; };
 		A414FE1D1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
 		A414FE1E1A4402AC0004F415 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = A414FE1C1A4402AC0004F415 /* config.xml */; };
-		A414FE261A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
-		A414FE271A4402CA0004F415 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		A41CE1A71A6E25CC004F17E7 /* ActivityUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */; };
 		A41CE1A81A6E25CC004F17E7 /* ActivityUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */; };
 		A41CE1A91A6E25CC004F17E7 /* ActivityUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */; };
@@ -449,15 +444,6 @@
 		A44BDF8A1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
 		A44BDF8B1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
 		A44BDF8C1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */; };
-		A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
-		A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
-		A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
-		A45065451A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
-		A45065461A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
-		A45065471A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
-		A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
-		A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
-		A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
 		A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
 		A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
 		A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A450654E1A5BCE990057F8AA /* SEImageCache.m */; };
@@ -1093,7 +1079,6 @@
 		A49C7BDA1A70D42700F2AEC5 /* M80AttributedLabelURL.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D356831A260F75005EF094 /* M80AttributedLabelURL.m */; };
 		A49C7BDB1A70D42700F2AEC5 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F5188AB319CF017600FE9273 /* SDWebImageDecoder.m */; };
 		A49C7BDC1A70D42700F2AEC5 /* WLMessageBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C142EB1A4BF5A900C9BAB5 /* WLMessageBubbleView.m */; };
-		A49C7BDE1A70D42700F2AEC5 /* BaseCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */; };
 		A49C7BDF1A70D42700F2AEC5 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCED19C8694B005B887D /* AFNetworkReachabilityManager.m */; };
 		A49C7BE01A70D42700F2AEC5 /* TQRichTextBaseRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86E19D2961600110C07 /* TQRichTextBaseRun.m */; };
 		A49C7BE11A70D42700F2AEC5 /* AddImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D0FD19F8FA6B000610A1 /* AddImageCollectionCell.m */; };
@@ -1120,7 +1105,6 @@
 		A49C7BFE1A70D42700F2AEC5 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
 		A49C7C001A70D42700F2AEC5 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B5319F4B4D700D9E696 /* FriendCell.m */; };
 		A49C7C011A70D42700F2AEC5 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9A19F684BF00D9E696 /* SWUtilityButtonView.m */; };
-		A49C7C021A70D42700F2AEC5 /* ActivityEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */; };
 		A49C7C031A70D42700F2AEC5 /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9119CFF84000E753E4 /* ALAsset+accessibilityLabel.m */; };
 		A49C7C041A70D42700F2AEC5 /* MagicalRecord+ErrorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EACD1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m */; };
 		A49C7C051A70D42700F2AEC5 /* CTAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDAC19CFF84000E753E4 /* CTAssetsViewController.m */; };
@@ -1239,7 +1223,6 @@
 		A49C7C901A70D42700F2AEC5 /* InvestorController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCDC19C80B7F005B887D /* InvestorController.m */; };
 		A49C7C911A70D42700F2AEC5 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E819D3BACE003987CC /* MJPhotoView.m */; };
 		A49C7C921A70D42700F2AEC5 /* WLStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5874C1F1A1D901F009F7D83 /* WLStatusCell.m */; };
-		A49C7C931A70D42700F2AEC5 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F646D71A43CE46002E66FC /* ActivityViewController.m */; };
 		A49C7C941A70D42700F2AEC5 /* SameFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B8519F63EE800D9E696 /* SameFriendsCell.m */; };
 		A49C7C951A70D42700F2AEC5 /* XHSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C1410B1A4BEF5700C9BAB5 /* XHSoundManager.m */; };
 		A49C7C961A70D42700F2AEC5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140C31A4BEF5700C9BAB5 /* FLAnimatedImage.m */; };
@@ -1271,7 +1254,6 @@
 		A49C7CBC1A70D42700F2AEC5 /* WLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140551A4BEA8500C9BAB5 /* WLMessage.m */; };
 		A49C7CBE1A70D42700F2AEC5 /* CTAssetsGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9D19CFF84000E753E4 /* CTAssetsGroupViewCell.m */; };
 		A49C7CBF1A70D42700F2AEC5 /* WLContentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF4911A20561300AB19E8 /* WLContentCellView.m */; };
-		A49C7CC01A70D42700F2AEC5 /* CDVWelianPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */; };
 		A49C7CC11A70D42700F2AEC5 /* NSManagedObject+MagicalFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAB31A6CF7C8006ADA55 /* NSManagedObject+MagicalFinders.m */; };
 		A49C7CC21A70D42700F2AEC5 /* BaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4DFB1A4A771300CA06C8 /* BaseUser.m */; };
 		A49C7CC31A70D42700F2AEC5 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A4272FC61A4E8AAD0019E440 /* ChatMessage.m */; };
@@ -1316,7 +1298,6 @@
 		A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140371A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m */; };
 		A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m */; };
-		A49C7CFA1A70D42700F2AEC5 /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */; };
 		A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88D19D2AA6000110C07 /* MJIvar.m */; };
 		A49C7CFD1A70D42700F2AEC5 /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6991A4D044B009EBD04 /* DTTimePeriodCollection.m */; };
 		A49C7CFF1A70D42700F2AEC5 /* CompotAndPostController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA97D1A5CFCB800988A61 /* CompotAndPostController.m */; };
@@ -1381,7 +1362,6 @@
 		A49C7D451A70D42700F2AEC5 /* WLPhotoListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87D19D296B600110C07 /* WLPhotoListView.m */; };
 		A49C7D461A70D42700F2AEC5 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCEA19C8694B005B887D /* AFHTTPSessionManager.m */; };
 		A49C7D471A70D42700F2AEC5 /* IWTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C86319D292BC00110C07 /* IWTextView.m */; };
-		A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */; };
 		A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
 		A49C7D4C1A70D42700F2AEC5 /* XHWaterDropRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C1410D1A4BEF5700C9BAB5 /* XHWaterDropRefresh.m */; };
 		A49C7D4D1A70D42700F2AEC5 /* BSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA9501A5BE6E400988A61 /* BSearchFriendsController.m */; };
@@ -1419,7 +1399,6 @@
 		A49C7D741A70D42700F2AEC5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE868A19BFF4DE00A9D14C /* SystemConfiguration.framework */; };
 		A49C7D751A70D42700F2AEC5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
 		A49C7D761A70D42700F2AEC5 /* ShareSDKCoreService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5FE601A596D4A007FE11B /* ShareSDKCoreService.framework */; };
-		A49C7D771A70D42700F2AEC5 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
 		A49C7D781A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A437CEE11A52ED4A00B54E68 /* libBlocksKit.a */; };
 		A49C7D791A70D42700F2AEC5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
 		A49C7D7A1A70D42700F2AEC5 /* WeChatConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B5FE5A1A596D4A007FE11B /* WeChatConnection.framework */; };
@@ -1661,7 +1640,6 @@
 		A49C7F281A70D42700F2AEC5 /* me_circle_chat_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A41CE1C41A6F9E25004F17E7 /* me_circle_chat_location@2x.png */; };
 		A49C7F291A70D42700F2AEC5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5CE860619BFF2AB00A9D14C /* InfoPlist.strings */; };
 		A49C7F2B1A70D42700F2AEC5 /* MultiSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4C140DA1A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib */; };
-		A49C7F2D1A70D42700F2AEC5 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		A49C7F2E1A70D42700F2AEC5 /* home_picture_enlarge_download_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099319C2E3F2009DB1B2 /* home_picture_enlarge_download_bg@2x.png */; };
 		A49C7F2F1A70D42700F2AEC5 /* SearchIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C143471A4C0A6B00C9BAB5 /* SearchIcon@2x.png */; };
 		A49C7F321A70D42700F2AEC5 /* RecordingSignal003@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C143541A4C0A6B00C9BAB5 /* RecordingSignal003@2x.png */; };
@@ -2507,10 +2485,6 @@
 		A4F646B91A43C2D5002E66FC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646B81A43C2D5002E66FC /* AVFoundation.framework */; };
 		A4F646BB1A43C2E0002E66FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */; };
 		A4F646BD1A43C2FB002E66FC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
-		A4F646D81A43CE46002E66FC /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F646D71A43CE46002E66FC /* ActivityViewController.m */; };
-		A4F646D91A43CE46002E66FC /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F646D71A43CE46002E66FC /* ActivityViewController.m */; };
-		A4F647A41A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */; };
-		A4F647A51A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */; };
 		A4F6A5EA1A514A47008DBC8C /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */; };
 		A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
 		A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */; };
@@ -2824,7 +2798,6 @@
 		F53DC31C1A49192600F5F712 /* InvestorController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCDC19C80B7F005B887D /* InvestorController.m */; };
 		F53DC31D1A49192600F5F712 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E819D3BACE003987CC /* MJPhotoView.m */; };
 		F53DC31E1A49192600F5F712 /* WLStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5874C1F1A1D901F009F7D83 /* WLStatusCell.m */; };
-		F53DC31F1A49192600F5F712 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F646D71A43CE46002E66FC /* ActivityViewController.m */; };
 		F53DC3201A49192600F5F712 /* SameFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B8519F63EE800D9E696 /* SameFriendsCell.m */; };
 		F53DC3221A49192600F5F712 /* WeixinSessionActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B123A319E7CE8F002B9E58 /* WeixinSessionActivity.m */; };
 		F53DC3251A49192600F5F712 /* InvestorUsersListController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FBA2C19EF973600D85D7F /* InvestorUsersListController.m */; };
@@ -2843,7 +2816,6 @@
 		F53DC33A1A49192600F5F712 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FCF519C8694B005B887D /* AFURLResponseSerialization.m */; };
 		F53DC33C1A49192600F5F712 /* CTAssetsGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520ED9D19CFF84000E753E4 /* CTAssetsGroupViewCell.m */; };
 		F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F53CF4911A20561300AB19E8 /* WLContentCellView.m */; };
-		F53DC33E1A49192600F5F712 /* CDVWelianPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */; };
 		F53DC33F1A49192600F5F712 /* HaderInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B7F19F6207700D9E696 /* HaderInfoCell.m */; };
 		F53DC3401A49192600F5F712 /* WLStatusDock.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88019D297D800110C07 /* WLStatusDock.m */; };
 		F53DC3411A49192600F5F712 /* FeedAndZanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE26021A1470B800B0E836 /* FeedAndZanCell.m */; };
@@ -2919,7 +2891,6 @@
 		F53DC3A41A49192600F5F712 /* AuthTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B123E619E7EEBC002B9E58 /* AuthTypeView.m */; };
 		F53DC3A51A49192600F5F712 /* M80AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D3567E1A260F75005EF094 /* M80AttributedLabel.m */; };
 		F53DC3A71A49192600F5F712 /* UIColor+HBVHarmonies.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BCDEB41A03BF7200183F64 /* UIColor+HBVHarmonies.m */; };
-		F53DC3A91A49192600F5F712 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
 		F53DC3AA1A49192600F5F712 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
 		F53DC3AB1A49192600F5F712 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F532FD4C19C952E3005B887D /* AddressBook.framework */; };
 		F53DC3AC1A49192600F5F712 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F532FD4E19C952E9005B887D /* AddressBookUI.framework */; };
@@ -3040,7 +3011,6 @@
 		F53DC5001A49192600F5F712 /* icon_session@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1239619E7CE8F002B9E58 /* icon_session@2x.png */; };
 		F53DC5091A49192600F5F712 /* home_new_emoji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098419C2E3F2009DB1B2 /* home_new_emoji@2x.png */; };
 		F53DC50B1A49192600F5F712 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5CE860619BFF2AB00A9D14C /* InfoPlist.strings */; };
-		F53DC50F1A49192600F5F712 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A414FE251A4402CA0004F415 /* www */; };
 		F53DC5101A49192600F5F712 /* home_picture_enlarge_download_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579099319C2E3F2009DB1B2 /* home_picture_enlarge_download_bg@2x.png */; };
 		F53DC5161A49192600F5F712 /* MeinfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53C6EC319C5925200FE9AE6 /* MeinfoCell.xib */; };
 		F53DC5171A49192600F5F712 /* tabbar_circle_prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51BA4341A444DA2009E5CDF /* tabbar_circle_prompt@2x.png */; };
@@ -4591,8 +4561,6 @@
 		F5D04E641AC1056F004DE412 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D04CED1AC1056F004DE412 /* TTTAttributedLabel.m */; };
 		F5D04E651AC1056F004DE412 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D04CED1AC1056F004DE412 /* TTTAttributedLabel.m */; };
 		F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */; };
-		F5D075451A45956200D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
-		F5D075481A45956C00D31157 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D075421A45954C00D31157 /* libCordova.a */; };
 		F5E13A371A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
 		F5E13A381A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
 		F5E13A391A7B3062001BB786 /* MyProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E13A361A7B3062001BB786 /* MyProjectViewController.m */; };
@@ -4617,48 +4585,8 @@
 		F5F818AC1A69493B00E98CB6 /* login_phone_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5F818A91A69493B00E98CB6 /* login_phone_logo@2x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		A49C7BC01A70D42700F2AEC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = CordovaLib;
-		};
-		F53DC29B1A49192600F5F712 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = CordovaLib;
-		};
-		F5D075411A45954C00D31157 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 68A32D7114102E1C006B237C;
-			remoteInfo = CordovaLib;
-		};
-		F5D075431A45955C00D31157 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = CordovaLib;
-		};
-		F5D075461A45956800D31157 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = CordovaLib;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		10389B611A3EC8E3001A785C /* Other.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Other.h; sourceTree = "<group>"; };
-		A40355F31A5D0A14006AE52C /* BaseCDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCDVViewController.h; sourceTree = "<group>"; };
-		A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCDVViewController.m; sourceTree = "<group>"; };
 		A40355F81A5D1142006AE52C /* WLSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSegmentedControl.h; sourceTree = "<group>"; };
 		A40355F91A5D1142006AE52C /* WLSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSegmentedControl.m; sourceTree = "<group>"; };
 		A403560D1A5D2259006AE52C /* MyFriendsOperateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFriendsOperateViewCell.h; sourceTree = "<group>"; };
@@ -4759,7 +4687,6 @@
 		A409A1881AC2E1AF0033A31D /* yellowbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellowbutton@2x.png"; sourceTree = "<group>"; };
 		A409A1891AC2E1AF0033A31D /* yellowbutton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellowbutton_pressed@2x.png"; sourceTree = "<group>"; };
 		A414FE1C1A4402AC0004F415 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		A414FE251A4402CA0004F415 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		A41CE1A51A6E25CC004F17E7 /* ActivityUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityUserListViewController.h; sourceTree = "<group>"; };
 		A41CE1A61A6E25CC004F17E7 /* ActivityUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityUserListViewController.m; sourceTree = "<group>"; };
 		A41CE1AA1A6E4ED5004F17E7 /* ActivityUserViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityUserViewCell.h; sourceTree = "<group>"; };
@@ -4834,12 +4761,6 @@
 		A44BDF871AC3F4B000E306E7 /* UserInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewCell.h; sourceTree = "<group>"; };
 		A44BDF881AC3F4B000E306E7 /* UserInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewCell.m; sourceTree = "<group>"; };
 		A44F8EC81A5A591700CAB083 /* weLian1.1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.2.xcdatamodel; sourceTree = "<group>"; };
-		A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
-		A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
-		A45065431A5BB4D70057F8AA /* ActivityEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEntryViewController.h; sourceTree = "<group>"; };
-		A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEntryViewController.m; sourceTree = "<group>"; };
-		A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderViewController.h; sourceTree = "<group>"; };
-		A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderViewController.m; sourceTree = "<group>"; };
 		A450654D1A5BCE990057F8AA /* SEImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEImageCache.h; sourceTree = "<group>"; };
 		A450654E1A5BCE990057F8AA /* SEImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEImageCache.m; sourceTree = "<group>"; };
 		A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapViewController.h; sourceTree = "<group>"; };
@@ -5529,10 +5450,6 @@
 		A4F646B81A43C2D5002E66FC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		A4F646D61A43CE46002E66FC /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
-		A4F646D71A43CE46002E66FC /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
-		A4F647A01A43DA4B002E66FC /* CDVWelianPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWelianPlugin.h; sourceTree = "<group>"; };
-		A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVWelianPlugin.m; sourceTree = "<group>"; };
 		A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBlocksKit.a; sourceTree = "<group>"; };
 		A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		F500B1E11AAEAB4C00A7AD35 /* home_repost_huati@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_repost_huati@2x.png"; sourceTree = "<group>"; };
@@ -6451,7 +6368,6 @@
 		F5D04CEA1AC1056F004DE412 /* MLEmojiLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLEmojiLabel.m; sourceTree = "<group>"; };
 		F5D04CEC1AC1056F004DE412 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		F5D04CED1AC1056F004DE412 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
-		F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = Welian/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		F5D3567D1A260F75005EF094 /* M80AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M80AttributedLabel.h; sourceTree = "<group>"; };
 		F5D3567E1A260F75005EF094 /* M80AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M80AttributedLabel.m; sourceTree = "<group>"; };
 		F5D3567F1A260F75005EF094 /* M80AttributedLabelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M80AttributedLabelAttachment.h; sourceTree = "<group>"; };
@@ -6572,7 +6488,6 @@
 				A49C7D741A70D42700F2AEC5 /* SystemConfiguration.framework in Frameworks */,
 				A49C7D751A70D42700F2AEC5 /* MessageUI.framework in Frameworks */,
 				A49C7D761A70D42700F2AEC5 /* ShareSDKCoreService.framework in Frameworks */,
-				A49C7D771A70D42700F2AEC5 /* libCordova.a in Frameworks */,
 				A49C7D781A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */,
 				A49C7D791A70D42700F2AEC5 /* CoreMotion.framework in Frameworks */,
 				A49C7D7A1A70D42700F2AEC5 /* WeChatConnection.framework in Frameworks */,
@@ -6620,7 +6535,6 @@
 				F53DC3C01A49192600F5F712 /* SystemConfiguration.framework in Frameworks */,
 				A4F6A5EE1A514ADD008DBC8C /* MessageUI.framework in Frameworks */,
 				F5B5FE761A596D4B007FE11B /* ShareSDKCoreService.framework in Frameworks */,
-				F53DC3A91A49192600F5F712 /* libCordova.a in Frameworks */,
 				A437CEE41A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
 				F53DC3AA1A49192600F5F712 /* CoreMotion.framework in Frameworks */,
 				F5B5FE6A1A596D4A007FE11B /* WeChatConnection.framework in Frameworks */,
@@ -6664,7 +6578,6 @@
 				F5664A701A2AFD56008A5830 /* CoreTelephony.framework in Frameworks */,
 				F5664A7D1A2AFD56008A5830 /* SystemConfiguration.framework in Frameworks */,
 				A4F6A5EC1A514ACF008DBC8C /* MessageUI.framework in Frameworks */,
-				F5D075481A45956C00D31157 /* libCordova.a in Frameworks */,
 				A437CEE21A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
 				A4F646BD1A43C2FB002E66FC /* CoreMotion.framework in Frameworks */,
 				F5B5FE6B1A596D4A007FE11B /* AGCommon.framework in Frameworks */,
@@ -6711,7 +6624,6 @@
 				F5B5FE531A5949DD007FE11B /* libicucore.dylib in Frameworks */,
 				F5664D2A1A2AFDD5008A5830 /* CoreTelephony.framework in Frameworks */,
 				A4F6A5ED1A514AD6008DBC8C /* MessageUI.framework in Frameworks */,
-				F5D075451A45956200D31157 /* libCordova.a in Frameworks */,
 				A437CEE31A52ED4A00B54E68 /* libBlocksKit.a in Frameworks */,
 				F5D0753C1A4593C900D31157 /* CoreMotion.framework in Frameworks */,
 				F5B5FE6C1A596D4A007FE11B /* AGCommon.framework in Frameworks */,
@@ -7000,22 +6912,12 @@
 		A47F1B321A7F539300CB4D9F /* Activity */ = {
 			isa = PBXGroup;
 			children = (
-				A4F646D61A43CE46002E66FC /* ActivityViewController.h */,
-				A4F646D71A43CE46002E66FC /* ActivityViewController.m */,
 				A472DBDD1A85EE2E003EF296 /* ActivityListViewController.h */,
 				A472DBDE1A85EE2E003EF296 /* ActivityListViewController.m */,
 				A472DBEF1A85F928003EF296 /* ActivityDetailInfoViewController.h */,
 				A472DBF01A85F928003EF296 /* ActivityDetailInfoViewController.m */,
 				A46FAE591A8DE82A005EB34E /* ActivityOrderInfoViewController.h */,
 				A46FAE5A1A8DE82A005EB34E /* ActivityOrderInfoViewController.m */,
-				A450653E1A5B8EF20057F8AA /* ActivityDetailViewController.h */,
-				A450653F1A5B8EF20057F8AA /* ActivityDetailViewController.m */,
-				A45065431A5BB4D70057F8AA /* ActivityEntryViewController.h */,
-				A45065441A5BB4D70057F8AA /* ActivityEntryViewController.m */,
-				A45065481A5BB64E0057F8AA /* ActivityOrderViewController.h */,
-				A45065491A5BB64E0057F8AA /* ActivityOrderViewController.m */,
-				A40355F31A5D0A14006AE52C /* BaseCDVViewController.h */,
-				A40355F41A5D0A14006AE52C /* BaseCDVViewController.m */,
 				A45065551A5BD4AF0057F8AA /* ActivityMapViewController.h */,
 				A45065561A5BD4AF0057F8AA /* ActivityMapViewController.m */,
 				A41CE1A51A6E25CC004F17E7 /* ActivityUserListViewController.h */,
@@ -8195,15 +8097,6 @@
 			path = PureLayout;
 			sourceTree = "<group>";
 		};
-		A4F6479F1A43DA4B002E66FC /* phonegap */ = {
-			isa = PBXGroup;
-			children = (
-				A4F647A01A43DA4B002E66FC /* CDVWelianPlugin.h */,
-				A4F647A11A43DA4B002E66FC /* CDVWelianPlugin.m */,
-			);
-			path = phonegap;
-			sourceTree = "<group>";
-		};
 		F511F0D119ECFF5500B1A356 /* messageFaceView */ = {
 			isa = PBXGroup;
 			children = (
@@ -9259,7 +9152,6 @@
 				F5B5FE2C1A59491C007FE11B /* libz.1.2.5.dylib */,
 				F5B5FE2A1A59490C007FE11B /* libicucore.dylib */,
 				A4F6A5EB1A514ACF008DBC8C /* MessageUI.framework */,
-				F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */,
 				A4F646BC1A43C2FB002E66FC /* CoreMotion.framework */,
 				A4F646BA1A43C2E0002E66FC /* AudioToolbox.framework */,
 				A4F646B81A43C2D5002E66FC /* AVFoundation.framework */,
@@ -9291,8 +9183,6 @@
 		F5CE860319BFF2AB00A9D14C /* Welian */ = {
 			isa = PBXGroup;
 			children = (
-				A414FE251A4402CA0004F415 /* www */,
-				A4F6479F1A43DA4B002E66FC /* phonegap */,
 				F5CE862C19BFF44100A9D14C /* Class */,
 				F5CE864219BFF44100A9D14C /* Image */,
 				F5CE860C19BFF2AB00A9D14C /* AppDelegate.h */,
@@ -9940,14 +9830,6 @@
 			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
-		F5D0753E1A45954C00D31157 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F5D075421A45954C00D31157 /* libCordova.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F5D3567C1A260F75005EF094 /* M80AttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -10081,7 +9963,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A49C7BBF1A70D42700F2AEC5 /* PBXTargetDependency */,
 			);
 			name = weLianAppDev;
 			productName = Welian;
@@ -10099,7 +9980,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F53DC29A1A49192600F5F712 /* PBXTargetDependency */,
 			);
 			name = weLianAppDis;
 			productName = Welian;
@@ -10117,7 +9997,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5D075471A45956800D31157 /* PBXTargetDependency */,
 			);
 			name = weLianDev;
 			productName = Welian;
@@ -10135,7 +10014,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5D075441A45955C00D31157 /* PBXTargetDependency */,
 			);
 			name = weLianDis;
 			productName = Welian;
@@ -10207,12 +10085,6 @@
 			mainGroup = F5CE85F119BFF2AB00A9D14C;
 			productRefGroup = F5CE85FB19BFF2AB00A9D14C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F5D0753E1A45954C00D31157 /* Products */;
-					ProjectRef = F5D0753D1A45954C00D31157 /* CordovaLib.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F566497A1A2AFD56008A5830 /* weLianDev */,
@@ -10223,16 +10095,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F5D075421A45954C00D31157 /* libCordova.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCordova.a;
-			remoteRef = F5D075411A45954C00D31157 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A49C7D931A70D42700F2AEC5 /* Resources */ = {
@@ -10653,7 +10515,6 @@
 				A49C7F291A70D42700F2AEC5 /* InfoPlist.strings in Resources */,
 				A49C7F2B1A70D42700F2AEC5 /* MultiSelectTableViewCell.xib in Resources */,
 				A409A1ED1AC2E1AF0033A31D /* me_circle_chat_picture@2x.png in Resources */,
-				A49C7F2D1A70D42700F2AEC5 /* www in Resources */,
 				A471FE091ACE3C9D00339ED0 /* activity_share@2x.png in Resources */,
 				A49C7F2E1A70D42700F2AEC5 /* home_picture_enlarge_download_bg@2x.png in Resources */,
 				A49C7F2F1A70D42700F2AEC5 /* SearchIcon@2x.png in Resources */,
@@ -11244,7 +11105,6 @@
 				A4C141311A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
 				A409A24C1AC2E1AF0033A31D /* me_myfriend_wechat_logo@2x.png in Resources */,
 				A409A2181AC2E1AF0033A31D /* me_mycard_cardlogo@2x.png in Resources */,
-				F53DC50F1A49192600F5F712 /* www in Resources */,
 				A493C3C41ADD14A60056BD52 /* FinancingStagePlist.plist in Resources */,
 				F5CBE3B51AC4351A00F4C884 /* Expression_18@2x.png in Resources */,
 				A409A2001AC2E1AF0033A31D /* me_empty@2x.png in Resources */,
@@ -11537,7 +11397,6 @@
 				A4C143F41A4C0A6B00C9BAB5 /* input-field-cover.png in Resources */,
 				A493C3E01ADD14A60056BD52 /* PioneerPlist.plist in Resources */,
 				A41CE1CA1A6F9E25004F17E7 /* me_circle_chat_camera@2x.png in Resources */,
-				A414FE261A4402CA0004F415 /* www in Resources */,
 				A409A2661AC2E1AF0033A31D /* me_mywriten_with.@2xpng.png in Resources */,
 				F5CBE4B71AC4351A00F4C884 /* Expression_83@2x.png in Resources */,
 				F5CBE4231AC4351A00F4C884 /* Expression_46@2x.png in Resources */,
@@ -12390,7 +12249,6 @@
 				A4C141301A4BEF5700C9BAB5 /* MultiSelectTableViewCell.xib in Resources */,
 				A409A24B1AC2E1AF0033A31D /* me_myfriend_wechat_logo@2x.png in Resources */,
 				A409A2171AC2E1AF0033A31D /* me_mycard_cardlogo@2x.png in Resources */,
-				A414FE271A4402CA0004F415 /* www in Resources */,
 				A493C3C31ADD14A60056BD52 /* FinancingStagePlist.plist in Resources */,
 				F5CBE3B41AC4351A00F4C884 /* Expression_18@2x.png in Resources */,
 				A409A1FF1AC2E1AF0033A31D /* me_empty@2x.png in Resources */,
@@ -12596,7 +12454,6 @@
 				A493C3491ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A49C7BDC1A70D42700F2AEC5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F51A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
-				A49C7BDE1A70D42700F2AEC5 /* BaseCDVViewController.m in Sources */,
 				A49C7BDF1A70D42700F2AEC5 /* AFNetworkReachabilityManager.m in Sources */,
 				A49C7BE01A70D42700F2AEC5 /* TQRichTextBaseRun.m in Sources */,
 				A49C7BE11A70D42700F2AEC5 /* AddImageCollectionCell.m in Sources */,
@@ -12635,7 +12492,6 @@
 				A49C7BFE1A70D42700F2AEC5 /* NSDate+DateTools.m in Sources */,
 				A49C7C001A70D42700F2AEC5 /* FriendCell.m in Sources */,
 				A49C7C011A70D42700F2AEC5 /* SWUtilityButtonView.m in Sources */,
-				A49C7C021A70D42700F2AEC5 /* ActivityEntryViewController.m in Sources */,
 				A49C7C031A70D42700F2AEC5 /* ALAsset+accessibilityLabel.m in Sources */,
 				A4C770E31A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A49C7C041A70D42700F2AEC5 /* MagicalRecord+ErrorHandling.m in Sources */,
@@ -12802,7 +12658,6 @@
 				A493C2571ADD0BB00056BD52 /* UIImage+FixOrientation.m in Sources */,
 				A49C7C911A70D42700F2AEC5 /* MJPhotoView.m in Sources */,
 				A49C7C921A70D42700F2AEC5 /* WLStatusCell.m in Sources */,
-				A49C7C931A70D42700F2AEC5 /* ActivityViewController.m in Sources */,
 				A49C7C941A70D42700F2AEC5 /* SameFriendsCell.m in Sources */,
 				A49C7C951A70D42700F2AEC5 /* XHSoundManager.m in Sources */,
 				A49C7C961A70D42700F2AEC5 /* FLAnimatedImage.m in Sources */,
@@ -12852,7 +12707,6 @@
 				A4EFA6D21A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				A49C7CBE1A70D42700F2AEC5 /* CTAssetsGroupViewCell.m in Sources */,
 				A49C7CBF1A70D42700F2AEC5 /* WLContentCellView.m in Sources */,
-				A49C7CC01A70D42700F2AEC5 /* CDVWelianPlugin.m in Sources */,
 				A49C7CC11A70D42700F2AEC5 /* NSManagedObject+MagicalFinders.m in Sources */,
 				A493C3261ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				A49C7CC21A70D42700F2AEC5 /* BaseUser.m in Sources */,
@@ -12921,7 +12775,6 @@
 				A493C31C1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA91AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
-				A49C7CFA1A70D42700F2AEC5 /* ActivityDetailViewController.m in Sources */,
 				A472DBE21A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				A49C80571A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A493C3581ADD14A60056BD52 /* PublishModel.m in Sources */,
@@ -13035,7 +12888,6 @@
 				A46FAE531A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A493C2751ADD0BB00056BD52 /* NSManagedObject+e0571.m in Sources */,
 				A49C80671A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
-				A49C7D491A70D42700F2AEC5 /* ActivityOrderViewController.m in Sources */,
 				A49C7D4B1A70D42700F2AEC5 /* HomeMessage.m in Sources */,
 				A49C7D4C1A70D42700F2AEC5 /* XHWaterDropRefresh.m in Sources */,
 				A49C7D4D1A70D42700F2AEC5 /* BSearchFriendsController.m in Sources */,
@@ -13126,7 +12978,6 @@
 				A493C3471ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A4C142EE1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F41A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
-				A40355F71A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F53DC2AF1A49192600F5F712 /* AFNetworkReachabilityManager.m in Sources */,
 				F53DC2B01A49192600F5F712 /* TQRichTextBaseRun.m in Sources */,
 				F53DC2B11A49192600F5F712 /* AddImageCollectionCell.m in Sources */,
@@ -13165,7 +13016,6 @@
 				A48CA6B21A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F53DC2C41A49192600F5F712 /* FriendCell.m in Sources */,
 				F53DC2C51A49192600F5F712 /* SWUtilityButtonView.m in Sources */,
-				A45065471A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F53DC2C61A49192600F5F712 /* ALAsset+accessibilityLabel.m in Sources */,
 				A4C770E21A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1D1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
@@ -13332,7 +13182,6 @@
 				A493C2551ADD0BB00056BD52 /* UIImage+FixOrientation.m in Sources */,
 				F53DC31D1A49192600F5F712 /* MJPhotoView.m in Sources */,
 				F53DC31E1A49192600F5F712 /* WLStatusCell.m in Sources */,
-				F53DC31F1A49192600F5F712 /* ActivityViewController.m in Sources */,
 				F53DC3201A49192600F5F712 /* SameFriendsCell.m in Sources */,
 				A4C141761A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C141101A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
@@ -13382,7 +13231,6 @@
 				A4EFA6D11A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F53DC33C1A49192600F5F712 /* CTAssetsGroupViewCell.m in Sources */,
 				F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */,
-				F53DC33E1A49192600F5F712 /* CDVWelianPlugin.m in Sources */,
 				A4A2EAF91A6CF7C8006ADA55 /* NSManagedObject+MagicalFinders.m in Sources */,
 				A493C3241ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				F53D4DFE1A4A771300CA06C8 /* BaseUser.m in Sources */,
@@ -13451,7 +13299,6 @@
 				A493C31A1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA81AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
-				A45065421A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				A49C80561A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A493C3561ADD14A60056BD52 /* PublishModel.m in Sources */,
@@ -13565,7 +13412,6 @@
 				A46FAE521A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A493C2731ADD0BB00056BD52 /* NSManagedObject+e0571.m in Sources */,
 				A49C80661A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
-				A450654C1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141791A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				F58CA9531A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -13658,7 +13504,6 @@
 				A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				F566498C1A2AFD56008A5830 /* AFNetworkReachabilityManager.m in Sources */,
 				A4C770F21A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
-				A40355F51A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F566498D1A2AFD56008A5830 /* TQRichTextBaseRun.m in Sources */,
 				F566498E1A2AFD56008A5830 /* AddImageCollectionCell.m in Sources */,
 				F566498F1A2AFD56008A5830 /* PinyinHelper.m in Sources */,
@@ -13700,7 +13545,6 @@
 				F566499F1A2AFD56008A5830 /* SWUtilityButtonView.m in Sources */,
 				F56649A01A2AFD56008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				F56649A11A2AFD56008A5830 /* CTAssetsViewController.m in Sources */,
-				A45065451A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F56649A21A2AFD56008A5830 /* ALAssetsGroup+isEqual.m in Sources */,
 				A4C770E01A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1B1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
@@ -13793,7 +13637,6 @@
 				F56649CF1A2AFD56008A5830 /* SWLongPressGestureRecognizer.m in Sources */,
 				A49C80501A71041000F2AEC5 /* DataVerifier.m in Sources */,
 				F5D04C6B1AC104A6004DE412 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
-				A4F647A41A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				F56649D11A2AFD56008A5830 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F5E13A441A7B5329001BB786 /* CreateProjectController.m in Sources */,
 				F56649D21A2AFD56008A5830 /* MJType.m in Sources */,
@@ -13943,7 +13786,6 @@
 				F59E761F1A411E4C0028FBAF /* ICompanyResult.m in Sources */,
 				F55078CB1A7F5BE9009CE4F7 /* JKPhotoBrowser.m in Sources */,
 				A493C3681ADD14A60056BD52 /* WLPhoto.m in Sources */,
-				A4F646D81A43CE46002E66FC /* ActivityViewController.m in Sources */,
 				A4C1417C1A4BEFBA00C9BAB5 /* WLMessageAvatorFactory.m in Sources */,
 				F5664A211A2AFD56008A5830 /* CityLocationController.m in Sources */,
 				A4A2EB001A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
@@ -13981,7 +13823,6 @@
 				A493C3181ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				F5933FA61AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
-				A45065401A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				A49C80541A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A493C3541ADD14A60056BD52 /* PublishModel.m in Sources */,
@@ -14095,7 +13936,6 @@
 				A46FAE501A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A493C2711ADD0BB00056BD52 /* NSManagedObject+e0571.m in Sources */,
 				A49C80641A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
-				A450654A1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F5664A5E1A2AFD56008A5830 /* UIImage+GIF.m in Sources */,
 				F58CA9511A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
 				A4A2EB211A6CF7C8006ADA55 /* MagicalRecord+Options.m in Sources */,
@@ -14186,7 +14026,6 @@
 				A493C3461ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A4C142ED1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F31A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
-				A40355F61A5D0A14006AE52C /* BaseCDVViewController.m in Sources */,
 				F5664C461A2AFDD5008A5830 /* AFNetworkReachabilityManager.m in Sources */,
 				F5664C471A2AFDD5008A5830 /* TQRichTextBaseRun.m in Sources */,
 				F5664C481A2AFDD5008A5830 /* AddImageCollectionCell.m in Sources */,
@@ -14225,7 +14064,6 @@
 				A48CA6B11A4D044B009EBD04 /* NSDate+DateTools.m in Sources */,
 				F5664C581A2AFDD5008A5830 /* FriendCell.m in Sources */,
 				F5664C591A2AFDD5008A5830 /* SWUtilityButtonView.m in Sources */,
-				A45065461A5BB4D70057F8AA /* ActivityEntryViewController.m in Sources */,
 				F5664C5A1A2AFDD5008A5830 /* ALAsset+accessibilityLabel.m in Sources */,
 				A4C770E11A80A1E0005ABC7F /* IProjectDetailInfo.m in Sources */,
 				A4A2EB1C1A6CF7C8006ADA55 /* MagicalRecord+ErrorHandling.m in Sources */,
@@ -14392,7 +14230,6 @@
 				A493C2541ADD0BB00056BD52 /* UIImage+FixOrientation.m in Sources */,
 				F5664CAA1A2AFDD5008A5830 /* MJPhotoView.m in Sources */,
 				F5664CAC1A2AFDD5008A5830 /* WLStatusCell.m in Sources */,
-				A4F646D91A43CE46002E66FC /* ActivityViewController.m in Sources */,
 				F5664CAD1A2AFDD5008A5830 /* SameFriendsCell.m in Sources */,
 				A4C141751A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				A4C1410F1A4BEF5700C9BAB5 /* FLAnimatedImage.m in Sources */,
@@ -14442,7 +14279,6 @@
 				A4EFA6D01A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F5664CC21A2AFDD5008A5830 /* CTAssetsGroupViewCell.m in Sources */,
 				F5664CC31A2AFDD5008A5830 /* WLContentCellView.m in Sources */,
-				A4F647A51A43DA4B002E66FC /* CDVWelianPlugin.m in Sources */,
 				A4A2EAF81A6CF7C8006ADA55 /* NSManagedObject+MagicalFinders.m in Sources */,
 				A493C3231ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				F53D4DFD1A4A771300CA06C8 /* BaseUser.m in Sources */,
@@ -14511,7 +14347,6 @@
 				A493C3191ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA71AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
-				A45065411A5B8EF20057F8AA /* ActivityDetailViewController.m in Sources */,
 				A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
 				A49C80551A71041000F2AEC5 /* MD5DataSigner.m in Sources */,
 				A493C3551ADD14A60056BD52 /* PublishModel.m in Sources */,
@@ -14625,7 +14460,6 @@
 				A46FAE511A8DDE00005EB34E /* ActivityLookTicketViewCell.m in Sources */,
 				A493C2721ADD0BB00056BD52 /* NSManagedObject+e0571.m in Sources */,
 				A49C80651A71041000F2AEC5 /* RSADataVerifier.m in Sources */,
-				A450654B1A5BB64E0057F8AA /* ActivityOrderViewController.m in Sources */,
 				F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */,
 				A4C141781A4BEF5700C9BAB5 /* XHWaterDropRefresh.m in Sources */,
 				F58CA9521A5BE6E400988A61 /* BSearchFriendsController.m in Sources */,
@@ -14750,29 +14584,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A49C7BBF1A70D42700F2AEC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = A49C7BC01A70D42700F2AEC5 /* PBXContainerItemProxy */;
-		};
-		F53DC29A1A49192600F5F712 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = F53DC29B1A49192600F5F712 /* PBXContainerItemProxy */;
-		};
-		F5D075441A45955C00D31157 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = F5D075431A45955C00D31157 /* PBXContainerItemProxy */;
-		};
-		F5D075471A45956800D31157 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = F5D075461A45956800D31157 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A4C143251A4C0A6B00C9BAB5 /* MessageDisplayKitString.strings */ = {

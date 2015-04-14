@@ -11,7 +11,6 @@
 #import "UserCardController.h"
 #import "TOWebViewController.h"
 #import "InvestorUsersListController.h"
-#import "ActivityViewController.h"
 #import "ActivityListViewController.h"
 #import "BadgeBaseCell.h"
 #import "MainViewController.h"
@@ -193,12 +192,6 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
                 ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
                 [self.navigationController pushViewController:activityListVC animated:YES];
                 
-//                //活动页面，进行phoneGap页面加载
-//                ActivityViewController *activityVC = [[ActivityViewController alloc] init];
-//                [[NSURLCache sharedURLCache] removeAllCachedResponses];
-//                activityVC.wwwFolderName = @"www";
-//                activityVC.startPage = [NSString stringWithFormat:@"activity.html?t=%@",[NSString getNowTimestamp]];
-//                [self.navigationController pushViewController:activityVC animated:YES];
                 // 取消新活动角标
                 [LogInUser setUserIsactivebadge:NO];
                 [[MainViewController sharedMainViewController] loadNewStustupdata];
