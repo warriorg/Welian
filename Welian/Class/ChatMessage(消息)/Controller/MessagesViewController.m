@@ -228,7 +228,7 @@
                 opereateType = friendM.operateType;
             }
 //            UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:opereateType];
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:opereateType HidRightBtn:NO];
             [self.navigationController pushViewController:userInfoVC animated:YES];
 //            [userInfoVC setNeedlessCancel:YES];
             WEAKSELF

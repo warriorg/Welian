@@ -198,7 +198,7 @@
             }
 //                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
             
-            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)needAddUser OperateType:nil];
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)needAddUser OperateType:nil HidRightBtn:NO];
             [self.navigationController pushViewController:userInfoVC animated:YES];
                 //    __weak NewFriendController *newFVC = self;
 //                __weak UserInfoBasicVC *weakUserInfoVC = userInfoVC;

@@ -497,6 +497,9 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     [textView resignFirstResponder];
+    if ([self.delegate respondsToSelector:@selector(inputTextViewDidEndEditing:)]) {
+        [self.delegate inputTextViewDidEndEditing:self.inputTextView];
+    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {

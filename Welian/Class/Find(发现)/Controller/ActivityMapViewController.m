@@ -29,6 +29,11 @@
 //    _locService = nil;
 }
 
+- (NSString *)title
+{
+    return @"地图";
+}
+
 - (instancetype)initWithAddress:(NSString *)address city:(NSString *)city
 {
     self = [super init];
@@ -60,7 +65,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.title = _address;
+//    self.title = _address;
     
 //    //初始化BMKLocationService
 //    BMKLocationService *locService = [[BMKLocationService alloc] init];

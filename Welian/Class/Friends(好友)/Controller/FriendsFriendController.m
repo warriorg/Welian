@@ -184,7 +184,7 @@ static NSString *identifier = @"investorcellid";
     
 //    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
 //    [self.navigationController pushViewController:userinfoVC animated:YES];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:friendinfoM OperateType:nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:friendinfoM OperateType:nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

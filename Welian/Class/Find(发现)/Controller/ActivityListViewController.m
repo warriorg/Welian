@@ -22,7 +22,7 @@
 
 @property (assign,nonatomic) WLSegmentedControl *segmentedControl;
 @property (assign,nonatomic) UITableView *tableView;
-@property (strong,nonatomic) UIRefreshControl *refreshControl;
+//@property (strong,nonatomic) UIRefreshControl *refreshControl;
 @property (strong,nonatomic) ActivityTypeInfoView *timeActivityTypeInfo;
 @property (strong,nonatomic) ActivityTypeInfoView *cityActivityTypeInfo;
 
@@ -49,7 +49,7 @@
     _timeActivityTypeInfo = nil;
     _selectTimeType = nil;
     _selectAddressType = nil;
-    _refreshControl = nil;
+//    _refreshControl = nil;
     _selectIndex = nil;
     _cityList = nil;
     _timeList = nil;
@@ -132,9 +132,9 @@
 //    [tableView setDebug:YES];
     
     //添加下来刷新
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(loadReflshData) forControlEvents:UIControlEventValueChanged];
-    [tableView addSubview:self.refreshControl];
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//    [self.refreshControl addTarget:self action:@selector(loadReflshData) forControlEvents:UIControlEventValueChanged];
+//    [tableView addSubview:self.refreshControl];
     
     ActivityTypeInfoView *timeActivityTypeInfo = [[ActivityTypeInfoView alloc] initWithFrame:CGRectMake(0.f, tableView.top, self.view.width, tableView.height)];
     timeActivityTypeInfo.hidden = YES;
@@ -175,14 +175,18 @@
     [headView addSubview:segmentedControl];
     self.segmentedControl = segmentedControl;
     
-    //初始化数据
-    [self loadReflshData];
+    //下拉刷新
+    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadReflshData)];
     
     //上提加载更多
     // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
     [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataArray)];
     // 隐藏当前的上拉刷新控件
     _tableView.footer.hidden = YES;
+    
+    //初始化数据
+//    [self loadReflshData];
+    [_tableView.header beginRefreshing];
 }
 
 - (void)updateUiInfo
@@ -318,7 +322,8 @@
     [WLHttpTool getActivitysParameterDic:params
                                  success:^(id JSON) {
                                      //隐藏加载更多动画
-                                     [self.refreshControl endRefreshing];
+//                                     [self.refreshControl endRefreshing];
+                                     [_tableView.header endRefreshing];
                                      [_tableView.footer endRefreshing];
                                      
                                      DLog(@"---json:%@",JSON);
@@ -356,8 +361,9 @@
                                          [_notView removeFromSuperview];
                                      }
                                  } fail:^(NSError *error) {
-                                     [self.refreshControl endRefreshing];
+//                                     [self.refreshControl endRefreshing];
                                      //隐藏加载更多动画
+                                     [self.tableView.header endRefreshing];
                                      [self.tableView.footer endRefreshing];
                                      DLog(@"getActivitysParameterDic error:%@",error.description);
                                  }];
@@ -367,8 +373,7 @@
 - (void)loadReflshData
 {
     //开始刷新动画
-    [self.refreshControl beginRefreshing];
-    
+//    [self.refreshControl beginRefreshing];
     self.pageIndex = 1;
     [self initData];
 }

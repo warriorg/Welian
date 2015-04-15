@@ -143,6 +143,9 @@
 //数据源，显示多少消息
 @property (nonatomic, strong) NSMutableArray *messages;
 
+//聊天的好友
+@property (nonatomic, strong) MyFriendUser *friendUser;
+
 //消息的主体，默认为nil
 @property (nonatomic, copy) NSString *messageSender;
 

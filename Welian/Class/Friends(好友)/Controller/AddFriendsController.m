@@ -291,7 +291,7 @@ static NSString *fridcellid = @"fridcellid";
         UserInfoModel *mode = self.filterArray[indexPath.row];
 //        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //        [self.navigationController pushViewController:userBasic animated:YES];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }

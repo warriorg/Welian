@@ -209,7 +209,7 @@ static NSString *identifier = @"investorcellid";
     [mode setCityname:invesM.cityname];
     
 //    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

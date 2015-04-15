@@ -213,6 +213,9 @@
     
     //获取详情信息
     [self initData];
+    //下拉刷新
+//    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initData)];
+//    [self.tableView.header beginRefreshing];
 }
 
 #pragma mark - UITableView Datasource&Delegate
@@ -948,6 +951,8 @@
 {
     [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
                                       success:^(id JSON) {
+                                          //隐藏下拉刷新控件
+//                                          [self.tableView.header endRefreshing];
                                           if (JSON) {
                                               IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
                                               BOOL isFromList = _activityInfo != nil ? YES : NO;
@@ -968,6 +973,8 @@
                                               [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
                                           }
                                       } fail:^(NSError *error) {
+                                          //隐藏下拉刷新控件
+//                                          [self.tableView.header endRefreshing];
                                           DLog(@"getActivityDetailParameterDic error:%@",error.description);
                                       }];
 }

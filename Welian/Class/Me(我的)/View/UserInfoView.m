@@ -61,7 +61,7 @@
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _loginUser.name;
-    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_loginUser.position,_loginUser.company];
+    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",[_loginUser.position deleteTopAndBottomKonggeAndHuiche],[_loginUser.company deleteTopAndBottomKonggeAndHuiche]];
     _touZiRenBtn.hidden = _loginUser.investorauth.integerValue == 1 ? NO : YES;
     //手机是否通过认证
     _phoneRZImageView.image = [UIImage imageNamed:_loginUser.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];
@@ -85,7 +85,7 @@
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _baseUserModel.name;
-    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_baseUserModel.position,_baseUserModel.company];
+    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",[_baseUserModel.position deleteTopAndBottomKonggeAndHuiche],[_baseUserModel.company deleteTopAndBottomKonggeAndHuiche]];
     _touZiRenBtn.hidden = _baseUserModel.investorauth.integerValue == 1 ? NO : YES;
     //手机是否通过认证
     _phoneRZImageView.image = [UIImage imageNamed:_baseUserModel.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];
@@ -171,11 +171,16 @@
     _logoImageView.bottom = _bgImageView.height + 23.f;
     _logoImageView.left = kMarginLeft;
     
+    [_phoneRZImageView sizeToFit];
+    
     [_nameLabel sizeToFit];
+    if(_nameLabel.width > self.width - _logoImageView.right - kMarginEdge * 2.f - kMarginLeft - _phoneRZImageView.width)
+    {
+        _nameLabel.width = self.width - _logoImageView.right - kMarginEdge * 2.f - kMarginLeft - _phoneRZImageView.width;
+    }
     _nameLabel.left = _logoImageView.right + kMarginEdge;
     _nameLabel.top = _logoImageView.top;
     
-    [_phoneRZImageView sizeToFit];
     _phoneRZImageView.left = _nameLabel.right + kMarginEdge;
     _phoneRZImageView.centerY = _nameLabel.centerY;
     

@@ -7,6 +7,7 @@
 //
 
 #import "WLPhotographyHelper.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface WLPhotographyHelper () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -37,8 +38,13 @@
     imagePickerController.editing = YES;
     imagePickerController.delegate = self;
     imagePickerController.sourceType = sourceType;
+    //照相 只调用照片
+//    imagePickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        imagePickerController.mediaTypes =  [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        //        kUTTypeImage 对应拍照
+        //        kUTTypeMovie  对应摄像
+        imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+//        imagePickerController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     [viewController presentViewController:imagePickerController animated:YES completion:NULL];
 }

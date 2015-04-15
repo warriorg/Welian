@@ -136,7 +136,7 @@
         //系统联系人
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:baseUser isAsk:NO];
         
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:baseUser OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:baseUser OperateType:nil HidRightBtn:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];
         
         //添加好友成功

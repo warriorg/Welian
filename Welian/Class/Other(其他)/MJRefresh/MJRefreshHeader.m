@@ -65,6 +65,8 @@
         // 设置为默认状态
         self.state = MJRefreshHeaderStateIdle;
         
+        self.updatedTimeHidden = YES;
+        
         // 初始化文字
         [self setTitle:MJRefreshHeaderStateIdleText forState:MJRefreshHeaderStateIdle];
         [self setTitle:MJRefreshHeaderStatePullingText forState:MJRefreshHeaderStatePulling];

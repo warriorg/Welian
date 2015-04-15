@@ -39,6 +39,7 @@
 @property (strong,nonatomic) NSNumber *operateType;//操作类型0：添加 1：接受  2:已添加 3：待验证    10:隐藏
 @property (assign,nonatomic) NSInteger pageIndex;//默认选择动态页数
 @property (assign,nonatomic) BOOL canLoadMore;
+@property (assign,nonatomic) BOOL hidRightBtn;//右上角按钮
 
 @end
 
@@ -98,7 +99,7 @@ static NSString *fridcellid = @"fridcellid";
     return _wlSegmentedControl;
 }
 
-- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel OperateType:(NSNumber *)operateType
+- (instancetype)initWithBaseUserM:(IBaseUserM *)iBaseUserModel OperateType:(NSNumber *)operateType HidRightBtn:(BOOL)hidRightBtn
 {
     self = [super init];
     if (self) {
@@ -108,6 +109,7 @@ static NSString *fridcellid = @"fridcellid";
         self.baseUserModel = iBaseUserModel;
         self.operateType = operateType;
         self.canLoadMore = YES;
+        self.hidRightBtn = hidRightBtn;
     }
     return self;
 }
@@ -354,19 +356,20 @@ static NSString *fridcellid = @"fridcellid";
             // 2.给cell传递模型数据
             // 传递的模型：文字数据 + 子控件frame数据
             cell.statusFrame = _datasource2[indexPath.row];
+            WEAKSELF
             cell.feedzanBlock = ^(WLStatusM *statusM){
-                WLStatusFrame *statusF = _datasource2[indexPath.row];
+                WLStatusFrame *statusF = weakSelf.datasource2[indexPath.row];
                 [statusF setStatus:statusM];
-                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+                [weakSelf.datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
 //                [_tableView reloadData];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             cell.feedTuiBlock = ^(WLStatusM *statusM){
-                WLStatusFrame *statusF = _datasource2[indexPath.row];
+                WLStatusFrame *statusF = weakSelf.datasource2[indexPath.row];
                 [statusF setStatus:statusM];
-                [_datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
+                [weakSelf.datasource2 replaceObjectAtIndex:indexPath.row withObject:statusF];
 //                [_tableView reloadData];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             };
             //    // 评论
             [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
@@ -535,7 +538,7 @@ static NSString *fridcellid = @"fridcellid";
         {
             UserInfoModel *modeIM = _datasource3[indexPath.row];
 //            UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
-            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil];
+            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil HidRightBtn:NO];
             [self.navigationController pushViewController:userInfoVC animated:YES];
         }
             break;
@@ -1164,7 +1167,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)rightBtnClicked:(UIButton *)sender
 {
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    if (_baseUserModel.friendship.integerValue == 1) {
+    if (_baseUserModel.friendship.integerValue == 1 && !_hidRightBtn) {
         [self moreBtnClicked];
     }
 }
@@ -1173,7 +1176,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)setRightNavBtnWithUserInfoModel:(IBaseUserM *)userInfoModel
 {
     /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    if (userInfoModel.friendship.integerValue == 1) {
+    if (userInfoModel.friendship.integerValue == 1 && !_hidRightBtn) {
         //设置右侧按钮
         [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_more"]];
         //更多操作
@@ -1188,12 +1191,13 @@ static NSString *fridcellid = @"fridcellid";
     if (item) {
         [self getUserInfoWith:item.itemObject];
     }
-    
-    [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
-        [self getUserInfoWith:JSON];
-    } fail:^(NSError *error) {
-        _wlNoteInfoView.loadFailed = YES;
-    }];
+    if (_baseUserModel.uid) {
+        [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
+            [self getUserInfoWith:JSON];
+        } fail:^(NSError *error) {
+            _wlNoteInfoView.loadFailed = YES;
+        }];
+    }
 }
 
 - (void)getUserInfoWith:(NSDictionary *)dataDic

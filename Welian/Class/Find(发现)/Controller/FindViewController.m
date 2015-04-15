@@ -117,11 +117,14 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
     cell.titLabel.text = dict[@"name"];
     [cell.iconImage setImage:[UIImage imageNamed:dict[@"icon"]]];
     LogInUser *meinfo = [LogInUser getCurrentLoginUser];
+    
+    cell.deputLabel.text = @"";
+    cell.deputLabel.hidden = YES;
     if (indexPath.section==0) {
         switch (indexPath.row) {
             case 1:
             {
-                if (meinfo.activecount.integerValue) {
+                if (meinfo.activecount.integerValue > 0) {
                     [cell.deputLabel setHidden:NO];
                     [cell.deputLabel setText:[NSString stringWithFormat:@"有%@个活动可以参与",meinfo.activecount]];
                 }
@@ -129,6 +132,10 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             }
                 break;
             default:
+            {
+                [cell.deputLabel setHidden:YES];
+                [cell.badgeImage setHidden:YES];
+            }
                 break;
         }
     }else if (indexPath.section==1){
@@ -161,53 +168,61 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             break;
         }
     }
-    if (indexPath.section==1) {
-        if (indexPath.row==0) {
-            //项目
-            ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
-            [self.navigationController pushViewController:projectListVC animated:YES];
-            // 取消新活动角标
-            [LogInUser setUserIsProjectBadge:NO];
-            [[MainViewController sharedMainViewController] loadNewStustupdata];
-            [self reloadProject];
-        }else if (indexPath.row==1){
-            InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
-            [investorListVC setTitle:@"投资人"];
-            [self.navigationController pushViewController:investorListVC animated:YES];
-        }
-    }else{
-        switch (indexPath.row) {
-            case 0:
-            {
-                // 观点  虎嗅网
-                TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
-                webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
-                webVC.showRightShareBtn = YES;//现实右上角分享按钮
-                [self.navigationController pushViewController:webVC animated:YES];
+    switch (indexPath.section) {
+        case 0:
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    // 观点  虎嗅网
+                    TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://m.huxiu.com/"];
+                    webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+                    webVC.showRightShareBtn = YES;//现实右上角分享按钮
+                    [self.navigationController pushViewController:webVC animated:YES];
+                }
+                    break;
+                case 1:
+                {
+                    //活动列表
+                    ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
+                    [self.navigationController pushViewController:activityListVC animated:YES];
+                    
+                    // 取消新活动角标
+                    [LogInUser setUserIsactivebadge:NO];
+                    [[MainViewController sharedMainViewController] loadNewStustupdata];
+                    [self reloadNewactivit];
+                }
+                    break;
+                case 2:
+                {
+                    
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            case 1:
-            {
-                //活动列表
-                ActivityListViewController *activityListVC = [[ActivityListViewController alloc] init];
-                [self.navigationController pushViewController:activityListVC animated:YES];
-                
+        }
+            break;
+        case 1:
+        {
+            if (indexPath.row==0) {
+                //项目
+                ProjectListViewController *projectListVC = [[ProjectListViewController alloc] init];
+                [self.navigationController pushViewController:projectListVC animated:YES];
                 // 取消新活动角标
-                [LogInUser setUserIsactivebadge:NO];
+                [LogInUser setUserIsProjectBadge:NO];
                 [[MainViewController sharedMainViewController] loadNewStustupdata];
-                [self reloadNewactivit];
+                [self reloadProject];
+            }else if (indexPath.row==1){
+                InvestorUsersListController *investorListVC = [[InvestorUsersListController alloc] initWithStyle:UITableViewStylePlain];
+                [investorListVC setTitle:@"投资人"];
+                [self.navigationController pushViewController:investorListVC animated:YES];
             }
-                break;
-            case 2:
-            {
-                
-            }
-                break;
-            default:
-                break;
         }
+            break;
+        default:
+            break;
     }
-    
 }
 
 

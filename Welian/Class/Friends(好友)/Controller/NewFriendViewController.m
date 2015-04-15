@@ -110,7 +110,7 @@ static NSString *cellIdentifier = @"frnewCellid";
         isask = YES;
     }
 //    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)friendM isAsk:isask];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:@(10)];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendM OperateType:@(10) HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 //    [userInfoVC setNeedlessCancel:YES];
     WEAKSELF

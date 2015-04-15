@@ -120,7 +120,7 @@
     if (tableView == _searchDisplayVC.searchResultsTableView) {
         UserInfoModel *mode = _filterArray[indexPath.row];
 
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil HidRightBtn:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }else{
         switch (indexPath.row) {
