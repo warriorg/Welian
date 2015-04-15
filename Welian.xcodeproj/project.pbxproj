@@ -493,11 +493,7 @@
 		A46FAE621A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */; };
 		A46FAE631A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A46FAE5F1A8DEC2D005EB34E /* discovery_activity_pay_bg@2x.png */; };
 		A470956F1ADD252600329050 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
-		A47095701ADD252600329050 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
-		A47095711ADD252600329050 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
 		A47095721ADD252600329050 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
-		A47095731ADD252600329050 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
-		A470957A1ADD253900329050 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47095751ADD253800329050 /* BasicPlainTableViewController.m */; };
 		A470957B1ADD253900329050 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47095751ADD253800329050 /* BasicPlainTableViewController.m */; };
 		A470957C1ADD253900329050 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47095751ADD253800329050 /* BasicPlainTableViewController.m */; };
 		A470957D1ADD253900329050 /* BasicPlainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47095751ADD253800329050 /* BasicPlainTableViewController.m */; };
@@ -2537,6 +2533,9 @@
 		F500B21F1AAEB16800A7AD35 /* share_welianfriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F500B1FD1AAEB16800A7AD35 /* share_welianfriend@2x.png */; };
 		F500B2201AAEB16800A7AD35 /* share_welianfriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F500B1FD1AAEB16800A7AD35 /* share_welianfriend@2x.png */; };
 		F500B2211AAEB16800A7AD35 /* share_welianfriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F500B1FD1AAEB16800A7AD35 /* share_welianfriend@2x.png */; };
+		F506A8A71ADE666B00EABB0E /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
+		F506A8A81ADE672C00EABB0E /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
+		F506A8A91ADE674200EABB0E /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A470956E1ADD252600329050 /* NavViewController.m */; };
 		F50CB09D1ACE8CF10003DA8E /* home_repost_beijing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F50CB09A1ACE8CF10003DA8E /* home_repost_beijing@2x.png */; };
 		F50CB09E1ACE8CF10003DA8E /* home_repost_beijing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F50CB09A1ACE8CF10003DA8E /* home_repost_beijing@2x.png */; };
 		F50CB09F1ACE8CF10003DA8E /* home_repost_beijing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F50CB09A1ACE8CF10003DA8E /* home_repost_beijing@2x.png */; };
@@ -12838,6 +12837,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F506A8A71ADE666B00EABB0E /* NavViewController.m in Sources */,
 				A49C7BC31A70D42700F2AEC5 /* ISchoolResult.m in Sources */,
 				A46A284A1ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				A49C7BC41A70D42700F2AEC5 /* NewFriendController.m in Sources */,
@@ -13347,6 +13347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F506A8A81ADE672C00EABB0E /* NavViewController.m in Sources */,
 				F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */,
 				A46A28491ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */,
@@ -13950,7 +13951,6 @@
 				A493C3721ADD14A60056BD52 /* WLStatusM.m in Sources */,
 				F56649A51A2AFD56008A5830 /* AppDelegate.mm in Sources */,
 				F5915FFE1ADE1044002E8A65 /* CTAssetItemViewController.m in Sources */,
-				F55ED9E71A58D7BB00C4AB93 /* BasicPlainTableViewController.m in Sources */,
 				F5915FE21ADE1044002E8A65 /* JKImagePickerController.m in Sources */,
 				F56649A61A2AFD56008A5830 /* TQRichTextView.m in Sources */,
 				A493C2441ADD0BB00056BD52 /* NSUserDefaults+Standard.m in Sources */,
@@ -14252,7 +14252,6 @@
 				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				A4D43AB01AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5933F961AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
-				A403561A1A5D5B7E006AE52C /* BaseTableViewCell.m in Sources */,
 				F5664A421A2AFD56008A5830 /* MeinfoCell.m in Sources */,
 				A493C25D1ADD0BB00056BD52 /* UIView+Extend.m in Sources */,
 				A4C141171A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
@@ -14367,6 +14366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F506A8A91ADE674200EABB0E /* NavViewController.m in Sources */,
 				F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */,
 				A46A28481ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				F5664C361A2AFDD5008A5830 /* NewFriendController.m in Sources */,
