@@ -1,5 +1,5 @@
 /*
- ALAsset+accessibilityLabel.h
+ CTAssetItemViewController.h
  
  The MIT License (MIT)
  
@@ -25,14 +25,28 @@
  
  */
 
+#import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "JKAssets.h"
+
+@protocol CTAssetItemViewControllerDataSource;
+
+
+@interface CTAssetItemViewController : UIViewController
+
++ (CTAssetItemViewController *)assetItemViewControllerForPageIndex:(NSInteger)pageIndex;
+
+@property (nonatomic, weak) id<CTAssetItemViewControllerDataSource> dataSource;
+@property (nonatomic, assign) NSInteger pageIndex;
+
+@end
 
 
 
 
 
-@interface ALAsset (accessibilityLabel)
-
-- (NSString *)accessibilityLabel;
+@protocol CTAssetItemViewControllerDataSource <NSObject>
+@required
+- (JKAssets *)assetAtIndex:(NSUInteger)index;
 
 @end

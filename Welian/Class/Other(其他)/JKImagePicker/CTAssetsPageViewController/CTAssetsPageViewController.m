@@ -65,37 +65,33 @@
     return self;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    _picBlcok([NSMutableArray arrayWithArray:self.assets]);
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self addNotificationObserver];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deletePick)];
+//    [self loadAssetsGroups];
 }
 
 - (void)deletePick
 {
+    WEAKSELF
     [UIAlertView bk_showAlertViewWithTitle:@"确定删除吗？" message:@"" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex==1) {
             NSMutableArray *mutAssets = [NSMutableArray arrayWithArray:self.assets];
             [mutAssets removeObjectAtIndex:_currently-1];
-            self.assets = mutAssets;
+            weakSelf.assets = mutAssets;
             if (_currently==1) {
-                if (self.assets.count==0) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                if (weakSelf.assets.count==0) {
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
                     return;
                 }
-                [self setPageIndex:0];
+                [weakSelf setPageIndex:0];
             }else {
                 
-                [self setPageIndex:_currently-2];
+                [weakSelf setPageIndex:_currently-2];
             }
+            _picBlcok([NSMutableArray arrayWithArray:weakSelf.assets]);
 
         }
     }];
@@ -271,7 +267,7 @@
 
 
 #pragma mark - CTAssetItemViewControllerDataSource
-- (ALAsset *)assetAtIndex:(NSUInteger)index;
+- (JKAssets *)assetAtIndex:(NSUInteger)index;
 {
     return [self.assets objectAtIndex:index];
 }

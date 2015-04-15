@@ -15,8 +15,7 @@
 #import "NavViewController.h"
 #import "PictureCell.h"
 #import "CTAssetsPageViewController.h"
-#import "JKPhotoBrowser.h"
-#import "CTAssetsPickerController.h"
+//#import "CTAssetsPickerController.h"
 #import "CollectionViewController.h"
 #import "MJExtension.h"
 #import "MJPhotoBrowser.h"
@@ -25,7 +24,7 @@
 #import "MJExtension.h"
 #import "WLPhotographyHelper.h"
 
-@interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CTAssetsPickerControllerDelegate,UITextViewDelegate>
+@interface CreateProjectController () <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextViewDelegate,JKImagePickerControllerDelegate>
 {
     BOOL _isEdit;
     ALAssetsLibrary *_alassets;
@@ -105,7 +104,7 @@ static NSString *projectcellid = @"projectcellid";
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [self.footView.lentLabel setText:[NSString stringWithFormat:@"%d",textView.text.length]];
+    [self.footView.lentLabel setText:[NSString stringWithFormat:@"%lu",(unsigned long)textView.text.length]];
     if (textView.text.length<=200) {
         [self.footView.lentLabel setTextColor:WLRGB(125, 125, 125)];
     }else{
@@ -254,129 +253,44 @@ static NSString *projectcellid = @"projectcellid";
 
 - (void)selectPhotosBut
 {
-    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-    [sheet bk_addButtonWithTitle:@"拍照" handler:^{
-        
-        // 判断相机可以使用
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:^(UIImage *image, NSDictionary *editingInfo) {
-                [WLHUDView showCustomHUD:@"正在加载" imageview:nil];
-                UIImage *edImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
-                NSDictionary *metaDic = [editingInfo objectForKey:UIImagePickerControllerMediaMetadata];
-                // 保存图片到相册，调用的相关方法，查看是否保存成功
-                [_alassets writeImageToSavedPhotosAlbum:edImage.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
-                    [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-                        [self.assetsArray addObject:asset];
-                        [self.footView.collectionView reloadData];
-                        [self.tableView setTableFooterView:self.footView];
-                        [WLHUDView hiddenHud];
-                    } failureBlock:^(NSError *error) {
-                        [WLHUDView hiddenHud];
-                    }];
-                }];
-            }];
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-    }];
-    [sheet bk_addButtonWithTitle:@"从相册选择" handler:^{
-        CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
-        picker.assetsFilter         = [ALAssetsFilter allAssets];
-        [picker setAssetsLibrary:_alassets];
-        picker.delegate             = self;
-        picker.selectedAssets       = [NSMutableArray arrayWithArray:self.assetsArray];
-        
-        [self presentViewController:picker animated:YES completion:nil];
-    }];
-    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     
-    [sheet showInView:self.view];
-    
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.filterType = JKImagePickerControllerFilterTypePhotos;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 9;
+    imagePickerController.selectedAssetArray = self.assetsArray;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
-
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
-//
-//    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
-//
-//        // 保存图片到相册，调用的相关方法，查看是否保存成功
-//        [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
-//            [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-//                [self.assetsArray addObject:asset];
-//                [self.footView.collectionView reloadData];
-//                [picker dismissViewControllerAnimated:YES completion:^{
-//
-//                }];
-//            } failureBlock:^(NSError *error) {
-//
-//            }];
-//
-//        }];
-//    }
-//}
-
-#pragma mark - Assets Picker Delegate
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker isDefaultAssetsGroup:(ALAssetsGroup *)group
+#pragma mark - JKImagePickerControllerDelegate
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
 {
-    return ([[group valueForProperty:ALAssetsGroupPropertyType] integerValue] == ALAssetsGroupSavedPhotos);
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
-    [picker.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     self.assetsArray = [NSMutableArray arrayWithArray:assets];
-    [self.footView.collectionView reloadData];
-    [self.tableView setTableFooterView:self.footView];
-}
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldEnableAsset:(ALAsset *)asset
-{
-    // Enable video clips if they are at least 5s
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo])
-    {
-        NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
-        return lround(duration) >= 5;
-    }
-    else
-    {
-        return YES;
-    }
-}
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldSelectAsset:(ALAsset *)asset
-{
-    if (picker.selectedAssets.count >= 9-_projectModel.photos.count)
-    {
-        UIAlertView *alertView =
-        [[UIAlertView alloc] initWithTitle:@"你最多只能选9张照片"
-                                   message:nil
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                         otherButtonTitles:@"我知道了", nil];
-        
-        [alertView show];
-    }
     
-    if (!asset.defaultRepresentation)
-    {
-        UIAlertView *alertView =
-        [[UIAlertView alloc] initWithTitle:@"Attention"
-                                   message:@"Your asset has not yet been downloaded to your device"
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                         otherButtonTitles:@"OK", nil];
-        
-        [alertView show];
-    }
-    
-    return (picker.selectedAssets.count < 9-_projectModel.photos.count && asset.defaultRepresentation != nil);
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        self.assetsArray = [NSMutableArray arrayWithArray:assets];
+        [self.footView.collectionView reloadData];
+        [self.tableView setTableFooterView:self.footView];
+    }];
 }
 
+- (void)imagePickerControllerJKDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
 
 #pragma mark - CollectionView代理
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -418,12 +332,12 @@ static NSString *projectcellid = @"projectcellid";
             IPhotoInfo *photoUrl = _projectModel.photos[indexPath.row];
             [cell.picImageV sd_setImageWithURL:[NSURL URLWithString:photoUrl.photo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
         }else{
-            ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row];
-            [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+            JKAssets *jkAssets = [self.assetsArray objectAtIndex:indexPath.row];
+            cell.picImageV.image = jkAssets.fullImage;
         }
     }else if(indexPath.section==1){
-        ALAsset *asset = [self.assetsArray objectAtIndex:indexPath.row];
-        [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+        JKAssets *jkAssets = [self.assetsArray objectAtIndex:indexPath.row];
+        cell.picImageV.image = jkAssets.fullImage;
     }
     
     return cell;
@@ -431,9 +345,9 @@ static NSString *projectcellid = @"projectcellid";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    PictureCell *cell = (PictureCell *)[collectionView cellForItemAtIndexPath:indexPath];
     // 2.显示相册
     MJPhoto *photo = [[MJPhoto alloc] init];
+    WEAKSELF
     if (indexPath.section==0) {
         if (_projectModel.photos.count) {
             seleSection = 0;
@@ -441,22 +355,21 @@ static NSString *projectcellid = @"projectcellid";
             [photo setUrl:[NSURL URLWithString:photoI.photo]];
         }else{
             seleSection = 1;
-            ALAsset *asset = self.assetsArray[indexPath.row];
-            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                                 scale:0.5
-                                           orientation:UIImageOrientationUp];
-            [photo setImage:image];
+            JKAssets *jkAssets = [self.assetsArray objectAtIndex:indexPath.row];
+            photo.image = jkAssets.fullImage;
         }
     }else if(indexPath.section==1){
         seleSection = 1;
-        ALAsset *asset = self.assetsArray[indexPath.row];
-        UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                             scale:0.5
-                                       orientation:UIImageOrientationUp];
-        [photo setImage:image];
+        JKAssets *jkAssets = [self.assetsArray objectAtIndex:indexPath.row];
+        photo.image = jkAssets.fullImage;
     }
-    //    [photo setHasNoImageView:YES];
     _row = indexPath.row;
+    [self showPhotoBrowser:photo];
+    
+}
+
+- (void)showPhotoBrowser:(MJPhoto *)photo
+{
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     [browser setIsDelete:YES];
     browser.photos = @[photo]; // 设置所有的图片
@@ -665,10 +578,8 @@ static NSString *projectcellid = @"projectcellid";
 - (NSMutableArray *)seleAssetsArray
 {
     NSMutableArray *photArray = [NSMutableArray array];
-    for (ALAsset *asset in self.assetsArray) {
-        UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                             scale:0.5
-                                       orientation:UIImageOrientationUp];
+    for (JKAssets *jkAsset in self.assetsArray) {
+        UIImage *image = jkAsset.fullImage;
         NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
         NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         [photArray addObject:@{@"photo":imageStr,@"title":@"jpg"}];
