@@ -7,7 +7,13 @@
 //
 
 
+#pragma mark - NSNotification Key
+extern NSString *const KupdataMyAllFriends;//我的好友更新通知
 
+
+
+
+#pragma mark - NSUserDefaults Key
 
 
 
