@@ -25,7 +25,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterTyp
 @optional
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source;
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source;
-- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker;
+- (void)imagePickerControllerJKDidCancel:(JKImagePickerController *)imagePicker;
 
 @end
 

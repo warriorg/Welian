@@ -8,11 +8,13 @@
 
 #import "PublishStatusController.h"
 #import "CTAssetsPageViewController.h"
-#import "CTAssetsPickerController.h"
+
+#import "JKImagePickerController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "PictureCell.h"
 #import "PublishModel.h"
 #import "IWTextView.h"
-#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "ACEExpandableTextCell.h"
 #import "WLCellCardView.h"
 #import "WUDemoKeyboardBuilder.h"
@@ -20,7 +22,7 @@
 
 static NSString *picCellid = @"PicCellID";
 
-@interface PublishStatusController () <UITextViewDelegate,CTAssetsPickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource,ACEExpandableTableViewDelegate>
+@interface PublishStatusController () <UITextViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITableViewDelegate,UITableViewDataSource,ACEExpandableTableViewDelegate,JKImagePickerControllerDelegate>
 
 {
     CGFloat _cellHeight;
@@ -38,10 +40,9 @@ static NSString *picCellid = @"PicCellID";
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIView *inputttView;
-@property (nonatomic, strong) __block NSMutableArray *assets;
+@property (nonatomic, strong) __block NSMutableArray *assetsArray;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
-@property (nonatomic, strong) NSArray *friendArray;
 @property (nonatomic, strong) PublishModel *publishM;
 
 @property (nonatomic, strong) WLCellCardView *forwardView;
@@ -65,7 +66,7 @@ static NSString *picCellid = @"PicCellID";
         _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
     }
-    NSInteger conut = _assets.count?_assets.count+1:_assets.count;
+    NSInteger conut = _assetsArray.count?_assetsArray.count+1:_assetsArray.count;
     
     [_collectionView setFrame:CGRectMake(0, 0, 0, 20+ceilf(conut/3.0)*(self.view.bounds.size.width-60)/3+20)];
     return _collectionView;
@@ -132,7 +133,7 @@ static NSString *picCellid = @"PicCellID";
 {
     [super viewDidLoad];
     _alassets = [[ALAssetsLibrary alloc] init];
-    _assets = [NSMutableArray arrayWithArray:_assets];
+    _assetsArray = [NSMutableArray arrayWithArray:_assetsArray];
     self.publishM = [[PublishModel alloc] init];
     [self setUiItems];
     [self addUIView];
@@ -249,10 +250,10 @@ static NSString *picCellid = @"PicCellID";
 #pragma mark - CollectionView代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.assets.count>0&&self.assets.count<9) {
-        return self.assets.count+1;
+    if (self.assetsArray.count>0&&self.assetsArray.count<9) {
+        return self.assetsArray.count+1;
     }
-    return self.assets.count;
+    return self.assetsArray.count;
 }
 
 
@@ -267,13 +268,13 @@ static NSString *picCellid = @"PicCellID";
 {
     PictureCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:picCellid forIndexPath:indexPath];;
     
-    if (self.assets.count>0) {
-        if (indexPath.row==self.assets.count) {
+    if (self.assetsArray.count>0) {
+        if (indexPath.row==self.assetsArray.count) {
             
             [cell.picImageV setImage:[UIImage imageNamed:@"home_new_upload_picture_add"]];
         }else{
-            ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
-            [cell.picImageV setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+            JKAssets *jkAssets = [self.assetsArray objectAtIndex:indexPath.row];
+            cell.picImageV.image = jkAssets.fullImage;
         }
     }
     return cell;
@@ -281,14 +282,14 @@ static NSString *picCellid = @"PicCellID";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == self.assets.count) {
+    if (indexPath.row == self.assetsArray.count) {
         [self showPicVC:nil];
     }else{
-        CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assets picDatablock:^(NSMutableArray *picArray) {
+        CTAssetsPageViewController *vc = [[CTAssetsPageViewController alloc] initWithAssets:self.assetsArray picDatablock:^(NSMutableArray *picArray) {
             if (picArray.count || _textCell.textView.text.length) {
                 [self.navigationItem.rightBarButtonItem setEnabled:YES];
             }
-            self.assets = picArray;
+            self.assetsArray = picArray;
             [self.collectionView reloadData];
             [self.tableView setTableFooterView:self.collectionView];
         }];
@@ -304,80 +305,17 @@ static NSString *picCellid = @"PicCellID";
 {
     
     [self dismissKeyBoard];
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
-    [sheet showInView:self.view];
     
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {  // 拍照
-        // 判断相机可以使用
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            //            [imagePicker setAllowsEditing:YES];
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-            [self presentViewController:imagePicker animated:YES completion:^{
-                
-            }];
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-        
-    }else if (buttonIndex ==1){ // 从相册选择
-        
-        CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
-        picker.assetsFilter         = [ALAssetsFilter allAssets];
-        [picker setAssetsLibrary:_alassets];
-        //    picker.showsCancelButton    = NO;
-        picker.delegate             = self;
-        picker.selectedAssets       = [NSMutableArray arrayWithArray:self.assets];
-        
-        [self presentViewController:picker animated:YES completion:nil];
-    }
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSDictionary *metaDic = [info objectForKey:UIImagePickerControllerMediaMetadata];
-    
-    if (picker.sourceType==UIImagePickerControllerSourceTypeCamera) {
-        // 保存图片到相册，调用的相关方法，查看是否保存成功
-        [_alassets writeImageToSavedPhotosAlbum:image.CGImage metadata:metaDic completionBlock:^(NSURL *assetURL, NSError *error) {
-            [_alassets assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-                [self.assets addObject:asset];
-                [self.navigationItem.rightBarButtonItem setEnabled:YES];
-                [self.collectionView reloadData];
-                [self.tableView setTableFooterView:self.collectionView];
-                [picker dismissViewControllerAnimated:YES completion:^{
-                    
-                }];
-                
-            } failureBlock:^(NSError *error) {
-                
-            }];
-            
-            //            [_alassets saveImage:[info objectForKey:UIImagePickerControllerOriginalImage] toAlbum:@"weLian" withCompletionBlock:^(NSError *error) {
-            //
-            //
-            //            } withSaveAlasset:^(ALAsset *asset) {
-            //                if (asset) {  // 保存成功
-            //
-            //                    [self.assets addObject:asset];
-            //                    [self.collectionView reloadData];
-            //
-            //
-            //                }else{
-            //
-            //                }
-            //            }];
-            
-        }];
-    }
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.filterType = JKImagePickerControllerFilterTypePhotos;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 9;
+    imagePickerController.selectedAssetArray = [NSMutableArray arrayWithArray:self.assetsArray];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
 #pragma mark - Keyboard notifications
@@ -417,93 +355,31 @@ static NSString *picCellid = @"PicCellID";
     }];
 }
 
-#pragma mark - Assets Picker Delegate
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker isDefaultAssetsGroup:(ALAssetsGroup *)group
+#pragma mark - JKImagePickerControllerDelegate
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
 {
-    return ([[group valueForProperty:ALAssetsGroupPropertyType] integerValue] == ALAssetsGroupSavedPhotos);
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSMutableArray *)assets
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
-    [picker.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    
     if (assets.count || _textCell.textView.text.length) {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
-    self.assets = assets;
-    //    [self reloadCollectionView];
+    self.assetsArray = [NSMutableArray arrayWithArray:assets];;
     [self.collectionView reloadData];
     [self.tableView setTableFooterView:self.collectionView];
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldEnableAsset:(ALAsset *)asset
+- (void)imagePickerControllerJKDidCancel:(JKImagePickerController *)imagePicker
 {
-    // Enable video clips if they are at least 5s
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo])
-    {
-        NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
-        return lround(duration) >= 5;
-    }
-    else
-    {
-        return YES;
-    }
-}
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldSelectAsset:(ALAsset *)asset
-{
-    if (picker.selectedAssets.count >= 9)
-    {
-        UIAlertView *alertView =
-        [[UIAlertView alloc] initWithTitle:@"你最多只能选9张照片"
-                                   message:nil
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                         otherButtonTitles:@"我知道了", nil];
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
         
-        [alertView show];
-    }
-    
-    if (!asset.defaultRepresentation)
-    {
-        UIAlertView *alertView =
-        [[UIAlertView alloc] initWithTitle:@"Attention"
-                                   message:@"Your asset has not yet been downloaded to your device"
-                                  delegate:nil
-                         cancelButtonTitle:nil
-                         otherButtonTitles:@"OK", nil];
-        
-        [alertView show];
-    }
-    
-    return (picker.selectedAssets.count < 9 && asset.defaultRepresentation != nil);
-}
-
-//#pragma mark - 添加位置
-//- (void)addUserLocation:(UIButton*)but
-//{
-//    MyLocationController *myLocationVC = [[MyLocationController alloc] initWithLocationBlock:^(BMKPoiInfo *infoPoi) {
-//
-//        [but setTitle:infoPoi.name forState:UIControlStateNormal];
-//        [but sizeToFit];
-//        if ([infoPoi.name isEqualToString:@"不显示"]) {
-//
-//        }else {
-//
-//            [self.publishM setAddress:infoPoi.name];
-//            [self.publishM setX:[NSString stringWithFormat:@"%f",infoPoi.pt.latitude]];
-//            [self.publishM setY:[NSString stringWithFormat:@"%f",infoPoi.pt.longitude]];
-//        }
-//
-//    }];
-//    [self.navigationController pushViewController:myLocationVC animated:YES];
-//}
-
-#pragma mark - 和谁在一起
-- (void)getTogether:(UIButton *)button
-{
-    
+    }];
 }
 
 
@@ -512,6 +388,7 @@ static NSString *picCellid = @"PicCellID";
 {
     [self.view.findFirstResponder resignFirstResponder];
     [self dismissKeyBoard];
+    WEAKSELF
     if (_publishType == PublishTypeForward) {
         if (self.statusCard) {
             NSMutableDictionary *pubCardDic = [NSMutableDictionary dictionary];
@@ -525,10 +402,10 @@ static NSString *picCellid = @"PicCellID";
             [pubCardDic setObject:[self.statusCard keyValues] forKey:@"card"];
             [WLHttpTool addFeedParameterDic:pubCardDic success:^(id JSON) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
-                if (self.publishBlock) {
-                    self.publishBlock();
+                if (weakSelf.publishBlock) {
+                    weakSelf.publishBlock();
                 }
-                [self dismissViewControllerAnimated:YES completion:^{
+                [weakSelf dismissViewControllerAnimated:YES completion:^{
                     
                 }];
                 
@@ -541,7 +418,7 @@ static NSString *picCellid = @"PicCellID";
         }
     }else if (_publishType == PublishTypeNomel)
     {
-        if (!(_textCell.textView.text.length||self.assets.count)) {
+        if (!(_textCell.textView.text.length||self.assetsArray.count)) {
             [WLHUDView showErrorHUD:@"内容为空！"];
             return;
         }
@@ -562,21 +439,15 @@ static NSString *picCellid = @"PicCellID";
             [reqDataDic setObject:self.publishM.y forKey:@"y"];
         }
         
-        if (self.assets.count) {
-            for (ALAsset *asset in self.assets) {
-                UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage
-                                                     scale:0.5
-                                               orientation:UIImageOrientationUp];
+        if (self.assetsArray.count) {
+            for (JKAssets *jkAsset in self.assetsArray) {
+                UIImage *image = jkAsset.fullImage;
                 NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
                 NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                 NSDictionary *imageDic = @{@"photo":imageStr,@"title":@"jpg"};
                 [self.publishM.photos addObject:imageDic];
             }
-            [reqDataDic setObject:self.publishM.photos forKey:@"photos"];
-        }
-        if (self.friendArray.count) {
-            
-            [reqDataDic setObject:self.publishM.with forKey:@"with"];
+             [reqDataDic setObject:weakSelf.publishM.photos forKey:@"photos"];
         }
         
         [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
@@ -599,7 +470,7 @@ static NSString *picCellid = @"PicCellID";
 - (void)cancelPublish
 {
     [self dismissKeyBoard];
-    if (_textCell.textView.text.length||self.assets.count||self.statusCard) {
+    if (_textCell.textView.text.length||self.assetsArray.count||self.statusCard) {
         WEAKSELF
         [UIAlertView bk_showAlertViewWithTitle:@"退出此次编辑？" message:@"" cancelButtonTitle:@"取消" otherButtonTitles:@[@"退出"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex==1) {

@@ -84,9 +84,9 @@
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage  *img = [UIImage imageNamed:@"photo_check_default"];
         UIImage  *imgH = [UIImage imageNamed:@"photo_check_selected"];
-        _checkButton.frame = CGRectMake(0, 0, img.size.width, img.size.height);
-        [_checkButton setBackgroundImage:img forState:UIControlStateNormal];
-        [_checkButton setBackgroundImage:imgH forState:UIControlStateSelected];
+        _checkButton.frame = CGRectMake(0, 0, img.size.width+10, img.size.height+10);
+        [_checkButton setImage:img forState:UIControlStateNormal];
+        [_checkButton setImage:imgH forState:UIControlStateSelected];
         [_checkButton addTarget:self action:@selector(photoDidChecked) forControlEvents:UIControlEventTouchUpInside];
         _checkButton.exclusiveTouch = YES;
         [self.imageView addSubview:_checkButton];
@@ -99,7 +99,6 @@
         _photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _photoButton.frame = self.contentView.bounds;
         UIImage  *bgImg = [UIImage imageNamed:@"compose_photograph_background"];
-        [_photoButton setBackgroundImage:bgImg forState:UIControlStateNormal];
         [_photoButton setBackgroundImage:bgImg forState:UIControlStateNormal];
 
         UIImage  *img = [UIImage imageNamed:@"compose_photograph"];

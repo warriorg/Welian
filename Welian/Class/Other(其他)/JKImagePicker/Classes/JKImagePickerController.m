@@ -104,27 +104,31 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
     // Property settings
     self.groupTypes = @[@(ALAssetsGroupLibrary),
                         @(ALAssetsGroupSavedPhotos),
-                        @(ALAssetsGroupPhotoStream),
                         @(ALAssetsGroupAlbum)];
+//    self.groupTypes = @[@(ALAssetsGroupLibrary),
+//                        @(ALAssetsGroupSavedPhotos),
+//                        @(ALAssetsGroupPhotoStream),
+//                        @(ALAssetsGroupAlbum)];
 
     self.navigationItem.titleView = self.titleButton;
     
-    UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    preBtn.frame = CGRectMake(0, 0, 50, 30);
-    [preBtn setTitle:@"预览" forState:UIControlStateNormal];
-    [preBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [preBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateHighlighted];
-    [preBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateDisabled];
-    [preBtn addTarget:self action:@selector(previewPhotoesSelected) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *preItem = [[UIBarButtonItem alloc] initWithCustomView:preBtn];
-    [self.navigationItem setRightBarButtonItem:preItem animated:NO];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+//    UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    preBtn.frame = CGRectMake(0, 0, 50, 30);
+//    [preBtn setTitle:@"预览" forState:UIControlStateNormal];
+//    [preBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    [preBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateHighlighted];
+//    [preBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateDisabled];
+//    [preBtn addTarget:self action:@selector(previewPhotoesSelected) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *preItem = [[UIBarButtonItem alloc] initWithCustomView:preBtn];
+//    [self.navigationItem setRightBarButtonItem:preItem animated:NO];
+//    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 - (void)cancelEventDidTouched
 {
-    if ([_delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
-        [_delegate imagePickerControllerDidCancel:self];
+    self.selectedAssetArray = nil;
+    if ([_delegate respondsToSelector:@selector(imagePickerControllerJKDidCancel:)]) {
+        [_delegate imagePickerControllerJKDidCancel:self];
     }
 }
 
@@ -182,6 +186,7 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
 - (void)previewPhotoesSelected
 {
     [self passSelectedAssets];
+//    [self browerPhotoes:self.selectedAssetArray page:0];
 }
 
 - (void)browerPhotoes:(NSArray *)array page:(NSInteger)page
@@ -419,14 +424,15 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
     
     // Show/hide cancel button
     if (showsCancelButton) {
-        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelBtn.frame = CGRectMake(0, 0, 50, 30);
-        [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-        [cancelBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [cancelBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateHighlighted];
-        [cancelBtn addTarget:self action:@selector(cancelEventDidTouched) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
+//        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        cancelBtn.frame = CGRectMake(0, 0, 50, 30);
+//        [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+//        [cancelBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+//        [cancelBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//        [cancelBtn setTitleColor:[JKUtil getColor:@"828689"] forState:UIControlStateHighlighted];
+//        [cancelBtn addTarget:self action:@selector(cancelEventDidTouched) forControlEvents:UIControlEventTouchUpInside];
+
+        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelEventDidTouched)];;
         [self.navigationItem setLeftBarButtonItem:cancelItem animated:NO];
     } else {
         [self.navigationItem setLeftBarButtonItem:nil animated:NO];
@@ -531,7 +537,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
     return nil;
 }
 
-#define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/4
+#define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/3
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -552,18 +558,17 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
 #pragma mark - getter
 - (void)photoBrowser:(JKPhotoBrowser *)photoBrowser didSelectAtIndex:(NSInteger)index
 {
-    ALAsset *asset = self.assetsArray[index];
-    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    [self addAssetsObject:assetURL];
+    ALAsset *asset = photoBrowser.assetsArray[index];
+    [self addAssetsObject:asset];
     [self resetFinishFrame];
     [self.collectionView reloadData];
 }
 
 - (void)photoBrowser:(JKPhotoBrowser *)photoBrowser didDeselectAtIndex:(NSInteger)index
 {
-    ALAsset *asset = self.assetsArray[index];
-    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    [self removeAssetsObject:assetURL];
+    ALAsset *asset = photoBrowser.assetsArray[index];
+//    ALAsset *asset = self.assetsArray[index];
+    [self removeAssetsObject:asset];
     [self resetFinishFrame];
     [self.collectionView reloadData];
 }
@@ -579,8 +584,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
                                          toAlbum:assetsName
                                  completionBlock:^(ALAsset *asset, NSError *error) {
                                      if (error == nil && asset) {
-                                         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-                                         [self addAssetsObject:assetURL];
+                                         [self addAssetsObject:asset];
                                          [weakSelf finishPhotoDidSelected];
                                      }
                                  }];
@@ -609,6 +613,11 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
     }
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)didSelectItemAssetsViewCell:(JKAssetsViewCell *)assetsCell
 {
     if (self.selectedAssetArray.count>=self.maximumNumberOfSelection) {
@@ -619,8 +628,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
     BOOL  validate = [self validateMaximumNumberOfSelections:(self.selectedAssetArray.count + 1)];
     if (validate) {
         // Add asset URL
-        NSURL *assetURL = [assetsCell.asset valueForProperty:ALAssetPropertyAssetURL];
-        [self addAssetsObject:assetURL];
+        [self addAssetsObject:assetsCell.asset];
         [self resetFinishFrame];
         assetsCell.isSelected = YES;
     }
@@ -629,35 +637,37 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
 
 - (void)didDeselectItemAssetsViewCell:(JKAssetsViewCell *)assetsCell
 {
-    NSURL *assetURL = [assetsCell.asset valueForProperty:ALAssetPropertyAssetURL];
-    [self removeAssetsObject:assetURL];
+    [self removeAssetsObject:assetsCell.asset];
     [self resetFinishFrame];
     assetsCell.isSelected = NO;
 
 
 }
 
-- (void)removeAssetsObject:(NSURL *)assetURL
+- (void)removeAssetsObject:(ALAsset *)asset
 {
-    for (JKAssets *asset in self.selectedAssetArray) {
-        if ([assetURL isEqual:asset.assetPropertyURL]) {
-            [self.assetsGroupsView removeAssetSelected:asset];
-            [self.selectedAssetArray removeObject:asset];
+    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+    for (JKAssets *jkAsset in self.selectedAssetArray) {
+        if ([assetURL isEqual:jkAsset.assetPropertyURL]) {
+            [self.assetsGroupsView removeAssetSelected:jkAsset];
+            [self.selectedAssetArray removeObject:jkAsset];
             break;
         }
     }
 }
 
-- (void)addAssetsObject:(NSURL *)assetURL
+- (void)addAssetsObject:(ALAsset *)asset
 {
+    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
     NSURL *groupURL = [self.selectAssetsGroup valueForProperty:ALAssetsGroupPropertyURL];
     NSString *groupID = [self.selectAssetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-    JKAssets  *asset = [[JKAssets alloc] init];
-    asset.groupPropertyID = groupID;
-    asset.groupPropertyURL = groupURL;
-    asset.assetPropertyURL = assetURL;
-    [self.selectedAssetArray addObject:asset];
-    [self.assetsGroupsView addAssetSelected:asset];
+    JKAssets  *jkAsset = [[JKAssets alloc] init];
+    jkAsset.fullImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage scale:0.5 orientation:UIImageOrientationUp];
+    jkAsset.groupPropertyID = groupID;
+    jkAsset.groupPropertyURL = groupURL;
+    jkAsset.assetPropertyURL = assetURL;
+    [self.selectedAssetArray addObject:jkAsset];
+    [self.assetsGroupsView addAssetSelected:jkAsset];
 }
 
 - (BOOL)assetIsSelected:(NSURL *)assetURL
@@ -703,7 +713,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
 - (UIButton *)titleButton{
     if (!_titleButton) {
         _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _titleButton.frame = CGRectMake(0, 0, 120, 30);
+        _titleButton.frame = CGRectMake(0, 0, 150, 30);
         UIImage  *img =[UIImage imageNamed:@"navigationbar_title_highlighted"];
         [_titleButton setBackgroundImage:nil forState:UIControlStateNormal];
         [_titleButton setBackgroundImage:[JKUtil stretchImage:img capInsets:UIEdgeInsetsMake(5, 2, 5, 2) resizingMode:UIImageResizingModeStretch] forState:UIControlStateHighlighted];
@@ -729,8 +739,8 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = [UIColor blackColor];
-        _titleLabel.font = [UIFont systemFontOfSize:16];
+        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.font = [UIFont systemFontOfSize:17];
         [self.titleButton addSubview:_titleLabel];
     }
     return _titleLabel;
@@ -792,6 +802,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
         label.centerY = _selectButton.height/2;
         label.right = _selectButton.width - 14;
         [_selectButton addSubview:label];
+        [_selectButton setHidden:YES];
         
         _finishLabel = [[UILabel alloc] init];
         _finishLabel.backgroundColor = [UIColor clearColor];
@@ -834,6 +845,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
                    withReuseIdentifier:kJKAssetsFooterViewIdentifier];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.alwaysBounceVertical = YES;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:_collectionView];
