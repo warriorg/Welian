@@ -246,7 +246,7 @@
         
 //        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
         [self.homeVC.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
@@ -287,7 +287,7 @@
         [statM setIszan:0];
         statM.zan -= 1;
         
-        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
@@ -297,7 +297,7 @@
         [statM setZansArray:zans];
         [statM setIszan:1];
         statM.zan +=1;
-        [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+        [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
@@ -336,7 +336,7 @@
         [statM setIsforward:0];
         statM.forwardcount -= 1;
         
-        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
@@ -346,7 +346,7 @@
         [statM setForwardsArray:forwards];
         [statM setIsforward:1];
         statM.forwardcount +=1;
-        [WLHttpTool forwardFeedParameterDic:@{@"fid":@(statM.topid)} success:^(id JSON) {
+        [WLHttpTool forwardFeedParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
             [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
             [but setEnabled:YES];
         } fail:^(NSError *error) {

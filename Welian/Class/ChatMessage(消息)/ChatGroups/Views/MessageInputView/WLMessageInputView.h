@@ -33,6 +33,13 @@ typedef NS_ENUM(NSInteger, WLMessageInputViewStyle) {
  */
 - (void)inputTextViewWillBeginEditing:(WLMessageTextView *)messageInputTextView;
 
+/**
+ *  输入框将要结束编辑
+ *
+ *  @param messageInputTextView 输入框对象
+ */
+- (void)inputTextViewDidEndEditing:(WLMessageTextView *)messageInputTextView;
+
 @optional
 
 /**

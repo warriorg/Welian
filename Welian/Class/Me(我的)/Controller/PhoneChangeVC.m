@@ -17,11 +17,17 @@
     
     NSInteger _type;
 }
+@property (strong,nonatomic) NSString *checkCode;
 @end
 
 #define KTimes 60;
 
 @implementation PhoneChangeVC
+
+- (void)dealloc
+{
+    _checkCode = nil;
+}
 
 - (instancetype)initWithPhoneType:(NSInteger)type
 {
@@ -87,16 +93,21 @@
 
 #pragma mark - 确认
 - (IBAction)sureButClick:(id)sender {
-    if (!self.phoneTF.text.length) {
-        [WLHUDView showErrorHUD:@"请输入手机号"];
+    if (self.phoneTF.text.length == 0) {
+        [WLHUDView showErrorHUD:@"请输入手机号！"];
         return;
     }
-    if (![NSString phoneValidate:self.phoneTF.text]) {
+    if (self.phoneTF.text.length > 0 && ![self.phoneTF.text isMobileNumber]) {
         [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
         return;
     }
-    if (self.authCodeTF.text.length<4) {
-        [WLHUDView showErrorHUD:@"验证码错误！"];
+//    if (![NSString phoneValidate:self.phoneTF.text]) {
+//        [WLHUDView showErrorHUD:@"请输入正确的手机号！"];
+//        return;
+//    }
+    
+    if (self.authCodeTF.text.length != 4 || ![_checkCode isEqualToString:self.authCodeTF.text]) {
+        [WLHUDView showErrorHUD:@"请输入正确的验证码！"];
         return;
     }
     WEAKSELF
@@ -123,14 +134,22 @@
 
 #pragma mark - 发送验证码
 - (IBAction)authButClick:(id)sender {
-    if (!self.phoneTF.text.length) {
-        [WLHUDView showErrorHUD:@"请输入手机号"];
+    if (self.phoneTF.text.length == 0) {
+        [WLHUDView showErrorHUD:@"请输入手机号！"];
         return;
     }
-    if (![NSString phoneValidate:self.phoneTF.text]) {
+    if (self.phoneTF.text.length > 0 && ![self.phoneTF.text isMobileNumber]) {
         [WLHUDView showErrorHUD:@"请填写正确的手机号！"];
         return;
     }
+//    if (!self.phoneTF.text.length) {
+//        [WLHUDView showErrorHUD:@"请输入手机号"];
+//        return;
+//    }
+//    if (![NSString phoneValidate:self.phoneTF.text]) {
+//        [WLHUDView showErrorHUD:@""];
+//        return;
+//    }
     [self startTime];
     [self chongxingfasongforgetcode];
 }
@@ -143,6 +162,7 @@
     [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
         if ([JSON objectForKey:@"checkcode"]) {
 //            [WLHUDView showSuccessHUD:@"发送成功"];
+            self.checkCode = [JSON objectForKey:@"checkcode"];
         }
     } fail:^(NSError *error) {
         

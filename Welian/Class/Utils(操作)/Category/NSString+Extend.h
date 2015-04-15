@@ -10,12 +10,17 @@
 
 @interface NSString (Extend)
 
+- (BOOL)isMobile;
+- (BOOL)isEmail;
 - (BOOL)isContainsString:(NSString *)string;
 
 - (CGSize)calculateSize:(CGSize)size font:(UIFont *)font;
 
 //将NSString转化为NSArray或者NSDictionary
 - (id)JSONValue;
+
+- (BOOL)isMobileNumber;//判断是否是中国的手机号码
+- (NSString *)mobileType;//判断手机号码的类型
 
 //日期转换
 - (NSDate *)dateFromShortString;

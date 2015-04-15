@@ -231,6 +231,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     UIButton *backBut = [[UIButton alloc] init];
     [backBut setTitle:@"返回" forState:UIControlStateNormal];
     [backBut setImage:[UIImage imageNamed:@"backItem"] forState:UIControlStateNormal];
+    [backBut setTitleColor:[UIColor colorWithWhite:1 alpha:0.5] forState:UIControlStateHighlighted];
     [backBut addTarget:self action:@selector(backItem) forControlEvents:UIControlEventTouchUpInside];
     [backBut setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBut];
@@ -341,18 +342,22 @@ static NSString *noCommentCell = @"NoCommentCell";
         [weakSelf closeProjectDetailInfoView];
     }];
     
-    if (_projectDetailInfo) {
-        [self.tableView reloadData];
-        [self updateUI];
-    }else{
-        //获取数据
-        [self initData];
-    }
+    //下拉刷新
+    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initData)];
     
     //上提加载更多
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreCommentData)];
     self.tableView.footer.hidden = YES;
 //    [self.tableView addFooterWithTarget:self action:@selector(loadMoreCommentData)];
+    
+    if (_projectDetailInfo) {
+        [self.tableView reloadData];
+        [self updateUI];
+    }else{
+        //获取数据
+//        [self initData];
+        [self.tableView.header beginRefreshing];
+    }
 }
 
 //获取按钮对象
@@ -962,6 +967,9 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)initData{
     [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
                                      success:^(id JSON) {
+                                         //隐藏
+                                         [self.tableView.header endRefreshing];
+                                         
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
                                          self.iProjectDetailInfo = detailInfo;
                                          self.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
@@ -1012,6 +1020,8 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          
                                          [self updateUI];
                                      } fail:^(NSError *error) {
+                                         //隐藏
+                                         [self.tableView.header endRefreshing];
                                          [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
                                      }];
 }
@@ -1102,7 +1112,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     //系统联系人
 //    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:_iProjectDetailInfo.user isAsk:NO];
 //    [self.navigationController pushViewController:userInfoVC animated:YES];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:_iProjectDetailInfo.user OperateType:nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:_iProjectDetailInfo.user OperateType:nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 
@@ -1129,7 +1139,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     }else{
         //系统联系人
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:user isAsk:NO];
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:user OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:user OperateType:nil HidRightBtn:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];
     }
 }
@@ -1141,6 +1151,9 @@ static NSString *noCommentCell = @"NoCommentCell";
        _pageIndex++;
         [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
                                            success:^(id JSON) {
+                                               //隐藏加载更多动画
+                                               [self.tableView.footer endRefreshing];
+                                               
                                                if (JSON) {
                                                    NSArray *comments = [ICommentInfo objectsWithInfo:JSON];
                                                    
@@ -1175,8 +1188,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                        
                                                        [_datasource addObject:commentFrame];
                                                    }
-                                                 //隐藏加载更多动画
-                                                  [self.tableView.footer endRefreshing];
+                                                 
                                                    if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
                                                        [self.tableView.footer setHidden:YES];
                                                    }else{
@@ -1186,7 +1198,8 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                                                }
                                            } fail:^(NSError *error) {
-                                               
+                                               //隐藏加载更多动画
+                                               [self.tableView.footer endRefreshing];
                                            }];
 //    }
 }

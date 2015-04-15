@@ -216,7 +216,7 @@
     
 //    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //    [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
     [self.controllVC.navigationController pushViewController:userInfoVC animated:YES];
 }
 

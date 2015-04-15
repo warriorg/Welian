@@ -114,7 +114,7 @@
     CGSize size1 = [title calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     
-    float height = (title.length > 0 ? size1.height : 0) + size2.height + kMarginEdge * 2.f + kButtonHeight + kMarginLeft * 2.f;
+    float height = (title.length > 0 ? size1.height : 0) + size2.height + kMarginEdge * 2.f + kButtonHeight * 2.f + kMarginLeft * 2.f;
     if (height > 60.f) {
         return height;
     }else{

@@ -28,6 +28,11 @@ static NSString *iconCellid = @"IconTableViewCellid";
 static NSString *mobileCellid = @"MobileInfoCellid";
 @implementation MeInfoController
 
+- (NSString *)title
+{
+    return @"个人资料";
+}
+
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
     // 1.封装图片数据

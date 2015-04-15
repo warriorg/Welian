@@ -25,8 +25,6 @@
 
 @interface ChatViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
-//聊天的好友
-@property (nonatomic, strong) MyFriendUser *friendUser;
 @property (nonatomic, strong) NSMutableArray *localMessages;//本地数据库数据
 //@property (nonatomic, assign) NSInteger totalOffset;
 @property (nonatomic, assign) NSInteger offset;
@@ -38,14 +36,14 @@
 
 - (void)dealloc
 {
-    _friendUser = nil;
+    self.friendUser = nil;
     _localMessages = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)loadDemoDataSource {
     //获取数据
-    NSArray *localMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+    NSArray *localMessages = [self.friendUser getChatMessagesWithOffset:_offset count:_count];
     self.localMessages = [NSMutableArray arrayWithArray:localMessages];
     
     WEAKSELF
@@ -61,7 +59,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     break;
                 case WLBubbleMessageMediaTypeText:
                     //普通文本
@@ -70,7 +68,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     break;
                 case WLBubbleMessageMediaTypePhoto:
                 {
@@ -83,7 +81,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     message.msgId = chatMessage.msgId.stringValue;
                 }
                     break;
@@ -102,7 +100,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     message.msgId = chatMessage.msgId.stringValue;
                 }
                     break;
@@ -159,6 +157,13 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     //取消接口调用
 //    [WLHttpTool cancelAllRequestHttpTool];
+    
+    //设置上次输入的为发送的文本内容
+    NSString *unSendText = [UserDefaults objectForKey:[NSString stringWithFormat:@"chat:%@",self.friendUser.uid.stringValue]];
+    if (unSendText.length > 0) {
+        [self.messageInputView.inputTextView becomeFirstResponder];
+        [self.messageInputView.inputTextView setText:unSendText];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -170,7 +175,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = _friendUser.name;
+    self.title = self.friendUser.name;
     
     // 设置整体背景颜色
     [self setBackgroundColor:RGB(236.f, 238.f, 241.f)];
@@ -179,22 +184,22 @@
     [self setNormalInfo];
     
     //更新当前未查看消息数量
-    [_friendUser updateUnReadMessageNumber:@(0)];
+    [self.friendUser updateUnReadMessageNumber:@(0)];
     
     //初始化数据查询
     self.count = 15;
-    if (_friendUser.rsChatMessages.count > _count) {
-        self.offset = _friendUser.rsChatMessages.count - _count;
+    if (self.friendUser.rsChatMessages.count > _count) {
+        self.offset = self.friendUser.rsChatMessages.count - _count;
     }else{
         self.offset = 0;
-        self.count = _friendUser.rsChatMessages.count;
+        self.count = self.friendUser.rsChatMessages.count;
     }
     
     //加载初始化数据
     [self loadDemoDataSource];
     
     //添加新消息监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewChatMessage:) name:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",_friendUser.uid.stringValue] object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewChatMessage:) name:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",self.friendUser.uid.stringValue] object:nil];
     
 }
 
@@ -220,11 +225,11 @@
 - (void)receiveNewChatMessage:(NSNotification *)notification
 {
     //更新当前未查看消息数量
-    [_friendUser updateUnReadMessageNumber:@(0)];
+    [self.friendUser updateUnReadMessageNumber:@(0)];
     
     NSString *msgId = [[notification userInfo] objectForKey:@"msgId"];
     
-    ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:msgId];
+    ChatMessage *chatMessage = [self.friendUser getChatMessageWithMsgId:msgId];
     //添加数据
     [_localMessages addObject:chatMessage];
 //    [chatMessage updateReSendStatus];
@@ -237,7 +242,7 @@
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-            message.uid = _friendUser.uid.stringValue;
+            message.uid = self.friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
             break;
         case WLBubbleMessageMediaTypePhoto:
@@ -251,7 +256,7 @@
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-            message.uid = _friendUser.uid.stringValue;
+            message.uid = self.friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
         }
             break;
@@ -270,7 +275,7 @@
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-            message.uid = _friendUser.uid.stringValue;
+            message.uid = self.friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
         }
             break;
@@ -452,17 +457,17 @@
 {
     [self exMainQueue:^{
         //已经不是好友关系
-        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",_friendUser.name] sender:@"" timestamp:[NSDate date]];
+        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你和%@已经不是好友关系，请先发送好友请求，对方通过验证后，才能聊天。&sendAddFriend",self.friendUser.name] sender:@"" timestamp:[NSDate date]];
         textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
         textMessage.sender = [LogInUser getCurrentLoginUser].name;
-        textMessage.uid = _friendUser.uid.stringValue;
+        textMessage.uid = self.friendUser.uid.stringValue;
         //是否读取
         textMessage.isRead = YES;
         textMessage.sended = @"1";
         textMessage.bubbleMessageType = WLBubbleMessageTypeSpecial;
         
         //    //本地聊天数据库添加
-        ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:_friendUser];
+        ChatMessage *chatMessage = [ChatMessage createSpecialMessageWithMessage:textMessage FriendUser:self.friendUser];
         textMessage.msgId = chatMessage.msgId.stringValue;
         
         //添加数据
@@ -493,7 +498,7 @@
 //{
 //
 //    NSDictionary *param = @{@"type":@(message.messageMediaType),@"msg":message.text,@"touser":message.uid};
-//    ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:message.msgId];
+//    ChatMessage *chatMessage = [self.friendUser getChatMessageWithMsgId:message.msgId];
 //    WEAKSELF;
 //    [WLHttpTool sendMessageParameterDic:param
 //                                success:^(id JSON) {
@@ -528,7 +533,7 @@
 
 #pragma mark - XHMessageTableViewController Delegate
 - (BOOL)shouldLoadMoreMessagesScrollToTop {
-    if (_friendUser.rsChatMessages.count > _localMessages.count) {
+    if (self.friendUser.rsChatMessages.count > _localMessages.count) {
         return YES;
     }else{
         return NO;
@@ -557,11 +562,11 @@
     //获取新的聊天记录
     if(_offset - _count >= 0){
         _offset = _offset - _count;
-        getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+        getLocalMessages = [self.friendUser getChatMessagesWithOffset:_offset count:_count];
     }else if(_offset > 0 && _offset < _count){
         _count = _offset - 0;
         _offset = 0;
-        getLocalMessages = [_friendUser getChatMessagesWithOffset:_offset count:_count];
+        getLocalMessages = [self.friendUser getChatMessagesWithOffset:_offset count:_count];
     }else{
         self.loadingMoreMessage = NO;
     }
@@ -583,7 +588,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     break;
                 case WLBubbleMessageMediaTypePhoto:
                 {
@@ -596,7 +601,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     message.msgId = chatMessage.msgId.stringValue;
                 }
                     break;
@@ -608,7 +613,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     break;
                 case WLBubbleMessageMediaTypeActivity://活动
                 case WLBubbleMessageMediaTypeCard:
@@ -625,7 +630,7 @@
                     message.avatorUrl = chatMessage.avatorUrl;
                     message.sended = chatMessage.sendStatus.stringValue;
                     message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-                    message.uid = _friendUser.uid.stringValue;
+                    message.uid = self.friendUser.uid.stringValue;
                     message.msgId = chatMessage.msgId.stringValue;
                 }
                     break;
@@ -658,17 +663,17 @@
 //    textMessage.avator = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[LogInUser getCurrentLoginUser].avatar]]];// [UIImage imageNamed:@"user_small"];
     textMessage.avatorUrl = [LogInUser getCurrentLoginUser].avatar;//@"http://www.pailixiu.com/jack/meIcon@2x.png";
     textMessage.sender = [LogInUser getCurrentLoginUser].name;
-    textMessage.uid = _friendUser.uid.stringValue;
+    textMessage.uid = self.friendUser.uid.stringValue;
     //是否读取
     textMessage.isRead = YES;
     textMessage.sended = @"0";
     textMessage.timestamp = [NSDate date];
     
     //更新聊天好友
-//    [_friendUser updateIsChatStatus:YES];
+//    [self.friendUser updateIsChatStatus:YES];
     
     //本地聊天数据库添加
-    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:_friendUser];
+    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:self.friendUser];
     textMessage.msgId = chatMessage.msgId.stringValue;
     
     
@@ -699,14 +704,14 @@
     WLMessage *photoMessage = [[WLMessage alloc] initWithPhoto:photo thumbnailUrl:nil originPhotoUrl:nil sender:sender timestamp:date];
     photoMessage.avatorUrl = loginUser.avatar;
     photoMessage.sender = loginUser.name;
-    photoMessage.uid = _friendUser.uid.stringValue;
+    photoMessage.uid = self.friendUser.uid.stringValue;
     //是否读取
     photoMessage.isRead = YES;
     photoMessage.sended = @"0";
     photoMessage.timestamp = [NSDate date];
     photoMessage.text = @"[图片]";
     //本地聊天数据库添加
-    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:photoMessage FriendUser:_friendUser];
+    ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:photoMessage FriendUser:self.friendUser];
     photoMessage.msgId = chatMessage.msgId.stringValue;
     photoMessage.thumbnailUrl = chatMessage.thumbnailUrl;
     //添加数据
@@ -813,7 +818,7 @@
 {
     DLog(@"重新发送消息 -----------");
     //重新设置发送时间和发送状态
-    ChatMessage *chatMessage = [_friendUser getChatMessageWithMsgId:msgId];
+    ChatMessage *chatMessage = [self.friendUser getChatMessageWithMsgId:msgId];
     [chatMessage updateReSendStatus];
     
     //普通文本
@@ -825,7 +830,7 @@
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-            message.uid = _friendUser.uid.stringValue;
+            message.uid = self.friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
             message.isRead = YES;
             message.sender = chatMessage.sender;
@@ -842,7 +847,7 @@
             message.avatorUrl = chatMessage.avatorUrl;
             message.sended = chatMessage.sendStatus.stringValue;
             message.bubbleMessageType = chatMessage.bubbleMessageType.integerValue;
-            message.uid = _friendUser.uid.stringValue;
+            message.uid = self.friendUser.uid.stringValue;
             message.msgId = chatMessage.msgId.stringValue;
         }
             break;
@@ -851,10 +856,10 @@
     }
     
     //更新聊天好友
-    [_friendUser updateIsChatStatus:YES];
+    [self.friendUser updateIsChatStatus:YES];
     
     //更新好友的聊天时间
-    [_friendUser updateLastChatTime:chatMessage.timestamp];
+    [self.friendUser updateLastChatTime:chatMessage.timestamp];
     
 //    [self.messages removeObjectAtIndex:indexPath.row];
     [self removeMessageAtIndexPath:indexPath];
@@ -1008,7 +1013,7 @@
             LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
             //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
-            [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+            [WLHttpTool requestFriendParameterDic:@{@"fid":self.friendUser.uid,@"message":msg} success:^(id JSON) {
                 [WLHUDView showSuccessHUD:@"好友请求已发送"];
             } fail:^(NSError *error) {
                 
@@ -1028,7 +1033,7 @@
 //        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
 //        NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
 //        //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
-//        [WLHttpTool requestFriendParameterDic:@{@"fid":_friendUser.uid,@"message":msg} success:^(id JSON) {
+//        [WLHttpTool requestFriendParameterDic:@{@"fid":self.friendUser.uid,@"message":msg} success:^(id JSON) {
 //            
 //        } fail:^(NSError *error) {
 //            
@@ -1243,7 +1248,7 @@
     
 //    UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];
 //    userInfoVC.isHideSendMsgBtn = YES;
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode OperateType:userMode.friendship.integerValue == 1 ? @(10) : nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userMode OperateType:userMode.friendship.integerValue == 1 ? @(10) : nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

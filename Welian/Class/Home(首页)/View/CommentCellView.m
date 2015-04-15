@@ -115,7 +115,7 @@
         [userModel setPosition:usmode.position];
         [userModel setCompany:usmode.company];
         
-        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userModel OperateType:nil];
+        UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userModel OperateType:nil HidRightBtn:NO];
         [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
     }
 }

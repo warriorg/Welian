@@ -670,6 +670,16 @@
 		A48CA6B01A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
 		A48CA6B11A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
 		A48CA6B21A4D044B009EBD04 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */; };
+		A49234CD1ADE3E0C009E0B8C /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49234CB1ADE3E0C009E0B8C /* UserCardController.m */; };
+		A49234CE1ADE3E0C009E0B8C /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49234CB1ADE3E0C009E0B8C /* UserCardController.m */; };
+		A49234CF1ADE3E0C009E0B8C /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49234CB1ADE3E0C009E0B8C /* UserCardController.m */; };
+		A49234D01ADE3E0C009E0B8C /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49234CB1ADE3E0C009E0B8C /* UserCardController.m */; };
+		A49234D11ADE3E0C009E0B8C /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49234CB1ADE3E0C009E0B8C /* UserCardController.m */; };
+		A49234D21ADE3E0C009E0B8C /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */; };
+		A49234D31ADE3E0C009E0B8C /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */; };
+		A49234D41ADE3E0C009E0B8C /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */; };
+		A49234D51ADE3E0C009E0B8C /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */; };
+		A49234D61ADE3E0C009E0B8C /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */; };
 		A493C1BE1ADD0A0C0056BD52 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C1B41ADD0A0C0056BD52 /* Constants.m */; };
 		A493C1BF1ADD0A0C0056BD52 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C1B41ADD0A0C0056BD52 /* Constants.m */; };
 		A493C1C01ADD0A0C0056BD52 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C1B41ADD0A0C0056BD52 /* Constants.m */; };
@@ -1205,7 +1215,6 @@
 		A49C7C671A70D42700F2AEC5 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		A49C7C691A70D42700F2AEC5 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
 		A49C7C6B1A70D42700F2AEC5 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
-		A49C7C6C1A70D42700F2AEC5 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		A49C7C6D1A70D42700F2AEC5 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
 		A49C7C6E1A70D42700F2AEC5 /* ForgetCoderController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB881A01D734007BEBD2 /* ForgetCoderController.m */; };
 		A49C7C6F1A70D42700F2AEC5 /* ForgetPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB851A01D714007BEBD2 /* ForgetPhoneController.m */; };
@@ -1478,7 +1487,6 @@
 		A49C7DDB1A70D42700F2AEC5 /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		A49C7DDC1A70D42700F2AEC5 /* section0_emotion8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C143091A4C0A6A00C9BAB5 /* section0_emotion8@2x.png */; };
 		A49C7DE01A70D42700F2AEC5 /* enroll_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9FD19EF6C3E00D85D7F /* enroll_button@2x.png */; };
-		A49C7DE11A70D42700F2AEC5 /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F532FD4919C93F0D005B887D /* UserCardController.xib */; };
 		A49C7DE31A70D42700F2AEC5 /* osusume_add_bg_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8031A31B33C00B677B0 /* osusume_add_bg_pressed@2x.png */; };
 		A49C7DE51A70D42700F2AEC5 /* discovery_circle_ administrator_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F619EF6C3E00D85D7F /* discovery_circle_ administrator_bg@2x.png */; };
 		A49C7DE71A70D42700F2AEC5 /* sharemore_friendcard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C1430E1A4C0A6A00C9BAB5 /* sharemore_friendcard@2x.png */; };
@@ -2787,7 +2795,6 @@
 		F53DC3021A49192600F5F712 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F53DC3041A49192600F5F712 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
 		F53DC3061A49192600F5F712 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
-		F53DC3071A49192600F5F712 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F53DC3081A49192600F5F712 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
 		F53DC3091A49192600F5F712 /* ForgetCoderController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB881A01D734007BEBD2 /* ForgetCoderController.m */; };
 		F53DC30A1A49192600F5F712 /* ForgetPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB851A01D714007BEBD2 /* ForgetPhoneController.m */; };
@@ -2939,7 +2946,6 @@
 		F53DC3EE1A49192600F5F712 /* home_new_upload_picture_enlarge_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098819C2E3F2009DB1B2 /* home_new_upload_picture_enlarge_delete@2x.png */; };
 		F53DC3F71A49192600F5F712 /* osusume_friend_add_already@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53356361A382301000A15AC /* osusume_friend_add_already@2x.png */; };
 		F53DC3FB1A49192600F5F712 /* enroll_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9FD19EF6C3E00D85D7F /* enroll_button@2x.png */; };
-		F53DC3FC1A49192600F5F712 /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F532FD4919C93F0D005B887D /* UserCardController.xib */; };
 		F53DC3FE1A49192600F5F712 /* osusume_add_bg_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F569A8031A31B33C00B677B0 /* osusume_add_bg_pressed@2x.png */; };
 		F53DC4001A49192600F5F712 /* discovery_circle_ administrator_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F619EF6C3E00D85D7F /* discovery_circle_ administrator_bg@2x.png */; };
 		F53DC4021A49192600F5F712 /* discovery_activity_list_ registered_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F219EF6C3E00D85D7F /* discovery_activity_list_ registered_bg@2x.png */; };
@@ -3324,7 +3330,6 @@
 		F56649D81A2AFD56008A5830 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F56649DA1A2AFD56008A5830 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
 		F56649DC1A2AFD56008A5830 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
-		F56649DD1A2AFD56008A5830 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F56649DE1A2AFD56008A5830 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
 		F56649DF1A2AFD56008A5830 /* ForgetCoderController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB881A01D734007BEBD2 /* ForgetCoderController.m */; };
 		F56649E01A2AFD56008A5830 /* ForgetPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB851A01D714007BEBD2 /* ForgetPhoneController.m */; };
@@ -3462,7 +3467,6 @@
 		F5664AA51A2AFD56008A5830 /* NewFriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5239B4F19F4B17200D9E696 /* NewFriendsCell.xib */; };
 		F5664AAA1A2AFD56008A5830 /* home_new_upload_picture_enlarge_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098819C2E3F2009DB1B2 /* home_new_upload_picture_enlarge_delete@2x.png */; };
 		F5664AB71A2AFD56008A5830 /* enroll_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9FD19EF6C3E00D85D7F /* enroll_button@2x.png */; };
-		F5664AB81A2AFD56008A5830 /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F532FD4919C93F0D005B887D /* UserCardController.xib */; };
 		F5664ABB1A2AFD56008A5830 /* discovery_circle_ administrator_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F619EF6C3E00D85D7F /* discovery_circle_ administrator_bg@2x.png */; };
 		F5664ABD1A2AFD56008A5830 /* discovery_activity_list_ registered_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F219EF6C3E00D85D7F /* discovery_activity_list_ registered_bg@2x.png */; };
 		F5664AC61A2AFD56008A5830 /* tabbar_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909A219C2E3F2009DB1B2 /* tabbar_b@2x.png */; };
@@ -3623,7 +3627,6 @@
 		F5664C921A2AFDD5008A5830 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C2D11119F9F7F8000610A1 /* FMResultSet.m */; };
 		F5664C941A2AFDD5008A5830 /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C87419D2961600110C07 /* TQRichTextURLRun.m */; };
 		F5664C961A2AFDD5008A5830 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EE261A1A14DFCB00B0E836 /* MessageCell.m */; };
-		F5664C971A2AFDD5008A5830 /* UserCardController.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD4819C93F0D005B887D /* UserCardController.m */; };
 		F5664C981A2AFDD5008A5830 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F56254F119C01C1800809D0B /* MeViewController.m */; };
 		F5664C991A2AFDD5008A5830 /* ForgetCoderController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB881A01D734007BEBD2 /* ForgetCoderController.m */; };
 		F5664C9A1A2AFDD5008A5830 /* ForgetPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E4BB851A01D714007BEBD2 /* ForgetPhoneController.m */; };
@@ -3761,7 +3764,6 @@
 		F5664D5F1A2AFDD5008A5830 /* NewFriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5239B4F19F4B17200D9E696 /* NewFriendsCell.xib */; };
 		F5664D641A2AFDD5008A5830 /* home_new_upload_picture_enlarge_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098819C2E3F2009DB1B2 /* home_new_upload_picture_enlarge_delete@2x.png */; };
 		F5664D711A2AFDD5008A5830 /* enroll_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9FD19EF6C3E00D85D7F /* enroll_button@2x.png */; };
-		F5664D721A2AFDD5008A5830 /* UserCardController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F532FD4919C93F0D005B887D /* UserCardController.xib */; };
 		F5664D751A2AFDD5008A5830 /* discovery_circle_ administrator_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F619EF6C3E00D85D7F /* discovery_circle_ administrator_bg@2x.png */; };
 		F5664D771A2AFDD5008A5830 /* discovery_activity_list_ registered_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51FB9F219EF6C3E00D85D7F /* discovery_activity_list_ registered_bg@2x.png */; };
 		F5664D801A2AFDD5008A5830 /* tabbar_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57909A219C2E3F2009DB1B2 /* tabbar_b@2x.png */; };
@@ -4858,6 +4860,9 @@
 		A48CA69B1A4D044B009EBD04 /* DTTimePeriodGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodGroup.m; sourceTree = "<group>"; };
 		A48CA69C1A4D044B009EBD04 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
 		A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
+		A49234CA1ADE3E0C009E0B8C /* UserCardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCardController.h; sourceTree = "<group>"; };
+		A49234CB1ADE3E0C009E0B8C /* UserCardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCardController.m; sourceTree = "<group>"; };
+		A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCardController.xib; sourceTree = "<group>"; };
 		A493C17C1ADCF55B0056BD52 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		A493C1B31ADD0A0C0056BD52 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A493C1B41ADD0A0C0056BD52 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -5718,9 +5723,6 @@
 		F532FD0819C8694B005B887D /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		F532FD0919C8694B005B887D /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		F532FD4519C89B3D005B887D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		F532FD4719C93F0D005B887D /* UserCardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCardController.h; sourceTree = "<group>"; };
-		F532FD4819C93F0D005B887D /* UserCardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCardController.m; sourceTree = "<group>"; };
-		F532FD4919C93F0D005B887D /* UserCardController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCardController.xib; sourceTree = "<group>"; };
 		F532FD4C19C952E3005B887D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F532FD4E19C952E9005B887D /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F53328E81A5E3015001F48FA /* research_bg_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "research_bg_pre@2x.png"; sourceTree = "<group>"; };
@@ -6971,6 +6973,37 @@
 				A48CA69D1A4D044B009EBD04 /* NSDate+DateTools.m */,
 			);
 			path = DateTools;
+			sourceTree = "<group>";
+		};
+		A49234D71ADE3E2E009E0B8C /* 个人信息 */ = {
+			isa = PBXGroup;
+			children = (
+				A49234CA1ADE3E0C009E0B8C /* UserCardController.h */,
+				A49234CB1ADE3E0C009E0B8C /* UserCardController.m */,
+				A49234CC1ADE3E0C009E0B8C /* UserCardController.xib */,
+				F56254F019C01C1800809D0B /* MeViewController.h */,
+				F56254F119C01C1800809D0B /* MeViewController.m */,
+				A49FF3FE1AC2B1A3009982E2 /* UserInfoViewController.h */,
+				A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */,
+				F57EB54E19C5BC6700AA3396 /* MeInfoController.h */,
+				F57EB54F19C5BC6700AA3396 /* MeInfoController.m */,
+				F57EB55119C5BC9E00AA3396 /* SettingController.h */,
+				F57EB55219C5BC9E00AA3396 /* SettingController.m */,
+				F50C89691A08F2050007BE52 /* AboutViewController.h */,
+				F50C896A1A08F2050007BE52 /* AboutViewController.m */,
+				F57EB55819C5E88F00AA3396 /* WorksListController.h */,
+				F57EB55919C5E88F00AA3396 /* WorksListController.m */,
+				F57EB55B19C5F3E500AA3396 /* AddWorkOrEducationController.h */,
+				F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */,
+				F5B123EC19E81875002B9E58 /* LocationprovinceController.h */,
+				F5B123ED19E81875002B9E58 /* LocationprovinceController.m */,
+				F5A1A71619E9543C003773F1 /* CityLocationController.h */,
+				F5A1A71719E9543C003773F1 /* CityLocationController.m */,
+				F56C30571AC3E01D00EDF054 /* PhoneChangeVC.h */,
+				F56C30581AC3E01D00EDF054 /* PhoneChangeVC.m */,
+				F56C30591AC3E01D00EDF054 /* PhoneChangeVC.xib */,
+			);
+			name = "个人信息";
 			sourceTree = "<group>";
 		};
 		A493C17B1ADCF48A0056BD52 /* Utils(操作) */ = {
@@ -9302,9 +9335,6 @@
 				F5C2D10019F909EF000610A1 /* AddFriendsController.m */,
 				F5382B6019FFB1F000FAA5B6 /* FriendsFriendController.h */,
 				F5382B6119FFB1F000FAA5B6 /* FriendsFriendController.m */,
-				F532FD4719C93F0D005B887D /* UserCardController.h */,
-				F532FD4819C93F0D005B887D /* UserCardController.m */,
-				F532FD4919C93F0D005B887D /* UserCardController.xib */,
 				F5E4BB931A023E78007BEBD2 /* CommonFriendsController.h */,
 				F5E4BB941A023E78007BEBD2 /* CommonFriendsController.m */,
 			);
@@ -9451,27 +9481,7 @@
 				A489E7BB1AA1A47B00F7BE9F /* 我的活动 */,
 				F5E13A341A7B2AD0001BB786 /* 我的项目 */,
 				F534DACD1A4E8FA700B6A725 /* 投资人认证 */,
-				F56254F019C01C1800809D0B /* MeViewController.h */,
-				F56254F119C01C1800809D0B /* MeViewController.m */,
-				A49FF3FE1AC2B1A3009982E2 /* UserInfoViewController.h */,
-				A49FF3FF1AC2B1A3009982E2 /* UserInfoViewController.m */,
-				F57EB54E19C5BC6700AA3396 /* MeInfoController.h */,
-				F57EB54F19C5BC6700AA3396 /* MeInfoController.m */,
-				F57EB55119C5BC9E00AA3396 /* SettingController.h */,
-				F57EB55219C5BC9E00AA3396 /* SettingController.m */,
-				F50C89691A08F2050007BE52 /* AboutViewController.h */,
-				F50C896A1A08F2050007BE52 /* AboutViewController.m */,
-				F57EB55819C5E88F00AA3396 /* WorksListController.h */,
-				F57EB55919C5E88F00AA3396 /* WorksListController.m */,
-				F57EB55B19C5F3E500AA3396 /* AddWorkOrEducationController.h */,
-				F57EB55C19C5F3E500AA3396 /* AddWorkOrEducationController.m */,
-				F5B123EC19E81875002B9E58 /* LocationprovinceController.h */,
-				F5B123ED19E81875002B9E58 /* LocationprovinceController.m */,
-				F5A1A71619E9543C003773F1 /* CityLocationController.h */,
-				F5A1A71719E9543C003773F1 /* CityLocationController.m */,
-				F56C30571AC3E01D00EDF054 /* PhoneChangeVC.h */,
-				F56C30581AC3E01D00EDF054 /* PhoneChangeVC.m */,
-				F56C30591AC3E01D00EDF054 /* PhoneChangeVC.xib */,
+				A49234D71ADE3E2E009E0B8C /* 个人信息 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -9520,10 +9530,10 @@
 		F5CE864119BFF44100A9D14C /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
+				10389B611A3EC8E3001A785C /* Other.h */,
 				F5933F6D1AD4F4020088C70D /* MJRefresh */,
 				A4D43A9F1AC55A7100713295 /* VGParallaxHeader */,
 				F5D04C8B1AC1056F004DE412 /* MLEmoji */,
-				10389B611A3EC8E3001A785C /* Other.h */,
 				F55078861A7F5BE9009CE4F7 /* JKImagePicker */,
 				F5E13A3B1A7B45EF001BB786 /* HMSegmentedControl */,
 				A49C7FCF1A71040F00F2AEC5 /* alipay */,
@@ -10188,7 +10198,6 @@
 				A49C7DE01A70D42700F2AEC5 /* enroll_button@2x.png in Resources */,
 				F5CBE3AE1AC4351A00F4C884 /* Expression_16@2x.png in Resources */,
 				F5CBE3821AC4351A00F4C884 /* Expression_5@2x.png in Resources */,
-				A49C7DE11A70D42700F2AEC5 /* UserCardController.xib in Resources */,
 				A49C7DE31A70D42700F2AEC5 /* osusume_add_bg_pressed@2x.png in Resources */,
 				A49C7DE51A70D42700F2AEC5 /* discovery_circle_ administrator_bg@2x.png in Resources */,
 				A49C7DE71A70D42700F2AEC5 /* sharemore_friendcard@2x.png in Resources */,
@@ -10502,6 +10511,7 @@
 				A493C3E41ADD14A60056BD52 /* PioneerPlist.plist in Resources */,
 				A49C7F1B1A70D42700F2AEC5 /* voice_HL@2x.png in Resources */,
 				A47BA6661A81C1020000EC48 /* discovery_xiangmu_detail_nolink@2x.png in Resources */,
+				A49234D61ADE3E0C009E0B8C /* UserCardController.xib in Resources */,
 				A409A1951AC2E1AF0033A31D /* bluebuttton_pressed@2x.png in Resources */,
 				A49C7F221A70D42700F2AEC5 /* home_new_emoji@2x.png in Resources */,
 				A409A1DD1AC2E1AF0033A31D /* me_circle_chat_card@2x.png in Resources */,
@@ -10755,7 +10765,6 @@
 				A4E7BBEB1AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */,
 				A409A27C1AC2E1AF0033A31D /* me_right@2x.png in Resources */,
 				F53DC3FB1A49192600F5F712 /* enroll_button@2x.png in Resources */,
-				F53DC3FC1A49192600F5F712 /* UserCardController.xib in Resources */,
 				F5CBE38D1AC4351A00F4C884 /* Expression_8@2x.png in Resources */,
 				F53DC3FE1A49192600F5F712 /* osusume_add_bg_pressed@2x.png in Resources */,
 				F53DC4001A49192600F5F712 /* discovery_circle_ administrator_bg@2x.png in Resources */,
@@ -11074,6 +11083,7 @@
 				A493C3E21ADD14A60056BD52 /* PioneerPlist.plist in Resources */,
 				F500B1E91AAEAB4C00A7AD35 /* home_repost_huodong@2x.png in Resources */,
 				A4C144A01A4C3EC600C9BAB5 /* notification_badge2@2x.png in Resources */,
+				A49234D41ADE3E0C009E0B8C /* UserCardController.xib in Resources */,
 				F53DC4F71A49192600F5F712 /* success@2x.png in Resources */,
 				F5472DB71A8DCE8E002C9B35 /* backItem@2x.png in Resources */,
 				A4C1445F1A4C0A6B00C9BAB5 /* RecordingSignal006@2x.png in Resources */,
@@ -11322,7 +11332,6 @@
 				F5664AB71A2AFD56008A5830 /* enroll_button@2x.png in Resources */,
 				F5CBE3C31AC4351A00F4C884 /* Expression_22@2x.png in Resources */,
 				F55772C11A5AA3E200693279 /* login_camera@2x.png in Resources */,
-				F5664AB81A2AFD56008A5830 /* UserCardController.xib in Resources */,
 				A4E7BBE91AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */,
 				A409A28A1AC2E1AF0033A31D /* me_touzirenrenzheng_card@2x.png in Resources */,
 				A4C144151A4C0A6B00C9BAB5 /* VoiceBtn_BlackHL@2x.png in Resources */,
@@ -11803,6 +11812,7 @@
 				A493C3C21ADD14A60056BD52 /* FinancingStagePlist.plist in Resources */,
 				F5664C2C1A2AFD56008A5830 /* home_picture_add_ok_bg@2x.png in Resources */,
 				A409A21E1AC2E1AF0033A31D /* me_mycard_lacation@2x.png in Resources */,
+				A49234D21ADE3E0C009E0B8C /* UserCardController.xib in Resources */,
 				F5CBE3CF1AC4351A00F4C884 /* Expression_25@2x.png in Resources */,
 				A409A2EE1AC2E1AF0033A31D /* yellowbutton_pressed@2x.png in Resources */,
 				A4C144861A4C3EC600C9BAB5 /* chat_to_send@2x_highlight.png in Resources */,
@@ -11897,7 +11907,6 @@
 				A4E7BBEA1AAEF1B3006BB52A /* weChatBubble_pre_Sending_Solid@2x.png in Resources */,
 				A409A27B1AC2E1AF0033A31D /* me_right@2x.png in Resources */,
 				F5664D711A2AFDD5008A5830 /* enroll_button@2x.png in Resources */,
-				F5664D721A2AFDD5008A5830 /* UserCardController.xib in Resources */,
 				F5CBE38C1AC4351A00F4C884 /* Expression_8@2x.png in Resources */,
 				F569A8091A31B33C00B677B0 /* osusume_add_bg_pressed@2x.png in Resources */,
 				F5664D751A2AFDD5008A5830 /* discovery_circle_ administrator_bg@2x.png in Resources */,
@@ -12216,6 +12225,7 @@
 				A493C3E11ADD14A60056BD52 /* PioneerPlist.plist in Resources */,
 				F500B1E81AAEAB4C00A7AD35 /* home_repost_huodong@2x.png in Resources */,
 				A4C1449F1A4C3EC600C9BAB5 /* notification_badge2@2x.png in Resources */,
+				A49234D31ADE3E0C009E0B8C /* UserCardController.xib in Resources */,
 				F5664E651A2AFDD5008A5830 /* success@2x.png in Resources */,
 				F5472DB61A8DCE8E002C9B35 /* backItem@2x.png in Resources */,
 				A4C1445E1A4C0A6B00C9BAB5 /* RecordingSignal006@2x.png in Resources */,
@@ -12386,6 +12396,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49234D51ADE3E0C009E0B8C /* UserCardController.xib in Resources */,
 				A493C3B61ADD14A60056BD52 /* city.db in Resources */,
 				A493C3ED1ADD14A60056BD52 /* settingPlist.plist in Resources */,
 				A493C3D41ADD14A60056BD52 /* InvestStagePlist.plist in Resources */,
@@ -12609,7 +12620,6 @@
 				A49C7C691A70D42700F2AEC5 /* TQRichTextURLRun.m in Sources */,
 				A493C3621ADD14A60056BD52 /* WLBasicTrends.m in Sources */,
 				A49C7C6B1A70D42700F2AEC5 /* MessageCell.m in Sources */,
-				A49C7C6C1A70D42700F2AEC5 /* UserCardController.m in Sources */,
 				A49C7C6D1A70D42700F2AEC5 /* MeViewController.m in Sources */,
 				A49C7C6E1A70D42700F2AEC5 /* ForgetCoderController.m in Sources */,
 				A49C7C6F1A70D42700F2AEC5 /* ForgetPhoneController.m in Sources */,
@@ -12810,6 +12820,7 @@
 				F550787B1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				A49C7D151A70D42700F2AEC5 /* ALAsset+assetType.m in Sources */,
 				A4D43AB31AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
+				A49234D11ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				A49C7D161A70D42700F2AEC5 /* MeinfoCell.m in Sources */,
 				F5933F991AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A49C7D171A70D42700F2AEC5 /* SEImageCache.m in Sources */,
@@ -13132,7 +13143,6 @@
 				F53DC3041A49192600F5F712 /* TQRichTextURLRun.m in Sources */,
 				A493C3601ADD14A60056BD52 /* WLBasicTrends.m in Sources */,
 				F53DC3061A49192600F5F712 /* MessageCell.m in Sources */,
-				F53DC3071A49192600F5F712 /* UserCardController.m in Sources */,
 				F53DC3081A49192600F5F712 /* MeViewController.m in Sources */,
 				F53DC3091A49192600F5F712 /* ForgetCoderController.m in Sources */,
 				F53DC30A1A49192600F5F712 /* ForgetPhoneController.m in Sources */,
@@ -13333,6 +13343,7 @@
 				F550787A1A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F53DC3761A49192600F5F712 /* ALAsset+assetType.m in Sources */,
 				A4D43AB21AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
+				A49234CF1ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				F53DC3771A49192600F5F712 /* MeinfoCell.m in Sources */,
 				F5933F981AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A45065511A5BCE990057F8AA /* SEImageCache.m in Sources */,
@@ -13655,7 +13666,6 @@
 				F56649DA1A2AFD56008A5830 /* TQRichTextURLRun.m in Sources */,
 				A4272FC71A4E8AAD0019E440 /* ChatMessage.m in Sources */,
 				F56649DC1A2AFD56008A5830 /* MessageCell.m in Sources */,
-				F56649DD1A2AFD56008A5830 /* UserCardController.m in Sources */,
 				F56649DE1A2AFD56008A5830 /* MeViewController.m in Sources */,
 				F56649DF1A2AFD56008A5830 /* ForgetCoderController.m in Sources */,
 				F56649E01A2AFD56008A5830 /* ForgetPhoneController.m in Sources */,
@@ -13856,6 +13866,7 @@
 				F5664A3D1A2AFD56008A5830 /* MyFriendsController.m in Sources */,
 				F5664A3E1A2AFD56008A5830 /* UIButton+WebCache.m in Sources */,
 				F5664A3F1A2AFD56008A5830 /* CommentCell.m in Sources */,
+				A49234CD1ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				A450654F1A5BCE990057F8AA /* SEImageCache.m in Sources */,
 				A4D43AB01AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
 				F5933F961AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
@@ -14178,7 +14189,6 @@
 				F5664C941A2AFDD5008A5830 /* TQRichTextURLRun.m in Sources */,
 				A493C35F1ADD14A60056BD52 /* WLBasicTrends.m in Sources */,
 				F5664C961A2AFDD5008A5830 /* MessageCell.m in Sources */,
-				F5664C971A2AFDD5008A5830 /* UserCardController.m in Sources */,
 				F5664C981A2AFDD5008A5830 /* MeViewController.m in Sources */,
 				F5664C991A2AFDD5008A5830 /* ForgetCoderController.m in Sources */,
 				F5664C9A1A2AFDD5008A5830 /* ForgetPhoneController.m in Sources */,
@@ -14379,6 +14389,7 @@
 				F55078791A7F1B2C009CE4F7 /* TextFieldCell.m in Sources */,
 				F5664CFB1A2AFDD5008A5830 /* ALAsset+assetType.m in Sources */,
 				A4D43AB11AC55A7200713295 /* NSArray+PureLayout.m in Sources */,
+				A49234CE1ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				F5664CFC1A2AFDD5008A5830 /* MeinfoCell.m in Sources */,
 				F5933F971AD4F4030088C70D /* MJRefreshGifFooter.m in Sources */,
 				A45065501A5BCE990057F8AA /* SEImageCache.m in Sources */,
@@ -14517,6 +14528,7 @@
 				A493C2511ADD0BB00056BD52 /* UIColor+_6jinzhi.m in Sources */,
 				A493C3B11ADD14A60056BD52 /* WLTool.m in Sources */,
 				A470958E1ADD25A200329050 /* BaseTableViewCell.m in Sources */,
+				A49234D01ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				A493C3391ADD14A60056BD52 /* CommentHomeViewFrame.m in Sources */,
 				A493C24C1ADD0BB00056BD52 /* UIAlertView+Extend.m in Sources */,
 				A493C26F1ADD0BB00056BD52 /* e0571CoreDataManager.m in Sources */,

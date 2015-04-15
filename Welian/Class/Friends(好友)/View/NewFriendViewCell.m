@@ -344,7 +344,7 @@
     
     //操作按钮
     UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    operateBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;
 }

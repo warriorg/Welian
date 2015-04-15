@@ -98,7 +98,7 @@
 {
     UserInfoModel *mode = addressComponents[@"user"];
     if (!mode) return;
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
     [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
 }
 

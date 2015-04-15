@@ -19,6 +19,11 @@
 
 @implementation UserCardController
 
+- (NSString *)title
+{
+    return @"个人名片";
+}
+
 - (void)setdatainfo:(UserInfoModel *)userinfoM
 {
     [_iconImageV sd_setImageWithURL:[NSURL URLWithString:userinfoM.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];

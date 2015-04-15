@@ -84,6 +84,13 @@
 
 - (void)saveInfo:(UIBarButtonItem*)itme
 {
+    if (_verType == IWVerifiedTypeMailbox) {
+        //邮箱
+        if (self.searchTextField.text.length > 0 && ![self.searchTextField.text isEmail]) {
+            [WLHUDView showErrorHUD:@"邮箱格式不正确！"];
+            return;
+        }
+    }
     _isSave = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
