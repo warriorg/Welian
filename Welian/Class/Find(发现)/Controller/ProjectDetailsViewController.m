@@ -749,6 +749,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                 };
                 [weakSelf.navigationController pushViewController:memberProjectVC animated:YES];
             }
+                break;
             case ShareTypeProjectFinancing:
             {
                 FinancingProjectController *financingProjectVC = [[FinancingProjectController alloc] initIsEdit:YES withData:_iProjectDetailInfo];

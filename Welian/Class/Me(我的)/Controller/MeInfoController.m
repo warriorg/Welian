@@ -315,7 +315,7 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     [LogInUser setUserCityname:locationDic[@"cityname"]];
     [LogInUser setUserCityid:locationDic[@"cityid"]];
     [LogInUser setUserProvinceid:locationDic[@"provid"]];
-    
+
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
     
     [WLHttpTool saveProfileParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} success:^(id JSON) {

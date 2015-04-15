@@ -146,7 +146,7 @@
             NSString *coderStr = [JSON objectForKey:@"checkcode"];
             self.coderString = coderStr;
         }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
-            [WLHUDView showErrorHUD:@"该号码已经注册，请直接登陆！"];
+            [WLHUDView showErrorHUD:@"该号码已经注册，请直接登录！"];
         }
     } fail:^(NSError *error) {
         

@@ -224,7 +224,7 @@
             [self.navigationController pushViewController:cityVC animated:YES];
         }else{
             if ([_locationDelegate respondsToSelector:@selector(locationProvinController:withLocationDic:)]) {
-               NSDictionary *seleCityDic = @{@"provname":[dic objectForKey:@"name"],@"cityname":[dic objectForKey:@"name"],@"cityid":@([[dic objectForKey:@"cid"] integerValue]),@"provid":@([[dic objectForKey:@"pid"] integerValue])};
+               NSDictionary *seleCityDic = @{@"provname":[dic objectForKey:@"name"],@"cityname":[dic objectForKey:@"name"],@"cityid":@([[dic objectForKey:@"pid"] integerValue]),@"provid":@([[dic objectForKey:@"pid"] integerValue])};
                 [_locationDelegate locationProvinController:self withLocationDic:seleCityDic];
                 [self.navigationController popViewControllerAnimated:YES];
             }

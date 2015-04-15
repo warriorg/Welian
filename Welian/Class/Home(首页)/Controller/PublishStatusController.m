@@ -57,18 +57,17 @@ static NSString *picCellid = @"PicCellID";
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         [layout setSectionInset:UIEdgeInsetsMake(10, 15, 10, 15)];
         [layout setMinimumLineSpacing:10.0];
-        
+        layout.itemSize = CGSizeMake((SuperSize.width-60)/3 , (SuperSize.width-60)/3);
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
         // 注册cell
         [_collectionView registerClass:[PictureCell class] forCellWithReuseIdentifier:picCellid];
         [_collectionView setScrollEnabled:NO];
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
     }
     NSInteger conut = _assetsArray.count?_assetsArray.count+1:_assetsArray.count;
-    
-    [_collectionView setFrame:CGRectMake(0, 0, 0, 20+ceilf(conut/3.0)*(self.view.bounds.size.width-60)/3+20)];
+    [_collectionView setFrame:CGRectMake(0, 0, SuperSize.width, 20+ceilf(conut/3.0)*(self.view.bounds.size.width-60)/3+20)];
     return _collectionView;
 }
 
@@ -248,6 +247,10 @@ static NSString *picCellid = @"PicCellID";
 
 
 #pragma mark - CollectionView代理
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (self.assetsArray.count>0&&self.assetsArray.count<9) {
@@ -256,18 +259,9 @@ static NSString *picCellid = @"PicCellID";
     return self.assetsArray.count;
 }
 
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = CGSizeMake((self.view.bounds.size.width-60)/3 , (self.view.bounds.size.width-60)/3);
-    return size;
-}
-
-
-- (PictureCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    PictureCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:picCellid forIndexPath:indexPath];;
-    
+    PictureCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:picCellid forIndexPath:indexPath];
     if (self.assetsArray.count>0) {
         if (indexPath.row==self.assetsArray.count) {
             
@@ -368,10 +362,10 @@ static NSString *picCellid = @"PicCellID";
     if (assets.count || _textCell.textView.text.length) {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
-    self.assetsArray = [NSMutableArray arrayWithArray:assets];;
-    [self.collectionView reloadData];
-    [self.tableView setTableFooterView:self.collectionView];
     [imagePicker dismissViewControllerAnimated:YES completion:^{
+        self.assetsArray = [NSMutableArray arrayWithArray:assets];;
+        [self.collectionView reloadData];
+        [self.tableView setTableFooterView:_collectionView];
     }];
 }
 

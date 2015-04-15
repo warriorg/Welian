@@ -89,14 +89,14 @@
 
 - (void)logout
 {
-    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
+//    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
+    [UserDefaults removeObjectForKey:@"sessionid"];
+    [LogInUser setUserisNow:NO];
+    [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
     [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-        [WLHUDView hiddenHud];
-        [UserDefaults removeObjectForKey:@"sessionid"];
-        [LogInUser setUserisNow:NO];
-        [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
+//        [WLHUDView hiddenHud];
     } fail:^(NSError *error) {
-        [WLHUDView showErrorHUD:@"退出失败！"];
+//        [WLHUDView showErrorHUD:@"退出失败！"];
     }];
     
 }

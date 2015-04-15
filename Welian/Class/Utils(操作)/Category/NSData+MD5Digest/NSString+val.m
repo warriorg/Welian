@@ -33,7 +33,7 @@
 //以字母开头，只能包含“字母”，“数字”，“下划线”，长度6~18
 + (BOOL)passwordValidate:(NSString *)password{
     
-    NSString *pwdRegex = @"^([a-zA-Z]|[a-zA-Z0-9_]|[0-9]){5,17}$";
+    NSString *pwdRegex = @"^([a-zA-Z]|[a-zA-Z0-9_]|[0-9]){6,17}$";
     NSPredicate *pwdTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",pwdRegex];
     DLog(@"%d",[pwdTest evaluateWithObject:password]);
     return [pwdTest evaluateWithObject:password];

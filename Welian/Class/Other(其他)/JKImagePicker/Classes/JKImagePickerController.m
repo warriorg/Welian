@@ -62,6 +62,8 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
 
 @property (nonatomic, strong) UICollectionView   *collectionView;
 
+@property (nonatomic, strong)     JKPhotoBrowser  *photoBorwser;
+
 @end
 
 @implementation JKImagePickerController
@@ -191,12 +193,14 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
 
 - (void)browerPhotoes:(NSArray *)array page:(NSInteger)page
 {
-    JKPhotoBrowser  *photoBorwser = [[JKPhotoBrowser alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    photoBorwser.delegate = self;
-    photoBorwser.pickerController = self;
-    photoBorwser.currentPage = page;
-    photoBorwser.assetsArray = [NSMutableArray arrayWithArray:array];
-    [photoBorwser show:YES];
+    if (_photoBorwser==nil) {
+        _photoBorwser = [[JKPhotoBrowser alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    }
+    _photoBorwser.delegate = self;
+    _photoBorwser.pickerController = self;
+    _photoBorwser.currentPage = page;
+    _photoBorwser.assetsArray = [NSMutableArray arrayWithArray:array];
+    [_photoBorwser show:YES];
 }
 
 #pragma mark - Managing Assets
@@ -511,12 +515,16 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
             }
                 
             case JKImagePickerControllerFilterTypePhotos:{
-                NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
+                NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"请在iPhone的“设置-隐私-照片”选项中，允许微链访问你的手机相册";
                 footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
                                                                                                   @"JKImagePickerController",
                                                                                                   nil),
                                              self.numberOfPhotos
                                              ];
+                footerView.textLabel.numberOfLines = 0;
+                footerView.textLabel.width = SuperSize.width-60;
+                [footerView.textLabel sizeToFit];
+                footerView.textLabel.centerX = SuperSize.width*0.5;
                 break;
             }
                 

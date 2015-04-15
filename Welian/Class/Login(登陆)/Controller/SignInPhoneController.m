@@ -54,7 +54,7 @@
     
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, _phoneTextField.bottom+15, self.view.width-40, 40)];
     [textLabel setNumberOfLines:0];
-    [textLabel setText:@"该手机号码作为您在微链的登陆账号，微链不会在任何地方泄露您的手机号码。"];
+    [textLabel setText:@"该手机号码作为您在微链的登录账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];
     [textLabel setFont:[UIFont systemFontOfSize:13.0]];
     [self.view addSubview:textLabel];
@@ -86,7 +86,7 @@
 - (void)coderPhoneClick:(UIBarButtonItem *)sender {
     [self.phoneTextField resignFirstResponder];
     
-    if ([NSString phoneValidate:self.phoneTextField.text]) {
+    if ([self.phoneTextField.text isMobileNumber]) {
         NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
         [reqstDicM setObject:@"register" forKey:@"type"];
         [reqstDicM setObject:self.phoneTextField.text forKey:@"mobile"];
@@ -108,7 +108,7 @@
                 
             }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
                 // 该号码已注册
-                [WLHUDView showErrorHUD:@"该号码已存在，请登陆！"];
+                [WLHUDView showErrorHUD:@"该号码已存在，请登录！"];
             }
         } fail:^(NSError *error) {
             
