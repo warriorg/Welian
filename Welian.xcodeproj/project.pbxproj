@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
-		A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
-		A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A403560F1A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
 		A40356101A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
 		A40356111A5D2259006AE52C /* MyFriendsOperateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */; };
@@ -610,6 +607,11 @@
 		A48302FD1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
 		A48302FE1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
 		A48302FF1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */; };
+		A48465BC1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */; };
+		A48465BD1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */; };
+		A48465BE1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */; };
+		A48465BF1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */; };
+		A48465C01ADF900A0041BBCE /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */; };
 		A489E7B71AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B81AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
 		A489E7B91AA198E400F7BE9F /* ActivityOrderInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */; };
@@ -1506,7 +1508,6 @@
 		A49C7CF21A70D42700F2AEC5 /* WLMessageBubbleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140521A4BEA8500C9BAB5 /* WLMessageBubbleFactory.m */; };
 		A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F532FD0719C8694B005B887D /* UIRefreshControl+AFNetworking.m */; };
 		A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F520EDC319CFF94200E753E4 /* PictureCell.m */; };
-		A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A40355F91A5D1142006AE52C /* WLSegmentedControl.m */; };
 		A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C140371A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m */; };
 		A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2EAA41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m */; };
 		A49C7CFC1A70D42700F2AEC5 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F3C88D19D2AA6000110C07 /* MJIvar.m */; };
@@ -4658,8 +4659,6 @@
 
 /* Begin PBXFileReference section */
 		10389B611A3EC8E3001A785C /* Other.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Other.h; sourceTree = "<group>"; };
-		A40355F81A5D1142006AE52C /* WLSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSegmentedControl.h; sourceTree = "<group>"; };
-		A40355F91A5D1142006AE52C /* WLSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSegmentedControl.m; sourceTree = "<group>"; };
 		A403560D1A5D2259006AE52C /* MyFriendsOperateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFriendsOperateViewCell.h; sourceTree = "<group>"; };
 		A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFriendsOperateViewCell.m; sourceTree = "<group>"; };
 		A40356131A5D4F61006AE52C /* NewFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendViewController.h; sourceTree = "<group>"; };
@@ -4900,6 +4899,8 @@
 		A482A2451A5FD16F004AABE5 /* NeedAddUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedAddUser.h; sourceTree = "<group>"; };
 		A482A2461A5FD16F004AABE5 /* NeedAddUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedAddUser.m; sourceTree = "<group>"; };
 		A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_activity_detail_time@2x.png"; sourceTree = "<group>"; };
+		A48465BA1ADF900A0041BBCE /* WLSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSegmentedControl.h; sourceTree = "<group>"; };
+		A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSegmentedControl.m; sourceTree = "<group>"; };
 		A489E7B51AA198E400F7BE9F /* ActivityOrderInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityOrderInfoViewCell.h; sourceTree = "<group>"; };
 		A489E7B61AA198E400F7BE9F /* ActivityOrderInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityOrderInfoViewCell.m; sourceTree = "<group>"; };
 		A489E7BC1AA1A54400F7BE9F /* MyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityViewController.h; sourceTree = "<group>"; };
@@ -7438,6 +7439,8 @@
 		A493C2121ADD0BB00056BD52 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				A48465BA1ADF900A0041BBCE /* WLSegmentedControl.h */,
+				A48465BB1ADF900A0041BBCE /* WLSegmentedControl.m */,
 				A493C2B31ADD13DF0056BD52 /* WLTextField.h */,
 				A493C2B41ADD13DF0056BD52 /* WLTextField.m */,
 				A493C2131ADD0BB00056BD52 /* CardAlertView */,
@@ -9562,8 +9565,6 @@
 				F5382B5B19FE261D00FAA5B6 /* FriendsNewCell.h */,
 				F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */,
 				F5382B5D19FE261D00FAA5B6 /* FriendsNewCell.xib */,
-				A40355F81A5D1142006AE52C /* WLSegmentedControl.h */,
-				A40355F91A5D1142006AE52C /* WLSegmentedControl.m */,
 				A403560D1A5D2259006AE52C /* MyFriendsOperateViewCell.h */,
 				A403560E1A5D2259006AE52C /* MyFriendsOperateViewCell.m */,
 				A403561D1A5D5C85006AE52C /* NewFriendViewCell.h */,
@@ -12850,6 +12851,7 @@
 				A49C7C231A70D42700F2AEC5 /* WorkListCell.m in Sources */,
 				F55078F71A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				A49C7C251A70D42700F2AEC5 /* UIImage+Utility.m in Sources */,
+				A48465C01ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				A49C7C271A70D42700F2AEC5 /* SignInPWDController.m in Sources */,
 				A49C7C281A70D42700F2AEC5 /* XHPathCover.m in Sources */,
 				A49C7C291A70D42700F2AEC5 /* FMDatabaseAdditions.m in Sources */,
@@ -13079,7 +13081,6 @@
 				A49C7CF31A70D42700F2AEC5 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A46FAE5E1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */,
-				A49C7CF71A70D42700F2AEC5 /* WLSegmentedControl.m in Sources */,
 				A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A493C31C1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
@@ -13360,6 +13361,7 @@
 				A4C1407C1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				F53DC2DD1A49192600F5F712 /* SignInPWDController.m in Sources */,
 				A4C141731A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
+				A48465BE1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				F53DC2DE1A49192600F5F712 /* FMDatabaseAdditions.m in Sources */,
 				A437CEF71A541BF300B54E68 /* WLMessageSpecialView.m in Sources */,
 				F53DC2DF1A49192600F5F712 /* ShareEngine.m in Sources */,
@@ -13590,7 +13592,6 @@
 				F53DC3621A49192600F5F712 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A46FAE5D1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
-				A40355FC1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A493C31A1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
@@ -13870,6 +13871,7 @@
 				F56649B21A2AFD56008A5830 /* LocationprovinceController.m in Sources */,
 				A47D41DC1A8B587A0070BFD8 /* ActivityTypeInfoView.m in Sources */,
 				F53D4E3D1A4AABE800CA06C8 /* FriendsFriendUser.m in Sources */,
+				A48465BC1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				A4C141741A4BEF5700C9BAB5 /* XHSoundManager.m in Sources */,
 				F55078F41A80C70C009CE4F7 /* ProjectBaseModel.m in Sources */,
 				A4C144741A4C370100C9BAB5 /* WLMessageVoiceFactory.m in Sources */,
@@ -14098,7 +14100,6 @@
 				F5664A2B1A2AFD56008A5830 /* AFHTTPRequestOperationManager.m in Sources */,
 				F5664A2C1A2AFD56008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A46FAE5B1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
-				A40355FA1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A493C3181ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
@@ -14380,6 +14381,7 @@
 				A4C1407B1A4BEA8500C9BAB5 /* UIImage+Utility.m in Sources */,
 				F5664C701A2AFDD5008A5830 /* SignInPWDController.m in Sources */,
 				A4C141721A4BEF5700C9BAB5 /* XHPathCover.m in Sources */,
+				A48465BD1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				F5664C711A2AFDD5008A5830 /* FMDatabaseAdditions.m in Sources */,
 				A437CEF61A541BF300B54E68 /* WLMessageSpecialView.m in Sources */,
 				F5664C721A2AFDD5008A5830 /* ShareEngine.m in Sources */,
@@ -14610,7 +14612,6 @@
 				F5664CE61A2AFDD5008A5830 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A46FAE5C1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
-				A40355FB1A5D1142006AE52C /* WLSegmentedControl.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				A493C3191ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
@@ -14829,6 +14830,7 @@
 				A493C3701ADD14A60056BD52 /* WLStatusFrame.m in Sources */,
 				A493C3661ADD14A60056BD52 /* WLContentCellFrame.m in Sources */,
 				A493C2331ADD0BB00056BD52 /* NSError+Extend.m in Sources */,
+				A48465BF1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				A493C2561ADD0BB00056BD52 /* UIImage+FixOrientation.m in Sources */,
 				A493C3521ADD14A60056BD52 /* MessageHomeModel.m in Sources */,
 				A49236651ADE6AF9009E0B8C /* BaseTableViewCell.m in Sources */,

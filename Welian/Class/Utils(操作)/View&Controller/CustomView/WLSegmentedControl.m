@@ -126,7 +126,7 @@
             UIImageView *iconImage = (UIImageView *)[view viewWithTag:Define_Image_Tag + i];
             [iconImage sizeToFit];
             if (_isHorizontal) {
-                iconImage.left = 20.f;
+                iconImage.left = (view.width - titleLabel.width - iconImage.width - kMarginBottom) / 2.f; //20.f;
                 iconImage.centerY = view.height / 2.f;
             }else{
                 iconImage.centerX = view.width / 2.f;
