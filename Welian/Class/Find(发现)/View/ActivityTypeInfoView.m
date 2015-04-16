@@ -163,6 +163,9 @@
                                 if (provinces.count > 0) {
                                     NSDictionary *dic = [provinces firstObject];
                                     locationCityDic = @{@"cityid":dic[@"pid"],@"name":cityStr};
+                                }else{
+                                    //不存在的位置信息  -1:列表中没有定位的城市
+                                    locationCityDic = @{@"cityid":@(-1),@"name":cityStr};
                                 }
                             }else{
                                 NSDictionary *dic = [citys firstObject];

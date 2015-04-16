@@ -90,5 +90,28 @@
     return resultUIImage;
 }
 
+//压缩图片到指定的大小比列  默认：200k
+- (UIImage *)thumbImageWithScaleSize:(float)scaleSize
+{
+    UIImage *thumImage = self;
+    float currentImageSize = scaleSize > 200 ? scaleSize : 200;
+    CGFloat scaleFactor = 0.5;
+    //原图大小
+    NSData *currentImageData = UIImageJPEGRepresentation(self,1);
+    DLog(@"===currentImageData: %d  字节",(int)currentImageData.length);
+    //1k＝ 1024字节
+    CGFloat currentLength = currentImageData.length / 1024;
+    DLog(@"===currentImageData: %.2f k",currentLength);
+    //小于
+    if (currentLength > currentImageSize) {
+        scaleFactor =  currentImageSize / currentLength;
+        DLog(@"===scaleFactor: %.2f ",scaleFactor);
+        NSData *thum = UIImageJPEGRepresentation(self,scaleFactor);
+        CGFloat thumLength = thum.length / 1024;
+        DLog(@"===thum Data: %d字节  %.2f K",(int)thum.length,thumLength);
+        thumImage = [UIImage imageWithData:thum];
+    }
+    return thumImage;
+}
 
 @end

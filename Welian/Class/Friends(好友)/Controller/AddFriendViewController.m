@@ -114,13 +114,17 @@
     self.segmentedControl = segmentedControl;
     
     //下拉刷新
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//    [self.refreshControl addTarget:self action:@selector(changeDataWithIndex:) forControlEvents:UIControlEventValueChanged];
+//    [self.tableView addSubview:self.refreshControl];
     
     //默认加载的数据
     self.canOpenAddress = YES;
-    [self changeDataWithIndex:_selectIndex];
+//    [self changeDataWithIndex:_selectIndex];
+    
+    //下拉刷新
+    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(changeDataWithIndex:)];
+    [self.tableView.header beginRefreshing];
 }
 
 #pragma mark - Table view data source
@@ -277,7 +281,9 @@
 //    [WLHUDView hiddenHud];
 //    [WLHttpTool cancelAllRequestHttpTool];
     self.selectIndex = sender.selectedSegmentIndex;
-    [self changeDataWithIndex:_selectIndex];
+//    [self changeDataWithIndex:_selectIndex];
+    //重新开始刷新
+    [self.tableView.header beginRefreshing];
 }
 
 /**
@@ -335,7 +341,8 @@
             self.datasource = [NSMutableArray array];
             [self.view addSubview:self.phoneNotView];
             [self.view bringSubviewToFront:_phoneNotView];
-            [self.refreshControl endRefreshing];
+            [self.tableView.header endRefreshing];
+//            [self.refreshControl endRefreshing];
             
             WEAKSELF
             [_phoneNotView setBtnClickedBlock:^(void){
@@ -396,10 +403,12 @@
 - (void)getPhoneData
 {
     [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
+        [self.tableView.header endRefreshing];
         //保存数据到数据库
         [self createNeedAddUserWithInfo:JSON withType:1];
     } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
+        [self.tableView.header endRefreshing];
+//        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -462,7 +471,8 @@
     } completion:^(BOOL contextDidSave, NSError *error) {
         if (_selectIndex == type - 1) {
             [WLHUDView hiddenHud];
-            [self.refreshControl endRefreshing];
+//            [self.refreshControl endRefreshing];
+            [self.tableView.header endRefreshing];
             // 3) 设置UI
             [self reloadUIData];
         }
@@ -480,6 +490,8 @@
     }
     [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
                                  success:^(id JSON) {
+                                     [self.tableView.header endRefreshing];
+                                     
                                      //删除本地数据库微信数据
                                      NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
                                      
@@ -500,7 +512,8 @@
                                      //保存到数据库
                                      [self createNeedAddUserWithInfo:JSON withType:2];
                                  } fail:^(NSError *error) {
-                                     [self.refreshControl endRefreshing];
+                                     [self.tableView.header endRefreshing];
+//                                     [self.refreshControl endRefreshing];
                                  }];
 }
 

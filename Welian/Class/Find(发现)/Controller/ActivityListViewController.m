@@ -315,6 +315,7 @@
 #pragma mark - Private
 - (void)initData
 {
+    //-1:列表中没有定位的城市
     NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),
                              @"cityid":@([_selectAddressType[@"cityid"] integerValue]),
                              @"page":@(_pageIndex),
