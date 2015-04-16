@@ -22,7 +22,7 @@ typedef enum {
 @interface NameController : UIViewController
 @property (nonatomic, strong) NSString *userInfoStr;
 //@property (nonatomic, strong) UITextField *infoTextF;
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 - (id)initWithBlock:(UserInfoBlock)block withType:(IWVerifiedType)verType;
 

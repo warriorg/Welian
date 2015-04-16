@@ -10,6 +10,6 @@
 
 @interface CreateHeaderView : UIView
 
-@property (weak, nonatomic) IBOutlet UIImageView *ImageView;
+@property (weak, nonatomic) IBOutlet UIButton *imageBut;
 
 @end

@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSOperationQueue *searchQueue;
 @property (nonatomic, strong) BiaoQianView *postView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *searchArray;
+@property (nonatomic, strong) NSMutableArray *searchArray;
 @end
 
 @implementation CompotAndPostController
@@ -89,7 +89,7 @@
 
         self.searchQueue = [[NSOperationQueue alloc] init];
         [self.searchQueue setMaxConcurrentOperationCount:1];
-        self.searchArray = [NSArray array];
+        self.searchArray = [NSMutableArray array];
     }
     return self;
 }
@@ -99,19 +99,23 @@
     [self.searchQueue cancelAllOperations];
     if (textFiled.text.length) {
         [self.searchQueue addOperationWithBlock:^{
-            
             [self beginSearchData:textFiled.text];
-            
         }];
+    }else{
+        [self.searchArray removeAllObjects];
+        [self.tableView reloadData];
+        if (_type==2) {
+            [_backdropView insertSubview:self.postView aboveSubview:self.tableView];
+        }
     }
 }
 
 - (void)beginSearchData:(NSString *)searchText
 {
+    
     if (_type ==1) {
         [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-            self.searchArray = JSON;
-            
+            self.searchArray = [NSMutableArray arrayWithArray:JSON];
             [self.tableView reloadData];
             DLog(@"%@",JSON);
         } fail:^(NSError *error) {
@@ -119,7 +123,7 @@
         }];
     }else if (_type ==2){
         [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-            self.searchArray = JSON;
+            self.searchArray = [NSMutableArray arrayWithArray:JSON];
             [self.tableView reloadData];
             [_backdropView insertSubview:self.postView belowSubview:self.tableView];
         } fail:^(NSError *error) {

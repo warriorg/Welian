@@ -97,36 +97,38 @@
 
 - (void)searchTextFiled:(WLTextField *)textFiled
 {
+    [self.searchQueue cancelAllOperations];
     if (textFiled.text.length) {
          [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        [self.searchQueue addOperationWithBlock:^{
+            
+            [self beginSearchData:textFiled.text];
+            
+        }];
     }else{
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.dataArray removeAllObjects];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+        [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.searchQueue cancelAllOperations];
-    [self.searchQueue addOperationWithBlock:^{
-        
-        [self beginSearchData:textFiled.text];
-        
-    }];
 }
 
 
 - (void)beginSearchData:(NSString *)searchText
 {
     if (searchText.length) {
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
         if (_verType==IWVerifiedTypeCompany) {
             
             [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                self.dataArray = [NSMutableArray arrayWithArray:JSON];
                 [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
             } fail:^(NSError *error) {
                 
             }];
         }else if (_verType == IWVerifiedTypeJob){
             [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                self.dataArray = [NSMutableArray arrayWithArray:JSON];
                 [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
             } fail:^(NSError *error) {
                 
@@ -135,8 +137,7 @@
         }else if (_verType == IWVerifiedTypeSchool){
             
             [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = JSON;
-                NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
+                self.dataArray = [NSMutableArray arrayWithArray:JSON];
                 [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
             } fail:^(NSError *error) {
                 

@@ -84,7 +84,8 @@
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage  *img = [UIImage imageNamed:@"photo_check_default"];
         UIImage  *imgH = [UIImage imageNamed:@"photo_check_selected"];
-        _checkButton.frame = CGRectMake(0, 0, img.size.width+10, img.size.height+10);
+        _checkButton.frame = CGRectMake(0, 0, self.width/2+5, self.width/2+5);
+        [_checkButton setImageEdgeInsets:UIEdgeInsetsMake(0, 25, 25, 0)];
         [_checkButton setImage:img forState:UIControlStateNormal];
         [_checkButton setImage:imgH forState:UIControlStateSelected];
         [_checkButton addTarget:self action:@selector(photoDidChecked) forControlEvents:UIControlEventTouchUpInside];

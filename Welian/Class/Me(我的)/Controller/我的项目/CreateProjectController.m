@@ -142,12 +142,6 @@ static NSString *projectcellid = @"projectcellid";
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
         }else{
             CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
-            if (Iphone6plus) {
-                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_one1242.png"]];
-            }else{
-                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_one640.png"]];
-            }
-            
             [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
             [self.tableView setTableHeaderView:headerV];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(addMemberProject)];
