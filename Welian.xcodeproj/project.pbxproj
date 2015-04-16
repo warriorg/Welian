@@ -2850,10 +2850,6 @@
 		F53519951A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */; };
 		F53519961A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */; };
 		F53519971A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */; };
-		F53519981A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */; };
-		F53519991A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */; };
-		F535199A1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */; };
-		F535199B1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */; };
 		F535199C1A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */; };
 		F535199D1A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */; };
 		F535199E1A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */; };
@@ -5850,7 +5846,6 @@
 		F534DB621A5119A000B6A725 /* InvestItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestItems.h; sourceTree = "<group>"; };
 		F534DB631A5119A000B6A725 /* InvestItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestItems.m; sourceTree = "<group>"; };
 		F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_buzhou_step_one640@2x.png"; sourceTree = "<group>"; };
-		F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_buzhou_step_one1242@3x.png"; sourceTree = "<group>"; };
 		F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_buzhou_step_three640@2x.png"; sourceTree = "<group>"; };
 		F53519911A8C8DD2004488EE /* discovery_buzhou_step_three1242@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_buzhou_step_three1242@3x.png"; sourceTree = "<group>"; };
 		F53519921A8C8DD2004488EE /* discovery_buzhou_step_two640@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discovery_buzhou_step_two640@2x.png"; sourceTree = "<group>"; };
@@ -8529,7 +8524,6 @@
 				A4557DFA1AC91A90008EB54E /* discovery_activity_detail_zhubanfang@2x.png */,
 				A48302FB1AA9849000B5CB52 /* discovery_activity_detail_time@2x.png */,
 				F535198E1A8C8DD2004488EE /* discovery_buzhou_step_one640@2x.png */,
-				F535198F1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png */,
 				F53519901A8C8DD2004488EE /* discovery_buzhou_step_three640@2x.png */,
 				F53519911A8C8DD2004488EE /* discovery_buzhou_step_three1242@3x.png */,
 				F53519921A8C8DD2004488EE /* discovery_buzhou_step_two640@2x.png */,
@@ -10886,7 +10880,6 @@
 				A47BA66A1A81C1020000EC48 /* discovery_xiangmu_detail_nomember@2x.png in Resources */,
 				A47D41F81A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A49C7FA61A70D42700F2AEC5 /* notification_badge1@2x.png in Resources */,
-				F535199B1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */,
 				A49C7FAD1A70D42700F2AEC5 /* me_circle_chat_picture@2x.png in Resources */,
 				A4C770D01A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */,
 				A49235FF1ADE693A009E0B8C /* navigationbar_arrow_up@2x.png in Resources */,
@@ -11481,7 +11474,6 @@
 				A409A2041AC2E1AF0033A31D /* me_lvli@2x.png in Resources */,
 				A47D41F71A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A4C144A31A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
-				F535199A1A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */,
 				A49235FD1ADE693A009E0B8C /* navigationbar_arrow_up@2x.png in Resources */,
 				A41CE1DE1A6F9E25004F17E7 /* me_circle_chat_picture@2x.png in Resources */,
 				A4C770CF1A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */,
@@ -12065,7 +12057,6 @@
 				A4C143AF1A4C0A6B00C9BAB5 /* sharemore_video@2x.png in Resources */,
 				F5CBE4E71AC4351A00F4C884 /* Expression_95@2x.png in Resources */,
 				F5CBE4771AC4351A00F4C884 /* Expression_67@2x.png in Resources */,
-				F53519981A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */,
 				A41CE1DC1A6F9E25004F17E7 /* me_circle_chat_picture@2x.png in Resources */,
 				A4C143B81A4C0A6B00C9BAB5 /* sharemore_voipvoice@2x.png in Resources */,
 				A437CEEB1A53D53100B54E68 /* circle_chatlist_sendfailed@2x.png in Resources */,
@@ -12665,7 +12656,6 @@
 				A409A2031AC2E1AF0033A31D /* me_lvli@2x.png in Resources */,
 				A47D41F61A8B6E900070BFD8 /* discovery_activity_list_already@2x.png in Resources */,
 				A4C144A21A4C3EC600C9BAB5 /* notification_badge1@2x.png in Resources */,
-				F53519991A8C8DD2004488EE /* discovery_buzhou_step_one1242@3x.png in Resources */,
 				A49235FC1ADE693A009E0B8C /* navigationbar_arrow_up@2x.png in Resources */,
 				A41CE1DD1A6F9E25004F17E7 /* me_circle_chat_picture@2x.png in Resources */,
 				A4C770CE1A806A82005ABC7F /* discovery_xiangmu@2x.png in Resources */,

@@ -195,9 +195,9 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
 {
     if (_photoBorwser==nil) {
         _photoBorwser = [[JKPhotoBrowser alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _photoBorwser.delegate = self;
+        _photoBorwser.pickerController = self;
     }
-    _photoBorwser.delegate = self;
-    _photoBorwser.pickerController = self;
     _photoBorwser.currentPage = page;
     _photoBorwser.assetsArray = [NSMutableArray arrayWithArray:array];
     [_photoBorwser show:YES];
@@ -252,8 +252,6 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
                                  weakSelf.titleButton.enabled = NO;
                              }
                          }];
-    
-    // Validation
 }
 
 - (void)setSelectAssetsGroup:(ALAssetsGroup *)selectAssetsGroup{
@@ -505,36 +503,24 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
                 } else {
                     format = @"format_photos_and_videos";
                 }
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"JKImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfPhotos,
-                                             self.numberOfVideos
-                                             ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,@"JKImagePickerController",nil),self.numberOfPhotos,self.numberOfVideos];
                 break;
             }
                 
             case JKImagePickerControllerFilterTypePhotos:{
-                NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"请在iPhone的“设置-隐私-照片”选项中，允许微链访问你的手机相册";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"JKImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfPhotos
-                                             ];
-                footerView.textLabel.numberOfLines = 0;
-                footerView.textLabel.width = SuperSize.width-60;
-                [footerView.textLabel sizeToFit];
-                footerView.textLabel.centerX = SuperSize.width*0.5;
+//                NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
+                //请在iPhone的“设置-隐私-照片”选项中，允许微链访问你的手机相册
+                footerView.textLabel.text = [NSString stringWithFormat:@"%lu张照片",(unsigned long)self.numberOfPhotos];
+//                footerView.textLabel.numberOfLines = 0;
+//                footerView.textLabel.width = SuperSize.width-60;
+//                [footerView.textLabel sizeToFit];
+//                footerView.textLabel.centerX = SuperSize.width*0.5;
                 break;
             }
                 
             case JKImagePickerControllerFilterTypeVideos:{
                 NSString *format = (self.numberOfVideos == 1) ? @"format_video" : @"format_videos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"JKImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfVideos
-                                             ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,@"JKImagePickerController",nil),self.numberOfVideos];
                 break;
             }
         }

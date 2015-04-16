@@ -78,11 +78,6 @@ static NSString *financingCellid = @"financingCellid";
         if (!isEdit) {
             self.isFinancing = 0;
             CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
-            if (Iphone6plus) {
-                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_three1242.png"]];
-            }else{
-                [headerV.ImageView setImage:[UIImage imageNamed:@"discovery_buzhou_step_three640.png"]];
-            }
             [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
             [self.tableView setTableHeaderView:headerV];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
