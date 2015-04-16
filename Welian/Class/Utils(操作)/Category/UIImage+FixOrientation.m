@@ -90,7 +90,6 @@
     return resultUIImage;
 }
 
-
 //压缩图片到指定的大小比列  默认：200k
 - (UIImage *)thumbImageWithScaleSize:(float)scaleSize
 {
