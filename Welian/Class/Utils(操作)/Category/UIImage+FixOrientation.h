@@ -15,4 +15,8 @@
 //设置图片颜色
 - (UIImage *) partialImageWithPercentage:(float)percentage vertical:(BOOL)vertical grayscaleRest:(BOOL)grayscaleRest;
 
+
+//压缩图片到指定的大小比列  默认：200
+- (UIImage *)thumbImageWithScaleSize:(float)scaleSize;
+
 @end

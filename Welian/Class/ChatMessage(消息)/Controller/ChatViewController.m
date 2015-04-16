@@ -700,6 +700,9 @@
  *  @param date   发送时间
  */
 - (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
+    //压缩200k
+    photo = [photo thumbImageWithScaleSize:200];
+    
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     WLMessage *photoMessage = [[WLMessage alloc] initWithPhoto:photo thumbnailUrl:nil originPhotoUrl:nil sender:sender timestamp:date];
     photoMessage.avatorUrl = loginUser.avatar;
