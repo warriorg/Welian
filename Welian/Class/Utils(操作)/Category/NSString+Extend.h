@@ -10,6 +10,7 @@
 
 @interface NSString (Extend)
 
+- (BOOL)isUrl;
 - (BOOL)isMobile;
 - (BOOL)isEmail;
 - (BOOL)isContainsString:(NSString *)string;

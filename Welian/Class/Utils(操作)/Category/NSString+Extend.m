@@ -11,6 +11,14 @@
 
 @implementation NSString (Extend)
 
+- (BOOL)isUrl
+{
+    NSString * regex = @"http(s)?:\\/\\/([\\w-]+\\.)+[\\w-]+(\\/[\\w- .\\/?%&=]*)?";
+    NSPredicate * pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    
+    return [pred evaluateWithObject:self];
+}
+
 - (BOOL)isMobile
 {
     NSUInteger num = 0;
