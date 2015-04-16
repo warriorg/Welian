@@ -15,6 +15,8 @@
 #import "LoginGuideController.h"
 #import <StoreKit/StoreKit.h>
 #import "MeInfoController.h"
+#import "SEImageCache.h"
+#import "ShareEngine.h"
 
 @interface SettingController () <UIActionSheetDelegate,SKStoreProductViewControllerDelegate>
 {
@@ -166,7 +168,19 @@
     }else if (indexPath.section ==1&&indexPath.row==0){
         AboutViewController *aboutVC = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
-    }else if (indexPath.section ==1&&indexPath.row==1){
+    }else if (indexPath.section==1&&indexPath.row==1){
+        //微信邀请
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+        [sheet bk_addButtonWithTitle:@"微信好友" handler:^{
+            [self shareWithType:0];
+        }];
+        [sheet bk_addButtonWithTitle:@"微信朋友圈" handler:^{
+            [self shareWithType:1];
+        }];
+        [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+        [sheet showInView:self.view];
+        
+    }else if (indexPath.section ==1&&indexPath.row==2){
         NSString *str = [NSString stringWithFormat: @"itms-apps://itunes.apple.com/app/id%@", @"944154493"];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }
@@ -187,6 +201,23 @@
 //
 //        }];
 //    }
+}
+
+/**
+ *  分享到微信
+ *
+ *  @param type 分享方式：0：微信好友、1：微信朋友圈
+ */
+- (void)shareWithType:(NSInteger)type
+{
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
+    NSString *messStr = [NSString stringWithFormat:@"%@邀请您一起来玩微链",mode.name];
+    NSString *desStr = @"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！";
+    [WLHUDView showHUDWithStr:@"" dim:NO];
+    [[SEImageCache sharedInstance] imageForURL:[NSURL URLWithString:mode.avatar] completionBlock:^(UIImage *image, NSError *error) {
+        [WLHUDView hiddenHud];
+        [[ShareEngine sharedShareEngine] sendWeChatMessage:messStr andDescription:desStr WithUrl:mode.inviteurl andImage:image WithScene:type == 0 ? weChat : weChatFriend];
+    }];
 }
 
 

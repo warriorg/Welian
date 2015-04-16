@@ -966,17 +966,34 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //获取详情信息
 - (void)initData{
+    WEAKSELF
+    if (!_projectPid.boolValue) {
+        UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该项目已经被删除！"];
+        [alert bk_addButtonWithTitle:@"确定" handler:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert show];
+        return;
+    }
+
     [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
                                      success:^(id JSON) {
                                          //隐藏
                                          [self.tableView.header endRefreshing];
-                                         
+                                         if ([[JSON objectForKey:@"deleted"] boolValue]) {
+                                            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该项目已经被删除！"];
+                                             [alert bk_addButtonWithTitle:@"确定" handler:^{
+                                                  [weakSelf.navigationController popViewControllerAnimated:YES];
+                                             }];
+                                             [alert show];
+                                             return;
+                                         }
                                          IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
-                                         self.iProjectDetailInfo = detailInfo;
-                                         self.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
+                                         weakSelf.iProjectDetailInfo = detailInfo;
+                                         weakSelf.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
                                          
                                          //添加分享按钮
-                                         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+                                         weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
                                          
                                          NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
                                          for (ICommentInfo *commentInfo in detailInfo.comments) {
@@ -1013,16 +1030,16 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          }
                                          self.datasource = dataAM;
                                          if (dataAM.count >= detailInfo.commentcount.integerValue) {
-                                             [self.tableView.footer setHidden:YES];
+                                             [weakSelf.tableView.footer setHidden:YES];
                                          }else{
-                                             [self.tableView.footer setHidden:NO];
+                                             [weakSelf.tableView.footer setHidden:NO];
                                          }
                                          [_tableView reloadData];
                                          
-                                         [self updateUI];
+                                         [weakSelf updateUI];
                                      } fail:^(NSError *error) {
                                          //隐藏
-                                         [self.tableView.header endRefreshing];
+                                         [weakSelf.tableView.header endRefreshing];
                                          [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
                                      }];
 }

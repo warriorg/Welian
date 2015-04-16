@@ -949,11 +949,28 @@
 //获取详情信息
 - (void)initData
 {
+    WEAKSELF
+    if (!_activityId.boolValue) {
+        UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
+        [alert bk_addButtonWithTitle:@"确定" handler:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert show];
+        return;
+    }
     [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
                                       success:^(id JSON) {
                                           //隐藏下拉刷新控件
 //                                          [self.tableView.header endRefreshing];
                                           if (JSON) {
+                                              if ([[JSON objectForKey:@"deleted"] boolValue]) {
+                                                  UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
+                                                  [alert bk_addButtonWithTitle:@"确定" handler:^{
+                                                      [weakSelf.navigationController popViewControllerAnimated:YES];
+                                                  }];
+                                                  [alert show];
+                                                  return;
+                                              }
                                               IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
                                               BOOL isFromList = _activityInfo != nil ? YES : NO;
                                               if (isFromList) {

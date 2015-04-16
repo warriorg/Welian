@@ -172,6 +172,7 @@
         _cellCardView.hidden = NO;
         _cellCardView.frame = contenFrame.cellCardF;
         _cellCardView.cardM = status.card;
+//        _cellCardView.tapBut.userInteractionEnabled = status.card.cid.boolValue;
     }else{
         _cellCardView.hidden = YES;
     }

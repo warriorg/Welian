@@ -17,6 +17,12 @@
 			<key>content</key>
 			<string></string>
 		</dict>
+        <dict>
+            <key>title</key>
+            <string>推荐给好友</string>
+            <key>content</key>
+            <string></string>
+        </dict>
 		<dict>
 			<key>title</key>
 			<string>给我评分</string>

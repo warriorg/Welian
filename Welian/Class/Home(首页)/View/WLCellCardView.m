@@ -67,16 +67,14 @@
     _cardM = cardM;
     NSInteger typeint = cardM.type.integerValue;
     NSString *imageName = @"";
-    
+    BOOL cidBool = cardM.cid.boolValue;
     if (typeint==12||typeint==10) { // 项目
-        imageName = @"home_repost_xiangmu";
-        
+        imageName = cidBool? @"home_repost_xiangmu":@"home_repost_xiangmu_no";
     }else if (typeint==11){    // 网页
         imageName = @"home_repost_link";
         
     }else if (typeint==3||typeint==5){ // 活动
-        imageName = @"home_repost_huodong";
-        
+        imageName = cidBool? @"home_repost_huodong":@"home_repost_huodong_no";
     }else if (typeint==13){ // 话题
         imageName = @"home_repost_huati";
     }else if (typeint==4 || typeint==6){ // 个人信息
