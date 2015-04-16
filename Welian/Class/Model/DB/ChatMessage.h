@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * avatorUrl;
 @property (nonatomic, retain) NSNumber * isRead;
-@property (nonatomic, retain) NSNumber * sendStatus;
+@property (nonatomic, retain) NSNumber * sendStatus;//0：正在发送 1:发送成功   2：发送失败、重新发送
 @property (nonatomic, retain) NSNumber * bubbleMessageType;
 @property (nonatomic, retain) NSString * thumbnailUrl;
 @property (nonatomic, retain) NSString * originPhotoUrl;

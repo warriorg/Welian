@@ -371,6 +371,29 @@
     //获取数据库中发送的消息对象
     ChatMessage *chatMessage = _localMessages[indexPath.row];
     
+    //获取本地数据库中的消息
+    ChatMessage *localChatMessage = [self.friendUser getChatMessageWithMsgId:message.msgId];
+    //0：正在发送 1:发送成功   2：发送失败、重新发送
+    if (localChatMessage.sendStatus.intValue == 1 && message.bubbleMessageType == WLBubbleMessageTypeSending) {
+        //再次进来，本地数据库中已经发送
+        WLMessage *msg = self.messages[indexPath.row];
+        //更新发送消息状态
+        msg.sended = @"1";
+        
+        //替换原有数据
+        [self.messages replaceObjectAtIndex:indexPath.row withObject:msg];
+        [self.localMessages replaceObjectAtIndex:indexPath.row withObject:localChatMessage];
+        
+        WEAKSELF
+        [weakSelf exMainQueue:^{
+            //刷新列表
+            [weakSelf.messageTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+//            [weakSelf scrollToBottomAnimated:YES];
+            //返回
+            return ;
+        }];
+    }
+    
     [WLHttpTool sendMessageParameterDic:param
                                 success:^(id JSON) {
                                     //返回的是字典
