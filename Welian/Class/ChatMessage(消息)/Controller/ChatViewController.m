@@ -161,8 +161,7 @@
     //设置上次输入的为发送的文本内容
     NSString *unSendText = [UserDefaults objectForKey:[NSString stringWithFormat:@"chat:%@",self.friendUser.uid.stringValue]];
     if (unSendText.length > 0) {
-        [self.messageInputView.inputTextView becomeFirstResponder];
-        [self.messageInputView.inputTextView setText:unSendText];
+        [self setDeFaultInputText:unSendText];
     }
 }
 

@@ -375,15 +375,15 @@ static CGPoint  delayOffset = {0.0};
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // 设置键盘通知或者手势控制键盘消失
-    [self.messageTableView setupPanGestureControlKeyboardHide:self.allowsPanToDismissKeyboard];
-    
     // KVO 检查contentSize
     [self.messageInputView.inputTextView addObserver:self
                                           forKeyPath:@"contentSize"
                                              options:NSKeyValueObservingOptionNew
                                              context:nil];
     [self.messageInputView.inputTextView setEditable:YES];
+    
+    // 设置键盘通知或者手势控制键盘消失
+    [self.messageTableView setupPanGestureControlKeyboardHide:self.allowsPanToDismissKeyboard];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -628,6 +628,15 @@ static CGPoint  delayOffset = {0.0};
 {
     //编辑结束  如果输入的不为空保存输入内容
     [UserDefaults setObject:messageInputTextView.text forKey:[NSString stringWithFormat:@"chat:%@",_friendUser.uid.stringValue]];
+}
+
+//设置输入框中的默认文本
+- (void)setDeFaultInputText:(NSString *)inputMsg
+{
+    if (!self.previousTextViewContentHeight)
+        self.previousTextViewContentHeight = [self getTextViewContentH:self.messageInputView.inputTextView];
+    
+    self.messageInputView.inputTextView.text = inputMsg;
 }
 
 
