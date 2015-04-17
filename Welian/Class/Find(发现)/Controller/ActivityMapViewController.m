@@ -88,11 +88,11 @@
     [WLHUDView showHUDWithStr:@"获取位置中..." dim:NO];
     if(flag)
     {
-        NSLog(@"geo检索发送成功");
+        DLog(@"geo检索发送成功");
     }
     else
     {
-        NSLog(@"geo检索发送失败");
+        DLog(@"geo检索发送失败");
     }
 }
 
@@ -135,7 +135,7 @@
         [_mapView selectAnnotation:annotation animated:YES];
     }
     else {
-        NSLog(@"抱歉，未找到结果");
+        DLog(@"抱歉，未找到结果");
     }
 }
 
