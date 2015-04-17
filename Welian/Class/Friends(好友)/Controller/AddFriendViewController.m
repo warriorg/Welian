@@ -496,14 +496,18 @@
                                      NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
                                      
                                      //循环，删除本地数据库多余的缓存数据
-                                     for (int i = 0; i < [wxAddUser count]; i++){
-                                         NeedAddUser *addUser = wxAddUser[i];
-                                         //判断返回的数组是否包含
-                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
-                                             //判断是否包含对应的
-                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
-                                         }];
-                                         if(!isHave){
+                                     if (wxAddUser.count > 0) {
+                                         for (int i = 0; i < [wxAddUser count]; i++){
+                                             NeedAddUser *addUser = wxAddUser[i];
+                                             //判断返回的数组是否包含
+                                             //                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
+                                             //                                             //判断是否包含对应的
+                                             //                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
+                                             //                                         }];
+                                             //                                         if(!isHave){
+                                             //                                             //删除
+                                             //                                             [addUser MR_deleteEntity];
+                                             //                                         }
                                              //删除
                                              [addUser MR_deleteEntity];
                                          }
