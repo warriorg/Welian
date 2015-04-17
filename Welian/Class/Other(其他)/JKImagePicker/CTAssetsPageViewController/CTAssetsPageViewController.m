@@ -84,6 +84,7 @@
             if (_currently==1) {
                 if (weakSelf.assets.count==0) {
                     [weakSelf.navigationController popViewControllerAnimated:YES];
+                    _picBlcok([NSMutableArray arrayWithArray:weakSelf.assets]);
                     return;
                 }
                 [weakSelf setPageIndex:0];

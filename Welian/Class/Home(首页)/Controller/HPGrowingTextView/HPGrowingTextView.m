@@ -89,6 +89,7 @@
     r.origin.x = 0;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
+    internalTextView.layoutManager.allowsNonContiguousLayout = YES;
 #else
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
 #endif
@@ -110,7 +111,7 @@
     internalTextView.text = @"";
     
     [self setMaxNumberOfLines:3];
-
+//    internalTextView.layoutManager.allowsNonContiguousLayout = NO;
     [self setPlaceholderColor:[UIColor lightGrayColor]];
     internalTextView.displayPlaceHolder = YES;
 }

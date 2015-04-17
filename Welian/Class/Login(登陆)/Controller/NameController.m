@@ -91,6 +91,16 @@
             return;
         }
     }
+    if (_verType == IWVerifiedTypeName) {
+        if (!self.searchTextField.text.length) {
+            [WLHUDView showErrorHUD:@"请填写你的姓名"];
+            return;
+        }
+        if (self.searchTextField.text.length<2||[self.searchTextField.text charNumber]>20) {
+            [WLHUDView showErrorHUD:@"姓名长度为2-20个字"];
+            return;
+        }
+    }
     _isSave = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }

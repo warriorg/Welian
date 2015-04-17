@@ -38,5 +38,6 @@
 //获取时间戳
 + (NSString *)getNowTimestamp;
 
-
+// 字节长度
+-(int)charNumber;
 @end

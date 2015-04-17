@@ -338,7 +338,7 @@ static NSString *itemscellid = @"itemscellid";
                 } fail:^(NSError *error) {
                     
                 }];
-            } withType:IWVerifiedTypeName];
+            } withType:IWVerifiedTypeAddress];
             [self.navigationController pushViewController:caseVC animated:YES];
         }
     }
