@@ -176,6 +176,9 @@
 @property (nonatomic, assign) WLMessageInputViewStyle inputViewStyle;
 
 #pragma mark - DataSource Change
+//设置输入框中的默认文本
+- (void)setDeFaultInputText:(NSString *)inputMsg;
+
 /**
  *  添加一条新的消息
  *
