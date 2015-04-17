@@ -294,7 +294,7 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
             }else if ([type isEqualToString:ALAssetTypeVideo]){
                 numberOfVideos++;
             }
-            [assets addObject:result];
+            [assets insertObject:result atIndex:0];
         }
     }];
     

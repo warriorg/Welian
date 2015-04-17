@@ -11,6 +11,7 @@
 #import "WUEmoticonsKeyboardKeyItem.h"
 #import "WUEmoticonsKeyboardKeysPageFlowLayout.h"
 #import "WUEmoticonsKeyboardKeyCell.h"
+#import "WUEmoticonsKeyboardToolsView.h"
 
 extern NSString * const WUEmoticonsKeyboardDidSwitchToDefaultKeyboardNotification;
 
@@ -61,6 +62,8 @@ typedef NS_ENUM(NSUInteger, WUEmoticonsKeyboardButton) {
 - (NSAttributedString *)attributedTitleForButton:(WUEmoticonsKeyboardButton)button state:(UIControlState)state;
 
 @property (nonatomic) CGFloat toolsViewHeight UI_APPEARANCE_SELECTOR; //Default 45.0f
+
+@property (nonatomic,weak)           WUEmoticonsKeyboardToolsView *toolsView;
 
 @property (nonatomic, assign) BOOL hideSendBut;
 

@@ -8,7 +8,6 @@
 
 #import "WUEmoticonsKeyboard.h"
 #import "UIResponder+WriteableInputView.h"
-#import "WUEmoticonsKeyboardToolsView.h"
 #import "WUEmoticonsKeyboardKeyItemGroupView.h"
 
 NSString * const WUEmoticonsKeyboardDidSwitchToDefaultKeyboardNotification = @"WUEmoticonsKeyboardDidSwitchToDefaultKeyboardNotification";
@@ -19,7 +18,6 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 
 @interface WUEmoticonsKeyboard () <UIInputViewAudioFeedback>
 @property (nonatomic,weak,readwrite) UIResponder<UITextInput>     *textInput;
-@property (nonatomic,weak)           WUEmoticonsKeyboardToolsView *toolsView;
 @property (nonatomic,weak)           UIImageView                  *backgroundImageView;
 @property (nonatomic,strong)         NSArray                      *keyItemGroupViews;
 @property (nonatomic,readonly)       CGRect                        keyItemGroupViewFrame;
@@ -141,9 +139,9 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
     WUEmoticonsKeyboard *__weak weakSelf = self;
     
     self.toolsViewHeight = WUEmoticonsKeyboardToolsViewDefaultHeight;
-    self.hideSendBut = NO;
+//    self.hideSendBut = NO;
     WUEmoticonsKeyboardToolsView *toolsView = [[WUEmoticonsKeyboardToolsView alloc] initWithFrame:self.toolsViewFrame];
-    [toolsView setHideSendBut:self.hideSendBut];
+    [toolsView.spaceButton setHidden:self.hideSendBut];
     toolsView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     [toolsView setKeyboardSwitchButtonTappedBlock:^{
@@ -179,7 +177,8 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 - (void)setHideSendBut:(BOOL)hideSendBut
 {
     _hideSendBut = hideSendBut;
-    [self setNeedsLayout];
+//    [self setNeedsLayout];
+    [self.toolsView.spaceButton setHidden:hideSendBut];
 }
 
 - (void)setToolsViewHeight:(CGFloat)toolsViewHeight {
@@ -198,7 +197,7 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.toolsView.frame = self.toolsViewFrame;
-    [self.toolsView setHideSendBut:self.hideSendBut];
+//    [self.toolsView setHideSendBut:self.hideSendBut];
     [self.keyItemGroupViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.frame = self.keyItemGroupViewFrame;
     }];

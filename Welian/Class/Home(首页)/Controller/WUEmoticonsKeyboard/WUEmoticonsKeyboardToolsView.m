@@ -52,18 +52,18 @@
         [spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:spaceButton];
         self.spaceButton = spaceButton;
-        if (self.hideSendBut) {
-            [self.spaceButton setHidden:YES];
-        }
+//        if (self.hideSendBut) {
+//            [self.spaceButton setHidden:YES];
+//        }
     }
     return self;
 }
 
-- (void)setHideSendBut:(BOOL)hideSendBut
-{
-    _hideSendBut = hideSendBut;
-    [self setNeedsLayout];
-}
+//- (void)setHideSendBut:(BOOL)hideSendBut
+//{
+//    _hideSendBut = hideSendBut;
+//    [self setNeedsLayout];
+//}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -74,9 +74,9 @@
 //    self.keyboardSwitchButton.frame = (CGRect){CGPointZero,keyboardSwitchButtonSize};
     self.backspaceButton.frame = (CGRect){ {CGRectGetWidth(self.bounds) - backspaceButtonSize.width-20, 5} ,backspaceButtonSize};
     self.spaceButton.frame = self.segmentedControl.frame = CGRectMake(CGRectGetMinX(self.backspaceButton.frame)-70-20, 5, 70, CGRectGetHeight(self.bounds)-10);
-    if (self.hideSendBut) {
-        [self.spaceButton setHidden:YES];
-    }
+//    if (self.hideSendBut) {
+//        [self.spaceButton setHidden:YES];
+//    }
 
 }
 
