@@ -120,7 +120,6 @@ static NSString *frnewCellid = @"frnewCellid";
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FriendsNewCell *cell = [tableView dequeueReusableCellWithIdentifier:frnewCellid];
     NewFriendUser *newFM = _dataArray[indexPath.row];
