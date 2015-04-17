@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import "BasicViewController.h"
+//#import "BasicViewController.h"
 
-@interface BSearchFriendsController : BasicViewController
+@interface BSearchFriendsController : UIViewController
 
 @property (nonatomic, assign) BOOL isStart;
 

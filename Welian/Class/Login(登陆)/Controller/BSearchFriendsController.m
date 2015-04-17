@@ -38,10 +38,17 @@ static NSString *fridcellid = @"fridcellid";
 
 @implementation BSearchFriendsController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)dealloc
 {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    _tableView = nil;
+    _addressBookRefView = nil;
+    _friendsBook = nil;
+    _friendsWeixing = nil;
+    _notFriendsView = nil;
+    DLog(@"%@ ------  dealloc",[self class]);
+    [WLHUDView hiddenHud];
+    [WLHttpTool cancelAllRequestHttpTool];
+    DLog(@"--------------------------------------取消请求-------取消请求");
 }
 
 - (NotstringView *)notFriendsView
@@ -97,8 +104,11 @@ static NSString *fridcellid = @"fridcellid";
     return _tableView;
 }
 
-
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
