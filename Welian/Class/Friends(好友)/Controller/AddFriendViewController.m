@@ -160,7 +160,7 @@
     }
     
     cell.indexPath = indexPath;
-    if (_selectIndex == 1 && indexPath.section == 0) {
+    if (_selectIndex == 1 && indexPath.section == 0 && indexPath.row == 0) {
         //邀请好友
         cell.dicData = @{@"logo":@"me_myfriend_add_wechat_logo",@"name":@"邀请微信好友"};
     }else{
@@ -282,6 +282,7 @@
 //    [WLHttpTool cancelAllRequestHttpTool];
     self.selectIndex = sender.selectedSegmentIndex;
 //    [self changeDataWithIndex:_selectIndex];
+    self.datasource = nil;
     //重新开始刷新
     [self.tableView.header beginRefreshing];
 }
