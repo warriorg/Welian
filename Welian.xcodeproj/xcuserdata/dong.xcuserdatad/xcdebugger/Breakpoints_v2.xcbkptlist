@@ -19,21 +19,5 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Find(&#x53d1;&#x73b0;)/Controller/ProjectDetailsViewController.m"
-            timestampString = "450791974.746979"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "688"
-            endingLineNumber = "688"
-            landmarkName = "-shareBtnClicked"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

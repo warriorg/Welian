@@ -94,7 +94,7 @@
 {
     if (isHide) {
       WUEmoticonsKeyboard *keyboard = [self sharedEmoticonsKeyboard];
-        [keyboard setHideSendBut:isHide];
+        [keyboard.toolsView.spaceButton setHidden:isHide];
     }
 }
 

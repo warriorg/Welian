@@ -288,6 +288,11 @@ static NSString *financingCellid = @"financingCellid";
                     [weakSelf.tableView reloadData];
                 }
             }];
+            [cell.textField setBk_shouldChangeCharactersInRangeWithReplacementStringBlock:^BOOL(UITextField *textField, NSRange range, NSString *textStr) {
+                
+                if (range.location>=8) return NO;
+                return YES;
+            }];
            UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"万(RMB)　"];
             [rightL sizeToFit];
@@ -303,6 +308,11 @@ static NSString *financingCellid = @"financingCellid";
                 if (weakSelf.projectModel.amount.integerValue&&weakSelf.projectModel.share) {
                     [weakSelf.tableView reloadData];
                 }
+            }];
+            [cell.textField setBk_shouldChangeCharactersInRangeWithReplacementStringBlock:^BOOL(UITextField *textField, NSRange range, NSString *textStr) {
+                
+                if (range.location>=8) return NO;
+                return YES;
             }];
             UILabel *rightL = (UILabel *)cell.textField.rightView;
             [rightL setText:@"%(0~100)　"];
