@@ -482,8 +482,9 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     CommentCellFrame *selecCommFrame = _datasource[indexPath.row];
     
-    UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    
     if (selecCommFrame.commentM.user.uid.integerValue == [LogInUser getCurrentLoginUser].uid.integerValue) {
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
             [WLHttpTool deleteProjectCommentParameterDic:@{@"pcid":selecCommFrame.commentM.fcid}
                                                  success:^(id JSON) {
@@ -499,14 +500,16 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                      [UIAlertView showWithTitle:@"系统提示" message:@"删除失败，请重试！"];
                                                  }];
         }];
+        [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+        [sheet showInView:self.view];
     }else{
-        [sheet bk_addButtonWithTitle:@"回复" handler:^{
-            self.selecCommFrame = selecCommFrame;
-            [self.messageView startCompile:_selecCommFrame.commentM.user];
-        }];
+//        [sheet bk_addButtonWithTitle:@"回复" handler:^{
+//            
+//        }];
+        //回复别人的，直接回复
+        self.selecCommFrame = selecCommFrame;
+        [self.messageView startCompile:_selecCommFrame.commentM.user];
     }
-    [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
-    [sheet showInView:self.view];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -1227,6 +1230,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     //处理
     _selectIndex = nil;
+    //清空输入框内容
+    _messageView.commentTextView.internalTextView.text = @"";
     
     //取消手势
     [_tableView removeGestureRecognizer:self.tapGesture];

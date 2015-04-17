@@ -20,7 +20,7 @@
     NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
     NSString *folder = [[ResManager userResourcePath] stringByAppendingPathComponent:toFolder];
     if (![[NSFileManager defaultManager] fileExistsAtPath:folder]) {
-        NSLog(@"创建home cover 目录!");
+        DLog(@"创建home cover 目录!");
         [[NSFileManager defaultManager] createDirectoryAtPath:folder
                                   withIntermediateDirectories:YES
                                                    attributes:nil

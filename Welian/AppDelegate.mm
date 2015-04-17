@@ -89,7 +89,7 @@ BMKMapManager* _mapManager;
             BOOL success = [fileManager copyItemAtPath:defaultStorePath toPath:[storeURL path] error:&error];
             if (!success)
             {
-                NSLog(@"Failed to install default recipe store");
+                DLog(@"Failed to install default recipe store");
             }
         }
     }

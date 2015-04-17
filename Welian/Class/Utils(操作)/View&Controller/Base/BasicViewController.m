@@ -93,13 +93,8 @@
         if (self.navigationController.viewControllers.count == 1) {
             [self.navigationController setNavigationBarHidden:YES animated:YES];
         }else{
-            if (_isJoindThisVC) {
-                self.navigationController.navigationBarHidden = NO;
-                self.navigationController.navigationBar.hidden = NO;
-            }else{
-                self.navigationController.navigationBarHidden = NO;
-                self.navigationController.navigationBar.hidden = YES;
-            }
+            self.navigationController.navigationBarHidden = NO;
+            self.navigationController.navigationBar.hidden = YES;
         }
     }else{
         self.navigationController.navigationBarHidden = NO;

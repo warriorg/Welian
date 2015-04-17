@@ -215,7 +215,7 @@
 
 - (void)m80AttributedLabel:(M80AttributedLabel *)label clickedOnLink:(id)linkData
 {
-    NSLog(@"fasdfa");
+    DLog(@"fasdfa");
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

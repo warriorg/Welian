@@ -158,7 +158,7 @@
                                
                                if (result)
                                {
-                                   NSLog(@"sourceData = %@",[userInfo sourceData]);
+                                   DLog(@"sourceData = %@",[userInfo sourceData]);
                                    NSDictionary *sourceDic = [userInfo sourceData];
                                    if (!sourceDic) return;
                                    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
