@@ -296,9 +296,12 @@
     //刷新动画
 //    [self refreshAnimation];
     //默认加载的数据
-    [self reloadUIData];
+//    [self reloadUIData];
     //调用接口
     if (_selectIndex == 0) {
+        self.datasource = [NeedAddUser allNeedAddUsersWithType:1];
+        [self.tableView reloadData];
+        
         //通讯录
         ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
         dispatch_semaphore_t sema=dispatch_semaphore_create(0);
@@ -322,6 +325,10 @@
         });
     }else{
         //获取微信好友
+        //微信
+        self.datasource = [NeedAddUser allNeedAddUsersWithType:2];
+        [self.tableView reloadData];
+        
         [self getWxFriends];
     }
 }
@@ -496,17 +503,22 @@
                                      NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
                                      
                                      //循环，删除本地数据库多余的缓存数据
-                                     for (int i = 0; i < [wxAddUser count]; i++){
-                                         NeedAddUser *addUser = wxAddUser[i];
-                                         //判断返回的数组是否包含
-                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
-                                             //判断是否包含对应的
-                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
-                                         }];
-                                         if(!isHave){
+                                     if (wxAddUser.count > 0) {
+                                         for (int i = 0; i < [wxAddUser count]; i++){
+                                             NeedAddUser *addUser = wxAddUser[i];
+                                             //判断返回的数组是否包含
+                                             //                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
+                                             //                                             //判断是否包含对应的
+                                             //                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
+                                             //                                         }];
+                                             //                                         if(!isHave){
+                                             //                                             //删除
+                                             //                                             [addUser MR_deleteEntity];
+                                             //                                         }
                                              //删除
                                              [addUser MR_deleteEntity];
                                          }
+                                         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                                      }
                                      
                                      //保存到数据库
