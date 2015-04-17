@@ -290,6 +290,10 @@
     _operateBtn.top = kMarginLeft;
     
     [_nameLabel sizeToFit];
+    CGFloat nameWidth = self.width - kLogoWidth - kMarginLeft * 3.f - (_operateBtn.hidden ? 0 : kButtonWidth);
+    if (_nameLabel.width > nameWidth) {
+        _nameLabel.width = nameWidth;
+    }
     _nameLabel.left = _logoImageView.right + kMarginLeft;
     if (_messageLabel.text.length == 0) {
         _nameLabel.centerY = self.height / 2.f;
@@ -330,6 +334,7 @@
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font = [UIFont systemFontOfSize:16.f];
+//    nameLabel.numberOfLines = 0.f;
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -379,7 +384,7 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - kLogoWidth - kButtonWidth - kMarginLeft * 4.f;
     //计算第一个label的高度
-    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
+    CGSize size1 = CGSizeMake(maxWidth, 20.f);//[name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
     //计算第二个label的高度
     CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
     

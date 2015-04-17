@@ -182,7 +182,8 @@ static NSString *fridcellid = @"fridcellid";
     
     [self scrollViewDidScroll:_tableView];
     
-    [self initUserInfo];
+    //取sqlite数据库用户信息
+    [self updateLocalSqlUserInfo];
     
     //开启iOS7的滑动返回效果
 //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -1074,7 +1075,7 @@ static NSString *fridcellid = @"fridcellid";
 //操作按钮点击
 - (void)operateBtnClicked
 {
-    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
+    /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */ ////操作类型0：添加 1：接受  2:已添加 3：待验证   10:隐藏操作按钮
     if (_baseUserModel.friendship.integerValue == 1 || _operateType.integerValue == 2) {
         //好友
         [self chatBtnClicked:nil];
@@ -1140,26 +1141,36 @@ static NSString *fridcellid = @"fridcellid";
 //进入聊天页面
 - (void)chatBtnClicked:(UIButton *)sender
 {
-    UIViewController *rootVC = [self.navigationController.viewControllers firstObject];
-    if ([rootVC isKindOfClass:[MessagesViewController class]]) {
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"CurrentChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
-        
+    ////操作类型0：添加 1：接受  2:已添加 3：待验证   10:隐藏操作按钮
+    //已经是好友，雷达页面  不用进入消息页面  ////操作类型0：添加 1：接受  2:已添加 3：待验证   10:隐藏操作按钮
+    if(_baseUserModel.friendship.integerValue == 1 && _hidRightBtn){
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
         MyFriendUser *user = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
         ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
         [self.navigationController pushViewController:chatVC animated:YES];
-        
-        //替换中间的内容
-        NSMutableArray *contros = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-        [contros removeObjectsInRange:NSMakeRange(1, contros.count - 1) ];
-        [contros addObject:chatVC];
-        
-        [self.navigationController setViewControllers:contros animated:YES];
     }else{
-        //进入聊天页面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        UIViewController *rootVC = [self.navigationController.viewControllers firstObject];
+        //当前已经在消息页面
+        if ([rootVC isKindOfClass:[MessagesViewController class]]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CurrentChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+            
+            LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+            MyFriendUser *user = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithUser:user];
+            [self.navigationController pushViewController:chatVC animated:YES];
+            
+            //替换中间的内容
+            NSMutableArray *contros = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+            [contros removeObjectsInRange:NSMakeRange(1, contros.count - 1) ];
+            [contros addObject:chatVC];
+            
+            [self.navigationController setViewControllers:contros animated:YES];
+        }else{
+            //进入聊天页面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -1187,16 +1198,23 @@ static NSString *fridcellid = @"fridcellid";
 - (void)initUserInfo
 {
     //取sqlite数据库用户信息
-    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:_baseUserModel.uid.stringValue fromTable:KWLUserInfoTableName];
-    if (item) {
-        [self getUserInfoWith:item.itemObject];
-    }
+    [self updateLocalSqlUserInfo];
     if (_baseUserModel.uid) {
         [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
             [self getUserInfoWith:JSON];
         } fail:^(NSError *error) {
             _wlNoteInfoView.loadFailed = YES;
         }];
+    }
+}
+
+//获取本地数据库用户信息
+- (void)updateLocalSqlUserInfo
+{
+    //取sqlite数据库用户信息
+    YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:_baseUserModel.uid.stringValue fromTable:KWLUserInfoTableName];
+    if (item) {
+        [self getUserInfoWith:item.itemObject];
     }
 }
 

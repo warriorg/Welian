@@ -174,9 +174,10 @@
     [_phoneRZImageView sizeToFit];
     
     [_nameLabel sizeToFit];
-    if(_nameLabel.width > self.width - _logoImageView.right - kMarginEdge * 2.f - kMarginLeft - _phoneRZImageView.width)
+    CGFloat nameWith = self.width - _logoImageView.right - kMarginEdge * 2.f - kMarginLeft - _phoneRZImageView.width - (_operateBtn.hidden ? 0 : kButtonWidth + kMarginEdge);
+    if(_nameLabel.width > nameWith)
     {
-        _nameLabel.width = self.width - _logoImageView.right - kMarginEdge * 2.f - kMarginLeft - _phoneRZImageView.width;
+        _nameLabel.width = nameWith;
     }
     _nameLabel.left = _logoImageView.right + kMarginEdge;
     _nameLabel.top = _logoImageView.top;
@@ -239,6 +240,7 @@
     nameLabel.text = @"";
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
+//    [nameLabel setDebug:YES];
     
     //公司信息
     UILabel *companyLabel = [[UILabel alloc] init];
