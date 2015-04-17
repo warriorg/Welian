@@ -30,7 +30,7 @@
 {
     _status = status;
     _cellHigh = 60;
-    _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth];
+    _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth withShowMoreBut:NO];
     [_contentFrame setStatus:status];
     _cellHigh += _contentFrame.cellHeight;
     

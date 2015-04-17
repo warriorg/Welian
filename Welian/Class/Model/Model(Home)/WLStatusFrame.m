@@ -41,7 +41,7 @@
     if (status.type==1||status.type==2||status.type==6||status.type==4) {
         _cellHigh = 90;
     }
-    _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth];
+    _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth withShowMoreBut:YES];
     [_contentFrame setStatus:status];
     _cellHigh += _contentFrame.cellHeight;
     

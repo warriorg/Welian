@@ -30,6 +30,8 @@
 {
     /** 内容 */
     MLEmojiLabel *_contentLabel;
+    // * 查看全部 */
+    UIButton *_moreContentBut;
     /** 配图 */
     WLPhotoListView *_photoListView;
     // 项目和活动
@@ -69,6 +71,15 @@
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
     [recognizer setMinimumPressDuration:0.4f];
     [_contentLabel addGestureRecognizer:recognizer];
+    
+    // 查看全部按钮
+    _moreContentBut = [[UIButton alloc] init];
+    [_moreContentBut setTitle:@"查看全部>" forState:UIControlStateNormal];
+    [_moreContentBut setTitleColor:KBasesColor forState:UIControlStateNormal];
+    _moreContentBut.titleLabel.font = WLFONT(15);
+    _moreContentBut.backgroundColor = [UIColor clearColor];
+    _moreContentBut.userInteractionEnabled = NO;
+    [self addSubview:_moreContentBut];
     
     // 6.配图
     _photoListView = [[WLPhotoListView alloc] init];
@@ -149,6 +160,7 @@
     if (status.type==6||status.type==5||status.type==12) {
         _contentLabel.hidden = YES;
         _photoListView.hidden = YES;
+        _moreContentBut.hidden = YES;
     }else{
         _contentLabel.hidden = NO;
         // 3.正文
@@ -156,7 +168,8 @@
         
         _contentLabel.frame = textFrame;
         _contentLabel.text = status.content;
-        
+        _moreContentBut.frame = contenFrame.moreButFrame;
+        _moreContentBut.hidden = !contenFrame.isShowMoreBut;
         // 4.配图
         if (status.photos.count) {
             _photoListView.hidden = NO;

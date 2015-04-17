@@ -67,18 +67,34 @@
 - (void)saveAndLogin
 {
     NSString *mima = self.pwdString;
+    
     if (!_nameStr.length) {
-        [WLHUDView showErrorHUD:@"姓名不能为空"];
+        [WLHUDView showErrorHUD:@"请填写你的姓名"];
         return;
     }
+    if (_nameStr.length<2||_nameStr.length>20) {
+        [WLHUDView showErrorHUD:@"姓名长度为2-20个字"];
+        return;
+    }
+    
     if (!_danweiStr.length) {
-        [WLHUDView showErrorHUD:@"单位不能为空"];
+        [WLHUDView showErrorHUD:@"请填写你所在的公司"];
         return;
     }
+    if (_danweiStr.length<2||_danweiStr.length>30) {
+        [WLHUDView showErrorHUD:@"公司长度为2-30个字"];
+        return;
+    }
+    
     if (!_zhiwuStr.length) {
-        [WLHUDView showErrorHUD:@"职务不能为空"];
+        [WLHUDView showErrorHUD:@"请填写你的职位"];
         return;
     }
+    if (_zhiwuStr.length<2 ||_zhiwuStr.length>30) {
+        [WLHUDView showErrorHUD:@"职位长度为2-30个字"];
+        return;
+    }
+    
     if (!avatar) {
         [WLHUDView showErrorHUD:@"头像不能为空"];
         return;

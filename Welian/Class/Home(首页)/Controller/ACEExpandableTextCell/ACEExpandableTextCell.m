@@ -51,7 +51,7 @@
         
         _textView = [[SZTextView alloc] initWithFrame:cellFrame];
         _textView.delegate = self;
-        
+        _textView.layoutManager.allowsNonContiguousLayout = NO;
         _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _textView.backgroundColor = [UIColor clearColor];
         _textView.font = [UIFont systemFontOfSize:15.0f];

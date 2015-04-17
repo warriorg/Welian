@@ -14,18 +14,25 @@
 @interface WLContentCellFrame()
 {
     CGFloat _cellWidth;
+    BOOL _showMoreBut;
 }
 @end
 
 @implementation WLContentCellFrame
 
-- (instancetype)initWithWidth:(CGFloat)width
+- (instancetype)initWithWidth:(CGFloat)width withShowMoreBut:(BOOL)showMoreBut
 {
     self = [super init];
     if (self) {
         _cellWidth = width;
+        _showMoreBut = showMoreBut;
     }
     return self;
+}
+
+- (void)setIsShowMoreBut:(BOOL)isShowMoreBut
+{
+    _isShowMoreBut = isShowMoreBut;
 }
 
 /**
@@ -52,17 +59,29 @@
             contLabel.font = WLFONT(15);
             
             CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - IWCellBorderWidth];
-            if (sizelabel.height>140) {
-                
-            }
+            
             _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, sizelabel.height+5);
+            if (_showMoreBut) {
+                if (sizelabel.height >= 330-3) {
+                    _contentLabelF = CGRectMake(contentX, contentY, sizelabel.width, 230+3);
+                    _isShowMoreBut = _showMoreBut;
+                    _moreButFrame = CGRectMake(contentX, CGRectGetMaxY(_contentLabelF), 70, 25);
+                }else{
+                    _isShowMoreBut = NO;
+                    _moreButFrame = CGRectMake(contentX, CGRectGetMaxY(_contentLabelF), 0, 0);
+                }
+            }else{
+                   _moreButFrame = CGRectMake(contentX, CGRectGetMaxY(_contentLabelF), 0, 0);
+            }
+            
         }else{
             _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
+            _moreButFrame = _contentLabelF;
         }
         if (status.photos.count) {
             // 4.如果有配图
             CGFloat photoListX = contentX;
-            CGFloat photoListY = CGRectGetMaxY(_contentLabelF) + 5;
+            CGFloat photoListY = CGRectGetMaxY(_moreButFrame) + 5;
             
             // 根据图片数量计算相册的尺寸
             CGSize photoListSize = [WLPhotoListView photoListSizeWithCount:status.photos needAutoSize:NO];
@@ -75,7 +94,7 @@
     if (status.photos.count) { // 有配图
         _cellHeight = CGRectGetMaxY(_photoListViewF);
     } else { // 只有文字
-        _cellHeight = CGRectGetMaxY(_contentLabelF);
+        _cellHeight = CGRectGetMaxY(_moreButFrame);
     }
     
     // 活动和项目高度

@@ -57,7 +57,7 @@
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
         [_commentTextView.layer setBorderColor:[WLLineColor CGColor]];
-        [_commentTextView setFont:[UIFont systemFontOfSize:17]];
+        [_commentTextView setFont:[UIFont systemFontOfSize:15]];
         [_commentTextView setReturnKeyType:UIReturnKeySend];
         [_commentTextView setPlaceholder:@"写评论..."];
         [_commentTextView setDelegate:self];
@@ -78,39 +78,6 @@
     return self;
 }
 
-- (void)textviewChangeHigh:(CGSize)size withTextView:(UITextView *)textView
-{
-//    size.height -= 2;
-//    if ( size.height >= 58 ) {
-//        
-//        size.height = 58;
-//    }
-//    else if ( size.height <= 35 ) {
-//        
-//        size.height = 35;
-//    }
-//    
-//    if ( size.height != textView.frame.size.height ) {
-//        
-//        CGFloat span = size.height - textView.frame.size.height;
-//        
-//        CGRect frame = self.frame;
-//        frame.origin.y -= span;
-//        frame.size.height += span;
-//        self.frame = frame;
-//        
-//        CGFloat centerY = frame.size.height / 2;
-//        
-//        frame = textView.frame;
-//        frame.size = size;
-//        textView.frame = frame;
-//        
-//        CGPoint center = textView.center;
-//        center.y = centerY;
-//        textView.center = center;
-//    }
-
-}
 
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
 {
@@ -120,14 +87,7 @@
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
     float bottom = self.bottom;
-    if ([growingTextView.text length] == 0)
-    {
-        [self setHeight:height + 13];
-    }
-    else
-    {
-        [self setHeight:height + 13];
-    }
+    [self setHeight:height + 13];
     [self setBottom:bottom];
     if (self.textHighBlock) {
         self.textHighBlock(self.height);
