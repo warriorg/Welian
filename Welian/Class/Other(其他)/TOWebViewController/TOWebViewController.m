@@ -508,6 +508,13 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.hidden = NO;
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];

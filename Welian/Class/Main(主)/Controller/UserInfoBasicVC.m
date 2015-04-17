@@ -55,6 +55,14 @@ static NSString *staurCellid = @"staurCellid";
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.hidden = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (UIView*)askView

@@ -47,6 +47,7 @@
     self.keyboardType = UIKeyboardTypeDefault;
     self.returnKeyType = UIReturnKeyDefault;
     self.textAlignment = NSTextAlignmentLeft;
+//    self.layoutManager.allowsNonContiguousLayout = YES;//设置放置输入的时候输入框跳动
 }
 
 #pragma mark - Notifications

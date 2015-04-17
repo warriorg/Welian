@@ -85,6 +85,7 @@
         
         self.selectType= 0;
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
+        self.showCustomNavHeader = YES;//隐藏头部
     }
     return self;
 }
@@ -193,7 +194,9 @@
             HomeMessage *messagedata = messageFrameModel.messageDataM;
             //更新查看状态
             [messagedata updateHomeMessageIsLook];
-            [self selectIndexChanged:1];
+//            [self selectIndexChanged:1];
+            //刷新当前行为已读
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             if ([messagedata.type isEqualToString:@"projectComment"]||[messagedata.type isEqualToString:@"projectCommentZan"]) {
                 //进入项目详情
                 //查询数据库是否存在
@@ -363,6 +366,7 @@
         case 1:
         {
             //更新角标
+            self.isLookedMessage = YES;
             loginUser.homemessagebadge = @(0);
             //更新角标
             [self currentBadgeChanged];
@@ -372,7 +376,6 @@
         case 2:
         {
             //设置角标改变
-            self.isLookedMessage = YES;
             [self setNewUserBadgeChange];
             [self loadNewFriendData];
         }
