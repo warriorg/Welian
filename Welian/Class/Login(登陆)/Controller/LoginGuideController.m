@@ -53,7 +53,7 @@
         PageY += 40;
     }
     for (NSInteger i = 1; i <= 4; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"login_guide%d.png",i]];
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"login_guide%ld.png",(long)i]];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         // 如果不指定UIImaView的大小，会默认使用image的大小
         imageView.frame = CGRectMake((SuperSize.width * (i-1) + ((SuperSize.width-image.size.width)*0.5)), imageY, image.size.width, image.size.height);

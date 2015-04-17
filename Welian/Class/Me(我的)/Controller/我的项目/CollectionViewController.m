@@ -28,7 +28,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
     [_alldataArray removeAllObjects];
     NSMutableArray *allArray = [NSMutableArray arrayWithArray:dataarray];
 //    [allArray insertObject:@{@"id":@(-1),@"name":@"不限"} atIndex:0];
-    BOOL isAll = NO;
+//    BOOL isAll = NO;
     for (NSDictionary *indDic in allArray) {
         IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
         [indust setIndustryid:[indDic objectForKey:@"id"]];

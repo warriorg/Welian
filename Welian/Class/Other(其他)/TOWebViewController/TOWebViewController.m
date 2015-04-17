@@ -1830,4 +1830,9 @@ static const float kAfterInteractiveMaxProgressValue    = 0.9f;
     [UIViewController attemptRotationToDeviceOrientation];
 }
 
+- (void)dealloc
+{
+    DLog(@"------------网页释放");
+}
+
 @end

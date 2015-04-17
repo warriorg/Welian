@@ -78,6 +78,7 @@ static NSString *financingCellid = @"financingCellid";
         if (!isEdit) {
             self.isFinancing = 0;
             CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
+            [headerV.imageBut setImage:[UIImage imageNamed:@"discovery_buzhou_step_three640"] forState:UIControlStateNormal];
             [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
             [self.tableView setTableHeaderView:headerV];
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishPorject)];
@@ -153,8 +154,8 @@ static NSString *financingCellid = @"financingCellid";
         }
     }else if (section==1) {
          NSInteger a = _projectModel.amount.integerValue/_projectModel.share.integerValue*100;
-        NSString *headStr = [NSString stringWithFormat:@"投后估值为%d万",a];
-        NSInteger  length = [[NSString stringWithFormat:@"%d",a] length];
+        NSString *headStr = [NSString stringWithFormat:@"投后估值为%ld万",(long)a];
+        NSInteger  length = [[NSString stringWithFormat:@"%ld",(long)a] length];
         
         NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
         NSMutableAttributedString *attrstr = [[NSMutableAttributedString alloc] initWithString:headStr];
@@ -336,7 +337,7 @@ static NSString *financingCellid = @"financingCellid";
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [_financingcell.lentLabel setText:[NSString stringWithFormat:@"%d",textView.text.length]];
+    [_financingcell.lentLabel setText:[NSString stringWithFormat:@"%lu",(unsigned long)textView.text.length]];
     if (textView.text.length<=200) {
         [_financingcell.lentLabel setTextColor:WLRGB(125, 125, 125)];
     }else{

@@ -107,8 +107,7 @@
         [self addSubview:_photoLoadingView];
         
         __weak MJPhotoView *photoView = self;
-        __weak MJPhotoLoadingView *loading = _photoLoadingView;
-        
+//        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         
         [_imageView sd_setImageWithPreviousCachedImageWithURL:_photo.url andPlaceholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             if (receivedSize > kMinProgress) {

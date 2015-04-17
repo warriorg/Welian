@@ -69,6 +69,7 @@ static NSString *fridcellid = @"fridcellid";
             [button setTitle:@"保存" forState:UIControlStateNormal];
         }else{
             CreateHeaderView *headerV = [[[NSBundle mainBundle]loadNibNamed:@"CreateHeaderView" owner:nil options:nil] firstObject];
+            [headerV.imageBut setImage:[UIImage imageNamed:@"discovery_buzhou_step_two640"] forState:UIControlStateNormal];
             [headerV setFrame:CGRectMake(0, 0, SuperSize.width, 70)];
             [self.tableView setTableHeaderView:headerV];
             [button setTitle:@"下一步" forState:UIControlStateNormal];

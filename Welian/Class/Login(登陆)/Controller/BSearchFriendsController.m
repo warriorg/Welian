@@ -300,17 +300,17 @@ static NSString *fridcellid = @"fridcellid";
     NSInteger  length = 0;
     if (section==0) {
         if (self.friendsBook.count) {
-           headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个通讯录好友",self.friendsBook.count];
-            length = [[NSString stringWithFormat:@"%d",self.friendsBook.count] length];
+           headStr =  [NSString stringWithFormat:@"为你搜索到 %lu 个通讯录好友",(unsigned long)self.friendsBook.count];
+            length = [[NSString stringWithFormat:@"%lu",(unsigned long)self.friendsBook.count] length];
             
         }else if (self.friendsWeixing.count){
-           headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个微信好友",self.friendsWeixing.count];
-            length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
+           headStr =  [NSString stringWithFormat:@"为你搜索到 %lu 个微信好友",(unsigned long)self.friendsWeixing.count];
+            length = [[NSString stringWithFormat:@"%lu",(unsigned long)self.friendsWeixing.count] length];
         }
         
     }else if (section==1){
-        headStr =  [NSString stringWithFormat:@"为你搜索到 %d 个微信好友",self.friendsWeixing.count];
-        length = [[NSString stringWithFormat:@"%d",self.friendsWeixing.count] length];
+        headStr =  [NSString stringWithFormat:@"为你搜索到 %lu 个微信好友",(unsigned long)self.friendsWeixing.count];
+        length = [[NSString stringWithFormat:@"%lu",(unsigned long)self.friendsWeixing.count] length];
     }
     
     NSDictionary *attrsDic = @{NSForegroundColorAttributeName: WLRGB(52, 116, 186),NSFontAttributeName:WLFONTBLOD(17)};
