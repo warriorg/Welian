@@ -40,7 +40,7 @@
         [_footButton setTitleColor:[UIColor colorWithWhite:0.7 alpha:1] forState:UIControlStateNormal];
         // tableFooterView的宽度是不需要设置。默认就是整个tableView的宽度
         _footButton.bounds = CGRectMake(0, 0, 0, 44);
-        [_footButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_footButton.titleLabel setFont:kNormal14Font];
         [_footButton setTitle:@"查看更早的信息" forState:UIControlStateNormal];
         [_footButton addTarget:self action:@selector(loadAllMessgeData:) forControlEvents:UIControlEventTouchUpInside];
     }

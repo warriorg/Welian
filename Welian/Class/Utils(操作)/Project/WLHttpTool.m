@@ -127,7 +127,7 @@
 {
     NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
-        [UserDefaults removeObjectForKey:@"sid"];
+        [UserDefaults removeObjectForKey:kSidkey];
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);
@@ -937,8 +937,8 @@
         NSMutableDictionary *parameterDic = [NSMutableDictionary dictionary];
         [parameterDic setObject:KPlatformType forKey:@"platform"];
         
-        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-            [parameterDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+            [parameterDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
         }
         NSDictionary *dic = @{@"type":@"updateClient",@"data":parameterDic};
         

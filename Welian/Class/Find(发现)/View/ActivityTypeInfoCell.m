@@ -47,9 +47,9 @@
     //设置选择效果
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.textLabel.font = [UIFont systemFontOfSize:16.f];
+    self.textLabel.font = kNormal16Font;
     self.detailTextLabel.textColor = RGB(79.f, 192.f, 232.f);
-    self.detailTextLabel.font = [UIFont systemFontOfSize:12.f];
+    self.detailTextLabel.font = kNormal12Font;
 }
 
 @end

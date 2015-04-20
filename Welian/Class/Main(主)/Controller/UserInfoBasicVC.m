@@ -121,7 +121,7 @@ static NSString *staurCellid = @"staurCellid";
 - (void)chatBtnClicked:(UIButton *)sender
 {
     //进入聊天页面
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_userMode.uid.stringValue}];
+    [KNSNotification postNotificationName:kChatFromUserInfo object:self userInfo:@{@"uid":_userMode.uid.stringValue}];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -209,8 +209,8 @@ static NSString *staurCellid = @"staurCellid";
         
         [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
         //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        [KNSNotification postNotificationName:kChatUserChanged object:nil];
+        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
         [self.navigationController popViewControllerAnimated:YES];
         [WLHUDView showSuccessHUD:@"删除成功！"];
     } fail:^(NSError *error) {

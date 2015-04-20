@@ -547,7 +547,7 @@
                 geolocationsLabel.lineBreakMode = NSLineBreakByTruncatingTail;
                 geolocationsLabel.textColor = [UIColor whiteColor];
                 geolocationsLabel.backgroundColor = [UIColor clearColor];
-                geolocationsLabel.font = [UIFont systemFontOfSize:12];
+                geolocationsLabel.font = kNormal12Font;
                 [bubblePhotoImageView addSubview:geolocationsLabel];
                 _geolocationsLabel = geolocationsLabel;
             }
@@ -558,7 +558,7 @@
             UILabel *voiceDurationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 30, 30)];
             voiceDurationLabel.textColor = [UIColor lightGrayColor];
             voiceDurationLabel.backgroundColor = [UIColor clearColor];
-            voiceDurationLabel.font = [UIFont systemFontOfSize:13.f];
+            voiceDurationLabel.font = kNormal13Font;
             voiceDurationLabel.textAlignment = NSTextAlignmentRight;
             voiceDurationLabel.hidden = YES;
             [self addSubview:voiceDurationLabel];

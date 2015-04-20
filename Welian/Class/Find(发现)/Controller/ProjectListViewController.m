@@ -118,7 +118,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = RGB(125.f, 125.f, 125.f);
-    titleLabel.font = [UIFont systemFontOfSize:14.f];
+    titleLabel.font = kNormal14Font;
     titleLabel.text = titile;
     [titleLabel sizeToFit];
     titleLabel.left = 15.f;

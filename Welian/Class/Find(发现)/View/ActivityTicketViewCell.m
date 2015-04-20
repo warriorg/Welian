@@ -168,7 +168,7 @@
     //购买数量
     UILabel *buyNumLabel = [[UILabel alloc] init];
     buyNumLabel.textColor = kTitleNormalTextColor;
-    buyNumLabel.font = [UIFont systemFontOfSize:15.f];
+    buyNumLabel.font = kNormal15Font;
     buyNumLabel.textAlignment = NSTextAlignmentCenter;
     [operateView addSubview:buyNumLabel];
     self.buyNumLabel = buyNumLabel;
@@ -177,7 +177,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     moneyLabel.backgroundColor = [UIColor clearColor];
     moneyLabel.textColor = KBlueTextColor;
-    moneyLabel.font = [UIFont boldSystemFontOfSize:19.f];
+    moneyLabel.font = kNormalBlod19Font;
     moneyLabel.text = @"500元";
     [moneyLabel setAttributedText:[self getAttributedInfoString:moneyLabel.text searchStr:@"元"]];
     [self.contentView addSubview:moneyLabel];
@@ -187,7 +187,7 @@
     UILabel *ticketNumLabel = [[UILabel alloc] init];
     ticketNumLabel.backgroundColor = [UIColor clearColor];
     ticketNumLabel.textColor = kNormalTextColor;
-    ticketNumLabel.font = [UIFont systemFontOfSize:12.f];
+    ticketNumLabel.font = kNormal12Font;
     ticketNumLabel.text = @"剩余32张";
     [self.contentView addSubview:ticketNumLabel];
     self.ticketNumLabel = ticketNumLabel;
@@ -196,7 +196,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = kTitleNormalTextColor;
-    nameLabel.font = [UIFont boldSystemFontOfSize:14.f];
+    nameLabel.font = kNormalBlod14Font;
     nameLabel.numberOfLines = 0;
     nameLabel.text = @"VIP门票";
     [self.contentView addSubview:nameLabel];
@@ -206,7 +206,7 @@
     UILabel *infoLabel = [[UILabel alloc] init];
     infoLabel.backgroundColor = [UIColor clearColor];
     infoLabel.textColor = kNormalTextColor;
-    infoLabel.font = [UIFont systemFontOfSize:12.f];
+    infoLabel.font = kNormal12Font;
     infoLabel.text = @"参加贵宾晚宴";
     infoLabel.numberOfLines = 0;
     [self.contentView addSubview:infoLabel];
@@ -216,7 +216,7 @@
     UILabel *statusLabel = [[UILabel alloc] init];
     statusLabel.backgroundColor = [UIColor clearColor];
     statusLabel.textColor = kNormalTextColor;
-    statusLabel.font = [UIFont systemFontOfSize:14.f];
+    statusLabel.font = kNormal14Font;
     statusLabel.text = @"已售罄";
     [self.contentView addSubview:statusLabel];
     self.statusLabel = statusLabel;
@@ -258,8 +258,8 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width / 2.f - kMarginLeft * 2.f;
     //计算第一个label的高度
-    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal14Font];
+    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal12Font];
     
     float height = (name.length > 0 ? size1.height : 0) + (detailInfo.length > 0 ? size2.height + kMarginInEdge : 0) + kMarginTop * 2.f;
     if (height > 60.f) {

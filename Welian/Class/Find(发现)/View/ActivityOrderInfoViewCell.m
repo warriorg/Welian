@@ -41,7 +41,7 @@
     [super didChangeValueForKey:@"iActivityTicket"];
     _nameLabel.text = _iActivityTicket.name;
     _priceLabel.text = [NSString stringWithFormat:@"￥%@元",_iActivityTicket.price];
-    [_priceLabel setAttributedText:[NSObject getAttributedInfoString:_priceLabel.text searchStr:[NSString stringWithFormat:@"￥%@",_iActivityTicket.price] color:KBlueTextColor font:[UIFont boldSystemFontOfSize:14.f]]];
+    [_priceLabel setAttributedText:[NSObject getAttributedInfoString:_priceLabel.text searchStr:[NSString stringWithFormat:@"￥%@",_iActivityTicket.price] color:KBlueTextColor font:kNormalBlod14Font]];
     _numLabel.text = [NSString stringWithFormat:@"x %@",_iActivityTicket.buyCount];
 }
 
@@ -70,7 +70,7 @@
     //门票名称
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.font = [UIFont systemFontOfSize:14.f];
+    nameLabel.font = kNormal14Font;
     nameLabel.textColor = kTitleNormalTextColor;
     nameLabel.text = @"VIP门票";
     [self.contentView addSubview:nameLabel];
@@ -79,7 +79,7 @@
     //门票数量
     UILabel *numLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     numLabel.backgroundColor = [UIColor clearColor];
-    numLabel.font = [UIFont systemFontOfSize:14.f];
+    numLabel.font = kNormal14Font;
     numLabel.textColor = kTitleNormalTextColor;
     numLabel.text = @"x 2";
     [self.contentView addSubview:numLabel];
@@ -88,10 +88,10 @@
     //门票价格
     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     priceLabel.backgroundColor = [UIColor clearColor];
-    priceLabel.font = [UIFont systemFontOfSize:14.f];
+    priceLabel.font = kNormal14Font;
     priceLabel.textColor = kTitleNormalTextColor;
     priceLabel.text = @"￥200元";
-    [priceLabel setAttributedText:[NSObject getAttributedInfoString:priceLabel.text searchStr:@"￥200" color:KBlueTextColor font:[UIFont boldSystemFontOfSize:14.f]]];
+    [priceLabel setAttributedText:[NSObject getAttributedInfoString:priceLabel.text searchStr:@"￥200" color:KBlueTextColor font:kNormalBlod14Font]];
     [self.contentView addSubview:priceLabel];
     self.priceLabel = priceLabel;
 }

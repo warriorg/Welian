@@ -217,7 +217,7 @@ static NSString *cellIdentifier = @"frnewCellid";
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             
             //刷新好友列表
-            [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
             
             //接受后，本地创建一条消息
             //        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
@@ -236,7 +236,7 @@ static NSString *cellIdentifier = @"frnewCellid";
             //        textMessage.msgId = chatMessage.msgId.stringValue;
             //
             //        //聊天状态发送改变
-            //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+            //        [KNSNotification postNotificationName:@"ChatUserChanged" object:nil];
             
             [WLHUDView showSuccessHUD:@"添加成功！"];
         } fail:^(NSError *error) {

@@ -26,7 +26,7 @@
         _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 140)];
         [self.textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
         [self.textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-        [self.textView setFont:[UIFont systemFontOfSize:15]];
+        [self.textView setFont:kNormal15Font];
         [self addSubview:_textView];
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];

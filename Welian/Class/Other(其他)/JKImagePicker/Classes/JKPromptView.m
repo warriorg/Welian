@@ -31,7 +31,7 @@ static JKPromptView *instancePrompt;
         [self addSubview:imageView];
         
         UILabel *label = [[UILabel alloc] init];
-        label.font = [UIFont systemFontOfSize:14];
+        label.font = kNormal14Font;
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;

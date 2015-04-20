@@ -160,7 +160,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = kTitleNormalTextColor;
-    titleLabel.font = [UIFont systemFontOfSize:16.f];
+    titleLabel.font = kNormal16Font;
     titleLabel.text = @"杭州布鲁姆斯伯里沙龙咯好哦好哦配合哦好累了据了解";
     titleLabel.numberOfLines = 2;
     [self.contentView addSubview:titleLabel];
@@ -170,7 +170,7 @@
     //时间
     UIButton *timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     timeBtn.backgroundColor = [UIColor clearColor];
-    timeBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    timeBtn.titleLabel.font = kNormal12Font;
     [timeBtn setTitle:@"6/18" forState:UIControlStateNormal];
     [timeBtn setTitleColor:KBlueTextColor forState:UIControlStateNormal];
     [timeBtn setImage:[UIImage imageNamed:@"discovery_activity_list_time"] forState:UIControlStateNormal];
@@ -182,7 +182,7 @@
     UILabel *dateLabel = [[UILabel alloc] init];
     dateLabel.backgroundColor = [UIColor clearColor];
     dateLabel.textColor = kNormalTextColor;
-    dateLabel.font = [UIFont systemFontOfSize:12.f];
+    dateLabel.font = kNormal12Font;
     dateLabel.text = @"周日";
     [self.contentView addSubview:dateLabel];
     self.dateLabel = dateLabel;
@@ -190,7 +190,7 @@
     //城市
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     locationBtn.backgroundColor = [UIColor clearColor];
-    locationBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    locationBtn.titleLabel.font = kNormal12Font;
     [locationBtn setTitle:@"上海" forState:UIControlStateNormal];
     [locationBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     [locationBtn setImage:[UIImage imageNamed:@"discovery_activity_list_place"] forState:UIControlStateNormal];
@@ -202,7 +202,7 @@
     UILabel *statusLabel = [[UILabel alloc] init];
     statusLabel.backgroundColor = [UIColor clearColor];
     statusLabel.textColor = kNormalTextColor;
-    statusLabel.font = [UIFont systemFontOfSize:12.f];
+    statusLabel.font = kNormal12Font;
     statusLabel.text = @"报名";
     [self.contentView addSubview:statusLabel];
     self.statusLabel = statusLabel;
@@ -211,7 +211,7 @@
     UILabel *numLabel = [[UILabel alloc] init];
     numLabel.backgroundColor = [UIColor clearColor];
     numLabel.textColor = KBlueTextColor;
-    numLabel.font = [UIFont systemFontOfSize:12.f];
+    numLabel.font = kNormal12Font;
     numLabel.text = @"10";
     [self.contentView addSubview:numLabel];
     self.numLabel = numLabel;

@@ -55,7 +55,7 @@ static NSString *fridcellid = @"fridcellid";
     _baseUserModel = nil;
     _operateType = nil;
     _wlNoteInfoView = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (NSString *)title
@@ -89,8 +89,8 @@ static NSString *fridcellid = @"fridcellid";
         _wlSegmentedControl.showLine = YES;//显示分割线
         //        _wlSegmentedControl.isShowVertical = YES;//纵向显示
         _wlSegmentedControl.isAllowTouchEveryTime = YES;//允许重复点击
-        _wlSegmentedControl.detailLabelFont = [UIFont boldSystemFontOfSize:14.f];
-        _wlSegmentedControl.font = [UIFont systemFontOfSize:14.f];
+        _wlSegmentedControl.detailLabelFont = kNormalBlod14Font;
+        _wlSegmentedControl.font = kNormal14Font;
         //设置边线
         _wlSegmentedControl.layer.borderColorFromUIColor = WLLineColor;
         _wlSegmentedControl.layer.borderWidths = @"{0,0,0.8,0}";
@@ -216,7 +216,7 @@ static NSString *fridcellid = @"fridcellid";
     }
     
     //添加同意好友请求成功监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addSucceed) name:[NSString stringWithFormat:@"Accepte%@",_baseUserModel.uid]  object:nil];
+    [KNSNotification addObserver:self selector:@selector(addSucceed) name:[NSString stringWithFormat:kAccepteFriend,_baseUserModel.uid]  object:nil];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
@@ -328,7 +328,7 @@ static NSString *fridcellid = @"fridcellid";
         [headView addSubview:logoImageView];
         
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.font = [UIFont systemFontOfSize:16.f];
+        titleLabel.font = kNormal16Font;
         titleLabel.textColor = kTitleNormalTextColor;
         titleLabel.text = [_datasource1[section] objectForKey:@"title"];
         [titleLabel sizeToFit];
@@ -436,12 +436,12 @@ static NSString *fridcellid = @"fridcellid";
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.isInTwoLine = YES;
                     cell.textLabel.text = titleInfo;
-                    cell.textLabel.font = [UIFont systemFontOfSize:14.f];
+                    cell.textLabel.font = kNormal14Font;
                     cell.textLabel.textColor = kTitleTextColor;
                     
                     cell.detailTextLabel.text = detailInfo;
                     cell.detailTextLabel.numberOfLines = 0.f;
-                    cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+                    cell.detailTextLabel.font = kNormal14Font;
                     cell.detailTextLabel.textColor = kTitleTextColor;
                 }
                     break;
@@ -455,12 +455,12 @@ static NSString *fridcellid = @"fridcellid";
                     }
                     IProjectInfo *projectInfo = [infos objectAtIndex:indexPath.row];
                     cell.textLabel.text = projectInfo.name;
-                    cell.textLabel.font = [UIFont systemFontOfSize:14.f];
+                    cell.textLabel.font = kNormal14Font;
                     cell.textLabel.textColor = kTitleTextColor;
                     
                     cell.detailTextLabel.text = projectInfo.intro;
                     cell.detailTextLabel.numberOfLines = 1.f;
-                    cell.detailTextLabel.font = [UIFont systemFontOfSize:12.f];
+                    cell.detailTextLabel.font = kNormal12Font;
                     cell.detailTextLabel.textColor = kNormalTextColor;
                     
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -494,11 +494,11 @@ static NSString *fridcellid = @"fridcellid";
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.hidBottomLine = YES;
                     cell.textLabel.text = titleInfo;
-                    cell.textLabel.font = [UIFont systemFontOfSize:12.f];
+                    cell.textLabel.font = kNormal12Font;
                     cell.textLabel.textColor = kNormalTextColor;
                     
                     cell.detailTextLabel.text = detailInfo;
-                    cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+                    cell.detailTextLabel.font = kNormal14Font;
                     cell.detailTextLabel.numberOfLines = 0.f;
                     cell.detailTextLabel.textColor = kTitleNormalTextColor;
                     cell.imageView.image = [UIImage imageNamed:@"me_lvli_line"];
@@ -776,8 +776,8 @@ static NSString *fridcellid = @"fridcellid";
         [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
         
         //聊天状态发送改变
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        [KNSNotification postNotificationName:kChatUserChanged object:nil];
+        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
         [self.navigationController popViewControllerAnimated:YES];
         [WLHUDView showSuccessHUD:@"删除成功！"];
     } fail:^(NSError *error) {
@@ -1152,7 +1152,7 @@ static NSString *fridcellid = @"fridcellid";
         UIViewController *rootVC = [self.navigationController.viewControllers firstObject];
         //当前已经在消息页面
         if ([rootVC isKindOfClass:[MessagesViewController class]]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CurrentChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+            [KNSNotification postNotificationName:kCurrentChatFromUserInfo object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
             
             LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             MyFriendUser *user = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
@@ -1167,7 +1167,7 @@ static NSString *fridcellid = @"fridcellid";
             [self.navigationController setViewControllers:contros animated:YES];
         }else{
             //进入聊天页面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatFromUserInfo" object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
+            [KNSNotification postNotificationName:kChatFromUserInfo object:self userInfo:@{@"uid":_baseUserModel.uid.stringValue}];
             
             [self.navigationController popToRootViewControllerAnimated:YES];
         }

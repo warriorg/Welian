@@ -30,7 +30,7 @@
 @implementation CardAlertView
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
     _cardModel = nil;
     _selectFriendUser = nil;
     _bgImageView = nil;
@@ -125,7 +125,7 @@
     
     //取消按钮
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    cancelBtn.titleLabel.font = kNormal16Font;
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:KBlueTextColor forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,7 +134,7 @@
     
     //发送按钮
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sendBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    sendBtn.titleLabel.font = kNormal16Font;
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
     [sendBtn setTitleColor:KBlueTextColor forState:UIControlStateNormal];
     [sendBtn addTarget:self action:@selector(sendBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

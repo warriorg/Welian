@@ -66,8 +66,8 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - kMarginLeft - 15.f;
     //计算第一个label的高度
-    CGSize size1 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    CGSize size2 = [detailMsg calculateSize:CGSizeMake(maxWidth - size1.width, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size1 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal14Font];
+    CGSize size2 = [detailMsg calculateSize:CGSizeMake(maxWidth - size1.width, FLT_MAX) font:kNormal14Font];
     
     float height = size2.height + 15.f;
     if (height > 33.f) {

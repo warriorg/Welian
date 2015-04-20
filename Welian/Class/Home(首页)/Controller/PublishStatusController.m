@@ -445,7 +445,7 @@ static NSString *picCellid = @"PicCellID";
         }
         
         [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:KPublishOK object:nil];
+            [KNSNotification postNotificationName:KPublishOK object:nil];
             if (self.publishBlock) {
                 self.publishBlock();
             }

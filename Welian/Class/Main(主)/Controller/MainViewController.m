@@ -170,7 +170,7 @@ single_implementation(MainViewController)
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 //更新消息数量改变
@@ -207,11 +207,11 @@ single_implementation(MainViewController)
    [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KMessageHomeNotif object:nil];
     
     //添加聊天用户改变监听
-    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:@"ChatMsgNumChanged" object:nil];
-    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:@"UpdateMainMessageBadge" object:nil];
+    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:kChatMsgNumChanged object:nil];
+    [KNSNotification addObserver:self selector:@selector(updateChatMessageBadge:) name:kUpdateMainMessageBadge object:nil];
     
     //如果是从好友列表进入聊天，首页变换
-    [KNSNotification addObserver:self selector:@selector(changeTapToChatList:) name:@"ChangeTapToChatList" object:nil];
+    [KNSNotification addObserver:self selector:@selector(changeTapToChatList:) name:kChangeTapToChatList object:nil];
     
     // 新的活动提示
     [KNSNotification addObserver:self selector:@selector(updataItembadge) name:KNewactivitNotif object:nil];
@@ -387,10 +387,10 @@ single_implementation(MainViewController)
 //                            
 //                            }
                             //定位的城市
-                            [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                            [UserDefaults setObject:city forKey:kLocationCity];
                         }else{
                             //定位的城市
-                            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LocationCity"];
+                            [UserDefaults setObject:@"" forKey:kLocationCity];
                         }
                     }
                 }
@@ -436,8 +436,8 @@ single_implementation(MainViewController)
 - (UITabBarItem*)itemWithTitle:(NSString *)title imageStr:(NSString *)imageStr selectedImageStr:(NSString *)selectedImageStr
 {
     UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imageStr] selectedImage:[UIImage imageNamed:selectedImageStr]];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName :KBasesColor,NSFontAttributeName:[UIFont systemFontOfSize:12]} forState:UIControlStateSelected];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor],NSFontAttributeName:[UIFont systemFontOfSize:12]} forState:UIControlStateNormal];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName :KBasesColor,NSFontAttributeName:kNormal12Font} forState:UIControlStateSelected];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor],NSFontAttributeName:kNormal12Font} forState:UIControlStateNormal];
     return item;
 }
 

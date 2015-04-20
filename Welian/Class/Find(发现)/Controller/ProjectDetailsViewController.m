@@ -91,7 +91,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     _messageView = nil;
     _selectIndex = nil;
     _tapGesture = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+    [KNSNotification removeObserver:self name:nil object:nil];
 }
 
 - (NSString *)title
@@ -171,8 +171,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     [super viewWillDisappear:animated];
     //删除键盘监听
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [KNSNotification removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [KNSNotification removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
     if (!_isFromCreate) {
         //代理置空，否则会闪退 设置手势滑动返回
@@ -186,8 +186,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     [super viewWillAppear:animated];
     //键盘监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [KNSNotification addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [KNSNotification addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -364,7 +364,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (UIButton *)getBtnWithTitle:(NSString *)title image:(UIImage *)image{
     UIButton *favoriteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     favoriteBtn.backgroundColor = [UIColor clearColor];
-    favoriteBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    favoriteBtn.titleLabel.font = kNormal14Font;
     [favoriteBtn setTitle:title forState:UIControlStateNormal];
     [favoriteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [favoriteBtn setImage:image forState:UIControlStateNormal];
@@ -413,7 +413,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    titleLabel.font = kNormalBlod16Font;
     titleLabel.text = section == 0 && _iProjectDetailInfo.zancount.integerValue > 0 ? @"赞过的人" : [NSString stringWithFormat:@"评论（%d）",_iProjectDetailInfo.commentcount.intValue];
     [titleLabel sizeToFit];
     titleLabel.left = 15.f;

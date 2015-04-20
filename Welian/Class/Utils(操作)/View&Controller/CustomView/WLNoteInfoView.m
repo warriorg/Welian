@@ -98,13 +98,13 @@
     UILabel *noteLabel = [[UILabel alloc] init];
     noteLabel.backgroundColor = [UIColor clearColor];
     noteLabel.textColor = [UIColor grayColor];
-    noteLabel.font = [UIFont systemFontOfSize:14.f];
+    noteLabel.font = kNormal14Font;
     [self addSubview:noteLabel];
     self.noteLabel = noteLabel;
     
     UIButton *reloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     reloadBtn.backgroundColor = [UIColor clearColor];
-    reloadBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    reloadBtn.titleLabel.font = kNormal16Font;
     [reloadBtn setTitle:@"重新加载" forState:UIControlStateNormal];
     [reloadBtn setTitleColor:kTitleTextColor forState:UIControlStateNormal];
     [reloadBtn addTarget:self action:@selector(reloadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

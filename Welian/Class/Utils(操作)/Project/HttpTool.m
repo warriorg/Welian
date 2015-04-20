@@ -90,7 +90,7 @@ static HttpTool *engine;
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     NSString *sessid = mode.sessionid;
     if (!sessid) {
-        sessid = [UserDefaults objectForKey:@"sid"];
+        sessid = [UserDefaults objectForKey:kSidkey];
     }
     if (!sessid) {
         [[self operationQueue] cancelAllOperations];

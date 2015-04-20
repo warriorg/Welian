@@ -78,8 +78,8 @@
     [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
     [reqstDic setObject:KPlatformType forKey:@"platform"];
     
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
     
     [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {

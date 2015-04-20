@@ -152,7 +152,7 @@
 //                            NSString * city = [cityStr substringToIndex:range.location]; //截取字符串
 //                            NSString *city = [cityStr hasSuffix:@"市"] ? [cityStr stringByReplacingOccurrencesOfString:@"市" withString:@""] : cityStr;
                             //定位的城市
-                            [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"LocationCity"];
+                            [UserDefaults setObject:city forKey:kLocationCity];
                             
                             NSMutableArray *all = [NSMutableArray arrayWithArray:_datasource];
                             //判断是否在城市列表中

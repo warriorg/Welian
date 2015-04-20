@@ -90,7 +90,7 @@
     
     CGFloat butW = 75;
     UIButton *forgetBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - butW - 20, pwdTF.bottom + 15, butW, 30)];
-    [forgetBut.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [forgetBut.titleLabel setFont:kNormal15Font];
     [forgetBut setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [forgetBut setTitle:@"忘记密码?" forState:UIControlStateNormal];
     [forgetBut addTarget:self action:@selector(forgetPwd:) forControlEvents:UIControlEventTouchUpInside];
@@ -130,9 +130,9 @@
     [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
     [reqstDic setObject:self.pwdTextField.text forKey:@"password"];
     [reqstDic setObject:KPlatformType forKey:@"platform"];
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
         
-        [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
     
     [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
@@ -141,7 +141,7 @@
             UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
             [mode setCheckcode:self.pwdTextField.text];
             
-            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
+            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
             //记录最后一次登陆的手机号
             SaveLoginMobile(self.phoneTextField.text);
             SaveLoginPassWD(self.pwdTextField.text);

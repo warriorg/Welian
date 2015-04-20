@@ -195,7 +195,7 @@
         //添加内容
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.font = [UIFont systemFontOfSize:14.f];
+        titleLabel.font = kNormal14Font;
         titleLabel.textColor = RGB(155.f, 155.f, 155.f);
         titleLabel.text = _titles[i];
         titleLabel.tag = Define_Label_Tag + i;
@@ -219,7 +219,7 @@
         //添加角标
         UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         numBtn.backgroundColor = [UIColor clearColor];
-        numBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+        numBtn.titleLabel.font = kNormal12Font;
         numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 0, .0, .0);
         //    [numBtn setTitle:@"99" forState:UIControlStateNormal];
         [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -234,7 +234,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         //btn.frame = view.bounds;//CGRectMake(i*width4btn, .0f, width4btn, self.height);
         [btn setTitleColor:UIColorFromRGBValue(0x999999) forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        btn.titleLabel.font = kNormal14Font;
         [btn setTitleColor:UIColorFromRGBValue(0x454545) forState:UIControlStateSelected];
         //            [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(segmentedControlChange:) forControlEvents:UIControlEventTouchUpInside];

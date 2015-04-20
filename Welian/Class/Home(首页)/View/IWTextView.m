@@ -22,14 +22,14 @@
     if (self) {
         _placeholderColor = [UIColor lightGrayColor];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
+        [KNSNotification addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (void)textDidChange

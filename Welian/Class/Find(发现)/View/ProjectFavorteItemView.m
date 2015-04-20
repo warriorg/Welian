@@ -48,7 +48,7 @@
     
     UILabel *numLabel = [[UILabel alloc] init];
     numLabel.backgroundColor = [UIColor clearColor];
-    numLabel.font = [UIFont systemFontOfSize:12.f];
+    numLabel.font = kNormal12Font;
     numLabel.adjustsFontSizeToFitWidth = YES;
     numLabel.minimumScaleFactor = 0.6f;
     numLabel.textColor = [UIColor whiteColor];

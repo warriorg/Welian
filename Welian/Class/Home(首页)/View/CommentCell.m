@@ -72,14 +72,14 @@
     
     // 2.昵称
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.font = [UIFont boldSystemFontOfSize:15];
+    _nameLabel.font = kNormalBlod15Font;
     // 清除背景颜色
     _nameLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_nameLabel];
     
     // 3.时间
     _timeLabel = [[UILabel alloc] init];
-    _timeLabel.font = IWTimeFont;
+    _timeLabel.font = kNormal12Font;
     _timeLabel.textColor = [UIColor darkGrayColor];
     _timeLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_timeLabel];

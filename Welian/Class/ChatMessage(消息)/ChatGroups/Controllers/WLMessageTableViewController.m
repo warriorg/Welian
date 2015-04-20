@@ -154,7 +154,7 @@ static CGPoint  delayOffset = {0.0};
         case WLBubbleMessageMediaTypeText: {
             [self.messageInputView.inputTextView setText:nil];
             //保存数据
-            [UserDefaults setObject:@"" forKey:[NSString stringWithFormat:@"chat:%@",_friendUser.uid.stringValue]];
+            [UserDefaults setObject:@"" forKey:[NSString stringWithFormat:kChatNowKey,_friendUser.uid.stringValue]];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
                 self.messageInputView.inputTextView.enablesReturnKeyAutomatically = NO;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -627,7 +627,7 @@ static CGPoint  delayOffset = {0.0};
 - (void)inputTextViewDidEndEditing:(WLMessageTextView *)messageInputTextView;
 {
     //编辑结束  如果输入的不为空保存输入内容
-    [UserDefaults setObject:messageInputTextView.text forKey:[NSString stringWithFormat:@"chat:%@",_friendUser.uid.stringValue]];
+    [UserDefaults setObject:messageInputTextView.text forKey:[NSString stringWithFormat:kChatNowKey,_friendUser.uid.stringValue]];
 }
 
 //设置输入框中的默认文本

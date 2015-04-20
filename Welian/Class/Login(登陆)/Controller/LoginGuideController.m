@@ -165,8 +165,8 @@
                                    [reqstDic setObject:[sourceDic objectForKey:@"openid"] forKey:@"openid"];
                                    [reqstDic setObject:[sourceDic objectForKey:@"unionid"] forKey:@"unionid"];
                                    [reqstDic setObject:KPlatformType forKey:@"platform"];
-                                   if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-                                       [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+                                   if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+                                       [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
                                    }
                                    
                                    [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
@@ -175,7 +175,7 @@
                                            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                                            //记录最后一次登陆的手机号
                                            SaveLoginMobile(mode.mobile);
-                                           [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
+                                           [UserDefaults setObject:mode.sessionid forKey:kSessionId];
                                            [LogInUser createLogInUserModel:mode];
                                            [LogInUser setUseropenid:[sourceDic objectForKey:@"openid"]];
                                            [LogInUser setUserunionid:[sourceDic objectForKey:@"unionid"]];

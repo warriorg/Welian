@@ -148,7 +148,7 @@
     UILabel *praiseNumLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     praiseNumLabel.backgroundColor = [UIColor clearColor];
     praiseNumLabel.textColor = RGB(0.f, 93.f, 180.f);
-    praiseNumLabel.font = [UIFont systemFontOfSize:12.f];
+    praiseNumLabel.font = kNormal12Font;
     praiseNumLabel.minimumScaleFactor = 0.8f;
     praiseNumLabel.adjustsFontSizeToFitWidth = YES;
     praiseNumLabel.textAlignment = NSTextAlignmentCenter;
@@ -158,7 +158,7 @@
     //项目名称
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.font = [UIFont systemFontOfSize:16.f];
+    nameLabel.font = kNormal16Font;
     nameLabel.textColor = RGB(51.f, 51.f, 51.f);
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -166,7 +166,7 @@
     //项目简介
     UILabel *msgLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     msgLabel.backgroundColor = [UIColor clearColor];
-    msgLabel.font = [UIFont systemFontOfSize:13.f];
+    msgLabel.font = kNormal13Font;
     msgLabel.textColor = RGB(125.f, 125.f, 125.f);
     [self addSubview:msgLabel];
     self.msgLabel = msgLabel;
@@ -175,7 +175,7 @@
     UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     statusLabel.backgroundColor = RGB(245.f, 166.f, 35.f);
     statusLabel.textColor = [UIColor whiteColor];
-    statusLabel.font = [UIFont systemFontOfSize:12.f];
+    statusLabel.font = kNormal12Font;
     statusLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:statusLabel];
     self.statusLabel = statusLabel;

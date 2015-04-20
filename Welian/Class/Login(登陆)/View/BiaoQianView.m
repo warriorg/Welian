@@ -46,7 +46,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:self.dataArray[indexPath.row]];
-    CGSize size = [[dic objectForKey:@"name"] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 30) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17],NSFontAttributeName, nil]  context:nil].size;
+    CGSize size = [[dic objectForKey:@"name"] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 30) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:kNormal17Font,NSFontAttributeName, nil]  context:nil].size;
     return CGSizeMake(size.width+20, 30);
 }
 

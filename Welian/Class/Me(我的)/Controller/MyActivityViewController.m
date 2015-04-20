@@ -40,7 +40,7 @@
     _refreshControl = nil;
     _datasource = nil;
     _notView = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (NotstringView *)notView
@@ -84,7 +84,7 @@
         self.selectType = 0;
         
         //监听页面数据改变
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadReflshData) name:@"MyActivityInfoChanged" object:nil];
+        [KNSNotification addObserver:self selector:@selector(loadReflshData) name:kMyActivityInfoChanged object:nil];
     }
     return self;
 }

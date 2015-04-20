@@ -66,17 +66,17 @@
 {
     //标题
     self.textLabel.textColor = RGB(125.f, 125.f, 125.f);
-    self.textLabel.font = [UIFont systemFontOfSize:14.f];
+    self.textLabel.font = kNormal14Font;
     self.textLabel.numberOfLines = 0.f;
     
     self.detailTextLabel.textColor = RGB(125.f, 125.f, 125.f);
-    self.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+    self.detailTextLabel.font = kNormal14Font;
     
     //已报名人数
 //    UILabel *readyJoinLabel = [[UILabel alloc] init];
 //    readyJoinLabel.backgroundColor = [UIColor clearColor];
 //    readyJoinLabel.textColor = KBlueTextColor;
-//    readyJoinLabel.font = [UIFont systemFontOfSize:14.f];
+//    readyJoinLabel.font = kNormal14Font;
 //    readyJoinLabel.text = @"已报名5";
 //    [readyJoinLabel setAttributedText:[self getAttributedInfoString:readyJoinLabel.text searchStr:@"5"]];
 //    readyJoinLabel.hidden = YES;
@@ -87,11 +87,11 @@
 //    UILabel *totalLabel = [[UILabel alloc] init];
 //    totalLabel.backgroundColor = [UIColor clearColor];
 //    totalLabel.textColor = RGB(125.f, 125.f, 125.f);
-//    totalLabel.font = [UIFont systemFontOfSize:14.f];
+//    totalLabel.font = kNormal14Font;
 //    totalLabel.text = @"人/限额10人";
 //    totalLabel.hidden = YES;
 //    //设置特殊颜色
-//    [totalLabel setAttributedText:[NSObject getAttributedInfoString:totalLabel.text searchStr:@"10" color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
+//    [totalLabel setAttributedText:[NSObject getAttributedInfoString:totalLabel.text searchStr:@"10" color:KBlueTextColor font:kNormal14Font]];
 //    [self.contentView addSubview:totalLabel];
 //    self.totalLabel = totalLabel;
 }
@@ -101,7 +101,7 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - 47.f - (hasArrowImage ? 40.f : 15.f);
     //计算第一个label的高度
-    CGSize size = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal14Font];
     
     float height = size.height + 10.f;
     if (height > 30.f) {

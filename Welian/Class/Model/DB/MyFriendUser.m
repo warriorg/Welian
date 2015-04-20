@@ -161,7 +161,7 @@
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
 }
 
 //更新未读消息的数量
@@ -171,7 +171,7 @@
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
     
     //更新总的聊天消息数量
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    [KNSNotification postNotificationName:kChatMsgNumChanged object:nil];
 }
 
 //更新所有未读消息为读取状态
@@ -186,7 +186,7 @@
     }
     
     //更新总的聊天消息数量
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    [KNSNotification postNotificationName:kChatMsgNumChanged object:nil];
 }
 
 //获取最新的一条消息

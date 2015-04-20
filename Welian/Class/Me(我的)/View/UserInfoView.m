@@ -236,7 +236,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor whiteColor];
-    nameLabel.font = [UIFont systemFontOfSize:14.f];
+    nameLabel.font = kNormal14Font;
     nameLabel.text = @"";
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -246,7 +246,7 @@
     UILabel *companyLabel = [[UILabel alloc] init];
     companyLabel.backgroundColor = [UIColor clearColor];
     companyLabel.textColor = [UIColor colorWithWhite:1 alpha:0.5];
-    companyLabel.font = [UIFont systemFontOfSize:12.f];
+    companyLabel.font = kNormal12Font;
     companyLabel.text = @"";
     [self addSubview:companyLabel];
     self.companyLabel = companyLabel;
@@ -259,7 +259,7 @@
     
     //是否认证投资人
     UIButton *touZiRenBtn = [UIView getBtnWithTitle:@"认证投资人" image:[UIImage imageNamed:@"me_mycard_tou_big2"]];
-    touZiRenBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    touZiRenBtn.titleLabel.font = kNormal12Font;
     [touZiRenBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     touZiRenBtn.backgroundColor = [UIColor clearColor];
     [self addSubview:touZiRenBtn];
@@ -267,7 +267,7 @@
     
     //城市
     UIButton *cityBtn = [UIView getBtnWithTitle:@"杭州" image:[UIImage imageNamed:@"me_myplace"]];
-    cityBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    cityBtn.titleLabel.font = kNormal12Font;
     [cityBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
     cityBtn.backgroundColor = [UIColor clearColor];
     [self addSubview:cityBtn];
@@ -276,7 +276,7 @@
     
     //操作按钮 me_button_chat
     UIButton *operateBtn = [UIView getBtnWithTitle:@"加好友" image:[UIImage imageNamed:@"me_button_add"]];
-    operateBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    operateBtn.titleLabel.font = kNormal12Font;
     [operateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     operateBtn.backgroundColor = [UIColor clearColor];
     operateBtn.layer.borderWidth = 1.f;

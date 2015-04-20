@@ -27,7 +27,7 @@
     
 //    NSString *localVersion =[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     UILabel *verLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(aboutImageView.frame)+10, self.view.bounds.size.width, 30)];
-    [verLabel setFont:[UIFont systemFontOfSize:15]];
+    [verLabel setFont:kNormal15Font];
     [verLabel setTextColor:[UIColor lightGrayColor]];
     [verLabel setText:[NSString stringWithFormat:@"Ver %@",XcodeAppVersion]];
     [verLabel setTextAlignment:NSTextAlignmentCenter];
@@ -37,7 +37,7 @@
     UILabel *titLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(verLabel.frame)+30, self.view.bounds.size.width, 30)];
     [titLabel setTextColor:[UIColor lightGrayColor]];
     [titLabel setText:@"专注于互联网创业的社交平台"];
-    [titLabel setFont:[UIFont systemFontOfSize:17]];
+    [titLabel setFont:kNormal17Font];
     [titLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:titLabel];
 
@@ -45,7 +45,7 @@
     UILabel *hiLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-40, self.view.bounds.size.width, 30)];
     [hiLabel setTextColor:[UIColor lightGrayColor]];
     [hiLabel setText:@"hi@weLian.com"];
-    [hiLabel setFont:[UIFont systemFontOfSize:14]];
+    [hiLabel setFont:kNormal14Font];
     [hiLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:hiLabel];
     
