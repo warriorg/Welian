@@ -51,7 +51,7 @@
 {
     _datasource = nil;
     _activityInfo = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (NSString *)title
@@ -66,7 +66,7 @@
         self.showCustomNavHeader = YES;
         self.activityInfo = activityInfo;
         self.activityId = _activityInfo.activeid;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
+        [KNSNotification addObserver:self selector:@selector(updatePayJoined) name:kNeedReloadActivityUI object:nil];
     }
     return self;
 }
@@ -78,7 +78,7 @@
         self.showCustomNavHeader = YES;
         self.activityId = activityId;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePayJoined) name:@"NeedReloadActivityUI" object:nil];
+        [KNSNotification addObserver:self selector:@selector(updatePayJoined) name:kNeedReloadActivityUI object:nil];
     }
     return self;
 }
@@ -249,7 +249,7 @@
     [headerView addSubview:topBgView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:14.f];
+    titleLabel.font = kNormal14Font;
     titleLabel.textColor = RGB(125.f, 125.f, 125.f);
     titleLabel.text = @"嘉宾";
     [titleLabel sizeToFit];
@@ -296,12 +296,12 @@
                     
                     NSString *info = [NSString stringWithFormat:@"已报名%@人",_activityInfo.joined];
                     cell.textLabel.text = info;
-                    [cell.textLabel setAttributedText:[NSObject getAttributedInfoString:info searchStr:_activityInfo.joined.stringValue color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
+                    [cell.textLabel setAttributedText:[NSObject getAttributedInfoString:info searchStr:_activityInfo.joined.stringValue color:KBlueTextColor font:kNormal14Font]];
                     
                     NSString *detailInfo = [NSString stringWithFormat:@"/限额%@人",_activityInfo.limited];
                     cell.detailTextLabel.text = detailInfo;
                     //设置特殊颜色
-                    [cell.detailTextLabel setAttributedText:[NSObject getAttributedInfoString:detailInfo searchStr:_activityInfo.limited.stringValue color:KBlueTextColor font:[UIFont systemFontOfSize:14.f]]];
+                    [cell.detailTextLabel setAttributedText:[NSObject getAttributedInfoString:detailInfo searchStr:_activityInfo.limited.stringValue color:KBlueTextColor font:kNormal14Font]];
                     //收费和免费中未现在人数
                     if (_activityInfo.type.integerValue == 1 || (_activityInfo.type.integerValue == 0 && _activityInfo.limited.integerValue == 0)) {
                         cell.detailTextLabel.hidden = YES;
@@ -586,7 +586,7 @@
                                                  self.activityInfo = [_activityInfo updateFavorite:@(0)];
                                                  [self checkFavorteStatus];
                                                  //通知刷新我的活动中的数据
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
+                                                 [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
                                              } fail:^(NSError *error) {
                                                  [UIAlertView showWithTitle:nil message:@"取消收藏失败，请重试！"];
                                              }];
@@ -599,7 +599,7 @@
                                            self.activityInfo = [_activityInfo updateFavorite:@(1)];
                                            [self checkFavorteStatus];
                                            //通知刷新我的活动中的数据
-                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
+                                           [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
                                         } fail:^(NSError *error) {
                                             [UIAlertView showWithTitle:nil message:@"收藏活动失败，请重试！"];
                                         }];
@@ -893,7 +893,7 @@
 //更新页面展示数据信息
 - (void)initActivityUIInfo
 {
-    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - 30.f, FLT_MAX) font:[UIFont boldSystemFontOfSize:16.f]];
+    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - 30.f, FLT_MAX) font:kNormalBlod16Font];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight + titleSize.height + 20.f)];
     headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
     headerView.layer.borderWidths = @"{0,0,0.6,0}";
@@ -908,7 +908,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = kTitleNormalTextColor;
-    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    titleLabel.font = kNormalBlod16Font;
     titleLabel.text = _activityInfo.name;
     titleLabel.width = headerView.width - 30.f;
     titleLabel.numberOfLines = 0;
@@ -928,9 +928,9 @@
 - (void)updateJoinedInfo:(BOOL)isJoin
 {
     //通知刷新我的活动中的数据
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MyActivityInfoChanged" object:nil];
+    [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
     //更新列表的报名状态
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateJoinedUI" object:nil];
+    [KNSNotification postNotificationName:kUpdateJoinedUI object:nil];
     
     //更新报名状态
     self.activityInfo = [_activityInfo updateIsjoined:@(isJoin)];

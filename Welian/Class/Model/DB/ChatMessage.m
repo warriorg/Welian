@@ -109,7 +109,7 @@
     //更新好友的聊天时间
 //    [friendUser updateLastChatTime:chatMsg.timestamp];
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
     
     return chatMsg;
 }
@@ -178,9 +178,9 @@
     //更新好友的聊天时间
     //    [friendUser updateLastChatTime:chatMsg.timestamp];
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
     //调用获取收到新消息，刷新正在聊天的列表
-    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+    [KNSNotification postNotificationName:[NSString stringWithFormat:kReceiveNewChatMessage,friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
     
     return chatMsg;
 }
@@ -410,11 +410,11 @@
 //    [friendUser updateLastChatTime:chatMsg.timestamp];
     
     //更新总的聊天消息数量
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    [KNSNotification postNotificationName:kChatMsgNumChanged object:nil];
     //调用获取收到新消息，刷新正在聊天的列表
-    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
+    [KNSNotification postNotificationName:[NSString stringWithFormat:kReceiveNewChatMessage,friendUser.uid.stringValue] object:self userInfo:@{@"msgId":chatMsg.msgId}];
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
 }
 
 //创建特殊自定义聊天类型
@@ -509,7 +509,7 @@
     DLog(@"changed: ---- %d",self.sendStatus.intValue);
     
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
 }
 
 //更新读取状态

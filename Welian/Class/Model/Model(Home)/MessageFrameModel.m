@@ -47,7 +47,7 @@
         [contLabel setText:messageDataM.msg];
         contLabel.numberOfLines = 0;
         contLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        contLabel.font = IWContentFont;
+        contLabel.font = kNormal16Font;
         
         CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:commentW];
         

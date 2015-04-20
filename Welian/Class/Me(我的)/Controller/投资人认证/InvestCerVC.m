@@ -184,7 +184,7 @@ static NSString *itemscellid = @"itemscellid";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:seeltwocellid];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+        cell.detailTextLabel.font = kNormal14Font;
         if (indexPath.row ==0) {      // 投资领域
             [cell.textLabel setText:@"投资领域"];
             NSMutableString *industryStr = [NSMutableString string];

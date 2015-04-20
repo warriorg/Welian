@@ -109,7 +109,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
     _indexPath = nil;
     _messageSpecialView = nil;
     _message = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (void)prepareForReuse {
@@ -235,7 +235,7 @@ static const CGFloat kWLMessageSpecialViewPaddingX = 16;
 //        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatorButton.bounds) + 20, 20)];
 //        userNameLabel.textAlignment = NSTextAlignmentCenter;
 //        userNameLabel.backgroundColor = [UIColor clearColor];
-//        userNameLabel.font = [UIFont systemFontOfSize:12];
+//        userNameLabel.font = kNormal12Font;
 //        userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
 //        [self.contentView addSubview:userNameLabel];
 //        self.userNameLabel = userNameLabel;
@@ -568,10 +568,10 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
         [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
         
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(handleMenuWillShowNotification:)
-                                                     name:UIMenuControllerWillShowMenuNotification
-                                                   object:nil];
+        [KNSNotification addObserver:self
+                            selector:@selector(handleMenuWillShowNotification:)
+                                name:UIMenuControllerWillShowMenuNotification
+                              object:nil];
         [menu setMenuVisible:YES animated:YES];
     }else if(self.messageBubbleView.message.messageMediaType == WLBubbleMessageMediaTypeCard){
         UIMenuItem *menuItem = nil;
@@ -599,10 +599,10 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
             
             [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
             
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(handleMenuWillShowNotification:)
-                                                         name:UIMenuControllerWillShowMenuNotification
-                                                       object:nil];
+            [KNSNotification addObserver:self
+                                selector:@selector(handleMenuWillShowNotification:)
+                                    name:UIMenuControllerWillShowMenuNotification
+                                  object:nil];
             [menu setMenuVisible:YES animated:YES];
         }
     }
@@ -665,20 +665,16 @@ didSelectLinkWithCorrectionCheckingResult:(NSString *)components
 
 #pragma mark - Notifications
 - (void)handleMenuWillHideNotification:(NSNotification *)notification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillHideMenuNotification
-                                                  object:nil];
+    [KNSNotification removeObserver:self name:UIMenuControllerWillHideMenuNotification object:nil];
 }
 
 - (void)handleMenuWillShowNotification:(NSNotification *)notification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillShowMenuNotification
-                                                  object:nil];
+    [KNSNotification removeObserver:self name:UIMenuControllerWillShowMenuNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleMenuWillHideNotification:)
-                                                 name:UIMenuControllerWillHideMenuNotification
-                                               object:nil];
+    [KNSNotification addObserver:self
+                        selector:@selector(handleMenuWillHideNotification:)
+                            name:UIMenuControllerWillHideMenuNotification
+                          object:nil];
 }
 
 #pragma mark - Getters

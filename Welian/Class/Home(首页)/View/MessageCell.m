@@ -87,7 +87,7 @@
     [self.contentView addSubview:_badgeImage];
     
     _nameLabel = [[UILabel alloc] init];
-    [_nameLabel setFont:IWContentFont];
+    [_nameLabel setFont:kNormal16Font];
     [self.contentView addSubview:_nameLabel];
     
     _commentLabel = [[MLEmojiLabel alloc]init];
@@ -103,7 +103,7 @@
     
     _timeLabel = [[UILabel alloc] init];
     [_timeLabel setTextColor:WLRGB(173, 173, 173)];
-    [_timeLabel setFont:IWTimeFont];
+    [_timeLabel setFont:kNormal12Font];
     [self.contentView addSubview:_timeLabel];
     
     _photImage = [[UIImageView alloc] init];

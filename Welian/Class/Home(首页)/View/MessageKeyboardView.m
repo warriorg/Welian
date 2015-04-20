@@ -57,7 +57,7 @@
         [_commentTextView.layer setCornerRadius:8.0];
         [_commentTextView.layer setBorderWidth:1.0];
         [_commentTextView.layer setBorderColor:[WLLineColor CGColor]];
-        [_commentTextView setFont:[UIFont systemFontOfSize:15]];
+        [_commentTextView setFont:kNormal15Font];
         [_commentTextView setReturnKeyType:UIReturnKeySend];
         [_commentTextView setPlaceholder:@"写评论..."];
         [_commentTextView setDelegate:self];

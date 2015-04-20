@@ -34,7 +34,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(imageView.frame)+20, frame.size.width-80, 40)];
         [label setText:@"还没有动态内容哦，赶快发布一条动态或去寻找好友吧！"];
         [label setNumberOfLines:0];
-        [label setFont:[UIFont systemFontOfSize:14]];
+        [label setFont:kNormal14Font];
         [label setTextColor:WLRGB(162, 182, 190)];
         [self addSubview:label];
         

@@ -49,7 +49,7 @@
         UILabel *shareMenuItemTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shareMenuItemButton.frame), kWLShareMenuItemWidth, kWLShareMenuItemHeight - kWLShareMenuItemWidth)];
         shareMenuItemTitleLabel.backgroundColor = [UIColor clearColor];
         shareMenuItemTitleLabel.textColor = [UIColor darkGrayColor];
-        shareMenuItemTitleLabel.font = [UIFont systemFontOfSize:12.f];
+        shareMenuItemTitleLabel.font = kNormal12Font;
         shareMenuItemTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:shareMenuItemTitleLabel];
         

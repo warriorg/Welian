@@ -82,7 +82,7 @@
     }
     //等待验证
     if(_baseUser.friendship.integerValue == 4){
-        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+        _operateBtn.titleLabel.font = kNormal16Font;
         [_operateBtn setImage:nil forState:UIControlStateNormal];
         [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
         [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
@@ -92,7 +92,7 @@
         if (_baseUser.friendship.integerValue == -1) {
             _operateBtn.hidden = YES;
         }else{
-            _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
+            _operateBtn.titleLabel.font = kNormal13Font;
             [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
             [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
@@ -153,7 +153,7 @@
     }
     //等待验证
     if(friendship.integerValue == 4){
-        _operateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+        _operateBtn.titleLabel.font = kNormal16Font;
         [_operateBtn setImage:nil forState:UIControlStateNormal];
         [_operateBtn setTitle:@"待验证" forState:UIControlStateNormal];
         [_operateBtn setTitleColor:RGB(72.f, 130.f, 193.f) forState:UIControlStateNormal];
@@ -163,7 +163,7 @@
         if (friendship.integerValue == -1) {
             _operateBtn.hidden = YES;
         }else{
-            _operateBtn.titleLabel.font = [UIFont systemFontOfSize:13.f];
+            _operateBtn.titleLabel.font = kNormal13Font;
             [_operateBtn addTarget:self action:@selector(operateBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_operateBtn setImage:[UIImage imageNamed:@"osusume_friend_add"] forState:UIControlStateNormal];
             [_operateBtn setTitle:@"添加" forState:UIControlStateNormal];
@@ -245,7 +245,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor blackColor];
-    nameLabel.font = [UIFont systemFontOfSize:16.f];
+    nameLabel.font = kNormal16Font;
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -253,7 +253,7 @@
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = [UIColor lightGrayColor];
-    messageLabel.font = [UIFont systemFontOfSize:12.f];
+    messageLabel.font = kNormal12Font;
     messageLabel.numberOfLines = 0.f;
     [self addSubview:messageLabel];
     self.messageLabel = messageLabel;
@@ -266,7 +266,7 @@
     //微信用户标志
     UIButton *wxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     wxBtn.backgroundColor = RGB(248.f, 248.f, 248.f);
-    wxBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    wxBtn.titleLabel.font = kNormal12Font;
     wxBtn.layer.cornerRadius = 10.f;
     wxBtn.layer.masksToBounds = YES;
     wxBtn.hidden = YES;

@@ -67,7 +67,7 @@ static NSString *fridcellid = @"fridcellid";
     [super viewDidLoad];
     
     //刷新所有好友通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
+    [KNSNotification addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     //获取数据库好友信息
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSArray *myFriends = [loginUser getAllMyFriendUsers];
@@ -82,7 +82,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (void)addUI
@@ -119,7 +119,7 @@ static NSString *fridcellid = @"fridcellid";
     UILabel *footLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, self.view.bounds.size.width, 40)];
     [footLabel setBackgroundColor:[UIColor clearColor]];
     [footLabel setTextColor:[UIColor lightGrayColor]];
-    [footLabel setFont:[UIFont systemFontOfSize:15]];
+    [footLabel setFont:kNormal15Font];
     [footLabel setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
     [footLabel setTextAlignment:NSTextAlignmentCenter];
     [self.tableView setTableFooterView:footLabel];
@@ -295,14 +295,14 @@ static NSString *fridcellid = @"fridcellid";
         NSDictionary *dick = self.allArray[section];
         UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         sectionHeader.backgroundColor = WLLineColor;
-        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.font = kNormal15Font;
         sectionHeader.textColor = [UIColor grayColor];
         sectionHeader.text = [NSString stringWithFormat:@"   %@",[dick objectForKey:@"key"]];
         return sectionHeader;
     }else{
         UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         sectionHeader.backgroundColor = WLLineColor;
-        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.font = kNormal15Font;
         sectionHeader.textColor = [UIColor grayColor];
         sectionHeader.text = [NSString stringWithFormat:@"    搜索结果"];
         return sectionHeader;

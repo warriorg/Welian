@@ -188,7 +188,7 @@
     UILabel *praiseNumLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     praiseNumLabel.backgroundColor = [UIColor clearColor];
     praiseNumLabel.textColor = RGB(0.f, 93.f, 180.f);
-    praiseNumLabel.font = [UIFont systemFontOfSize:12.f];
+    praiseNumLabel.font = kNormal12Font;
     praiseNumLabel.minimumScaleFactor = 0.8f;
     praiseNumLabel.adjustsFontSizeToFitWidth = YES;
     praiseNumLabel.textAlignment = NSTextAlignmentCenter;
@@ -199,7 +199,7 @@
     //项目名称
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    nameLabel.font = kNormalBlod16Font;
     nameLabel.textColor = RGB(51.f, 51.f, 51.f);
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -207,7 +207,7 @@
     //项目简介
     UILabel *msgLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     msgLabel.backgroundColor = [UIColor clearColor];
-    msgLabel.font = [UIFont systemFontOfSize:14.f];
+    msgLabel.font = kNormal14Font;
     msgLabel.textColor = RGB(125.f, 125.f, 125.f);
     msgLabel.numberOfLines = 0;
     [self addSubview:msgLabel];
@@ -217,7 +217,7 @@
     UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     typeLabel.backgroundColor = [UIColor clearColor];
     typeLabel.textColor = RGB(173.f, 173.f, 173.f);
-    typeLabel.font = [UIFont systemFontOfSize:12.f];
+    typeLabel.font = kNormal12Font;
     typeLabel.textAlignment = NSTextAlignmentCenter;
     typeLabel.numberOfLines = 0;
     [self addSubview:typeLabel];
@@ -236,7 +236,7 @@
     //项目状态
     UIButton *statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     statusBtn.backgroundColor = RGB(254.f, 247.f, 231.f);
-    statusBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    statusBtn.titleLabel.font = kNormal14Font;
     [statusBtn setTitleColor:RGB(251.f, 178.f, 23.f) forState:UIControlStateNormal];
     [statusBtn setTitle:@"正在融资" forState:UIControlStateNormal];
     [statusBtn setImage:[UIImage imageNamed:@"discovery_rongzi_right"] forState:UIControlStateNormal];
@@ -270,11 +270,11 @@
 + (CGFloat)configureWithInfo:(ProjectDetailInfo *)detailInfo
 {
     CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
-    CGSize nameSize = [detailInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
-    CGSize msgSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize nameSize = [detailInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal16Font];
+    CGSize msgSize = [detailInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal14Font];
     msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge + kMarginLeft;
     //项目领域
-    CGSize typeSize = [[detailInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize typeSize = [[detailInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal12Font];
     
      //status 1 正在融资，0不融资
     CGFloat btnHeight = detailInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
@@ -286,10 +286,10 @@
 + (CGFloat)configureWithProjectInfo:(ProjectInfo *)projectInfo
 {
     CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
-    CGSize nameSize = [projectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
-    CGSize msgSize = [projectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize nameSize = [projectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal16Font];
+    CGSize msgSize = [projectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal14Font];
     msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
-    CGSize typeSize = [projectInfo.industrys calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize typeSize = [projectInfo.industrys calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal12Font];
     
     //status 1 正在融资，0不融资
     CGFloat btnHeight = projectInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;
@@ -301,10 +301,10 @@
 + (CGFloat)configureWithIProjectInfo:(IProjectInfo *)iProjectInfo
 {
     CGFloat msgWidth = MainScreen.bounds.size.width - kMarginLeft * 2.f - kLogoWidth - kZanWidth - kMarginLeftEdge * 2.f;
-    CGSize nameSize = [iProjectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
-    CGSize msgSize = [iProjectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize nameSize = [iProjectInfo.name calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal16Font];
+    CGSize msgSize = [iProjectInfo.intro calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal14Font];
     msgWidth = msgWidth + kLogoWidth + kMarginLeftEdge;
-    CGSize typeSize = [[iProjectInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize typeSize = [[iProjectInfo displayIndustrys] calculateSize:CGSizeMake(msgWidth, FLT_MAX) font:kNormal12Font];
     
     //status 1 正在融资，0不融资
     CGFloat btnHeight = iProjectInfo.status.integerValue != 0 ? kBtnHeight + kMarginEdge : 0;

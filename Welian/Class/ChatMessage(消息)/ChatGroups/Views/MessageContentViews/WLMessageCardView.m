@@ -80,7 +80,7 @@
     titleLabel.numberOfLines = 0;
     //            displayLabel.emojiDelegate = self;
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    titleLabel.font = [UIFont systemFontOfSize:16.f];
+    titleLabel.font = kNormal16Font;
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor  = kTitleNormalTextColor;
 //    titleLabel.textAlignment = NSTextAlignmentLeft;
@@ -121,7 +121,7 @@
         displayLabel.numberOfLines = 0;
         //    displayLabel.emojiDelegate = self;
         displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        displayLabel.font = [UIFont systemFontOfSize:16.f];
+        displayLabel.font = kNormal16Font;
         displayLabel.text = message.cardMsg;
         
         textHeight = [displayLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)].height + 5.f;
@@ -140,7 +140,7 @@
         displayLabel.numberOfLines = 0;
         //    displayLabel.emojiDelegate = self;
         displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        displayLabel.font = [UIFont systemFontOfSize:16.f];
+        displayLabel.font = kNormal16Font;
         displayLabel.text = message.cardMsg;
         
         CGSize textSize = [displayLabel preferredSizeWithMaxWidth:(InfoMaxWidth - kMarginLeft * 2)];

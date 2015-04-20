@@ -78,8 +78,8 @@
     [requstDic setObject:_phoneTF.text forKey:@"mobile"];
     [requstDic setObject:_pwdTF.text forKey:@"password"];
     [requstDic setObject:KPlatformType forKey:@"platform"];
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        [requstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
     
     [WLHttpTool loginParameterDic:requstDic success:^(id JSON) {
@@ -91,7 +91,7 @@
             SaveLoginMobile(_phoneTF.text);
             SaveLoginPassWD(_pwdTF.text);
             
-            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
+            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
             [LogInUser createLogInUserModel:mode];
             [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];

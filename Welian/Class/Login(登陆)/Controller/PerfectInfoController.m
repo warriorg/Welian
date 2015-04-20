@@ -197,8 +197,8 @@
     [requstDic setObject:_imagebase64Str forKey:@"photo"];
 
     
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        [requstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
     if ([self.userInfoDic objectForKey:@"nickname"]) {
         [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
@@ -215,7 +215,7 @@
             //记录最后一次登陆的手机号
             SaveLoginMobile(mode.mobile);
             
-            [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
+            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
             [LogInUser createLogInUserModel:mode];
             [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
             [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];

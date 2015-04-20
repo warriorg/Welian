@@ -68,8 +68,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
         _wlSegmentedControl.showLine = YES;//显示分割线
         _wlSegmentedControl.isShowVertical = YES;//纵向显示
         _wlSegmentedControl.isAllowTouchEveryTime = YES;//允许重复点击
-        _wlSegmentedControl.detailLabelFont = [UIFont boldSystemFontOfSize:16.f];
-        _wlSegmentedControl.font = [UIFont systemFontOfSize:14.f];
+        _wlSegmentedControl.detailLabelFont = kNormalBlod16Font;
+        _wlSegmentedControl.font = kNormal14Font;
         //设置边线
         _wlSegmentedControl.layer.borderColorFromUIColor = WLLineColor;
         _wlSegmentedControl.layer.borderWidths = @"{0.8,0,0.8,0}";

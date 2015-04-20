@@ -18,25 +18,6 @@
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
 
-/*
-//  支付宝配置信息
- //合作身份者id，以2088开头的16位纯数字
- #define PartnerID @"2088111741145515"
- //收款支付宝账号
- #define SellerID  @"zhangqi@codans.com"
- 
- //安全校验码（MD5）密钥，以数字和字母组成的32位字符
- #define MD5_KEY @"wvtdlvrab98tots56mv5xx53sjk74y4r"
- 
- //商户私钥，自助生成
- #define PartnerPrivKey @"MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANu86LBhn0iKoFrUOyVOXDEWx0E7dV2y8ShK5QdR3qI3PM60CFOjqGFjs+vdL/nbUTRYW+sQzqY0WD3Bi88mqxVL9Uo9sRIPzmJZ4So2Qoar8IzoxRuN1yZw/Yyd0YdpwWmcUQstVsln2o/FOt8OT2vTVSZOasNvFoucQ/I0xmFfAgMBAAECgYBmdfTOYgbizXkuQS3/HEXSwftRSIdWlJzsm9eljSBR5Y3eGIaVcYePOe1oeu/nAsQfs1/RATpKt7e5vCkUA8TbwRN+RWXQtwucNCmN1nQPz0zPGGdvLWTTs/GOMizWSM+BCHpDiiyWvaxedW4a1C4xjUT3uGW0JAltNtqLo2q4YQJBAPQBlZNMXlwqXhVz1MSMlONxAT/PJcdkCO5NCGfNUlzLvTYf6TKJRs8+T2HlY/rBVTy5ITn5iP191NC76vJFC7ECQQDmifLVgH0CBhY/Kw+6j112D59R0PpiVVEOvO4rJqAdWw5auJNlPAggidqffpgVmVDj193uEiz3iRJW0lr/vFIPAkBsYb/Em6lWGuOLd9XML/16QRmi9Cn9tOtanhDbupGY8k5rGiWE8wDm0PCFtVSBbxqjTD/79mDo59l9ldq4Hf8hAkEA3JyoF+20MsqWYW6Yx6PIAWGjyYyc/pq8Tck4dWyqDk2DqAc3bcoL0O96meRwL0MfKFn704XrKBowxYrZcB7LuwJATGI5nzsu3MKYEN2Z7OkkqI25lPh83QfGEWYKUOItvS1Xq00ZrhX/LPB6vdCIf3bMYV1CL7yMRq50h6ldsxcCFw=="
- 
- //把支付宝公钥和RSA私钥配置到代码里面，RSA私钥如果不是php语言签名的，都要用pkcs8转码后再配置到代码里面，php语言签名的直接用rsa_private的pem文件 RSA公钥上传地址：登录b.alipay.com，点我的商家服务，点查询PID和KEY->合作伙伴密钥管理，RSA密钥->查看密钥或者添加密钥
- 
- //支付宝商户生成的公钥
- #define AlipayPubKey @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB"
-*/
-
 //  支付宝配置信息
 //合作身份者id，以2088开头的16位纯数字
 #define PartnerID @"2088611088140964"
@@ -141,44 +122,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 //微链服务电话 now now
 #define kTelNumber @"18658883913"
 
-
-//#define KupdataMyAllFriends @"KupdataMyAllFriends"
-
-// 首页动态有 更新通知
-#define KNEWStustUpdate  @"KNEWStustUpdate"
-
-// 首页动态更新个数
-//#define KNewStaustbadge @"KNewStaustbadge"
-
-// 首页消息通知
-#define KMessageHomeNotif @"KMessageHomeNotif"
-
-// 新活动的通知
-#define KNewactivitNotif  @"KNewactivitNotif"
-
-// 投资人状态通知
-#define KInvestorstateNotif @"KInvestorstateNotif"
-
-// 项目通知
-#define KProjectstateNotif @"ProjectstateNotif"
-
-//刷新个人项目列表
-#define KRefreshMyProjectNotif @"RefreshMyProjectNotif"
-
-// 首页消息提示个数
-//#define KMessagebadge @"KMessagebadge"
-
-// 好友页新好友提示个数
-//#define KFriendbadge @"KFriendbadge"
-
-// 新好友通知
-#define KNewFriendNotif @"KNewFriendNotif"
-// 发布动态成功
-#define KPublishOK @"PublishStatusOK"
-// 退出登录通知
-#define KLogoutNotif @"KLogoutNotif"
-
-
 #define KWLDataDBName @"wlDataDBName.db"
 
 // 首页数据
@@ -270,21 +213,39 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define kNavBgColor RGB(74.f, 117.f, 183.f)
 
 /*
- 7.一条微博上的字体
+ 4.字体大小
  */
-// 昵称
-#define IWNameFont [UIFont boldSystemFontOfSize:16]
-// 时间
-#define IWTimeFont [UIFont systemFontOfSize:12]
-// 内容
-#define IWContentFont [UIFont systemFontOfSize:16]
+//常用的19号粗体
+#define kNormalBlod19Font [UIFont boldSystemFontOfSize:19.f]
+//常用的18号粗体
+#define kNormalBlod18Font [UIFont boldSystemFontOfSize:18.f]
+//常用的17号字体
+#define kNormal17Font [UIFont systemFontOfSize:17.f]
 
-// 转发的昵称
-#define IWRetweetNameFont [UIFont systemFontOfSize:16]
-// 转发的内容
-#define IWRetweetContentFont IWContentFont
-// 赞，转发姓名
-#define WLZanNameFont [UIFont systemFontOfSize:14]
+//常用的16号粗体
+#define kNormalBlod16Font [UIFont boldSystemFontOfSize:16.f]
+//常用的16号字体
+#define kNormal16Font [UIFont systemFontOfSize:16.f]
+
+//常用的15号粗体
+#define kNormalBlod15Font [UIFont boldSystemFontOfSize:15.f]
+//常用的15号字体
+#define kNormal15Font [UIFont systemFontOfSize:15.f]
+
+//常用的14号粗体
+#define kNormalBlod14Font [UIFont boldSystemFontOfSize:14.f]
+//常用的14号字体
+#define kNormal14Font [UIFont systemFontOfSize:14.f]
+
+//常用的13号粗体
+#define kNormalBlod13Font [UIFont boldSystemFontOfSize:13.f]
+//常用的13号字体
+#define kNormal13Font [UIFont systemFontOfSize:13.f]
+
+//常用的12号粗体
+#define kNormalBlod12Font [UIFont boldSystemFontOfSize:12.f]
+//常用的12号字体
+#define kNormal12Font [UIFont systemFontOfSize:12.f]
 
 
 // 每次加载cell的个数
@@ -322,10 +283,6 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 //每个controller 中第一个控件距离顶部的高度
 #define kFirstMarginTop 20
-
-
-// 返回结果的键
-#define BPushRequestChannelIdKey   @"channel_id"
 
 
 

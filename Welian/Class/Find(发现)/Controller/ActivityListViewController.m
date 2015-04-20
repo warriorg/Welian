@@ -53,7 +53,7 @@
     _selectIndex = nil;
     _cityList = nil;
     _timeList = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (NotstringView *)notView
@@ -84,7 +84,7 @@
         self.cityList = [NSArray arrayWithArray:customCitys];
         
         //活动当前定位的城市
-        NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:@"LocationCity"];
+        NSString *city = [UserDefaults objectForKey:kLocationCity];
         NSDictionary *localCity = nil;
         if (city.length > 0) {
             localCity = [localCitys bk_match:^BOOL(id obj) {
@@ -105,7 +105,7 @@
         self.pageSize = KCellConut;
         
         //监听报名状态改变
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUiInfo) name:@"UpdateJoinedUI" object:nil];
+        [KNSNotification addObserver:self selector:@selector(updateUiInfo) name:kUpdateJoinedUI object:nil];
     }
     return self;
 }
@@ -213,7 +213,7 @@
     headView.backgroundColor = [UIColor whiteColor];
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:14.f];
+    titleLabel.font = kNormal14Font;
     titleLabel.textColor = RGB(173.f, 173.f, 173.f);
     titleLabel.text = @"以下为历史活动";
     [titleLabel sizeToFit];

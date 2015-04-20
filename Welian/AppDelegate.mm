@@ -131,7 +131,7 @@ BMKMapManager* _mapManager;
 
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     DLog(@"%@",mode.description);
-    if (mode.sessionid&&mode.mobile&&[UserDefaults objectForKey:@"sessionid"]) {
+    if (mode.sessionid&&mode.mobile&&[UserDefaults objectForKey:kSessionId]) {
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
@@ -433,7 +433,7 @@ BMKMapManager* _mapManager;
         [friendUser updateUnReadMessageNumber:@(friendUser.unReadChatMsg.integerValue + 1)];
         
         //更新好友列表
-        [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
     }else{
         [newfrendM setIsAgree:@(0)];
         //别人请求加我为好友
@@ -472,10 +472,10 @@ BMKMapManager* _mapManager;
             NSInteger badge = [loginUser.newfriendbadge integerValue];
             if (!badge) {
                 //设置是否在新的好友通知页面
-                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLookAtNewFriendVC"]) {
+                if (![UserDefaults boolForKey:kIsLookAtNewFriendVC]) {
                     [LogInUser setUserNewfriendbadge:@(1)];
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:KNewFriendNotif object:self];
+                [KNSNotification postNotificationName:KNewFriendNotif object:self];
             }
         }
     }
@@ -498,7 +498,7 @@ BMKMapManager* _mapManager;
     if ([self.window.rootViewController isKindOfClass:[LoginGuideController class]])
         return;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
-    [UserDefaults removeObjectForKey:@"sessionid"];
+    [UserDefaults removeObjectForKey:kSessionId];
     [LogInUser setUserisNow:NO];
     [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
@@ -534,7 +534,7 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:KNEWStustUpdate object:self];
+    [KNSNotification postNotificationName:KNEWStustUpdate object:self];
     DLog(@"应用程序将要进入活动状态，即将进入前台运行");
 
 }
@@ -584,7 +584,7 @@ BMKMapManager* _mapManager;
              NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
              if (resultStatus == 9000) {
                  //支付成功
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+                 [KNSNotification postNotificationName:kAlipayPaySuccess object:nil];
              }else{
                  if ([resultDic[@"memo"] length] > 0) {
                      [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
@@ -600,7 +600,7 @@ BMKMapManager* _mapManager;
             NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
             if (resultStatus == 9000) {
                 //支付成功
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+                [KNSNotification postNotificationName:kAlipayPaySuccess object:nil];
             }else{
                 if ([resultDic[@"memo"] length] > 0) {
                     [UIAlertView showWithTitle:@"系统提示" message:resultDic[@"memo"]];
@@ -623,7 +623,7 @@ BMKMapManager* _mapManager;
     // [4-EXT-1]: 个推SDK已注册
     _sdkStatus = SdkStatusStarted;
     _clientId = clientId;
-    [UserDefaults setObject:clientId forKey:BPushRequestChannelIdKey];
+    [UserDefaults setObject:clientId forKey:kBPushRequestChannelIdKey];
     [WLHttpTool updateClientSuccess:^(id JSON) {
         
     } fail:^(NSError *error) {
@@ -668,7 +668,7 @@ BMKMapManager* _mapManager;
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (loginUser) {
-        NSString *localMaxChatNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaxChatMessageId"];
+        NSString *localMaxChatNum = [UserDefaults objectForKey:kMaxChatMessageId];
         NSString *maxChatNum = localMaxChatNum.length > 0 ? localMaxChatNum : @"0";
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(0),@"topid":maxChatNum}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
@@ -686,7 +686,7 @@ BMKMapManager* _mapManager;
                                                }
                                                
                                                NSString *maxChatNum = [ChatMessage getMaxChatMessageId];
-                                               [[NSUserDefaults standardUserDefaults] setObject:maxChatNum forKey:@"MaxChatMessageId"];
+                                               [UserDefaults setObject:maxChatNum forKey:kMaxChatMessageId];
                                            } fail:^(NSError *error) {
                                                DLog(@"service chatMsg error:%@",error.description);
                                            }];
@@ -704,7 +704,7 @@ BMKMapManager* _mapManager;
          type = friendRequest;
          uid = 10019;
          */
-        NSString *localMaxNewFriendId = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaxNewFriendId"];
+        NSString *localMaxNewFriendId = [UserDefaults objectForKey:kMaxNewFriendId];
         NSString *maxNewFriendId = localMaxNewFriendId.length > 0 ? localMaxNewFriendId : @"0";
         [WLHttpTool getServiceMessagesParameterDic:@{@"type":@(1),@"topid":maxNewFriendId}//0 聊天消息，1 好友请求
                                            success:^(id JSON) {
@@ -734,7 +734,7 @@ BMKMapManager* _mapManager;
                                                
                                                //保存最新的最大id
                                                NSString *maxNewFriendId = [loginUser getMaxNewFriendUserMessageId];
-                                               [[NSUserDefaults standardUserDefaults] setObject:maxNewFriendId forKey:@"MaxNewFriendId"];
+                                               [UserDefaults setObject:maxNewFriendId forKey:kMaxNewFriendId];
                                            } fail:^(NSError *error) {
                                                DLog(@"service friendMsg error:%@",error.description);
                                            }];

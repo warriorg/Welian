@@ -26,7 +26,7 @@
         self.backgroundColor = [UIColor clearColor];
         //0.添加时间
         _timeLabel = [[UILabel alloc] init];
-        _timeLabel.font = IWTimeFont;
+        _timeLabel.font = kNormal12Font;
         _timeLabel.textColor = WLRGB(173, 173, 173);
         _timeLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_timeLabel];

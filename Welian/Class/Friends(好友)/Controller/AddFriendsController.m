@@ -172,7 +172,7 @@ static NSString *fridcellid = @"fridcellid";
                 NSDictionary * dic = self.allArray[section-1];
                 UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
                 sectionHeader.backgroundColor = [UIColor groupTableViewBackgroundColor];
-                sectionHeader.font = [UIFont systemFontOfSize:15];
+                sectionHeader.font = kNormal15Font;
                 sectionHeader.textColor = [UIColor grayColor];
                 sectionHeader.text = [dic objectForKey:@"key"];;
                 return sectionHeader;
@@ -184,7 +184,7 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         UILabel *sectionHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         sectionHeader.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        sectionHeader.font = [UIFont systemFontOfSize:15];
+        sectionHeader.font = kNormal15Font;
         sectionHeader.textColor = [UIColor grayColor];
         sectionHeader.text = @"  搜索结果";
         return sectionHeader;

@@ -141,7 +141,7 @@
     
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.backgroundColor = [UIColor clearColor];
-    leftBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    leftBtn.titleLabel.font = kNormalBlod16Font;
     [leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:leftBtn];
     self.leftBtn = leftBtn;
@@ -151,7 +151,7 @@
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.backgroundColor = [UIColor clearColor];
-    rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    rightBtn.titleLabel.font = kNormalBlod16Font;
 //    rightBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
 //    [rightBtn setTitle:@"操作" forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -162,7 +162,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    titleLabel.font = kNormalBlod16Font;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"标题";
     [contentView addSubview:titleLabel];

@@ -137,8 +137,8 @@
     [reqstDicM setObject:self.phoneString forKey:@"mobile"];
     [reqstDicM setObject:KPlatformType forKey:@"platform"];
     
-    if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-        [reqstDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+        [reqstDicM setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
     
     [WLHttpTool getCheckCodeParameterDic:reqstDicM success:^(id JSON) {

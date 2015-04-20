@@ -69,7 +69,7 @@
     [self.contentView addSubview:_nameLabel];
     
     _infoLabel = [[UILabel alloc] init];
-    [_infoLabel setFont:[UIFont systemFontOfSize:14]];
+    [_infoLabel setFont:kNormal14Font];
     [_infoLabel setNumberOfLines:2];
     [_infoLabel setTextColor:[UIColor grayColor]];
     [self.contentView addSubview:_infoLabel];
@@ -88,7 +88,7 @@
     [_iconImage setUserInteractionEnabled:YES];
     [_iconImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
     
-    CGSize timeSize = [userM.name sizeWithCustomFont:[UIFont systemFontOfSize:17]];
+    CGSize timeSize = [userM.name sizeWithCustomFont:kNormal17Font];
     CGFloat labelx = CGRectGetMaxX(_iconImage.frame)+10;
     [_nameLabel setFrame:CGRectMake(labelx, 20.0, timeSize.width, timeSize.height)];
     [_nameLabel setText:userM.name];
@@ -100,7 +100,7 @@
     if (userM.position&&userM.company) {
         NSString *infostr = [NSString stringWithFormat:@"%@   %@",userM.position,userM.company];
         // 3
-        CGSize contentSize = [infostr sizeWithCustomFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(self.bounds.size.width - 95, MAXFLOAT)];
+        CGSize contentSize = [infostr sizeWithCustomFont:kNormal14Font constrainedToSize:CGSizeMake(self.bounds.size.width - 95, MAXFLOAT)];
         [_infoLabel setText:infostr];
         CGFloat infLabelY =CGRectGetMaxY(_nameLabel.frame);
         if (contentSize.height<20) {

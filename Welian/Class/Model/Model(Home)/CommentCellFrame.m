@@ -27,7 +27,7 @@
     // 2.昵称
     CGFloat nameX = CGRectGetMaxX(_iconViewF) + IWCellBorderWidth;
     CGFloat nameY = iconY;
-//    CGSize nameSize = cellWidth-nameX-90[commentM.user.name sizeWithCustomFont:IWNameFont];
+//    CGSize nameSize = cellWidth-nameX-90[commentM.user.name sizeWithCustomFont:kNormalBlod16Font];
     _nameLabelF = (CGRect){{nameX, nameY}, {cellWidth-nameX-90,20}};
     
     // 7.时间

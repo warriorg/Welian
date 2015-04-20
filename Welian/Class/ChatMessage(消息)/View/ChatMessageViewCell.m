@@ -169,7 +169,7 @@
     //消息数量
     UIButton *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     numBtn.backgroundColor = [UIColor clearColor];
-    numBtn.titleLabel.font = [UIFont systemFontOfSize:12.f];
+    numBtn.titleLabel.font = kNormal12Font;
 //    numBtn.titleEdgeInsets = UIEdgeInsetsMake(.0, 2, .0, .0);
 //    [numBtn setTitle:@"99" forState:UIControlStateNormal];
     [numBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -181,7 +181,7 @@
     UILabel *nickNameLabel = [[UILabel alloc] init];
     nickNameLabel.backgroundColor = [UIColor clearColor];
     nickNameLabel.textColor = RGB(51.f, 51.f, 51.f);
-    nickNameLabel.font = [UIFont systemFontOfSize:16.f];
+    nickNameLabel.font = kNormal16Font;
     nickNameLabel.text = @"";
     [self addSubview:nickNameLabel];
     self.nickNameLabel = nickNameLabel;
@@ -190,7 +190,7 @@
     UILabel *timeLabel = [[UILabel alloc] init];
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textColor = RGB(173.f, 173.f, 173.f);
-    timeLabel.font = [UIFont systemFontOfSize:12.f];
+    timeLabel.font = kNormal12Font;
     timeLabel.text = @"";
     [self addSubview:timeLabel];
     self.timeLabel = timeLabel;
@@ -205,7 +205,7 @@
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = RGB(173.f, 173.f, 173.f);
-    messageLabel.font = [UIFont systemFontOfSize:14.f];
+    messageLabel.font = kNormal14Font;
     messageLabel.text = @"";
     [self addSubview:messageLabel];
     self.messageLabel = messageLabel;

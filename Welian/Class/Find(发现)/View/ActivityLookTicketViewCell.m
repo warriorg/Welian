@@ -103,7 +103,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = kTitleNormalTextColor;
-    nameLabel.font = [UIFont boldSystemFontOfSize:14.f];
+    nameLabel.font = kNormalBlod14Font;
     nameLabel.text = @"VIP门票";
     nameLabel.numberOfLines = 0;
     [bgImageView addSubview:nameLabel];
@@ -113,7 +113,7 @@
     UILabel *infoLabel = [[UILabel alloc] init];
     infoLabel.backgroundColor = [UIColor clearColor];
     infoLabel.textColor = kNormalTextColor;
-    infoLabel.font = [UIFont systemFontOfSize:13.f];
+    infoLabel.font = kNormal13Font;
     infoLabel.text = @"参加贵宾晚宴";
     infoLabel.numberOfLines = 0;
     [bgImageView addSubview:infoLabel];
@@ -123,7 +123,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     moneyLabel.backgroundColor = [UIColor clearColor];
     moneyLabel.textColor = KBlueTextColor;
-    moneyLabel.font = [UIFont boldSystemFontOfSize:19.f];
+    moneyLabel.font = kNormalBlod19Font;
     moneyLabel.text = @"500元";
     moneyLabel.textAlignment = NSTextAlignmentCenter;
     [moneyLabel setAttributedText:[self getAttributedInfoString:moneyLabel.text searchStr:@"元"]];
@@ -134,7 +134,7 @@
     UILabel *ticketNumLabel = [[UILabel alloc] init];
     ticketNumLabel.backgroundColor = [UIColor clearColor];
     ticketNumLabel.textColor = kTitleNormalTextColor;
-    ticketNumLabel.font = [UIFont systemFontOfSize:16.f];
+    ticketNumLabel.font = kNormal16Font;
     ticketNumLabel.text = @"x 1";
     [self.contentView addSubview:ticketNumLabel];
     self.ticketNumLabel = ticketNumLabel;
@@ -155,8 +155,8 @@
 {
     float maxWidth = [[UIScreen mainScreen] bounds].size.width - kMarginLeft * 3 - kTicketNumWidth;
     //计算第一个label的高度
-    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
-    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:13.f]];
+    CGSize size1 = [name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal14Font];
+    CGSize size2 = [detailInfo calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal13Font];
     
     float height = (name.length > 0 ? size1.height : 0) + (detailInfo.length > 0 ? size2.height + kMarginInEdge : 0) + kMarginTop * 2.f + kBottomHeight;
     if (height > 69.f) {

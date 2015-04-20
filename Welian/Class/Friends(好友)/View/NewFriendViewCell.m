@@ -333,7 +333,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.textColor = [UIColor blackColor];
-    nameLabel.font = [UIFont systemFontOfSize:16.f];
+    nameLabel.font = kNormal16Font;
 //    nameLabel.numberOfLines = 0.f;
     [self addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -342,14 +342,14 @@
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = [UIColor lightGrayColor];
-    messageLabel.font = [UIFont systemFontOfSize:14.f];
+    messageLabel.font = kNormal14Font;
     messageLabel.numberOfLines = 0.f;
     [self addSubview:messageLabel];
     self.messageLabel = messageLabel;
     
     //操作按钮
     UIButton *operateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    operateBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    operateBtn.titleLabel.font = kNormal14Font;
     [self addSubview:operateBtn];
     self.operateBtn = operateBtn;
 }
@@ -386,7 +386,7 @@
     //计算第一个label的高度
     CGSize size1 = CGSizeMake(maxWidth, 20.f);//[name calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:16.f]];
     //计算第二个label的高度
-    CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:[UIFont systemFontOfSize:14.f]];
+    CGSize size2 = [msg calculateSize:CGSizeMake(maxWidth, FLT_MAX) font:kNormal14Font];
     
     float height = size1.height + size2.height + kMarginTop * 2.f;
     if (height > 60) {

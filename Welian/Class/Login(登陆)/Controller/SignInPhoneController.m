@@ -92,8 +92,8 @@
         [reqstDicM setObject:self.phoneTextField.text forKey:@"mobile"];
         [reqstDicM setObject:KPlatformType forKey:@"platform"];
         
-        if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
-            [reqstDicM setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+        if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+            [reqstDicM setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
         }
         
         [WLHttpTool getCheckCodeParameterDic:reqstDicM success:^(id JSON) {
@@ -103,7 +103,7 @@
                 SignInPWDController  *signInPWDVC = [[SignInPWDController alloc] init];
                 [signInPWDVC setPhoneString:self.phoneTextField.text];
                 [signInPWDVC setCoderString:coderStr];
-                [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:@"sid"];
+                [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:kSidkey];
                 [self.navigationController pushViewController:signInPWDVC animated:YES];
                 
             }else if ([[JSON objectForKey:@"flag"] integerValue]==1){

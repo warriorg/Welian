@@ -801,7 +801,7 @@ static NSString *kJKAssetsFooterViewIdentifier = @"kJKAssetsFooterViewIdentifier
         _finishLabel = [[UILabel alloc] init];
         _finishLabel.backgroundColor = [UIColor clearColor];
         _finishLabel.textColor = [UIColor whiteColor];
-        _finishLabel.font = [UIFont systemFontOfSize:14];
+        _finishLabel.font = kNormal14Font;
         _finishLabel.text = @"下一步(9)";
         [_finishLabel sizeToFit];
         

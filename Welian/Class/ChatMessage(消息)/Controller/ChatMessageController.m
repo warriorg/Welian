@@ -38,12 +38,12 @@
     self = [super initWithStyle:style];
     if (self) {
         //添加聊天用户改变监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatUserChanged" object:nil];
+        [KNSNotification addObserver:self selector:@selector(chatUsersChanged:) name:kChatUserChanged object:nil];
         //添加聊天消息数量改变监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatUsersChanged:) name:@"ChatMsgNumChanged" object:nil];
+        [KNSNotification addObserver:self selector:@selector(chatUsersChanged:) name:kChatMsgNumChanged object:nil];
         
         //如果是从好友列表进入聊天，首页变换
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
+        [KNSNotification addObserver:self selector:@selector(chatFromUserInfo:) name:kChatFromUserInfo object:nil];
         
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
     }
@@ -145,7 +145,7 @@
         [friendUser updateUnReadMessageNumber:@(0)];
         
         //更新首页角标
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+        [KNSNotification postNotificationName:kChatMsgNumChanged object:nil];
         
         //刷新列表
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
@@ -201,7 +201,7 @@
 - (void)chatFromUserInfo:(NSNotification *)notification
 {
     //切换首页Tap
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+    [KNSNotification postNotificationName:kChangeTapToChatList object:nil];
     
     NSNumber *uid = @([[[notification userInfo] objectForKey:@"uid"] integerValue]);
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];

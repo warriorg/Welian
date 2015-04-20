@@ -24,7 +24,7 @@
         _textView = [[IWTextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_titLabel.frame), SuperSize.width-20, 140)];
         [_textView setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
         [_textView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-        [_textView setFont:[UIFont systemFontOfSize:15]];
+        [_textView setFont:kNormal15Font];
         [self.contentView addSubview:_textView];
     }
     return self;

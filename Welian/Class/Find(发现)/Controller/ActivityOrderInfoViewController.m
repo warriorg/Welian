@@ -35,7 +35,7 @@
 {
     _activityInfo = nil;
     _tickets = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (NSString *)title
@@ -52,7 +52,7 @@
         self.payInfo = payInfo;
         
         //添加支付成功监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOrderSucess) name:@"AlipayPaySuccess" object:nil];
+        [KNSNotification addObserver:self selector:@selector(updateOrderSucess) name:kAlipayPaySuccess object:nil];
     }
     return self;
 }
@@ -84,7 +84,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = kTitleNormalTextColor;
-    titleLabel.font = [UIFont boldSystemFontOfSize:16.f];
+    titleLabel.font = kNormalBlod16Font;
     titleLabel.text = _activityInfo.name;
     titleLabel.numberOfLines = 0.f;
     titleLabel.width = headerView.width - kMarginLeft * 2.f;
@@ -96,7 +96,7 @@
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textColor = kNormalTextColor;
-    timeLabel.font = [UIFont systemFontOfSize:12.f];
+    timeLabel.font = kNormal12Font;
     timeLabel.text = [_activityInfo displayStartTimeInfo];
     timeLabel.numberOfLines = 0.f;
     timeLabel.width = headerView.width - kMarginLeft * 2.f;
@@ -117,10 +117,10 @@
     //总金额
     UILabel *totalPriceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     totalPriceLabel.backgroundColor = [UIColor clearColor];
-    totalPriceLabel.font = [UIFont systemFontOfSize:14.f];
+    totalPriceLabel.font = kNormal14Font;
     totalPriceLabel.textColor = kTitleNormalTextColor;
     totalPriceLabel.text = [NSString stringWithFormat:@"%@元",[self displayTotalPrice]];
-    [totalPriceLabel setAttributedText:[NSObject getAttributedInfoString:totalPriceLabel.text searchStr:[self displayTotalPrice] color:RGB(224.f, 68.f, 0.f) font:[UIFont boldSystemFontOfSize:18.f]]];
+    [totalPriceLabel setAttributedText:[NSObject getAttributedInfoString:totalPriceLabel.text searchStr:[self displayTotalPrice] color:RGB(224.f, 68.f, 0.f) font:kNormalBlod18Font]];
     [totalPriceLabel sizeToFit];
     totalPriceLabel.right = totalInfoView.right - kMarginLeft;
     totalPriceLabel.top = 19.f;
@@ -129,7 +129,7 @@
     //总数量
     UILabel *totalNumLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     totalNumLabel.backgroundColor = [UIColor clearColor];
-    totalNumLabel.font = [UIFont systemFontOfSize:14.f];
+    totalNumLabel.font = kNormal14Font;
     totalNumLabel.textColor = kTitleNormalTextColor;
     totalNumLabel.text = [NSString stringWithFormat:@"共%d张　　　总计 ",[self displayTicketCount]];
     [totalNumLabel sizeToFit];
@@ -327,7 +327,7 @@
             NSInteger resultStatus = [resultDic[@"resultStatus"] integerValue];
             if (resultStatus == 9000) {
                 //支付成功
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayPaySuccess" object:nil];
+                [KNSNotification postNotificationName:kAlipayPaySuccess object:nil];
             }else{
                 if ([resultDic[@"memo"] length] > 0) {
                     [UIAlertView showWithTitle:nil message:resultDic[@"memo"]];
@@ -353,7 +353,7 @@
                                             success:^(id JSON) {
                                                 [WLHUDView hiddenHud];
                                                 //刷新详情页面
-                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedReloadActivityUI" object:nil];
+                                                [KNSNotification postNotificationName:kNeedReloadActivityUI object:nil];
                                                 [UIAlertView bk_showAlertViewWithTitle:@""
                                                                                message:@"恭喜您，活动报名成功！"
                                                                      cancelButtonTitle:@"确定"
@@ -391,8 +391,8 @@
 //获取表格头部内容的高度
 - (CGFloat)configureTableHeaderHeight
 {
-    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - kMarginLeft * 2.f, FLT_MAX) font:[UIFont boldSystemFontOfSize:16.f]];
-    CGSize timeSize = [[_activityInfo displayStartTimeInfo] calculateSize:CGSizeMake(self.view.width - kMarginLeft * 2.f, FLT_MAX) font:[UIFont systemFontOfSize:12.f]];
+    CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - kMarginLeft * 2.f, FLT_MAX) font:kNormalBlod16Font];
+    CGSize timeSize = [[_activityInfo displayStartTimeInfo] calculateSize:CGSizeMake(self.view.width - kMarginLeft * 2.f, FLT_MAX) font:kNormal12Font];
     return titleSize.height + timeSize.height + kMarginLeft + kMarginEdge;
 }
 

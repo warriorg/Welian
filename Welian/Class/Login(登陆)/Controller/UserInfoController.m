@@ -111,9 +111,9 @@
             [reqstDic setObject:self.phoneString forKey:@"mobile"];
             [reqstDic setObject:self.pwdString forKey:@"password"];
             [reqstDic setObject:KPlatformType forKey:@"platform"];
-            if ([UserDefaults objectForKey:BPushRequestChannelIdKey]) {
+            if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
                 
-                [reqstDic setObject:[UserDefaults objectForKey:BPushRequestChannelIdKey] forKey:@"clientid"];
+                [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
             }
 
             [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
@@ -121,7 +121,7 @@
                 if (dataDic) {
                     UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
                     [mode setCheckcode:self.pwdString];
-                    [UserDefaults setObject:mode.sessionid forKey:@"sessionid"];
+                    [UserDefaults setObject:mode.sessionid forKey:kSessionId];
                     [LogInUser createLogInUserModel:mode];
                     BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
                     [bsearchVC setIsStart:YES];

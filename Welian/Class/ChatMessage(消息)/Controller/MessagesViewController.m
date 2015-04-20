@@ -37,7 +37,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 //没有聊天记录提醒
@@ -60,7 +60,7 @@
         _wlSegmentedControl.selectionIndicatorHeight = 2;
         _wlSegmentedControl.backgroundColor = kNavBgColor;
         _wlSegmentedControl.showBottomLine = YES;
-        _wlSegmentedControl.font = [UIFont boldSystemFontOfSize:16.f];
+        _wlSegmentedControl.font = kNormalBlod16Font;
     }
     return _wlSegmentedControl;
 }
@@ -70,18 +70,18 @@
     self = [super init];
     if (self) {
         //添加聊天用户改变监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:@"ChatUserChanged" object:nil];
+        [KNSNotification addObserver:self selector:@selector(badgeInfoChanged) name:kChatUserChanged object:nil];
         //添加聊天消息数量改变监听
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:@"ChatMsgNumChanged" object:nil];
+        [KNSNotification addObserver:self selector:@selector(badgeInfoChanged) name:kChatMsgNumChanged object:nil];
         //新的好友改变通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:KNewFriendNotif object:nil];
+        [KNSNotification addObserver:self selector:@selector(badgeInfoChanged) name:KNewFriendNotif object:nil];
         //添加新的消息通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badgeInfoChanged) name:KMessageHomeNotif object:nil];
+        [KNSNotification addObserver:self selector:@selector(badgeInfoChanged) name:KMessageHomeNotif object:nil];
         //如果是从好友列表进入聊天，首页变换
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatFromUserInfo:) name:@"ChatFromUserInfo" object:nil];
+        [KNSNotification addObserver:self selector:@selector(chatFromUserInfo:) name:kChatFromUserInfo object:nil];
         
         //如果是从当前VC进入聊天
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentChatFromUserInfo:) name:@"CurrentChatFromUserInfo" object:nil];
+        [KNSNotification addObserver:self selector:@selector(currentChatFromUserInfo:) name:kCurrentChatFromUserInfo object:nil];
         
         self.selectType= 0;
         self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
@@ -304,11 +304,6 @@
                 //更新当前聊天的所有消息为已读状态
                 //        [friendUser updateAllMessageReadStatus];
                 [friendUser updateUnReadMessageNumber:@(0)];
-                //更新首页角标
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
-                //刷新列表
-//                self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
-//                [self.tableView reloadData];
             }
                 break;
             case 1:
@@ -343,7 +338,7 @@
 - (void)selectIndexChanged:(NSInteger)index
 {
     //设置是否在新的好友通知页面
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLookAtNewFriendVC"];
+    [UserDefaults setBool:NO forKey:kIsLookAtNewFriendVC];
     //改变普通消息的查看状态
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     if (_isLookedMessage) {
@@ -388,10 +383,10 @@
 - (void)setNewUserBadgeChange
 {
     //设置是否在新的好友通知页面
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLookAtNewFriendVC"];
+    [UserDefaults setBool:YES forKey:kIsLookAtNewFriendVC];
     //设置新的好友角标
     [LogInUser setUserNewfriendbadge:@(0)];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatMsgNumChanged" object:nil];
+    
     [self currentBadgeChanged];
 }
 
@@ -399,7 +394,7 @@
 - (void)currentBadgeChanged
 {
     //更新主页面总的角标
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateMainMessageBadge" object:nil];
+    [KNSNotification postNotificationName:kUpdateMainMessageBadge object:nil];
     //更新当前列表角标
     [self updateCurrentBadgeInfo];
 }
@@ -471,7 +466,7 @@
 - (void)chatFromUserInfo:(NSNotification *)notification
 {
     //切换首页Tap
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+    [KNSNotification postNotificationName:kChangeTapToChatList object:nil];
     
     //切换到聊天列表也没
     [_wlSegmentedControl setSelectedSegmentIndex:0];
@@ -572,10 +567,10 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             
             //刷新好友列表
-            [[NSNotificationCenter defaultCenter] postNotificationName:KupdataMyAllFriends object:self];
+            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
             
             //通知接受好友请求
-            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"Accepte%@",newFriendUser.uid] object:nil];
+            [KNSNotification postNotificationName:[NSString stringWithFormat:kAccepteFriend,newFriendUser.uid] object:nil];
             
             //接受后，本地创建一条消息
             //本地创建好像

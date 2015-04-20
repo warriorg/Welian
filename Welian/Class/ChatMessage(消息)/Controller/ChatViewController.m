@@ -38,7 +38,7 @@
 {
     self.friendUser = nil;
     _localMessages = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [KNSNotification removeObserver:self];
 }
 
 - (void)loadDemoDataSource {
@@ -159,7 +159,7 @@
 //    [WLHttpTool cancelAllRequestHttpTool];
     
     //设置上次输入的为发送的文本内容
-    NSString *unSendText = [UserDefaults objectForKey:[NSString stringWithFormat:@"chat:%@",self.friendUser.uid.stringValue]];
+    NSString *unSendText = [UserDefaults objectForKey:[NSString stringWithFormat:kChatNowKey,self.friendUser.uid.stringValue]];
     if (unSendText.length > 0) {
         [self setDeFaultInputText:unSendText];
     }
@@ -198,7 +198,7 @@
     [self loadDemoDataSource];
     
     //添加新消息监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewChatMessage:) name:[NSString stringWithFormat:@"ReceiveNewChatMessage%@",self.friendUser.uid.stringValue] object:nil];
+    [KNSNotification addObserver:self selector:@selector(receiveNewChatMessage:) name:[NSString stringWithFormat:kReceiveNewChatMessage,self.friendUser.uid.stringValue] object:nil];
     
 }
 
@@ -710,7 +710,7 @@
     //如果是从好友列表进入聊天，首页变换
 //    if(_isFromUserInfo){
 //        _isFromUserInfo = NO;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeTapToChatList" object:nil];
+//        [KNSNotification postNotificationName:kChangeTapToChatList object:nil];
 //    }
 }
 
@@ -901,7 +901,7 @@
     [self addMessage:message needSend:YES];
     
     //聊天状态发送改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChatUserChanged" object:nil];
+    [KNSNotification postNotificationName:kChatUserChanged object:nil];
 }
 
 /**

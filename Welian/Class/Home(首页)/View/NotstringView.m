@@ -125,7 +125,7 @@
             UILabel *titLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, top, frame.size.width - 60, 40)];
             
             [titLabel setText:titleStr];
-            titLabel.font = [UIFont systemFontOfSize:15.f];
+            titLabel.font = kNormal15Font;
             [titLabel setTextAlignment:NSTextAlignmentCenter];
             [titLabel setTextColor:WLRGB(170, 178, 182)];
             [titLabel setNumberOfLines:0];
@@ -140,7 +140,7 @@
         if(subTitle){
             UILabel *subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, top, frame.size.width - 60, 40)];
             [subTitleLabel setText:subTitle];
-            subTitleLabel.font = [UIFont systemFontOfSize:14.f];
+            subTitleLabel.font = kNormal14Font;
             [subTitleLabel setNumberOfLines:0];
             [subTitleLabel setTextAlignment:NSTextAlignmentCenter];
             [subTitleLabel setTextColor:WLRGB(170, 178, 182)];
@@ -154,7 +154,7 @@
         if (btnTitle || btnImageName) {
             UIButton *opeateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             opeateBtn.backgroundColor = [UIColor whiteColor];
-            opeateBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
+            opeateBtn.titleLabel.font = kNormal16Font;
             if (btnTitle) {
                 [opeateBtn setTitle:btnTitle forState:UIControlStateNormal];
                 [opeateBtn setTitleColor:RGB(51.f, 115.f, 186.f) forState:UIControlStateNormal];
