@@ -47,8 +47,6 @@
         _indexLabel = [[UILabel alloc] init];
         _indexLabel.font = [UIFont boldSystemFontOfSize:16];
         _indexLabel.frame = self.bounds;
-//        CGRectMake(self.bounds.size.width*0.5-40, 15, 80, 25);
-//        _indexLabel.backgroundColor = [UIColor clearColor];
         _indexLabel.textColor = [UIColor whiteColor];
         _indexLabel.textAlignment = NSTextAlignmentCenter;
         _indexLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -78,10 +76,15 @@
 //    [photArrayM removeObjectAtIndex:_currentPhotoIndex];
 //    self.photos = [NSArray arrayWithArray:photArrayM];
 //    [self setCurrentPhotoIndex:_currentPhotoIndex+1];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        MJPhoto *photo = _photos[_currentPhotoIndex];
-        UIImageWriteToSavedPhotosAlbum(photo.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    });
+    MJPhoto *photo = _photos[_currentPhotoIndex];
+    if (photo.image) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImageWriteToSavedPhotosAlbum(photo.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        });
+    }else{
+       [WLHUDView showErrorHUD:@"保存失败"];
+    }
+
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
@@ -104,9 +107,9 @@
     // 更新页码
     _indexLabel.text = [NSString stringWithFormat:@"%lu / %lu", _currentPhotoIndex + 1, (unsigned long)_photos.count];
     
-//    MJPhoto *photo = _photos[_currentPhotoIndex];
-    // 按钮
-//    _saveImageBtn.enabled = photo.image != nil && !photo.save;
+    MJPhoto *photo = _photos[_currentPhotoIndex];
+////     按钮
+    _saveImageBtn.enabled = !photo.save;
 }
 
 @end

@@ -13,6 +13,8 @@
 
 @interface WLStatusM : NSObject
 
+//@property (nonatomic, assign) BOOL 
+
 /** 0 正常动态，1 转推的动态，2推荐的动态，3创建的活动，4 修改个人公司，5 参加的活动，6 修改学校资料，10创建项目，11 网页, 12点评项目  */
 @property (nonatomic, assign) int type;
 
