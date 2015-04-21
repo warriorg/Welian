@@ -18,7 +18,8 @@
 + (void)initialize
 {
     UINavigationBar *navBar = [UINavigationBar appearance];
-    [navBar setBarTintColor:KBasesColor];
+    [navBar setBarTintColor:[UIColor colorWithRed:43/255.0 green:94/255.0 blue:171/255.0 alpha:0.01]];
+
     [navBar setTintColor:[UIColor whiteColor]];
     // 3.设置文字样式
     NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
