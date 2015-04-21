@@ -48,6 +48,8 @@
 
 // 首页数据
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[LogInUser getCurrentLoginUser].uid]
+//首页数据 重新发送
+#define KSendAgainDataTableName [NSString stringWithFormat:@"SendAgain%@",[LogInUser getCurrentLoginUser].uid]
 // 所有动态数据
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[LogInUser getCurrentLoginUser].uid]
 // 所有用户详细信息
