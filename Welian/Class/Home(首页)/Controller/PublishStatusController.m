@@ -8,10 +8,8 @@
 
 #import "PublishStatusController.h"
 #import "CTAssetsPageViewController.h"
-
 #import "JKImagePickerController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-
 #import "PictureCell.h"
 #import "PublishModel.h"
 #import "IWTextView.h"
@@ -19,6 +17,10 @@
 #import "WLCellCardView.h"
 #import "WUDemoKeyboardBuilder.h"
 
+#import "WLStatusM.h"
+#import "WLPhoto.h"
+#import "WLBasicTrends.h"
+#import "MJExtension.h"
 
 static NSString *picCellid = @"PicCellID";
 
@@ -432,7 +434,6 @@ static NSString *picCellid = @"PicCellID";
             [reqDataDic setObject:self.publishM.x forKey:@"x"];
             [reqDataDic setObject:self.publishM.y forKey:@"y"];
         }
-        
         if (self.assetsArray.count) {
             for (JKAssets *jkAsset in self.assetsArray) {
                 UIImage *image = jkAsset.fullImage;
@@ -444,17 +445,12 @@ static NSString *picCellid = @"PicCellID";
              [reqDataDic setObject:weakSelf.publishM.photos forKey:@"photos"];
         }
         
-        [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
-            [KNSNotification postNotificationName:KPublishOK object:nil];
-            if (self.publishBlock) {
-                self.publishBlock();
-            }
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-            }];
-        } fail:^(NSError *error) {
-            [WLHUDView showErrorHUD:@"发布失败！"];
-        }];
+        NSString *dateStr = [NSString stringWithFormat:@"%f",[NSDate timeIntervalSinceReferenceDate]];
+        [[WLDataDBTool sharedService] putObject:reqDataDic  withId:dateStr intoTable:KSendAgainDataTableName];
+        if (self.publishDicBlock) {
+            self.publishDicBlock(reqDataDic);
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     
 }

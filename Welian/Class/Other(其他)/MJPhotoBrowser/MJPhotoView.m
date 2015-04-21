@@ -66,7 +66,6 @@
     
         [self showImage];
     }
-    DLog(@"select photo:%f ,y:%f,w:%f,h:%f",photo.imageCurrentRect.origin.x,photo.imageCurrentRect.origin.y,photo.imageCurrentRect.size.width,photo.imageCurrentRect.size.height);
 }
 
 #pragma mark 显示图片
@@ -201,8 +200,6 @@
         }else{
             _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
         }
-        DLog(@"_imageView.frame:x:%f ,y:%f,w:%f,h:%f",_imageView.frame.origin.x,_imageView.frame.origin.y,_imageView.frame.size.width,_imageView.frame.size.height);
-        DLog(@"_photo:%f ,y:%f,w:%f,h:%f",_photo.imageCurrentRect.origin.x,_photo.imageCurrentRect.origin.y,_photo.imageCurrentRect.size.width,_photo.imageCurrentRect.size.height);
         
         [UIView animateWithDuration:0.3 animations:^{
             _imageView.frame = imageFrame;

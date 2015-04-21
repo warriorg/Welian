@@ -28,6 +28,8 @@
 #import "AFNetworkReachabilityManager.h"
 #import "NotstringView.h"
 
+#import "WLPhoto.h"
+
 @interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 {
    __block NSMutableArray *_dataArry;
@@ -341,11 +343,56 @@
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         DLog(@"status===%d",status);
         if (status == AFNetworkReachabilityStatusNotReachable) {
+            [self showStatusNotReachable];
         }else{
+            [self beginPullDownRefreshing];
+            self.tableView.tableHeaderView = nil;
         }
     }];
 
 }
+
+/**
+ *  显示最新微博的数量（提示）
+ */
+- (void)showStatusNotReachable
+{
+    // 1.创建一个按钮
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.userInteractionEnabled = NO;
+    btn.backgroundColor = RGB(255, 238, 238);
+    [btn setImage:[UIImage imageNamed:@"Shape"] forState:UIControlStateNormal];
+    // 3.设置文字
+    [btn setTitle:@"网络无法连接，请检查网络配置" forState:UIControlStateNormal];
+    [btn setTitleColor:RGB(127, 127, 127) forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+    // 4.设置frame
+    CGFloat btnW = self.view.frame.size.width;
+    CGFloat btnH = 44;
+    CGFloat btnY = 64 - btnH;
+    btn.frame = CGRectMake(0, btnY, btnW, btnH);
+    
+    // 5.添加按钮
+    [self.navigationController.view insertSubview:btn belowSubview:self.navigationController.navigationBar];
+    
+    // 6.执行动画
+    // 6.1.利用1s往下走
+    CGFloat duration = 0.7;
+    [UIView animateWithDuration:duration animations:^{
+        btn.transform = CGAffineTransformMakeTranslation(0, btnH);
+    } completion:^(BOOL finished) {
+        [self.tableView setTableHeaderView:btn];
+        // 6.2.等1.0s后，再用1s的时间往上走
+//        [UIView animateWithDuration:duration delay:100 options:UIViewAnimationOptionCurveLinear animations:^{
+////            btn.transform = CGAffineTransformIdentity;
+//        } completion:^(BOOL finished) {
+//            // 6.3.删除按钮
+////            [btn removeFromSuperview];
+//        }];
+    }];
+}
+
 
 #pragma mark - 消息页面
 - (void)messageButtonPress:(id)sender
@@ -367,6 +414,9 @@
 - (void)publishStatus
 {
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
+    publishVC.publishDicBlock = ^(NSDictionary *reqDataDic){
+        [self sendAgainStuat:reqDataDic];
+    };
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
     }];
 }
@@ -476,7 +526,7 @@
 {
     WLStatusFrame *statusF = _dataArry[indexPath.row];
     
-    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12) return;
+    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12 || statusF.status.type ==13) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
@@ -485,7 +535,6 @@
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
     };
     commentInfo.feedTuiBlock = ^(WLStatusM *statusM){
@@ -493,14 +542,12 @@
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
     };
     commentInfo.commentBlock = ^(WLStatusM *statusM){
         WLStatusFrame *statusF = _dataArry[indexPath.row];
         [statusF setStatus:statusM];
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusF];
-//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
     };
     
@@ -638,4 +685,55 @@
                                     }];
 }
 
+
+#pragma mark - 重新发布动态
+- (void)sendAgainStuat:(NSDictionary *)reqDtaDic
+{
+    LogInUser *meuser = [LogInUser getCurrentLoginUser];
+    NSArray *photsArray = [reqDtaDic objectForKey:@"photos"];
+    NSMutableArray *photosA = [NSMutableArray array];
+    for (NSDictionary *imageDic in photsArray) {
+        NSData *photoData = [[NSData alloc] initWithBase64EncodedString:[imageDic objectForKey:@"photo"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        [photosA addObject:@{@"imageData":photoData}];
+    }
+    NSMutableDictionary *frameDic = [NSMutableDictionary dictionaryWithDictionary:reqDtaDic];
+    [frameDic setObject:photosA forKey:@"photos"];
+
+    WLStatusFrame *newsf = [self dataFrameWith:frameDic];
+    WLStatusM *statusM = newsf.status;
+    statusM.sendType = 2;
+    statusM.type = 13;
+    WLBasicTrends *meBasic =  [[WLBasicTrends alloc] init];
+    meBasic.name = meuser.name;
+    meBasic.avatar = meuser.avatar;
+    meBasic.uid = meuser.uid;
+    meBasic.position = meuser.position;
+    meBasic.company = meuser.company;
+    meBasic.friendship = meuser.firststustid.intValue;
+    statusM.user = meBasic;
+    newsf.status = statusM;
+    
+    [_dataArry insertObject:newsf atIndex:0];
+    
+    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+//    [self.tableView reloadData];
+    [self sendStuat:reqDtaDic withIndexPath:indexPath];
+}
+
+- (void)sendStuat:(NSDictionary *)reqDataDic withIndexPath:(NSIndexPath *)indexPath
+{
+    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+        
+        
+    } fail:^(NSError *error) {
+        WLStatusFrame *statusFrame = _dataArry[indexPath.row];
+        WLStatusM *statusM = statusFrame.status;
+        statusM.sendType = 1;
+        statusFrame.status = statusM;
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [WLHUDView showErrorHUD:@"发布失败！"];
+    }];
+}
 @end

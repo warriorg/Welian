@@ -45,11 +45,14 @@
 - (void)setPhoto:(WLPhoto *)photo
 {
     _photo = photo;
-
-    // 1.下载图片
-    [self sd_setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:nil options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [[SDImageCache sharedImageCache] storeImage:image forKey:photo.url];
-    }];
+    if (photo.url) {
+        // 1.下载图片
+        [self sd_setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:nil options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [[SDImageCache sharedImageCache] storeImage:image forKey:photo.url];
+        }];
+    }else if (photo.imageData){
+        [self setImage:[UIImage imageWithData:photo.imageData]];
+    }
     
     // 2.gif标识的处理
     if ([photo.url.lowercaseString hasSuffix:@"gif"]) { // 是GIF

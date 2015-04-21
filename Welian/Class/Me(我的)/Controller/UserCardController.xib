@@ -101,7 +101,7 @@
                                     </variation>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="290" id="0q7-SE-YEL"/>
                                 <constraint firstAttribute="height" constant="401" id="Zjr-R8-Vy5"/>
@@ -129,6 +129,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <color key="backgroundColor" red="0.85014011550000002" green="0.85014011550000002" blue="0.85014011550000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="kmS-Nt-AVs" firstAttribute="top" secondItem="QoK-he-ayh" secondAttribute="top" constant="20" id="Jo6-hs-ByS"/>
                         <constraint firstAttribute="centerX" secondItem="kmS-Nt-AVs" secondAttribute="centerX" id="lIG-dV-zWS"/>

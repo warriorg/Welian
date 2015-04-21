@@ -21,6 +21,9 @@
 //* 赞*//
 @property (nonatomic, strong) UIButton *attitudeBtn;
 
+//** 重新发送 *///
+@property (nonatomic, strong) UIButton *sendAgainBtn;
+
 @property (nonatomic, strong) WLContentCellFrame *contentFrame;
 
 @end

@@ -35,7 +35,7 @@
         _failureLabel.text = @"网络不给力，图片下载失败";
         _failureLabel.font = [UIFont systemFontOfSize:16];
         _failureLabel.textColor = [UIColor whiteColor];
-        _failureLabel.backgroundColor = [UIColor clearColor];
+        _failureLabel.backgroundColor = [UIColor colorWithWhite:0.6 alpha:0.9];
         _failureLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     }
     [self addSubview:_failureLabel];
