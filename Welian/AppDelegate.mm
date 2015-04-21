@@ -31,8 +31,6 @@
 #import "LoginGuideController.h"
 #import "MsgPlaySound.h"
 
-#define kStoreName @"weLianAppDis.sqlite"
-
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
     MainViewController *mainVC;

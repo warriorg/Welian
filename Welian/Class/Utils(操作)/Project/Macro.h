@@ -28,6 +28,48 @@
 #define kAlipayNotifyURL @"http://www.welian.com:8080/alipay/notify"
 
 
+#pragma mark - 注册，登录
+//基本路径
+#define kRegisterUrl(path) [NSString stringWithFormat:@"register/%@",path]
+//微信注册
+#define kWXRegisterPath kRegisterUrl(@"wxregister")
+//手机注册
+#define kRegisterPath kRegisterUrl(@"register")
+//获取验证码
+#define kGetcodePath kRegisterUrl(@"getcode")
+//验证验证码
+#define kCheckcodePath kRegisterUrl(@"checkcode")
+//忘记密码
+#define kChanagePasswordPath kRegisterUrl(@"chanagepassword")
+//登陆
+#define kLoginPath kRegisterUrl(@"login")
+
+
+#pragma mark - 用户模块
+//基本路径
+#define kUserUrl(path) [NSString stringWithFormat:@"user/%@",path]
+//修改用户信息
+#define kSaveUserInfoPath kUserUrl(@"save")
+//增加教育经历
+#define kSaveSchoolPath kUserUrl(@"saveschool")
+//删除教育经历
+#define kDeleteSchoolPath kUserUrl(@"deleteschool")
+//增加工作经历
+#define kSaveCompanyPath kUserUrl(@"savecompany")
+//删除工作经历
+#define kDeleteCompanyPath kUserUrl(@"deletecompany")
+//认证投资人
+#define kInvestPath kUserUrl(@"invest")
+//取用户认证信息
+#define kLoadInvestorPath kUserUrl(@"loadinvestor")
+//修改密码
+#define kChangePassWDPath kUserUrl(@"chanagepassword")
+
+#pragma mark - 认证手机号码
+//取验证码接口
+#define kMobileCodePath kUserUrl(@"mobilecode")
+//验证手机号码
+#define kCheckMobileCodePath kUserUrl(@"checkmobilecode")
 
 
 
@@ -41,9 +83,12 @@
 
 
 
-
+#pragma mark - CoreData
+//数据库名字
+#define kStoreName @"weLianAppDis.sqlite"
 
 #pragma mark - Sqlite Data
+
 #define KWLDataDBName @"wlDataDBName.db"
 
 // 首页数据

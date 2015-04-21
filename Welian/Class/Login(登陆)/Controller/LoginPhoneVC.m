@@ -157,6 +157,15 @@
             [WLHUDView showErrorHUD:error.domain];
         }
     } isHUD:YES];
+    
+//    [WeLianClient loginWithMobile:self.phoneTextField.text
+//                          Unionid:@""
+//                         Password:self.pwdTextField.text
+//                          Success:^(id resultInfo) {
+//                              
+//                          } Failed:^(NSError *error) {
+//                              [UIAlertView showWithError:error];
+//                          }];
 }
 
 @end

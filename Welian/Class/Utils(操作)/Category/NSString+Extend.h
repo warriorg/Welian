@@ -19,6 +19,7 @@
 
 //将NSString转化为NSArray或者NSDictionary
 - (id)JSONValue;
+- (NSString *)MD5String;//md5加密
 
 - (BOOL)isMobileNumber;//判断是否是中国的手机号码
 - (NSString *)mobileType;//判断手机号码的类型

@@ -250,22 +250,41 @@
     
     if(type == WLBubbleMessageMediaTypePhoto){
         //下载图片
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:msg]
-                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
-                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                           
-                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                           if (finished) {
-                                                               //保存到本地  图片名称
-                                                               NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
-                                                               //保存图片
-                                                               NSString *path = [ResManager saveImage:image ToFolder:friendUser.uid.stringValue WithName:imageName];
-                                                               [self createReciveMessageWithDict:dict ImagePath:path FriendUser:friendUser];
-                                                           }else{
-                                                               DLog(@"获取图片消息，下载图片失败");
-                                                               return ;
-                                                           }
-                                                       }];
+        NSMutableDictionary *Files = [NSMutableDictionary dictionary];
+        //下载照片
+        NSString *imageName = [msg lastPathComponent];
+        NSString *toFolderPath = [NSString stringWithFormat:@"ChatDocument/%@",friendUser.uid.stringValue];
+        //设置下载图片信息
+        [Files setObject:msg forKey:imageName];
+        [WeLianClient downLoadImageWithMemberId:Files
+                                       ToFolder:toFolderPath
+                                        success:^(id result) {
+                                            DLog(@"聊天图片下载成功");
+//                                            NSString *folder = [[ResManager userResourcePath] stringByAppendingPathComponent:toFolderPath];
+                                            //本地的图片路径
+                                            NSString *path = [toFolderPath stringByAppendingPathComponent:imageName];
+                                            [self createReciveMessageWithDict:dict ImagePath:path FriendUser:friendUser];
+                                        } failed:^(NSError *error) {
+                                            DLog(@"聊天图片下载失败");
+                                            return ;
+                                        }];
+        
+//        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:msg]
+//                                                        options:SDWebImageRetryFailed|SDWebImageLowPriority
+//                                                       progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//                                                           
+//                                                       } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//                                                           if (finished) {
+//                                                               //保存到本地  图片名称
+//                                                               NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[NSString getNowTimestamp]];
+//                                                               //保存图片
+//                                                               NSString *path = [ResManager saveImage:image ToFolder:friendUser.uid.stringValue WithName:imageName];
+//                                                               [self createReciveMessageWithDict:dict ImagePath:path FriendUser:friendUser];
+//                                                           }else{
+//                                                               DLog(@"获取图片消息，下载图片失败");
+//                                                               return ;
+//                                                           }
+//                                                       }];
     }else{
         [self createReciveMessageWithDict:dict ImagePath:nil FriendUser:friendUser];
     }

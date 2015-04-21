@@ -290,6 +290,22 @@
             } fail:^(NSError *error) {
                 
             }];
+            
+            //添加教育经历
+//            [WeLianClient saveSchoolWithID:_schoolM.usid
+//                                  Schoolid:_schoolM.schoolid
+//                                Schoolname:_schoolM.schoolname
+//                               Specialtyid:_schoolM.specialtyid
+//                                 Startyear:_schoolM.startyear
+//                                Startmonth:_schoolM.startmonth
+//                                   Endyear:_schoolM.endyear
+//                                  Endmonth:_schoolM.endmonth
+//                                   Success:^(id resultInfo) {
+//                                       
+//                                   } Failed:^(NSError *error) {
+//                                       [UIAlertView showWithError:error];
+//                                   }];
+            
         }else{
             [WLHUDView showErrorHUD:@"信息不完整！"];
         }

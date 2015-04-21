@@ -18,10 +18,10 @@
 #ifndef SendIFMacros_h
 #define SendIFMacros_h
 
-typedef void (^RequestFinish)(id result);
+typedef void (^RequestFinish)(id resultInfo);
 typedef void (^RequestFailedBlocks)(NSError *error);
 
-typedef void (^SuccessBlock)(id result);
+typedef void (^SuccessBlock)(id resultInfo);
 typedef void (^FailedBlock)(NSError *error);
 typedef void (^FinalBlock)(void);
 

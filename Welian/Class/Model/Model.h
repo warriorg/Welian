@@ -26,6 +26,7 @@
 
 
 #pragma mark - Interface
+#import "IBaseModel.h"
 #import "IBaseUserM.h"
 #import "IProjectInfo.h"
 #import "IProjectDetailInfo.h"
