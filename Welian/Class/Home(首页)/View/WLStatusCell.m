@@ -150,6 +150,8 @@
     }else{
         [_moreBut setHidden:YES];
     }
+    // 发送中 删除按钮隐藏
+    _moreBut.hidden = status.sendType==2;
 
     [_cellHeadView setUserStat:status];
     [_cellHeadView setControllVC:self.homeVC];

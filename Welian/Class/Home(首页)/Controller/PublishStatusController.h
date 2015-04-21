@@ -25,7 +25,7 @@ typedef enum {
 typedef void(^WLPublishStatusBlock)(void);
 
 // 需要重新发送
-typedef void (^WLPublishStatusDataBlock)(NSDictionary *statusDic);
+typedef void (^WLPublishStatusDataBlock)(NSDictionary *statusDic, NSString *fidStr);
 
 @interface PublishStatusController : UIViewController
 

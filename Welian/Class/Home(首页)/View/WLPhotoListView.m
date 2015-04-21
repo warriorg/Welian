@@ -76,6 +76,28 @@
             
             if (picCount == 1) { // 1张
                 CGSize size = [self onePhotoSize:photoView.photo.url];
+                if (photoView.photo.imageData) {
+                    UIImage *image = [UIImage imageWithData:photoView.photo.imageData];
+                    size = image.size;
+                    CGFloat w = image.size.width;
+                    CGFloat h = image.size.height;
+                    if (w>h || w==h) {
+                        CGFloat se = 1.0;
+                        if (w>180) {
+                            se = 180/w;
+                            w = 180;
+                        }
+                        h = h*se;
+                    }else{
+                        CGFloat se = 1.0;
+                        if (h>150) {
+                            se = 150/h;
+                            h= 150;
+                        }
+                        w = w*se;
+                    }
+                    size = CGSizeMake(w, h);
+                }
                 photoView.frame = CGRectMake(0, 0, size.width, size.height);
                 continue;
             }
