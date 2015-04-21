@@ -31,6 +31,15 @@
         _timeLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_timeLabel];
         
+        // 重新发送
+        _sendAgainBtn = [[UIButton alloc] init];
+        [_sendAgainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+        [_sendAgainBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_sendAgainBtn setTitle:@"重新发送" forState:UIControlStateNormal];
+        [_sendAgainBtn setTitle:@"发送中..." forState:UIControlStateDisabled];
+        [_sendAgainBtn.titleLabel setFont:kNormal14Font];
+        [self addSubview:_sendAgainBtn];
+        
         // 1.添加赞
         _attitudeBtn = [self addBtn:@"赞" image:@"me_mywriten_good"];
         
@@ -84,9 +93,21 @@
     _contentFrame = contentFrame;
     
     WLStatusM *status = contentFrame.status;
+    //* 自己发送  重新发送 0无状态  1 重新发送  2 发送中... *//
+    [_sendAgainBtn setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.4, contentFrame.dockFrame.size.height)];
+    [_sendAgainBtn setHidden:!status.sendType];
+    [_timeLabel setHidden:status.sendType];
+    if (status.sendType==1) {
+        [_sendAgainBtn setEnabled:YES];
+    }else if (status.sendType ==2){
+        [_sendAgainBtn setEnabled:NO];
+    }
+    
+    
     // 0.设置时间
     [_timeLabel setText:status.created];
-    [_timeLabel setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.4, contentFrame.dockFrame.size.height)];
+    [_timeLabel setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.3, contentFrame.dockFrame.size.height)];
+    [_timeLabel setDebug:YES];
     
     // 1.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan index:0];

@@ -28,6 +28,8 @@
 #import "AFNetworkReachabilityManager.h"
 #import "NotstringView.h"
 
+#import "WLPhoto.h"
+
 @interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 {
    __block NSMutableArray *_dataArry;
@@ -412,6 +414,9 @@
 - (void)publishStatus
 {
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
+    publishVC.publishDicBlock = ^(NSDictionary *reqDataDic){
+        [self sendAgainStuat:reqDataDic];
+    };
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
     }];
 }
@@ -521,7 +526,7 @@
 {
     WLStatusFrame *statusF = _dataArry[indexPath.row];
     
-    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12) return;
+    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12 || statusF.status.type ==13) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
@@ -680,4 +685,55 @@
                                     }];
 }
 
+
+#pragma mark - 重新发布动态
+- (void)sendAgainStuat:(NSDictionary *)reqDtaDic
+{
+    LogInUser *meuser = [LogInUser getCurrentLoginUser];
+    NSArray *photsArray = [reqDtaDic objectForKey:@"photos"];
+    NSMutableArray *photosA = [NSMutableArray array];
+    for (NSDictionary *imageDic in photsArray) {
+        NSData *photoData = [[NSData alloc] initWithBase64EncodedString:[imageDic objectForKey:@"photo"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        [photosA addObject:@{@"imageData":photoData}];
+    }
+    NSMutableDictionary *frameDic = [NSMutableDictionary dictionaryWithDictionary:reqDtaDic];
+    [frameDic setObject:photosA forKey:@"photos"];
+
+    WLStatusFrame *newsf = [self dataFrameWith:frameDic];
+    WLStatusM *statusM = newsf.status;
+    statusM.sendType = 2;
+    statusM.type = 13;
+    WLBasicTrends *meBasic =  [[WLBasicTrends alloc] init];
+    meBasic.name = meuser.name;
+    meBasic.avatar = meuser.avatar;
+    meBasic.uid = meuser.uid;
+    meBasic.position = meuser.position;
+    meBasic.company = meuser.company;
+    meBasic.friendship = meuser.firststustid.intValue;
+    statusM.user = meBasic;
+    newsf.status = statusM;
+    
+    [_dataArry insertObject:newsf atIndex:0];
+    
+    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+//    [self.tableView reloadData];
+    [self sendStuat:reqDtaDic withIndexPath:indexPath];
+}
+
+- (void)sendStuat:(NSDictionary *)reqDataDic withIndexPath:(NSIndexPath *)indexPath
+{
+    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+        
+        
+    } fail:^(NSError *error) {
+        WLStatusFrame *statusFrame = _dataArry[indexPath.row];
+        WLStatusM *statusM = statusFrame.status;
+        statusM.sendType = 1;
+        statusFrame.status = statusM;
+        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [WLHUDView showErrorHUD:@"发布失败！"];
+    }];
+}
 @end

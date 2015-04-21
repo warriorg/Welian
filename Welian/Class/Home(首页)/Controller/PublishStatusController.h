@@ -24,11 +24,16 @@ typedef enum {
 // 发送成功
 typedef void(^WLPublishStatusBlock)(void);
 
+// 需要重新发送
+typedef void (^WLPublishStatusDataBlock)(NSDictionary *statusDic);
+
 @interface PublishStatusController : UIViewController
 
 @property (nonatomic, strong) CardStatuModel *statusCard;
 
 @property (nonatomic, copy) WLPublishStatusBlock publishBlock;
+
+@property (nonatomic, copy) WLPublishStatusDataBlock publishDicBlock;
 
 - (instancetype)initWithType:(PublishType)publishType;
 

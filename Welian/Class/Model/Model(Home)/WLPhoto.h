@@ -13,4 +13,7 @@
 /**  图片url   */
 @property (nonatomic, strong) NSString *url;
 
+//*   直接用图片 *//
+@property (nonatomic, strong) NSData *imageData;
+
 @end

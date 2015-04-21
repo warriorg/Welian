@@ -103,9 +103,9 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 服务器地址
 //测试环境
-//#define WLHttpServer  @"http://test.welian.com:8080"
+#define WLHttpServer  @"http://test.welian.com:8080"
 
-#define WLHttpServer @"http://sev.welian.com:80"
+//#define WLHttpServer @"http://sev.welian.com:80"
 
 //本地调试
 //#define WLHttpServer  @"http://192.168.1.122:80"
@@ -126,6 +126,10 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 // 首页数据
 #define KHomeDataTableName [NSString stringWithFormat:@"home%@",[LogInUser getCurrentLoginUser].uid]
+
+// 首页数据
+#define KSendAgainDataTableName [NSString stringWithFormat:@"SendAgain%@",[LogInUser getCurrentLoginUser].uid]
+
 // 所有动态数据
 #define KWLStutarDataTableName [NSString stringWithFormat:@"stutarData%@",[LogInUser getCurrentLoginUser].uid]
 // 所有用户详细信息
