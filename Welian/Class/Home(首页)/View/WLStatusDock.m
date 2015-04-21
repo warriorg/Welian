@@ -103,11 +103,9 @@
         [_sendAgainBtn setEnabled:NO];
     }
     
-    
     // 0.设置时间
     [_timeLabel setText:status.created];
     [_timeLabel setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.3, contentFrame.dockFrame.size.height)];
-    [_timeLabel setDebug:YES];
     
     // 1.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan index:0];

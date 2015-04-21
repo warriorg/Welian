@@ -221,7 +221,7 @@
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock (error);
-    } withHUD:YES andDim:YES];
+    } withHUD:NO andDim:NO];
 }
 
 #pragma mark - 加载好友最新动态

@@ -727,6 +727,7 @@
         
         
     } fail:^(NSError *error) {
+        
         WLStatusFrame *statusFrame = _dataArry[indexPath.row];
         WLStatusM *statusM = statusFrame.status;
         statusM.sendType = 1;
