@@ -34,7 +34,7 @@
         // 重新发送
         _sendAgainBtn = [[UIButton alloc] init];
         [_sendAgainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-        [_sendAgainBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_sendAgainBtn setTitleColor:KBasesColor forState:UIControlStateNormal];
         [_sendAgainBtn setTitle:@"重新发送" forState:UIControlStateNormal];
         [_sendAgainBtn setTitle:@"发送中..." forState:UIControlStateDisabled];
         [_sendAgainBtn.titleLabel setFont:kNormal14Font];
@@ -93,8 +93,12 @@
     _contentFrame = contentFrame;
     
     WLStatusM *status = contentFrame.status;
+    // 0.设置时间
+    [_timeLabel setText:status.created];
+    [_timeLabel setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.3, contentFrame.dockFrame.size.height)];
+    
     //* 自己发送  重新发送 0无状态  1 重新发送  2 发送中... *//
-    [_sendAgainBtn setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.4, contentFrame.dockFrame.size.height)];
+    [_sendAgainBtn setFrame:CGRectMake(0, 0, 60, contentFrame.dockFrame.size.height)];
     [_sendAgainBtn setHidden:!status.sendType];
     [_timeLabel setHidden:status.sendType];
     if (status.sendType==1) {
@@ -102,10 +106,6 @@
     }else if (status.sendType ==2){
         [_sendAgainBtn setEnabled:NO];
     }
-    
-    // 0.设置时间
-    [_timeLabel setText:status.created];
-    [_timeLabel setFrame:CGRectMake(0, 0, contentFrame.dockFrame.size.width*0.3, contentFrame.dockFrame.size.height)];
     
     // 1.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan index:0];
@@ -115,7 +115,6 @@
     
     // 3.设置转发数
     [self setBtn:_repostBtn title:@"转推" count:status.forwardcount index:2];
-    
     
     if (status.iszan==1) { // 已赞
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
@@ -140,6 +139,9 @@
     }else{
         [_commentBtn setEnabled:YES];
     }
+    
+    _attitudeBtn.enabled = !status.sendType;
+    _commentBtn.enabled = !status.sendType;
 }
 
 

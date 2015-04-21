@@ -144,8 +144,8 @@
     WLBasicTrends *tuiuser = status.tuiuser;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
     CGSize mainSize = [UIScreen mainScreen].bounds.size;
-
-    if ([[LogInUser getCurrentLoginUser].uid integerValue]==[user.uid integerValue]) {
+    // 发送中 删除按钮隐藏
+    if ([[LogInUser getCurrentLoginUser].uid integerValue]==[user.uid integerValue]&&status.sendType!=2) {
         [_moreBut setHidden:NO];
     }else{
         [_moreBut setHidden:YES];

@@ -99,25 +99,24 @@
 
         _dataArry = [NSMutableArray array];
         if (!_uid) {
+            NSArray *againArray = [self getSendAgainStuatArray];
+            [_dataArry addObjectsFromArray:againArray];
             NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KHomeDataTableName];
-            
+            [self loadFirstFID:[self dataFrameWith:[[arrr firstObject] itemObject]]];
             for (YTKKeyValueItem *aa in arrr) {
                 WLStatusFrame *sf = [self dataFrameWith:aa.itemObject];
                 [_dataArry addObject:sf];
             }
-            
-            [self loadFirstFID];    
         }
     }
     return self;
 }
 
 #pragma mark - 取第一条ID保存
-- (void)loadFirstFID
+- (void)loadFirstFID:(WLStatusFrame *)statusF
 {
     // 1.第一条微博的ID
-    WLStatusFrame *startf = [_dataArry firstObject];
-    [LogInUser setUserFirststustid:@(startf.status.fid)];
+    [LogInUser setUserFirststustid:@(statusF.status.fid)];
 }
 
 - (void)endRefreshing
@@ -147,12 +146,15 @@
         // 1.在拿到最新微博数据的同时计算它的frame
         [_dataArry removeAllObjects];
         
+        NSArray *againArray = [self getSendAgainStuatArray];
+        [_dataArry addObjectsFromArray:againArray];
+        
         for (NSDictionary *dic in jsonarray) {
              WLStatusFrame *sf = [self dataFrameWith:dic];
             [_dataArry addObject:sf];
         }
         if (!_uid) {
-            [self loadFirstFID];
+            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
             if (!_dataArry.count) {
                 [self.homeView setHidden:NO];
             }else{
@@ -318,22 +320,6 @@
 {
     if (!_uid||(_uid!=nil &&_uid.integerValue==0)) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_write"] style:UIBarButtonItemStyleBordered target:self action:@selector(publishStatus)];
-        
-        UIImage *image = [UIImage imageNamed:@"navbar_remind"];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:image forState:UIControlStateNormal];
-        button.frame = CGRectMake(0,0,35, 35);
-        [button setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 12)];
-        [button addTarget:self action:@selector(messageButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-        
-        // Make BarButton Item
-//        UIBarButtonItem *navLeftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-//        self.navigationItem.leftBarButtonItem = navLeftButton;
-//        self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor redColor];
-//        NSInteger badge = [[LogInUser getCurrentLoginUser].homemessagebadge integerValue];
-//        if (badge>0) {
-//            self.navigationItem.leftBarButtonItem.badgeValue = [NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].homemessagebadge];
-//        }
     }
     // 背景颜色
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -341,7 +327,6 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, IWTableBorderWidth, 0);
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        DLog(@"status===%d",status);
         if (status == AFNetworkReachabilityStatusNotReachable) {
             [self showStatusNotReachable];
         }else{
@@ -383,39 +368,15 @@
         btn.transform = CGAffineTransformMakeTranslation(0, btnH);
     } completion:^(BOOL finished) {
         [self.tableView setTableHeaderView:btn];
-        // 6.2.等1.0s后，再用1s的时间往上走
-//        [UIView animateWithDuration:duration delay:100 options:UIViewAnimationOptionCurveLinear animations:^{
-////            btn.transform = CGAffineTransformIdentity;
-//        } completion:^(BOOL finished) {
-//            // 6.3.删除按钮
-////            [btn removeFromSuperview];
-//        }];
     }];
-}
-
-
-#pragma mark - 消息页面
-- (void)messageButtonPress:(id)sender
-{
-    BOOL isAllMessage = YES;
-    if ([LogInUser getCurrentLoginUser].homemessagebadge.integerValue) {
-        isAllMessage = NO;
-    }
-    
-    MessageController *messageVC = [[MessageController alloc] initWithStyle:UITableViewStyleGrouped isAllMessage:isAllMessage];
-    
-    [self.navigationController pushViewController:messageVC animated:YES];
-    
-    self.navigationItem.leftBarButtonItem.badgeValue = nil;
-    [self.navigationController.tabBarItem setBadgeValue:nil];
 }
 
 #pragma mark - 发表状态
 - (void)publishStatus
 {
     PublishStatusController *publishVC = [[PublishStatusController alloc] init];
-    publishVC.publishDicBlock = ^(NSDictionary *reqDataDic){
-        [self sendAgainStuat:reqDataDic];
+    publishVC.publishDicBlock = ^(NSDictionary *reqDataDic, NSString *fidStr){
+        [self sendAgainStuat:reqDataDic withFidStr:fidStr];
     };
     [self presentViewController:[[NavViewController alloc] initWithRootViewController:publishVC] animated:YES completion:^{
     }];
@@ -450,9 +411,29 @@
     };
     //    // 评论
     [cell.contentAndDockView.dock.commentBtn addTarget:self action:@selector(commentBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 重新发送
+    [cell.contentAndDockView.dock.sendAgainBtn addTarget:self action:@selector(sendAgainBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     // 更多
     [cell.moreBut addTarget:self action:@selector(moreClick:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+#pragma mark - 重新发送按钮
+- (void)sendAgainBtnClick:(UIButton*)but event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    if(indexPath)
+    {
+        WLStatusFrame *statusF = _dataArry[indexPath.row];
+        YTKKeyValueItem *itemDic = [[WLDataDBTool sharedService] getYTKKeyValueItemById:statusF.status.sendId fromTable:KSendAgainDataTableName];
+        [self sendStuat:itemDic.itemObject withIndexPath:indexPath];
+    }
+
 }
 
 #pragma mark- 评论
@@ -488,19 +469,30 @@
 {
     if (buttonIndex==0) {
         WLStatusFrame *statuF = _dataArry[_clickIndex.row];
-        
-        [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
-            
+        if (statuF.status.type==13) { // 删除自己发布的
+            [[WLDataDBTool sharedService] deleteObjectById:statuF.status.sendId fromTable:KSendAgainDataTableName];
             [_dataArry removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
             if (_uid) {
-                 [self.notDataView setHidden:_dataArry.count];
+                [self.notDataView setHidden:_dataArry.count];
             }else{
                 [self.homeView setHidden:_dataArry.count];
             }
-        } fail:^(NSError *error) {
-            
-        }];
+        }else{
+            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
+                
+                [_dataArry removeObject:statuF];
+                [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
+                if (_uid) {
+                    [self.notDataView setHidden:_dataArry.count];
+                }else{
+                    [self.homeView setHidden:_dataArry.count];
+                }
+            } fail:^(NSError *error) {
+                
+            }];
+        }
+        
     }
 }
 
@@ -516,7 +508,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self pushCommentInfoVC:indexPath];
 }
@@ -685,23 +677,52 @@
                                     }];
 }
 
+#pragma mark - 加载缓存重新发送的动态
+- (NSMutableArray *)getSendAgainStuatArray
+{
+    NSMutableArray *sendFrameArray = [NSMutableArray array];
+    
+    if (!_uid) {
+        NSArray *arrr  = [[WLDataDBTool sharedService] getAllItemsFromTable:KSendAgainDataTableName];
+        
+        for (YTKKeyValueItem *aa in arrr) {
+            WLStatusFrame *sf = [self relodStatusFrameWithDic:aa.itemObject withFidStr:aa.itemId];
+            [sendFrameArray addObject:sf];
+        }
+    }
+    
+    return sendFrameArray;
+}
+
 
 #pragma mark - 重新发布动态
-- (void)sendAgainStuat:(NSDictionary *)reqDtaDic
+- (void)sendAgainStuat:(NSDictionary *)reqDataDic withFidStr:(NSString *)fidStr
+{
+    WLStatusFrame *newsf = [self relodStatusFrameWithDic:reqDataDic withFidStr:fidStr];
+    [_dataArry insertObject:newsf atIndex:0];
+    
+    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self sendStuat:reqDataDic withIndexPath:indexPath];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (WLStatusFrame *)relodStatusFrameWithDic:(NSDictionary *)reqDataDic withFidStr:(NSString *)fidStr
 {
     LogInUser *meuser = [LogInUser getCurrentLoginUser];
-    NSArray *photsArray = [reqDtaDic objectForKey:@"photos"];
+    NSArray *photsArray = [reqDataDic objectForKey:@"photos"];
     NSMutableArray *photosA = [NSMutableArray array];
     for (NSDictionary *imageDic in photsArray) {
         NSData *photoData = [[NSData alloc] initWithBase64EncodedString:[imageDic objectForKey:@"photo"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
         [photosA addObject:@{@"imageData":photoData}];
     }
-    NSMutableDictionary *frameDic = [NSMutableDictionary dictionaryWithDictionary:reqDtaDic];
+    NSMutableDictionary *frameDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
     [frameDic setObject:photosA forKey:@"photos"];
-
+    
     WLStatusFrame *newsf = [self dataFrameWith:frameDic];
     WLStatusM *statusM = newsf.status;
-    statusM.sendType = 2;
+    statusM.sendId = fidStr;
+    statusM.sendType = 1;
     statusM.type = 13;
     WLBasicTrends *meBasic =  [[WLBasicTrends alloc] init];
     meBasic.name = meuser.name;
@@ -712,28 +733,30 @@
     meBasic.friendship = meuser.firststustid.intValue;
     statusM.user = meBasic;
     newsf.status = statusM;
-    
-    [_dataArry insertObject:newsf atIndex:0];
-    
-    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
-//    [self.tableView reloadData];
-    [self sendStuat:reqDtaDic withIndexPath:indexPath];
+    return newsf;
 }
+
 
 - (void)sendStuat:(NSDictionary *)reqDataDic withIndexPath:(NSIndexPath *)indexPath
 {
+    WLStatusFrame *statusFrame = _dataArry[indexPath.row];
+    WLStatusM *statusM = statusFrame.status;
+    statusM.sendType = 2;
+    statusFrame.status = statusM;
+    [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    WEAKSELF
     [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
-        
-        
+        [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
+        [weakSelf beginPullDownRefreshing];
     } fail:^(NSError *error) {
         
-        WLStatusFrame *statusFrame = _dataArry[indexPath.row];
         WLStatusM *statusM = statusFrame.status;
         statusM.sendType = 1;
         statusFrame.status = statusM;
         [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [WLHUDView showErrorHUD:@"发布失败！"];
     }];
 }

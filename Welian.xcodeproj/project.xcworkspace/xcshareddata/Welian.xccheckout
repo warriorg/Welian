@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>02BE40EA-FDE7-464F-98A0-0FC9A6B483E8</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Welian</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>4A5C902960784FD296558FE5C19297625127F5B7</key>
 		<string>https://github.com/zhangyandong/Welian.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Welian.xcodeproj/project.xcworkspace</string>
+	<string>Welian.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>4A5C902960784FD296558FE5C19297625127F5B7</key>

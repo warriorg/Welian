@@ -444,13 +444,12 @@ static NSString *picCellid = @"PicCellID";
             }
              [reqDataDic setObject:weakSelf.publishM.photos forKey:@"photos"];
         }
-        
-        NSString *dateStr = [NSString stringWithFormat:@"%f",[NSDate timeIntervalSinceReferenceDate]];
+        NSString *dateStr = [NSString stringWithFormat:@"%lld",[[[NSDate date] formattedDateWithFormat:@"yyyyMMddHHMMss"] longLongValue]];
         [[WLDataDBTool sharedService] putObject:reqDataDic  withId:dateStr intoTable:KSendAgainDataTableName];
         if (self.publishDicBlock) {
-            self.publishDicBlock(reqDataDic);
+            self.publishDicBlock(reqDataDic, dateStr);
         }
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
     }
     
 }
