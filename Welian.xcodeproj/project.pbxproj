@@ -16,6 +16,11 @@
 		A403561F1A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
 		A40356201A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
 		A40356211A5D5C85006AE52C /* NewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */; };
+		A40515831AE5FA6300A3CA3F /* WeLianClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515821AE5FA6300A3CA3F /* WeLianClient.m */; };
+		A40515841AE5FA6300A3CA3F /* WeLianClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515821AE5FA6300A3CA3F /* WeLianClient.m */; };
+		A40515851AE5FA6300A3CA3F /* WeLianClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515821AE5FA6300A3CA3F /* WeLianClient.m */; };
+		A40515861AE5FA6300A3CA3F /* WeLianClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515821AE5FA6300A3CA3F /* WeLianClient.m */; };
+		A40515871AE5FA6300A3CA3F /* WeLianClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515821AE5FA6300A3CA3F /* WeLianClient.m */; };
 		A409A18A1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
 		A409A18B1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
 		A409A18C1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
@@ -4657,6 +4662,9 @@
 		A40356141A5D4F61006AE52C /* NewFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewController.m; sourceTree = "<group>"; };
 		A403561D1A5D5C85006AE52C /* NewFriendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendViewCell.h; sourceTree = "<group>"; };
 		A403561E1A5D5C85006AE52C /* NewFriendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendViewCell.m; sourceTree = "<group>"; };
+		A40515811AE5FA6300A3CA3F /* WeLianClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeLianClient.h; sourceTree = "<group>"; };
+		A40515821AE5FA6300A3CA3F /* WeLianClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeLianClient.m; sourceTree = "<group>"; };
+		A40515881AE5FCB600A3CA3F /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_welian_logo@2x.png"; sourceTree = "<group>"; };
 		A409A1311AC2E1AE0033A31D /* bluebutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluebutton@2x.png"; sourceTree = "<group>"; };
 		A409A1321AC2E1AE0033A31D /* bluebuttton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluebuttton_pressed@2x.png"; sourceTree = "<group>"; };
@@ -7310,6 +7318,9 @@
 			isa = PBXGroup;
 			children = (
 				A493C3EF1ADD17720056BD52 /* SendIFMacros.h */,
+				A40515881AE5FCB600A3CA3F /* Macro.h */,
+				A40515811AE5FA6300A3CA3F /* WeLianClient.h */,
+				A40515821AE5FA6300A3CA3F /* WeLianClient.m */,
 				A493C1B31ADD0A0C0056BD52 /* Constants.h */,
 				A493C1B41ADD0A0C0056BD52 /* Constants.m */,
 				A493C1B51ADD0A0C0056BD52 /* HttpTool.h */,
@@ -13002,6 +13013,7 @@
 				A49C7CBC1A70D42700F2AEC5 /* WLMessage.m in Sources */,
 				A4EFA6D21A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				A49C7CBF1A70D42700F2AEC5 /* WLContentCellView.m in Sources */,
+				A40515871AE5FA6300A3CA3F /* WeLianClient.m in Sources */,
 				A49C7CC11A70D42700F2AEC5 /* NSManagedObject+MagicalFinders.m in Sources */,
 				A493C3261ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				A49C7CC21A70D42700F2AEC5 /* BaseUser.m in Sources */,
@@ -13512,6 +13524,7 @@
 				F53DC33A1A49192600F5F712 /* AFURLResponseSerialization.m in Sources */,
 				A493C2871ADD0BB00056BD52 /* DKPredicate.m in Sources */,
 				A4C140941A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
+				A40515851AE5FA6300A3CA3F /* WeLianClient.m in Sources */,
 				A49235671ADE693A009E0B8C /* JKPromptView.m in Sources */,
 				A4EFA6D11A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F53DC33D1A49192600F5F712 /* WLContentCellView.m in Sources */,
@@ -14022,6 +14035,7 @@
 				F5C566891A821BAB002AF408 /* HeaderLabel.m in Sources */,
 				F5664A091A2AFD56008A5830 /* WLContentCellView.m in Sources */,
 				F5664A0A1A2AFD56008A5830 /* HaderInfoCell.m in Sources */,
+				A40515831AE5FA6300A3CA3F /* WeLianClient.m in Sources */,
 				F5664A0B1A2AFD56008A5830 /* WLStatusDock.m in Sources */,
 				A493C3221ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				A4EFA6CF1A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
@@ -14532,6 +14546,7 @@
 				F5664CC01A2AFDD5008A5830 /* AFURLResponseSerialization.m in Sources */,
 				A493C2861ADD0BB00056BD52 /* DKPredicate.m in Sources */,
 				A4C140931A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
+				A40515841AE5FA6300A3CA3F /* WeLianClient.m in Sources */,
 				A49235661ADE693A009E0B8C /* JKPromptView.m in Sources */,
 				A4EFA6D01A89E75D00CB5A4D /* PhotoInfos.m in Sources */,
 				F5664CC31A2AFDD5008A5830 /* WLContentCellView.m in Sources */,
@@ -14768,6 +14783,7 @@
 				A493C2511ADD0BB00056BD52 /* UIColor+_6jinzhi.m in Sources */,
 				A49235811ADE693A009E0B8C /* CTAssetScrollView.m in Sources */,
 				A493C3B11ADD14A60056BD52 /* WLTool.m in Sources */,
+				A40515861AE5FA6300A3CA3F /* WeLianClient.m in Sources */,
 				A49234D01ADE3E0C009E0B8C /* UserCardController.m in Sources */,
 				A493C3391ADD14A60056BD52 /* CommentHomeViewFrame.m in Sources */,
 				A493C24C1ADD0BB00056BD52 /* UIAlertView+Extend.m in Sources */,
@@ -15144,7 +15160,7 @@
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = weLianDev;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e0712cc9-ac03-4d0c-87c6-5d9a09e8d351";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -15192,7 +15208,7 @@
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = weLianDev;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e0712cc9-ac03-4d0c-87c6-5d9a09e8d351";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};

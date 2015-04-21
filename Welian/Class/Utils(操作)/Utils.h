@@ -12,6 +12,7 @@
 
 #pragma mark - Project
 #import "SendIFMacros.h"
+#import "Macro.h"
 #import "Constants.h"
 #import "ResManager.h"
 
