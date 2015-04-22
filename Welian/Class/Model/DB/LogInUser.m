@@ -86,7 +86,7 @@
     loginuser.investorauth = userInfoM.investorauth;
     loginuser.startupauth = userInfoM.startupauth;
     loginuser.company = userInfoM.company;
-    loginuser.checkcode = userInfoM.checkcode;
+    loginuser.checkcode = userInfoM.checkcode != nil ? userInfoM.checkcode : @"";
     loginuser.sessionid = userInfoM.sessionid;
     loginuser.inviteurl = userInfoM.inviteurl;
     loginuser.isNow = @(1);

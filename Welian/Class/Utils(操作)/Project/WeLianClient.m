@@ -18,6 +18,20 @@
         self.requestSerializer = [AFJSONRequestSerializer serializer];
         self.responseSerializer = [AFJSONResponseSerializer serializer];
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        //设置sessionid
+//        LogInUser *mode = [LogInUser getCurrentLoginUser];
+//        NSString *sessid = mode.sessionid;
+//        if (!sessid) {
+//            sessid = [UserDefaults objectForKey:kSidkey];
+//        }
+//        if (!sessid) {
+//            [[self operationQueue] cancelAllOperations];
+//            return;
+//        }
+//        if (sessid) {
+//            //header 里面放入sessionid
+//            [self.requestSerializer setValue:sessid forHTTPHeaderField:@"sessionid"];
+//        }
     }
     return self;
 }
@@ -36,23 +50,45 @@
 + (void)reqestPostWithParams:(NSDictionary *)params Path:(NSString *)path Success:(SuccessBlock)success
                             Failed:(FailedBlock)failed
 {
-    [[WeLianClient sharedClient] POST:path
+    //设置sessionid
+    LogInUser *mode = [LogInUser getCurrentLoginUser];
+    NSString *sessid = mode.sessionid;
+    if (!sessid) {
+        sessid = [UserDefaults objectForKey:kSidkey];
+    }
+    
+    NSString *pathInfo = path;
+    if (sessid) {
+        pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",path,sessid];
+    }
+    
+    [[WeLianClient sharedClient] POST:pathInfo
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                   DLog(@"reqest Result ---- %@",responseObject);
-//                                  NSDictionary *dictObject = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
-                                  NSNumber *state = [responseObject objectForKey:@"state"];
-                                  if (state.integerValue == 1000) {
-                                      SAFE_BLOCK_CALL(success, responseObject);
+                                  
+                                  IBaseModel *result = [IBaseModel objectWithDict:responseObject];
+                                  
+                                  //如果sessionid有的话放入data
+                                  NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithDictionary:result.data];
+                                  
+                                  if (result.isSuccess) {
+                                      if (result.sessionid.length > 0) {
+                                          [resultDict setObject:result.sessionid forKey:@"sessionid"];
+                                      }
+                                      
+                                      SAFE_BLOCK_CALL(success, resultDict);
                                   }else{
-                                      NSString *errormsg = [responseObject objectForKey:@"errorcode"];
-                                      NSError *error = [NSError errorWithMsg:errormsg];
-                                      if (state.integerValue >= 1000 && state.integerValue < 2000) {
+                                      if (result.state.integerValue > 1000 && result.state.integerValue < 2000) {
                                           //可以提醒的错误
-                                          SAFE_BLOCK_CALL(failed, error);
+                                          SAFE_BLOCK_CALL(failed, result.error);
+                                      }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
+                                          //系统级错误，直接打印错误信息
+                                          DLog(@"Result System ErroInfo-- : %@",result.errormsg);
                                       }else{
-                                          //打印错误信息
-                                          DLog(@"Result ErroInfo-- : %@",errormsg);
+                                          //打印错误信息 ，返回操作
+                                          DLog(@"Result ErroInfo-- : %@",result.errormsg);
+                                          SAFE_BLOCK_CALL(success, resultDict);
                                       }
                                   }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -92,9 +128,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"wxRegister ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success,result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -125,9 +159,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"register ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -146,10 +178,8 @@
                           Path:kGetcodePath
                        Success:^(id resultInfo) {
                            DLog(@"getCode ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -168,9 +198,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"checkCode ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -187,9 +215,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"changePassword ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -209,10 +235,8 @@
                           Path:kLoginPath
                        Success:^(id resultInfo) {
                            DLog(@"login ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success, result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -263,9 +287,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"saveUserInfo ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -295,10 +317,8 @@
                           Path:kSaveSchoolPath
                        Success:^(id resultInfo) {
                            DLog(@"saveSchool ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -315,9 +335,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"deleteSchool ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -348,9 +366,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"saveCompany ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -368,9 +384,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"deleteCompany ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -393,9 +407,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"invest ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -412,9 +424,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"loadInvestor ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -433,9 +443,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"changeUserPassWd ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -453,9 +461,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"getUserMobileCode ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -472,9 +478,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"checkUserMobileCode ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           if (result.isSuccess) {
-                               SAFE_BLOCK_CALL(success, result);
-                           }
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

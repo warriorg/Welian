@@ -155,6 +155,7 @@
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession
                       authOptions:authOptions
                            result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+                               [WLHUDView hiddenHud];
                                
                                if (result)
                                {
@@ -168,6 +169,44 @@
                                    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
                                        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
                                    }
+                                   
+//                                   [WeLianClient loginWithMobile:@""
+//                                                         Unionid:[sourceDic objectForKey:@"unionid"]
+//                                                        Password:@""
+//                                                         Success:^(id resultInfo) {
+//                                                             //{"data":{"flag":0},"state":3000,"errorcode":"微信账号没有登陆过"}
+//                                                             if ([resultInfo flag] == nil) {
+//                                                                 DLog(@"微信账号登录过");
+////                                                                 UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+//                                                                 UserInfoModel *mode = resultInfo;
+//                                                                 //记录最后一次登陆的手机号
+//                                                                 SaveLoginMobile(mode.mobile);
+//                                                                 [UserDefaults setObject:mode.sessionid forKey:kSessionId];
+//                                                                 [LogInUser createLogInUserModel:mode];
+//                                                                 [LogInUser setUseropenid:[sourceDic objectForKey:@"openid"]];
+//                                                                 [LogInUser setUserunionid:[sourceDic objectForKey:@"unionid"]];
+//                                                                 // 进入主页面
+//                                                                 MainViewController *mainVC = [[MainViewController alloc] init];
+//                                                                 [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+//                                                             }else{
+//                                                                 PerfectInfoController *perfcetInfoVC = [[PerfectInfoController alloc] init];
+//                                                                 
+//                                                                 NSMutableDictionary *userinfodic = [NSMutableDictionary dictionaryWithDictionary:[userInfo sourceData]];
+////                                                                 NSDictionary *dataDic = error.userInfo;
+////                                                                 if (dataDic) {
+////                                                                     [userinfodic setObject:dataDic forKey:@"weixingdata"];
+////                                                                 }
+////                                                                 
+//                                                                 [perfcetInfoVC setUserInfoDic:userinfodic];
+//                                                                 NavViewController *nav = [[NavViewController alloc] initWithRootViewController:perfcetInfoVC];
+//                                                                 [self presentViewController:nav animated:YES completion:^{
+//                                                                     
+//                                                                 }];
+//
+//                                                             }
+//                                                         } Failed:^(NSError *error) {
+//                                                             [UIAlertView showWithError:error];
+//                                                         }];
                                    
                                    [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
                                        NSDictionary *dataDic = JSON;
@@ -206,11 +245,11 @@
                                        }
                                        [WLHUDView hiddenHud];
                                    } isHUD:YES];
-                                   
+//
                                }else{
                                     [WLHUDView hiddenHud];
                                    [[[UIAlertView alloc] initWithTitle:[error errorDescription] message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil] show];
-
+//
                                }
 
                                DLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);

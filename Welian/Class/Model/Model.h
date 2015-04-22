@@ -42,6 +42,9 @@
 #import "ISchoolResult.h"
 #import "InvestItemM.h"
 
+#pragma mark - Interface2.0
+#import "ILoginUserModel.h"
+
 
 #pragma mark - Model（Home）
 #import "CardStatuModel.h"

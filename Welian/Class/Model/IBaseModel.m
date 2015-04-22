@@ -12,14 +12,14 @@
 
 - (void)customOperation:(NSDictionary *)dict
 {
-    NSNumber *state = dict[@"state"];
-    self.Success = (state.intValue == 1000) ? @(YES) : @(NO);
+//    NSNumber *state = dict[@"state"];
+    self.Success = (self.state.intValue == 1000) ? @(YES) : @(NO);
     
     if ([self isSuccess]) {
-        if ([_errorcode isKindOfClass:[NSNull class]]) {
-            self.errorcode = @"无返回错误信息.";
+        if ([_errormsg isKindOfClass:[NSNull class]]) {
+            self.errormsg = @"无返回错误信息.";
         }else{
-            if (!_errorcode.length) self.errorcode = @"无返回错误信息.";
+            if (!_errormsg.length) self.errormsg = @"无返回错误信息.";
         }
     }
 }
@@ -35,7 +35,7 @@
         return nil;
     }
     
-    NSError *error = [NSError errorWithMsg:_errorcode];
+    NSError *error = [NSError errorWithMsg:_errormsg];
     return error;
 }
 

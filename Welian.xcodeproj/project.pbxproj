@@ -26,6 +26,11 @@
 		A40515901AE61FE500A3CA3F /* IBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A405158D1AE61FE500A3CA3F /* IBaseModel.m */; };
 		A40515911AE61FE500A3CA3F /* IBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A405158D1AE61FE500A3CA3F /* IBaseModel.m */; };
 		A40515921AE61FE500A3CA3F /* IBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A405158D1AE61FE500A3CA3F /* IBaseModel.m */; };
+		A40515961AE777E300A3CA3F /* ILoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515951AE777E300A3CA3F /* ILoginUserModel.m */; };
+		A40515971AE777E300A3CA3F /* ILoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515951AE777E300A3CA3F /* ILoginUserModel.m */; };
+		A40515981AE777E300A3CA3F /* ILoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515951AE777E300A3CA3F /* ILoginUserModel.m */; };
+		A40515991AE777E300A3CA3F /* ILoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515951AE777E300A3CA3F /* ILoginUserModel.m */; };
+		A405159A1AE777E300A3CA3F /* ILoginUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A40515951AE777E300A3CA3F /* ILoginUserModel.m */; };
 		A409A18A1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
 		A409A18B1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
 		A409A18C1AC2E1AF0033A31D /* about_welian_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */; };
@@ -4676,6 +4681,8 @@
 		A40515881AE5FCB600A3CA3F /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		A405158C1AE61FE500A3CA3F /* IBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBaseModel.h; sourceTree = "<group>"; };
 		A405158D1AE61FE500A3CA3F /* IBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBaseModel.m; sourceTree = "<group>"; };
+		A40515941AE777E300A3CA3F /* ILoginUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILoginUserModel.h; sourceTree = "<group>"; };
+		A40515951AE777E300A3CA3F /* ILoginUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILoginUserModel.m; sourceTree = "<group>"; };
 		A409A1301AC2E1AE0033A31D /* about_welian_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_welian_logo@2x.png"; sourceTree = "<group>"; };
 		A409A1311AC2E1AE0033A31D /* bluebutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluebutton@2x.png"; sourceTree = "<group>"; };
 		A409A1321AC2E1AE0033A31D /* bluebuttton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluebuttton_pressed@2x.png"; sourceTree = "<group>"; };
@@ -6744,6 +6751,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A40515931AE7771900A3CA3F /* Interface2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A40515941AE777E300A3CA3F /* ILoginUserModel.h */,
+				A40515951AE777E300A3CA3F /* ILoginUserModel.m */,
+			);
+			path = Interface2.0;
+			sourceTree = "<group>";
+		};
 		A409A12F1AC2E1AE0033A31D /* 我的images */ = {
 			isa = PBXGroup;
 			children = (
@@ -9071,6 +9087,7 @@
 		F59E76061A405CE70028FBAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A40515931AE7771900A3CA3F /* Interface2.0 */,
 				F59E76071A405CE70028FBAF /* DB */,
 				F59E76081A405CE70028FBAF /* Interface */,
 				A493C2BA1ADD14A60056BD52 /* Model(Find) */,
@@ -12954,6 +12971,7 @@
 				A49C7C731A70D42700F2AEC5 /* MultiSelectItem.m in Sources */,
 				A49C7C751A70D42700F2AEC5 /* MagicalImportFunctions.m in Sources */,
 				A49C7C771A70D42700F2AEC5 /* NewFriendsCell.m in Sources */,
+				A405159A1AE777E300A3CA3F /* ILoginUserModel.m in Sources */,
 				A49C7C781A70D42700F2AEC5 /* NameController.m in Sources */,
 				A49C7C791A70D42700F2AEC5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A49C7C7A1A70D42700F2AEC5 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
@@ -13466,6 +13484,7 @@
 				A49235801ADE693A009E0B8C /* CTAssetScrollView.m in Sources */,
 				F53DC30F1A49192600F5F712 /* NameController.m in Sources */,
 				F53DC3101A49192600F5F712 /* UIImageView+HighlightedWebCache.m in Sources */,
+				A40515981AE777E300A3CA3F /* ILoginUserModel.m in Sources */,
 				A4A2EB111A6CF7C8006ADA55 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				A493C1D41ADD0A0C0056BD52 /* WLHUDView.m in Sources */,
 				F53DC3121A49192600F5F712 /* FriendsFriendController.m in Sources */,
@@ -13978,6 +13997,7 @@
 				F55772951A5A8E9600693279 /* PerfectInfoController.m in Sources */,
 				F56649E51A2AFD56008A5830 /* UIImageView+HighlightedWebCache.m in Sources */,
 				F56649E71A2AFD56008A5830 /* FriendsFriendController.m in Sources */,
+				A40515961AE777E300A3CA3F /* ILoginUserModel.m in Sources */,
 				A4A2EADC1A6CF7C8006ADA55 /* MagicalImportFunctions.m in Sources */,
 				A493C1D21ADD0A0C0056BD52 /* WLHUDView.m in Sources */,
 				A493C3901ADD14A60056BD52 /* FriendsAddressBook.m in Sources */,
@@ -14490,6 +14510,7 @@
 				A492357F1ADE693A009E0B8C /* CTAssetScrollView.m in Sources */,
 				F5664C9E1A2AFDD5008A5830 /* NameController.m in Sources */,
 				F5664C9F1A2AFDD5008A5830 /* UIImageView+HighlightedWebCache.m in Sources */,
+				A40515971AE777E300A3CA3F /* ILoginUserModel.m in Sources */,
 				A4A2EB101A6CF7C8006ADA55 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				A493C1D31ADD0A0C0056BD52 /* WLHUDView.m in Sources */,
 				F5664CA11A2AFDD5008A5830 /* FriendsFriendController.m in Sources */,
@@ -14822,6 +14843,7 @@
 				A493C31B1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				A493C3431ADD14A60056BD52 /* FeedAndZanFrameM.m in Sources */,
 				A493C1D01ADD0A0C0056BD52 /* WLHttpTool.m in Sources */,
+				A40515991AE777E300A3CA3F /* ILoginUserModel.m in Sources */,
 				A493C2971ADD0BB00056BD52 /* NSManagedObject+ManagedObjectQuery.m in Sources */,
 				A493C2B81ADD13DF0056BD52 /* WLTextField.m in Sources */,
 				A493C3571ADD14A60056BD52 /* PublishModel.m in Sources */,
