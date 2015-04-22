@@ -11,5 +11,6 @@
 @interface WLTextField : UITextField
 
 @property (nonatomic, assign) BOOL isToBounds;
+@property (nonatomic, assign) BOOL isIndent;
 
 @end

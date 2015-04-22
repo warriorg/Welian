@@ -27,7 +27,11 @@
         [self.layer setMasksToBounds:YES];
         [self.layer setCornerRadius:5];
     }
+}
 
+- (void)setIsIndent:(BOOL)isIndent
+{
+    _isIndent = isIndent;
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds

@@ -36,9 +36,17 @@
 
 @implementation PerfectInfoController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self loadUIView];
+    }
+    return self;
+}
+
+- (void)loadUIView
+{
     [self.view setBackgroundColor:WLRGB(231, 234, 238)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelVC)];
     [self setTitle:@"完善信息"];
@@ -58,15 +66,6 @@
     _iconBut = iconBut;
     [scrollView addSubview:iconBut];
     [iconBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
-    if ([self.userInfoDic objectForKey:@"headimgurl"]) {
-        [iconBut.layer setCornerRadius:iconimage.size.width*0.5];
-        [iconBut.layer setMasksToBounds:YES];
-        [iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            [iconBut setImage:image forState:UIControlStateNormal];
-            
-        }];
-    }
     
     UITextField *nameTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(iconBut.frame)+25 Placeholder:@"姓名" leftImageName:@"login_name"];
     [nameTF setReturnKeyType:UIReturnKeyDone];
@@ -80,7 +79,7 @@
     [companyTF setRightView:companyRightV];
     _companyTF = companyTF;
     [scrollView addSubview:companyTF];
-
+    
     
     UITextField *postTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(companyTF.frame)+15 Placeholder:@"职位" leftImageName:@"login_zhiwei"];
     UIButton *postRightV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 16)];
@@ -114,20 +113,38 @@
     _bindingBut = bindingBut;
     [scrollView addSubview:bindingBut];
     
-    NSDictionary *weixingDic = [self.userInfoDic objectForKey:@"weixingdata"];
-    if (weixingDic) {
-        [_phoneTF setText:[weixingDic objectForKey:@"mobile"]];
-        [_nameTF setText:[weixingDic objectForKey:@"name"]];
-        [_companyTF setText:[weixingDic objectForKey:@"company"]];
-        [_postTF setText:[weixingDic objectForKey:@"position"]];
-    }
-    
     // 键盘管理
     [DaiDodgeKeyboard addRegisterTheViewNeedDodgeKeyboard:scrollView];
     UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
         [[self.view findFirstResponder] resignFirstResponder];
     }];
     [self.view addGestureRecognizer:tap];
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+- (void)setUserInfoDic:(NSDictionary *)userInfoDic
+{
+    _userInfoDic = userInfoDic;
+    NSDictionary *weixingDic = [userInfoDic objectForKey:@"weixingdata"];
+    if (weixingDic) {
+        [_phoneTF setText:[weixingDic objectForKey:@"mobile"]];
+        [_nameTF setText:[weixingDic objectForKey:@"name"]];
+        [_companyTF setText:[weixingDic objectForKey:@"company"]];
+        [_postTF setText:[weixingDic objectForKey:@"position"]];
+    }
+    if ([userInfoDic objectForKey:@"headimgurl"]) {
+        UIImage *iconimage = [UIImage imageNamed:@"login_user.png"];
+        [_iconBut.layer setCornerRadius:iconimage.size.width*0.5];
+        [_iconBut.layer setMasksToBounds:YES];
+        [_iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            [_iconBut setImage:image forState:UIControlStateNormal];
+        }];
+    }
 }
 
 
@@ -234,7 +251,6 @@
     } fail:^(NSError *error) {
         if (error.code==1) {
             [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                DLog(@"%d",buttonIndex);
                 if (buttonIndex==1) {
                     [self bindingPhoneClick:nil];
                 }
