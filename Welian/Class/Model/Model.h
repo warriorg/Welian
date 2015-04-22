@@ -26,6 +26,7 @@
 
 
 #pragma mark - Interface
+#import "IBaseModel.h"
 #import "IBaseUserM.h"
 #import "IProjectInfo.h"
 #import "IProjectDetailInfo.h"
@@ -40,6 +41,9 @@
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
 #import "InvestItemM.h"
+
+#pragma mark - Interface2.0
+#import "ILoginUserModel.h"
 
 
 #pragma mark - Model（Home）

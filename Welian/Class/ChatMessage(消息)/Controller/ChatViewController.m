@@ -1107,7 +1107,9 @@
                 photo.srcImageView = photoView; // 来源于哪个UIImageView
                 photo.hasNoImageView = YES;
                 WLMessageTableViewCell *cell = (WLMessageTableViewCell *)[self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-                photo.imageCurrentRect = [cell.messageBubbleView.bubblePhotoImageView convertRect:cell.messageBubbleView.bubblePhotoImageView.bounds toView:self.view];
+                //计算图片在屏幕中的位置
+                CGRect imageRect = [cell.messageBubbleView.bubblePhotoImageView convertRect:cell.messageBubbleView.bubblePhotoImageView.bounds toView:self.view];
+                photo.imageCurrentRect = CGRectMake(imageRect.origin.x, imageRect.origin.y + ViewCtrlTopBarHeight, imageRect.size.width, imageRect.size.height);
                 [photos addObject:photo];
             }
             

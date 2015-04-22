@@ -89,13 +89,27 @@
             [forgetCoderVC setPhoneString:self.phoneTextField.text];
             [forgetCoderVC setCoderString:[JSON objectForKey:@"checkcode"]];
             [self.navigationController pushViewController:forgetCoderVC animated:YES];
-            
+
         }else if ([[JSON objectForKey:@"flag"] integerValue]==0){
             [WLHUDView showErrorHUD:@"该号码未注册，请先注册！"];
         }
     } fail:^(NSError *error) {
         
     }];
+    
+//    [WeLianClient getCodeWithMobile:self.phoneTextField.text
+//                               Type:@"forgetpassword"
+//                            Success:^(id resultInfo) {
+////                                data =     {
+////                                    code = 5105;
+////                                };
+//                                ForgetCoderController  *forgetCoderVC = [[ForgetCoderController alloc] init];
+//                                forgetCoderVC.phoneString = self.phoneTextField.text;
+//                                forgetCoderVC.coderString = [resultInfo objectForKey:@"code"];
+//                                [self.navigationController pushViewController:forgetCoderVC animated:YES];
+//                            } Failed:^(NSError *error) {
+//                                [UIAlertView showWithError:error];
+//                            }];
 
 }
 @end

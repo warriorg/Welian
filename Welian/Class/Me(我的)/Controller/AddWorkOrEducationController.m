@@ -280,16 +280,35 @@
         if (_schoolM.schoolname.length&&_schoolM.startyear&&_schoolM.endyear&&_schoolM.startmonth&&_schoolM.endmonth) {
             [_schoolM setSchoolid:nil];
             [_schoolM setSpecialtyid:nil];
-            NSDictionary *daDic = [_schoolM keyValues];
+//            NSDictionary *daDic = [_schoolM keyValues];
             
-            [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
-                [_schoolM setKeyValues:JSON];
-                [SchoolModel createSchoolModel:_schoolM];
-                [self dismissVC];
-                [WLHUDView showSuccessHUD:@"保存成功！"];
-            } fail:^(NSError *error) {
-                
-            }];
+//            [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
+//                [_schoolM setKeyValues:JSON];
+//                [SchoolModel createSchoolModel:_schoolM];
+//                [self dismissVC];
+//                [WLHUDView showSuccessHUD:@"保存成功！"];
+//            } fail:^(NSError *error) {
+//                
+//            }];
+            
+            //添加教育经历
+            [WeLianClient saveSchoolWithID:_schoolM.usid
+                                  Schoolid:_schoolM.schoolid
+                                Schoolname:_schoolM.schoolname
+                               Specialtyid:_schoolM.specialtyid
+                                 Startyear:_schoolM.startyear
+                                Startmonth:_schoolM.startmonth
+                                   Endyear:_schoolM.endyear
+                                  Endmonth:_schoolM.endmonth
+                                   Success:^(id resultInfo) {
+//                                       [_schoolM setKeyValues:JSON];
+                                       [SchoolModel createSchoolModel:_schoolM];
+                                       [self dismissVC];
+                                       [WLHUDView showSuccessHUD:@"保存成功！"];
+                                   } Failed:^(NSError *error) {
+                                       [UIAlertView showWithError:error];
+                                   }];
+            
         }else{
             [WLHUDView showErrorHUD:@"信息不完整！"];
         }

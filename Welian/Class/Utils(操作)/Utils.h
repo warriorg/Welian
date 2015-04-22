@@ -15,6 +15,7 @@
 #import "Macro.h"
 #import "Constants.h"
 #import "ResManager.h"
+#import "WeLianClient.h"
 
 
 #pragma mark - Categorys
