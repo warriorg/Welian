@@ -9,9 +9,11 @@
 #import "ForgetPhoneController.h"
 #import "NSString+val.h"
 #import "ForgetCoderController.h"
+#import "UITextField+LeftRightView.h"
+#import "UIImage+ImageEffects.h"
 
 @interface ForgetPhoneController ()<UITextFieldDelegate>
-@property (strong, nonatomic) WLTextField *phoneTextField;
+@property (strong, nonatomic) UITextField *phoneTextField;
 @end
 
 @implementation ForgetPhoneController
@@ -26,18 +28,24 @@
 {
     [self setTitle:@"验证手机1/3"];
     [self.view setBackgroundColor:WLLineColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(forgetPhoneNext:)];
 
-    CGSize size = self.view.bounds.size;
-    self.phoneTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
-    [self.phoneTextField setPlaceholder:@"手机号码"];
+    self.phoneTextField = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"手机号码" leftViewImageName:@"login_phone" andRightViewImageName:nil];
     [self.phoneTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.phoneTextField setDelegate:self];
     [self.phoneTextField setBackgroundColor:[UIColor whiteColor]];
     [self.phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:self.phoneTextField];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneTextField.frame)+15, size.width-40, 40)];
+    UIButton *nextBut = [[UIButton alloc] initWithFrame:CGRectMake(25, self.phoneTextField.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [nextBut.titleLabel setFont:WLFONTBLOD(18)];
+    [nextBut addTarget:self action:@selector(forgetPhoneNext:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBut];
+    
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, nextBut.bottom+15, SuperSize.width-40, 40)];
     [textLabel setNumberOfLines:0];
     [textLabel setText:@"该手机号码作为您在微链的登录账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];

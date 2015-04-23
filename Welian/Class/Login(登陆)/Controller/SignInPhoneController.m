@@ -9,10 +9,11 @@
 #import "SignInPhoneController.h"
 #import "NSString+val.h"
 #import "SignInPWDController.h"
-#import "WLTextField.h"
+#import "UITextField+LeftRightView.h"
+#import "UIImage+ImageEffects.h"
 
 @interface SignInPhoneController () <UITextFieldDelegate>
-@property (strong, nonatomic) WLTextField *phoneTextField;
+@property (strong, nonatomic) UITextField *phoneTextField;
 @end
 
 @implementation SignInPhoneController
@@ -42,22 +43,30 @@
 {
     [self setTitle:@"注册"];
     [self.view setBackgroundColor:WLLineColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(coderPhoneClick:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancellVC)];
     
-    
-    self.phoneTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
-    [_phoneTextField setPlaceholder:@"手机号码"];
+    self.phoneTextField = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"手机号码" leftViewImageName:@"login_phone" andRightViewImageName:nil];
+    [self.phoneTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_phoneTextField setDelegate:self];
+    _phoneTextField.returnKeyType = UIReturnKeyDone;
     [_phoneTextField setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:_phoneTextField];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, _phoneTextField.bottom+15, self.view.width-40, 40)];
+    UIButton *nextBut = [[UIButton alloc] initWithFrame:CGRectMake(25, self.phoneTextField.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [nextBut.titleLabel setFont:WLFONTBLOD(18)];
+    [nextBut addTarget:self action:@selector(coderPhoneClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBut];
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, nextBut.bottom+15, self.view.width-40, 40)];
     [textLabel setNumberOfLines:0];
     [textLabel setText:@"该手机号码作为您在微链的登录账号，微链不会在任何地方泄露您的手机号码。"];
     [textLabel setTextColor:[UIColor lightGrayColor]];
     [textLabel setFont:[UIFont systemFontOfSize:13.0]];
     [self.view addSubview:textLabel];
+    
 }
 
 
@@ -83,7 +92,7 @@
 
 
 #pragma mark- 发送手机号，获取验证码
-- (void)coderPhoneClick:(UIBarButtonItem *)sender {
+- (void)coderPhoneClick:(UIButton *)sender {
     [self.phoneTextField resignFirstResponder];
     
     if ([self.phoneTextField.text isMobileNumber]) {

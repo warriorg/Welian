@@ -222,7 +222,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 #define IWIconWHSmall 40
 
 //每个controller 中第一个控件距离顶部的高度
-#define kFirstMarginTop 20
+#define kFirstMarginTop 25
 
 
 //iphone5适配

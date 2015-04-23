@@ -15,95 +15,132 @@
 #import "BSearchFriendsController.h"
 #import "NavViewController.h"
 
-@interface UserInfoController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "UITextField+LeftRightView.h"
+#import "UIImage+ImageEffects.h"
+#import "CompotAndPostController.h"
+
+@interface UserInfoController () <UITextFieldDelegate>
 {
-    NSString *avatar;
-    NSArray *_dataArray;
-   __block NSString *_nameStr;
-   __block NSString *_danweiStr;
-   __block NSString *_zhiwuStr;
+    UIButton *_iconBut;
+    UITextField *_nameTF;
+    UITextField *_companyTF;
+    UITextField *_postTF;
+    UIButton *_loginBut;
+    UIScrollView *_scrollView;
+    NSString *_imagebase64Str;
+
+    
 }
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) InfoHeaderView *infoHeader;
 @end
 
 @implementation UserInfoController
-
-- (InfoHeaderView*)infoHeader
-{
-    if (nil == _infoHeader) {
-        
-        _infoHeader = [[[NSBundle mainBundle] loadNibNamed:@"InfoHeaderView" owner:self options:nil] lastObject];
-        [_infoHeader.pictureBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _infoHeader;
-}
-
-- (UITableView *)tableView
-{
-    if (nil == _tableView) {
-        
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        [_tableView setSeparatorInset:UIEdgeInsetsZero];
-        [_tableView setDataSource:self];
-        [_tableView setDelegate:self];
-    }
-    return _tableView;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"加入微链"];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveAndLogin)];
-    
-    // 2.读取数据
-    _dataArray = @[@"姓名",@"单位",@"职务"];
-    
-    [self.view addSubview:self.tableView];
+    [self loadUIView];
 }
+
+- (void)loadUIView
+{
+    [self.view setBackgroundColor:WLRGB(231, 234, 238)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    [scrollView setContentSize:CGSizeMake(SuperSize.width, 520)];
+    [scrollView setShowsVerticalScrollIndicator:NO];
+    [scrollView setShowsHorizontalScrollIndicator:NO];
+    [scrollView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+    [scrollView setBackgroundColor:WLRGB(231, 234, 238)];
+    _scrollView = scrollView;
+    [self.view addSubview:scrollView];
+    
+    
+    UIImage *iconimage = [UIImage imageNamed:@"login_user"];
+    UIButton *iconBut = [[UIButton alloc] initWithFrame:CGRectMake(self.view.center.x-iconimage.size.width*0.5, 25, iconimage.size.width, iconimage.size.height)];
+    [iconBut setImage:iconimage forState:UIControlStateNormal];
+    _iconBut = iconBut;
+    [scrollView addSubview:iconBut];
+    [iconBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITextField *nameTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(iconBut.frame)+25, SuperSize.width-50, 40) placeholder:@"姓名" leftViewImageName:@"login_name" andRightViewImageName:nil];
+    [nameTF setDelegate:self];
+    [nameTF setReturnKeyType:UIReturnKeyDone];
+    _nameTF = nameTF;
+    [scrollView addSubview:nameTF];
+    
+    UITextField *companyTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(nameTF.frame)+15, SuperSize.width-50, 40) placeholder:@"单位" leftViewImageName:@"login_gongsi" andRightViewImageName:@"me_right"];
+    [companyTF setDelegate:self];
+    _companyTF = companyTF;
+    [scrollView addSubview:companyTF];
+    
+    
+    UITextField *postTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(companyTF.frame)+15, SuperSize.width-50, 40) placeholder:@"职位" leftViewImageName:@"login_zhiwei" andRightViewImageName:@"me_right"];
+    [postTF setDelegate:self];
+    _postTF = postTF;
+    [scrollView addSubview:postTF];
+    
+    
+    UIButton *loginBut = [[UIButton alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(postTF.frame)+25, SuperSize.width-50, 44)];
+    [loginBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [loginBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [loginBut setTitle:@"进入微链" forState:UIControlStateNormal];
+    [loginBut addTarget:self action:@selector(saveAndLogin) forControlEvents:UIControlEventTouchUpInside];
+    [loginBut.titleLabel setFont:WLFONTBLOD(18)];
+    _loginBut = loginBut;
+    [scrollView addSubview:loginBut];
+    
+    // 键盘管理
+    [DaiDodgeKeyboard addRegisterTheViewNeedDodgeKeyboard:scrollView];
+    UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        [[self.view findFirstResponder] resignFirstResponder];
+    }];
+    [self.view addGestureRecognizer:tap];
+    
+}
+
+
 
 #pragma mark - 保存并登陆
 - (void)saveAndLogin
 {
     NSString *mima = self.pwdString;
     
-    if (!_nameStr.length) {
+    if (!_nameTF.text.length) {
         [WLHUDView showErrorHUD:@"请填写你的姓名"];
         return;
     }
-    if (_nameStr.length<2||_nameStr.length>20) {
+    if (_nameTF.text.length<2||_nameTF.text.length>20) {
         [WLHUDView showErrorHUD:@"姓名长度为2-20个字"];
         return;
     }
     
-    if (!_danweiStr.length) {
+    if (!_companyTF.text.length) {
         [WLHUDView showErrorHUD:@"请填写你所在的公司"];
         return;
     }
-    if (_danweiStr.length<2||_danweiStr.length>30) {
+    if (_companyTF.text.length<2||_companyTF.text.length>30) {
         [WLHUDView showErrorHUD:@"公司长度为2-30个字"];
         return;
     }
     
-    if (!_zhiwuStr.length) {
+    if (!_postTF.text.length) {
         [WLHUDView showErrorHUD:@"请填写你的职位"];
         return;
     }
-    if (_zhiwuStr.length<2 ||_zhiwuStr.length>30) {
+    if (_postTF.text.length<2 ||_postTF.text.length>30) {
         [WLHUDView showErrorHUD:@"职位长度为2-30个字"];
         return;
     }
     
-    if (!avatar) {
-        [WLHUDView showErrorHUD:@"头像不能为空"];
+    if (!_imagebase64Str.length) {
+        [WLHUDView showErrorHUD:@"请选择头像"];
         return;
     }
     if (!mima.length) {
         [WLHUDView showErrorHUD:@"密码不能为空"];
     }
     
-    [WLHttpTool registerParameterDic:@{@"name":_nameStr,@"company":_danweiStr,@"position":_zhiwuStr,@"avatar":avatar,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
+    [WLHttpTool registerParameterDic:@{@"name":_nameTF.text,@"company":_companyTF.text,@"position":_postTF.text,@"avatar":_imagebase64Str,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
         NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
         if ([datadic objectForKey:@"url"]) {
             
@@ -146,144 +183,68 @@
 
 
 #pragma mark - 选取头像照片
-- (void)choosePicture
-{
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择",nil];
-    [sheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    [imagePicker setAllowsEditing:YES];
-    if (buttonIndex==0) { //拍照
-        // 判断相机可以使用
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"摄像头不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-        [self presentViewController:imagePicker animated:YES completion:^{
-            
-        }];
-
-        
-    }else if(buttonIndex ==1) {  // 从相册选择
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            
-        }else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"相册不可用！！！" delegate:self cancelButtonTitle:@"知道了！" otherButtonTitles:nil, nil] show];
-            return;
-        }
-        [self presentViewController:imagePicker animated:YES completion:^{
-            
-        }];
-    }
-    
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
-    
-    avatar = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    
-    [self.infoHeader.pictureBut setImage:image forState:UIWindowLevelNormal];
-    [self.infoHeader.pictureBut.layer setCornerRadius:self.infoHeader.pictureBut.bounds.size.width*0.5];
-    [self.infoHeader.pictureBut.layer setMasksToBounds:YES];
-    [self.infoHeader.pictureBut.layer setBorderWidth:2];
-    [self.infoHeader.pictureBut.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-    
+    [_iconBut setImage:image forState:UIControlStateNormal];
+    [_iconBut.layer setCornerRadius:_iconBut.bounds.size.width*0.5];
+    [_iconBut.layer setMasksToBounds:YES];
+    _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
-}
-
-#pragma mark ---tableView代理
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _dataArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 60;
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid"];
-    if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellid"];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
     
-    [cell.textLabel setText:_dataArray[indexPath.row]];
-    NSString *str = @"";
-    if (indexPath.row==0) {
-        str = _nameStr;
-    }else if (indexPath.row ==1){
-        str = _danweiStr;
-    }else if (indexPath.row ==2){
-        str = _zhiwuStr;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _nameTF){
+        if (range.location>=20) return NO;
     }
-    [cell.detailTextLabel setText:str];
-    return cell;
+    return YES;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 170.0;
-}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    return self.infoHeader;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *tit = _dataArray[indexPath.row];
-    
-    if ([tit isEqualToString:@"姓名"]) {
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            _nameStr = userInfo;
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        } withType:IWVerifiedTypeName];
-        [nameVC setUserInfoStr:_nameStr];
-        [nameVC setTitle:tit];
-        [self.navigationController pushViewController:nameVC animated:YES];
-    }else if ([tit isEqualToString:@"单位"]){
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            _danweiStr = userInfo;
-[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        } withType:IWVerifiedTypeCompany];
-        [nameVC setUserInfoStr:_danweiStr];
-        [nameVC setTitle:tit];
-        [self.navigationController pushViewController:nameVC animated:YES];
-    }else if ([tit isEqualToString:@"职务"]){
-        NameController *nameVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-            _zhiwuStr = userInfo;
-[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        } withType:IWVerifiedTypeJob];
-        [nameVC setUserInfoStr:_zhiwuStr];
-        [nameVC setTitle:tit];
-        [self.navigationController pushViewController:nameVC animated:YES];
+    if (textField==_nameTF) {
+        return YES;
+    }else {
+        [UIView animateWithDuration:0.25 animations:^{
+            [_scrollView setAlpha:0.2];
+            [self.navigationController.navigationBar setAlpha:0];
+        } completion:^(BOOL finished) {
+            NSInteger type = 1;
+            if (textField == _companyTF) {
+                
+            }else if (textField ==_postTF){
+                type = 2;
+            }
+            CompotAndPostController *compAPostVC = [[CompotAndPostController alloc] initWithType:type];
+            compAPostVC.comPostBlock = ^(NSString *compotAndPostStr){
+                if (type==1) {
+                    [_companyTF setText:compotAndPostStr];
+                }else if (type==2){
+                    [_postTF setText:compotAndPostStr];
+                }
+            };
+            [self presentViewController:compAPostVC animated:NO completion:^{
+                [_scrollView setAlpha:1.0];
+                [self.navigationController.navigationBar setAlpha:1];
+                
+            }];
+        }];
+        
+        return NO;
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[self.view findFirstResponder] resignFirstResponder];
+    return YES;
 }
 
 

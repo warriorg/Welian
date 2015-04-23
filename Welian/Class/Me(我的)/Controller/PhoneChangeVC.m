@@ -44,6 +44,7 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
     [self.scrollView addGestureRecognizer:singleTap];
     [self.authBut setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateNormal];
+    [self.authBut setBackgroundImage:[UIImage resizedImage:@"button_blue_pre"] forState:UIControlStateHighlighted];
     [self.authBut setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateHighlighted];
     [self.sureBut setBackgroundImage:[UIImage resizedImage:@"discovery_activity_detail_button_blue_bg"] forState:UIControlStateNormal];
     [self.sureBut setBackgroundImage:[UIImage resizedImage:@"discovery_activity_detail_button_blue_bg_pre"] forState:UIControlStateHighlighted];

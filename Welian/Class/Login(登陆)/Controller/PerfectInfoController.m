@@ -17,9 +17,9 @@
 #import "MJExtension.h"
 #import "NSString+val.h"
 #import "NavViewController.h"
+#import "UITextField+LeftRightView.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
-
 {
     UIButton *_iconBut;
     UITextField *_nameTF;
@@ -67,33 +67,30 @@
     [scrollView addSubview:iconBut];
     [iconBut addTarget:self action:@selector(choosePicture) forControlEvents:UIControlEventTouchUpInside];
     
-    UITextField *nameTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(iconBut.frame)+25 Placeholder:@"姓名" leftImageName:@"login_name"];
+    UITextField *nameTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(iconBut.frame)+25, SuperSize.width-50, 40) placeholder:@"姓名" leftViewImageName:@"login_name" andRightViewImageName:nil];
+    [nameTF setDelegate:self];
     [nameTF setReturnKeyType:UIReturnKeyDone];
     _nameTF = nameTF;
     [scrollView addSubview:nameTF];
     
-    UITextField *companyTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(nameTF.frame)+15 Placeholder:@"单位" leftImageName:@"login_gongsi"];
-    UIButton *companyRightV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 16)];
-    [companyRightV setUserInteractionEnabled:NO];
-    [companyRightV setImage:[UIImage imageNamed:@"me_right"] forState:UIControlStateNormal];
-    [companyTF setRightView:companyRightV];
+    UITextField *companyTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(nameTF.frame)+15, SuperSize.width-50, 40) placeholder:@"单位" leftViewImageName:@"login_gongsi" andRightViewImageName:@"me_right"];
+    [companyTF setDelegate:self];
     _companyTF = companyTF;
     [scrollView addSubview:companyTF];
     
     
-    UITextField *postTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(companyTF.frame)+15 Placeholder:@"职位" leftImageName:@"login_zhiwei"];
-    UIButton *postRightV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 16)];
-    [postRightV setUserInteractionEnabled:NO];
-    [postRightV setImage:[UIImage imageNamed:@"me_right"] forState:UIControlStateNormal];
-    [postTF setRightView:postRightV];
+    UITextField *postTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(companyTF.frame)+15, SuperSize.width-50, 40) placeholder:@"职位" leftViewImageName:@"login_zhiwei" andRightViewImageName:@"me_right"];
+    [postTF setDelegate:self];
     _postTF = postTF;
     [scrollView addSubview:postTF];
     
+
     
-    UITextField *phoneTF = [self addPerfectInfoTextfWithFrameY:CGRectGetMaxY(postTF.frame)+15 Placeholder:@"手机号" leftImageName:@"login_phone"];
-    _phoneTF = phoneTF;
+    UITextField *phoneTF = [UITextField textFieldWitFrame:CGRectMake(25, CGRectGetMaxY(postTF.frame)+15, SuperSize.width-50, 40) placeholder:@"手机号" leftViewImageName:@"login_phone" andRightViewImageName:nil];
+    [phoneTF setDelegate:self];
     [phoneTF setKeyboardType:UIKeyboardTypeNumberPad];
     [phoneTF setReturnKeyType:UIReturnKeyDone];
+    _phoneTF = phoneTF;
     [scrollView addSubview:phoneTF];
     
     UIButton *loginBut = [[UIButton alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(phoneTF.frame)+25, SuperSize.width-50, 44)];
@@ -242,12 +239,7 @@
             [self presentViewController:nav animated:YES completion:^{
                 
             }];
-            
-            //进入主页面
-//            MainViewController *mainVC = [[MainViewController alloc] init];
-//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         }
-
     } fail:^(NSError *error) {
         if (error.code==1) {
             [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -333,32 +325,12 @@
 }
 
 
-
 - (void)bindingPhoneClick:(UIButton *)but
 {
     BindingPhoneController *bindingPVC = [[BindingPhoneController alloc] init];
     [bindingPVC setPhoneStr:_phoneTF.text];
     [bindingPVC setUserInfoDic:self.userInfoDic];
     [self.navigationController pushViewController:bindingPVC animated:YES];
-}
-
-
-- (UITextField *)addPerfectInfoTextfWithFrameY:(CGFloat)Y Placeholder:(NSString *)placeholder leftImageName:(NSString *)imagename
-{
-    UITextField *textf = [[UITextField alloc] initWithFrame:CGRectMake(25, Y, SuperSize.width-50, 40)];
-    [textf setPlaceholder:placeholder];
-    [textf setDelegate:self];
-    [textf setLeftViewMode:UITextFieldViewModeAlways];
-    [textf setRightViewMode:UITextFieldViewModeAlways];
-    [textf setBackgroundColor:[UIColor whiteColor]];
-    [textf setClearButtonMode:UITextFieldViewModeWhileEditing];
-    UIButton *nameleftV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 16)];
-    [nameleftV setUserInteractionEnabled:NO];
-    [nameleftV setImage:[UIImage imageNamed:imagename] forState:UIControlStateNormal];
-    [textf setLeftView:nameleftV];
-    [textf.layer setCornerRadius:4];
-    [textf.layer setMasksToBounds:YES];
-    return textf;
 }
 
 - (void)cancelVC
@@ -372,15 +344,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "BasicViewController.h"
-#import "WLTextField.h"
 
 @interface ForgetCoderController : BasicViewController
 
