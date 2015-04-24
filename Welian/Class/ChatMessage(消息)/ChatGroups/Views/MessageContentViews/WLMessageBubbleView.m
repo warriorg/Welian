@@ -92,6 +92,7 @@
     displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
     displayLabel.font = [[WLMessageBubbleView appearance] font];
     displayLabel.text = text;
+//    displayLabel.text = @"/:|-)TableView github:https://github.com/molon/MLEmojiLabel @撒旦 哈哈哈哈#九歌#九黎电话13612341234邮箱13612341234@qq.com旦旦/:dsad旦/::)sss/::~啊是大三的拉了/::B/::|/:8-)/::</::$/::X/::Z/::'(/::-|/::@/::P/::D/::O/::(/::+/:--b/::Q/::T/:,@P/:,@-D/::d/:,@o/::g/:|-)/::!/::L/::>/::,@/:,@f/::-S/:?/:ok/:love/:<L>/:jump/:shake/:<O>/:circle/:kotow/:turn/:skip/:oY链接:http://baidu.com dudl@qq.com";
 //    displayLabel.textColor = WLRGB(51, 51, 51);
 //    displayLabel.backgroundColor = [UIColor clearColor];
 //    [self addSubview:displayLabel];
@@ -383,6 +384,10 @@
             _displayLabel.textColor = [message bubbleMessageType] == WLBubbleMessageTypeReceiving ? kTitleNormalTextColor : [UIColor whiteColor];
             _displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
             _displayLabel.text = message.text;
+//            _displayLabel.text = @"/:|-)TableView github:https://github.com/molon/MLEmojiLabel @撒旦 哈哈哈哈#九歌#九黎电话13612341234邮箱13612341234@qq.com旦旦/:dsad旦/::)sss/::~啊是大三的拉了/::B/::|/:8-)/::</::$/::X/::Z/::'(/::-|/::@/::P/::D/::O/::(/::+/:--b/::Q/::T/:,@P/:,@-D/::d/:,@o/::g/:|-)/::!/::L/::>/::,@/:,@f/::-S/:?/:ok/:love/:<L>/:jump/:shake/:<O>/:circle/:kotow/:turn/:skip/:oY链接:http://baidu.com dudl@qq.com";
+            
+            //测试TTT原生方法
+//            [_displayLabel addLinkToURL:[NSURL URLWithString:@"http://sasasadan.com"] withRange:[_displayLabel.text rangeOfString:@"TableView"]];
             
             //            _displayTextView.attributedText = [[WLMessageBubbleHelper sharedMessageBubbleHelper] bubbleAttributtedStringWithText:[message text] withTextColor:[UIColor blackColor]];
             //            //设置字体颜色

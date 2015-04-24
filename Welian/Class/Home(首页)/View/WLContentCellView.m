@@ -66,6 +66,7 @@
     _contentLabel.font = WLFONT(15);
     _contentLabel.textColor = WLRGB(51, 51, 51);
     _contentLabel.backgroundColor = [UIColor clearColor];
+    _contentLabel.enableToLinkUrl = YES;//设置url转成网页链接展示
     [self addSubview:_contentLabel];
     // 长按手势 复制
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerHandle:)];
