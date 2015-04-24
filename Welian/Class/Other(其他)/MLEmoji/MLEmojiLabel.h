@@ -32,6 +32,7 @@ typedef NS_OPTIONS(NSUInteger, MLEmojiLabelLinkType) {
 @interface MLEmojiLabel : TTTAttributedLabel
 
 @property (nonatomic, assign) BOOL disableEmoji; //禁用表情
+@property (nonatomic, assign) BOOL enableToLinkUrl; //设置链接URL变成@“网页链接”  默认为NO 不使用
 @property (nonatomic, assign) BOOL disableThreeCommon; //禁用电话，邮箱，连接三者
 
 @property (nonatomic, assign) BOOL isNeedAtAndPoundSign; //是否需要话题和@功能，默认为不需要

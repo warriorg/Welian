@@ -157,6 +157,7 @@
     displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
     displayLabel.font = [[WLMessageSpecialView appearance] font];
     displayLabel.text = text;
+    
     //    displayLabel.textColor = WLRGB(51, 51, 51);
     //    displayLabel.backgroundColor = [UIColor clearColor];
     //    [self addSubview:displayLabel];

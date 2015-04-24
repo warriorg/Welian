@@ -57,6 +57,7 @@
             contLabel.numberOfLines = 0;
             contLabel.lineBreakMode = NSLineBreakByCharWrapping;
             contLabel.font = WLFONT(15);
+            contLabel.enableToLinkUrl = YES;//设置url转成网页链接展示
             
             CGSize sizelabel = [contLabel preferredSizeWithMaxWidth:_cellWidth - IWCellBorderWidth];
             

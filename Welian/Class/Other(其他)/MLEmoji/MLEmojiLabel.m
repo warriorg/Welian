@@ -48,13 +48,19 @@ const CGFloat kLineSpacing = 5.0;
 const CGFloat kAscentDescentScale = 0.25; //在这里的话无意义，高度的结局都是和宽度一样
 
 const CGFloat kEmojiWidthRatioWithLineHeight = 1.15;//和字体高度的比例
+const CGFloat kLinkUrlWidthRatioWithLineHeight = 1.15;
 
 const CGFloat kEmojiOriginYOffsetRatioWithLineHeight = 0.10; //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
 NSString *const kCustomGlyphAttributeImageName = @"CustomGlyphAttributeImageName";
 
 #define kEmojiReplaceCharacter @"\uFFFC"
 
+//链接类型地址替换 标题和图片
+#define kLinkTitleName @"网页链接"
+#define kLinkIconName @"home_link_logo"
+
 #define kURLActionCount 3
+
 NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
 
 /**
@@ -139,10 +145,14 @@ NSString * const kURLActions[] = {@"url->",@"at->",@"poundSign->"};
 @property (nonatomic, weak) NSRegularExpression *customEmojiRegularExpression;
 @property (nonatomic, weak) NSDictionary *customEmojiDictionary; //这玩意如果有也是在MLEmojiLabelPlistManager单例里面存着
 
+//@property (nonatomic, weak) NSRegularExpression *customLinkUrlRegularExpression;
+//@property (nonatomic, weak) NSDictionary *customLinkUrlDictionary; //这玩意如果有也是在单例里面存着
+
 @property (nonatomic, assign) BOOL ignoreSetText;
 
 //留个初始副本
 @property (nonatomic, copy) id emojiText;
+//@property (nonatomic, copy) id linkUrlText;
 
 @end
 
@@ -393,8 +403,90 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     //                                                         options:NSMatchingWithTransparentBounds
     //                                                           range:NSMakeRange(0, [emojiText length])];
     
-    NSArray *emojis = nil;
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
+    NSUInteger location = 0;
+    //禁用把链接变成 网页链接
+    if(_enableToLinkUrl){
+        //链接
+        NSArray *linkUrls = [kURLRegularExpression() matchesInString:emojiText.string
+                                                             options:NSMatchingWithTransparentBounds
+                                                               range:NSMakeRange(0, [emojiText length])];
+        
+        /*
+         /:|-)TableView github:https://github.com/molon/MLEmojiLabel @撒旦 哈哈哈哈#九歌#九黎电话13612341234邮箱13612341234@qq.com旦旦/:dsad旦/::)sss/::~啊是大三的拉了/::B/::|/:8-)/::</::$/::X/::Z/::'(/::-|/::@/::P/::D/::O/::(/::+/:--b/::Q/::T/:,@P/:,@-D/::d/:,@o/::g/:|-)/::!/::L/::>/::,@/:,@f/::-S/:?/:ok/:love/:<L>/:jump/:shake/:<O>/:circle/:kotow/:turn/:skip/:oY链接:http://baidu.com dudl@qq.com
+         */
+        CGFloat linkIconWith = self.font.lineHeight*kLinkUrlWidthRatioWithLineHeight;
+        if (linkUrls.count > 0) {
+            for (int i = 0; i < linkUrls.count; i++) {
+                NSTextCheckingResult *result = linkUrls[i];
+                NSRange range = result.range;
+                DLog(@"result location:%d  length:%d",(int)range.location,(int)range.length);
+                DLog(@"location:%d  length:%d",(int)range.location,(int)(range.location - location));
+                NSAttributedString *attSubStr = [emojiText attributedSubstringFromRange:NSMakeRange(location, range.location - location)];
+                [attrStr appendAttributedString:attSubStr];
+                
+                //url地址
+                NSAttributedString *linkUrlKey = [emojiText attributedSubstringFromRange:range];
+                NSString *linkTitleName = linkUrlKey.string.length > 0 ? kLinkTitleName : nil;
+                //url图标名称
+                NSString *linkIconName = kLinkIconName;
+                if (linkTitleName) {
+                    //添加链接图片
+                    // 这里不用空格，空格有个问题就是连续空格的时候只显示在一行
+                    NSMutableAttributedString *replaceLinkIconStr = [[NSMutableAttributedString alloc] initWithString:kEmojiReplaceCharacter];
+                    NSRange __range = NSMakeRange([attrStr length], 1);
+                    [attrStr appendAttributedString:replaceLinkIconStr];
+                    
+                    // 定义回调函数
+                    CTRunDelegateCallbacks callbacks;
+                    callbacks.version = kCTRunDelegateCurrentVersion;
+                    callbacks.getAscent = ascentCallback;
+                    callbacks.getDescent = descentCallback;
+                    callbacks.getWidth = widthCallback;
+                    callbacks.dealloc = deallocCallback;
+                    
+                    // 这里设置下需要绘制的图片的大小，这里我自定义了一个结构体以便于存储数据
+                    CustomGlyphMetricsRef metrics = malloc(sizeof(CustomGlyphMetrics));
+                    metrics->width = linkIconWith;
+                    metrics->ascent = 1/(1+kAscentDescentScale)*metrics->width;
+                    metrics->descent = metrics->ascent*kAscentDescentScale;
+                    CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, metrics);
+                    [attrStr addAttribute:(NSString *)kCTRunDelegateAttributeName
+                                    value:(__bridge id)delegate
+                                    range:__range];
+                    CFRelease(delegate);
+                    
+                    // 设置自定义属性，绘制的时候需要用到
+                    [attrStr addAttribute:kCustomGlyphAttributeImageName
+                                    value:linkIconName
+                                    range:__range];
+                    
+                    
+                    //重置链接文本内容
+                    NSMutableAttributedString *replaceStr = [[NSMutableAttributedString alloc] initWithString:linkTitleName];
+                    // 设置自定义属性，绘制的时候需要用到
+                    [attrStr appendAttributedString:replaceStr];
+                    //给最后的网页链接添加链接地址
+                    [attrStr addAttribute:NSLinkAttributeName value:[NSURL URLWithString:linkUrlKey.string] range:NSMakeRange(attrStr.length - replaceStr.length, replaceStr.length)];
+                } else {
+                    [attrStr appendAttributedString:linkUrlKey];
+                }
+                //设置计算后的位置
+                location = range.location + range.length;
+            }
+            //判断是否有未添加的内容，加入
+            if (location < [emojiText length]) {
+                NSRange range = NSMakeRange(location, [emojiText length] - location);
+                NSAttributedString *attrSubStr = [emojiText attributedSubstringFromRange:range];
+                [attrStr appendAttributedString:attrSubStr];
+            }
+            //链接匹配结束后的文本  重新设置
+            emojiText = attrStr;
+        }
+    }
     
+    //表情匹配
+    NSArray *emojis = nil;
     if (self.customEmojiRegularExpression) {
         //自定义表情正则
         emojis = [self.customEmojiRegularExpression matchesInString:emojiText.string
@@ -406,9 +498,9 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
                                                            range:NSMakeRange(0, [emojiText length])];
     }
     
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
-    NSUInteger location = 0;
-    
+    //重新设置值
+    attrStr = [[NSMutableAttributedString alloc] init];
+    location = 0;
     
     CGFloat emojiWith = self.font.lineHeight*kEmojiWidthRatioWithLineHeight;
     for (NSTextCheckingResult *result in emojis) {
@@ -478,6 +570,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
             [attrStr appendAttributedString:emojiKey];
         }
     }
+    
     if (location < [emojiText length]) {
         NSRange range = NSMakeRange(location, [emojiText length] - location);
         NSAttributedString *attrSubStr = [emojiText attributedSubstringFromRange:range];
@@ -527,7 +620,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     }
     
     NSRange stringRange = NSMakeRange(0, mutableAttributedString.length);
-    
+//    NSRegularExpression * const regexps[] = {kAtRegularExpression(),kPoundSignRegularExpression()};
     NSRegularExpression * const regexps[] = {kURLRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
     
     NSMutableArray *results = [NSMutableArray array];
@@ -553,14 +646,15 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
             //这里暂时用NSTextCheckingTypeCorrection类型的传递消息吧
             //因为有自定义的类型出现，所以这样方便点。
             NSTextCheckingResult *aResult = [NSTextCheckingResult correctionCheckingResultWithRange:result.range replacementString:actionString];
-            
             [results addObject:aResult];
         }];
     }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     //这里直接调用父类私有方法，好处能内部只会setNeedDisplay一次。一次更新所有添加的链接
+    
     [super performSelector:@selector(addLinksWithTextCheckingResults:attributes:) withObject:results withObject:self.linkAttributes];
+    
 #pragma clang diagnostic pop
     
 }
@@ -651,6 +745,16 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
             }
         }
     }
+    //链接类型
+    if (result.resultType == NSTextCheckingTypeLink) {
+        if(self.delegate&&[self.delegate respondsToSelector:@selector(mlEmojiLabel:didSelectLink:withType:)]){
+            //type的数组和i刚好对应
+            [self.delegate mlEmojiLabel:self didSelectLink:result.URL.absoluteString withType:MLEmojiLabelLinkTypeURL];
+            return YES;
+        }
+        return NO;
+    }
+    
     return NO;
 }
 
