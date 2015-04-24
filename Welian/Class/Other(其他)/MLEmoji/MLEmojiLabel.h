@@ -11,10 +11,10 @@
 
 typedef NS_OPTIONS(NSUInteger, MLEmojiLabelLinkType) {
     MLEmojiLabelLinkTypeURL = 0,
-    MLEmojiLabelLinkTypeEmail,
-    MLEmojiLabelLinkTypePhoneNumber,
     MLEmojiLabelLinkTypeAt,
     MLEmojiLabelLinkTypePoundSign,
+    MLEmojiLabelLinkTypeEmail,
+    MLEmojiLabelLinkTypePhoneNumber,
 };
 
 

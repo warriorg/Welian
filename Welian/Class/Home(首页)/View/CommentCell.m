@@ -90,7 +90,7 @@
     _contentLabel.delegate = self;
     _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _contentLabel.isNeedAtAndPoundSign = YES;
+    _contentLabel.isNeedAtAndPoundSign = NO;//是否启用@ 和 话题功能
     _contentLabel.font = WLFONT(14);
     _contentLabel.textColor = WLRGB(51, 51, 51);
     // 自动换行
