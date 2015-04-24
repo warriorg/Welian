@@ -10,6 +10,7 @@
 #import "ForgetPWDController.h"
 #import "NSString+val.h"
 #import "UIImage+ImageEffects.h"
+#import "UITextField+LeftRightView.h"
 
 #define KTimes 60;
 
@@ -18,7 +19,7 @@
     __block int timeout;
     dispatch_source_t _timer;
 }
-@property (strong, nonatomic) WLTextField *forgetCoderTextField;
+@property (strong, nonatomic) UITextField *forgetCoderTextField;
 @property (strong, nonatomic) UIButton *forgetAgainCoderButton;
 
 @end
@@ -38,27 +39,31 @@
 {
     [self setTitle:@"验证手机2/3"];
     [self.view setBackgroundColor:WLLineColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(coderForgetCoderNext:)];
-    
-    CGSize size = self.view.bounds.size;
-    self.forgetCoderTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 20+64, size.width, 44)];
-    [self.forgetCoderTextField setPlaceholder:@"验证码"];
+
+    self.forgetCoderTextField = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"验证码" leftViewImageName:@"login_code" andRightViewImageName:nil];
     [self.forgetCoderTextField setDelegate:self];
     [self.forgetCoderTextField setBackgroundColor:[UIColor whiteColor]];
     [self.forgetCoderTextField setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:self.forgetCoderTextField];
     
-    CGFloat butW = 88;
-    self.forgetAgainCoderButton = [[UIButton alloc] initWithFrame:CGRectMake(size.width-88-20, 91, butW, 30)];
+    CGFloat butW = 100;
+    self.forgetAgainCoderButton = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width-25-butW, ViewCtrlTopBarHeight + kFirstMarginTop, butW, TextFieldHeight)];
     [self.forgetAgainCoderButton setTitle:@"重新发送" forState:UIControlStateNormal];
     [self.forgetAgainCoderButton.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
     [self.forgetAgainCoderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.forgetAgainCoderButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
-    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"login_background"] forState:UIControlStateDisabled];
+    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"button_blue"] forState:UIControlStateNormal];
+    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"button_blue_pre"] forState:UIControlStateHighlighted];
+    [self.forgetAgainCoderButton setBackgroundImage:[UIImage resizedImage:@"button_white"] forState:UIControlStateDisabled];
     [self.forgetAgainCoderButton addTarget:self action:@selector(forgetAgainCoderClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.forgetAgainCoderButton];
+    
+    UIButton *nextBut = [[UIButton alloc] initWithFrame:CGRectMake(25, self.forgetCoderTextField.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [nextBut.titleLabel setFont:WLFONTBLOD(18)];
+    [nextBut addTarget:self action:@selector(coderForgetCoderNext:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBut];
     
 }
 

@@ -11,7 +11,6 @@
 #import "WLTool.h"
 #import "NavViewController.h"
 #import "AboutViewController.h"
-#import "LoginViewController.h"
 #import "LoginGuideController.h"
 #import <StoreKit/StoreKit.h>
 #import "MeInfoController.h"

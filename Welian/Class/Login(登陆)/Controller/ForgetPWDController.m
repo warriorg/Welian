@@ -9,10 +9,11 @@
 #import "ForgetPWDController.h"
 #import "NSString+val.h"
 #import "LoginPhoneVC.h"
-#import "WLTextField.h"
+#import "UITextField+LeftRightView.h"
+#import "UIImage+ImageEffects.h"
 
 @interface ForgetPWDController () <UITextFieldDelegate>
-@property (strong, nonatomic) WLTextField *pwdTextField;
+@property (strong, nonatomic) UITextField *pwdTextField;
 @end
 
 @implementation ForgetPWDController
@@ -27,14 +28,19 @@
 {
     [self setTitle:@"验证手机3/3"];
     [self.view setBackgroundColor:WLLineColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(savePWDClick:)];
     
-    self.pwdTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
-    [self.pwdTextField setPlaceholder:@"请输入新的密码"];
+    self.pwdTextField = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"请输入新的密码" leftViewImageName:@"login_password" andRightViewImageName:nil];
     [self.pwdTextField setDelegate:self];
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.pwdTextField];
-
+    
+    UIButton *nextBut = [[UIButton alloc] initWithFrame:CGRectMake(25, self.pwdTextField.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [nextBut.titleLabel setFont:WLFONTBLOD(18)];
+    [nextBut addTarget:self action:@selector(savePWDClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBut];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

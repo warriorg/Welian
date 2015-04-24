@@ -62,7 +62,7 @@
         _homeView = [[HomeView alloc] initWithFrame:self.tableView.frame];
         [_homeView setHomeController:self];
         [_homeView setHidden:YES];
-        [self.view addSubview:_homeView];
+        [self.tableView addSubview:_homeView];
     }
     return _homeView;
 }

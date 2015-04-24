@@ -10,14 +10,17 @@
 #import "NSString+val.h"
 #import "MainViewController.h"
 #import "MJExtension.h"
-#import "WLTextField.h"
+#import "UITextField+LeftRightView.h"
 #import "ForgetPhoneController.h"
 #import "LogInUser.h"
+#import "UIImage+ImageEffects.h"
+
+#import "UserInfoController.h"
 
 @interface LoginPhoneVC ()<UITextFieldDelegate>
 
-@property (strong, nonatomic)  WLTextField *phoneTextField;
-@property (strong, nonatomic)  WLTextField *pwdTextField;
+@property (strong, nonatomic)  UITextField *phoneTextField;
+@property (strong, nonatomic)  UITextField *pwdTextField;
 
 @end
 
@@ -57,6 +60,10 @@
     [super viewDidLoad];
     //加载页面数据
     [self loadUIView];
+    UITapGestureRecognizer *tap = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        [[self.view findFirstResponder] resignFirstResponder];
+    }];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)loadUIView
@@ -64,13 +71,11 @@
     [self setTitle:@"登录"];
     //设置背景色
     [self.view setBackgroundColor:WLLineColor];
-    //设置右上角
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(loginPhonePWD:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancellVC)];
     
     //手机号码
-    WLTextField *phoneTF = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
-    phoneTF.placeholder = @"手机号码";
+    UITextField *phoneTF = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"手机号码" leftViewImageName:@"login_phone" andRightViewImageName:nil];
+    [phoneTF setClearButtonMode:UITextFieldViewModeWhileEditing];
     phoneTF.text = lastLoginMobile;
     phoneTF.returnKeyType = UIReturnKeyNext;
     phoneTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -79,8 +84,7 @@
     self.phoneTextField = phoneTF;
     
     //密码
-    WLTextField *pwdTF = [[WLTextField alloc] initWithFrame:Rect(0, phoneTF.bottom + 1, self.view.width, TextFieldHeight)];
-    pwdTF.placeholder = @"密码";
+    UITextField *pwdTF = [UITextField textFieldWitFrame:Rect(25, phoneTF.bottom + 10, SuperSize.width-50, TextFieldHeight) placeholder:@"密码" leftViewImageName:@"login_password" andRightViewImageName:nil];
     pwdTF.secureTextEntry = YES;
     pwdTF.returnKeyType = UIReturnKeyGo;
     pwdTF.keyboardType = UIKeyboardTypeDefault;
@@ -95,6 +99,15 @@
     [forgetBut setTitle:@"忘记密码?" forState:UIControlStateNormal];
     [forgetBut addTarget:self action:@selector(forgetPwd:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:forgetBut];
+    
+    UIButton *loginBut = [[UIButton alloc] initWithFrame:CGRectMake(25, forgetBut.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [loginBut setTitle:@"进入微链" forState:UIControlStateNormal];
+    [loginBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [loginBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [loginBut.titleLabel setFont:WLFONTBLOD(18)];
+    [loginBut addTarget:self action:@selector(loginPhonePWD:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:loginBut];
+    
 }
 
 - (void)cancellVC
@@ -115,7 +128,7 @@
     [self.navigationController pushViewController:forgetVC animated:YES];
 }
 
-- (void)loginPhonePWD:(UIBarButtonItem *)sender {
+- (void)loginPhonePWD:(UIButton *)sender {
     [[self.view findFirstResponder] resignFirstResponder];
     
     if (![NSString phoneValidate:self.phoneTextField.text]) {

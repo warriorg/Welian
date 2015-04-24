@@ -10,7 +10,7 @@
 #import "UserInfoController.h"
 #import "NSString+val.h"
 #import "UIImage+ImageEffects.h"
-#import "WLTextField.h"
+#import "UITextField+LeftRightView.h"
 
 #define KTimes 60;
 
@@ -20,9 +20,9 @@
     dispatch_source_t _timer;
 }
 
-@property (strong, nonatomic) WLTextField *coderTextField;
+@property (strong, nonatomic) UITextField *coderTextField;
 
-@property (strong, nonatomic) WLTextField *pwdTextField;
+@property (strong, nonatomic) UITextField *pwdTextField;
 
 @property (strong, nonatomic) UIButton *timeButton;
 
@@ -42,36 +42,39 @@
 {
     [self setTitle:@"验证手机号2/3"];
     [self.view setBackgroundColor:WLLineColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleBordered target:self action:@selector(nextPush:)];
     
-    CGSize size = self.view.bounds.size;
-    self.coderTextField = [[WLTextField alloc] initWithFrame:Rect(0, ViewCtrlTopBarHeight + kFirstMarginTop, self.view.width, TextFieldHeight)];
-    [self.coderTextField setPlaceholder:@"验证码"];
+    self.coderTextField = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"验证码" leftViewImageName:@"login_code" andRightViewImageName:nil];
     [self.coderTextField setDelegate:self];
     [self.coderTextField setBackgroundColor:[UIColor whiteColor]];
     [self.coderTextField setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:self.coderTextField];
     
-    CGFloat butW = 88;
-    self.timeButton = [[UIButton alloc] initWithFrame:CGRectMake(size.width-88-20, 91, butW, 30)];
+    CGFloat butW = 100;
+    self.timeButton = [[UIButton alloc] initWithFrame:CGRectMake(SuperSize.width-25-butW, ViewCtrlTopBarHeight + kFirstMarginTop, butW, TextFieldHeight)];
     [self.timeButton setTitle:@"重新发送" forState:UIControlStateNormal];
     [self.timeButton.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
     [self.timeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.timeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"bluebutton"] forState:UIControlStateNormal];
-    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"bluebuttton_pressed"] forState:UIControlStateHighlighted];
-    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"login_background"] forState:UIControlStateDisabled];
+    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"button_blue"] forState:UIControlStateNormal];
+    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"button_blue_pre"] forState:UIControlStateHighlighted];
+    [self.timeButton setBackgroundImage:[UIImage resizedImage:@"button_white"] forState:UIControlStateDisabled];
     [self.timeButton addTarget:self action:@selector(againCoder:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.timeButton];
     
     
-    self.pwdTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.coderTextField.frame)+1, size.width, 44)];
-    [self.pwdTextField setPlaceholder:@"密码"];
+    self.pwdTextField = [UITextField textFieldWitFrame:Rect(25, self.coderTextField.bottom+10, SuperSize.width-50, TextFieldHeight) placeholder:@"密码" leftViewImageName:@"login_password" andRightViewImageName:nil];
     [self.pwdTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.pwdTextField setBackgroundColor:[UIColor whiteColor]];
     [self.pwdTextField setDelegate:self];
     [self.pwdTextField setSecureTextEntry:YES];
     [self.view addSubview:self.pwdTextField];
+    
+    UIButton *nextBut = [[UIButton alloc] initWithFrame:CGRectMake(25, self.pwdTextField.bottom+25, SuperSize.width-50, TextFieldHeight)];
+    [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage resizedImage:@"login_my_button_pre"] forState:UIControlStateHighlighted];
+    [nextBut.titleLabel setFont:WLFONTBLOD(18)];
+    [nextBut addTarget:self action:@selector(nextPush:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextBut];
     
 }
 
@@ -100,7 +103,7 @@
 }
 
 
-- (void)nextPush:(UIBarButtonItem *)sender {
+- (void)nextPush:(UIButton *)sender {
     
     if (![self.coderTextField.text isEqualToString:self.coderString]) {
         [WLHUDView showErrorHUD:@"验证码输入有误！"];

@@ -14,7 +14,6 @@
 #import "UIImageView+WebCache.h"
 #import "ShareEngine.h"
 #import "WLTool.h"
-#import "LoginViewController.h"
 #import "NewFriendModel.h"
 #import "MJExtension.h"
 #import "MobClick.h"
