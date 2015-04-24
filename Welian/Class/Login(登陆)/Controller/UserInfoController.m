@@ -7,7 +7,6 @@
 //
 
 #import "UserInfoController.h"
-#import "InfoHeaderView.h"
 #import "NameController.h"
 #import "MainViewController.h"
 #import "WLHUDView.h"
