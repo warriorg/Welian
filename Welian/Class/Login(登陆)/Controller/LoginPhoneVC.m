@@ -147,7 +147,7 @@
 //        
 //        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
 //    }
-    [WLHUDView showHUDWithStr:@"正在登录..." dim:YES];
+    [WLHUDView showHUDWithStr:@"登录中..." dim:YES];
     [WeLianClient loginWithParameterDic:reqstDic Success:^(id resultInfo) {
         [WLHUDView hiddenHud];
         ILoginUserModel *loginUserM = resultInfo;
@@ -157,7 +157,7 @@
         [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         
     } Failed:^(NSError *error) {
-        [WLHUDView showErrorHUD:error.description];
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
     
 //    [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {

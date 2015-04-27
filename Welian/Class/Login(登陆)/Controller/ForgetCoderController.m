@@ -35,6 +35,12 @@
     [self startTime];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    timeout = 1;
+}
+
 - (void)loadUIView
 {
     [self setTitle:@"验证手机2/3"];
@@ -98,26 +104,36 @@
 // 注册重新发送验证码
 - (void)chongxingfasongforgetcode
 {
-    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
-    [reqstDic setObject:self.phoneString forKey:@"mobile"];
-    [reqstDic setObject:KPlatformType forKey:@"platform"];
-    
-    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-    }
-    
-    [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue] == 1) {
-            
-            self.coderString = [JSON objectForKey:@"checkcode"];
-            
-        }else if ([[JSON objectForKey:@"flag"] integerValue]==0){
-            [WLHUDView showErrorHUD:@"该号码未注册，请先注册！"];
+//    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+//    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
+//    [reqstDic setObject:self.phoneString forKey:@"mobile"];
+//    [reqstDic setObject:KPlatformType forKey:@"platform"];
+//    
+//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//    }
+    [WLHUDView showHUDWithStr:@"加载中..." dim:NO];
+    [WeLianClient getCodeWithMobile:self.phoneString Type:@"forgetpassword" Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        [WLHUDView hiddenHud];
+        if ([resultInfo objectForKey:@"code"]) {
+            self.coderString = [resultInfo objectForKey:@"code"];
         }
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
+    
+//    [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue] == 1) {
+//            
+//            self.coderString = [JSON objectForKey:@"checkcode"];
+//            
+//        }else if ([[JSON objectForKey:@"flag"] integerValue]==0){
+//            [WLHUDView showErrorHUD:@"该号码未注册，请先注册！"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 
@@ -129,22 +145,36 @@
         [WLHUDView showErrorHUD:@"验证码输入有误！"];
         return;
     }
-    
-    [WLHttpTool checkCodeParameterDic:@{@"code":self.coderString} success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
-            
+    [WeLianClient checkCodeWithMobile:self.phoneString Code:self.coderString Success:^(id resultInfo) {
+        if ([[resultInfo objectForKey:@"flag"] integerValue]==0) {
             ForgetPWDController *forgetPWDVC = [[ForgetPWDController alloc] init];
             [forgetPWDVC setPhoneString:self.phoneString];
             [forgetPWDVC setCoderString:self.coderString];
             [self.navigationController pushViewController:forgetPWDVC animated:YES];
             
-        }else{
+        }else if([[resultInfo objectForKey:@"flag"] integerValue]==1){
             [WLHUDView showErrorHUD:@"验证失败，请重试！"];
         }
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
+    
+//    [WLHttpTool checkCodeParameterDic:@{@"code":self.coderString} success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+//            
+//            ForgetPWDController *forgetPWDVC = [[ForgetPWDController alloc] init];
+//            [forgetPWDVC setPhoneString:self.phoneString];
+//            [forgetPWDVC setCoderString:self.coderString];
+//            [self.navigationController pushViewController:forgetPWDVC animated:YES];
+//            
+//        }else{
+//            [WLHUDView showErrorHUD:@"验证失败，请重试！"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
+
 
 -(void)startTime{
     

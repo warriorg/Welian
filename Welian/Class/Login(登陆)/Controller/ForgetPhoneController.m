@@ -81,43 +81,40 @@
         return;
     }
     
-    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
-    [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
-    [reqstDic setObject:KPlatformType forKey:@"platform"];
-    
-    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-    }
-    
-    [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue] == 1) {
-
+//    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+//    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
+//    [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
+//    [reqstDic setObject:KPlatformType forKey:@"platform"];
+//    
+//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//    }
+    [WLHUDView showHUDWithStr:@"加载中..." dim:YES];
+    [WeLianClient getCodeWithMobile:self.phoneTextField.text Type:@"forgetpassword" Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        [WLHUDView hiddenHud];
+        if ([resultInfo objectForKey:@"code"]) {
             ForgetCoderController  *forgetCoderVC = [[ForgetCoderController alloc] init];
             [forgetCoderVC setPhoneString:self.phoneTextField.text];
-            [forgetCoderVC setCoderString:[JSON objectForKey:@"checkcode"]];
+            [forgetCoderVC setCoderString:[resultInfo objectForKey:@"code"]];
             [self.navigationController pushViewController:forgetCoderVC animated:YES];
-
-        }else if ([[JSON objectForKey:@"flag"] integerValue]==0){
-            [WLHUDView showErrorHUD:@"该号码未注册，请先注册！"];
         }
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
-    
-//    [WeLianClient getCodeWithMobile:self.phoneTextField.text
-//                               Type:@"forgetpassword"
-//                            Success:^(id resultInfo) {
-////                                data =     {
-////                                    code = 5105;
-////                                };
-//                                ForgetCoderController  *forgetCoderVC = [[ForgetCoderController alloc] init];
-//                                forgetCoderVC.phoneString = self.phoneTextField.text;
-//                                forgetCoderVC.coderString = [resultInfo objectForKey:@"code"];
-//                                [self.navigationController pushViewController:forgetCoderVC animated:YES];
-//                            } Failed:^(NSError *error) {
-//                                [UIAlertView showWithError:error];
-//                            }];
-
+//    [WLHttpTool getCheckCodeParameterDic:reqstDic success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue] == 1) {
+//
+//            ForgetCoderController  *forgetCoderVC = [[ForgetCoderController alloc] init];
+//            [forgetCoderVC setPhoneString:self.phoneTextField.text];
+//            [forgetCoderVC setCoderString:[JSON objectForKey:@"checkcode"]];
+//            [self.navigationController pushViewController:forgetCoderVC animated:YES];
+//
+//        }else if ([[JSON objectForKey:@"flag"] integerValue]==0){
+//            [WLHUDView showErrorHUD:@"该号码未注册，请先注册！"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 @end

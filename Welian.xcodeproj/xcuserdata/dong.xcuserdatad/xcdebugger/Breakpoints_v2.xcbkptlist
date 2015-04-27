@@ -4,28 +4,18 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Me(&#x6211;&#x7684;)/Controller/AddWorkOrEducationController.m"
-            timestampString = "451391084.199372"
+            filePath = "Welian/Class/Utils(&#x64cd;&#x4f5c;)/Project/WeLianClient.m"
+            timestampString = "451819018.474016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
-            landmarkName = "-savedata"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "+reqestPostWithParams:Path:Success:Failed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

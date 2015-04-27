@@ -102,8 +102,6 @@
 #pragma mark - 保存并登陆
 - (void)saveAndLogin
 {
-    NSString *mima = self.pwdString;
-    
     if (!_nameTF.text.length) {
         [WLHUDView showErrorHUD:@"请填写你的姓名"];
         return;
@@ -135,46 +133,56 @@
         [WLHUDView showErrorHUD:@"请选择头像"];
         return;
     }
-    if (!mima.length) {
-        [WLHUDView showErrorHUD:@"密码不能为空"];
-    }
-    
-    [WLHttpTool registerParameterDic:@{@"name":_nameTF.text,@"company":_companyTF.text,@"position":_postTF.text,@"avatar":_imagebase64Str,@"avatarname":@"jpg",@"password":mima} success:^(id JSON) {
-        NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
-        if ([datadic objectForKey:@"url"]) {
-            
-            NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-            [reqstDic setObject:self.phoneString forKey:@"mobile"];
-            [reqstDic setObject:self.pwdString forKey:@"password"];
-            [reqstDic setObject:KPlatformType forKey:@"platform"];
-            if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-                
-                [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-            }
-
-            [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-                NSDictionary *dataDic = JSON;
-                if (dataDic) {
-                    UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-                    [mode setCheckcode:self.pwdString];
-                    [UserDefaults setObject:mode.sessionid forKey:kSessionId];
-                    [LogInUser createLogInUserModel:mode];
-                    BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
-                    [bsearchVC setIsStart:YES];
-                    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
-                    [self presentViewController:nav animated:YES completion:^{
-                        
-                    }];
-                }
-                
-            } fail:^(NSError *error) {
-                
-            } isHUD:YES];
-
-        }
-    } fail:^(NSError *error) {
+    [WLHUDView showHUDWithStr:@"登录中..." dim:YES];
+    [WeLianClient registerWithName:_nameTF.text Mobile:self.phoneString Company:_companyTF.text Position:_postTF.text Password:[self.pwdString MD5String] Avatar:_imagebase64Str Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        [WLHUDView hiddenHud];
+        ILoginUserModel *loginUserM = resultInfo;
+        [LogInUser createLogInUserModel:loginUserM];
+        //进入主页面
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
+    
+//    [WLHttpTool registerParameterDic:@{@"name":_nameTF.text,@"company":_companyTF.text,@"position":_postTF.text,@"avatar":_imagebase64Str,@"avatarname":@"jpg",@"password":[mima MD5String]} success:^(id JSON) {
+//        NSDictionary *datadic = [NSDictionary dictionaryWithDictionary:JSON];
+//        if ([datadic objectForKey:@"url"]) {
+//            
+//            NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
+//            [reqstDic setObject:self.phoneString forKey:@"mobile"];
+//            [reqstDic setObject:self.pwdString forKey:@"password"];
+//            [reqstDic setObject:KPlatformType forKey:@"platform"];
+//            if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//                
+//                [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//            }
+//
+//            [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+//                NSDictionary *dataDic = JSON;
+//                if (dataDic) {
+//                    UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+//                    [mode setCheckcode:self.pwdString];
+//                    [UserDefaults setObject:mode.sessionid forKey:kSessionId];
+//                    [LogInUser createLogInUserModel:mode];
+//                    BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
+//                    [bsearchVC setIsStart:YES];
+//                    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
+//                    [self presentViewController:nav animated:YES completion:^{
+//                        
+//                    }];
+//                }
+//                
+//            } fail:^(NSError *error) {
+//                
+//            } isHUD:YES];
+//
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 
 }
 

@@ -49,7 +49,7 @@ extern NSString *const kLocationCity;//定位的城市
 extern NSString *const kIsLookAtNewFriendVC;//是否在新的好友通知页面
 extern NSString *const kBPushRequestChannelIdKey;// 返回结果的键
 extern NSString *const kSessionId;// sessionId
-extern NSString *const kSidkey;// sessionId
+//extern NSString *const kSidkey;// sessionId
 extern NSString *const kChatNowKey;//正在聊天中
 
 

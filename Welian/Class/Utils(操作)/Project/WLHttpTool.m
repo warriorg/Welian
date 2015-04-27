@@ -127,7 +127,7 @@
 {
     NSDictionary *dic = @{@"type":@"login",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
-        [UserDefaults removeObjectForKey:kSidkey];
+//        [UserDefaults removeObjectForKey:kSidkey];
         succeBlock (JSON);
     } failure:^(NSError *error) {
         failurBlock(error);

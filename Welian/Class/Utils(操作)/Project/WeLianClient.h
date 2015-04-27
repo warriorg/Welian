@@ -24,8 +24,6 @@
                 Position:(NSString *)position
                 Password:(NSString *)password
                   Avatar:(NSString *)avatar
-                Platform:(NSString *)platform
-                Clientid:(NSString *)clientid
                  Success:(SuccessBlock)success
                   Failed:(FailedBlock)failed;
 

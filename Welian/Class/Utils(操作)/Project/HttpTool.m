@@ -88,7 +88,7 @@ static HttpTool *engine;
     NSString *parameterStr = [self dicTostring:parameterDic];
 
 //    LogInUser *mode = [LogInUser getCurrentLoginUser];
-    NSString *sessid = [UserDefaults objectForKey:kSidkey];
+    NSString *sessid = [UserDefaults objectForKey:kSessionId];
     if (!sessid) {
         [[self operationQueue] cancelAllOperations];
         return;

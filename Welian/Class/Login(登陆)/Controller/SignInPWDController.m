@@ -114,46 +114,71 @@
         [WLHUDView showErrorHUD:@"密码为6-18位！"];
         return;
     }
-    
-    [WLHttpTool checkCodeParameterDic:@{@"code":self.coderTextField.text} success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
-            
+    [WLHUDView showHUDWithStr:@"加载中..." dim:YES];
+    [WeLianClient checkCodeWithMobile:self.phoneString Code:self.coderString Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        if ([[resultInfo objectForKey:@"flag"] integerValue]==0) {
+            [WLHUDView hiddenHud];
             UserInfoController *userinVC = [[UserInfoController alloc] init];
             [userinVC setPhoneString:self.phoneString];
             [userinVC setPwdString:self.pwdTextField.text];
             [self.navigationController pushViewController:userinVC animated:YES];
-        
-        }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
+        }else if ([[resultInfo objectForKey:@"flag"] integerValue]==1){
             [WLHUDView showErrorHUD:@"验证失败！"];
         }
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
+//    [WLHttpTool checkCodeParameterDic:@{@"code":self.coderTextField.text} success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+//            
+//            UserInfoController *userinVC = [[UserInfoController alloc] init];
+//            [userinVC setPhoneString:self.phoneString];
+//            [userinVC setPwdString:self.pwdTextField.text];
+//            [self.navigationController pushViewController:userinVC animated:YES];
+//        
+//        }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
+//            [WLHUDView showErrorHUD:@"验证失败！"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 //*  重新发送验证码*//
 // 注册重新发送验证码
 - (void)chongxingfasong
 {
-    NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-    [reqstDicM setObject:@"register" forKey:@"type"];
-    [reqstDicM setObject:self.phoneString forKey:@"mobile"];
-    [reqstDicM setObject:KPlatformType forKey:@"platform"];
-    
-    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-        [reqstDicM setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-    }
-    
-    [WLHttpTool getCheckCodeParameterDic:reqstDicM success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue] == 0) {
-            NSString *coderStr = [JSON objectForKey:@"checkcode"];
+//    NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
+//    [reqstDicM setObject:@"register" forKey:@"type"];
+//    [reqstDicM setObject:self.phoneString forKey:@"mobile"];
+//    [reqstDicM setObject:KPlatformType forKey:@"platform"];
+//    
+//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//        [reqstDicM setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//    }
+    [WLHUDView showHUDWithStr:@"加载中..." dim:YES];
+    [WeLianClient getCodeWithMobile:self.phoneString Type:@"register" Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        [WLHUDView hiddenHud];
+        if ([resultInfo objectForKey:@"code"]) {
+            NSString *coderStr = [resultInfo objectForKey:@"code"];
             self.coderString = coderStr;
-        }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
-            [WLHUDView showErrorHUD:@"该号码已经注册，请直接登录！"];
         }
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
+    
+//    [WLHttpTool getCheckCodeParameterDic:reqstDicM success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue] == 0) {
+//            NSString *coderStr = [JSON objectForKey:@"checkcode"];
+//            self.coderString = coderStr;
+//        }else if ([[JSON objectForKey:@"flag"] integerValue]==1){
+//            [WLHUDView showErrorHUD:@"该号码已经注册，请直接登录！"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 -(void)startTime{

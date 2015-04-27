@@ -69,20 +69,34 @@
         [WLHUDView showErrorHUD:@"密码为6-18位字符，区分大小写"];
         return;
     }
-    
-    [WLHttpTool forgetPasswordParameterDic:@{@"newpassword":self.pwdTextField.text} success:^(id JSON) {
-        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
-            [WLHUDView showSuccessHUD:@"密码修改成功！"];
-            LoginPhoneVC *loginPhoneVC = self.navigationController.viewControllers[0];
-            [loginPhoneVC setPhoneString:self.phoneString];
-            
-            [self.navigationController popToViewController:loginPhoneVC animated:YES];
-
-        }else{
-            [WLHUDView showErrorHUD:@"密码修改失败！请重试"];
-        }
-    } fail:^(NSError *error) {
-        
+    [WLHUDView showHUDWithStr:@"" dim:YES];
+    [WeLianClient changePasswordWithPassWd:[self.pwdTextField.text MD5String] Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        [WLHUDView showSuccessHUD:@"密码修改成功！"];
+        [self performSelector:@selector(popToViewController) withObject:self afterDelay:1.0];
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.localizedDescription];
     }];
+//    [WLHttpTool forgetPasswordParameterDic:@{@"newpassword":self.pwdTextField.text} success:^(id JSON) {
+//        if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+//            [WLHUDView showSuccessHUD:@"密码修改成功！"];
+//            LoginPhoneVC *loginPhoneVC = self.navigationController.viewControllers[0];
+//            [loginPhoneVC setPhoneString:self.phoneString];
+//            
+//            [self.navigationController popToViewController:loginPhoneVC animated:YES];
+//
+//        }else{
+//            [WLHUDView showErrorHUD:@"密码修改失败！请重试"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
+}
+
+- (void)popToViewController
+{
+    LoginPhoneVC *loginPhoneVC = self.navigationController.viewControllers[0];
+    [loginPhoneVC setPhoneString:self.phoneString];
+    [self.navigationController popToViewController:loginPhoneVC animated:YES];
 }
 @end

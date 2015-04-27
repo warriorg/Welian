@@ -18,20 +18,6 @@
         self.requestSerializer = [AFJSONRequestSerializer serializer];
         self.responseSerializer = [AFJSONResponseSerializer serializer];
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        //设置sessionid
-//        LogInUser *mode = [LogInUser getCurrentLoginUser];
-//        NSString *sessid = mode.sessionid;
-//        if (!sessid) {
-//            sessid = [UserDefaults objectForKey:kSidkey];
-//        }
-//        if (!sessid) {
-//            [[self operationQueue] cancelAllOperations];
-//            return;
-//        }
-//        if (sessid) {
-//            //header 里面放入sessionid
-//            [self.requestSerializer setValue:sessid forHTTPHeaderField:@"sessionid"];
-//        }
     }
     return self;
 }
@@ -46,22 +32,36 @@
     return _sharedClient;
 }
 
++ (void)formatUrlAndParameters:(NSDictionary*)parameters WithpathInfo:(NSString *)pathInfo{
+    //格式化url和参数
+    NSString *paraString=@"";
+    NSArray *keyArray = [parameters allKeys];
+    int index = 0;
+    for (NSString *key in keyArray) {
+        NSString *value = [parameters objectForKey:key];
+        paraString = [NSString stringWithFormat:@"%@%@=%@%@",paraString,key,value, ++index == keyArray.count ? @"" : @"&"];
+    }
+    NSString *api = [NSString stringWithFormat:@"====\n%@/%@?%@\n=======", WLHttpServer,pathInfo, paraString];
+    DLog(@"api:%@", api);
+}
+
+
 //post请求
 + (void)reqestPostWithParams:(NSDictionary *)params Path:(NSString *)path Success:(SuccessBlock)success
                             Failed:(FailedBlock)failed
 {
     //设置sessionid
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
-    NSString *sessid = mode.sessionid;
-    if (!sessid) {
-        sessid = [UserDefaults objectForKey:kSidkey];
-    }
+//    LogInUser *mode = [LogInUser getCurrentLoginUser];
+//    NSString *sessid = mode.sessionid;
+//    if (!sessid) {
+        NSString *sessid = [UserDefaults objectForKey:kSessionId];
+//    }
     
     NSString *pathInfo = path;
-    if (sessid) {
+    if (sessid.length) {
         pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",path,sessid];
     }
-    
+    [self formatUrlAndParameters:params WithpathInfo:pathInfo];
     [[WeLianClient sharedClient] POST:pathInfo
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -73,8 +73,7 @@
                                   
                                   if (result.isSuccess) {
                                       if (result.sessionid.length > 0) {
-                                          [UserDefaults setObject:result.sessionid forKey:kSidkey];
-//                                          [resultDict setObject:result.sessionid forKey:@"sessionid"];
+                                          [UserDefaults setObject:result.sessionid forKey:kSessionId];
                                       }
                                       
                                       SAFE_BLOCK_CALL(success, resultDict);
@@ -116,8 +115,8 @@
                           Path:kWXRegisterPath
                        Success:^(id resultInfo) {
                            DLog(@"wxRegister ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -130,8 +129,6 @@
                 Position:(NSString *)position
                 Password:(NSString *)password
                   Avatar:(NSString *)avatar
-                Platform:(NSString *)platform
-                Clientid:(NSString *)clientid
                  Success:(SuccessBlock)success
                   Failed:(FailedBlock)failed
 {
@@ -139,16 +136,16 @@
                              ,@"mobile":mobile
                              ,@"company":company
                              ,@"position":position
-                             ,@"avatar":avatar
-                             ,@"platform":platform
-                             ,@"password":password
-                             ,@"clientid":clientid};
+                             ,@"avatar":@"1417496795301_x.png"
+                             ,@"password":password};
     [self reqestPostWithParams:params
                           Path:kRegisterPath
                        Success:^(id resultInfo) {
                            DLog(@"register ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
+                           //记录最后一次登陆的手机号
+                           SaveLoginMobile(result.mobile);
+                           SAFE_BLOCK_CALL(success, result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -186,8 +183,8 @@
                           Path:kCheckcodePath
                        Success:^(id resultInfo) {
                            DLog(@"checkCode ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -203,8 +200,8 @@
                           Path:kChanagePasswordPath
                        Success:^(id resultInfo) {
                            DLog(@"changePassword ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -216,7 +213,7 @@
 //    NSDictionary *params = @{@"mobile":mobile
 //                             ,@"unionid":unionid
 //                             ,@"password":password};
-    [self reqestPostWithParams:@{@"unionid":@"fdsafdsfasdfdasfasdfsdfdseedsa"}
+    [self reqestPostWithParams:params
                           Path:kLoginPath
                        Success:^(id resultInfo) {
                            DLog(@"login ---- %@",resultInfo);
