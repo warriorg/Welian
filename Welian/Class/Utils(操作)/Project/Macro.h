@@ -43,6 +43,8 @@
 #define kChanagePasswordPath kRegisterUrl(@"chanagepassword")
 //登陆
 #define kLoginPath kRegisterUrl(@"login")
+// 上传平台，clientid
+#define kUpdateclient kRegisterUrl(@"updateclient")
 
 
 #pragma mark - 用户模块

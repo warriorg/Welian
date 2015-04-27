@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Utils(&#x64cd;&#x4f5c;)/Project/WeLianClient.m"
-            timestampString = "451819018.474016"
+            filePath = "Welian/Class/Login(&#x767b;&#x9646;)/Controller/LoginPhoneVC.m"
+            timestampString = "451830185.469821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "+reqestPostWithParams:Path:Success:Failed:"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "-loginPhonePWD:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

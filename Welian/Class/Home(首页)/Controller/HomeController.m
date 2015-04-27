@@ -37,6 +37,8 @@
     NSIndexPath *_clickIndex;
     NSNumber *_uid;
     NSIndexPath *_seletIndexPath;
+    
+    NSInteger _page;
 }
 @property (nonatomic, strong) HomeView *homeView;
 
@@ -129,9 +131,9 @@
 {
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
-
+    _page = 1;
     if (_uid) {
-        [darDic setObject:@(0) forKey:@"page"];
+        [darDic setObject:@(_page) forKey:@"page"];
         [darDic setObject:_uid forKey:@"uid"];        
     }else {
         [darDic setObject:@(0) forKey:@"start"];
@@ -153,6 +155,7 @@
              WLStatusFrame *sf = [self dataFrameWith:dic];
             [_dataArry addObject:sf];
         }
+        _page++;
         if (!_uid) {
             [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
             if (!_dataArry.count) {
@@ -250,7 +253,7 @@
     [darDic setObject:@(KCellConut) forKey:@"size"];
     if (_uid) {
         [darDic setObject:_uid forKey:@"uid"];
-        [darDic setObject:@(start) forKey:@"page"];
+        [darDic setObject:@(_page) forKey:@"page"];
     }else{
         [darDic setObject:@(start) forKey:@"start"];
     }
@@ -267,7 +270,7 @@
         }
         // 2.将newFrames整体插入到旧数据的后面
         [_dataArry addObjectsFromArray:newFrames];
-        
+        _page++;
         [self.tableView reloadData];
         
         [self endRefreshing];

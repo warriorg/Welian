@@ -47,21 +47,12 @@
 //登陆
 + (void)loginWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
+// 上传平台，clientid
++ (void)updateclientID;
 
 #pragma mark - 用户模块
 //修改用户信息
-+ (void)saveUserInfoWithName:(NSString *)name
-                      Mobile:(NSString *)mobile
-                     Company:(NSString *)company
-                    Position:(NSString *)position
-                      Avatar:(NSString *)avatar
-                      Cityid:(NSString *)cityid
-                    Latitude:(NSString *)latitude
-                  Langtitude:(NSString *)langtitude
-                     Address:(NSString *)address
-                       Email:(NSString *)email
-                     Success:(SuccessBlock)success
-                      Failed:(FailedBlock)failed;
++ (void)saveUserInfoWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //增加教育经历
 + (void)saveSchoolWithID:(NSNumber *)usid

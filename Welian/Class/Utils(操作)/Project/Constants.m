@@ -45,11 +45,10 @@ NSString *const kMaxChatMessageId = @"MaxChatMessageId";//最大的聊天消息I
 NSString *const kMaxNewFriendId = @"MaxNewFriendId";//最大的好友请求Id
 NSString *const kLocationCity = @"LocationCity";//定位的城市
 NSString *const kIsLookAtNewFriendVC = @"isLookAtNewFriendVC";//是否在新的好友通知页面
-NSString *const kBPushRequestChannelIdKey = @"channel_id";// 返回结果的键
 NSString *const kSessionId = @"sessionid";// sessionId
-//NSString *const kSidkey = @"sid";// sessionId
 NSString *const kChatNowKey = @"chat:%@";//正在聊天中
-
+NSString *const kBPushRequestChannelIdKey = @"channel_id";// 个推 channel_id的键
+NSString *const kneedChannelId = @"needChannelId";// 需要上传 channel_id
 
 
 

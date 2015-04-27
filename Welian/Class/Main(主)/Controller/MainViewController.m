@@ -196,7 +196,7 @@ single_implementation(MainViewController)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [WeLianClient updateclientID];
     // 有新好友通知
     [KNSNotification addObserver:self selector:@selector(newFriendPuthMessga) name:KNewFriendNotif object:nil];
     

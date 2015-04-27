@@ -84,10 +84,13 @@
                                       }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
                                           //系统级错误，直接打印错误信息
                                           DLog(@"Result System ErroInfo-- : %@",result.errormsg);
-                                      }else{
+                                      }else if(result.state.integerValue>=3000){
                                           //打印错误信息 ，返回操作
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
                                           SAFE_BLOCK_CALL(success, resultDict);
+                                      }else{
+                                          DLog(@"Result ErroInfo-- : %@",result.errormsg);
+                                            SAFE_BLOCK_CALL(failed, result.error);
                                       }
                                   }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -101,22 +104,18 @@
 //微信注册
 + (void)wxRegisterWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-//    NSDictionary *params = @{@"name":name
-//                             ,@"nickname":nickname
-//                             ,@"mobile":mobile
-//                             ,@"company":company
-//                             ,@"position":position
-//                             ,@"avatar":avatar
-//                             ,@"platform":platform
-//                             ,@"openid":openid
-//                             ,@"unionid":unionid
-//                             ,@"clientid":clientid};
     [self reqestPostWithParams:params
                           Path:kWXRegisterPath
                        Success:^(id resultInfo) {
                            DLog(@"wxRegister ---- %@",resultInfo);
-//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           if ([resultInfo objectForKey:@"flag"]) {
+                               SAFE_BLOCK_CALL(success, resultInfo);
+                           }else{
+                               ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
+                               //记录最后一次登陆的手机号
+                               SaveLoginMobile(result.mobile);
+                               SAFE_BLOCK_CALL(success, result);
+                           }
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -164,7 +163,6 @@
                           Path:kGetcodePath
                        Success:^(id resultInfo) {
                            DLog(@"getCode ---- %@",resultInfo);
-//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -183,7 +181,6 @@
                           Path:kCheckcodePath
                        Success:^(id resultInfo) {
                            DLog(@"checkCode ---- %@",resultInfo);
-//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -200,7 +197,6 @@
                           Path:kChanagePasswordPath
                        Success:^(id resultInfo) {
                            DLog(@"changePassword ---- %@",resultInfo);
-//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -231,32 +227,22 @@
                        }];
 }
 
+// 上传平台，clientid
++ (void)updateclientID
+{
+    if ([[UserDefaults objectForKey:kBPushRequestChannelIdKey] length]&& ![UserDefaults boolForKey:kneedChannelId]) {
+        [self reqestPostWithParams:@{@"platform":KPlatformType,@"clientid":kBPushRequestChannelIdKey,@"version":XcodeAppVersion} Path:kUpdateclient Success:^(id resultInfo) {
+            DLog(@"%@",resultInfo);
+            [UserDefaults setBool:YES forKey:kneedChannelId];
+        } Failed:^(NSError *error) {
+        }];
+    }
+}
 
 #pragma mark - 用户模块
 //修改用户信息
-+ (void)saveUserInfoWithName:(NSString *)name
-                      Mobile:(NSString *)mobile
-                     Company:(NSString *)company
-                    Position:(NSString *)position
-                      Avatar:(NSString *)avatar
-                      Cityid:(NSString *)cityid
-                    Latitude:(NSString *)latitude
-                  Langtitude:(NSString *)langtitude
-                     Address:(NSString *)address
-                       Email:(NSString *)email
-                     Success:(SuccessBlock)success
-                      Failed:(FailedBlock)failed
++ (void)saveUserInfoWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"name":name
-                             ,@"mobile":mobile
-                             ,@"company":company
-                             ,@"position":position
-                             ,@"avatar":avatar
-                             ,@"cityid":cityid
-                             ,@"latitude":latitude
-                             ,@"langtitude":langtitude
-                             ,@"address":address
-                             ,@"email":email};
     [self reqestPostWithParams:params
                           Path:kSaveUserInfoPath
                        Success:^(id resultInfo) {
@@ -292,7 +278,6 @@
                           Path:kSaveSchoolPath
                        Success:^(id resultInfo) {
                            DLog(@"saveSchool ---- %@",resultInfo);
-//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);

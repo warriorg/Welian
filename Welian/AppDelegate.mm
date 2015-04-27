@@ -126,9 +126,9 @@ BMKMapManager* _mapManager;
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
-    DLog(@"%@",mode.description);
-    if (mode.sessionid&&mode.mobile&&[UserDefaults objectForKey:kSessionId]) {
+//    LogInUser *mode = [LogInUser getCurrentLoginUser];
+//    DLog(@"%@",mode.description);
+    if ([UserDefaults objectForKey:kSessionId]) {
         /** 已登陆 */
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
@@ -496,7 +496,9 @@ BMKMapManager* _mapManager;
         return;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
     [UserDefaults removeObjectForKey:kSessionId];
+    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
     [LogInUser setUserisNow:NO];
+    
     [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
         [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
@@ -621,11 +623,12 @@ BMKMapManager* _mapManager;
     _sdkStatus = SdkStatusStarted;
     _clientId = clientId;
     [UserDefaults setObject:clientId forKey:kBPushRequestChannelIdKey];
-    [WLHttpTool updateClientSuccess:^(id JSON) {
-        
-    } fail:^(NSError *error) {
-        
-    }];
+    [WeLianClient updateclientID];
+//    [WLHttpTool updateClientSuccess:^(id JSON) {
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
     //    [self stopSdk];
 }
 

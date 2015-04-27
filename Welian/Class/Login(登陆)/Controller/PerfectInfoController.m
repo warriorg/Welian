@@ -199,27 +199,41 @@
     }
     
     NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
-    [requstDic setObject:@"jpg" forKey:@"title"];
-    [requstDic setObject:KPlatformType forKey:@"platform"];
+//    [requstDic setObject:KPlatformType forKey:@"platform"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
     [requstDic setObject:_nameTF.text  forKey:@"name"];
     [requstDic setObject:_phoneTF.text forKey:@"mobile"];
     [requstDic setObject:_companyTF.text forKey:@"company"];
     [requstDic setObject:_postTF.text forKey:@"position"];
-    [requstDic setObject:_imagebase64Str forKey:@"photo"];
+    [requstDic setObject:@"1417496795301_x.png" forKey:@"avatar"];
 
-    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-    }
+//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//    }
 //    if ([self.userInfoDic objectForKey:@"nickname"]) {
 //        [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
 //    }
     [WLHUDView showHUDWithStr:@"正在加载..." dim:YES];
     [WeLianClient wxRegisterWithParameterDic:requstDic Success:^(id resultInfo) {
-        DLog(@"%@",requstDic);
+        DLog(@"%@",resultInfo);
+        [WLHUDView hiddenHud];
+        if ([resultInfo isKindOfClass:[NSDictionary class]]) {
+            [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex==1) {
+                    [self bindingPhoneClick:nil];
+                }
+            }];
+
+        }else{
+            ILoginUserModel *loginUserM = resultInfo;
+            [LogInUser createLogInUserModel:loginUserM];
+            // 进入主页面
+            MainViewController *mainVC = [[MainViewController alloc] init];
+            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+        }
     } Failed:^(NSError *error) {
-        
+        [WLHUDView hiddenHud];
     }];
 //    [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
 //        NSDictionary *dataDic = JSON;

@@ -92,6 +92,7 @@
 {
 //    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
     [UserDefaults removeObjectForKey:kSessionId];
+    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
     [LogInUser setUserisNow:NO];
     [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
     [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {

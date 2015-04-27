@@ -47,10 +47,12 @@ extern NSString *const kMaxChatMessageId;//最大的聊天消息Id
 extern NSString *const kMaxNewFriendId;//最大的好友请求Id
 extern NSString *const kLocationCity;//定位的城市
 extern NSString *const kIsLookAtNewFriendVC;//是否在新的好友通知页面
-extern NSString *const kBPushRequestChannelIdKey;// 返回结果的键
 extern NSString *const kSessionId;// sessionId
 //extern NSString *const kSidkey;// sessionId
 extern NSString *const kChatNowKey;//正在聊天中
+
+extern NSString *const kBPushRequestChannelIdKey;//个推 channel_id的键
+extern NSString *const kneedChannelId;//个推 需要上传 channel_id
 
 
 
