@@ -36,7 +36,8 @@ REGULAREXPRESSION(AtRegularExpression, @"@[\\u4e00-\\u9fa5\\w\\-]+")
 
 
 //@"#([^\\#|.]+)#"
-REGULAREXPRESSION_OPTION(PoundSignRegularExpression, @"#([\\u4e00-\\u9fa5\\w\\-]+)#", NSRegularExpressionCaseInsensitive)
+REGULAREXPRESSION(PoundSignRegularExpression, @"#([\\u4e00-\\u9fa5\\w\\-]+)#")
+//REGULAREXPRESSION_OPTION(PoundSignRegularExpression, @"#([\\u4e00-\\u9fa5\\w\\-]+)#", NSRegularExpressionCaseInsensitive)
 
 //微信的表情符其实不是这种格式，这个格式的只是让人看起来更友好。。
 //REGULAREXPRESSION(EmojiRegularExpression, @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]")

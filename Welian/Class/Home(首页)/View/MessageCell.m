@@ -93,7 +93,7 @@
     _commentLabel = [[MLEmojiLabel alloc]init];
     _commentLabel.delegate = self;
     _commentLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _commentLabel.isNeedAtAndPoundSign = YES;
+    _commentLabel.isNeedAtAndPoundSign = NO;//是否启用@ 和 话题功能
     _commentLabel.font = WLFONT(14);
     _commentLabel.textColor = WLRGB(125, 125, 125);
     _commentLabel.backgroundColor = [UIColor clearColor];
@@ -116,7 +116,7 @@
     _trendsLabel.numberOfLines = 0;
     _trendsLabel.delegate = self;
     _trendsLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _trendsLabel.isNeedAtAndPoundSign = YES;
+    _trendsLabel.isNeedAtAndPoundSign = NO;//是否启用@ 和 话题功能
     _trendsLabel.font = WLFONT(12);
     _trendsLabel.textColor = WLRGB(173, 173, 173);
     _trendsLabel.backgroundColor = [UIColor clearColor];

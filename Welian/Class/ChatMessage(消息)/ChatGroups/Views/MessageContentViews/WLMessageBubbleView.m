@@ -92,6 +92,8 @@
     displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
     displayLabel.font = [[WLMessageBubbleView appearance] font];
     displayLabel.text = text;
+    displayLabel.isNeedAtAndPoundSign = NO;
+    
 //    displayLabel.text = @"/:|-)TableView github:https://github.com/molon/MLEmojiLabel @撒旦 哈哈哈哈#九歌#九黎电话13612341234邮箱13612341234@qq.com旦旦/:dsad旦/::)sss/::~啊是大三的拉了/::B/::|/:8-)/::</::$/::X/::Z/::'(/::-|/::@/::P/::D/::O/::(/::+/:--b/::Q/::T/:,@P/:,@-D/::d/:,@o/::g/:|-)/::!/::L/::>/::,@/:,@f/::-S/:?/:ok/:love/:<L>/:jump/:shake/:<O>/:circle/:kotow/:turn/:skip/:oY链接:http://baidu.com dudl@qq.com";
 //    displayLabel.textColor = WLRGB(51, 51, 51);
 //    displayLabel.backgroundColor = [UIColor clearColor];
@@ -526,7 +528,7 @@
             displayLabel.numberOfLines = 0;
 //            displayLabel.emojiDelegate = self;
             displayLabel.lineBreakMode = NSLineBreakByCharWrapping;
-            displayLabel.isNeedAtAndPoundSign = YES;
+            displayLabel.isNeedAtAndPoundSign = NO;
             displayLabel.font = [[WLMessageBubbleView appearance] font];
             displayLabel.backgroundColor = [UIColor clearColor];
             [self addSubview:displayLabel];
