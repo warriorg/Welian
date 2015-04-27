@@ -460,13 +460,855 @@
 }
 
 
+#pragma mark - 动态Feed模块
+//添加动态
++ (void)saveFeedWithParameterDic:(NSDictionary *)params
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kSaveFeedPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveFeed ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除动态
++ (void)deleteFeedWithID:(NSNumber *)fid
+                 Success:(SuccessBlock)success
+                  Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteFeedPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteFeed ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//评论动态
++ (void)commentFeedWithID:(NSNumber *)fid
+                  Comment:(NSString *)comment
+                    Touid:(NSNumber *)touid
+                  Success:(SuccessBlock)success
+                   Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid,@"comment":comment,@"touid":touid};
+    [self reqestPostWithParams:params
+                          Path:kFeedCommentPath
+                       Success:^(id resultInfo) {
+                           DLog(@"commentFeed ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除动态评论评论
++ (void)deleteFeedCommentWithID:(NSNumber *)cid
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"cid":cid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteFeedCommentPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteFeedComment ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//赞
++ (void)feedZanWithID:(NSNumber *)fid
+              Success:(SuccessBlock)success
+               Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedZanPath
+                       Success:^(id resultInfo) {
+                           DLog(@"feedZan ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取消赞
++ (void)deleteFeedZanWithID:(NSNumber *)fid
+                    Success:(SuccessBlock)success
+                     Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteFeedZanPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteFeedZan ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//转推
++ (void)feedForwardWithID:(NSNumber *)fid
+                  Success:(SuccessBlock)success
+                   Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedForwardPath
+                       Success:^(id resultInfo) {
+                           DLog(@"feedForward ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取消转推
++ (void)deleteFeedForwardWithID:(NSNumber *)fid
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteFeedForwardPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteFeedForward ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取动态列表
++ (void)getFeedListWithStart:(NSNumber *)start
+                        Size:(NSNumber *)size
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"start":start,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFeedListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取动态评论列表
++ (void)getFeedCommentListWithID:(NSNumber *)fid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFeedListCommentPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedCommentList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取赞的用户列表
++ (void)getFeedZanListWithID:(NSNumber *)fid
+                        Page:(NSNumber *)page
+                        Size:(NSNumber *)size
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFeedListZanPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedZanList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取转推的用户列表
++ (void)getFeedForwardListWithID:(NSNumber *)fid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFeedListForwardPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedForwardList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取动态详情
++ (void)getFeedDetailInfoWithID:(NSNumber *)fid
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedDetailInfoPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedDetailInfo ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//举报
++ (void)reportFeedWithID:(NSNumber *)fid
+                 Success:(SuccessBlock)success
+                  Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedReportPath
+                       Success:^(id resultInfo) {
+                           DLog(@"reportFeed ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+
+#pragma mark - 好友模块 friends
+//取好友列表
++ (void)getFriendListWithID:(NSNumber *)uid
+                    Success:(SuccessBlock)success
+                     Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid};
+    [self reqestPostWithParams:params
+                          Path:kFriendListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFriendList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//二度好友列表
++ (void)getFriend2ListWithID:(NSNumber *)uid
+                        Page:(NSNumber *)page
+                        Size:(NSNumber *)size
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFriendList2Path
+                       Success:^(id resultInfo) {
+                           DLog(@"getFriend2List ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取共同好友
++ (void)getSameFriendListWithID:(NSNumber *)uid
+                           Page:(NSNumber *)page
+                           Size:(NSNumber *)size
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kFriendSamelistPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getSameFriendList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//请求添加好友
++ (void)requestAddFriendWithID:(NSNumber *)uid
+                       Message:(NSString *)message
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid,@"message":message};
+    [self reqestPostWithParams:params
+                          Path:kFriendRequestPath
+                       Success:^(id resultInfo) {
+                           DLog(@"requestAddFriend ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//确认添加好友
++ (void)confirmAddFriendWithID:(NSNumber *)uid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid};
+    [self reqestPostWithParams:params
+                          Path:kFriendConfirmPath
+                       Success:^(id resultInfo) {
+                           DLog(@"confirmAddFriend ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除好友
++ (void)deleteFriendWithID:(NSNumber *)uid
+                   Success:(SuccessBlock)success
+                    Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteFriendPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteFriend ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+
+#pragma mark - 项目 project 模块
+//添加项目，修改
++ (void)saveProjectWithParameterDic:(NSDictionary *)params
+                            Success:(SuccessBlock)success
+                             Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kSaveProjectPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveProject ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//添加项目成员
++ (void)saveProjectMembersWithParameterDic:(NSDictionary *)params
+                                   Success:(SuccessBlock)success
+                                    Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kSaveProjectMembersPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveProjectMembers ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除项目成员
++ (void)deleteProjectMembersWithUid:(NSNumber *)uid
+                                Pid:(NSNumber *)pid
+                            Success:(SuccessBlock)success
+                             Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"uid":uid,@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectMembersPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProjectMembers ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取项目成员
++ (void)getProjectMembersWithPid:(NSNumber *)pid
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kProjectMembersPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getProjectMembers ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//项目 赞
++ (void)zanProjectWithPid:(NSNumber *)pid
+                  Success:(SuccessBlock)success
+                   Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kProjectZanPath
+                       Success:^(id resultInfo) {
+                           DLog(@"zanProject ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//项目 评论
++ (void)commentProjectWithPid:(NSNumber *)pid
+                        Touid:(NSNumber *)touid
+                      Comment:(NSString *)comment
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid,
+                             @"touid":touid,
+                             @"comment":comment};
+    [self reqestPostWithParams:params
+                          Path:kProjectCommentPath
+                       Success:^(id resultInfo) {
+                           DLog(@"commentProject ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取赞的用户列表
++ (void)getProjectZanListWithPid:(NSNumber *)pid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid,
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kProjectZanListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getProjectZanList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取评论列表
++ (void)getProjectCommentListWithPid:(NSNumber *)pid
+                                Page:(NSNumber *)page
+                                Size:(NSNumber *)size
+                             Success:(SuccessBlock)success
+                              Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid,
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kProjectCommentListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getProjectCommentList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除项目赞
++ (void)deleteProjectZanWithPid:(NSNumber *)pid
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectZanPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProjectZan ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除项目评论
++ (void)deleteProjectCommentWithCid:(NSNumber *)cid
+                            Success:(SuccessBlock)success
+                             Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"cid":cid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectCommentPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProjectComment ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除项目图片
++ (void)deleteProjectPhotoWithPhotoid:(NSNumber *)photoid
+                              Success:(SuccessBlock)success
+                               Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"photoid":photoid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectPhotoPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProjectPhoto ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//添加项目图片
++ (void)saveProjectPhotoWithParameterDic:(NSDictionary *)params
+                                 Success:(SuccessBlock)success
+                                  Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kSaveProjectPhotoPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveProjectPhoto ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//项目 收藏
++ (void)favoriteProjectWithPid:(NSNumber *)pid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kProjectFavoritePath
+                       Success:^(id resultInfo) {
+                           DLog(@"favoriteProject ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取消收藏
++ (void)deleteProjectFavoriteWithPid:(NSNumber *)pid
+                             Success:(SuccessBlock)success
+                              Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectFavoritePath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProjectFavorite ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//删除项目
++ (void)deleteProjectWithPid:(NSNumber *)pid
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteProjectPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteProject ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+
+#pragma mark - 活动 active 模块
+//取活动列表
++ (void)getActiveListWithDate:(NSNumber *)date      //-1 全部，0今天，1明天，7最近一周，-2 周末
+                       Cityid:(NSNumber *)cityid    //0 全国
+                         Page:(NSNumber *)page
+                         Size:(NSNumber *)size
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"date":date,      //-1 全部，0今天，1明天，7最近一周，-2 周末
+                             @"cityid":cityid,  //0 全国
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kActiveListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveList ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取活动详情
++ (void)getActiveDetailInfoWithID:(NSNumber *)activeid
+                          Success:(SuccessBlock)success
+                           Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kActiveDetailInfoPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveDetailInfo ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//已报名用户列表
++ (void)getActiveRecordersWithID:(NSNumber *)activeid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid,
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kActiveRecordersPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveRecorders ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取票务信息
++ (void)getActiveTicketsWithID:(NSNumber *)activeid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kActiveTicketsPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveTickets ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//收藏活动
++ (void)favoriteActiveWithID:(NSNumber *)activeid
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kActiveFavoritePath
+                       Success:^(id resultInfo) {
+                           DLog(@"favoriteActive ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取消收藏
++ (void)deleteActiveFavoriteWithID:(NSNumber *)activeid
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteActiveFavoritePath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteActiveFavorite ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取用户相关活动
++ (void)getActiveUserActivesWithType:(NSNumber *)type   ////1 收藏，2参加的
+                                Page:(NSNumber *)page
+                                Size:(NSNumber *)size
+                             Success:(SuccessBlock)success
+                              Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"type":type,  ///1 收藏，2参加的
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kActiveUserActivesPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveUserActives ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//报名，购票
++ (void)orderActiveWithID:(NSNumber *)activeid
+                  Tickets:(NSArray *)tickets
+                  Success:(SuccessBlock)success
+                   Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid,
+                             @"tickets":tickets};
+    [self reqestPostWithParams:params
+                          Path:kActiveOrderPath
+                       Success:^(id resultInfo) {
+                           DLog(@"orderActive ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//修改订单状态
++ (void)updateActiveOrderStatusWithID:(NSNumber *)orderid
+                              Success:(SuccessBlock)success
+                               Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"orderid":orderid};
+    [self reqestPostWithParams:params
+                          Path:kActiveOrderStatusPath
+                       Success:^(id resultInfo) {
+                           DLog(@"updateActiveOrderStatus ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取消报名
++ (void)deleteActiveRecordWithID:(NSNumber *)activeid
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kDeleteActiveRecordPath
+                       Success:^(id resultInfo) {
+                           DLog(@"deleteActiveRecord ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取已经购买的票
++ (void)getActiveBuyedTicketsWithID:(NSNumber *)activeid
+                            Success:(SuccessBlock)success
+                             Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"activeid":activeid};
+    [self reqestPostWithParams:params
+                          Path:kActiveBuyedTicketsPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveBuyedTickets ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取活动城市列表
++ (void)getActiveCitiesSuccess:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kActiveCitiesPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getActiveCities ---- %@",resultInfo);
+                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
 
 
 
 
 
 
-
+#pragma mark - Other  自定义接口
 //下载图片
 + (void)downLoadImageWithMemberId:(NSMutableDictionary *)photos
                          ToFolder:(NSString *)toFolder
@@ -502,7 +1344,7 @@
         }
     }
     // begin download
-    int totalCount = photos.allKeys.count;
+    NSInteger totalCount = photos.allKeys.count;
     __block int count = 0;
     for (NSString *key in photos) {
         NSString *path = [folder stringByAppendingPathComponent:key];
