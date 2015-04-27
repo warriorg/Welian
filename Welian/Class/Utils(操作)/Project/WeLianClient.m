@@ -65,16 +65,16 @@
     [[WeLianClient sharedClient] POST:pathInfo
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  DLog(@"reqest Result ---- %@",responseObject);
+                                  DLog(@"reqest Result ---- %@",[operation responseString]);
                                   
                                   IBaseModel *result = [IBaseModel objectWithDict:responseObject];
-                                  
                                   //如果sessionid有的话放入data
                                   NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithDictionary:result.data];
                                   
                                   if (result.isSuccess) {
                                       if (result.sessionid.length > 0) {
-                                          [resultDict setObject:result.sessionid forKey:@"sessionid"];
+                                          [UserDefaults setObject:result.sessionid forKey:kSidkey];
+//                                          [resultDict setObject:result.sessionid forKey:@"sessionid"];
                                       }
                                       
                                       SAFE_BLOCK_CALL(success, resultDict);
@@ -100,29 +100,18 @@
 
 #pragma mark - 注册，登录
 //微信注册
-+ (void)wxRegisterWithName:(NSString *)name
-                  Nickname:(NSString *)nickname
-                    Mobile:(NSString *)mobile
-                   Company:(NSString *)company
-                  Position:(NSString *)position
-                    Avatar:(NSString *)avatar
-                  Platform:(NSString *)platform
-                    Openid:(NSString *)openid
-                   Unionid:(NSString *)unionid
-                  Clientid:(NSString *)clientid
-                   Success:(SuccessBlock)success
-                    Failed:(FailedBlock)failed
++ (void)wxRegisterWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"name":name
-                             ,@"nickname":nickname
-                             ,@"mobile":mobile
-                             ,@"company":company
-                             ,@"position":position
-                             ,@"avatar":avatar
-                             ,@"platform":platform
-                             ,@"openid":openid
-                             ,@"unionid":unionid
-                             ,@"clientid":clientid};
+//    NSDictionary *params = @{@"name":name
+//                             ,@"nickname":nickname
+//                             ,@"mobile":mobile
+//                             ,@"company":company
+//                             ,@"position":position
+//                             ,@"avatar":avatar
+//                             ,@"platform":platform
+//                             ,@"openid":openid
+//                             ,@"unionid":unionid
+//                             ,@"clientid":clientid};
     [self reqestPostWithParams:params
                           Path:kWXRegisterPath
                        Success:^(id resultInfo) {
@@ -222,38 +211,27 @@
 }
 
 //登陆
-+ (void)loginWithMobile:(NSString *)mobile
-                Unionid:(NSString *)unionid
-               Password:(NSString *)password
-                Success:(SuccessBlock)success
-                 Failed:(FailedBlock)failed
++ (void)loginWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"mobile":mobile
-                             ,@"unionid":unionid
-                             ,@"password":password};
-    [self reqestPostWithParams:params
+//    NSDictionary *params = @{@"mobile":mobile
+//                             ,@"unionid":unionid
+//                             ,@"password":password};
+    [self reqestPostWithParams:@{@"unionid":@"fdsafdsfasdfdasfasdfsdfdseedsa"}
                           Path:kLoginPath
                        Success:^(id resultInfo) {
                            DLog(@"login ---- %@",resultInfo);
-                           ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success, result);
+                           if ([resultInfo objectForKey:@"flag"]) {
+                               SAFE_BLOCK_CALL(success, resultInfo);
+                           }else{
+                               ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
+                               //记录最后一次登陆的手机号
+                               SaveLoginMobile(result.mobile);
+                               SAFE_BLOCK_CALL(success, result);
+                           }
+                           
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
-    
-//    [[WeLianClient sharedClient] POST:kLoginPath
-//                           parameters:params
-//                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                                  DLog(@"login ---- %@",responseObject);
-//                                  IBaseModel *result = [IBaseModel objectWithDict:responseObject];
-//                                  if (result.isSuccess) {
-//                                      SAFE_BLOCK_CALL(success, result);
-//                                  }else{
-//                                      SAFE_BLOCK_CALL(failed, result.error);
-//                                  }
-//                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                                  SAFE_BLOCK_CALL(failed, error);
-//                              }];
 }
 
 

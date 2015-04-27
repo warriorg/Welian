@@ -97,7 +97,7 @@
 {
      NSDictionary *dic = @{@"type":@"getCheckCode",@"data":parameterDic};
     [[HttpTool sharedService] reqestParameters:dic successBlock:^(id JSON) {
-        [LogInUser setUserSessionid:[JSON objectForKey:@"sessionid"]];
+//        [LogInUser setUserSessionid:[JSON objectForKey:@"sessionid"]];
         [UserDefaults setObject:[JSON objectForKey:@"sessionid"] forKey:@"SID"];
         
         succeBlock(JSON);

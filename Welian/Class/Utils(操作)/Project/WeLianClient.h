@@ -15,18 +15,7 @@
 
 #pragma mark - 注册，登录
 //微信注册
-+ (void)wxRegisterWithName:(NSString *)name
-                  Nickname:(NSString *)nickname
-                    Mobile:(NSString *)mobile
-                   Company:(NSString *)company
-                  Position:(NSString *)position
-                    Avatar:(NSString *)avatar
-                  Platform:(NSString *)platform
-                    Openid:(NSString *)openid
-                   Unionid:(NSString *)unionid
-                  Clientid:(NSString *)clientid
-                   Success:(SuccessBlock)success
-                    Failed:(FailedBlock)failed;
++ (void)wxRegisterWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //手机注册
 + (void)registerWithName:(NSString *)name
@@ -58,11 +47,7 @@
                           Failed:(FailedBlock)failed;
 
 //登陆
-+ (void)loginWithMobile:(NSString *)mobile
-                Unionid:(NSString *)unionid
-               Password:(NSString *)password
-                Success:(SuccessBlock)success
-                 Failed:(FailedBlock)failed;
++ (void)loginWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 
 #pragma mark - 用户模块

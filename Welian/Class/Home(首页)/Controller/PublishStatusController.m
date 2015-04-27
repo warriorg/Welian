@@ -419,7 +419,6 @@ static NSString *picCellid = @"PicCellID";
             return;
         }
         [self.publishM setContent:_textCell.textView.text];
-        self.publishM.with = [NSMutableArray array];
         self.publishM.photos = [NSMutableArray array];
         NSMutableDictionary *reqDataDic = [NSMutableDictionary dictionary];
         if (self.publishM.content) {

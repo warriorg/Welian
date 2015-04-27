@@ -18,9 +18,6 @@
 /**  地址   */
 @property (nonatomic, strong) NSString *address;
 
-/**  在一起   */
-@property (nonatomic, strong) NSMutableArray *with;
-
 /**  图片   */
 @property (nonatomic, strong) NSMutableArray *photos;
 

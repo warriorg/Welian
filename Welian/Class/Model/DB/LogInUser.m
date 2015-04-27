@@ -62,7 +62,7 @@
 }
 
 //创建新收据
-+ (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM
++ (LogInUser *)createLogInUserModel:(ILoginUserModel *)userInfoM
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"uid",userInfoM.uid];
     LogInUser *loginuser = [LogInUser MR_findFirstWithPredicate:pre];
@@ -84,10 +84,10 @@
     loginuser.address = userInfoM.address;
     loginuser.email = userInfoM.email;
     loginuser.investorauth = userInfoM.investorauth;
-    loginuser.startupauth = userInfoM.startupauth;
+//    loginuser.startupauth = userInfoM.startupauth;
     loginuser.company = userInfoM.company;
-    loginuser.checkcode = userInfoM.checkcode != nil ? userInfoM.checkcode : @"";
-    loginuser.sessionid = userInfoM.sessionid;
+//    loginuser.checkcode = userInfoM.checkcode != nil ? userInfoM.checkcode : @"";
+//    loginuser.sessionid = userInfoM.sessionid;
     loginuser.inviteurl = userInfoM.inviteurl;
     loginuser.isNow = @(1);
     loginuser.friendcount = userInfoM.friendcount;
@@ -101,7 +101,7 @@
     return loginuser;
 }
 
-+ (LogInUser *)updateLoginUserWithModel:(UserInfoModel *)userInfoM
++ (LogInUser *)updateLoginUserWithModel:(ILoginUserModel *)userInfoM
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"uid",userInfoM.uid];
     LogInUser *loginuser = [LogInUser MR_findFirstWithPredicate:pre];
@@ -119,9 +119,9 @@
     loginuser.address = userInfoM.address;
     loginuser.email = userInfoM.email;
     loginuser.investorauth = userInfoM.investorauth;
-    loginuser.startupauth = userInfoM.startupauth;
+//    loginuser.startupauth = userInfoM.startupauth;
     loginuser.company = userInfoM.company;
-    loginuser.checkcode = userInfoM.checkcode;
+//    loginuser.checkcode = userInfoM.checkcode;
 //    loginuser.sessionid = userInfoM.sessionid;
     loginuser.inviteurl = userInfoM.inviteurl;
     loginuser.isNow = @(1);
@@ -418,25 +418,25 @@
 //        [MOC save];
 }
 
-+ (void)setUsercheckcode:(NSString *)checkcode
-{
-    LogInUser *loginUser = [self getCurrentLoginUser];
-    loginUser.checkcode = checkcode;
-    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
-    
-//    [[LogInUser getNowLogInUser] setCheckcode:checkcode];
-//        [MOC save];
-}
+//+ (void)setUsercheckcode:(NSString *)checkcode
+//{
+//    LogInUser *loginUser = [self getCurrentLoginUser];
+//    loginUser.checkcode = checkcode;
+//    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
+//    
+////    [[LogInUser getNowLogInUser] setCheckcode:checkcode];
+////        [MOC save];
+//}
 
-+ (void)setUserSessionid:(NSString *)sessionid
-{
-    LogInUser *loginUser = [self getCurrentLoginUser];
-    loginUser.sessionid = sessionid;
-    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
-    
-//    [[LogInUser getNowLogInUser]setSessionid:sessionid];
-//    [MOC save];
-}
+//+ (void)setUserSessionid:(NSString *)sessionid
+//{
+//    LogInUser *loginUser = [self getCurrentLoginUser];
+//    loginUser.sessionid = sessionid;
+//    [[loginUser managedObjectContext] MR_saveToPersistentStoreAndWait];
+//    
+////    [[LogInUser getNowLogInUser]setSessionid:sessionid];
+////    [MOC save];
+//}
 
 + (void)setUserisNow:(BOOL)isnow
 {

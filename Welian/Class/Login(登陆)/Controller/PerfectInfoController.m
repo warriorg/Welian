@@ -201,7 +201,6 @@
     NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
     [requstDic setObject:@"jpg" forKey:@"title"];
     [requstDic setObject:KPlatformType forKey:@"platform"];
-    
     [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
     [requstDic setObject:_nameTF.text  forKey:@"name"];
@@ -210,46 +209,48 @@
     [requstDic setObject:_postTF.text forKey:@"position"];
     [requstDic setObject:_imagebase64Str forKey:@"photo"];
 
-    
     if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
         [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
     }
-    if ([self.userInfoDic objectForKey:@"nickname"]) {
-        [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
-    }
-
-    [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
-        NSDictionary *dataDic = JSON;
-        if (dataDic) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-            [mode setName:_nameTF.text];
-            [mode setMobile:_phoneTF.text];
-            [mode setCompany:_companyTF.text];
-            [mode setPosition:_postTF.text];
-            //记录最后一次登陆的手机号
-            SaveLoginMobile(mode.mobile);
-            
-            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
-            [LogInUser createLogInUserModel:mode];
-            [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
-            [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
-            BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
-            [bsearchVC setIsStart:YES];
-            NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
-            [self presentViewController:nav animated:YES completion:^{
-                
-            }];
-        }
-    } fail:^(NSError *error) {
-        if (error.code==1) {
-            [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex==1) {
-                    [self bindingPhoneClick:nil];
-                }
-            }];
-
-        }
+//    if ([self.userInfoDic objectForKey:@"nickname"]) {
+//        [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
+//    }
+    [WLHUDView showHUDWithStr:@"正在加载..." dim:YES];
+    [WeLianClient wxRegisterWithParameterDic:requstDic Success:^(id resultInfo) {
+        DLog(@"%@",requstDic);
+    } Failed:^(NSError *error) {
+        
     }];
+//    [WLHttpTool weixinRegisterParameterDic:requstDic success:^(id JSON) {
+//        NSDictionary *dataDic = JSON;
+//        if (dataDic) {
+//            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+//            [mode setName:_nameTF.text];
+//            [mode setMobile:_phoneTF.text];
+//            [mode setCompany:_companyTF.text];
+//            [mode setPosition:_postTF.text];
+//            //记录最后一次登陆的手机号
+//            SaveLoginMobile(mode.mobile);
+//            
+//            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
+//            [LogInUser createLogInUserModel:mode];
+////            [LogInUser setUseropenid:[self.userInfoDic objectForKey:@"openid"]];
+////            [LogInUser setUserunionid:[self.userInfoDic objectForKey:@"unionid"]];
+//            BSearchFriendsController *bsearchVC = [[BSearchFriendsController alloc] init];
+//            [bsearchVC setIsStart:YES];
+//            NavViewController *nav = [[NavViewController alloc] initWithRootViewController:bsearchVC];
+//            [self presentViewController:nav animated:YES completion:nil];
+//        }
+//    } fail:^(NSError *error) {
+//        if (error.code==1) {
+//            [UIAlertView bk_showAlertViewWithTitle:@"手机号码已经注册，可直接绑定" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"绑定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//                if (buttonIndex==1) {
+//                    [self bindingPhoneClick:nil];
+//                }
+//            }];
+//
+//        }
+//    }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

@@ -76,7 +76,7 @@
     //手机号码
     UITextField *phoneTF = [UITextField textFieldWitFrame:Rect(25, ViewCtrlTopBarHeight + kFirstMarginTop, SuperSize.width-50, TextFieldHeight) placeholder:@"手机号码" leftViewImageName:@"login_phone" andRightViewImageName:nil];
     [phoneTF setClearButtonMode:UITextFieldViewModeWhileEditing];
-    phoneTF.text = lastLoginMobile;
+    phoneTF.text = GetLastLoginMobile;
     phoneTF.returnKeyType = UIReturnKeyNext;
     phoneTF.keyboardType = UIKeyboardTypeNumberPad;
     phoneTF.delegate = self;
@@ -141,35 +141,47 @@
     }
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
     [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
-    [reqstDic setObject:self.pwdTextField.text forKey:@"password"];
-    [reqstDic setObject:KPlatformType forKey:@"platform"];
-    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+    [reqstDic setObject:[self.pwdTextField.text MD5String] forKey:@"password"];
+//    [reqstDic setObject:KPlatformType forKey:@"platform"];
+//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
+//        
+//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
+//    }
+    [WLHUDView showHUDWithStr:@"正在登录..." dim:YES];
+    [WeLianClient loginWithParameterDic:reqstDic Success:^(id resultInfo) {
+        [WLHUDView hiddenHud];
+        ILoginUserModel *loginUserM = resultInfo;
+        [LogInUser createLogInUserModel:loginUserM];
+        //进入主页面
+        MainViewController *mainVC = [[MainViewController alloc] init];
+        [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         
-        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-    }
+    } Failed:^(NSError *error) {
+        [WLHUDView showErrorHUD:error.description];
+    }];
     
-    [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
-        NSDictionary *dataDic = JSON;
-        if (dataDic) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
-            [mode setCheckcode:self.pwdTextField.text];
-            
-            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
-            //记录最后一次登陆的手机号
-            SaveLoginMobile(self.phoneTextField.text);
-            SaveLoginPassWD(self.pwdTextField.text);
-            [LogInUser createLogInUserModel:mode];
-
-            //进入主页面
-            MainViewController *mainVC = [[MainViewController alloc] init];
-            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
-        }
-
-    } fail:^(NSError *error) {
-        if (error.code==1) {
-            [WLHUDView showErrorHUD:error.domain];
-        }
-    } isHUD:YES];
+//    [WLHttpTool loginParameterDic:reqstDic success:^(id JSON) {
+//        NSDictionary *dataDic = JSON;
+//        if (dataDic) {
+//            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:dataDic];
+//            [mode setCheckcode:self.pwdTextField.text];
+//            
+//            [UserDefaults setObject:mode.sessionid forKey:kSessionId];
+//            //记录最后一次登陆的手机号
+//            SaveLoginMobile(self.phoneTextField.text);
+////            SaveLoginPassWD(self.pwdTextField.text);
+//            [LogInUser createLogInUserModel:mode];
+//
+//            //进入主页面
+//            MainViewController *mainVC = [[MainViewController alloc] init];
+//            [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+//        }
+//
+//    } fail:^(NSError *error) {
+//        if (error.code==1) {
+//            [WLHUDView showErrorHUD:error.domain];
+//        }
+//    } isHUD:YES];
     
 //    [WeLianClient loginWithMobile:self.phoneTextField.text
 //                          Unionid:@""

@@ -89,7 +89,7 @@
             
             //记录最后一次登陆的手机号
             SaveLoginMobile(_phoneTF.text);
-            SaveLoginPassWD(_pwdTF.text);
+//            SaveLoginPassWD(_pwdTF.text);
             
             [UserDefaults setObject:mode.sessionid forKey:kSessionId];
             [LogInUser createLogInUserModel:mode];

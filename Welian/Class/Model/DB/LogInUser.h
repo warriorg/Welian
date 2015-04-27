@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
-#import "UserInfoModel.h"
+
+@class ILoginUserModel;
 
 @class CompanyModel, FriendsFriendUser, MyFriendUser, NewFriendUser, SchoolModel, HomeMessage, InvestStages, InvestIndustry, InvestItems, NeedAddUser ,ProjectInfo, ActivityInfo;
 
@@ -44,8 +45,8 @@
 //<-------------------------------->
 
 //创建新收据
-+ (LogInUser *)createLogInUserModel:(UserInfoModel *)userInfoM;
-+ (LogInUser *)updateLoginUserWithModel:(UserInfoModel *)userInfoM;
++ (LogInUser *)createLogInUserModel:(ILoginUserModel *)userInfoM;
++ (LogInUser *)updateLoginUserWithModel:(ILoginUserModel *)userInfoM;
 
 //通过ucid查询
 + (LogInUser *)getLogInUserWithUid:(NSNumber*)uid;
@@ -175,8 +176,8 @@
 + (void)setUserinvestorauth:(NSNumber *)investorauth;
 + (void)setUserstartupauth:(NSNumber *)startupauth;
 + (void)setUsercompany:(NSString *)company;
-+ (void)setUsercheckcode:(NSString *)checkcode;
-+ (void)setUserSessionid:(NSString *)sessionid;
+//+ (void)setUsercheckcode:(NSString *)checkcode;
+//+ (void)setUserSessionid:(NSString *)sessionid;
 + (void)setUserisNow:(BOOL)isnow;
 + (void)setUserUrl:(NSString *)url;
 + (void)setUseropenid:(NSString *)openid;
