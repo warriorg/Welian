@@ -72,9 +72,118 @@
 #define kCheckMobileCodePath kUserUrl(@"checkmobilecode")
 
 
+#pragma mark - 动态Feed模块
+//基本路径
+#define kFeedUrl(path) [NSString stringWithFormat:@"feed/%@",path]
+//添加动态
+#define kSaveFeedPath kFeedUrl(@"save")
+//删除动态
+#define kDeleteFeedPath kFeedUrl(@"delete")
+//评论动态
+#define kFeedCommentPath kFeedUrl(@"comment")
+//删除动态评论
+#define kDeleteFeedCommentPath kFeedUrl(@"deletecomment")
+//赞
+#define kFeedZanPath kFeedUrl(@"zan")
+//取消赞
+#define kDeleteFeedZanPath kFeedUrl(@"deletezan")
+//转推
+#define kFeedForwardPath kFeedUrl(@"forward")
+//取消转推
+#define kDeleteFeedForwardPath kFeedUrl(@"deleteforward")
+//取动态列表
+#define kFeedListPath kFeedUrl(@"list")
+//取动态评论列表
+#define kFeedListCommentPath kFeedUrl(@"listcomment")
+//取赞的用户列表
+#define kFeedListZanPath kFeedUrl(@"listzan")
+//取转推的用户列表
+#define kFeedListForwardPath kFeedUrl(@"listforward")
+//取动态详情
+#define kFeedDetailInfoPath kFeedUrl(@"get")
+//举报
+#define kFeedReportPath kFeedUrl(@"report")
 
 
+#pragma mark - 好友模块 friends
+//基本路径
+#define kFriendUrl(path) [NSString stringWithFormat:@"friend/%@",path]
+//取好友列表
+#define kFriendListPath kFeedUrl(@"list")
+//二度好友列表
+#define kFriendList2Path kFeedUrl(@"list2")
+//取共同好友
+#define kFriendSamelistPath kFeedUrl(@"samelist")
+//请求添加好友
+#define kFriendRequestPath kFeedUrl(@"request")
+//确认添加好友
+#define kFriendConfirmPath kFeedUrl(@"confirm")
+//删除好友
+#define kDeleteFriendPath kFeedUrl(@"delete")
 
+
+#pragma mark - 项目 project 模块
+//基本路径
+#define kProjectUrl(path) [NSString stringWithFormat:@"project/%@",path]
+//添加项目，修改
+#define kSaveProjectPath kProjectUrl(@"save")
+//添加项目成员
+#define kSaveProjectMembersPath kProjectUrl(@"savemembers")
+//删除项目成员
+#define kDeleteProjectMembersPath kProjectUrl(@"deletemembers")
+//取项目成员
+#define kProjectMembersPath kProjectUrl(@"members")
+//项目 赞
+#define kProjectZanPath kProjectUrl(@"zan")
+//项目 评论
+#define kProjectCommentPath kProjectUrl(@"comment")
+//取赞的用户列表
+#define kProjectZanListPath kProjectUrl(@"zanlist")
+//取评论列表
+#define kProjectCommentListPath kProjectUrl(@"commentlist")
+//删除项目赞
+#define kDeleteProjectZanPath kProjectUrl(@"deletezan")
+//删除项目评论
+#define kDeleteProjectCommentPath kProjectUrl(@"deletecomment")
+//删除项目图片
+#define kDeleteProjectPhotoPath kProjectUrl(@"deletephoto")
+//添加项目图片
+#define kSaveProjectPhotoPath kProjectUrl(@"savephoto")
+//项目 收藏
+#define kProjectFavoritePath kProjectUrl(@"favorite")
+//取消收藏
+#define kDeleteProjectFavoritePath kProjectUrl(@"deletefavorite")
+//删除项目
+#define kDeleteProjectPath kProjectUrl(@"delete")
+
+
+#pragma mark - 活动 active 模块
+//基本路径
+#define kActiveUrl(path) [NSString stringWithFormat:@"active/%@",path]
+//取活动列表
+#define kActiveListPath kActiveUrl(@"list")
+//取活动详情
+#define kActiveDetailInfoPath kActiveUrl(@"get")
+//已报名用户列表
+#define kActiveRecordersPath kActiveUrl(@"recorders")
+//取票务信息
+#define kActiveTicketsPath kActiveUrl(@"tickets")
+//收藏活动
+#define kActiveFavoritePath kActiveUrl(@"favorite")
+//取消收藏
+#define kDeleteActiveFavoritePath kActiveUrl(@"deletefavorite")
+//取用户相关活动
+#define kActiveUserActivesPath kActiveUrl(@"useractives")
+//报名，购票
+#define kActiveOrderPath kActiveUrl(@"order")
+//修改订单状态
+#define kActiveOrderStatusPath kActiveUrl(@"orderstatus")
+//取消报名
+#define kDeleteActiveRecordPath kActiveUrl(@"deleterecord")
+//取已经购买的票
+#define kActiveBuyedTicketsPath kActiveUrl(@"buyedtickets")
+//取活动城市列表
+#define kActiveCitiesPath kActiveUrl(@"cities")
 
 
 
