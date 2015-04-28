@@ -204,7 +204,7 @@ static NSString *identifier = @"investorcellid";
     [mode setAvatar:invesM.avatar];
     [mode setFriendship:invesM.friendship];
     [mode setInvestorauth:invesM.investorauth];
-    [mode setStartupauth:invesM.startupauth];
+//    [mode setStartupauth:invesM.startupauth];
     [mode setProvincename:invesM.provincename];
     [mode setCityname:invesM.cityname];
     

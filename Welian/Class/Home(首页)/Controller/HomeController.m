@@ -629,7 +629,7 @@
                             myFriend.address = friendM.address;
                             myFriend.email = friendM.email;
                             myFriend.investorauth = friendM.investorauth;
-                            myFriend.startupauth = friendM.startupauth;
+//                            myFriend.startupauth = friendM.startupauth;
                             myFriend.company = friendM.company;
                             myFriend.status = friendM.status;
                             myFriend.isMyFriend = @(YES);

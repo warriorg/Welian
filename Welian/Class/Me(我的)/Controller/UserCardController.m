@@ -56,13 +56,13 @@
         [_investerImage setHidden:YES];
     }
     
-    NSInteger startint = [userinfoM.startupauth integerValue];
-    if (startint==1) {
-        
-        [_entrepreneurImage setHidden:NO];
-    }else{
+//    NSInteger startint = [userinfoM.startupauth integerValue];
+//    if (startint==1) {
+//        
+//        [_entrepreneurImage setHidden:NO];
+//    }else{
         [_entrepreneurImage setHidden:YES];
-    }
+//    }
     
     
     NSInteger relint = [userinfoM.friendship integerValue];

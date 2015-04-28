@@ -45,7 +45,7 @@
     newFriend.address = userInfoM.address;
     newFriend.email = userInfoM.email;
     newFriend.investorauth = userInfoM.investorauth;
-    newFriend.startupauth = userInfoM.startupauth;
+//    newFriend.startupauth = userInfoM.startupauth;
     newFriend.company = userInfoM.company;
     newFriend.created = userInfoM.created;
     newFriend.isLook = userInfoM.isLook;

@@ -1214,7 +1214,7 @@ typedef enum {
             NSString *charset = (__bridge NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
             [mutableRequest setValue:[NSString stringWithFormat:@"application/json; charset=%@", charset] forHTTPHeaderField:@"Content-Type"];
         }
-//        DLog(@"json body ----:%@",[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error] encoding:NSUTF8StringEncoding]);
+        DLog(@"json body ----:%@",[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error] encoding:NSUTF8StringEncoding]);
         [mutableRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error]];
     }
 

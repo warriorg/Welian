@@ -45,7 +45,7 @@
     myFriend.address = userInfoM.address;
     myFriend.email = userInfoM.email;
     myFriend.investorauth = userInfoM.investorauth;
-    myFriend.startupauth = userInfoM.startupauth;
+//    myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.unReadChatMsg = @(0);
     myFriend.isMyFriend = @(YES);
@@ -79,7 +79,7 @@
     myFriend.address = userInfoM.address;
     myFriend.email = userInfoM.email;
     myFriend.investorauth = userInfoM.investorauth;
-    myFriend.startupauth = userInfoM.startupauth;
+//    myFriend.startupauth = userInfoM.startupauth;
     myFriend.company = userInfoM.company;
     myFriend.unReadChatMsg = @(0);
     myFriend.isMyFriend = @(YES);

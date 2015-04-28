@@ -43,7 +43,7 @@
     investM.investorauth = iInvestor.investorauth;
     investM.inviteurl = iInvestor.inviteurl;
     investM.mobile = iInvestor.mobile;
-    investM.startupauth = iInvestor.startupauth;
+//    investM.startupauth = iInvestor.startupauth;
     investM.provincename = iInvestor.provincename;
     investM.items = iInvestor.items;
     investM.shareurl = iInvestor.shareurl;

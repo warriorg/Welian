@@ -51,17 +51,14 @@
                             Failed:(FailedBlock)failed
 {
     //设置sessionid
-//    LogInUser *mode = [LogInUser getCurrentLoginUser];
-//    NSString *sessid = mode.sessionid;
-//    if (!sessid) {
-        NSString *sessid = [UserDefaults objectForKey:kSessionId];
-//    }
+    NSString *sessid = [UserDefaults objectForKey:kSessionId];
     
     NSString *pathInfo = path;
     if (sessid.length) {
         pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",path,sessid];
     }
-    [self formatUrlAndParameters:params WithpathInfo:pathInfo];
+    //打印
+//    [self formatUrlAndParameters:params WithpathInfo:pathInfo];
     [[WeLianClient sharedClient] POST:pathInfo
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -69,14 +66,26 @@
                                   
                                   IBaseModel *result = [IBaseModel objectWithDict:responseObject];
                                   //如果sessionid有的话放入data
-                                  NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithDictionary:result.data];
+                                  NSMutableDictionary *resultDict = nil;
+                                  NSArray *resultArray = nil;
+                                  if ([result.data isKindOfClass:[NSDictionary class]]) {
+                                      //字典
+                                      resultDict = [NSMutableDictionary dictionaryWithDictionary:result.data];
+                                  }
+                                  if ([result.data isKindOfClass:[NSArray class]]) {
+                                      //数组
+                                      resultArray = result.data;
+                                  }
                                   
                                   if (result.isSuccess) {
                                       if (result.sessionid.length > 0) {
                                           [UserDefaults setObject:result.sessionid forKey:kSessionId];
                                       }
-                                      
-                                      SAFE_BLOCK_CALL(success, resultDict);
+                                      if (resultDict) {
+                                          SAFE_BLOCK_CALL(success, resultDict);
+                                      }else{
+                                          SAFE_BLOCK_CALL(success, resultArray);
+                                      }
                                   }else{
                                       if (result.state.integerValue > 1000 && result.state.integerValue < 2000) {
                                           //可以提醒的错误
@@ -87,7 +96,11 @@
                                       }else if(result.state.integerValue>=3000){
                                           //打印错误信息 ，返回操作
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
-                                          SAFE_BLOCK_CALL(success, resultDict);
+                                          if (resultDict) {
+                                              SAFE_BLOCK_CALL(success, resultDict);
+                                          }else{
+                                              SAFE_BLOCK_CALL(success, resultArray);
+                                          }
                                       }else{
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
                                             SAFE_BLOCK_CALL(failed, result.error);
@@ -704,7 +717,7 @@
                           Path:kFriendListPath
                        Success:^(id resultInfo) {
                            DLog(@"getFriendList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -723,7 +736,7 @@
                           Path:kFriendList2Path
                        Success:^(id resultInfo) {
                            DLog(@"getFriend2List ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           IFriend2Model *result = [IFriend2Model objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);

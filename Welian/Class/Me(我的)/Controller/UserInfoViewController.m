@@ -383,7 +383,7 @@ static NSString *fridcellid = @"fridcellid";
         {
             FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
             UserInfoModel *modeIM = _datasource3[indexPath.row];
-            [cell setUserMode:(FriendsUserModel *)modeIM];
+            [cell setUserMode:(IBaseUserM *)modeIM];
             cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
             cell.layer.borderWidths = @"{0,0,0.5,0}";
             return cell;

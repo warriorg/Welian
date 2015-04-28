@@ -44,6 +44,8 @@
 
 #pragma mark - Interface2.0
 #import "ILoginUserModel.h"
+#import "IFriend2Model.h"
+#import "IFriend2InfoModel.h"
 
 
 #pragma mark - Model（Home）

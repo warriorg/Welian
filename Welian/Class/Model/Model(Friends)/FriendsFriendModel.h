@@ -16,3 +16,5 @@
 @property (nonatomic, strong) NSArray *friends;
 
 @end
+
+

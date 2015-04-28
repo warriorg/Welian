@@ -111,17 +111,17 @@
 //基本路径
 #define kFriendUrl(path) [NSString stringWithFormat:@"friend/%@",path]
 //取好友列表
-#define kFriendListPath kFeedUrl(@"list")
+#define kFriendListPath kFriendUrl(@"list")
 //二度好友列表
-#define kFriendList2Path kFeedUrl(@"list2")
+#define kFriendList2Path kFriendUrl(@"list2")
 //取共同好友
-#define kFriendSamelistPath kFeedUrl(@"samelist")
+#define kFriendSamelistPath kFriendUrl(@"samelist")
 //请求添加好友
-#define kFriendRequestPath kFeedUrl(@"request")
+#define kFriendRequestPath kFriendUrl(@"request")
 //确认添加好友
-#define kFriendConfirmPath kFeedUrl(@"confirm")
+#define kFriendConfirmPath kFriendUrl(@"confirm")
 //删除好友
-#define kDeleteFriendPath kFeedUrl(@"delete")
+#define kDeleteFriendPath kFriendUrl(@"delete")
 
 
 #pragma mark - 项目 project 模块

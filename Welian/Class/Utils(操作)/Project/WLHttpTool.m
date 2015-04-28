@@ -575,7 +575,7 @@
    
     NSMutableArray *_sectionHeadsKeys = [NSMutableArray array];
     NSMutableArray *chineseStringsArray = [NSMutableArray array];
-    for (FriendsUserModel *mode in arrToSort) {
+    for (IBaseUserM *mode in arrToSort) {
         if (!mode.name) continue;
         ChineseString *chineseString=[[ChineseString alloc]init];
         chineseString.string=[[NSString stringWithString:mode.name] substringToIndex:1];
