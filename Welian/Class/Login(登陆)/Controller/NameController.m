@@ -30,8 +30,10 @@
     if (_searchTextField == nil) {
         _searchTextField = [[WLTextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
         [_searchTextField addTarget:self action:@selector(searchTextFiled:) forControlEvents:UIControlEventEditingChanged];
+        [_searchTextField setDelegate:self];
         [_searchTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
         [_searchTextField setText:self.userInfoStr];
+        [_searchTextField setReturnKeyType:UIReturnKeyDone];
         [_searchTextField becomeFirstResponder];
     }
     return _searchTextField;
@@ -157,6 +159,11 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self saveInfo:nil];
+    return YES;
+}
 
 #pragma mark tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

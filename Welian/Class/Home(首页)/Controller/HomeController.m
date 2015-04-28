@@ -245,16 +245,15 @@
 #pragma mark 加载更多数据
 - (void)loadMoreData
 {
-    // 1.最后1条微博的ID
-    WLStatusFrame *f = [_dataArry lastObject];
-    int start = f.status.fid;
-
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
     if (_uid) {
         [darDic setObject:_uid forKey:@"uid"];
         [darDic setObject:@(_page) forKey:@"page"];
     }else{
+        // 1.最后1条微博的ID
+        WLStatusFrame *f = [_dataArry lastObject];
+        int start = f.status.fid;
         [darDic setObject:@(start) forKey:@"start"];
     }
     

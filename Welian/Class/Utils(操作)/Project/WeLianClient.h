@@ -55,16 +55,7 @@
 + (void)saveUserInfoWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //增加教育经历
-+ (void)saveSchoolWithID:(NSNumber *)usid
-                Schoolid:(NSNumber *)schoolid
-              Schoolname:(NSString *)schoolname
-             Specialtyid:(NSNumber *)specialtyid
-               Startyear:(NSNumber *)startyear
-              Startmonth:(NSNumber *)startmonth
-                 Endyear:(NSNumber *)endyear
-                Endmonth:(NSNumber *)endmonth
-                 Success:(SuccessBlock)success
-                  Failed:(FailedBlock)failed;
++ (void)saveSchoolWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //删除教育经历
 + (void)deleteSchoolWithID:(NSNumber *)usid
@@ -72,19 +63,10 @@
                     Failed:(FailedBlock)failed;
 
 //增加工作经历
-+ (void)saveCompanyWithID:(NSString *)ucid
-                Companyid:(NSString *)companyid
-              Companyname:(NSString *)companyname
-               Positionid:(NSString *)positionid
-                Startyear:(NSString *)startyear
-               Startmonth:(NSString *)startmonth
-                  Endyear:(NSString *)endyear
-                 Endmonth:(NSString *)endmonth
-                  Success:(SuccessBlock)success
-                   Failed:(FailedBlock)failed;
++ (void)saveCompanyWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //删除工作经历
-+ (void)deleteCompanyWithID:(NSString *)ucid
++ (void)deleteCompanyWithID:(NSNumber *)ucid
                     Success:(SuccessBlock)success
                      Failed:(FailedBlock)failed;
 

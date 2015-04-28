@@ -280,35 +280,17 @@
         if (_schoolM.schoolname.length&&_schoolM.startyear&&_schoolM.endyear&&_schoolM.startmonth&&_schoolM.endmonth) {
             [_schoolM setSchoolid:nil];
             [_schoolM setSpecialtyid:nil];
-//            NSDictionary *daDic = [_schoolM keyValues];
-            
-//            [WLHttpTool addSchoolParameterDic:daDic success:^(id JSON) {
-//                [_schoolM setKeyValues:JSON];
-//                [SchoolModel createSchoolModel:_schoolM];
-//                [self dismissVC];
-//                [WLHUDView showSuccessHUD:@"保存成功！"];
-//            } fail:^(NSError *error) {
-//                
-//            }];
-            
+            NSDictionary *daDic = [_schoolM keyValues];
+            [WLHUDView showHUDWithStr:nil dim:YES];
             //添加教育经历
-            [WeLianClient saveSchoolWithID:_schoolM.usid
-                                  Schoolid:_schoolM.schoolid
-                                Schoolname:_schoolM.schoolname
-                               Specialtyid:_schoolM.specialtyid
-                                 Startyear:_schoolM.startyear
-                                Startmonth:_schoolM.startmonth
-                                   Endyear:_schoolM.endyear
-                                  Endmonth:_schoolM.endmonth
-                                   Success:^(id resultInfo) {
-//                                       [_schoolM setKeyValues:JSON];
-                                       [SchoolModel createSchoolModel:_schoolM];
-                                       [self dismissVC];
-                                       [WLHUDView showSuccessHUD:@"保存成功！"];
-                                   } Failed:^(NSError *error) {
-                                       [UIAlertView showWithError:error];
-                                   }];
-            
+            [WeLianClient saveSchoolWithParameterDic:daDic Success:^(id resultInfo) {
+                [_schoolM setKeyValues:resultInfo];
+                [SchoolModel createSchoolModel:_schoolM];
+                [self dismissVC];
+                [WLHUDView showSuccessHUD:@"保存成功！"];
+            } Failed:^(NSError *error) {
+                [WLHUDView hiddenHud];
+            }];
         }else{
             [WLHUDView showErrorHUD:@"信息不完整！"];
         }
@@ -317,13 +299,14 @@
             [_companyM setCompanyid:nil];
             [_companyM setJobid:nil];
             NSDictionary *datDic = [_companyM keyValues];
-            [WLHttpTool addCompanyParameterDic:datDic success:^(id JSON) {
-                [_companyM setUcid:@([[JSON objectForKey:@"ucid"] integerValue])];
+            [WLHUDView showHUDWithStr:nil dim:YES];
+            [WeLianClient saveCompanyWithParameterDic:datDic Success:^(id resultInfo) {
+                [_companyM setKeyValues:resultInfo];
                 [CompanyModel createCompanyModel:_companyM];
                 [self dismissVC];
                 [WLHUDView showSuccessHUD:@"保存成功！"];
-            } fail:^(NSError *error) {
-                
+            } Failed:^(NSError *error) {
+                [WLHUDView hiddenHud];
             }];
         }else{
             [WLHUDView showErrorHUD:@"信息不完整！"];
@@ -543,20 +526,21 @@
 {
     [UIAlertView bk_showAlertViewWithTitle:@"" message:@"确定删除？" cancelButtonTitle:@"取消" otherButtonTitles:@[@"删除"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex) {
+            [WLHUDView showHUDWithStr:@"" dim:YES];
             if (_wlUserLoadType == 1) {
-                [WLHttpTool deleteUserSchoolParameterDic:@{@"usid":_schoolM.usid} success:^(id JSON) {
+                [WeLianClient deleteSchoolWithID:_schoolM.usid Success:^(id resultInfo) {
                     [self.coerSchoolM MR_deleteEntity];
                     [self dismissVC];
-                    
-                } fail:^(NSError *error) {
-                    
+                    [WLHUDView showSuccessHUD:@"删除成功"];
+                } Failed:^(NSError *error) {
+                    [WLHUDView hiddenHud];
                 }];
             }else if (_wlUserLoadType == 2){
-                
-                [WLHttpTool deleteUserCompanyParameterDic:@{@"ucid":_companyM.ucid} success:^(id JSON) {
+                [WeLianClient deleteCompanyWithID:_coerCompanyM.ucid Success:^(id resultInfo) {
                     [self.coerCompanyM MR_deleteEntity];
                     [self dismissVC];
-                } fail:^(NSError *error) {
+                    [WLHUDView showSuccessHUD:@"删除成功"];
+                } Failed:^(NSError *error) {
                     
                 }];
             }

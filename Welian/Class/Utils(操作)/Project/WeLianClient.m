@@ -84,6 +84,7 @@
                                       }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
                                           //系统级错误，直接打印错误信息
                                           DLog(@"Result System ErroInfo-- : %@",result.errormsg);
+                                          SAFE_BLOCK_CALL(failed, result.error);
                                       }else if(result.state.integerValue>=3000){
                                           //打印错误信息 ，返回操作
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
@@ -255,25 +256,8 @@
 }
 
 //增加教育经历
-+ (void)saveSchoolWithID:(NSNumber *)usid
-                Schoolid:(NSNumber *)schoolid
-              Schoolname:(NSString *)schoolname
-             Specialtyid:(NSNumber *)specialtyid
-               Startyear:(NSNumber *)startyear
-              Startmonth:(NSNumber *)startmonth
-                 Endyear:(NSNumber *)endyear
-                Endmonth:(NSNumber *)endmonth
-                 Success:(SuccessBlock)success
-                  Failed:(FailedBlock)failed
++ (void)saveSchoolWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"usid":usid ? : @""
-                             ,@"schoolid":schoolid ? : @""
-                             ,@"schoolname":schoolname
-                             ,@"specialtyid":specialtyid ? : @""
-                             ,@"startyear":startyear
-                             ,@"startmonth":startmonth
-                             ,@"endyear":endyear
-                             ,@"endmonth":endmonth};
     [self reqestPostWithParams:params
                           Path:kSaveSchoolPath
                        Success:^(id resultInfo) {
@@ -294,39 +278,21 @@
                           Path:kDeleteSchoolPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteSchool ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
 }
 
 //增加工作经历
-+ (void)saveCompanyWithID:(NSString *)ucid
-                Companyid:(NSString *)companyid
-              Companyname:(NSString *)companyname
-               Positionid:(NSString *)positionid
-                Startyear:(NSString *)startyear
-               Startmonth:(NSString *)startmonth
-                  Endyear:(NSString *)endyear
-                 Endmonth:(NSString *)endmonth
-                  Success:(SuccessBlock)success
-                   Failed:(FailedBlock)failed
++ (void)saveCompanyWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
+
 {
-    NSDictionary *params = @{@"ucid":ucid
-                             ,@"companyid":companyid
-                             ,@"companyname":companyname
-                             ,@"positionid":positionid
-                             ,@"startyear":startyear
-                             ,@"startmonth":startmonth
-                             ,@"endyear":endyear
-                             ,@"endmonth":endmonth};
     [self reqestPostWithParams:params
                           Path:kSaveCompanyPath
                        Success:^(id resultInfo) {
                            DLog(@"saveCompany ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -334,7 +300,7 @@
 }
 
 //删除工作经历
-+ (void)deleteCompanyWithID:(NSString *)ucid
++ (void)deleteCompanyWithID:(NSNumber *)ucid
                     Success:(SuccessBlock)success
                      Failed:(FailedBlock)failed
 {
@@ -343,8 +309,7 @@
                           Path:kDeleteCompanyPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteCompany ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -455,8 +420,7 @@
                           Path:kSaveFeedPath
                        Success:^(id resultInfo) {
                            DLog(@"saveFeed ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -472,8 +436,7 @@
                           Path:kDeleteFeedPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFeed ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -491,8 +454,7 @@
                           Path:kFeedCommentPath
                        Success:^(id resultInfo) {
                            DLog(@"commentFeed ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -508,8 +470,7 @@
                           Path:kDeleteFeedCommentPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFeedComment ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -525,8 +486,7 @@
                           Path:kFeedZanPath
                        Success:^(id resultInfo) {
                            DLog(@"feedZan ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -542,8 +502,7 @@
                           Path:kDeleteFeedZanPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFeedZan ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -559,8 +518,7 @@
                           Path:kFeedForwardPath
                        Success:^(id resultInfo) {
                            DLog(@"feedForward ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -576,8 +534,7 @@
                           Path:kDeleteFeedForwardPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFeedForward ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -594,8 +551,7 @@
                           Path:kFeedListPath
                        Success:^(id resultInfo) {
                            DLog(@"getFeedList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -613,8 +569,7 @@
                           Path:kFeedListCommentPath
                        Success:^(id resultInfo) {
                            DLog(@"getFeedCommentList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -632,8 +587,7 @@
                           Path:kFeedListZanPath
                        Success:^(id resultInfo) {
                            DLog(@"getFeedZanList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -651,8 +605,7 @@
                           Path:kFeedListForwardPath
                        Success:^(id resultInfo) {
                            DLog(@"getFeedForwardList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -668,8 +621,7 @@
                           Path:kFeedDetailInfoPath
                        Success:^(id resultInfo) {
                            DLog(@"getFeedDetailInfo ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -685,8 +637,7 @@
                           Path:kFeedReportPath
                        Success:^(id resultInfo) {
                            DLog(@"reportFeed ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -704,8 +655,7 @@
                           Path:kFriendListPath
                        Success:^(id resultInfo) {
                            DLog(@"getFriendList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -723,8 +673,7 @@
                           Path:kFriendList2Path
                        Success:^(id resultInfo) {
                            DLog(@"getFriend2List ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -742,8 +691,7 @@
                           Path:kFriendSamelistPath
                        Success:^(id resultInfo) {
                            DLog(@"getSameFriendList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -760,8 +708,7 @@
                           Path:kFriendRequestPath
                        Success:^(id resultInfo) {
                            DLog(@"requestAddFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -777,8 +724,7 @@
                           Path:kFriendConfirmPath
                        Success:^(id resultInfo) {
                            DLog(@"confirmAddFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -794,8 +740,7 @@
                           Path:kDeleteFriendPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -812,8 +757,7 @@
                           Path:kSaveProjectPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProject ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -828,8 +772,7 @@
                           Path:kSaveProjectMembersPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProjectMembers ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -846,8 +789,7 @@
                           Path:kDeleteProjectMembersPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProjectMembers ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -863,8 +805,7 @@
                           Path:kProjectMembersPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectMembers ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -880,8 +821,7 @@
                           Path:kProjectZanPath
                        Success:^(id resultInfo) {
                            DLog(@"zanProject ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -901,8 +841,7 @@
                           Path:kProjectCommentPath
                        Success:^(id resultInfo) {
                            DLog(@"commentProject ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -922,8 +861,7 @@
                           Path:kProjectZanListPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectZanList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -943,8 +881,7 @@
                           Path:kProjectCommentListPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectCommentList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -960,8 +897,7 @@
                           Path:kDeleteProjectZanPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProjectZan ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -977,8 +913,7 @@
                           Path:kDeleteProjectCommentPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProjectComment ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -994,8 +929,7 @@
                           Path:kDeleteProjectPhotoPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProjectPhoto ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1010,8 +944,7 @@
                           Path:kSaveProjectPhotoPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProjectPhoto ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1027,8 +960,7 @@
                           Path:kProjectFavoritePath
                        Success:^(id resultInfo) {
                            DLog(@"favoriteProject ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1044,8 +976,7 @@
                           Path:kDeleteProjectFavoritePath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProjectFavorite ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1061,8 +992,7 @@
                           Path:kDeleteProjectPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteProject ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1086,8 +1016,7 @@
                           Path:kActiveListPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1103,8 +1032,7 @@
                           Path:kActiveDetailInfoPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveDetailInfo ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1124,8 +1052,7 @@
                           Path:kActiveRecordersPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveRecorders ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1141,8 +1068,7 @@
                           Path:kActiveTicketsPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveTickets ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1158,8 +1084,7 @@
                           Path:kActiveFavoritePath
                        Success:^(id resultInfo) {
                            DLog(@"favoriteActive ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1175,8 +1100,7 @@
                           Path:kDeleteActiveFavoritePath
                        Success:^(id resultInfo) {
                            DLog(@"deleteActiveFavorite ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1196,8 +1120,7 @@
                           Path:kActiveUserActivesPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveUserActives ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1215,8 +1138,7 @@
                           Path:kActiveOrderPath
                        Success:^(id resultInfo) {
                            DLog(@"orderActive ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1232,8 +1154,7 @@
                           Path:kActiveOrderStatusPath
                        Success:^(id resultInfo) {
                            DLog(@"updateActiveOrderStatus ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1249,8 +1170,7 @@
                           Path:kDeleteActiveRecordPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteActiveRecord ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1266,8 +1186,7 @@
                           Path:kActiveBuyedTicketsPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveBuyedTickets ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1281,8 +1200,7 @@
                           Path:kActiveCitiesPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveCities ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
