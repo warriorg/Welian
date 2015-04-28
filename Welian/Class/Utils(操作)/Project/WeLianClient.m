@@ -66,26 +66,12 @@
                                   
                                   IBaseModel *result = [IBaseModel objectWithDict:responseObject];
                                   //如果sessionid有的话放入data
-                                  NSMutableDictionary *resultDict = nil;
-                                  NSArray *resultArray = nil;
-                                  if ([result.data isKindOfClass:[NSDictionary class]]) {
-                                      //字典
-                                      resultDict = [NSMutableDictionary dictionaryWithDictionary:result.data];
-                                  }
-                                  if ([result.data isKindOfClass:[NSArray class]]) {
-                                      //数组
-                                      resultArray = result.data;
-                                  }
-                                  
                                   if (result.isSuccess) {
                                       if (result.sessionid.length > 0) {
+                                          //保存session
                                           [UserDefaults setObject:result.sessionid forKey:kSessionId];
                                       }
-                                      if (resultDict) {
-                                          SAFE_BLOCK_CALL(success, resultDict);
-                                      }else{
-                                          SAFE_BLOCK_CALL(success, resultArray);
-                                      }
+                                      SAFE_BLOCK_CALL(success, result.data);
                                   }else{
                                       if (result.state.integerValue > 1000 && result.state.integerValue < 2000) {
                                           //可以提醒的错误
@@ -96,18 +82,13 @@
                                       }else if(result.state.integerValue>=3000){
                                           //打印错误信息 ，返回操作
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
-                                          if (resultDict) {
-                                              SAFE_BLOCK_CALL(success, resultDict);
-                                          }else{
-                                              SAFE_BLOCK_CALL(success, resultArray);
-                                          }
+                                          SAFE_BLOCK_CALL(success, result.data);
                                       }else{
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
                                             SAFE_BLOCK_CALL(failed, result.error);
                                       }
                                   }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                                  SAFE_BLOCK_CALL(failed, error);
                                   //打印错误信息
                                   DLog(@"SystemErroInfo-- : %@",error.description);
                               }];
