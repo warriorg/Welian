@@ -649,7 +649,8 @@
                           Path:kFriendListPath
                        Success:^(id resultInfo) {
                            DLog(@"getFriendList ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
