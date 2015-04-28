@@ -6,23 +6,9 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import "IBaseUserModel.h"
+#import "IBaseUserM.h"
 
-@interface ILoginUserModel : IBaseUserModel
-
-@property (nonatomic, strong) NSString *mobile; //用户手机号
-@property (nonatomic, strong) NSString *email;//用户邮箱
-@property (nonatomic, strong) NSNumber *provinceid;//省id
-@property (nonatomic, strong) NSString *provincename;//省份名称
-@property (nonatomic, strong) NSString *address;//地址
-@property (nonatomic, strong) NSNumber *cityid;//城市id
-@property (nonatomic, strong) NSString *cityname;//城市名称
-@property (nonatomic, strong) NSString *shareurl;//对外分享url
-@property (nonatomic, strong) NSString *inviteurl;//邀请url
-@property (nonatomic, strong) NSNumber *friendcount;//好友数量
-@property (nonatomic, strong) NSNumber *feedcount;// 动态数量
-@property (nonatomic, strong) NSNumber *friend2count;// 二度好友 数量
-@property (nonatomic, strong) NSNumber *samefriendscount; // 共同好友数量  取自己信息的时候没有
+@interface ILoginUserModel : IBaseUserM
 
 //@property (nonatomic, strong) NSNumber *flag;//标记是否第一次登录
 

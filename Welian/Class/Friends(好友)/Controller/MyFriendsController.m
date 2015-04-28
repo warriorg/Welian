@@ -8,7 +8,7 @@
 
 #import "MyFriendsController.h"
 #import "NewFriendController.h"
-#import "UserInfoBasicVC.h"
+//#import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
 #import "FriendsFriendController.h"
@@ -135,103 +135,189 @@ static NSString *fridcellid = @"fridcellid";
     if (!nowLoginUser.rsMyFriends.count) {
         [WLHUDView showCustomHUD:@"加载好友..." imageview:nil];
     }
-    [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-        
-        WEAKSELF
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
-            NSArray  *json = [NSArray arrayWithArray:JSON];
-            //循环，删除本地数据库多余的缓存数据
-            for (int i = 0; i < [myFriends count]; i++){
-                MyFriendUser *myFriendUser = myFriends[i];
-                //判断返回的数组是否包含
-                BOOL isHave = [json bk_any:^BOOL(id obj) {
-                    //判断是否包含对应的
-                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
-                }];
-                //删除新的好友本地数据库
-                NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
-                //本地不存在，不是好友关系
-                if(!isHave){
-                    if (newFuser) {
-                        //更新好友请求列表数据为 添加
-                        [newFuser updateOperateType:0];
-                    }
-                    
-                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
-                    if(myFriendUser.uid.integerValue > 100){
-                        //不包含，删除当前数据
-                        //                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
-                        //更新设置为不是我的好友
-                        [myFriendUser updateIsNotMyFriend];
-                    }
-                }else{
-                    //好友
-                    if (newFuser) {
-                        //更新好友请求列表数据为 添加
-                        [newFuser updateOperateType:2];
-                    }
-                }
-            }
-
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-
-                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
-                    LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
-                    
-                    //循环添加数据库数据
-                    for (NSDictionary *modic in json) {
-                        FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
-                        friendM.friendship = @(1);
-                        
-                        NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
-                        MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];
-                        if (!myFriend) {
-                            myFriend = [MyFriendUser MR_createEntityInContext:localContext];
-                        }
-                        myFriend.uid = friendM.uid;
-                        myFriend.mobile = friendM.mobile;
-                        myFriend.position = friendM.position;
-                        myFriend.provinceid = friendM.provinceid;
-                        myFriend.provincename = friendM.provincename;
-                        myFriend.cityid = friendM.cityid;
-                        myFriend.cityname = friendM.cityname;
-                        myFriend.friendship = friendM.friendship;
-                        myFriend.shareurl = friendM.shareurl;
-                        myFriend.avatar = friendM.avatar;
-                        myFriend.name = friendM.name;
-                        myFriend.address = friendM.address;
-                        myFriend.email = friendM.email;
-                        myFriend.investorauth = friendM.investorauth;
-                        myFriend.startupauth = friendM.startupauth;
-                        myFriend.company = friendM.company;
-                        myFriend.status = friendM.status;
-                        myFriend.isMyFriend = @(YES);
-                        [loginUser addRsMyFriendsObject:myFriend];
-                    }
-                    
-                } completion:^(BOOL contextDidSave, NSError *error) {
-                    [weakSelf.refreshControl endRefreshing];
-                    [WLHUDView hiddenHud];
-                    
-                    NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
-                    weakSelf.allArray = [WLHttpTool getChineseStringArr:myFriends];
-                    _count = myFriends.count;
-                    UILabel *fff = (UILabel*)self.tableView.tableFooterView;
-                    [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
-                    [weakSelf.tableView reloadData];
-                    [self.searchDisplayVC setActive:NO animated:NO];
-                }];
-
-            });
-        });
-        
-    } fail:^(NSError *error) {
-        [self.refreshControl endRefreshing];
-        [WLHUDView hiddenHud];
-    }];
+    
+    //获取好友列表
+    [WeLianClient getFriendListWithID:nowLoginUser.uid
+                              Success:^(id resultInfo) {
+                                  WEAKSELF
+                                  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                      NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+                                      //循环，删除本地数据库多余的缓存数据
+                                      for (int i = 0; i < [myFriends count]; i++){
+                                          MyFriendUser *myFriendUser = myFriends[i];
+                                          //判断返回的数组是否包含
+                                          BOOL isHave = [resultInfo bk_any:^BOOL(id obj) {
+                                              //判断是否包含对应的
+                                              return [[obj uid] integerValue] == [myFriendUser uid].integerValue;
+                                          }];
+                                          //删除新的好友本地数据库
+                                          NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
+                                          //本地不存在，不是好友关系
+                                          if(!isHave){
+                                              if (newFuser) {
+                                                  //更新好友请求列表数据为 添加
+                                                  [newFuser updateOperateType:0];
+                                              }
+                                              
+                                              //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+                                              if(myFriendUser.uid.integerValue > 100){
+                                                  //不包含，删除当前数据
+                                                  //                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+                                                  //更新设置为不是我的好友
+                                                  [myFriendUser updateIsNotMyFriend];
+                                              }
+                                          }else{
+                                              //好友
+                                              if (newFuser) {
+                                                  //更新好友请求列表数据为 添加
+                                                  [newFuser updateOperateType:2];
+                                              }
+                                          }
+                                      }
+                                      
+                                      [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                                          NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
+                                          LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
+                                          
+                                          //循环添加数据库数据
+                                          for (IBaseUserM *baseUser in resultInfo) {
+                                              baseUser.friendship = @(1);//设置为好友关系
+                                              
+                                              NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",baseUser.uid];
+                                              MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];
+                                              if (!myFriend) {
+                                                  myFriend = [MyFriendUser MR_createEntityInContext:localContext];
+                                              }
+                                              myFriend.uid = baseUser.uid;
+                                              myFriend.name = baseUser.name;
+                                              myFriend.avatar = baseUser.avatar;
+                                              myFriend.company = baseUser.company;
+                                              myFriend.position = baseUser.position;
+                                              myFriend.investorauth = baseUser.investorauth;
+                                              myFriend.friendship = baseUser.friendship;
+                                              myFriend.checked = baseUser.checked;
+                                              myFriend.mobile = baseUser.mobile;
+                                              myFriend.cityname = baseUser.cityname;
+                                              myFriend.isMyFriend = @(YES);
+                                              [loginUser addRsMyFriendsObject:myFriend];
+                                          }
+                                          
+                                      } completion:^(BOOL contextDidSave, NSError *error) {
+                                          [weakSelf.refreshControl endRefreshing];
+                                          [WLHUDView hiddenHud];
+                                          
+                                          NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+                                          weakSelf.allArray = [WLHttpTool getChineseStringArr:myFriends];
+                                          _count = myFriends.count;
+                                          UILabel *fff = (UILabel*)self.tableView.tableFooterView;
+                                          [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
+                                          [weakSelf.tableView reloadData];
+                                          [self.searchDisplayVC setActive:NO animated:NO];
+                                      }];
+                                  });
+                              } Failed:^(NSError *error) {
+                                  [self.refreshControl endRefreshing];
+                                  [WLHUDView hiddenHud];
+                              }];
+    
+    
+//    [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
+//        
+//        WEAKSELF
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+//            NSArray  *json = [NSArray arrayWithArray:JSON];
+//            //循环，删除本地数据库多余的缓存数据
+//            for (int i = 0; i < [myFriends count]; i++){
+//                MyFriendUser *myFriendUser = myFriends[i];
+//                //判断返回的数组是否包含
+//                BOOL isHave = [json bk_any:^BOOL(id obj) {
+//                    //判断是否包含对应的
+//                    return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
+//                }];
+//                //删除新的好友本地数据库
+//                NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
+//                //本地不存在，不是好友关系
+//                if(!isHave){
+//                    if (newFuser) {
+//                        //更新好友请求列表数据为 添加
+//                        [newFuser updateOperateType:0];
+//                    }
+//                    
+//                    //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
+//                    if(myFriendUser.uid.integerValue > 100){
+//                        //不包含，删除当前数据
+//                        //                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
+//                        //更新设置为不是我的好友
+//                        [myFriendUser updateIsNotMyFriend];
+//                    }
+//                }else{
+//                    //好友
+//                    if (newFuser) {
+//                        //更新好友请求列表数据为 添加
+//                        [newFuser updateOperateType:2];
+//                    }
+//                }
+//            }
+//
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//                    NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
+//                    LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
+//                    
+//                    //循环添加数据库数据
+//                    for (NSDictionary *modic in json) {
+//                        FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
+//                        friendM.friendship = @(1);
+//                        
+//                        NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
+//                        MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];
+//                        if (!myFriend) {
+//                            myFriend = [MyFriendUser MR_createEntityInContext:localContext];
+//                        }
+//                        myFriend.uid = friendM.uid;
+//                        myFriend.mobile = friendM.mobile;
+//                        myFriend.position = friendM.position;
+//                        myFriend.provinceid = friendM.provinceid;
+//                        myFriend.provincename = friendM.provincename;
+//                        myFriend.cityid = friendM.cityid;
+//                        myFriend.cityname = friendM.cityname;
+//                        myFriend.friendship = friendM.friendship;
+//                        myFriend.shareurl = friendM.shareurl;
+//                        myFriend.avatar = friendM.avatar;
+//                        myFriend.name = friendM.name;
+//                        myFriend.address = friendM.address;
+//                        myFriend.email = friendM.email;
+//                        myFriend.investorauth = friendM.investorauth;
+//                        myFriend.startupauth = friendM.startupauth;
+//                        myFriend.company = friendM.company;
+//                        myFriend.status = friendM.status;
+//                        myFriend.isMyFriend = @(YES);
+//                        [loginUser addRsMyFriendsObject:myFriend];
+//                    }
+//                    
+//                } completion:^(BOOL contextDidSave, NSError *error) {
+//                    [weakSelf.refreshControl endRefreshing];
+//                    [WLHUDView hiddenHud];
+//                    
+//                    NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
+//                    weakSelf.allArray = [WLHttpTool getChineseStringArr:myFriends];
+//                    _count = myFriends.count;
+//                    UILabel *fff = (UILabel*)self.tableView.tableFooterView;
+//                    [fff setText:[NSString stringWithFormat:@"%ld位好友",(long)_count]];
+//                    [weakSelf.tableView reloadData];
+//                    [self.searchDisplayVC setActive:NO animated:NO];
+//                }];
+//
+//            });
+//        });
+//
+//    } fail:^(NSError *error) {
+//        [self.refreshControl endRefreshing];
+//        [WLHUDView hiddenHud];
+//    }];
 }
 
 //添加好友
@@ -316,7 +402,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
-        FriendsUserModel *modeIM = self.filterArray[indexPath.row];
+        IBaseUserM *modeIM = self.filterArray[indexPath.row];
         [fcell setUserMode:modeIM];
         return fcell;
     }else{
@@ -334,11 +420,11 @@ static NSString *fridcellid = @"fridcellid";
 //            
 //        }
         FriendCell *fcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
-#warning  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++标星好友
+//#warning  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++标星好友
         
         NSDictionary *usersDic = self.allArray[indexPath.section];
         NSArray *modear = usersDic[@"userF"];
-        FriendsUserModel *modeIM = modear[indexPath.row];
+        IBaseUserM *modeIM = modear[indexPath.row];
         
         [fcell setUserMode:modeIM];
         return fcell;
@@ -348,7 +434,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    FriendsUserModel *userMode;
+    IBaseUserM *userMode;
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         userMode = self.filterArray[indexPath.row];
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:userMode isAsk:NO];

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FriendsUserModel.h"
 
 @interface FriendCell : UITableViewCell
 
@@ -19,6 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *VCImageView;
 
-@property (nonatomic, strong) FriendsUserModel *userMode;
+@property (nonatomic, strong) IBaseUserM *userMode;
 
 @end

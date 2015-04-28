@@ -28,7 +28,7 @@
     mode.address = userinf.address;
     mode.email = userinf.email;
     mode.investorauth = userinf.investorauth;
-    mode.startupauth = userinf.startupauth;
+//    mode.startupauth = userinf.startupauth;
     mode.company = userinf.company;
     mode.checkcode = userinf.checkcode;
     mode.sessionid = userinf.sessionid;

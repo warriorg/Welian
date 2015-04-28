@@ -83,25 +83,49 @@ static NSString *identifier = @"investorcellid";
 {
     self.tableView.footer.hidden = YES;
     page = 1;
-    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
-        [self.allArray removeAllObjects];
-        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
-        
-        self.allArray = [NSMutableArray arrayWithArray:friendsM.friends];
-        [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
-        
-        [self.tableView reloadData];
-        [self hideRefreshView];
-        if (friendsM.friends.count>=15) {
-            self.tableView.footer.hidden = NO;
-        }
-        page++;
-        if (!self.allArray.count) {
-            [self.tableView addSubview:self.notView];
-        }
-    } fail:^(NSError *error) {
-        [self hideRefreshView];
-    }];
+    [WeLianClient getFriend2ListWithID:[LogInUser getCurrentLoginUser].uid
+                                  Page:@(page)
+                                  Size:@(KCellConut)
+                               Success:^(id resultInfo) {
+                                   [self.allArray removeAllObjects];
+//                                   FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
+                                   
+                                   self.allArray = [NSMutableArray arrayWithArray:[resultInfo friends]];
+                                   self.title = [NSString stringWithFormat:@"好友的好友%@人",[resultInfo friendCount]];
+//                                   [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
+//
+                                   [self.tableView reloadData];
+                                   [self hideRefreshView];
+                                   if ([resultInfo friends].count>=15) {
+                                       self.tableView.footer.hidden = NO;
+                                   }
+                                   page++;
+                                   if (!self.allArray.count) {
+                                       [self.tableView addSubview:self.notView];
+                                   }
+                               } Failed:^(NSError *error) {
+                                   [self hideRefreshView];
+                               }];
+    
+//    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
+//        [self.allArray removeAllObjects];
+//        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
+//        
+//        self.allArray = [NSMutableArray arrayWithArray:friendsM.friends];
+//        [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
+//        
+//        [self.tableView reloadData];
+//        [self hideRefreshView];
+//        if (friendsM.friends.count>=15) {
+//            self.tableView.footer.hidden = NO;
+//        }
+//        page++;
+//        if (!self.allArray.count) {
+//            [self.tableView addSubview:self.notView];
+//        }
+//    } fail:^(NSError *error) {
+//        [self hideRefreshView];
+//    }];
 }
 
 // 加载更多
@@ -180,11 +204,12 @@ static NSString *identifier = @"investorcellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
+//    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
+    IFriend2InfoModel *friendinfoM = self.allArray[indexPath.row];
     
 //    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
 //    [self.navigationController pushViewController:userinfoVC animated:YES];
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:friendinfoM OperateType:nil HidRightBtn:NO];
+    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendinfoM OperateType:nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }
 

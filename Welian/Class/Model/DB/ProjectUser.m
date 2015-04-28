@@ -30,7 +30,7 @@
     baseUser.investorauth = iBaseUserM.investorauth;
     baseUser.inviteurl = iBaseUserM.inviteurl;
     baseUser.mobile = iBaseUserM.mobile;
-    baseUser.startupauth = iBaseUserM.startupauth;
+//    baseUser.startupauth = iBaseUserM.startupauth;
     baseUser.company = iBaseUserM.company;
     baseUser.position = iBaseUserM.position;
     baseUser.provinceid = iBaseUserM.provinceid;
