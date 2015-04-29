@@ -1120,7 +1120,8 @@
                           Path:kActiveUserActivesPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveUserActives ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IActivityInfo objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1132,13 +1133,22 @@
                   Success:(SuccessBlock)success
                    Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"activeid":activeid,
-                             @"tickets":tickets};
+    NSDictionary *params = [NSDictionary dictionary];
+    if (tickets.count > 0) {
+        //1：收费
+        params = @{@"activeid":activeid,
+                   @"tickets":tickets};
+    }else{
+        //0:免费
+        params = @{@"activeid":activeid};
+    }
+
     [self reqestPostWithParams:params
                           Path:kActiveOrderPath
                        Success:^(id resultInfo) {
                            DLog(@"orderActive ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           IActivityOrderResultModel *result = [IActivityOrderResultModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
