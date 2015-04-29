@@ -740,19 +740,33 @@
 //获取活动城市列表
 - (void)loadAcitvityCitys
 {
-    [WLHttpTool getActiveCitiesParameterDic:[NSDictionary dictionary]
-                                    success:^(id JSON) {
-                                        NSArray *citys = [NSArray arrayWithArray:JSON];
-                                        //写入到本地
-                                        BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
-                                        if (state == YES) {
-                                            DLog(@"write successfully");
-                                        }else{
-                                            DLog(@"fail to write");
-                                        }
-                                    } fail:^(NSError *error) {
-                                        DLog(@"getActiveCitiesParameterDic error:%@",error.description);
-                                    }];
+    [WeLianClient getActiveCitiesSuccess:^(id resultInfo) {
+        if ([resultInfo count] > 0) {
+            NSArray *citys = [NSArray arrayWithArray:resultInfo];
+            //写入到本地
+            BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
+            if (state == YES) {
+                DLog(@"getActiveCities write successfully");
+            }else{
+                DLog(@"getActiveCities fail to write");
+            }
+        }
+    } Failed:^(NSError *error) {
+        DLog(@"getActiveCities error:%@",error.description);
+    }];
+//    [WLHttpTool getActiveCitiesParameterDic:[NSDictionary dictionary]
+//                                    success:^(id JSON) {
+//                                        NSArray *citys = [NSArray arrayWithArray:JSON];
+//                                        //写入到本地
+//                                        BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
+//                                        if (state == YES) {
+//                                            DLog(@"write successfully");
+//                                        }else{
+//                                            DLog(@"fail to write");
+//                                        }
+//                                    } fail:^(NSError *error) {
+//                                        DLog(@"getActiveCitiesParameterDic error:%@",error.description);
+//                                    }];
 }
 
 #pragma mark - 加载缓存重新发送的动态

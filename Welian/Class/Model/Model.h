@@ -46,6 +46,8 @@
 #import "ILoginUserModel.h"
 #import "IFriend2Model.h"
 #import "IFriend2InfoModel.h"
+#import "IActivityOrderResultModel.h"
+#import "IAlipayInfoModel.h"
 
 
 #pragma mark - Model（Home）

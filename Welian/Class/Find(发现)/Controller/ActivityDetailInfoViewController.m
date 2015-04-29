@@ -580,29 +580,62 @@
 {
     if (_activityInfo.isfavorite.boolValue) {
         //取消收藏
-        [WLHttpTool deleteFavoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
-                                             success:^(id JSON) {
-//                                                 _iProjectDetailInfo.isfavorite = @(0);
-                                                 self.activityInfo = [_activityInfo updateFavorite:@(0)];
-                                                 [self checkFavorteStatus];
-                                                 //通知刷新我的活动中的数据
-                                                 [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
-                                             } fail:^(NSError *error) {
-                                                 [UIAlertView showWithTitle:nil message:@"取消收藏失败，请重试！"];
-                                             }];
+        [WLHUDView showHUDWithStr:@"取消收藏中..." dim:NO];
+        [WeLianClient deleteActiveFavoriteWithID:_activityInfo.activeid
+                                         Success:^(id resultInfo) {
+                                             [WLHUDView hiddenHud];
+                                             
+                                             self.activityInfo = [_activityInfo updateFavorite:@(0)];
+                                             [self checkFavorteStatus];
+                                             //通知刷新我的活动中的数据
+                                             [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
+                                         } Failed:^(NSError *error) {
+                                             if (error) {
+                                                 [WLHUDView showErrorHUD:error.description];
+                                             }else{
+                                                 [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
+                                             }
+                                         }];
+//        [WLHttpTool deleteFavoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
+//                                             success:^(id JSON) {
+////                                                 _iProjectDetailInfo.isfavorite = @(0);
+//                                                 self.activityInfo = [_activityInfo updateFavorite:@(0)];
+//                                                 [self checkFavorteStatus];
+//                                                 //通知刷新我的活动中的数据
+//                                                 [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
+//                                             } fail:^(NSError *error) {
+//                                                 [UIAlertView showWithTitle:nil message:@"取消收藏失败，请重试！"];
+//                                             }];
         
     }else{
         //收藏项目
-        [WLHttpTool favoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
-                                       success:^(id JSON) {
-//                                           _iProjectDetailInfo.isfavorite = @(1);
-                                           self.activityInfo = [_activityInfo updateFavorite:@(1)];
-                                           [self checkFavorteStatus];
-                                           //通知刷新我的活动中的数据
-                                           [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
-                                        } fail:^(NSError *error) {
-                                            [UIAlertView showWithTitle:nil message:@"收藏活动失败，请重试！"];
-                                        }];
+        [WLHUDView showHUDWithStr:@"收藏中..." dim:NO];
+        [WeLianClient favoriteActiveWithID:_activityInfo.activeid
+                                   Success:^(id resultInfo) {
+                                       [WLHUDView hiddenHud];
+                                       
+                                       self.activityInfo = [_activityInfo updateFavorite:@(1)];
+                                       [self checkFavorteStatus];
+                                       //通知刷新我的活动中的数据
+                                       [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
+                                   } Failed:^(NSError *error) {
+                                       if (error) {
+                                           [WLHUDView showErrorHUD:error.description];
+                                       }else{
+                                           [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
+                                       }
+                                   }];
+        
+//        [WLHttpTool favoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
+//                                       success:^(id JSON) {
+////                                           _iProjectDetailInfo.isfavorite = @(1);
+//                                           self.activityInfo = [_activityInfo updateFavorite:@(1)];
+//                                           [self checkFavorteStatus];
+//                                           //通知刷新我的活动中的数据
+//                                           [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
+//                                        } fail:^(NSError *error) {
+//                                            [UIAlertView showWithTitle:nil message:@"收藏活动失败，请重试！"];
+//                                        }];
     }
 }
 
@@ -1064,40 +1097,77 @@
 //创建活动报名   type: 0:免费 1：收费
 - (void)createActivityOrderWithType:(NSInteger)type Tickets:(NSArray *)tickets
 {
-    NSDictionary *param = [NSDictionary dictionary];
-    if (type == 0) {
-        //免费活动
-        param = @{@"activeid":_activityId};
-    }else{
-        NSMutableArray *ticketsinfo = [NSMutableArray array];
+    NSMutableArray *ticketsinfo = [NSMutableArray array];
+    if (tickets.count > 0 && type == 1) {
         for (int i = 0; i < tickets.count; i++) {
             IActivityTicket *ticket = tickets[i];
             [ticketsinfo addObject:@{@"ticketid":ticket.ticketid,@"count":ticket.buyCount}];
         }
-        //需要支付的活动
-        param = @{@"activeid":_activityId,
-                  @"ticket":ticketsinfo};
     }
-    [WLHttpTool createTicketOrderParameterDic:param
-                                      success:^(id JSON) {
-                                          if ([JSON isKindOfClass:[NSDictionary class]]) {
-                                              if ([JSON[@"state"] integerValue] == -1) {
-                                                  [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
-                                                  return;
-                                              }
-                                          }
-                                          if (type != 0) {
-                                              //进入订单页面
-                                              ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
-                                              [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
-                                          }else{
-                                              [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
-                                              //更页面
-                                              [self updateJoinedInfo:YES];
-                                          }
-                                      } fail:^(NSError *error) {
-                                          [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
-                                      }];
+    [WLHUDView showHUDWithStr:@"报名中..." dim:NO];
+    [WeLianClient orderActiveWithID:_activityId
+                            Tickets:ticketsinfo
+                            Success:^(id resultInfo) {
+                                [WLHUDView hiddenHud];
+                                
+//                                if ([JSON isKindOfClass:[NSDictionary class]]) {
+//                                    if ([JSON[@"state"] integerValue] == -1) {
+//                                        [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
+//                                        return;
+//                                    }
+//                                }
+//                                if (type != 0) {
+//                                    //进入订单页面
+//                                    ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
+//                                    [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
+//                                }else{
+//                                    [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
+//                                    //更页面
+//                                    [self updateJoinedInfo:YES];
+//                                }
+                            } Failed:^(NSError *error) {
+                                if (error) {
+                                    [WLHUDView showErrorHUD:error.description];
+                                }else{
+                                    [WLHUDView showErrorHUD:@"报名失败，请重新尝试！"];
+                                }
+                            }];
+    
+//    NSDictionary *param = [NSDictionary dictionary];
+//    if (type == 0) {
+//        //免费活动
+//        param = @{@"activeid":_activityId};
+//    }else{
+//        NSMutableArray *ticketsinfo = [NSMutableArray array];
+//        for (int i = 0; i < tickets.count; i++) {
+//            IActivityTicket *ticket = tickets[i];
+//            [ticketsinfo addObject:@{@"ticketid":ticket.ticketid,@"count":ticket.buyCount}];
+//        }
+//        //需要支付的活动
+//        param = @{@"activeid":_activityId,
+//                  @"tickets":ticketsinfo};
+//    }
+    
+//    [WLHttpTool createTicketOrderParameterDic:param
+//                                      success:^(id JSON) {
+//                                          if ([JSON isKindOfClass:[NSDictionary class]]) {
+//                                              if ([JSON[@"state"] integerValue] == -1) {
+//                                                  [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
+//                                                  return;
+//                                              }
+//                                          }
+//                                          if (type != 0) {
+//                                              //进入订单页面
+//                                              ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
+//                                              [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
+//                                          }else{
+//                                              [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
+//                                              //更页面
+//                                              [self updateJoinedInfo:YES];
+//                                          }
+//                                      } fail:^(NSError *error) {
+//                                          [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
+//                                      }];
 }
 
 @end

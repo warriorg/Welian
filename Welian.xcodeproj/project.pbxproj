@@ -643,6 +643,16 @@
 		A489E7D11AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
 		A489E7D21AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
 		A489E7D31AA5980C00F7BE9F /* ActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */; };
+		A48A365C1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */; };
+		A48A365D1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */; };
+		A48A365E1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */; };
+		A48A365F1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */; };
+		A48A36601AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */; };
+		A48A36631AF0AF130099615D /* IAlipayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A36621AF0AF130099615D /* IAlipayInfoModel.m */; };
+		A48A36641AF0AF130099615D /* IAlipayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A36621AF0AF130099615D /* IAlipayInfoModel.m */; };
+		A48A36651AF0AF130099615D /* IAlipayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A36621AF0AF130099615D /* IAlipayInfoModel.m */; };
+		A48A36661AF0AF130099615D /* IAlipayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A36621AF0AF130099615D /* IAlipayInfoModel.m */; };
+		A48A36671AF0AF130099615D /* IAlipayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A48A36621AF0AF130099615D /* IAlipayInfoModel.m */; };
 		A48CA69E1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA69F1A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
 		A48CA6A01A4D044B009EBD04 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A48CA68F1A4D044B009EBD04 /* DateTools.bundle */; };
@@ -4909,6 +4919,10 @@
 		A489E7CD1AA5958E00F7BE9F /* weLian1.1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian1.1.8.xcdatamodel; sourceTree = "<group>"; };
 		A489E7CE1AA5980C00F7BE9F /* ActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityInfo.h; sourceTree = "<group>"; };
 		A489E7CF1AA5980C00F7BE9F /* ActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityInfo.m; sourceTree = "<group>"; };
+		A48A365A1AF0AE6A0099615D /* IActivityOrderResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IActivityOrderResultModel.h; sourceTree = "<group>"; };
+		A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IActivityOrderResultModel.m; sourceTree = "<group>"; };
+		A48A36611AF0AF130099615D /* IAlipayInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAlipayInfoModel.h; sourceTree = "<group>"; };
+		A48A36621AF0AF130099615D /* IAlipayInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAlipayInfoModel.m; sourceTree = "<group>"; };
 		A48CA68F1A4D044B009EBD04 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		A48CA6901A4D044B009EBD04 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		A48CA6911A4D044B009EBD04 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -6728,6 +6742,10 @@
 				A49075F71AEF399D001921EB /* IFriend2Model.m */,
 				A49075FD1AEF3A07001921EB /* IFriend2InfoModel.h */,
 				A49075FE1AEF3A07001921EB /* IFriend2InfoModel.m */,
+				A48A365A1AF0AE6A0099615D /* IActivityOrderResultModel.h */,
+				A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */,
+				A48A36611AF0AF130099615D /* IAlipayInfoModel.h */,
+				A48A36621AF0AF130099615D /* IAlipayInfoModel.m */,
 			);
 			path = Interface2.0;
 			sourceTree = "<group>";
@@ -12906,6 +12924,7 @@
 				A4D43ABB1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A49C7C5B1A70D42700F2AEC5 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				A49C7C5C1A70D42700F2AEC5 /* UIWebView+AFNetworking.m in Sources */,
+				A48A36671AF0AF130099615D /* IAlipayInfoModel.m in Sources */,
 				A49C7C5D1A70D42700F2AEC5 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
 				A492355F1ADE693A009E0B8C /* JKPhotoBrowser.m in Sources */,
 				A4C770E91A80A3D1005ABC7F /* IUserInfo.m in Sources */,
@@ -13041,6 +13060,7 @@
 				A49C7CE11A70D42700F2AEC5 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				A49C7CE21A70D42700F2AEC5 /* CityLocationController.m in Sources */,
 				A493C2B11ADD0BB00056BD52 /* WLNoteInfoView.m in Sources */,
+				A48A36601AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */,
 				F55EB1111ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
 				F57F31D71AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				A49C7CE41A70D42700F2AEC5 /* NSString+XHMD5.m in Sources */,
@@ -13411,6 +13431,7 @@
 				A4C141701A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				A4D43ABA1AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A4A2EB081A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
+				A48A36651AF0AF130099615D /* IAlipayInfoModel.m in Sources */,
 				F53DC2FD1A49192600F5F712 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9991A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
 				A4C770E81A80A3D1005ABC7F /* IUserInfo.m in Sources */,
@@ -13546,6 +13567,7 @@
 				F53DC3521A49192600F5F712 /* FMDatabase.m in Sources */,
 				A493C36A1ADD14A60056BD52 /* WLPhoto.m in Sources */,
 				F53DC3551A49192600F5F712 /* ChineseToPinyinResource.m in Sources */,
+				A48A365E1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */,
 				A4A2EB021A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				F53DC3571A49192600F5F712 /* CityLocationController.m in Sources */,
 				A493C2AF1ADD0BB00056BD52 /* WLNoteInfoView.m in Sources */,
@@ -13917,6 +13939,7 @@
 				A4D43AB81AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A4C140651A4BEA8500C9BAB5 /* NSString+MessageInputView.m in Sources */,
 				F56649D51A2AFD56008A5830 /* UIButton+Badge.m in Sources */,
+				A48A36631AF0AF130099615D /* IAlipayInfoModel.m in Sources */,
 				A4A2EB061A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				A492355B1ADE693A009E0B8C /* JKPhotoBrowser.m in Sources */,
 				F58CA9971A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
@@ -14052,6 +14075,7 @@
 				A4A2EB001A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				A493C2AD1ADD0BB00056BD52 /* WLNoteInfoView.m in Sources */,
 				F55EB10E1ACB9FE400FFB3BE /* HPGrowingTextView.m in Sources */,
+				A48A365C1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */,
 				F57F31D41AA71A2300B8EF72 /* POHorizontalList.m in Sources */,
 				F5664A231A2AFD56008A5830 /* MessageController.m in Sources */,
 				A493C3CC1ADD14A60056BD52 /* InvestReqstModel.m in Sources */,
@@ -14421,6 +14445,7 @@
 				A4C1416F1A4BEF5700C9BAB5 /* XHZoomingImageView.m in Sources */,
 				A4D43AB91AC55A7200713295 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				A4A2EB071A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
+				A48A36641AF0AF130099615D /* IAlipayInfoModel.m in Sources */,
 				F5664C8E1A2AFDD5008A5830 /* UIWebView+AFNetworking.m in Sources */,
 				F58CA9981A5D4F9100988A61 /* DaiDodgeKeyboard+AccessObject.m in Sources */,
 				A4C770E71A80A3D1005ABC7F /* IUserInfo.m in Sources */,
@@ -14556,6 +14581,7 @@
 				F5664CD61A2AFDD5008A5830 /* FMDatabase.m in Sources */,
 				A493C3691ADD14A60056BD52 /* WLPhoto.m in Sources */,
 				F5664CD91A2AFDD5008A5830 /* ChineseToPinyinResource.m in Sources */,
+				A48A365D1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */,
 				A4A2EB011A6CF7C8006ADA55 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				F5664CDB1A2AFDD5008A5830 /* CityLocationController.m in Sources */,
 				A493C2AE1ADD0BB00056BD52 /* WLNoteInfoView.m in Sources */,
@@ -14750,6 +14776,7 @@
 				A493C2471ADD0BB00056BD52 /* NSUserDefaults+Standard.m in Sources */,
 				A493C21F1ADD0BB00056BD52 /* CALayer+XibConfiguration.m in Sources */,
 				A493C2921ADD0BB00056BD52 /* NSArray+ArrayQuery.m in Sources */,
+				A48A36661AF0AF130099615D /* IAlipayInfoModel.m in Sources */,
 				A493C2241ADD0BB00056BD52 /* NSData+MD5Digest.m in Sources */,
 				A493C2791ADD0BB00056BD52 /* NSManagedObjectContext+e0571.m in Sources */,
 				A493C33E1ADD14A60056BD52 /* CommentMode.m in Sources */,
@@ -14799,6 +14826,7 @@
 				F5CE862319BFF2AB00A9D14C /* WelianTests.m in Sources */,
 				A493C3701ADD14A60056BD52 /* WLStatusFrame.m in Sources */,
 				A493C3661ADD14A60056BD52 /* WLContentCellFrame.m in Sources */,
+				A48A365F1AF0AE6A0099615D /* IActivityOrderResultModel.m in Sources */,
 				A493C2331ADD0BB00056BD52 /* NSError+Extend.m in Sources */,
 				A48465BF1ADF900A0041BBCE /* WLSegmentedControl.m in Sources */,
 				A493C2561ADD0BB00056BD52 /* UIImage+FixOrientation.m in Sources */,
