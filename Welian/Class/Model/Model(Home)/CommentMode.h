@@ -6,10 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "WLBasicTrends.h"
+#import "IFBase.h"
 
-@interface CommentMode : NSObject
+@interface CommentMode : IFBase
 
 /**  fcid   */
 @property (nonatomic, strong) NSNumber *fcid;
@@ -21,10 +20,10 @@
 @property (nonatomic, strong) NSString *created;
 
 /**  评论人   */
-@property (nonatomic, strong) WLBasicTrends *user;
+@property (nonatomic, strong) IBaseUserM *user;
 
 /**  对该评论的评论人   */
-@property (nonatomic, strong) WLBasicTrends *touser;
+@property (nonatomic, strong) IBaseUserM *touser;
 
 
 @property (nonatomic, strong) NSString *commentAndName;

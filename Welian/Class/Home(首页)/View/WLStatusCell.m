@@ -140,8 +140,8 @@
 {
     _statusFrame = statusFrame;
     WLStatusM *status = statusFrame.status;
-    WLBasicTrends *user = status.user;
-    WLBasicTrends *tuiuser = status.tuiuser;
+    IBaseUserM *user = status.user;
+    IBaseUserM *tuiuser = status.tuiuser;
     WLContentCellFrame *contenFrame = statusFrame.contentFrame;
     CGSize mainSize = [UIScreen mainScreen].bounds.size;
     // 发送中 删除按钮隐藏
@@ -155,7 +155,7 @@
     [_cellHeadView setControllVC:self.homeVC];
     CGFloat y = 0;
     CGRect headFrame = _cellHeadView.frame;
-    if (status.type==1||status.type==2||status.type==6 ||status.type==4) {
+    if (status.type.integerValue==1||status.type.integerValue==2||status.type.integerValue==6 ||status.type.integerValue==4) {
         y= 30;
         headFrame.origin.y = 30;
         [_cellHeadView setFrame:headFrame];
@@ -163,7 +163,7 @@
         [_imageV setHidden:NO];
         [_tuiUserLabel setHidden:NO];
         [_tuiUserLabel setFrame:CGRectMake(CGRectGetMaxX(_imageV.frame)+5, 17, mainSize.width-CGRectGetMaxX(_imageV.frame)-10, 20)];
-        if (status.type==1) { // 转推
+        if (status.type.integerValue==1) { // 转推
             NSString *tuiname = [NSString stringWithFormat:@"%@转推了",tuiuser.name];
             [_imageV setImage:[UIImage imageNamed:@"tui"]];
             [_tuiUserLabel setText:tuiname];
@@ -172,10 +172,10 @@
                                 forRange:range
                                linkColor:WLRGB(52, 116, 186)];
             
-        }else if (status.type ==2){  // 推荐好友
+        }else if (status.type.integerValue ==2){  // 推荐好友
             [_imageV setImage:[UIImage imageNamed:@"osusume"]];
             [_tuiUserLabel setText:status.commandmsg];
-        }else if (status.type ==6||status.type ==4){  // 修改背景
+        }else if (status.type.integerValue ==6||status.type.integerValue ==4){  // 修改背景
             [_imageV setImage:[UIImage imageNamed:@"xiugai"]];
             [_tuiUserLabel setText:[NSString stringWithFormat:@"%@　修改了自己的履历",status.user.name]];
         }
@@ -193,7 +193,7 @@
     
     CGFloat commenY = CGRectGetMaxY(_contentAndDockView.frame);
     
-    if (status.zansArray.count||status.forwardsArray.count) {
+    if (status.zans.count||status.forwards.count) {
         [_feznView setHidden:NO];
         [_feznView setFrame:CGRectMake(61,CGRectGetMaxY(_contentAndDockView.frame)-5, mainSize.width-61-10, statusFrame.feedAndZanFM.cellHigh)];
         [_feznView setFeedAndZanFrame:statusFrame.feedAndZanFM];

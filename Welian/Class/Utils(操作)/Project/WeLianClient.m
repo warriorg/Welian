@@ -334,7 +334,7 @@
 }
 
 //取用户认证信息
-+ (void)loadInvestorWithID:(NSString *)uid
++ (void)loadInvestorWithID:(NSNumber *)uid
                    Success:(SuccessBlock)success
                     Failed:(FailedBlock)failed
 {
@@ -379,8 +379,8 @@
                           Path:kMobileCodePath
                        Success:^(id resultInfo) {
                            DLog(@"getUserMobileCode ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -396,8 +396,8 @@
                           Path:kCheckMobileCodePath
                        Success:^(id resultInfo) {
                            DLog(@"checkUserMobileCode ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

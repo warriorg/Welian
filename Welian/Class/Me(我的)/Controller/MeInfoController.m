@@ -71,9 +71,6 @@ static NSString *mobileCellid = @"MobileInfoCellid";
 - (void)showUserCar
 {
     UserCardController *carVC = [[UserCardController alloc] init];
-
-//    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getCurrentLoginUser]];
-//    [carVC setUserinfoM:mode];
     [self.navigationController pushViewController:carVC animated:YES];
 }
 
@@ -320,7 +317,6 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     } Failed:^(NSError *error) {
         
     }];
-    
 }
 
 

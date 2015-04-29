@@ -64,9 +64,8 @@ static NSString *itemscellid = @"itemscellid";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 取自己创业者认证
-    [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-        IIMeInvestAuthModel *meInvestAuth = [IIMeInvestAuthModel objectWithDict:JSON];
+    [WeLianClient loadInvestorWithID:@(0) Success:^(id resultInfo) {
+        IIMeInvestAuthModel *meInvestAuth = [IIMeInvestAuthModel objectWithDict:resultInfo];
         [LogInUser setUserUrl:meInvestAuth.url];
         [LogInUser setUserinvestorauth:meInvestAuth.auth];
         for (IInvestIndustryModel *industryM in meInvestAuth.industry) {
@@ -79,9 +78,28 @@ static NSString *itemscellid = @"itemscellid";
             [InvestItems createInvestItems:itemM];
         }
         [self.tableView reloadData];
-    } fail:^(NSError *error) {
-        
+
+    } Failed:^(NSError *error) {
+    
     }];
+    // 取自己创业者认证
+//    [WLHttpTool getInvestAuthParameterDic:@{@"uid":@(0)} success:^(id JSON) {
+//        IIMeInvestAuthModel *meInvestAuth = [IIMeInvestAuthModel objectWithDict:JSON];
+//        [LogInUser setUserUrl:meInvestAuth.url];
+//        [LogInUser setUserinvestorauth:meInvestAuth.auth];
+//        for (IInvestIndustryModel *industryM in meInvestAuth.industry) {
+//            [InvestIndustry createInvestIndustry:industryM];
+//        }
+//        for (IInvestStageModel *stageM in meInvestAuth.stages) {
+//            [InvestStages createInvestStages:stageM];
+//        }
+//        for (InvestItemM *itemM in meInvestAuth.items) {
+//            [InvestItems createInvestItems:itemM];
+//        }
+//        [self.tableView reloadData];
+//    } fail:^(NSError *error) {
+//        
+//    }];
     
     [self refreshTabelViewHead];
     [self.tableView registerNib:[UINib nibWithNibName:@"InvestCardCell" bundle:nil] forCellReuseIdentifier:invcellid];

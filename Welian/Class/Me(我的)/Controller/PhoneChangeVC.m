@@ -112,10 +112,10 @@
         return;
     }
     WEAKSELF
-    [WLHttpTool checkMobileCodeParameterDic:@{@"code":self.authCodeTF.text} success:^(id JSON) {
-        if ([JSON objectForKey:@"flag"]) {
-            [WLHUDView showSuccessHUD:[JSON objectForKey:@"msg"]];
-            if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+    [WeLianClient checkUserMobileCodeWithCode:self.authCodeTF.text Success:^(id resultInfo) {
+        if ([resultInfo objectForKey:@"flag"]) {
+            [WLHUDView showSuccessHUD:[resultInfo objectForKey:@"msg"]];
+            if ([[resultInfo objectForKey:@"flag"] integerValue]==0) {
                 [LogInUser setUserMobile:self.phoneTF.text];
                 [LogInUser setUserChecked:@(1)];
                 if (weakSelf.phoneChangeBlcok) {
@@ -126,9 +126,26 @@
                 
             }
         }
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
+//    [WLHttpTool checkMobileCodeParameterDic:@{@"code":self.authCodeTF.text} success:^(id JSON) {
+//        if ([JSON objectForKey:@"flag"]) {
+//            [WLHUDView showSuccessHUD:[JSON objectForKey:@"msg"]];
+//            if ([[JSON objectForKey:@"flag"] integerValue]==0) {
+//                [LogInUser setUserMobile:self.phoneTF.text];
+//                [LogInUser setUserChecked:@(1)];
+//                if (weakSelf.phoneChangeBlcok) {
+//                    weakSelf.phoneChangeBlcok();
+//                }
+//                [self.navigationController popViewControllerAnimated:YES];
+//            }else{
+//                
+//            }
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
     
 }
 
@@ -160,14 +177,22 @@
 // 注册重新发送验证码
 - (void)chongxingfasongforgetcode
 {
-    [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
-        if ([JSON objectForKey:@"checkcode"]) {
-//            [WLHUDView showSuccessHUD:@"发送成功"];
-            self.checkCode = [JSON objectForKey:@"checkcode"];
+    [WeLianClient getUserMobileCodeWithMobile:self.phoneTF.text Success:^(id resultInfo) {
+        if ([resultInfo objectForKey:@"checkcode"]) {
+
+            self.checkCode = [resultInfo objectForKey:@"checkcode"];
         }
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
+//    [WLHttpTool getMobileCheckCodeParameterDic:@{@"mobile":self.phoneTF.text} success:^(id JSON) {
+//        if ([JSON objectForKey:@"checkcode"]) {
+////            [WLHUDView showSuccessHUD:@"发送成功"];
+//            self.checkCode = [JSON objectForKey:@"checkcode"];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 

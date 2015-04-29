@@ -27,7 +27,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import "AFNetworkReachabilityManager.h"
 #import "NotstringView.h"
-
+//#import "FeedAndZanModel.h"
 #import "WLPhoto.h"
 
 @interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -118,7 +118,7 @@
 - (void)loadFirstFID:(WLStatusFrame *)statusF
 {
     // 1.第一条微博的ID
-    [LogInUser setUserFirststustid:@(statusF.status.fid)];
+    [LogInUser setUserFirststustid:statusF.status.fid];
 }
 
 - (void)endRefreshing
@@ -141,7 +141,7 @@
     
     [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         
-        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+        NSArray *jsonarray = [WLStatusM objectsWithInfo:JSON];
         if (!_uid) {
             [LogInUser setUserNewstustcount:@(0)];
         }
@@ -151,13 +151,15 @@
         NSArray *againArray = [self getSendAgainStuatArray];
         [_dataArry addObjectsFromArray:againArray];
         
-        for (NSDictionary *dic in jsonarray) {
-             WLStatusFrame *sf = [self dataFrameWith:dic];
+        for (WLStatusM *statusM in jsonarray) {
+            WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
+            sf.status = statusM;
+//             WLStatusFrame *sf = [self dataFrameWith:dic];
             [_dataArry addObject:sf];
         }
         _page++;
         if (!_uid) {
-            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
+//            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
             if (!_dataArry.count) {
                 [self.homeView setHidden:NO];
             }else{
@@ -198,7 +200,7 @@
             [forwardsM addObject:mode];
         }
     }
-    [statusM setForwardsArray:forwardsM];
+    [statusM setForwards:forwardsM];
     
     NSMutableArray *zanArrayM = [NSMutableArray array];
     if (zanarray.count) {
@@ -207,7 +209,7 @@
             [zanArrayM addObject:mode];
         }
     }
-    [statusM setZansArray:zanArrayM];
+    [statusM setZans:zanArrayM];
     
     NSArray *comments = [statusDic objectForKey:@"comments"];
     NSMutableArray *commentArrayM = [NSMutableArray array];
@@ -218,10 +220,10 @@
         }
     }
     
-    [statusM setCommentsArray:commentArrayM];
+    [statusM setComments:commentArrayM];
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
-    if (statusM.type==5||statusM.type==12) {
+    if (statusM.type.integerValue==5||statusM.type.integerValue==12) {
         IBaseUserM *meInfoM = [[IBaseUserM alloc] init];
         meInfoM.name = statusM.user.name;
         meInfoM.uid = statusM.user.uid;
@@ -235,7 +237,7 @@
             }
         }
     }
-    [statusM setJoineduserArray:joinArrayM];
+    [statusM setJoinedusers:joinArrayM];
     
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
@@ -253,8 +255,7 @@
     }else{
         // 1.最后1条微博的ID
         WLStatusFrame *f = [_dataArry lastObject];
-        int start = f.status.fid;
-        [darDic setObject:@(start) forKey:@"start"];
+        [darDic setObject:f.status.fid forKey:@"start"];
     }
     
     [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
@@ -471,7 +472,7 @@
 {
     if (buttonIndex==0) {
         WLStatusFrame *statuF = _dataArry[_clickIndex.row];
-        if (statuF.status.type==13) { // 删除自己发布的
+        if (statuF.status.type.integerValue==13) { // 删除自己发布的
             [[WLDataDBTool sharedService] deleteObjectById:statuF.status.sendId fromTable:KSendAgainDataTableName];
             [_dataArry removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -481,7 +482,7 @@
                 [self.homeView setHidden:_dataArry.count];
             }
         }else{
-            [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
+            [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
                 
                 [_dataArry removeObject:statuF];
                 [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -519,8 +520,8 @@
 - (void)pushCommentInfoVC:(NSIndexPath*)indexPath
 {
     WLStatusFrame *statusF = _dataArry[indexPath.row];
-    
-    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12 || statusF.status.type ==13) return;
+    NSInteger type = statusF.status.type.integerValue;
+    if (type==2 ||type==4 || type==5||type==6||type==12 || type ==13) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
@@ -815,14 +816,14 @@
     WLStatusM *statusM = newsf.status;
     statusM.sendId = fidStr;
     statusM.sendType = 1;
-    statusM.type = 13;
-    WLBasicTrends *meBasic =  [[WLBasicTrends alloc] init];
+    statusM.type = @(13);
+    IBaseUserM *meBasic =  [[IBaseUserM alloc] init];
     meBasic.name = meuser.name;
     meBasic.avatar = meuser.avatar;
     meBasic.uid = meuser.uid;
     meBasic.position = meuser.position;
     meBasic.company = meuser.company;
-    meBasic.friendship = meuser.firststustid.intValue;
+    meBasic.friendship = meuser.firststustid;
     statusM.user = meBasic;
     newsf.status = statusM;
     return newsf;

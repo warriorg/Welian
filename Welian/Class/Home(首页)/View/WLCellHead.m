@@ -22,8 +22,8 @@
 {
     // 投资认证
     UIImageView *_touziImageView;
-    // 创业认证
-    UIImageView *_chuangImageView;
+//    // 创业认证
+//    UIImageView *_chuangImageView;
     // 姓名
     UILabel *_nameLabel;
     // 朋友关系
@@ -67,11 +67,11 @@
     [_touziImageView setImage:[UIImage imageNamed:@"me_mycard_tou"]];
     [self addSubview:_touziImageView];
     
-    // 创业者
-    _chuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KIconX, KIconX, KTouImageW, KTouImageW)];
-    [_chuangImageView setHidden:YES];
-    [_chuangImageView setImage:[UIImage imageNamed:@"me_mycard_chuang"]];
-    [self addSubview:_chuangImageView];
+//    // 创业者
+//    _chuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(KIconX, KIconX, KTouImageW, KTouImageW)];
+//    [_chuangImageView setHidden:YES];
+//    [_chuangImageView setImage:[UIImage imageNamed:@"me_mycard_chuang"]];
+//    [self addSubview:_chuangImageView];
     
     CGFloat nameX = CGRectGetMaxX(_iconImageView.frame)+8;
     
@@ -124,37 +124,27 @@
 - (void)setUserStat:(WLStatusM *)userStat
 {
     _userStat = userStat;
-    WLBasicTrends *user = userStat.user;
+    IBaseUserM *user = userStat.user;
     // 头像
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    // 是否创业和投资者
-    if (user.investorauth == WLVerifiedTypeInvestor) {
-        [_touziImageView setHidden:NO];
-    }else if (user.investorauth == WLVerifiedTypeCarver) {
-        [_chuangImageView setHidden:NO];
-    }else if (user.investorauth == WLVerifiedTypeInvestorAndCarver) {
-        [_touziImageView setHidden:NO];
-        [_chuangImageView setHidden:NO];
-    }else{
-        [_touziImageView setHidden:YES];
-        [_chuangImageView setHidden:YES];
-    }
+    // 是否创业
+    [_touziImageView setHidden:!user.investorauth.integerValue];
 
-    if (userStat.type==5||userStat.type==12) {
+    if (userStat.type.integerValue==5||userStat.type.integerValue==12) {
         NSMutableString *nameStr = [NSMutableString string];
         NSInteger conut = 0;
-        for (IBaseUserM *userM in userStat.joineduserArray) {
+        for (IBaseUserM *userM in userStat.joinedusers) {
             if (conut<=1) {
                 if (conut==0) {
-                    if (userStat.joineduserArray.count==1) {
+                    if (userStat.joinedusers.count==1) {
                         [nameStr appendString:[NSString stringWithFormat:@"%@",userM.name]];
                     }else{
                         [nameStr appendString:[NSString stringWithFormat:@"%@，",userM.name]];
                     }
 
                 }else{
-                    if (userStat.joineduserArray.count>2) {
-                        [nameStr appendString:[NSString stringWithFormat:@"%@等%lu位好友",userM.name,(unsigned long)userStat.joineduserArray.count]];
+                    if (userStat.joinedusers.count>2) {
+                        [nameStr appendString:[NSString stringWithFormat:@"%@等%lu位好友",userM.name,(unsigned long)userStat.joinedusers.count]];
                     }else{
                         [nameStr appendString:userM.name];
                     }
@@ -162,9 +152,9 @@
             }
             conut++;
         }
-        if (userStat.type==5) { // 参加活动
+        if (userStat.type.integerValue==5) { // 参加活动
             _mesLabel.text = [NSString stringWithFormat:@"%@报名了该活动",nameStr];
-        }else if (userStat.type==12){  // 点评了项目
+        }else if (userStat.type.integerValue==12){  // 点评了项目
             _mesLabel.text = [NSString stringWithFormat:@"%@点评了该项目",nameStr];
         }
         [_mesLabel setHidden:NO];
@@ -186,16 +176,16 @@
         }
         
         // 好友关系
-        if (user.friendship == WLRelationTypeFriend) {
+        if (user.friendship.integerValue == 1) {
             [_friendLabel setText:@"朋友"];
             [_friendLabel setHidden:NO];
-        }else if (user.friendship == WLRelationTypeFriendsFriend){
+        }else if (user.friendship.integerValue == 2){
             [_friendLabel setText:@"朋友的朋友"];
             [_friendLabel setHidden:NO];
         }else{
             [_friendLabel setHidden:YES];
         }
-        if (userStat.type==2) {
+        if (userStat.type.integerValue==2) {
             [_friendLabel setHidden:YES];
             [_addFriendBut setHidden:NO];
             
@@ -207,11 +197,11 @@
 
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
-    IBaseUserM *mode = [[IBaseUserM alloc] init];
-    WLBasicTrends *user = _userStat.user;
-    [mode setUid:user.uid];
-    [mode setAvatar:user.avatar];
-    [mode setName:user.name];
+    IBaseUserM *mode = _userStat.user;
+//    WLBasicTrends *user = _userStat.user;
+//    [mode setUid:user.uid];
+//    [mode setAvatar:user.avatar];
+//    [mode setName:user.name];
     
 //    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //    [self.controllVC.navigationController pushViewController:userinfoVC animated:YES];

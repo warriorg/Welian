@@ -10,13 +10,19 @@
 
 @implementation CommentMode
 
-- (void)setTouser:(WLBasicTrends *)touser
+- (void)customOperation:(NSDictionary *)dict
+{
+    self.user = [IBaseUserM objectWithDict:dict[@"user"]];
+    self.touser = [IBaseUserM objectWithDict:dict[@"touser"]];
+}
+
+- (void)setTouser:(IBaseUserM *)touser
 {
     _touser = touser;
     _commentAndName = [NSString stringWithFormat:@"%@ 回复 %@ : %@",_user.name,touser.name,_comment];
 }
 
-- (void)setUser:(WLBasicTrends *)user
+- (void)setUser:(IBaseUserM *)user
 {
     _user = user;
     _commentAndName = [NSString stringWithFormat:@"%@ : %@",_user.name,_comment];

@@ -44,7 +44,7 @@
 {
     _statusM = statusM;
     
-    NSArray * commentDataArray = statusM.commentsArray;
+    NSArray * commentDataArray = statusM.comments;
     CGFloat labelX = 5;
     CGFloat labelY =5;
     CGFloat labelW = _cellWidth - 20;

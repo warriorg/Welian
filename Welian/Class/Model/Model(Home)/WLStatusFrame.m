@@ -38,7 +38,7 @@
     _status = status;
     _cellHigh = 60;
     //0 正常动态，1 转推的动态，2推荐的动态，3创建的活动，4 修改个人公司，5 参加的活动，6 修改学校资料，10创建项目，11 网页, 12点评项目
-    if (status.type==1||status.type==2||status.type==6||status.type==4) {
+    if (status.type.integerValue==1||status.type.integerValue==2||status.type.integerValue==6||status.type.integerValue==4) {
         _cellHigh = 90;
     }
     _contentFrame = [[WLContentCellFrame alloc] initWithWidth:_cellWidth withShowMoreBut:YES];
@@ -46,22 +46,22 @@
     _cellHigh += _contentFrame.cellHeight;
     
     NSMutableDictionary *daafa = [NSMutableDictionary dictionary];
-    if (status.zansArray.count) {
-        [daafa setObject:status.zansArray forKey:@"zans"];
+    if (status.zans.count) {
+        [daafa setObject:status.zans forKey:@"zans"];
     }
     
-    if (status.forwardsArray.count) {
-        [daafa setObject:status.forwardsArray forKey:@"forwards"];
+    if (status.forwards.count) {
+        [daafa setObject:status.forwards forKey:@"forwards"];
     }
     NSInteger high = 8;
-    if (status.zansArray.count||status.forwardsArray.count) {
+    if (status.zans.count||status.forwards.count) {
         _feedAndZanFM = [[FeedAndZanFrameM alloc] initWithWidth:_cellWidth];
         [_feedAndZanFM setFeedAndzanDic:daafa];
         _cellHigh += _feedAndZanFM.cellHigh;
         high -= 5;
     }
     
-    if (status.commentsArray.count) {
+    if (status.comments.count) {
         _commentListFrame = [[CommentHomeViewFrame alloc] initWithWidth:_cellWidth];
         [_commentListFrame setStatusM:status];
         _cellHigh += _commentListFrame.cellHigh+high;

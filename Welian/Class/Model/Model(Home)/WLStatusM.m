@@ -7,18 +7,21 @@
 //
 
 #import "WLStatusM.h"
-#import "MJExtension.h"
 #import "WLPhoto.h"
-
 
 @implementation WLStatusM
 
-- (NSDictionary *)arrayModelClasses
+- (void)customOperation:(NSDictionary *)dict
 {
-    return @{@"photos" : [WLPhoto class]};
+    self.user = [IBaseUserM objectWithDict:dict[@"user"]];
+    self.tuiuser = [IBaseUserM objectWithDict:dict[@"tuiuser"]];
+    self.card = [CardStatuModel objectWithDict:dict[@"card"]];
+    self.photos = [WLPhoto objectsWithInfo:dict[@"photos"]];
+    self.comments = [CommentMode objectsWithInfo:dict[@"comments"]];
+    self.zans = [IBaseUserM objectsWithInfo:dict[@"zans"]];
+    self.forwards = [IBaseUserM objectsWithInfo:dict[@"forwards"]];
+    self.joinedusers = [IBaseUserM objectsWithInfo:dict[@"joinedusers"]];
 }
-
-
 
 - (NSString *)created
 {

@@ -257,23 +257,16 @@ static NSString *noCommentCell = @"NoCommentCell";
         if (_selecCommFrame) {
             params = @{@"pid":_projectPid,@"touid":_selecCommFrame.commentM.user.uid,@"comment":comment};
             
-            WLBasicTrends *touser = [[WLBasicTrends alloc] init];
-            touser.avatar = _selecCommFrame.commentM.user.avatar;
-            touser.company = _selecCommFrame.commentM.user.company;
-            touser.investorauth = _selecCommFrame.commentM.user.investorauth;
-            touser.name = _selecCommFrame.commentM.user.name;
-            touser.position = _selecCommFrame.commentM.user.position;
-            touser.uid = _selecCommFrame.commentM.user.uid;
-            commentM.touser = touser;
+            commentM.touser = _selecCommFrame.commentM.user;
         }else{
             params = @{@"pid":_projectPid,@"comment":comment};
         }
         
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-        WLBasicTrends *user = [[WLBasicTrends alloc] init];
+        IBaseUserM *user = [[IBaseUserM alloc] init];
         user.avatar = loginUser.avatar;
         user.company = loginUser.company;
-        user.investorauth = loginUser.investorauth.intValue;
+        user.investorauth = loginUser.investorauth;
         user.name = loginUser.name;
         user.position = loginUser.position;
         user.uid = loginUser.uid;
@@ -1005,24 +998,24 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              commentM.comment = commentInfo.comment;
                                              commentM.created = commentInfo.created;
                                              if (commentInfo.user.uid) {
-                                                 WLBasicTrends *user = [[WLBasicTrends alloc] init];
-                                                 user.avatar = commentInfo.user.avatar;
-                                                 user.company = commentInfo.user.company;
-                                                 user.investorauth = commentInfo.user.investorauth.intValue;
-                                                 user.name = commentInfo.user.name;
-                                                 user.position = commentInfo.user.position;
-                                                 user.uid = commentInfo.user.uid;
-                                                 commentM.user = user;
+//                                                 WLBasicTrends *user = [[WLBasicTrends alloc] init];
+//                                                 user.avatar = commentInfo.user.avatar;
+//                                                 user.company = commentInfo.user.company;
+//                                                 user.investorauth = commentInfo.user.investorauth.intValue;
+//                                                 user.name = commentInfo.user.name;
+//                                                 user.position = commentInfo.user.position;
+//                                                 user.uid = commentInfo.user.uid;
+                                                 commentM.user = commentInfo.user;
                                              }
                                              if (commentInfo.touser.uid) {
-                                                 WLBasicTrends *touser = [[WLBasicTrends alloc] init];
-                                                 touser.avatar = commentInfo.touser.avatar;
-                                                 touser.company = commentInfo.touser.company;
-                                                 touser.investorauth = commentInfo.touser.investorauth.intValue;
-                                                 touser.name = commentInfo.touser.name;
-                                                 touser.position = commentInfo.touser.position;
-                                                 touser.uid = commentInfo.touser.uid;
-                                                 commentM.touser = touser;
+//                                                 WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+//                                                 touser.avatar = commentInfo.touser.avatar;
+//                                                 touser.company = commentInfo.touser.company;
+//                                                 touser.investorauth = commentInfo.touser.investorauth.intValue;
+//                                                 touser.name = commentInfo.touser.name;
+//                                                 touser.position = commentInfo.touser.position;
+//                                                 touser.uid = commentInfo.touser.uid;
+                                                 commentM.touser = commentInfo.touser;
                                              }
                                              
                                              CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
@@ -1183,24 +1176,24 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                        commentM.comment = commentInfo.comment;
                                                        commentM.created = commentInfo.created;
                                                        if (commentInfo.user.uid) {
-                                                           WLBasicTrends *user = [[WLBasicTrends alloc] init];
-                                                           user.avatar = commentInfo.user.avatar;
-                                                           user.company = commentInfo.user.company;
-                                                           user.investorauth = commentInfo.user.investorauth.intValue;
-                                                           user.name = commentInfo.user.name;
-                                                           user.position = commentInfo.user.position;
-                                                           user.uid = commentInfo.user.uid;
-                                                           commentM.user = user;
+//                                                           WLBasicTrends *user = [[WLBasicTrends alloc] init];
+//                                                           user.avatar = commentInfo.user.avatar;
+//                                                           user.company = commentInfo.user.company;
+//                                                           user.investorauth = commentInfo.user.investorauth.intValue;
+//                                                           user.name = commentInfo.user.name;
+//                                                           user.position = commentInfo.user.position;
+//                                                           user.uid = commentInfo.user.uid;
+                                                           commentM.user = commentInfo.user;
                                                        }
                                                        if (commentInfo.touser.uid) {
-                                                           WLBasicTrends *touser = [[WLBasicTrends alloc] init];
-                                                           touser.avatar = commentInfo.touser.avatar;
-                                                           touser.company = commentInfo.touser.company;
-                                                           touser.investorauth = commentInfo.touser.investorauth.intValue;
-                                                           touser.name = commentInfo.touser.name;
-                                                           touser.position = commentInfo.touser.position;
-                                                           touser.uid = commentInfo.touser.uid;
-                                                           commentM.touser = touser;
+//                                                           WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+//                                                           touser.avatar = commentInfo.touser.avatar;
+//                                                           touser.company = commentInfo.touser.company;
+//                                                           touser.investorauth = commentInfo.touser.investorauth.intValue;
+//                                                           touser.name = commentInfo.touser.name;
+//                                                           touser.position = commentInfo.touser.position;
+//                                                           touser.uid = commentInfo.touser.uid;
+                                                           commentM.touser = commentInfo.touser;
                                                        }
                                                        
                                                        CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];

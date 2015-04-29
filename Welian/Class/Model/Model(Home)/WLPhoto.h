@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 chuansongmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "IFBase.h"
 
-@interface WLPhoto : NSObject
+@interface WLPhoto : IFBase
 
 /**  图片url   */
 @property (nonatomic, strong) NSString *url;

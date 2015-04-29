@@ -50,7 +50,7 @@
 - (void)setCommenFrame:(CommentHomeViewFrame *)commenFrame
 {
     _commenFrame = commenFrame;
-    NSArray *commentDataArray = commenFrame.statusM.commentsArray;
+    NSArray *commentDataArray = commenFrame.statusM.comments;
     
     for (NSInteger i = 0; i<commentDataArray.count; i++) {
         CommentMode *commMode = commentDataArray[i];
@@ -76,7 +76,7 @@
             [self setLableEmjoWith:fiveLabel andCommMode:commMode labelFrame:commenFrame.fiveLabelFrame];
         }
     }
-    if (commenFrame.statusM.commentcount>5) {
+    if (commenFrame.statusM.commentcount.integerValue>5) {
         [moreLabel setHidden:NO];
         [moreLabel setFrame:commenFrame.moreLabelFrame];
         [moreLabel setText:commenFrame.moreLabelStr];
@@ -105,14 +105,14 @@
         [commentInfoVC setStatusM:_commenFrame.statusM];
         [self.commentVC.navigationController pushViewController:commentInfoVC animated:YES];
     }else{
-        WLBasicTrends *usmode = addressComponents[@"user"];
-        if (!usmode)  return;
-        IBaseUserM *userModel = [[IBaseUserM alloc] init];
-        [userModel setUid:usmode.uid];
-        [userModel setAvatar:usmode.avatar];
-        [userModel setName:usmode.name];
-        [userModel setPosition:usmode.position];
-        [userModel setCompany:usmode.company];
+        IBaseUserM *userModel = addressComponents[@"user"];
+        if (!userModel)  return;
+//         = [[IBaseUserM alloc] init];
+//        [userModel setUid:usmode.uid];
+//        [userModel setAvatar:usmode.avatar];
+//        [userModel setName:usmode.name];
+//        [userModel setPosition:usmode.position];
+//        [userModel setCompany:usmode.company];
         
         UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:userModel OperateType:nil HidRightBtn:NO];
         [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];
@@ -147,7 +147,7 @@
 //针对于copy的实现
 -(void)copyText:(id)sender{
     UIPasteboard *pboard = [UIPasteboard generalPasteboard];
-    NSArray *commentDataArray = _commenFrame.statusM.commentsArray;
+    NSArray *commentDataArray = _commenFrame.statusM.comments;
     CommentMode *commMode = commentDataArray[_selectL];
     pboard.string = commMode.comment;
 }

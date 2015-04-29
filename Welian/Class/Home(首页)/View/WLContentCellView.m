@@ -157,7 +157,7 @@
 
 - (void)setViewDataAndFrame:(WLStatusM *)status frame:(WLContentCellFrame *)contenFrame
 {
-    if (status.type==6||status.type==5||status.type==12) {
+    if (status.type.integerValue==6||status.type.integerValue==5||status.type.integerValue==12) {
         _contentLabel.hidden = YES;
         _photoListView.hidden = YES;
         _moreContentBut.hidden = YES;
@@ -191,7 +191,7 @@
     }
     
     BOOL isDock = YES;
-    if (status.type==4||status.type==5||status.type==6||status.type==12) {
+    if (status.type.integerValue==4||status.type.integerValue==5||status.type.integerValue==6||status.type.integerValue==12) {
         isDock = NO;
     }
     
@@ -252,11 +252,11 @@
         webVC.showRightShareBtn = YES;//现实右上角分享按钮
         [self.homeVC.navigationController pushViewController:webVC animated:YES];
     }else if (card.type.integerValue==4||card.type.integerValue==6){   // 个人信息
-        IBaseUserM *mode = [[IBaseUserM alloc] init];
-        WLBasicTrends *user = self.statusFrame.status.user?self.statusFrame.status.user:self.commentFrame.status.user;
-        [mode setUid:user.uid];
-        [mode setAvatar:user.avatar];
-        [mode setName:user.name];
+//        IBaseUserM *mode = [[IBaseUserM alloc] init];
+        IBaseUserM *mode = self.statusFrame.status.user?self.statusFrame.status.user:self.commentFrame.status.user;
+//        [mode setUid:user.uid];
+//        [mode setAvatar:user.avatar];
+//        [mode setName:user.name];
         
 //        UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //        [self.homeVC.navigationController pushViewController:userinfoVC animated:YES];
@@ -288,30 +288,30 @@
         
         statM = _commentFrame.status;
     }
-    NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zansArray];
+    NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zans];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
-    if (statM.iszan==1) {
+    if (statM.iszan.boolValue) {
         
-        for (IBaseUserM *zanM in statM.zansArray) {
+        for (IBaseUserM *zanM in statM.zans) {
             if ([zanM.uid integerValue] == [mode.uid integerValue]) {
                 [zans removeObject:zanM];
             }
         }
-        [statM setZansArray:zans];
+        [statM setZans:zans];
         [statM setIszan:0];
-        statM.zan -= 1;
+        statM.zan = @(statM.zan.integerValue -1);
         
-        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
+        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
         }];
     }else{
         [zans insertObject:mode atIndex:0];
-        [statM setZansArray:zans];
-        [statM setIszan:1];
-        statM.zan +=1;
-        [WLHttpTool addFeedZanParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
+        [statM setZans:zans];
+        [statM setIszan:@(1)];
+        statM.zan = @(statM.zan.integerValue+1);
+        [WLHttpTool addFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
@@ -336,31 +336,31 @@
         
         statM = _commentFrame.status;
     }
-    NSMutableArray *forwards = [NSMutableArray arrayWithArray:statM.forwardsArray];
+    NSMutableArray *forwards = [NSMutableArray arrayWithArray:statM.forwards];
     //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
     LogInUser *mode = [LogInUser getCurrentLoginUser];
-    if (statM.isforward==1) {
+    if (statM.isforward.integerValue==1) {
         
-        for (IBaseUserM *forwardM in statM.forwardsArray) {
+        for (IBaseUserM *forwardM in statM.forwards) {
             if ([forwardM.uid integerValue] == [mode.uid integerValue]) {
                 [forwards removeObject:forwardM];
             }
         }
-        [statM setForwardsArray:forwards];
+        [statM setForwards:forwards];
         [statM setIsforward:0];
-        statM.forwardcount -= 1;
+        statM.forwardcount = @(statM.forwardcount.integerValue -1);
         
-        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
+        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
             [but setEnabled:YES];
         } fail:^(NSError *error) {
             [but setEnabled:YES];
         }];
     }else{
         [forwards insertObject:mode atIndex:0];
-        [statM setForwardsArray:forwards];
-        [statM setIsforward:1];
-        statM.forwardcount +=1;
-        [WLHttpTool forwardFeedParameterDic:@{@"fid":@(statM.topid == 0 ? statM.fid : statM.topid)} success:^(id JSON) {
+        [statM setForwards:forwards];
+        [statM setIsforward:@(1)];
+        statM.forwardcount = @(statM.forwardcount.integerValue +1);
+        [WLHttpTool forwardFeedParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
             [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
             [but setEnabled:YES];
         } fail:^(NSError *error) {
@@ -391,7 +391,7 @@
         
         if (wlStatusM) {
             //活动动态
-            if (wlStatusM.type == 3) {
+            if (wlStatusM.type.integerValue == 3) {
                 NSArray *info = [link componentsSeparatedByString:@"#"];
                 NSString *sessionId = [info lastObject];
                 //活动页面，进行phoneGap页面加载

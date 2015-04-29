@@ -28,7 +28,7 @@ typedef void(^MessageTextHighBlcok)(CGFloat textHigh);
 
 - (instancetype)initWithFrame:(CGRect)frame andSuperView:(UIView *)superView withMessageBlock:(MessageCommeBlock)messageBlock;
 
-- (void)startCompile:(WLBasicTrends*)touser;
+- (void)startCompile:(IBaseUserM*)touser;
 
 -(void)dismissKeyBoard;
 

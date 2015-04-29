@@ -999,7 +999,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     // 1.第一条微博的ID
     WLStatusFrame *startf = [_datasource2 firstObject];
-    [LogInUser setUserFirststustid:@(startf.status.fid)];
+    [LogInUser setUserFirststustid:startf.status.fid];
 }
 
 - (WLStatusFrame*)dataFrameWith:(NSDictionary *)statusDic
@@ -1016,7 +1016,7 @@ static NSString *fridcellid = @"fridcellid";
             [forwardsM addObject:mode];
         }
     }
-    [statusM setForwardsArray:forwardsM];
+    [statusM setForwards:forwardsM];
     
     NSMutableArray *zanArrayM = [NSMutableArray array];
     if (zanarray.count) {
@@ -1025,7 +1025,7 @@ static NSString *fridcellid = @"fridcellid";
             [zanArrayM addObject:mode];
         }
     }
-    [statusM setZansArray:zanArrayM];
+    [statusM setZans:zanArrayM];
     
     NSArray *comments = [statusDic objectForKey:@"comments"];
     NSMutableArray *commentArrayM = [NSMutableArray array];
@@ -1035,7 +1035,7 @@ static NSString *fridcellid = @"fridcellid";
             [commentArrayM addObject:commMode];
         }
     }
-    [statusM setCommentsArray:commentArrayM];
+    [statusM setComments:commentArrayM];
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
     if (joinedusers.count) {
@@ -1051,7 +1051,7 @@ static NSString *fridcellid = @"fridcellid";
             [joinArrayM addObject:joMode];
         }
     }
-    [statusM setJoineduserArray:joinArrayM];
+    [statusM setJoinedusers:joinArrayM];
     
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
@@ -1062,8 +1062,8 @@ static NSString *fridcellid = @"fridcellid";
 - (void)pushCommentInfoVC:(NSIndexPath*)indexPath
 {
     WLStatusFrame *statusF = _datasource2[indexPath.row];
-    
-    if (statusF.status.type==2 ||statusF.status.type==4 || statusF.status.type==5||statusF.status.type==6||statusF.status.type==12) return;
+    NSInteger type = statusF.status.type.integerValue;
+    if (type==2 ||type==4 || type==5||type==6||type==12) return;
     
     CommentInfoController *commentInfo = [[CommentInfoController alloc] init];
     [commentInfo setStatusM:statusF.status];
@@ -1126,7 +1126,7 @@ static NSString *fridcellid = @"fridcellid";
     [sheet bk_addButtonWithTitle:@"删除该条动态" handler:^{
         WLStatusFrame *statuF = _datasource2[indexPath.row];
         
-        [WLHttpTool deleteFeedParameterDic:@{@"fid":@(statuF.status.fid)} success:^(id JSON) {
+        [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
             
             [_datasource2 removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

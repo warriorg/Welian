@@ -1139,11 +1139,6 @@
 		A493C3421ADD14A60056BD52 /* FeedAndZanFrameM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D11ADD14A60056BD52 /* FeedAndZanFrameM.m */; };
 		A493C3431ADD14A60056BD52 /* FeedAndZanFrameM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D11ADD14A60056BD52 /* FeedAndZanFrameM.m */; };
 		A493C3441ADD14A60056BD52 /* FeedAndZanFrameM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D11ADD14A60056BD52 /* FeedAndZanFrameM.m */; };
-		A493C3451ADD14A60056BD52 /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */; };
-		A493C3461ADD14A60056BD52 /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */; };
-		A493C3471ADD14A60056BD52 /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */; };
-		A493C3481ADD14A60056BD52 /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */; };
-		A493C3491ADD14A60056BD52 /* FeedAndZanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */; };
 		A493C34A1ADD14A60056BD52 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D51ADD14A60056BD52 /* MessageFrameModel.m */; };
 		A493C34B1ADD14A60056BD52 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D51ADD14A60056BD52 /* MessageFrameModel.m */; };
 		A493C34C1ADD14A60056BD52 /* MessageFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2D51ADD14A60056BD52 /* MessageFrameModel.m */; };
@@ -5097,8 +5092,6 @@
 		A493C2CF1ADD14A60056BD52 /* CommentMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentMode.m; sourceTree = "<group>"; };
 		A493C2D01ADD14A60056BD52 /* FeedAndZanFrameM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAndZanFrameM.h; sourceTree = "<group>"; };
 		A493C2D11ADD14A60056BD52 /* FeedAndZanFrameM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAndZanFrameM.m; sourceTree = "<group>"; };
-		A493C2D21ADD14A60056BD52 /* FeedAndZanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAndZanModel.h; sourceTree = "<group>"; };
-		A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAndZanModel.m; sourceTree = "<group>"; };
 		A493C2D41ADD14A60056BD52 /* MessageFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrameModel.h; sourceTree = "<group>"; };
 		A493C2D51ADD14A60056BD52 /* MessageFrameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageFrameModel.m; sourceTree = "<group>"; };
 		A493C2D61ADD14A60056BD52 /* MessageHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageHomeModel.h; sourceTree = "<group>"; };
@@ -7527,8 +7520,6 @@
 				A493C2CF1ADD14A60056BD52 /* CommentMode.m */,
 				A493C2D01ADD14A60056BD52 /* FeedAndZanFrameM.h */,
 				A493C2D11ADD14A60056BD52 /* FeedAndZanFrameM.m */,
-				A493C2D21ADD14A60056BD52 /* FeedAndZanModel.h */,
-				A493C2D31ADD14A60056BD52 /* FeedAndZanModel.m */,
 				A493C2D41ADD14A60056BD52 /* MessageFrameModel.h */,
 				A493C2D51ADD14A60056BD52 /* MessageFrameModel.m */,
 				A493C2D61ADD14A60056BD52 /* MessageHomeModel.h */,
@@ -12771,7 +12762,6 @@
 				A49C7BDA1A70D42700F2AEC5 /* M80AttributedLabelURL.m in Sources */,
 				A49C7BDB1A70D42700F2AEC5 /* SDWebImageDecoder.m in Sources */,
 				A4C771011A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
-				A493C3491ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A49C7BDC1A70D42700F2AEC5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F51A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				A49C7BDF1A70D42700F2AEC5 /* AFNetworkReachabilityManager.m in Sources */,
@@ -13277,7 +13267,6 @@
 				F53DC2AC1A49192600F5F712 /* M80AttributedLabelURL.m in Sources */,
 				F53DC2AD1A49192600F5F712 /* SDWebImageDecoder.m in Sources */,
 				A4C771001A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
-				A493C3471ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A4C142EE1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F41A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				F53DC2AF1A49192600F5F712 /* AFNetworkReachabilityManager.m in Sources */,
@@ -13782,7 +13771,6 @@
 				F5D04C5F1AC104A6004DE412 /* SZTextView.m in Sources */,
 				A4C140921A4BEA8500C9BAB5 /* WLMessage.m in Sources */,
 				F56649891A2AFD56008A5830 /* M80AttributedLabelURL.m in Sources */,
-				A493C3451ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				F566498A1A2AFD56008A5830 /* SDWebImageDecoder.m in Sources */,
 				A4C770FE1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
 				F566498C1A2AFD56008A5830 /* AFNetworkReachabilityManager.m in Sources */,
@@ -14289,7 +14277,6 @@
 				F5664C431A2AFDD5008A5830 /* M80AttributedLabelURL.m in Sources */,
 				F5664C441A2AFDD5008A5830 /* SDWebImageDecoder.m in Sources */,
 				A4C770FF1A80E3AB005ABC7F /* ProjectUserListViewController.m in Sources */,
-				A493C3461ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A4C142ED1A4BF5A900C9BAB5 /* WLMessageBubbleView.m in Sources */,
 				A4C770F31A80A5B3005ABC7F /* IPhotoInfo.m in Sources */,
 				F5664C461A2AFDD5008A5830 /* AFNetworkReachabilityManager.m in Sources */,
@@ -14849,7 +14836,6 @@
 				A493C1C11ADD0A0C0056BD52 /* Constants.m in Sources */,
 				A493C2601ADD0BB00056BD52 /* UIView+Extend.m in Sources */,
 				A49235591ADE693A009E0B8C /* JKImagePickerController.m in Sources */,
-				A493C3481ADD14A60056BD52 /* FeedAndZanModel.m in Sources */,
 				A493C1C61ADD0A0C0056BD52 /* HttpTool.m in Sources */,
 				A493C2A11ADD0BB00056BD52 /* CardAlertView.m in Sources */,
 				F587964B1AE889EE002C414F /* UITextField+LeftRightView.m in Sources */,

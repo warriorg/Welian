@@ -173,7 +173,7 @@
     keyboardIsShow=NO;
 }
 
-- (void)startCompile:(WLBasicTrends *)touser
+- (void)startCompile:(IBaseUserM *)touser
 {
     if (!touser) {
         [_commentTextView setPlaceholder:@"写评论..."];

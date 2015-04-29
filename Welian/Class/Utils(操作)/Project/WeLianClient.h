@@ -79,7 +79,7 @@
 + (void)investWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //取用户认证信息
-+ (void)loadInvestorWithID:(NSString *)uid
++ (void)loadInvestorWithID:(NSNumber *)uid
                    Success:(SuccessBlock)success
                     Failed:(FailedBlock)failed;
 

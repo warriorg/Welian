@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "IFBase.h"
 
-@interface CardStatuModel : NSObject
+@interface CardStatuModel : IFBase
 
 @property (nonatomic, strong) NSNumber *cid;
  //3 活动，10项目，11 网页

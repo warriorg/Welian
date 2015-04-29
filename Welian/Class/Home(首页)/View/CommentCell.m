@@ -104,13 +104,13 @@
 
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
-    WLBasicTrends *user = _commentCellFrame.commentM.user;
+    IBaseUserM *mode = _commentCellFrame.commentM.user;
     
-    IBaseUserM *mode = [[IBaseUserM alloc] init];
-    
-    [mode setUid:user.uid];
-    [mode setAvatar:user.avatar];
-    [mode setName:user.name];
+//    IBaseUserM *mode = [[IBaseUserM alloc] init];
+//    
+//    [mode setUid:user.uid];
+//    [mode setAvatar:user.avatar];
+//    [mode setName:user.name];
 //    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //    [self.commentVC.navigationController pushViewController:userinfoVC animated:YES];
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
@@ -121,7 +121,7 @@
 {
     _commentCellFrame = commentCellFrame;
     CommentMode *commentM = commentCellFrame.commentM;
-    WLBasicTrends *user = commentCellFrame.commentM.user;
+    IBaseUserM *user = commentCellFrame.commentM.user;
     // 1.头像
     _iconView.frame = commentCellFrame.iconViewF;
     [_iconView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];

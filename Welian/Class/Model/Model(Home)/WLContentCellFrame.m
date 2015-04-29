@@ -43,11 +43,11 @@
 - (void)setStatus:(WLStatusM *)status
 {
     _status = status;
-    
+    NSInteger type = status.type.integerValue;
     // 1.内容
     CGFloat contentX = 10;
     CGFloat contentY = 0;
-    if (status.type== 6||status.type==5||status.type== 12||status.type==4) {
+    if (type== 6||type==5||type== 12||type==4) {
         _contentLabelF = CGRectMake(contentX, contentY, 0, 0);
         _photoListViewF = _contentLabelF;
     }else{
@@ -101,14 +101,14 @@
     // 活动和项目高度
     if (status.card) {
         NSInteger yy = 10;
-        if (status.type== 6||status.type==5||status.type== 12||status.type==4) {
+        if (type== 6||type==5||type== 12||type==4) {
             yy = 0;
         }
         _cellCardF = CGRectMake(contentX, _cellHeight+yy, _cellWidth - IWCellBorderWidth, 56);
         _cellHeight += 56+yy;
     }
     
-    if (!(status.type==4||status.type==5||status.type==6||status.type==12)) {
+    if (!(type==4||type==5||type==6||type==12)) {
         CGFloat dockY = _cellHeight+5;
         _dockFrame = CGRectMake(contentX, dockY, _cellWidth - IWCellBorderWidth, IWStatusDockH);
         _cellHeight = CGRectGetMaxY(_dockFrame);

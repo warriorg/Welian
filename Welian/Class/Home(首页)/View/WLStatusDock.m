@@ -106,7 +106,6 @@
     }else if (status.sendType ==2){
         [_sendAgainBtn setEnabled:NO];
     }
-    
     // 1.设置赞数
     [self setBtn:_attitudeBtn title:@"赞" count:status.zan index:0];
     
@@ -116,7 +115,7 @@
     // 3.设置转发数
     [self setBtn:_repostBtn title:@"转推" count:status.forwardcount index:2];
     
-    if (status.iszan==1) { // 已赞
+    if (status.iszan.boolValue) { // 已赞
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good_pre"] forState:UIControlStateNormal];
     }else {
         [_attitudeBtn setImage:[UIImage imageNamed:@"me_mywriten_good"] forState:UIControlStateNormal];
@@ -127,14 +126,14 @@
         [_repostBtn setEnabled:NO];
     }else{
         [_repostBtn setEnabled:YES];
-        if (status.isforward == 1) { // 已推
+        if (status.isforward.boolValue) { // 已推
             [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repea_pre"] forState:UIControlStateNormal];
         }else{
             [_repostBtn setImage:[UIImage imageNamed:@"me_mywriten_repeat"] forState:UIControlStateNormal];
         }
     }
     // 推荐好友 不进详情
-    if (status.type==2) {
+    if (status.type.integerValue==2) {
         [_commentBtn setEnabled:NO];
     }else{
         [_commentBtn setEnabled:YES];
@@ -152,7 +151,7 @@
  *  @param title 个数为0时 显示的字符串
  *  @param count 按钮显示的个数
  */
-- (void)setBtn:(UIButton *)btn title:(NSString *)title count:(int)count index:(int)index
+- (void)setBtn:(UIButton *)btn title:(NSString *)title count:(NSNumber *)count index:(int)index
 {
     // 0.设置按钮的frame
     CGFloat btnW = (_contentFrame.dockFrame.size.width*0.6)/ 3;
@@ -161,12 +160,12 @@
     btn.frame = CGRectMake(btnX, 0, btnW, btnH);
     
     // 1.得出title的内容
-    if (count >= 10000) {
-        NSString *old = [NSString stringWithFormat:@"%.1f万", count/10000.0];
+    if (count.integerValue >= 10000) {
+        NSString *old = [NSString stringWithFormat:@"%.1f万", count.integerValue/10000.0];
         // 将.0换成空串
         title = [old stringByReplacingOccurrencesOfString:@".0" withString:@""];
-    } else if (count != 0) {
-        title = [NSString stringWithFormat:@"%d", count];
+    } else if (count.integerValue != 0) {
+        title = [NSString stringWithFormat:@"%ld", (long)count.integerValue];
     }
     
     // 2.设置按钮文字
