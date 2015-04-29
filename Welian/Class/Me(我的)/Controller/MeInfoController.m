@@ -194,114 +194,105 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (indexPath.section==0) {
         [self choosePicture];
-        
-    }else if(indexPath.section ==1){
-
-        if (indexPath.row==0) {
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                [WLHttpTool saveProfileParameterDic:@{@"name":userInfo} success:^(id JSON) {
-
-                    [LogInUser setUserName:userInfo];
-                    
+    }else if(indexPath.section==2&&indexPath.row==0){
+        UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+        if (mode.checked.boolValue) {
+            [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
+                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
+                phoneVC.phoneChangeBlcok = ^{
+                    [WLHUDView showSuccessHUD:@"修改成功"];
                     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                } fail:^(NSError *error) {
-                    
-                }];
-                
-            } withType:IWVerifiedTypeName];
-            NameController *inffVC = (NameController*)controller;
-            [inffVC setUserInfoStr:mode.name];
-        }else if (indexPath.row ==1){
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                
-                [WLHttpTool saveProfileParameterDic:@{@"company":userInfo} success:^(id JSON) {
-                    [LogInUser setUsercompany:userInfo];
-                    
+                };
+                [self.navigationController pushViewController:phoneVC animated:YES];
+            }];
+        }else{
+            [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
+                PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
+                phoneVC.phoneChangeBlcok = ^{
+                    [WLHUDView showSuccessHUD:@"认证成功"];
                     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                } fail:^(NSError *error) {
-                    
-                }];
-                
-            } withType:IWVerifiedTypeCompany];
-            NameController *inffVC = (NameController*)controller;
-            [inffVC setUserInfoStr:mode.company];
-        }else if (indexPath.row ==2){
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                [WLHttpTool saveProfileParameterDic:@{@"position":userInfo} success:^(id JSON) {
-                    [LogInUser setUserPosition:userInfo];
-                    
-                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
-                } fail:^(NSError *error) {
-                    
-                }];
-                
-            } withType:IWVerifiedTypeJob];
-            NameController *inffVC = (NameController*)controller;
-            [inffVC setUserInfoStr:mode.position];
+                };
+                [self.navigationController pushViewController:phoneVC animated:YES];
+            }];
         }
         
-    }else if (indexPath.section ==2){
-        if (indexPath.row==0) {
-            UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-            if (mode.checked.boolValue) {
-                [sheet bk_addButtonWithTitle:@"修改手机号" handler:^{
-                    PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:2];
-                    phoneVC.phoneChangeBlcok = ^{
-                        [WLHUDView showSuccessHUD:@"修改成功"];
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    };
-                    [self.navigationController pushViewController:phoneVC animated:YES];
-                }];
-            }else{
-                [sheet bk_addButtonWithTitle:@"认证手机号" handler:^{
-                    PhoneChangeVC *phoneVC = [[PhoneChangeVC alloc] initWithPhoneType:1];
-                    phoneVC.phoneChangeBlcok = ^{
-                        [WLHUDView showSuccessHUD:@"认证成功"];
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    };
-                    [self.navigationController pushViewController:phoneVC animated:YES];
-                }];
+        [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+        [sheet showInView:self.view];
+    }else if (indexPath.section==3){
+        controller = [[WorksListController alloc] init];
+    }else{
+        WEAKSELF
+        if(indexPath.section ==1){
+            if (indexPath.row==0) {
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WeLianClient saveUserInfoWithParameterDic:@{@"name":userInfo} Success:^(id resultInfo) {
+                        [LogInUser setUserName:userInfo];
+                        [weakSelf saveUserInfoAtIndexPath:indexPath];
+                    } Failed:^(NSError *error) {
+                        
+                    }];
+                    
+                } withType:IWVerifiedTypeName];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.name];
+            }else if (indexPath.row ==1){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    
+                    [WeLianClient saveUserInfoWithParameterDic:@{@"company":userInfo} Success:^(id resultInfo) {
+                        [LogInUser setUsercompany:userInfo];
+                        [weakSelf saveUserInfoAtIndexPath:indexPath];
+                    } Failed:^(NSError *error) {
+                        
+                    }];
+                    
+                } withType:IWVerifiedTypeCompany];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.company];
+            }else if (indexPath.row ==2){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WeLianClient saveUserInfoWithParameterDic:@{@"company":userInfo} Success:^(id resultInfo) {
+                        [LogInUser setUserPosition:userInfo];
+                        [weakSelf saveUserInfoAtIndexPath:indexPath];
+                    } Failed:^(NSError *error) {
+                        
+                    }];
+                    
+                } withType:IWVerifiedTypeJob];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.position];
             }
             
-            [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
-            [sheet showInView:self.view];
-            
-        }else if (indexPath.row ==1){
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                [WLHttpTool saveProfileParameterDic:@{@"email":userInfo} success:^(id JSON) {
-                    [LogInUser setUserEmail:userInfo];
-                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                } fail:^(NSError *error) {
-                    
-                }];
+        }else if (indexPath.section ==2){
+            if (indexPath.row ==1){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WeLianClient saveUserInfoWithParameterDic:@{@"email":userInfo} Success:^(id resultInfo) {
+                        [LogInUser setUserEmail:userInfo];
+                        [weakSelf saveUserInfoAtIndexPath:indexPath];
+                    } Failed:^(NSError *error) {
+                        
+                    }];
+                } withType:IWVerifiedTypeMailbox];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.email];
+            } else if (indexPath.row==2){
+                LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
+                controller=locontroller;
+                [locontroller setLocationDelegate:self];
+                [locontroller setMeinfoVC:self];
                 
-            } withType:IWVerifiedTypeMailbox];
-            NameController *inffVC = (NameController*)controller;
-            [inffVC setUserInfoStr:mode.email];
-        } else if (indexPath.row==2){
-            LocationprovinceController *locontroller = [[LocationprovinceController alloc] initWithStyle:UITableViewStyleGrouped];
-            controller=locontroller;
-            [locontroller setLocationDelegate:self];
-            [locontroller setMeinfoVC:self];
-            
-        } else if (indexPath.row==3){
-            controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
-                [WLHttpTool saveProfileParameterDic:@{@"address":userInfo} success:^(id JSON) {
-                    
-                    [LogInUser setUserAddress:userInfo];
-                    
-                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                } fail:^(NSError *error) {
-                    
-                }];
-            } withType:IWVerifiedTypeAddress];
-            NameController *inffVC = (NameController*)controller;
-            [inffVC setUserInfoStr:mode.address];
+            } else if (indexPath.row==3){
+                controller = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
+                    [WeLianClient saveUserInfoWithParameterDic:@{@"address":userInfo} Success:^(id resultInfo) {
+                        [LogInUser setUserAddress:userInfo];
+                        [weakSelf saveUserInfoAtIndexPath:indexPath];
+                    } Failed:^(NSError *error) {
+                        
+                    }];
+                } withType:IWVerifiedTypeAddress];
+                NameController *inffVC = (NameController*)controller;
+                [inffVC setUserInfoStr:mode.address];
+            }
         }
-
-    }else if (indexPath.section ==3){
-            controller = [[WorksListController alloc] init];
     }
     if (controller) {
         [controller setTitle:dict[@"title"]];
@@ -309,18 +300,24 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     }
 }
 
+// 修改基本信息
+- (void)saveUserInfoAtIndexPath:(NSIndexPath *)indexPath
+{
+    [WLHUDView showSuccessHUD:@"修改成功"];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+// 修改城市
 - (void)locationProvinController:(LocationprovinceController *)locationVC withLocationDic:(NSDictionary *)locationDic
 {
-    [LogInUser setUserProvincename:locationDic[@"provname"]];
-    [LogInUser setUserCityname:locationDic[@"cityname"]];
-    [LogInUser setUserCityid:locationDic[@"cityid"]];
-    [LogInUser setUserProvinceid:locationDic[@"provid"]];
-
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-    
-    [WLHttpTool saveProfileParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} success:^(id JSON) {
-        
-    } fail:^(NSError *error) {
+    WEAKSELF
+    [WeLianClient saveUserInfoWithParameterDic:@{@"cityid":@([locationDic[@"cityid"] integerValue])} Success:^(id resultInfo) {
+        [LogInUser setUserProvincename:locationDic[@"provname"]];
+        [LogInUser setUserCityname:locationDic[@"cityname"]];
+        [LogInUser setUserCityid:locationDic[@"cityid"]];
+        [LogInUser setUserProvinceid:locationDic[@"provid"]];
+        [weakSelf saveUserInfoAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:2]];
+    } Failed:^(NSError *error) {
         
     }];
     

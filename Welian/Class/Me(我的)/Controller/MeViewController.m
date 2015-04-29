@@ -142,10 +142,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     if (offsetY > kHeaderViewHeight/2) {
         CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
     }
 }
 
@@ -164,19 +162,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     //设置右侧按钮
     [self.navHeaderView setRightBtnTitle:nil RightBtnImage:[UIImage imageNamed:@"navbar_set"]];
     
-//    //添加好友
-//    UIBarButtonItem *leftBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_add_friend"]
-//                                                                    style:UIBarButtonItemStylePlain
-//                                                                   target:self
-//                                                                   action:@selector(addFriendBtnClick)];
-//    self.navigationItem.leftBarButtonItem = leftBtnItem;
-//
-//    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_set"]
-//                                                                    style:UIBarButtonItemStylePlain
-//                                                                   target:self
-//                                                                   action:@selector(setBtnClick)];
-//    self.navigationItem.rightBarButtonItem = rightBtnItem;
-    
     // 2.读取plist文件的内容
     [self loadPlist];
     
@@ -189,10 +174,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [self.view addSubview:tableView];
     [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
-//    [tableView setDebug:YES];
     
     //注册cell
-    //    [self.tableView registerNib:[UINib nibWithNibName:@"MeinfoCell" bundle:nil] forCellReuseIdentifier:meinfocellid];
     [self.tableView registerNib:[UINib nibWithNibName:@"BadgeBaseCell" bundle:nil] forCellReuseIdentifier:BadgeBaseCellid];
     
     
@@ -261,16 +244,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-//    if (indexPath.section==0) {
-//        MeinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:meinfocellid];
-//        [cell.MyNameLabel setText:mode.name];
-//        [cell.deleLabel setText:[NSString stringWithFormat:@"%@    %@",mode.position,mode.company]];
-//        [cell.headPicImage sd_setImageWithURL:[NSURL URLWithString:mode.avatar] placeholderImage:[UIImage imageNamed:@"user_small.png"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
-//        return cell;
-//    }else{
-//
-//    }
-//    (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM});
     
     BadgeBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgeBaseCellid];
     // 1.取出这行对应的字典数据
@@ -417,23 +390,10 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
     }
-//    if (indexPath.section==0) {
-//        controller = [[MeInfoController alloc] initWithStyle:UITableViewStyleGrouped];
-//        [controller setTitle:@"个人信息"];
-//    }else if (indexPath.section==1){
-//        
-//    }else if (indexPath.section==2){
-//        
-//    }else if (indexPath.section == 3){
-//        controller = [[SettingController alloc] initWithStyle:UITableViewStyleGrouped];
-//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (indexPath.section==0) {
-    //        return 60;
-    //    }
     return KTableRowH;
 }
 
@@ -527,9 +487,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];
-    
-    // 创业者
-    //        NSDictionary *startup = [dataDic objectForKey:@"startup"];
     
     // 工作经历列表
     NSArray *usercompany = [dataDic objectForKey:@"usercompany"];

@@ -87,6 +87,7 @@
     UITextField *pwdTF = [UITextField textFieldWitFrame:Rect(25, phoneTF.bottom + 10, SuperSize.width-50, TextFieldHeight) placeholder:@"密码" leftViewImageName:@"login_password" andRightViewImageName:nil];
     pwdTF.secureTextEntry = YES;
     pwdTF.returnKeyType = UIReturnKeyGo;
+    [pwdTF setClearButtonMode:UITextFieldViewModeWhileEditing];
     pwdTF.keyboardType = UIKeyboardTypeDefault;
     pwdTF.delegate = self; 
     [self.view addSubview:pwdTF];
