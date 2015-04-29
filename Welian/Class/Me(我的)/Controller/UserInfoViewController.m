@@ -1159,6 +1159,7 @@ static NSString *fridcellid = @"fridcellid";
                 [alert bk_addButtonWithTitle:@"取消" handler:nil];
                 [alert bk_addButtonWithTitle:@"发送" handler:^{
                     //发送好友请求
+                    [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
                     [WeLianClient requestAddFriendWithID:_baseUserModel.uid
                                                  Message:[alert textFieldAtIndex:0].text
                                                  Success:^(id resultInfo) {
@@ -1166,12 +1167,16 @@ static NSString *fridcellid = @"fridcellid";
                                                      self.operateType = @(3);
                                                      _userInfoView.operateType = _operateType;
                                                      
-                                                     [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                                                     [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                                      if (_addFriendBlock) {
                                                          _addFriendBlock();
                                                      }
                                                  } Failed:^(NSError *error) {
-                                                     
+                                                     if (error) {
+                                                         [WLHUDView showErrorHUD:error.description];
+                                                     }else{
+                                                         [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                                     }
                                                  }];
                     
 //                    [WLHttpTool requestFriendParameterDic:@{@"fid":_baseUserModel.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
@@ -1281,11 +1286,27 @@ static NSString *fridcellid = @"fridcellid";
     //取sqlite数据库用户信息
     [self updateLocalSqlUserInfo];
     if (_baseUserModel.uid) {
-        [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
-            [self getUserInfoWith:JSON];
-        } fail:^(NSError *error) {
+        //获取用户详细信息
+        [WeLianClient getUserDetailInfoWithUid:_baseUserModel.uid Success:^(id resultInfo) {
+            DLog(@"userDetailInfo----%@",resultInfo);
+            WEAKSELF
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [weakSelf getUserInfoWith:resultInfo];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //检查
+                    [weakSelf checkNoteInfoLoad:YES];
+                });
+            });
+            
+        } Failed:^(NSError *error) {
             _wlNoteInfoView.loadFailed = YES;
         }];
+        
+//        [WLHttpTool loadUserInfoParameterDic:@{@"uid":_baseUserModel.uid} success:^(id JSON) {
+//            [self getUserInfoWith:JSON];
+//        } fail:^(NSError *error) {
+//            _wlNoteInfoView.loadFailed = YES;
+//        }];
     }
 }
 
@@ -1297,6 +1318,8 @@ static NSString *fridcellid = @"fridcellid";
     if (item) {
         [self getUserInfoWith:item.itemObject];
     }
+    //检查
+    [self checkNoteInfoLoad:YES];
 }
 
 - (void)getUserInfoWith:(NSDictionary *)dataDic
@@ -1389,9 +1412,6 @@ static NSString *fridcellid = @"fridcellid";
         [infos addObject:@{@"icon":@"me_lvli",@"title":@"履历",@"type":@(2),@"info":lvliArray}];
     }
     self.datasource1 = infos;
-    
-    //检查
-    [self checkNoteInfoLoad:YES];
 }
 
 @end

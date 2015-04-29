@@ -516,7 +516,8 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (void)initUserInfo
 {
-    [WeLianClient getWithUid:@(0) Success:^(id resultInfo) {
+    //获取用户详细信息
+    [WeLianClient getUserDetailInfoWithUid:@(0) Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);
         WEAKSELF
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

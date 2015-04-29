@@ -79,18 +79,19 @@
                                       }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
                                           //系统级错误，直接打印错误信息
                                           DLog(@"Result System ErroInfo-- : %@",result.errormsg);
-                                          SAFE_BLOCK_CALL(failed, result.error);
+                                          SAFE_BLOCK_CALL(failed, nil);
                                       }else if(result.state.integerValue>=3000){
                                           //打印错误信息 ，返回操作
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
                                           SAFE_BLOCK_CALL(success, result.data);
                                       }else{
                                           DLog(@"Result ErroInfo-- : %@",result.errormsg);
-                                            SAFE_BLOCK_CALL(failed, result.error);
+                                          SAFE_BLOCK_CALL(failed, nil);
                                       }
                                   }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                   //打印错误信息
+                                  SAFE_BLOCK_CALL(failed, nil);
                                   DLog(@"SystemErroInfo-- : %@",error.description);
                               }];
 }
@@ -310,7 +311,7 @@
 }
 
 // 取用户详细
-+ (void)getWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed
++ (void)getUserDetailInfoWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
     NSDictionary *params = @{@"uid":uid};
     [self reqestPostWithParams:params Path:kUserUrl(@"get") Success:^(id resultInfo) {
@@ -668,7 +669,8 @@
                           Path:kFriendList2Path
                        Success:^(id resultInfo) {
                            DLog(@"getFriend2List ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           IFriend2Model *result = [IFriend2Model objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -744,6 +746,40 @@
 
 
 #pragma mark - 项目 project 模块
+//取项目列表
++ (void)getProjectListWithPage:(NSNumber *)page
+                          Size:(NSNumber *)size
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"page":page,@"size":size};
+    [self reqestPostWithParams:params
+                          Path:kProjectListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveProject ---- %@",resultInfo);
+                           NSArray *result = [IProjectInfo objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取项目详情
++ (void)getProjectDetailInfoWithID:(NSNumber *)pid
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"pid":pid};
+    [self reqestPostWithParams:params
+                          Path:kProjectDetailInfoPath
+                       Success:^(id resultInfo) {
+                           DLog(@"saveProject ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 //添加项目，修改
 + (void)saveProjectWithParameterDic:(NSDictionary *)params
                             Success:(SuccessBlock)success
@@ -1147,15 +1183,14 @@
                           Path:kActiveOrderPath
                        Success:^(id resultInfo) {
                            DLog(@"orderActive ---- %@",resultInfo);
-                           IActivityOrderResultModel *result = [IActivityOrderResultModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
 }
 
 //修改订单状态
-+ (void)updateActiveOrderStatusWithID:(NSNumber *)orderid
++ (void)updateActiveOrderStatusWithID:(NSString *)orderid
                               Success:(SuccessBlock)success
                                Failed:(FailedBlock)failed
 {
@@ -1196,7 +1231,8 @@
                           Path:kActiveBuyedTicketsPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveBuyedTickets ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IActivityTicket objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

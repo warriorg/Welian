@@ -184,6 +184,7 @@ static NSString *cellIdentifier = @"frnewCellid";
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
+            [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
             [WeLianClient requestAddFriendWithID:newFriendUser.uid
                                          Message:[alert textFieldAtIndex:0].text
                                          Success:^(id resultInfo) {
@@ -193,8 +194,13 @@ static NSString *cellIdentifier = @"frnewCellid";
                                              [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
                                              //刷新列表
                                              [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                             [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                          } Failed:^(NSError *error) {
-                                             
+                                             if (error) {
+                                                 [WLHUDView showErrorHUD:error.description];
+                                             }else{
+                                                 [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                             }
                                          }];
 //            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
 //                //发送邀请成功，修改状态，刷新列表

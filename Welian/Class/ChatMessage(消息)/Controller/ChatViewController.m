@@ -1037,12 +1037,17 @@
             NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
             //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
             //发送好友请求
+            [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
             [WeLianClient requestAddFriendWithID:self.friendUser.uid
                                          Message:msg
                                          Success:^(id resultInfo) {
                                              [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                          } Failed:^(NSError *error) {
-                                             
+                                             if (error) {
+                                                 [WLHUDView showErrorHUD:error.description];
+                                             }else{
+                                                 [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                             }
                                          }];
 //            [WLHttpTool requestFriendParameterDic:@{@"fid":self.friendUser.uid,@"message":msg} success:^(id JSON) {
 //                [WLHUDView showSuccessHUD:@"好友请求已发送"];

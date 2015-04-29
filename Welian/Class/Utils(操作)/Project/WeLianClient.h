@@ -70,10 +70,8 @@
                     Success:(SuccessBlock)success
                      Failed:(FailedBlock)failed;
 
-
 // 取用户详细
-+ (void)getWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed;
-
++ (void)getUserDetailInfoWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //认证投资人
 + (void)investWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
@@ -218,6 +216,17 @@
 
 
 #pragma mark - 项目 project 模块
+//取项目列表
++ (void)getProjectListWithPage:(NSNumber *)page
+                          Size:(NSNumber *)size
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed;
+
+//取项目详情
++ (void)getProjectDetailInfoWithID:(NSNumber *)pid
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed;
+
 //添加项目，修改
 + (void)saveProjectWithParameterDic:(NSDictionary *)params
                             Success:(SuccessBlock)success
@@ -351,7 +360,7 @@
                    Failed:(FailedBlock)failed;
 
 //修改订单状态
-+ (void)updateActiveOrderStatusWithID:(NSNumber *)orderid
++ (void)updateActiveOrderStatusWithID:(NSString *)orderid
                               Success:(SuccessBlock)success
                                Failed:(FailedBlock)failed;
 

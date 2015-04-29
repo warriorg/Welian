@@ -892,7 +892,11 @@
                                          }
                                      }
                                  } Failed:^(NSError *error) {
-                                     [WLHUDView hiddenHud];
+                                     if (error) {
+                                         [WLHUDView showErrorHUD:error.description];
+                                     }else{
+                                         [WLHUDView showErrorHUD:@"获取票务信息失败，请重试！"];
+                                     }
                                      DLog(@"getActiveTickets error:%@",error.description);
                                  }];
     
@@ -921,21 +925,43 @@
 //查看我购买的票务信息
 - (void)lookMyTicketsInfo
 {
-    [WLHttpTool getBuyedActiveTicketsParameterDic:@{@"activeid":_activityInfo.activeid}
-                                          success:^(id JSON) {
-                                              if (JSON) {
-                                                  NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
-                                                  if (_activityTicketView.hidden) {
-                                                      _activityTicketView.isBuyTicket = NO;
-                                                      _activityTicketView.tickets = tickets;
-                                                      [_activityTicketView showInView];
-                                                  }else{
-                                                      [_activityTicketView dismiss];
-                                                  }
+    [WLHUDView showHUDWithStr:@"获取票务信息.." dim:NO];
+    [WeLianClient getActiveBuyedTicketsWithID:_activityInfo.activeid
+                                      Success:^(id resultInfo) {
+                                          [WLHUDView hiddenHud];
+                                          
+                                          if ([resultInfo count] > 0) {
+                                              if (_activityTicketView.hidden) {
+                                                  _activityTicketView.isBuyTicket = NO;
+                                                  _activityTicketView.tickets = resultInfo;
+                                                  [_activityTicketView showInView];
+                                              }else{
+                                                  [_activityTicketView dismiss];
                                               }
-                                          } fail:^(NSError *error) {
-                                              DLog(@"getActivityTicketParameterDic error:%@",error.description);
-                                          }];
+                                          }
+                                      } Failed:^(NSError *error) {
+                                          if (error) {
+                                              [WLHUDView showErrorHUD:error.description];
+                                          }else{
+                                              [WLHUDView showErrorHUD:@"获取票务信息失败，请重试！"];
+                                          }
+                                          DLog(@"getActiveBuyedTickets error:%@",error.description);
+                                      }];
+//    [WLHttpTool getBuyedActiveTicketsParameterDic:@{@"activeid":_activityInfo.activeid}
+//                                          success:^(id JSON) {
+//                                              if (JSON) {
+//                                                  NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
+//                                                  if (_activityTicketView.hidden) {
+//                                                      _activityTicketView.isBuyTicket = NO;
+//                                                      _activityTicketView.tickets = tickets;
+//                                                      [_activityTicketView showInView];
+//                                                  }else{
+//                                                      [_activityTicketView dismiss];
+//                                                  }
+//                                              }
+//                                          } fail:^(NSError *error) {
+//                                              DLog(@"getActivityTicketParameterDic error:%@",error.description);
+//                                          }];
 }
 
 //更新页面信息
@@ -1039,8 +1065,11 @@
                                             [WLHUDView showErrorHUD:@"获取失败，该活动不存在！"];
                                         }
                                     } Failed:^(NSError *error) {
-                                        [WLHUDView hiddenHud];
-                                        [WLHUDView showErrorHUD:@"无法连接网络！"];
+                                        if (error) {
+                                            [WLHUDView showErrorHUD:error.description];
+                                        }else{
+                                            [WLHUDView showErrorHUD:@"网络无法连接，请重试！"];
+                                        }
                                         DLog(@"getActivityDetailParameterDic error:%@",error.description);
                                     }];
     
@@ -1085,13 +1114,27 @@
 //取消报名
 - (void)cancelActivityJoined
 {
-    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityId}
-                                         success:^(id JSON) {
-                                             //更页面
-                                             [self updateJoinedInfo:NO];
-                                         } fail:^(NSError *error) {
-                                             DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
-                                         }];
+    [WLHUDView showHUDWithStr:@"取消中..." dim:NO];
+    [WeLianClient deleteActiveRecordWithID:_activityId
+                                   Success:^(id resultInfo) {
+                                       [WLHUDView hiddenHud];
+                                       //更页面
+                                       [self updateJoinedInfo:NO];
+                                   } Failed:^(NSError *error) {
+                                       if (error) {
+                                           [WLHUDView showErrorHUD:error.description];
+                                       }else{
+                                           [WLHUDView showErrorHUD:@"取消报名失败，请重试！"];
+                                       }
+                                       DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
+                                   }];
+//    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityId}
+//                                         success:^(id JSON) {
+//                                             //更页面
+//                                             [self updateJoinedInfo:NO];
+//                                         } fail:^(NSError *error) {
+//                                             DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
+//                                         }];
 }
 
 //创建活动报名   type: 0:免费 1：收费
@@ -1110,21 +1153,18 @@
                             Success:^(id resultInfo) {
                                 [WLHUDView hiddenHud];
                                 
-//                                if ([JSON isKindOfClass:[NSDictionary class]]) {
-//                                    if ([JSON[@"state"] integerValue] == -1) {
-//                                        [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
-//                                        return;
-//                                    }
-//                                }
-//                                if (type != 0) {
-//                                    //进入订单页面
-//                                    ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
-//                                    [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
-//                                }else{
-//                                    [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
-//                                    //更页面
-//                                    [self updateJoinedInfo:YES];
-//                                }
+                                if (type != 0) {
+                                    //付费
+                                    IActivityOrderResultModel *result = [IActivityOrderResultModel objectWithDict:resultInfo];
+                                    //进入订单页面
+                                    ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:result];
+                                    [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
+                                }else{
+                                    //免费
+                                    [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
+                                    //更页面
+                                    [self updateJoinedInfo:YES];
+                                }
                             } Failed:^(NSError *error) {
                                 if (error) {
                                     [WLHUDView showErrorHUD:error.description];
