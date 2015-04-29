@@ -382,8 +382,8 @@ static NSString *fridcellid = @"fridcellid";
         case 2:
         {
             FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
-            UserInfoModel *modeIM = _datasource3[indexPath.row];
-            [cell setUserMode:(IBaseUserM *)modeIM];
+            IBaseUserM *modeIM = _datasource3[indexPath.row];
+            cell.userMode = modeIM;
             cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
             cell.layer.borderWidths = @"{0,0,0.5,0}";
             return cell;
@@ -743,74 +743,141 @@ static NSString *fridcellid = @"fridcellid";
 // 删除好友
 - (void)deleteFriend
 {
-    [WLHttpTool deleteFriendParameterDic:@{@"fid":_baseUserModel.uid} success:^(id JSON) {
-        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-        //更新数据库好友的数量
-        loginUser.friendcount = @(loginUser.friendcount.integerValue - 1);
-        
-        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
-        //数据库删除当前好友
-        //        [loginUser removeRsMyFriendsObject:friendUser];
-        //更新设置为不是我的好友
-        [friendUser updateIsNotMyFriend];
-        //聊天状态发送改变
-        [friendUser updateIsChatStatus:NO];
-        //更新未读消息数量
-        [friendUser updateUnReadMessageNumber:@(0)];
-        
-        
-        //删除新的好友本地数据库
-        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_baseUserModel.uid];
-        if (newFuser) {
-            //删除好友请求数据
-            //更新好友请求列表数据为 添加
-            [newFuser updateOperateType:0];
-        }
-        //更新本地添加好友数据库
-        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_baseUserModel.uid];
-        if (needAddUser) {
-            //更新未好友的好友
-            [needAddUser updateFriendShip:2];
-        }
-        
-        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
-        
-        //聊天状态发送改变
-        [KNSNotification postNotificationName:kChatUserChanged object:nil];
-        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
-        [self.navigationController popViewControllerAnimated:YES];
-        [WLHUDView showSuccessHUD:@"删除成功！"];
-    } fail:^(NSError *error) {
-        
-    }];
+    [WLHUDView showHUDWithStr:@"删除中..." dim:YES];
+    [WeLianClient deleteFriendWithID:_baseUserModel.uid
+                             Success:^(id resultInfo) {
+                                 [WLHUDView hiddenHud];
+                                 
+                                 LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+                                 //更新数据库好友的数量
+                                 loginUser.friendcount = @(loginUser.friendcount.integerValue - 1);
+                                 
+                                 MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
+                                 //数据库删除当前好友
+                                 //        [loginUser removeRsMyFriendsObject:friendUser];
+                                 //更新设置为不是我的好友
+                                 [friendUser updateIsNotMyFriend];
+                                 //聊天状态发送改变
+                                 [friendUser updateIsChatStatus:NO];
+                                 //更新未读消息数量
+                                 [friendUser updateUnReadMessageNumber:@(0)];
+                                 
+                                 
+                                 //删除新的好友本地数据库
+                                 NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_baseUserModel.uid];
+                                 if (newFuser) {
+                                     //删除好友请求数据
+                                     //更新好友请求列表数据为 添加
+                                     [newFuser updateOperateType:0];
+                                 }
+                                 //更新本地添加好友数据库
+                                 NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_baseUserModel.uid];
+                                 if (needAddUser) {
+                                     //更新未好友的好友
+                                     [needAddUser updateFriendShip:2];
+                                 }
+                                 
+                                 [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+                                 
+                                 //聊天状态发送改变
+                                 [KNSNotification postNotificationName:kChatUserChanged object:nil];
+                                 [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+                                 [self.navigationController popViewControllerAnimated:YES];
+                                 [WLHUDView showSuccessHUD:@"删除成功！"];
+                             } Failed:^(NSError *error) {
+                                 [WLHUDView hiddenHud];
+                                 [WLHUDView showErrorHUD:@"删除失败，请重试！"];
+                             }];
+    
+//    [WLHttpTool deleteFriendParameterDic:@{@"fid":_baseUserModel.uid} success:^(id JSON) {
+//        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
+//        //更新数据库好友的数量
+//        loginUser.friendcount = @(loginUser.friendcount.integerValue - 1);
+//        
+//        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_baseUserModel.uid];
+//        //数据库删除当前好友
+//        //        [loginUser removeRsMyFriendsObject:friendUser];
+//        //更新设置为不是我的好友
+//        [friendUser updateIsNotMyFriend];
+//        //聊天状态发送改变
+//        [friendUser updateIsChatStatus:NO];
+//        //更新未读消息数量
+//        [friendUser updateUnReadMessageNumber:@(0)];
+//        
+//        
+//        //删除新的好友本地数据库
+//        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_baseUserModel.uid];
+//        if (newFuser) {
+//            //删除好友请求数据
+//            //更新好友请求列表数据为 添加
+//            [newFuser updateOperateType:0];
+//        }
+//        //更新本地添加好友数据库
+//        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_baseUserModel.uid];
+//        if (needAddUser) {
+//            //更新未好友的好友
+//            [needAddUser updateFriendShip:2];
+//        }
+//        
+//        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//        
+//        //聊天状态发送改变
+//        [KNSNotification postNotificationName:kChatUserChanged object:nil];
+//        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        [WLHUDView showSuccessHUD:@"删除成功！"];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 //获取共同好友列表
 - (void)getSameFriendData
 {
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    [WLHttpTool loadSameFriendParameterDic:@{@"uid":loginUser.uid,@"fid":_baseUserModel.uid,@"size":@(1000)} success:^(id JSON) {
-        [[WLDataDBTool sharedService] putObject:JSON withId:_baseUserModel.uid.stringValue intoTable:KWLSamefriendsTableName];
-        _datasource3 = [self getSameFriendsWith:JSON];
+    //本地数据库数据
+    YTKKeyValueItem *sameFitem = [[WLDataDBTool sharedService] getYTKKeyValueItemById:_baseUserModel.uid.stringValue fromTable:KWLSamefriendsTableName];
+    if (sameFitem) {
+        _datasource3 = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:sameFitem.itemObject]];
         //检查
         [self checkNoteInfoLoad:YES];
-    } fail:^(NSError *error) {
-        _wlNoteInfoView.loadFailed = YES;
-    }];
+    }
+    
+    [WeLianClient getSameFriendListWithID:_baseUserModel.uid
+                                     Page:@(1)
+                                     Size:@(1000)
+                                  Success:^(id resultInfo) {
+                                      //保存到Sqlite数据库
+                                      [[WLDataDBTool sharedService] putObject:resultInfo withId:_baseUserModel.uid.stringValue intoTable:KWLSamefriendsTableName];
+                                      
+                                      _datasource3 = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:resultInfo]];
+                                      //检查
+                                      [self checkNoteInfoLoad:YES];
+                                  } Failed:^(NSError *error) {
+                                      _wlNoteInfoView.loadFailed = YES;
+                                  }];
+    
+//    [WLHttpTool loadSameFriendParameterDic:@{@"uid":loginUser.uid,@"fid":_baseUserModel.uid,@"size":@(1000)} success:^(id JSON) {
+//        [[WLDataDBTool sharedService] putObject:JSON withId:_baseUserModel.uid.stringValue intoTable:KWLSamefriendsTableName];
+//        _datasource3 = [self getSameFriendsWith:JSON];
+//        //检查
+//        [self checkNoteInfoLoad:YES];
+//    } fail:^(NSError *error) {
+//        _wlNoteInfoView.loadFailed = YES;
+//    }];
 }
 
 //获取共同好友字典
-- (NSMutableArray *)getSameFriendsWith:(NSDictionary *)friendsDic
-{
-    NSArray *sameFA = [friendsDic objectForKey:@"samefriends"];
-    NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
-    for (NSDictionary *infoD in sameFA) {
-        FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
-        [fmode setKeyValues:infoD];
-        [sameFrindM addObject:fmode];
-    }
-    return sameFrindM;
-}
+//- (NSMutableArray *)getSameFriendsWith:(NSDictionary *)friendsDic
+//{
+//    NSArray *sameFA = [friendsDic objectForKey:@"samefriends"];
+//    NSMutableArray *sameFrindM = [NSMutableArray arrayWithCapacity:sameFA.count];
+//    for (NSDictionary *infoD in sameFA) {
+//        FriendsUserModel *fmode = [[FriendsUserModel alloc] init];
+//        [fmode setKeyValues:infoD];
+//        [sameFrindM addObject:fmode];
+//    }
+//    return sameFrindM;
+//}
 
 //获取用户最新动态
 - (void)getUserFeedsData
@@ -1093,18 +1160,33 @@ static NSString *fridcellid = @"fridcellid";
                 [alert bk_addButtonWithTitle:@"取消" handler:nil];
                 [alert bk_addButtonWithTitle:@"发送" handler:^{
                     //发送好友请求
-                    [WLHttpTool requestFriendParameterDic:@{@"fid":_baseUserModel.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                        //设置成待验证的
-                        self.operateType = @(3);
-                        _userInfoView.operateType = _operateType;
-                        
-                        [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
-                        if (_addFriendBlock) {
-                            _addFriendBlock();
-                        }
-                    } fail:^(NSError *error) {
-                        
-                    }];
+                    [WeLianClient requestAddFriendWithID:_baseUserModel.uid
+                                                 Message:[alert textFieldAtIndex:0].text
+                                                 Success:^(id resultInfo) {
+                                                     //设置成待验证的
+                                                     self.operateType = @(3);
+                                                     _userInfoView.operateType = _operateType;
+                                                     
+                                                     [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                                                     if (_addFriendBlock) {
+                                                         _addFriendBlock();
+                                                     }
+                                                 } Failed:^(NSError *error) {
+                                                     
+                                                 }];
+                    
+//                    [WLHttpTool requestFriendParameterDic:@{@"fid":_baseUserModel.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                        //设置成待验证的
+//                        self.operateType = @(3);
+//                        _userInfoView.operateType = _operateType;
+//                        
+//                        [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+//                        if (_addFriendBlock) {
+//                            _addFriendBlock();
+//                        }
+//                    } fail:^(NSError *error) {
+//                        
+//                    }];
                 }];
                 [alert show];
             }
@@ -1220,12 +1302,12 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)getUserInfoWith:(NSDictionary *)dataDic
 {
+    //保存到sqlite数据库
+    [[WLDataDBTool sharedService] putObject:dataDic withId:_baseUserModel.uid.stringValue intoTable:KWLUserInfoTableName];
+    
     // 详细信息
     NSDictionary *profile = [dataDic objectForKey:@"profile"];
     IBaseUserM *profileM = [IBaseUserM objectWithKeyValues:profile];
-    
-    //保存到sqlite数据库
-    [[WLDataDBTool sharedService] putObject:dataDic withId:profileM.uid.stringValue intoTable:KWLUserInfoTableName];
     
     //设置用户信息
     self.baseUserModel = profileM;

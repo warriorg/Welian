@@ -185,63 +185,117 @@ static NSString *cellIdentifier = @"frnewCellid";
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
-            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                //发送邀请成功，修改状态，刷新列表
-                NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
-                //改变数组，刷新列表
-                [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
-                //刷新列表
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient requestAddFriendWithID:newFriendUser.uid
+                                         Message:[alert textFieldAtIndex:0].text
+                                         Success:^(id resultInfo) {
+                                             //发送邀请成功，修改状态，刷新列表
+                                             NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+                                             //改变数组，刷新列表
+                                             [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+                                             //刷新列表
+                                             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         } Failed:^(NSError *error) {
+                                             
+                                         }];
+//            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                //发送邀请成功，修改状态，刷新列表
+//                NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+//                //改变数组，刷新列表
+//                [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+//                //刷新列表
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }];
         [alert show];
     }
     
     if (type == FriendOperateTypeAccept) {
         //接受好友请求
-        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
-            
-            [newFriendUser setIsAgree:@(1)];
-            //更新好友列表数据库
-            [MyFriendUser createWithNewFriendUser:newFriendUser];
-            
-            //发送邀请成功，修改状态，刷新列表
-            NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
-            if (self.userBasicVC) {
-                [self.userBasicVC addSucceed];
-            }
-            //改变数组，刷新列表
-            [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            
-            //刷新好友列表
-            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
-            
-            //接受后，本地创建一条消息
-            //        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
-            //        textMessage.avatorUrl = nil;
-            //        textMessage.sender = nil;
-            //        //是否读取
-            //        textMessage.isRead = NO;
-            //        textMessage.sended = @"1";
-            //        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
-            //
-            //        //更新聊天好友
-            //        [friendUser updateIsChatStatus:YES];
-            //
-            //        //    //本地聊天数据库添加
-            //        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
-            //        textMessage.msgId = chatMessage.msgId.stringValue;
-            //
-            //        //聊天状态发送改变
-            //        [KNSNotification postNotificationName:@"ChatUserChanged" object:nil];
-            
-            [WLHUDView showSuccessHUD:@"添加成功！"];
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient confirmAddFriendWithID:newFriendUser.uid
+                                     Success:^(id resultInfo) {
+                                         [newFriendUser setIsAgree:@(1)];
+                                         //更新好友列表数据库
+                                         [MyFriendUser createWithNewFriendUser:newFriendUser];
+                                         
+                                         //发送邀请成功，修改状态，刷新列表
+                                         NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+                                         if (self.userBasicVC) {
+                                             [self.userBasicVC addSucceed];
+                                         }
+                                         //改变数组，刷新列表
+                                         [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+                                         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         
+                                         //刷新好友列表
+                                         [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+                                         
+                                         //接受后，本地创建一条消息
+                                         //        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
+                                         //        textMessage.avatorUrl = nil;
+                                         //        textMessage.sender = nil;
+                                         //        //是否读取
+                                         //        textMessage.isRead = NO;
+                                         //        textMessage.sended = @"1";
+                                         //        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+                                         //
+                                         //        //更新聊天好友
+                                         //        [friendUser updateIsChatStatus:YES];
+                                         //
+                                         //        //    //本地聊天数据库添加
+                                         //        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+                                         //        textMessage.msgId = chatMessage.msgId.stringValue;
+                                         //
+                                         //        //聊天状态发送改变
+                                         //        [KNSNotification postNotificationName:@"ChatUserChanged" object:nil];
+                                         
+                                         [WLHUDView showSuccessHUD:@"添加成功！"];
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
+//            
+//            [newFriendUser setIsAgree:@(1)];
+//            //更新好友列表数据库
+//            [MyFriendUser createWithNewFriendUser:newFriendUser];
+//            
+//            //发送邀请成功，修改状态，刷新列表
+//            NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+//            if (self.userBasicVC) {
+//                [self.userBasicVC addSucceed];
+//            }
+//            //改变数组，刷新列表
+//            [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            
+//            //刷新好友列表
+//            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+//            
+//            //接受后，本地创建一条消息
+//            //        WLMessage *textMessage = [[WLMessage alloc] initWithSpecialText:[NSString stringWithFormat:@"你已经添加了%@,现在可以开始聊聊创业那些事了。",friendUser.name] sender:@"" timestamp:[NSDate date]];
+//            //        textMessage.avatorUrl = nil;
+//            //        textMessage.sender = nil;
+//            //        //是否读取
+//            //        textMessage.isRead = NO;
+//            //        textMessage.sended = @"1";
+//            //        textMessage.bubbleMessageType = WLBubbleMessageTypeReceiving;
+//            //
+//            //        //更新聊天好友
+//            //        [friendUser updateIsChatStatus:YES];
+//            //
+//            //        //    //本地聊天数据库添加
+//            //        ChatMessage *chatMessage = [ChatMessage createChatMessageWithWLMessage:textMessage FriendUser:friendUser];
+//            //        textMessage.msgId = chatMessage.msgId.stringValue;
+//            //
+//            //        //聊天状态发送改变
+//            //        [KNSNotification postNotificationName:@"ChatUserChanged" object:nil];
+//            
+//            [WLHUDView showSuccessHUD:@"添加成功！"];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 

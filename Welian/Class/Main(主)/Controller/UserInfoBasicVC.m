@@ -158,14 +158,25 @@ static NSString *staurCellid = @"staurCellid";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-        [WLHttpTool requestFriendParameterDic:@{@"fid":_userMode.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
-            [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
-            if (_addFriendBlock) {
-                _addFriendBlock();
-            }
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient requestAddFriendWithID:_userMode.uid
+                                     Message:[alertView textFieldAtIndex:0].text
+                                     Success:^(id resultInfo) {
+                                         [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                                         if (_addFriendBlock) {
+                                             _addFriendBlock();
+                                         }
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool requestFriendParameterDic:@{@"fid":_userMode.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
+//            [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+//            if (_addFriendBlock) {
+//                _addFriendBlock();
+//            }
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 
@@ -183,40 +194,73 @@ static NSString *staurCellid = @"staurCellid";
 - (void)deleteFriend
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
-        
-        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_userMode.uid];
-        //数据库删除当前好友
-//        [loginUser removeRsMyFriendsObject:friendUser];
-        //更新设置为不是我的好友
-        [friendUser updateIsNotMyFriend];
-        //聊天状态发送改变
-        [friendUser updateIsChatStatus:NO];
-        
-        //删除新的好友本地数据库
-        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
-        if (newFuser) {
-            //删除好友请求数据
-            //更新好友请求列表数据为 添加
-            [newFuser updateOperateType:0];
-        }
-        //更新本地添加好友数据库
-        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];
-        if (needAddUser) {
-            //更新未好友的好友
-            [needAddUser updateFriendShip:2];
-        }
-        
-        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
-        //聊天状态发送改变
-        [KNSNotification postNotificationName:kChatUserChanged object:nil];
-        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
-        [self.navigationController popViewControllerAnimated:YES];
-        [WLHUDView showSuccessHUD:@"删除成功！"];
-    } fail:^(NSError *error) {
-        
-    }];
-
+    [WeLianClient deleteFriendWithID:_userMode.uid
+                             Success:^(id resultInfo) {
+                                 MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_userMode.uid];
+                                 //数据库删除当前好友
+                                 //        [loginUser removeRsMyFriendsObject:friendUser];
+                                 //更新设置为不是我的好友
+                                 [friendUser updateIsNotMyFriend];
+                                 //聊天状态发送改变
+                                 [friendUser updateIsChatStatus:NO];
+                                 
+                                 //删除新的好友本地数据库
+                                 NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
+                                 if (newFuser) {
+                                     //删除好友请求数据
+                                     //更新好友请求列表数据为 添加
+                                     [newFuser updateOperateType:0];
+                                 }
+                                 //更新本地添加好友数据库
+                                 NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];
+                                 if (needAddUser) {
+                                     //更新未好友的好友
+                                     [needAddUser updateFriendShip:2];
+                                 }
+                                 
+                                 [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+                                 //聊天状态发送改变
+                                 [KNSNotification postNotificationName:kChatUserChanged object:nil];
+                                 [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+                                 [self.navigationController popViewControllerAnimated:YES];
+                                 [WLHUDView showSuccessHUD:@"删除成功！"];
+                             } Failed:^(NSError *error) {
+                                 
+                             }];
+    
+//    [WLHttpTool deleteFriendParameterDic:@{@"fid":_userMode.uid} success:^(id JSON) {
+//        
+//        MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:_userMode.uid];
+//        //数据库删除当前好友
+////        [loginUser removeRsMyFriendsObject:friendUser];
+//        //更新设置为不是我的好友
+//        [friendUser updateIsNotMyFriend];
+//        //聊天状态发送改变
+//        [friendUser updateIsChatStatus:NO];
+//        
+//        //删除新的好友本地数据库
+//        NewFriendUser *newFuser = [loginUser getNewFriendUserWithUid:_userMode.uid];
+//        if (newFuser) {
+//            //删除好友请求数据
+//            //更新好友请求列表数据为 添加
+//            [newFuser updateOperateType:0];
+//        }
+//        //更新本地添加好友数据库
+//        NeedAddUser *needAddUser = [loginUser getNeedAddUserWithUid:_userMode.uid];
+//        if (needAddUser) {
+//            //更新未好友的好友
+//            [needAddUser updateFriendShip:2];
+//        }
+//        
+//        [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
+//        //聊天状态发送改变
+//        [KNSNotification postNotificationName:kChatUserChanged object:nil];
+//        [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        [WLHUDView showSuccessHUD:@"删除成功！"];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 

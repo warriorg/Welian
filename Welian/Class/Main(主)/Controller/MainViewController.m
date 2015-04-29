@@ -20,7 +20,6 @@
 #import "LocationTool.h"
 #import "WLLocationHelper.h"
 
-#import "FriendsUserModel.h"
 #import "MyFriendUser.h"
 #import "NewFriendUser.h"
 #import "MJExtension.h"

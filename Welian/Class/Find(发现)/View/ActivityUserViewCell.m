@@ -57,7 +57,7 @@
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_baseUser.avatar]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    _nameLabel.text = _baseUser.name;
+    _nameLabel.text = baseUser.wlname.length == 0 ? baseUser.name : baseUser.wlname;
     
     NSString *company = _baseUser.company.length < 1 ? @"" : _baseUser.company;
     NSString *position = _baseUser.position.length < 1 ? @"" : _baseUser.position;
@@ -127,7 +127,7 @@
     [_logoImageView sd_setImageWithURL:[NSURL URLWithString:_activityUserData[@"avatar"]]
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
-    _nameLabel.text = _activityUserData[@"name"];
+    _nameLabel.text = [_activityUserData[@"wlname"] length] == 0 ? _activityUserData[@"name"] : _activityUserData[@"wlname"];
     
     NSString *company = _activityUserData[@"company"] == nil ? @"" : _activityUserData[@"company"];
     NSString *position = _activityUserData[@"position"] == nil ? @"" : _activityUserData[@"position"];

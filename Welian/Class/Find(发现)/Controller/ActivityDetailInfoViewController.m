@@ -840,26 +840,49 @@
 - (void)loadActivityTickets
 {
     //1038   946  收费活动
-    [WLHttpTool getActivityTicketParameterDic:@{@"activeid":_activityInfo.activeid}
-                                      success:^(id JSON) {
-                                          
-                                          if (JSON) {
-                                              NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
-                                              if (_activityTicketView.hidden) {
-                                                  WEAKSELF
-                                                  [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
-                                                      [weakSelf buyTicketToOrderInfo:ticekets];
-                                                  }];
-                                                  _activityTicketView.isBuyTicket = YES;
-                                                  _activityTicketView.tickets = tickets;
-                                                  [_activityTicketView showInView];
-                                              }else{
-                                                  [_activityTicketView dismiss];
-                                              }
-                                          }
-                                      } fail:^(NSError *error) {
-                                          DLog(@"getActivityTicketParameterDic error:%@",error.description);
-                                      }];
+    [WLHUDView showHUDWithStr:@"获取票务信息.." dim:NO];
+    [WeLianClient getActiveTicketsWithID:_activityInfo.activeid
+                                 Success:^(id resultInfo) {
+                                     [WLHUDView hiddenHud];
+                                     
+                                     if ([resultInfo count] > 0) {
+                                         if (_activityTicketView.hidden) {
+                                             WEAKSELF
+                                             [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
+                                                 [weakSelf buyTicketToOrderInfo:ticekets];
+                                             }];
+                                             _activityTicketView.isBuyTicket = YES;
+                                             _activityTicketView.tickets = resultInfo;
+                                             [_activityTicketView showInView];
+                                         }else{
+                                             [_activityTicketView dismiss];
+                                         }
+                                     }
+                                 } Failed:^(NSError *error) {
+                                     [WLHUDView hiddenHud];
+                                     DLog(@"getActiveTickets error:%@",error.description);
+                                 }];
+    
+//    [WLHttpTool getActivityTicketParameterDic:@{@"activeid":_activityInfo.activeid}
+//                                      success:^(id JSON) {
+//                                          
+//                                          if (JSON) {
+//                                              NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
+//                                              if (_activityTicketView.hidden) {
+//                                                  WEAKSELF
+//                                                  [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
+//                                                      [weakSelf buyTicketToOrderInfo:ticekets];
+//                                                  }];
+//                                                  _activityTicketView.isBuyTicket = YES;
+//                                                  _activityTicketView.tickets = tickets;
+//                                                  [_activityTicketView showInView];
+//                                              }else{
+//                                                  [_activityTicketView dismiss];
+//                                              }
+//                                          }
+//                                      } fail:^(NSError *error) {
+//                                          DLog(@"getActivityTicketParameterDic error:%@",error.description);
+//                                      }];
 }
 
 //查看我购买的票务信息
@@ -958,42 +981,72 @@
         [alert show];
         return;
     }
-    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
-                                      success:^(id JSON) {
-                                          //隐藏下拉刷新控件
-//                                          [self.tableView.header endRefreshing];
-                                          if (JSON) {
-                                              if ([[JSON objectForKey:@"deleted"] boolValue]) {
-                                                  UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
-                                                  [alert bk_addButtonWithTitle:@"确定" handler:^{
-                                                      [weakSelf.navigationController popViewControllerAnimated:YES];
-                                                  }];
-                                                  [alert show];
-                                                  return;
-                                              }
-                                              IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
-                                              BOOL isFromList = _activityInfo != nil ? YES : NO;
-                                              if (isFromList) {
-                                                  self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
-                                              }else{
-                                                  self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
-                                                  //更新数据
-                                                  [self initActivityUIInfo];
-                                              }
-                                              self.datasource = iActivity.guests;
-                                              
-                                              //检测分享按钮
-                                              [self checkShareBtn];
-                                              //更页面
-                                              [self updateUI];
-                                          }else{
-                                              [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
-                                          }
-                                      } fail:^(NSError *error) {
-                                          //隐藏下拉刷新控件
-//                                          [self.tableView.header endRefreshing];
-                                          DLog(@"getActivityDetailParameterDic error:%@",error.description);
-                                      }];
+    
+    [WLHUDView showHUDWithStr:@"获取详情中..." dim:NO];
+    [WeLianClient getActiveDetailInfoWithID:_activityId
+                                    Success:^(id resultInfo) {
+                                        [WLHUDView hiddenHud];
+                                        if (resultInfo) {
+                                            IActivityInfo *iActivity = resultInfo;
+                                            BOOL isFromList = _activityInfo != nil ? YES : NO;
+                                            if (isFromList) {
+                                                self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+                                            }else{
+                                                self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
+                                                //更新数据
+                                                [self initActivityUIInfo];
+                                            }
+                                            self.datasource = iActivity.guests;
+                                            
+                                            //检测分享按钮
+                                            [self checkShareBtn];
+                                            //更页面
+                                            [self updateUI];
+                                        }else{
+                                            [WLHUDView showErrorHUD:@"获取失败，该活动不存在！"];
+                                        }
+                                    } Failed:^(NSError *error) {
+                                        [WLHUDView hiddenHud];
+                                        [WLHUDView showErrorHUD:@"无法连接网络！"];
+                                        DLog(@"getActivityDetailParameterDic error:%@",error.description);
+                                    }];
+    
+//    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
+//                                      success:^(id JSON) {
+//                                          //隐藏下拉刷新控件
+////                                          [self.tableView.header endRefreshing];
+//                                          if (JSON) {
+//                                              if ([[JSON objectForKey:@"deleted"] boolValue]) {
+//                                                  UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
+//                                                  [alert bk_addButtonWithTitle:@"确定" handler:^{
+//                                                      [weakSelf.navigationController popViewControllerAnimated:YES];
+//                                                  }];
+//                                                  [alert show];
+//                                                  return;
+//                                              }
+//                                              IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
+//                                              BOOL isFromList = _activityInfo != nil ? YES : NO;
+//                                              if (isFromList) {
+//                                                  self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+//                                              }else{
+//                                                  self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
+//                                                  //更新数据
+//                                                  [self initActivityUIInfo];
+//                                              }
+//                                              self.datasource = iActivity.guests;
+//                                              
+//                                              //检测分享按钮
+//                                              [self checkShareBtn];
+//                                              //更页面
+//                                              [self updateUI];
+//                                          }else{
+//                                              [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
+//                                          }
+//                                      } fail:^(NSError *error) {
+//                                          //隐藏下拉刷新控件
+////                                          [self.tableView.header endRefreshing];
+//                                          DLog(@"getActivityDetailParameterDic error:%@",error.description);
+//                                      }];
 }
 
 //取消报名

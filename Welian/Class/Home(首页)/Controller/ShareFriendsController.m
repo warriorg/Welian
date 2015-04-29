@@ -44,15 +44,21 @@ static NSString *fridcellid = @"fridcellid";
     [self.searchDisplayVC setValue:[NSNumber numberWithInt:UITableViewStyleGrouped]
                             forKey:@"_searchResultsTableViewStyle"];
     
-    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
-        
-        self.allArray = [JSON objectForKey:@"array"];
-        
+    //加载数据库数据
+    NSArray *myFriends = [[LogInUser getCurrentLoginUser] getAllMyFriendUsers];
+    if(myFriends.count > 0){
+        self.allArray = [WLHttpTool getChineseStringArr:myFriends];
         [self.tableView reloadData];
-        
-    } fail:^(NSError *error) {
-        
-    }];
+    }
+//    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
+//        
+//        self.allArray = [JSON objectForKey:@"array"];
+//        
+//        [self.tableView reloadData];
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 

@@ -73,39 +73,7 @@
 {
     self = [super init];
     if (self) {
-        self.datasource = [ActivityInfo allNormalActivityInfos];
         
-        //获取省列表
-        NSArray *localCitys = [NSArray arrayWithContentsOfFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"]];
-        NSMutableArray *customCitys = [NSMutableArray array];
-        [customCitys addObject:@{@"cityid":@"-1",@"name":@"定位中..."}];
-        [customCitys addObject:@{@"cityid":@"0",@"name":@"全国"}];
-        [customCitys addObjectsFromArray:localCitys];
-        self.cityList = [NSArray arrayWithArray:customCitys];
-        
-        //活动当前定位的城市
-        NSString *city = [UserDefaults objectForKey:kLocationCity];
-        NSDictionary *localCity = nil;
-        if (city.length > 0) {
-            localCity = [localCitys bk_match:^BOOL(id obj) {
-//                return [[obj objectForKey:@"name"] isEqualToString:city];
-                return [city isContainsString:[obj objectForKey:@"name"]];
-            }];
-        }
-        
-        self.timeList = @[@{@"cityid":@"-1",@"name":@"全部"}
-                          ,@{@"cityid":@"0",@"name":@"今天"}
-                          ,@{@"cityid":@"1",@"name":@"明天"}
-                          ,@{@"cityid":@"7",@"name":@"最近一周"}
-                          ,@{@"cityid":@"-2",@"name":@"周末"}];
-        
-        self.selectTimeType = @{@"cityid":@"-1",@"name":@"全部"};
-        self.selectAddressType = localCity != nil ? localCity : @{@"cityid":@"0",@"name":@"全国"};
-        self.pageIndex = 1;
-        self.pageSize = KCellConut;
-        
-        //监听报名状态改变
-        [KNSNotification addObserver:self selector:@selector(updateUiInfo) name:kUpdateJoinedUI object:nil];
     }
     return self;
 }
@@ -117,6 +85,9 @@
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+    //初始化数据信息
+    [self initDataInfo];
     
     //添加创建活动按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建活动" style:UIBarButtonItemStyleDone target:self action:@selector(createActivity)];
@@ -313,61 +284,142 @@
 }
 
 #pragma mark - Private
+//初始化数据信息
+- (void)initDataInfo
+{
+    self.datasource = [ActivityInfo allNormalActivityInfos];
+    
+    //获取省列表
+    NSArray *localCitys = [NSArray arrayWithContentsOfFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"]];
+    NSMutableArray *customCitys = [NSMutableArray array];
+    [customCitys addObject:@{@"cityid":@"-1",@"name":@"定位中..."}];
+    [customCitys addObject:@{@"cityid":@"0",@"name":@"全国"}];
+    [customCitys addObjectsFromArray:localCitys];
+    self.cityList = [NSArray arrayWithArray:customCitys];
+    
+    //活动当前定位的城市
+    NSString *city = [UserDefaults objectForKey:kLocationCity];
+    NSDictionary *localCity = nil;
+    if (city.length > 0) {
+        localCity = [localCitys bk_match:^BOOL(id obj) {
+            //                return [[obj objectForKey:@"name"] isEqualToString:city];
+            return [city isContainsString:[obj objectForKey:@"name"]];
+        }];
+    }
+    
+    self.timeList = @[@{@"cityid":@"-1",@"name":@"全部"}
+                      ,@{@"cityid":@"0",@"name":@"今天"}
+                      ,@{@"cityid":@"1",@"name":@"明天"}
+                      ,@{@"cityid":@"7",@"name":@"最近一周"}
+                      ,@{@"cityid":@"-2",@"name":@"周末"}];
+    
+    self.selectTimeType = @{@"cityid":@"-1",@"name":@"全部"};
+    self.selectAddressType = localCity != nil ? localCity : @{@"cityid":@"0",@"name":@"全国"};
+    self.pageIndex = 1;
+    self.pageSize = KCellConut;
+    
+    //监听报名状态改变
+    [KNSNotification addObserver:self selector:@selector(updateUiInfo) name:kUpdateJoinedUI object:nil];
+}
+
 - (void)initData
 {
     //-1:列表中没有定位的城市
-    NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),
-                             @"cityid":@([_selectAddressType[@"cityid"] integerValue]),
-                             @"page":@(_pageIndex),
-                             @"size":@(_pageSize)};
-    [WLHttpTool getActivitysParameterDic:params
-                                 success:^(id JSON) {
-                                     //隐藏加载更多动画
-//                                     [self.refreshControl endRefreshing];
-                                     [_tableView.header endRefreshing];
-                                     [_tableView.footer endRefreshing];
-                                     
-                                     DLog(@"---json:%@",JSON);
-                                     if (JSON) {
-                                         if (_pageIndex == 1) {
-                                             //第一页
-                                             [ActivityInfo deleteAllActivityInfoWithType:@(0)];
-                                         }
-                                         NSArray *activitys = [IActivityInfo objectsWithInfo:JSON];
-                                         for (IActivityInfo *iActivityInfo in activitys) {
-                                             [ActivityInfo createActivityInfoWith:iActivityInfo withType:@(0)];
-                                         }
-                                     }
-                                     //获取数据
-                                     self.datasource = [ActivityInfo allNormalActivityInfos];
-                                     [_tableView reloadData];
-                                     
-                                     //设置是否可以下拉刷新
-                                     if ([JSON count] != KCellConut) {
-                                         _tableView.footer.hidden = YES;
-                                     }else{
-                                         _tableView.footer.hidden = NO;
-                                         _pageIndex++;
-                                     }
-                                     
-                                     if(([_datasource[0] count] + [_datasource[1] count]) == 0){
-                                         [_tableView addSubview:self.notView];
-                                         [_tableView sendSubviewToBack:self.notView];
-                                     }else{
-//                                         if ([_datasource[0] count] > 0) {
-//                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//                                         }else if ([_datasource[1] count] > 0){
-//                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [WeLianClient getActiveListWithDate:@([_selectTimeType[@"cityid"] integerValue])
+                                 Cityid:@([_selectAddressType[@"cityid"] integerValue])
+                                   Page:@(_pageIndex)
+                                   Size:@(_pageSize)
+                                Success:^(id resultInfo) {
+                                    [_tableView.header endRefreshing];
+                                    [_tableView.footer endRefreshing];
+                                    
+                                    if ([resultInfo count] > 0) {
+                                        if (_pageIndex == 1) {
+                                            //第一页 删除所有
+                                            [ActivityInfo deleteAllActivityInfoWithType:@(0)];
+                                        }
+                                        
+                                        for (IActivityInfo *iActivityInfo in resultInfo) {
+                                            [ActivityInfo createActivityInfoWith:iActivityInfo withType:@(0)];
+                                        }
+                                    }
+                                    //获取数据
+                                    self.datasource = [ActivityInfo allNormalActivityInfos];
+                                    [_tableView reloadData];
+                                    
+                                    //设置是否可以下拉刷新
+                                    if ([resultInfo count] != KCellConut) {
+                                        _tableView.footer.hidden = YES;
+                                    }else{
+                                        _tableView.footer.hidden = NO;
+                                        _pageIndex++;
+                                    }
+                                    
+                                    if(([_datasource[0] count] + [_datasource[1] count]) == 0){
+                                        [_tableView addSubview:self.notView];
+                                        [_tableView sendSubviewToBack:self.notView];
+                                    }else{
+                                        [_notView removeFromSuperview];
+                                    }
+                                } Failed:^(NSError *error) {
+                                    //隐藏加载更多动画
+                                    [self.tableView.header endRefreshing];
+                                    [self.tableView.footer endRefreshing];
+                                    DLog(@"getActiveList error:%@",error.description);
+                                }];
+    
+//    NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),
+//                             @"cityid":@([_selectAddressType[@"cityid"] integerValue]),
+//                             @"page":@(_pageIndex),
+//                             @"size":@(_pageSize)};
+//    [WLHttpTool getActivitysParameterDic:params
+//                                 success:^(id JSON) {
+//                                     //隐藏加载更多动画
+////                                     [self.refreshControl endRefreshing];
+//                                     [_tableView.header endRefreshing];
+//                                     [_tableView.footer endRefreshing];
+//                                     
+//                                     DLog(@"---json:%@",JSON);
+//                                     if (JSON) {
+//                                         if (_pageIndex == 1) {
+//                                             //第一页
+//                                             [ActivityInfo deleteAllActivityInfoWithType:@(0)];
 //                                         }
-                                         [_notView removeFromSuperview];
-                                     }
-                                 } fail:^(NSError *error) {
-//                                     [self.refreshControl endRefreshing];
-                                     //隐藏加载更多动画
-                                     [self.tableView.header endRefreshing];
-                                     [self.tableView.footer endRefreshing];
-                                     DLog(@"getActivitysParameterDic error:%@",error.description);
-                                 }];
+//                                         NSArray *activitys = [IActivityInfo objectsWithInfo:JSON];
+//                                         for (IActivityInfo *iActivityInfo in activitys) {
+//                                             [ActivityInfo createActivityInfoWith:iActivityInfo withType:@(0)];
+//                                         }
+//                                     }
+//                                     //获取数据
+//                                     self.datasource = [ActivityInfo allNormalActivityInfos];
+//                                     [_tableView reloadData];
+//                                     
+//                                     //设置是否可以下拉刷新
+//                                     if ([JSON count] != KCellConut) {
+//                                         _tableView.footer.hidden = YES;
+//                                     }else{
+//                                         _tableView.footer.hidden = NO;
+//                                         _pageIndex++;
+//                                     }
+//                                     
+//                                     if(([_datasource[0] count] + [_datasource[1] count]) == 0){
+//                                         [_tableView addSubview:self.notView];
+//                                         [_tableView sendSubviewToBack:self.notView];
+//                                     }else{
+////                                         if ([_datasource[0] count] > 0) {
+////                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+////                                         }else if ([_datasource[1] count] > 0){
+////                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+////                                         }
+//                                         [_notView removeFromSuperview];
+//                                     }
+//                                 } fail:^(NSError *error) {
+////                                     [self.refreshControl endRefreshing];
+//                                     //隐藏加载更多动画
+//                                     [self.tableView.header endRefreshing];
+//                                     [self.tableView.footer endRefreshing];
+//                                     DLog(@"getActivitysParameterDic error:%@",error.description);
+//                                 }];
 }
 
 //下拉刷新数据
