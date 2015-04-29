@@ -9,7 +9,6 @@
 #import "WLCellHead.h"
 #import "WLStatusM.h"
 #import "UIImageView+WebCache.h"
-#import "UserInfoBasicVC.h"
 #import "UIImage+ImageEffects.h"
 #import "UserInfoViewController.h"
 
@@ -144,7 +143,7 @@
     if (userStat.type==5||userStat.type==12) {
         NSMutableString *nameStr = [NSMutableString string];
         NSInteger conut = 0;
-        for (UserInfoModel *userM in userStat.joineduserArray) {
+        for (IBaseUserM *userM in userStat.joineduserArray) {
             if (conut<=1) {
                 if (conut==0) {
                     if (userStat.joineduserArray.count==1) {
@@ -208,7 +207,7 @@
 
 - (void)tapiconImage:(UITapGestureRecognizer *)tap
 {
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    IBaseUserM *mode = [[IBaseUserM alloc] init];
     WLBasicTrends *user = _userStat.user;
     [mode setUid:user.uid];
     [mode setAvatar:user.avatar];

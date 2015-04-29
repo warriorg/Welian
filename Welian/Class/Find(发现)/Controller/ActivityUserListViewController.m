@@ -7,7 +7,6 @@
 //
 
 #import "ActivityUserListViewController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "MJRefresh.h"

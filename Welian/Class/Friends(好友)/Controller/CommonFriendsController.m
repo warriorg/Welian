@@ -7,7 +7,6 @@
 //
 
 #import "CommonFriendsController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "FriendCell.h"
@@ -58,7 +57,7 @@ static NSString *fridcellid = @"fridcellid";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
-    UserInfoModel *modeIM = _friendsA[indexPath.row];
+    IBaseUserM *modeIM = _friendsA[indexPath.row];
     [cell setUserMode:modeIM];
     return cell;
 }
@@ -66,7 +65,7 @@ static NSString *fridcellid = @"fridcellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UserInfoModel *modeIM = _friendsA[indexPath.row];
+    IBaseUserM *modeIM = _friendsA[indexPath.row];
 //    UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
 //    [self.navigationController pushViewController:userinfVC animated:YES];
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil HidRightBtn:NO];

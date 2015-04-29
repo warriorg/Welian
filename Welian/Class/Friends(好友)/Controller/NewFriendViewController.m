@@ -15,7 +15,6 @@
 #import "UserInfoViewController.h"
 
 #import "FriendsNewCell.h"
-#import "UserInfoBasicVC.h"
 #import "NotstringView.h"
 #import "NewFriendViewCell.h"
 #import "MyFriendUser.h"
@@ -27,7 +26,7 @@ static NSString *cellIdentifier = @"frnewCellid";
 @property (strong, nonatomic) NotstringView *notView;
 
 @property (strong, nonatomic) NSMutableArray *datasource;
-@property (nonatomic, strong) UserInfoBasicVC *userBasicVC;
+//@property (nonatomic, strong) UserInfoBasicVC *userBasicVC;
 
 @end
 
@@ -118,7 +117,7 @@ static NSString *cellIdentifier = @"frnewCellid";
         [weakSelf newFriendOperate:FriendOperateTypeAccept newFriendUser:friendM indexPath:indexPath];
 //        [weakUserInfoVC addSucceed];
     };
-    self.userBasicVC = userInfoVC;
+//    self.userBasicVC = userInfoVC;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -221,9 +220,9 @@ static NSString *cellIdentifier = @"frnewCellid";
                                          
                                          //发送邀请成功，修改状态，刷新列表
                                          NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
-                                         if (self.userBasicVC) {
-                                             [self.userBasicVC addSucceed];
-                                         }
+//                                         if (self.userBasicVC) {
+//                                             [self.userBasicVC addSucceed];
+//                                         }
                                          //改变数组，刷新列表
                                          [_datasource replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
                                          [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

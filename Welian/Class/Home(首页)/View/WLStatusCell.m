@@ -33,7 +33,7 @@
     // 评论
     CommentCellView *_commentView;
     
-    UserInfoModel *_mode;
+    IBaseUserM *_mode;
 }
 @end
 

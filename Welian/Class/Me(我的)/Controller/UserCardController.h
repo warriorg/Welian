@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addresLabel;
 
 
-@property (nonatomic, strong) UserInfoModel *userinfoM;
+//@property (nonatomic, strong) UserInfoModel *userinfoM;
 
 - (IBAction)butCick:(id)sender;
 

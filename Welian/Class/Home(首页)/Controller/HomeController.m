@@ -194,7 +194,7 @@
     NSMutableArray *forwardsM = [NSMutableArray array];
     if (feedarray.count) {
         for (NSDictionary *feeddic in feedarray) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:feeddic];
+            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:feeddic];
             [forwardsM addObject:mode];
         }
     }
@@ -203,7 +203,7 @@
     NSMutableArray *zanArrayM = [NSMutableArray array];
     if (zanarray.count) {
         for (NSDictionary *zandic in zanarray) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:zandic];
+            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:zandic];
             [zanArrayM addObject:mode];
         }
     }
@@ -222,7 +222,7 @@
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
     if (statusM.type==5||statusM.type==12) {
-        UserInfoModel *meInfoM = [[UserInfoModel alloc] init];
+        IBaseUserM *meInfoM = [[IBaseUserM alloc] init];
         meInfoM.name = statusM.user.name;
         meInfoM.uid = statusM.user.uid;
         meInfoM.avatar = statusM.user.avatar;
@@ -230,7 +230,7 @@
         
         if (joinedusers.count) {
             for (NSDictionary *joDic in joinedusers) {
-                UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
+                IBaseUserM *joMode = [IBaseUserM objectWithKeyValues:joDic];
                 [joinArrayM addObject:joMode];
             }
         }

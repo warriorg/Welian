@@ -309,24 +309,25 @@
                        }];
 }
 
-//认证投资人
-+ (void)investWithPhoto:(NSString *)photo
-              Industrys:(NSArray *)industrys
-                 Stages:(NSArray *)stages
-                  Items:(NSArray *)items
-                Success:(SuccessBlock)success
-                 Failed:(FailedBlock)failed
+// 取用户详细
++ (void)getWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"photo":photo
-                             ,@"industrys":industrys
-                             ,@"stages":stages
-                             ,@"items":items};
+    NSDictionary *params = @{@"uid":uid};
+    [self reqestPostWithParams:params Path:kUserUrl(@"get") Success:^(id resultInfo) {
+        SAFE_BLOCK_CALL(success,resultInfo);
+    } Failed:^(NSError *error) {
+        SAFE_BLOCK_CALL(failed, error);
+    }];
+}
+
+//认证投资人
++ (void)investWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
+{
     [self reqestPostWithParams:params
                           Path:kInvestPath
                        Success:^(id resultInfo) {
                            DLog(@"invest ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -342,8 +343,7 @@
                           Path:kLoadInvestorPath
                        Success:^(id resultInfo) {
                            DLog(@"loadInvestor ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

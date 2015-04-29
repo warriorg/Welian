@@ -60,7 +60,7 @@
     CGFloat labelW = _cellWidth- CGRectGetMaxX(_zanImageF)-20;
     NSMutableString *zanStrM = [NSMutableString string];
     if (zanArray.count) {
-        for (UserInfoModel *zanModel  in zanArray) {
+        for (IBaseUserM *zanModel  in zanArray) {
             if (zanModel != zanArray.lastObject) {
                 [zanStrM appendFormat:@"%@，",zanModel.name];
             }else{
@@ -81,7 +81,7 @@
 
         _feedImageF = CGRectMake(imageX, _cellHigh, image.size.width, image.size.height);
         
-        for (UserInfoModel *feedModel in feedArray) {
+        for (IBaseUserM *feedModel in feedArray) {
             if (feedModel != feedArray.lastObject) {
                 
                 [feedStrM appendFormat:@"%@，",feedModel.name];

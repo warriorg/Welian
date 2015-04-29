@@ -8,8 +8,8 @@
 
 #import "BaseTableViewCell.h"
 #import "NewFriendUser.h"
-#import "UserInfoModel.h"
 #import "NeedAddUser.h"
+
 
 typedef enum : NSUInteger {
     FriendOperateTypeAdd = 0,//添加
@@ -33,7 +33,7 @@ typedef void(^addFriendOperateBlock)(NSInteger type,NeedAddUser *needAddUser,NSI
 @property (strong, nonatomic) NewFriendUser *nFriendUser;
 
 //搜索出来的用户
-@property (strong, nonatomic) UserInfoModel *userInfoModel;
+@property (strong, nonatomic) IBaseUserM *userInfoModel;
 
 //需要添加的好友
 @property (strong, nonatomic) NeedAddUser *needAddUser;

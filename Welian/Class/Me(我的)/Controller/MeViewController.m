@@ -465,7 +465,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 {
     // 详细信息
     NSDictionary *profile = [dataDic objectForKey:@"profile"];
-    UserInfoModel *profileM = [UserInfoModel objectWithKeyValues:profile];
+    ILoginUserModel *profileM = [ILoginUserModel objectWithKeyValues:profile];
     
     //保存到数据库
     LogInUser *loginUser = [LogInUser updateLoginUserWithModel:profileM];
@@ -516,18 +516,30 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (void)initUserInfo
 {
-    LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-    [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
+    [WeLianClient getWithUid:@(0) Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
         WEAKSELF
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            weakSelf.infoDict = [self getUserInfoWith:JSON];
+            weakSelf.infoDict = [self getUserInfoWith:resultInfo];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
             });
         });
-    } fail:^(NSError *error) {
+
+    } Failed:^(NSError *error) {
         
     }];
+//    [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
+//        WEAKSELF
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            weakSelf.infoDict = [self getUserInfoWith:JSON];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [weakSelf.tableView reloadData];
+//            });
+//        });
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 @end

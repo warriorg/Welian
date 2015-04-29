@@ -13,7 +13,6 @@
 #import "ChatViewController.h"
 #import "CommentInfoController.h"
 #import "ProjectDetailsViewController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "MessageCell.h"

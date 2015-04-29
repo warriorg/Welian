@@ -7,7 +7,6 @@
 //
 
 #import "FeedAndZanView.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 #import "MLEmojiLabel.h"
 
@@ -69,7 +68,7 @@
         [_zanLabel setFrame:feedAndZanFrame.zanLabelF];
         [_zanLabel setText:feedAndZanFrame.zanNameStr];
         
-        for (UserInfoModel *zanModel  in zanArray) {
+        for (IBaseUserM *zanModel  in zanArray) {
             NSRange range = [feedAndZanFrame.zanNameStr rangeOfString:zanModel.name];
             [_zanLabel addLinkToAddress:@{@"user":zanModel} withRange:range];
         }
@@ -84,7 +83,7 @@
         [_feedLabel setFrame:feedAndZanFrame.feedLabelF];
         [_feedimageview setFrame:feedAndZanFrame.feedImageF];
         [_feedLabel setText:feedAndZanFrame.feedNameStr];
-        for (UserInfoModel *feedModel in feedArray) {
+        for (IBaseUserM *feedModel in feedArray) {
             NSRange range = [feedAndZanFrame.feedNameStr rangeOfString:feedModel.name];
             [_feedLabel addLinkToAddress:@{@"user":feedModel} withRange:range];
         }
@@ -96,7 +95,7 @@
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithAddress:(NSDictionary *)addressComponents
 {
-    UserInfoModel *mode = addressComponents[@"user"];
+    IBaseUserM *mode = addressComponents[@"user"];
     if (!mode) return;
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];
     [self.commentVC.navigationController pushViewController:userInfoVC animated:YES];

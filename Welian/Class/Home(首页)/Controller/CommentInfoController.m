@@ -139,14 +139,14 @@ static NSString *noCommentCell = @"NoCommentCell";
         [_zanArrayM removeAllObjects];
         if (feedarray.count) {
             for (NSDictionary *feeddic in feedarray) {
-                UserInfoModel *mode = [UserInfoModel objectWithKeyValues:feeddic];
+                IBaseUserM *mode = [IBaseUserM objectWithKeyValues:feeddic];
                 [_feedArrayM addObject:mode];
             }
         }
         
         if (zanarray.count) {
             for (NSDictionary *zandic in zanarray) {
-                UserInfoModel *mode = [UserInfoModel objectWithKeyValues:zandic];
+                IBaseUserM *mode = [IBaseUserM objectWithKeyValues:zandic];
                 [_zanArrayM addObject:mode];
             }
         }

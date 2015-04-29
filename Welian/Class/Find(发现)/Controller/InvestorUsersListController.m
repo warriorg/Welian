@@ -7,7 +7,6 @@
 //
 
 #import "InvestorUsersListController.h"
-#import "UserInfoBasicVC.h"
 #import "InvestCerVC.h"
 #import "UserInfoViewController.h"
 
@@ -196,7 +195,7 @@ static NSString *identifier = @"investorcellid";
     if (tableView == self.searchDisplayVC.searchResultsTableView) {
         invesM = self.filterArray[indexPath.row];
     }
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    IBaseUserM *mode = [[IBaseUserM alloc] init];
     [mode setName:invesM.name];
     [mode setUid:invesM.uid];
     [mode setCompany:invesM.company];

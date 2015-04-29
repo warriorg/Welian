@@ -12,7 +12,6 @@
 #import "UIImage+ImageEffects.h"
 #import "WLStatusFrame.h"
 #import "WLStatusM.h"
-#import "UserInfoBasicVC.h"
 #import "PublishStatusController.h"
 #import "NavViewController.h"
 #import "ShareEngine.h"
@@ -253,7 +252,7 @@
         webVC.showRightShareBtn = YES;//现实右上角分享按钮
         [self.homeVC.navigationController pushViewController:webVC animated:YES];
     }else if (card.type.integerValue==4||card.type.integerValue==6){   // 个人信息
-        UserInfoModel *mode = [[UserInfoModel alloc] init];
+        IBaseUserM *mode = [[IBaseUserM alloc] init];
         WLBasicTrends *user = self.statusFrame.status.user?self.statusFrame.status.user:self.commentFrame.status.user;
         [mode setUid:user.uid];
         [mode setAvatar:user.avatar];
@@ -293,7 +292,7 @@
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (statM.iszan==1) {
         
-        for (UserInfoModel *zanM in statM.zansArray) {
+        for (IBaseUserM *zanM in statM.zansArray) {
             if ([zanM.uid integerValue] == [mode.uid integerValue]) {
                 [zans removeObject:zanM];
             }
@@ -342,7 +341,7 @@
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (statM.isforward==1) {
         
-        for (UserInfoModel *forwardM in statM.forwardsArray) {
+        for (IBaseUserM *forwardM in statM.forwardsArray) {
             if ([forwardM.uid integerValue] == [mode.uid integerValue]) {
                 [forwards removeObject:forwardM];
             }

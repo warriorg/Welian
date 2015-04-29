@@ -7,7 +7,6 @@
 //
 
 #import "CommentCellView.h"
-#import "UserInfoBasicVC.h"
 #import "CommentInfoController.h"
 #import "TOWebViewController.h"
 #import "UserInfoViewController.h"
@@ -108,7 +107,7 @@
     }else{
         WLBasicTrends *usmode = addressComponents[@"user"];
         if (!usmode)  return;
-        UserInfoModel *userModel = [[UserInfoModel alloc] init];
+        IBaseUserM *userModel = [[IBaseUserM alloc] init];
         [userModel setUid:usmode.uid];
         [userModel setAvatar:usmode.avatar];
         [userModel setName:usmode.name];

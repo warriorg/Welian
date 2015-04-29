@@ -7,7 +7,6 @@
 //
 
 #import "FriendsFriendController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "NotstringView.h"
@@ -189,7 +188,7 @@ static NSString *identifier = @"investorcellid";
     [cell.infoLabel setText:[NSString stringWithFormat:@"%@  %@",friendinfoM.position,friendinfoM.company]];
     
     NSMutableString *labestr = [NSMutableString string];
-    for (UserInfoModel *mode in friendinfoM.samefriends) {
+    for (IBaseUserM *mode in friendinfoM.samefriends) {
         [labestr appendFormat:@"%@、",mode.name];
     }
     

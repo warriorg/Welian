@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WLHttpTool.h"
-#import "UserInfoTool.h"
 #import "WLHUDView.h"
 #import "WLDataDBTool.h"
 #import "UIColor+_6jinzhi.h"
