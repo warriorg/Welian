@@ -1285,7 +1285,6 @@
 		A493C3ED1ADD14A60056BD52 /* settingPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A493C30D1ADD14A60056BD52 /* settingPlist.plist */; };
 		A493C3EE1ADD14A60056BD52 /* settingPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A493C30D1ADD14A60056BD52 /* settingPlist.plist */; };
 		A49C7BC31A70D42700F2AEC5 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
-		A49C7BC41A70D42700F2AEC5 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		A49C7BC51A70D42700F2AEC5 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CA6951A4D044B009EBD04 /* DTTimePeriod.m */; };
 		A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A41CE1AB1A6E4ED5004F17E7 /* ActivityUserViewCell.m */; };
 		A49C7BC71A70D42700F2AEC5 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; };
@@ -2880,7 +2879,6 @@
 		F53D4E511A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
 		F53D4E521A4AAEA100CA06C8 /* ChatMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F53D4E4F1A4AAEA100CA06C8 /* ChatMessageController.m */; };
 		F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F5A3F8F51A41855900F06DDD /* ISchoolResult.m */; };
-		F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; };
 		F53DC2A01A49192600F5F712 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
 		F53DC2A11A49192600F5F712 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E619D3BACE003987CC /* MJPhotoToolbar.m */; };
@@ -3337,7 +3335,6 @@
 		F56272901A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
 		F56272911A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
 		F56272921A4D474E002A9B88 /* HomeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F562728F1A4D474E002A9B88 /* HomeMessage.m */; };
-		F566497C1A2AFD56008A5830 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
 		F566497F1A2AFD56008A5830 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E619D3BACE003987CC /* MJPhotoToolbar.m */; };
@@ -3612,7 +3609,6 @@
 		F5664C0E1A2AFD56008A5830 /* icon_timeline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1239A19E7CE8F002B9E58 /* icon_timeline@2x.png */; };
 		F5664C251A2AFD56008A5830 /* home_detail_user_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098019C2E3F2009DB1B2 /* home_detail_user_small@2x.png */; };
 		F5664C2C1A2AFD56008A5830 /* home_picture_add_ok_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F579098C19C2E3F2009DB1B2 /* home_picture_add_ok_bg@2x.png */; };
-		F5664C361A2AFDD5008A5830 /* NewFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B1719FD108200FAA5B6 /* NewFriendController.m */; };
 		F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = F5239B9019F684BF00D9E696 /* NSMutableArray+SWUtilityButtons.m */; };
 		F5664C381A2AFDD5008A5830 /* FriendsNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */; };
 		F5664C391A2AFDD5008A5830 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C677E619D3BACE003987CC /* MJPhotoToolbar.m */; };
@@ -5858,8 +5854,6 @@
 		F53519AC1A8C90A0004488EE /* CreateHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateHeaderView.h; sourceTree = "<group>"; };
 		F53519AD1A8C90A0004488EE /* CreateHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateHeaderView.m; sourceTree = "<group>"; };
 		F53519BC1A8C935F004488EE /* CreateHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateHeaderView.xib; sourceTree = "<group>"; };
-		F5382B1619FD108200FAA5B6 /* NewFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendController.h; sourceTree = "<group>"; };
-		F5382B1719FD108200FAA5B6 /* NewFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendController.m; sourceTree = "<group>"; };
 		F5382B5B19FE261D00FAA5B6 /* FriendsNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsNewCell.h; sourceTree = "<group>"; };
 		F5382B5C19FE261D00FAA5B6 /* FriendsNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsNewCell.m; sourceTree = "<group>"; };
 		F5382B5D19FE261D00FAA5B6 /* FriendsNewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsNewCell.xib; sourceTree = "<group>"; };
@@ -9537,8 +9531,6 @@
 			children = (
 				F5239B4A19F4AD2A00D9E696 /* MyFriendsController.h */,
 				F5239B4B19F4AD2A00D9E696 /* MyFriendsController.m */,
-				F5382B1619FD108200FAA5B6 /* NewFriendController.h */,
-				F5382B1719FD108200FAA5B6 /* NewFriendController.m */,
 				A40356131A5D4F61006AE52C /* NewFriendViewController.h */,
 				A40356141A5D4F61006AE52C /* NewFriendViewController.m */,
 				A47C5F4C1A5E1E9400E63737 /* AddFriendViewController.h */,
@@ -12745,7 +12737,6 @@
 				F506A8A71ADE666B00EABB0E /* NavViewController.m in Sources */,
 				A49C7BC31A70D42700F2AEC5 /* ISchoolResult.m in Sources */,
 				A46A284A1ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
-				A49C7BC41A70D42700F2AEC5 /* NewFriendController.m in Sources */,
 				A49C7BC51A70D42700F2AEC5 /* DTTimePeriod.m in Sources */,
 				A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */,
 				A49C7BC71A70D42700F2AEC5 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -13252,7 +13243,6 @@
 				F506A8A81ADE672C00EABB0E /* NavViewController.m in Sources */,
 				F53DC29D1A49192600F5F712 /* ISchoolResult.m in Sources */,
 				A46A28491ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
-				F53DC29E1A49192600F5F712 /* NewFriendController.m in Sources */,
 				A48CA6A61A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A41CE1AE1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -13759,7 +13749,6 @@
 				F5E380B51A41B1680084F7F3 /* WorkListCell.m in Sources */,
 				A46A28471ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
 				A4C140741A4BEA8500C9BAB5 /* UIImage+Resize.m in Sources */,
-				F566497C1A2AFD56008A5830 /* NewFriendController.m in Sources */,
 				F566497D1A2AFD56008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A41CE1AC1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				A493C28A1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
@@ -14266,7 +14255,6 @@
 				F506A8A91ADE674200EABB0E /* NavViewController.m in Sources */,
 				F5E380B11A419ED90084F7F3 /* ISchoolResult.m in Sources */,
 				A46A28481ABD72F100BD5EA3 /* MessagesViewController.m in Sources */,
-				F5664C361A2AFDD5008A5830 /* NewFriendController.m in Sources */,
 				A48CA6A51A4D044B009EBD04 /* DTTimePeriod.m in Sources */,
 				A41CE1AD1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,

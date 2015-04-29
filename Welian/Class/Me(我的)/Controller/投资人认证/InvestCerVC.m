@@ -277,19 +277,16 @@ static NSString *itemscellid = @"itemscellid";
     } Failed:^(NSError *error) {
         
     }];
-    [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr} success:^(id JSON) {
-        NSString *url = [JSON objectForKey:@"url"];
-        [LogInUser setUserinvestorauth:@(-2)];
-        [LogInUser setUserUrl:url];
-        [self refreshTabelViewHead];
-//        [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
-    } fail:^(NSError *error) {
-        
-    }];
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+//    [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr} success:^(id JSON) {
+//        NSString *url = [JSON objectForKey:@"url"];
+//        [LogInUser setUserinvestorauth:@(-2)];
+//        [LogInUser setUserUrl:url];
+//        [self refreshTabelViewHead];
+////        [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
+//    } fail:^(NSError *error) {
+//        
+//    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 
 }
 

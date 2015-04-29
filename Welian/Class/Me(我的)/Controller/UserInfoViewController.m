@@ -17,7 +17,6 @@
 #import "FriendCell.h"
 #import "WLStatusCell.h"
 #import "UserInfoViewCell.h"
-#import "UserInfoBasicVC.h"
 #import "WLNoteInfoView.h"
 
 #define kTableViewHeaderViewHeight 298.f

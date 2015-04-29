@@ -10,7 +10,6 @@
 #import "UserInfoViewController.h"
 
 #import "ActivityUserViewCell.h"
-#import "UserInfoBasicVC.h"
 #import "MJRefresh.h"
 
 @interface ProjectUserListViewController ()

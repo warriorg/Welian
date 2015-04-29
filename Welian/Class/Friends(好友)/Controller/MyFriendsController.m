@@ -7,7 +7,6 @@
 //
 
 #import "MyFriendsController.h"
-#import "NewFriendController.h"
 //#import "UserInfoBasicVC.h"
 #import "AddFriendsController.h"
 #import "NavViewController.h"
