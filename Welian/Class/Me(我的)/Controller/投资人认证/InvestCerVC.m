@@ -269,8 +269,15 @@ static NSString *itemscellid = @"itemscellid";
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    
-    [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr,@"photoname":@"jpg"} success:^(id JSON) {
+    [WeLianClient investWithParameterDic:@{@"photo":@"1417496795301_x.png"} Success:^(id resultInfo) {
+        NSString *url = @"1417496795301_x.png";
+        [LogInUser setUserinvestorauth:@(-2)];
+        [LogInUser setUserUrl:url];
+        [self refreshTabelViewHead];
+    } Failed:^(NSError *error) {
+        
+    }];
+    [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr} success:^(id JSON) {
         NSString *url = [JSON objectForKey:@"url"];
         [LogInUser setUserinvestorauth:@(-2)];
         [LogInUser setUserUrl:url];
@@ -329,20 +336,24 @@ static NSString *itemscellid = @"itemscellid";
                 }
                 [arryM addObject:@{@"item":userInfo}];
                 [WeLianClient investWithParameterDic:@{@"items":arryM} Success:^(id resultInfo) {
-                    
-                } Failed:^(NSError *error) {
-                    
-                }];
-                [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
-
                     InvestItemM *invesIte = [[InvestItemM alloc] init];
                     [invesIte setItem:userInfo];
                     [invesIte setTime:[NSDate date]];
                     [InvestItems createInvestItems:invesIte];
                     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-                } fail:^(NSError *error) {
+                } Failed:^(NSError *error) {
                     
                 }];
+//                [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
+//
+//                    InvestItemM *invesIte = [[InvestItemM alloc] init];
+//                    [invesIte setItem:userInfo];
+//                    [invesIte setTime:[NSDate date]];
+//                    [InvestItems createInvestItems:invesIte];
+//                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+//                } fail:^(NSError *error) {
+//                    
+//                }];
             } withType:IWVerifiedTypeAddress];
             [self.navigationController pushViewController:caseVC animated:YES];
         }
@@ -371,14 +382,18 @@ static NSString *itemscellid = @"itemscellid";
     for (InvestItems *item in itemMuArray) {
         [arryM addObject:@{@"item":item.item}];
     }
-    [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
+    [WeLianClient investWithParameterDic:@{@"items":arryM} Success:^(id resultInfo) {
         [item MR_deleteEntity];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
-
-    
+//    [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
+//        [item MR_deleteEntity];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 
