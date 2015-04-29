@@ -25,7 +25,7 @@
 
 @property (strong,nonatomic) ActivityInfo *activityInfo;
 @property (strong,nonatomic) NSArray *tickets;
-@property (strong,nonatomic) NSDictionary *payInfo;
+@property (strong,nonatomic) IActivityOrderResultModel *payInfo;
 
 @end
 
@@ -43,7 +43,7 @@
     return @"订单详情";
 }
 
-- (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo Tickets:(NSArray *)tickets payInfo:(NSDictionary *)payInfo
+- (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo Tickets:(NSArray *)tickets payInfo:(IActivityOrderResultModel *)payInfo
 {
     self = [super init];
     if (self) {
@@ -268,9 +268,9 @@
     /*============================================================================*/
     //如果partner和seller数据存于其他位置,请改写下面两行代码
     
-    NSString *partner = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
-    NSString *seller = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
-    NSString *privateKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
+    NSString *partner = _payInfo.alipay.partnerid;//PartnerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"PartnerID"];
+    NSString *seller = _payInfo.alipay.sellerid;//SellerID;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"SellerID"];
+    NSString *privateKey = _payInfo.alipay.privkey;//PartnerPrivKey;//[[NSBundle mainBundle] objectForInfoDictionaryKey:@"RSA private key"];
     /*============================================================================*/
     /*============================================================================*/
     /*============================================================================*/
@@ -294,11 +294,11 @@
     Order *order = [[Order alloc] init];
     order.partner = partner;
     order.seller = seller;
-    order.tradeNO = _payInfo[@"orderid"]; //订单ID（由商家自行制定）
+    order.tradeNO = _payInfo.orderid;//_payInfo[@"orderid"]; //订单ID（由商家自行制定）
     order.productName = _activityInfo.name; //商品标题
     order.productDescription = [self displayOrderDetail]; //商品描述
-    order.amount = [NSString stringWithFormat:@"%.2f",[_payInfo[@"amount"] floatValue]]; //商品价格
-    order.notifyURL = kAlipayNotifyURL; //回调URL
+    order.amount = [NSString stringWithFormat:@"%.2f",_payInfo.amount.floatValue];//[NSString stringWithFormat:@"%.2f",[_payInfo[@"amount"] floatValue]]; //商品价格
+    order.notifyURL = _payInfo.alipay.callbackurl;//kAlipayNotifyURL; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";
@@ -348,32 +348,62 @@
 - (void)updateOrderSucess
 {
     [WLHUDView showHUDWithStr:@"更新订单状态中..." dim:YES];
-    NSDictionary *param = @{@"orderid":_payInfo[@"orderid"]};
-    [WLHttpTool updateTicketOrderStatusParameterDic:param
-                                            success:^(id JSON) {
-                                                [WLHUDView hiddenHud];
-                                                //刷新详情页面
-                                                [KNSNotification postNotificationName:kNeedReloadActivityUI object:nil];
-                                                [UIAlertView bk_showAlertViewWithTitle:@""
-                                                                               message:@"恭喜您，活动报名成功！"
-                                                                     cancelButtonTitle:@"确定"
-                                                                     otherButtonTitles:nil
-                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                                                                   [self.navigationController popViewControllerAnimated:YES];
-                                                                               }];
-                                            } fail:^(NSError *error) {
-                                                [UIAlertView bk_showAlertViewWithTitle:@""
-                                                                               message:[NSString stringWithFormat:@"订单状态修改失败，请联系客服：%@",kTelNumber]
-                                                                        cancelButtonTitle:@"取消"
-                                                                     otherButtonTitles:@[@"呼叫"]
-                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                                                                   if(buttonIndex == 0){
-                                                                                       return ;
-                                                                                   }else{
-                                                                                       [self telToWeLian];
-                                                                                   }
-                                                                               }];
-                                            }];
+//    NSDictionary *param = @{@"orderid":_payInfo[@"orderid"]};
+    [WeLianClient updateActiveOrderStatusWithID:_payInfo.orderid
+                                        Success:^(id resultInfo) {
+                                            [WLHUDView hiddenHud];
+                                            
+                                            //刷新详情页面
+                                            [KNSNotification postNotificationName:kNeedReloadActivityUI object:nil];
+                                            [UIAlertView bk_showAlertViewWithTitle:@""
+                                                                           message:@"恭喜您，活动报名成功！"
+                                                                 cancelButtonTitle:@"确定"
+                                                                 otherButtonTitles:nil
+                                                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                                               [self.navigationController popViewControllerAnimated:YES];
+                                                                           }];
+                                        } Failed:^(NSError *error) {
+                                            [WLHUDView hiddenHud];
+                                            
+                                            [UIAlertView bk_showAlertViewWithTitle:@""
+                                                                           message:[NSString stringWithFormat:@"订单状态修改失败，请联系客服：%@",kTelNumber]
+                                                                 cancelButtonTitle:@"取消"
+                                                                 otherButtonTitles:@[@"呼叫"]
+                                                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                                               if(buttonIndex == 0){
+                                                                                   return ;
+                                                                               }else{
+                                                                                   [self telToWeLian];
+                                                                               }
+                                                                           }];
+                                        }];
+    
+//    NSDictionary *param = @{@"orderid":_payInfo.orderid};
+//    [WLHttpTool updateTicketOrderStatusParameterDic:param
+//                                            success:^(id JSON) {
+//                                                [WLHUDView hiddenHud];
+//                                                //刷新详情页面
+//                                                [KNSNotification postNotificationName:kNeedReloadActivityUI object:nil];
+//                                                [UIAlertView bk_showAlertViewWithTitle:@""
+//                                                                               message:@"恭喜您，活动报名成功！"
+//                                                                     cancelButtonTitle:@"确定"
+//                                                                     otherButtonTitles:nil
+//                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//                                                                                   [self.navigationController popViewControllerAnimated:YES];
+//                                                                               }];
+//                                            } fail:^(NSError *error) {
+//                                                [UIAlertView bk_showAlertViewWithTitle:@""
+//                                                                               message:[NSString stringWithFormat:@"订单状态修改失败，请联系客服：%@",kTelNumber]
+//                                                                        cancelButtonTitle:@"取消"
+//                                                                     otherButtonTitles:@[@"呼叫"]
+//                                                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//                                                                                   if(buttonIndex == 0){
+//                                                                                       return ;
+//                                                                                   }else{
+//                                                                                       [self telToWeLian];
+//                                                                                   }
+//                                                                               }];
+//                                            }];
 }
 
 //拨打电话

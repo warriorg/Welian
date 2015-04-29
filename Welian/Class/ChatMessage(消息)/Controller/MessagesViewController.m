@@ -81,10 +81,6 @@
         
         //如果是从当前VC进入聊天
         [KNSNotification addObserver:self selector:@selector(currentChatFromUserInfo:) name:kCurrentChatFromUserInfo object:nil];
-        
-        self.selectType= 0;
-        self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
-        self.showCustomNavHeader = YES;//隐藏头部
     }
     return self;
 }
@@ -97,6 +93,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //初始化数据
+    self.selectType= 0;
+    self.datasource = [[LogInUser getCurrentLoginUser] chatUsers];
+    self.showCustomNavHeader = YES;//隐藏头部
+    
     // Do any additional setup after loading the view.
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ViewCtrlTopBarHeight)];
     headerView.backgroundColor = kNavBgColor;
@@ -528,6 +529,7 @@
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
+            [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
             [WeLianClient requestAddFriendWithID:newFriendUser.uid
                                          Message:[alert textFieldAtIndex:0].text
                                          Success:^(id resultInfo) {
@@ -540,8 +542,13 @@
                                              self.datasource = [NSArray arrayWithArray:allDatas];
                                              //刷新列表
                                              [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                             [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                          } Failed:^(NSError *error) {
-                                             
+                                             if (error) {
+                                                 [WLHUDView showErrorHUD:error.description];
+                                             }else{
+                                                 [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                             }
                                          }];
 //            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
 //                //发送邀请成功，修改状态，刷新列表

@@ -234,12 +234,18 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
+        [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
         [WeLianClient requestAddFriendWithID:_userStat.user.uid
                                      Message:[alertView textFieldAtIndex:0].text
                                      Success:^(id resultInfo) {
                                          [_addFriendBut setEnabled:NO];
+                                         [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                      } Failed:^(NSError *error) {
-                                         
+                                         if (error) {
+                                             [WLHUDView showErrorHUD:error.description];
+                                         }else{
+                                             [WLHUDView showErrorHUD:@"发送失败，请重试"];
+                                         }
                                      }];
         
 //        [WLHttpTool requestFriendParameterDic:@{@"fid":_userStat.user.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {

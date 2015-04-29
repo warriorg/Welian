@@ -10,6 +10,6 @@
 
 @interface ActivityOrderInfoViewController : BasicViewController
 
-- (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo Tickets:(NSArray *)tickets payInfo:(NSDictionary *)payInfo;
+- (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo Tickets:(NSArray *)tickets payInfo:(IActivityOrderResultModel *)payInfo;
 
 @end
