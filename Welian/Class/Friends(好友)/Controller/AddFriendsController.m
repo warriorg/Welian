@@ -363,11 +363,19 @@ static NSString *fridcellid = @"fridcellid";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-        [WLHttpTool requestFriendParameterDic:@{@"fid":_selecFriend.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
-            
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient requestAddFriendWithID:_selecFriend.uid
+                                     Message:[alertView textFieldAtIndex:0].text
+                                     Success:^(id resultInfo) {
+                                         
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool requestFriendParameterDic:@{@"fid":_selecFriend.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 

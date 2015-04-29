@@ -235,11 +235,19 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-        [WLHttpTool requestFriendParameterDic:@{@"fid":_userStat.user.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
-            [_addFriendBut setEnabled:NO];
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient requestAddFriendWithID:_userStat.user.uid
+                                     Message:[alertView textFieldAtIndex:0].text
+                                     Success:^(id resultInfo) {
+                                         [_addFriendBut setEnabled:NO];
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool requestFriendParameterDic:@{@"fid":_userStat.user.uid,@"message":[alertView textFieldAtIndex:0].text} success:^(id JSON) {
+//            [_addFriendBut setEnabled:NO];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 

@@ -25,7 +25,6 @@
 #import "ICompanyResult.h"
 #import "ISchoolResult.h"
 #import "MyFriendUser.h"
-#import "FriendsinfoModel.h"
 #import "IIMeInvestAuthModel.h"
 #import "NewFriendUser.h"
 

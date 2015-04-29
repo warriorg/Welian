@@ -14,8 +14,6 @@
 #import "MJRefresh.h"
 #import "InvestorUserCell.h"
 #import "UIImageView+WebCache.h"
-#import "FriendsinfoModel.h"
-#import "FriendsFriendModel.h"
 #import "MJExtension.h"
 #import "UIImageView+WebCache.h"
 
@@ -87,16 +85,15 @@ static NSString *identifier = @"investorcellid";
                                   Page:@(page)
                                   Size:@(KCellConut)
                                Success:^(id resultInfo) {
+                                   [self hideRefreshView];
+                                   //清空数据
                                    [self.allArray removeAllObjects];
-//                                   FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
                                    
                                    self.allArray = [NSMutableArray arrayWithArray:[resultInfo friends]];
                                    self.title = [NSString stringWithFormat:@"好友的好友%@人",[resultInfo friendCount]];
-//                                   [self setTitle:[NSString stringWithFormat:@"好友的好友%@人",friendsM.count]];
-//
+                                   
                                    [self.tableView reloadData];
-                                   [self hideRefreshView];
-                                   if ([resultInfo friends].count>=15) {
+                                   if ([resultInfo friends].count >= KCellConut) {
                                        self.tableView.footer.hidden = NO;
                                    }
                                    page++;
@@ -130,24 +127,42 @@ static NSString *identifier = @"investorcellid";
 
 // 加载更多
 - (void)loadMoreDataArray
-{   
-    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
-        
-        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
-        [self.allArray addObjectsFromArray:friendsM.friends];
-
-        [self.tableView reloadData];
-
-        if (friendsM.friends.count<15) {
-            self.tableView.footer.hidden = YES;
-        }else{
-            self.tableView.footer.hidden = NO;
-        }
-        [self hideRefreshView];
-        page++;
-    } fail:^(NSError *error) {
-        [self hideRefreshView];
-    }];
+{
+    [WeLianClient getFriend2ListWithID:[LogInUser getCurrentLoginUser].uid
+                                  Page:@(page)
+                                  Size:@(KCellConut)
+                               Success:^(id resultInfo) {
+                                   [self hideRefreshView];
+                                   [self.allArray addObjectsFromArray:[resultInfo friends]];
+                                   [self.tableView reloadData];
+                                   
+                                   if ([resultInfo friends].count < KCellConut) {
+                                       self.tableView.footer.hidden = YES;
+                                   }else{
+                                       self.tableView.footer.hidden = NO;
+                                   }
+                                   page++;
+                               } Failed:^(NSError *error) {
+                                   [self hideRefreshView];
+                               }];
+    
+//    [WLHttpTool loadUser2FriendParameterDic:@{@"uid":@(0),@"page":@(page),@"size":@(15)} success:^(id JSON) {
+//        
+//        FriendsFriendModel *friendsM = [FriendsFriendModel objectWithKeyValues:JSON];
+//        [self.allArray addObjectsFromArray:friendsM.friends];
+//
+//        [self.tableView reloadData];
+//
+//        if (friendsM.friends.count<15) {
+//            self.tableView.footer.hidden = YES;
+//        }else{
+//            self.tableView.footer.hidden = NO;
+//        }
+//        [self hideRefreshView];
+//        page++;
+//    } fail:^(NSError *error) {
+//        [self hideRefreshView];
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -166,7 +181,7 @@ static NSString *identifier = @"investorcellid";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     InvestorUserCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
+    IFriend2InfoModel *friendinfoM = self.allArray[indexPath.row];
     
     [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:friendinfoM.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
@@ -207,8 +222,6 @@ static NSString *identifier = @"investorcellid";
 //    FriendsinfoModel *friendinfoM = self.allArray[indexPath.row];
     IFriend2InfoModel *friendinfoM = self.allArray[indexPath.row];
     
-//    UserInfoBasicVC *userinfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:friendinfoM isAsk:NO];
-//    [self.navigationController pushViewController:userinfoVC animated:YES];
     UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)friendinfoM OperateType:nil HidRightBtn:NO];
     [self.navigationController pushViewController:userInfoVC animated:YES];
 }

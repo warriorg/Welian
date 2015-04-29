@@ -37,18 +37,35 @@
     return self;
 }
 
+//最大的图片宽度不超过屏幕一般
+- (CGSize)fitsize:(CGSize)thisSize
+{
+    if(thisSize.width == 0 && thisSize.height ==0)
+        return CGSizeMake(0, 0);
+    CGFloat maxWidth = ScreenWidth / 1.5f;
+    CGFloat wscale = thisSize.width / maxWidth;
+    
+    if (thisSize.width > maxWidth) {
+        return CGSizeMake(maxWidth, thisSize.height/wscale);
+    }else{
+        return thisSize;
+    }
+}
+
 - (void)setActivityInfo:(ActivityInfo *)activityInfo
 {
     [super willChangeValueForKey:@"activityInfo"];
     _activityInfo = activityInfo;
     [super didChangeValueForKey:@"activityInfo"];
-    //设置图片
+    //设置图片    
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo]
                       placeholderImage:nil
                                options:SDWebImageRetryFailed|SDWebImageLowPriority
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                  //黑白
                                  if (_activityInfo.status.integerValue == 2) {
+                                     //压缩原图片的一半大小
+                                     image = [image imageByScalingAndCroppingForSize:[self fitsize:image.size]];
                                      [_iconImageView setImage:[image partialImageWithPercentage:0 vertical:YES grayscaleRest:YES]];
                                      //已报名的
                                      [_joinedImageView setImage:[[UIImage imageNamed:@"discovery_activity_list_already"] partialImageWithPercentage:0 vertical:YES grayscaleRest:YES]];

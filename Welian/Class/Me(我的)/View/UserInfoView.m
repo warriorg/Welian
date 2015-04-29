@@ -85,7 +85,7 @@
                       placeholderImage:[UIImage imageNamed:@"user_small"]
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = _baseUserModel.name;
-    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",[_baseUserModel.position deleteTopAndBottomKonggeAndHuiche],[_baseUserModel.company deleteTopAndBottomKonggeAndHuiche]];
+    _companyLabel.text = [NSString stringWithFormat:@"%@　%@",_baseUserModel.position ? [_baseUserModel.position deleteTopAndBottomKonggeAndHuiche] : @"",_baseUserModel.company ? [_baseUserModel.company deleteTopAndBottomKonggeAndHuiche] : @""];
     _touZiRenBtn.hidden = _baseUserModel.investorauth.integerValue == 1 ? NO : YES;
     //手机是否通过认证
     _phoneRZImageView.image = [UIImage imageNamed:_baseUserModel.checked.boolValue ? @"me_phone_yes" : @"me_phone_no"];

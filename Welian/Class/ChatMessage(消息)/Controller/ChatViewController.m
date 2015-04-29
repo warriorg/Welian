@@ -9,7 +9,6 @@
 #import "ChatViewController.h"
 #import "ChatMessage.h"
 #import "UserInfoBasicVC.h"
-#import "FriendsUserModel.h"
 #import "TOWebViewController.h"
 #import "WLDisplayMediaViewController.h"
 #import "ActivityDetailInfoViewController.h"
@@ -1038,11 +1037,19 @@
             LogInUser *loginUser = [LogInUser getCurrentLoginUser];
             NSString *msg = [NSString stringWithFormat:@"我是%@的%@",loginUser.company,loginUser.position];
             //    [[alert textFieldAtIndex:0] setText:[NSString stringWithFormat:@"我是%@的%@",mode.company,mode.position]];
-            [WLHttpTool requestFriendParameterDic:@{@"fid":self.friendUser.uid,@"message":msg} success:^(id JSON) {
-                [WLHUDView showSuccessHUD:@"好友请求已发送"];
-            } fail:^(NSError *error) {
-                
-            }];
+            //发送好友请求
+            [WeLianClient requestAddFriendWithID:self.friendUser.uid
+                                         Message:msg
+                                         Success:^(id resultInfo) {
+                                             [WLHUDView showSuccessHUD:@"好友请求已发送"];
+                                         } Failed:^(NSError *error) {
+                                             
+                                         }];
+//            [WLHttpTool requestFriendParameterDic:@{@"fid":self.friendUser.uid,@"message":msg} success:^(id JSON) {
+//                [WLHUDView showSuccessHUD:@"好友请求已发送"];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }
             break;
             

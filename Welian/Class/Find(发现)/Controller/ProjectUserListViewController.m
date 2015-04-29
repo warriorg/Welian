@@ -259,18 +259,33 @@
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
-            [WLHttpTool requestFriendParameterDic:@{@"fid":userInfo.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
-                IBaseUserM *newUser = _datasource[indexPath.row];
-                newUser.friendship = @(4);
-                
-                //改变数组，刷新列表
-                [self.datasource replaceObjectAtIndex:indexPath.row withObject:newUser];
-                //刷新列表
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient requestAddFriendWithID:userInfo.uid
+                                         Message:[alert textFieldAtIndex:0].text
+                                         Success:^(id resultInfo) {
+                                             [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                                             IBaseUserM *newUser = _datasource[indexPath.row];
+                                             newUser.friendship = @(4);
+                                             
+                                             //改变数组，刷新列表
+                                             [self.datasource replaceObjectAtIndex:indexPath.row withObject:newUser];
+                                             //刷新列表
+                                             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         } Failed:^(NSError *error) {
+                                             
+                                         }];
+            
+//            [WLHttpTool requestFriendParameterDic:@{@"fid":userInfo.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+//                IBaseUserM *newUser = _datasource[indexPath.row];
+//                newUser.friendship = @(4);
+//                
+//                //改变数组，刷新列表
+//                [self.datasource replaceObjectAtIndex:indexPath.row withObject:newUser];
+//                //刷新列表
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }];
         [alert show];
     }

@@ -10,4 +10,9 @@
 
 @implementation IBaseUserM
 
+- (void)customOperation:(NSDictionary *)dict
+{
+
+}
+
 @end

@@ -572,16 +572,29 @@
             [alert bk_addButtonWithTitle:@"取消" handler:nil];
             [alert bk_addButtonWithTitle:@"发送" handler:^{
                 //发送好友请求
-                [WLHttpTool requestFriendParameterDic:@{@"fid":needAddUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                    //发送邀请成功，修改状态，刷新列表
-                    NeedAddUser *addUser = [needAddUser updateFriendShip:4];
-                    //改变数组，刷新列表
-                    [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
-                    //刷新列表
-                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                } fail:^(NSError *error) {
-                    
-                }];
+                [WeLianClient requestAddFriendWithID:needAddUser.uid
+                                             Message:[alert textFieldAtIndex:0].text
+                                             Success:^(id resultInfo) {
+                                                 //发送邀请成功，修改状态，刷新列表
+                                                 NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+                                                 //改变数组，刷新列表
+                                                 [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                                                 //刷新列表
+                                                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                             } Failed:^(NSError *error) {
+                                                 
+                                             }];
+                
+//                [WLHttpTool requestFriendParameterDic:@{@"fid":needAddUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                    //发送邀请成功，修改状态，刷新列表
+//                    NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+//                    //改变数组，刷新列表
+//                    [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+//                    //刷新列表
+//                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                } fail:^(NSError *error) {
+//                    
+//                }];
             }];
             [alert show];
         }

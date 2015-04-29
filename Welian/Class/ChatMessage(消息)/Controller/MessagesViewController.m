@@ -529,57 +529,105 @@
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
-            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                //发送邀请成功，修改状态，刷新列表
-                NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
-                
-                //改变数组，刷新列表
-                NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
-                [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
-                self.datasource = [NSArray arrayWithArray:allDatas];
-                //刷新列表
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient requestAddFriendWithID:newFriendUser.uid
+                                         Message:[alert textFieldAtIndex:0].text
+                                         Success:^(id resultInfo) {
+                                             //发送邀请成功，修改状态，刷新列表
+                                             NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+                                             
+                                             //改变数组，刷新列表
+                                             NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
+                                             [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+                                             self.datasource = [NSArray arrayWithArray:allDatas];
+                                             //刷新列表
+                                             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         } Failed:^(NSError *error) {
+                                             
+                                         }];
+//            [WLHttpTool requestFriendParameterDic:@{@"fid":newFriendUser.uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                //发送邀请成功，修改状态，刷新列表
+//                NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeWait];
+//                
+//                //改变数组，刷新列表
+//                NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
+//                [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+//                self.datasource = [NSArray arrayWithArray:allDatas];
+//                //刷新列表
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }];
         [alert show];
     }
     
     if (type == FriendOperateTypeAccept) {
         //接受好友请求
-        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
-            
-            [newFriendUser setIsAgree:@(1)];
-            //更新好友列表数据库
-            MyFriendUser *myFriendUser = [MyFriendUser createWithNewFriendUser:newFriendUser];
-            
-            //发送邀请成功，修改状态，刷新列表
-            NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
-//            if (self.userBasicVC) {
-//                [self.userBasicVC addSucceed];
-//            }
-            //改变数组，刷新列表
-            NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
-            [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
-            
-            self.datasource = [NSArray arrayWithArray:allDatas];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            
-            //刷新好友列表
-            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
-            
-            //通知接受好友请求
-            [KNSNotification postNotificationName:[NSString stringWithFormat:kAccepteFriend,newFriendUser.uid] object:nil];
-            
-            //接受后，本地创建一条消息
-            //本地创建好像
-            [ChatMessage createChatMessageForAddFriend:myFriendUser];
-            
-            [WLHUDView showSuccessHUD:@"添加成功！"];
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient confirmAddFriendWithID:newFriendUser.uid
+                                     Success:^(id resultInfo) {
+                                         [newFriendUser setIsAgree:@(1)];
+                                         //更新好友列表数据库
+                                         MyFriendUser *myFriendUser = [MyFriendUser createWithNewFriendUser:newFriendUser];
+                                         
+                                         //发送邀请成功，修改状态，刷新列表
+                                         NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+                                         //            if (self.userBasicVC) {
+                                         //                [self.userBasicVC addSucceed];
+                                         //            }
+                                         //改变数组，刷新列表
+                                         NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
+                                         [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+                                         
+                                         self.datasource = [NSArray arrayWithArray:allDatas];
+                                         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         
+                                         //刷新好友列表
+                                         [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+                                         
+                                         //通知接受好友请求
+                                         [KNSNotification postNotificationName:[NSString stringWithFormat:kAccepteFriend,newFriendUser.uid] object:nil];
+                                         
+                                         //接受后，本地创建一条消息
+                                         //本地创建好像
+                                         [ChatMessage createChatMessageForAddFriend:myFriendUser];
+                                         
+                                         [WLHUDView showSuccessHUD:@"添加成功！"];
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {
+//            
+//            [newFriendUser setIsAgree:@(1)];
+//            //更新好友列表数据库
+//            MyFriendUser *myFriendUser = [MyFriendUser createWithNewFriendUser:newFriendUser];
+//            
+//            //发送邀请成功，修改状态，刷新列表
+//            NewFriendUser *nowFriendUser = [newFriendUser updateOperateType:FriendOperateTypeAdded];
+////            if (self.userBasicVC) {
+////                [self.userBasicVC addSucceed];
+////            }
+//            //改变数组，刷新列表
+//            NSMutableArray *allDatas = [NSMutableArray arrayWithArray:_datasource];
+//            [allDatas replaceObjectAtIndex:indexPath.row withObject:nowFriendUser];
+//            
+//            self.datasource = [NSArray arrayWithArray:allDatas];
+//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            
+//            //刷新好友列表
+//            [KNSNotification postNotificationName:KupdataMyAllFriends object:self];
+//            
+//            //通知接受好友请求
+//            [KNSNotification postNotificationName:[NSString stringWithFormat:kAccepteFriend,newFriendUser.uid] object:nil];
+//            
+//            //接受后，本地创建一条消息
+//            //本地创建好像
+//            [ChatMessage createChatMessageForAddFriend:myFriendUser];
+//            
+//            [WLHUDView showSuccessHUD:@"添加成功！"];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 

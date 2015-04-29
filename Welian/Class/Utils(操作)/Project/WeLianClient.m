@@ -736,8 +736,8 @@
                           Path:kFriendSamelistPath
                        Success:^(id resultInfo) {
                            DLog(@"getSameFriendList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+//                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -749,13 +749,12 @@
                        Success:(SuccessBlock)success
                         Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"uid":uid,@"message":message};
+    NSDictionary *params = @{@"uid":uid,@"message":(message ? : @"")};
     [self reqestPostWithParams:params
                           Path:kFriendRequestPath
                        Success:^(id resultInfo) {
                            DLog(@"requestAddFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -771,8 +770,7 @@
                           Path:kFriendConfirmPath
                        Success:^(id resultInfo) {
                            DLog(@"confirmAddFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -788,8 +786,7 @@
                           Path:kDeleteFriendPath
                        Success:^(id resultInfo) {
                            DLog(@"deleteFriend ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -1080,7 +1077,7 @@
                           Path:kActiveListPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveList ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           NSArray *result = [IActivityInfo objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -1097,7 +1094,7 @@
                           Path:kActiveDetailInfoPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveDetailInfo ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           IActivityInfo *result = [IActivityInfo objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -1118,7 +1115,7 @@
                           Path:kActiveRecordersPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveRecorders ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -1135,7 +1132,7 @@
                           Path:kActiveTicketsPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveTickets ---- %@",resultInfo);
-                           IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           NSArray *result = [IActivityTicket objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FriendsUserModel.h"
 
 @interface ChineseString : NSObject
 

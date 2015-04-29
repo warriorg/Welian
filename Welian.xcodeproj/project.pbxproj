@@ -1094,16 +1094,6 @@
 		A493C3151ADD14A60056BD52 /* InvestorUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2BD1ADD14A60056BD52 /* InvestorUserM.m */; };
 		A493C3161ADD14A60056BD52 /* InvestorUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2BD1ADD14A60056BD52 /* InvestorUserM.m */; };
 		A493C3171ADD14A60056BD52 /* InvestorUserM.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2BD1ADD14A60056BD52 /* InvestorUserM.m */; };
-		A493C3181ADD14A60056BD52 /* FriendsFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */; };
-		A493C3191ADD14A60056BD52 /* FriendsFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */; };
-		A493C31A1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */; };
-		A493C31B1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */; };
-		A493C31C1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */; };
-		A493C31D1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */; };
-		A493C31E1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */; };
-		A493C31F1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */; };
-		A493C3201ADD14A60056BD52 /* FriendsinfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */; };
-		A493C3211ADD14A60056BD52 /* FriendsinfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */; };
 		A493C3221ADD14A60056BD52 /* NewFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C41ADD14A60056BD52 /* NewFriendModel.m */; };
 		A493C3231ADD14A60056BD52 /* NewFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C41ADD14A60056BD52 /* NewFriendModel.m */; };
 		A493C3241ADD14A60056BD52 /* NewFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A493C2C41ADD14A60056BD52 /* NewFriendModel.m */; };
@@ -5110,10 +5100,6 @@
 		A493C2BB1ADD14A60056BD52 /* Findplist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Findplist.plist; sourceTree = "<group>"; };
 		A493C2BC1ADD14A60056BD52 /* InvestorUserM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestorUserM.h; sourceTree = "<group>"; };
 		A493C2BD1ADD14A60056BD52 /* InvestorUserM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestorUserM.m; sourceTree = "<group>"; };
-		A493C2BF1ADD14A60056BD52 /* FriendsFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsFriendModel.h; sourceTree = "<group>"; };
-		A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsFriendModel.m; sourceTree = "<group>"; };
-		A493C2C11ADD14A60056BD52 /* FriendsinfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsinfoModel.h; sourceTree = "<group>"; };
-		A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsinfoModel.m; sourceTree = "<group>"; };
 		A493C2C31ADD14A60056BD52 /* NewFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendModel.h; sourceTree = "<group>"; };
 		A493C2C41ADD14A60056BD52 /* NewFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendModel.m; sourceTree = "<group>"; };
 		A493C2C61ADD14A60056BD52 /* CardStatuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardStatuModel.h; sourceTree = "<group>"; };
@@ -7546,10 +7532,6 @@
 		A493C2BE1ADD14A60056BD52 /* Model(Friends) */ = {
 			isa = PBXGroup;
 			children = (
-				A493C2BF1ADD14A60056BD52 /* FriendsFriendModel.h */,
-				A493C2C01ADD14A60056BD52 /* FriendsFriendModel.m */,
-				A493C2C11ADD14A60056BD52 /* FriendsinfoModel.h */,
-				A493C2C21ADD14A60056BD52 /* FriendsinfoModel.m */,
 				A493C2C31ADD14A60056BD52 /* NewFriendModel.h */,
 				A493C2C41ADD14A60056BD52 /* NewFriendModel.m */,
 			);
@@ -13117,7 +13099,6 @@
 				A49C7CD81A70D42700F2AEC5 /* MLLetterIndexNavigationItem.m in Sources */,
 				A49C7CD91A70D42700F2AEC5 /* ForgetPWDController.m in Sources */,
 				A49C7CDA1A70D42700F2AEC5 /* M80AttributedLabelAttachment.m in Sources */,
-				A493C3211ADD14A60056BD52 /* FriendsinfoModel.m in Sources */,
 				A49C7CDB1A70D42700F2AEC5 /* SDWebImageCompat.m in Sources */,
 				A49C7CDC1A70D42700F2AEC5 /* FMDatabase.m in Sources */,
 				A493C36C1ADD14A60056BD52 /* WLPhoto.m in Sources */,
@@ -13153,7 +13134,6 @@
 				A49C7CF61A70D42700F2AEC5 /* PictureCell.m in Sources */,
 				A49C7CF81A70D42700F2AEC5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A49C7CF91A70D42700F2AEC5 /* NSEntityDescription+MagicalDataImport.m in Sources */,
-				A493C31C1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA91AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805B1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A472DBE21A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -13632,7 +13612,6 @@
 				A4C141191A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
 				F53DC34F1A49192600F5F712 /* ForgetPWDController.m in Sources */,
 				F53DC3501A49192600F5F712 /* M80AttributedLabelAttachment.m in Sources */,
-				A493C31F1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */,
 				F53DC3511A49192600F5F712 /* SDWebImageCompat.m in Sources */,
 				F53DC3521A49192600F5F712 /* FMDatabase.m in Sources */,
 				A493C36A1ADD14A60056BD52 /* WLPhoto.m in Sources */,
@@ -13666,7 +13645,6 @@
 				F53DC3641A49192600F5F712 /* PictureCell.m in Sources */,
 				A4C140701A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE41A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
-				A493C31A1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA81AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C805A1A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A472DBE11A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -14139,7 +14117,6 @@
 				F5664A1B1A2AFD56008A5830 /* SDWebImageCompat.m in Sources */,
 				F5664A1C1A2AFD56008A5830 /* FMDatabase.m in Sources */,
 				F5E69B371A42D263001B19E5 /* InvestorUser.m in Sources */,
-				A493C31D1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */,
 				F5664A1F1A2AFD56008A5830 /* ChineseToPinyinResource.m in Sources */,
 				A4C144681A4C271900C9BAB5 /* WLBubblePhotoImageView.m in Sources */,
 				F59E761F1A411E4C0028FBAF /* ICompanyResult.m in Sources */,
@@ -14176,7 +14153,6 @@
 				A46FAE5B1A8DE82A005EB34E /* ActivityOrderInfoViewController.m in Sources */,
 				F5664A2E1A2AFD56008A5830 /* PictureCell.m in Sources */,
 				A4A2EAE21A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
-				A493C3181ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				A49C80581A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				F5933FA61AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A472DBDF1A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -14656,7 +14632,6 @@
 				A4C141181A4BEF5700C9BAB5 /* MLLetterIndexNavigationItem.m in Sources */,
 				F5664CD31A2AFDD5008A5830 /* ForgetPWDController.m in Sources */,
 				F5664CD41A2AFDD5008A5830 /* M80AttributedLabelAttachment.m in Sources */,
-				A493C31E1ADD14A60056BD52 /* FriendsinfoModel.m in Sources */,
 				F5664CD51A2AFDD5008A5830 /* SDWebImageCompat.m in Sources */,
 				F5664CD61A2AFDD5008A5830 /* FMDatabase.m in Sources */,
 				A493C3691ADD14A60056BD52 /* WLPhoto.m in Sources */,
@@ -14690,7 +14665,6 @@
 				F5664CE81A2AFDD5008A5830 /* PictureCell.m in Sources */,
 				A4C1406F1A4BEA8500C9BAB5 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				A4A2EAE31A6CF7C8006ADA55 /* NSEntityDescription+MagicalDataImport.m in Sources */,
-				A493C3191ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				F5933FA71AD4F4030088C70D /* MJRefreshLegendHeader.m in Sources */,
 				A49C80591A71041000F2AEC5 /* NSDataEx.m in Sources */,
 				A472DBE01A85EE2E003EF296 /* ActivityListViewController.m in Sources */,
@@ -14859,7 +14833,6 @@
 				A493C21F1ADD0BB00056BD52 /* CALayer+XibConfiguration.m in Sources */,
 				A493C2921ADD0BB00056BD52 /* NSArray+ArrayQuery.m in Sources */,
 				A493C2241ADD0BB00056BD52 /* NSData+MD5Digest.m in Sources */,
-				A493C3201ADD14A60056BD52 /* FriendsinfoModel.m in Sources */,
 				A493C2791ADD0BB00056BD52 /* NSManagedObjectContext+e0571.m in Sources */,
 				A493C33E1ADD14A60056BD52 /* CommentMode.m in Sources */,
 				A493C3161ADD14A60056BD52 /* InvestorUserM.m in Sources */,
@@ -14881,7 +14854,6 @@
 				A49076021AEF3A07001921EB /* IFriend2InfoModel.m in Sources */,
 				A493C37F1ADD14A60056BD52 /* WLUserStatusesResult.m in Sources */,
 				A47095721ADD252600329050 /* NavViewController.m in Sources */,
-				A493C31B1ADD14A60056BD52 /* FriendsFriendModel.m in Sources */,
 				A493C3431ADD14A60056BD52 /* FeedAndZanFrameM.m in Sources */,
 				A493C1D01ADD0A0C0056BD52 /* WLHttpTool.m in Sources */,
 				A40515991AE777E300A3CA3F /* ILoginUserModel.m in Sources */,

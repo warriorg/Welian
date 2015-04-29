@@ -112,7 +112,8 @@
         cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.indexPath = indexPath;
-    cell.activityUserData = _datasource[indexPath.row];
+//    cell.activityUserData = _datasource[indexPath.row];
+    cell.baseUser = _datasource[indexPath.row];
     WEAKSELF
     [cell setAddFriendBlock:^(NSIndexPath *indexPath){
         [weakSelf addFriendWithIndex:indexPath];
@@ -124,15 +125,16 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSDictionary *info = _datasource[indexPath.row];
-    NSString *uid = info[@"uid"];
+    IBaseUserM *baseUser = _datasource[indexPath.row];
+//    NSDictionary *info = _datasource[indexPath.row];
+//    NSString *uid = info[@"uid"];
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
 //    NSString *friendship = info[@"friendship"];
-    if(uid != nil){
-        IBaseUserM *baseUser = [[IBaseUserM alloc] init];
-        baseUser.name = info[@"name"];
-        baseUser.uid = info[@"uid"];
-        baseUser.friendship = @([info[@"friendship"] integerValue]);
+    if(baseUser.uid != nil){
+//        IBaseUserM *baseUser = [[IBaseUserM alloc] init];
+//        baseUser.name = info[@"name"];
+//        baseUser.uid = info[@"uid"];
+//        baseUser.friendship = @([info[@"friendship"] integerValue]);
         //系统联系人
 //        UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:baseUser isAsk:NO];
         
@@ -176,37 +178,70 @@
 //获取数据
 - (void)initData
 {
-    [WLHttpTool loadActiveRecordsParameterDic:@{@"activeid":_activeId,@"page":@(_pageIndex),@"size":@(_pageSize)}
-                                      success:^(id JSON) {
-                                          //隐藏加载更多动画
-                                          [self.tableView.footer endRefreshing];
-//                                          NSInteger count = [JSON[@"count"] integerValue];
-                                          NSArray *records = JSON[@"records"];
-                                          
-                                          if (records.count > 0) {
-                                              [self.datasource addObjectsFromArray:records];
-                                          }
-                                          
-                                          //设置是否可以下拉刷新
-                                          if ([records count] != KCellConut) {
-                                              self.tableView.footer.hidden = YES;
-                                          }else{
-                                              self.tableView.footer.hidden = NO;
-                                          }
-                                          
-                                          if (_datasource.count > 0) {
-                                              [_noDataNotView removeFromSuperview];
-                                          }else{
-                                              [self.tableView addSubview:self.noDataNotView];
-                                              [self.tableView sendSubviewToBack:self.noDataNotView];
-                                          }
-                                          
-                                          [self.tableView reloadData];
-                                      } fail:^(NSError *error) {
-                                          //隐藏加载更多动画
-                                          [self.tableView.footer endRefreshing];
-//                                          [UIAlertView showWithError:error];
-                                      }];
+    [WeLianClient getActiveRecordersWithID:@(_activeId.integerValue)
+                                      Page:@(_pageIndex)
+                                      Size:@(_pageSize)
+                                   Success:^(id resultInfo) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                       
+                                       NSArray *records = resultInfo;
+                                       
+                                       if (records.count > 0) {
+                                           [self.datasource addObjectsFromArray:records];
+                                       }
+                                       
+                                       //设置是否可以下拉刷新
+                                       if ([records count] != KCellConut) {
+                                           self.tableView.footer.hidden = YES;
+                                       }else{
+                                           self.tableView.footer.hidden = NO;
+                                       }
+                                       
+                                       if (_datasource.count > 0) {
+                                           [_noDataNotView removeFromSuperview];
+                                       }else{
+                                           [self.tableView addSubview:self.noDataNotView];
+                                           [self.tableView sendSubviewToBack:self.noDataNotView];
+                                       }
+                                       
+                                       [self.tableView reloadData];
+                                   } Failed:^(NSError *error) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                   }];
+    
+//    [WLHttpTool loadActiveRecordsParameterDic:@{@"activeid":_activeId,@"page":@(_pageIndex),@"size":@(_pageSize)}
+//                                      success:^(id JSON) {
+//                                          //隐藏加载更多动画
+//                                          [self.tableView.footer endRefreshing];
+////                                          NSInteger count = [JSON[@"count"] integerValue];
+//                                          NSArray *records = JSON[@"records"];
+//                                          
+//                                          if (records.count > 0) {
+//                                              [self.datasource addObjectsFromArray:records];
+//                                          }
+//                                          
+//                                          //设置是否可以下拉刷新
+//                                          if ([records count] != KCellConut) {
+//                                              self.tableView.footer.hidden = YES;
+//                                          }else{
+//                                              self.tableView.footer.hidden = NO;
+//                                          }
+//                                          
+//                                          if (_datasource.count > 0) {
+//                                              [_noDataNotView removeFromSuperview];
+//                                          }else{
+//                                              [self.tableView addSubview:self.noDataNotView];
+//                                              [self.tableView sendSubviewToBack:self.noDataNotView];
+//                                          }
+//                                          
+//                                          [self.tableView reloadData];
+//                                      } fail:^(NSError *error) {
+//                                          //隐藏加载更多动画
+//                                          [self.tableView.footer endRefreshing];
+////                                          [UIAlertView showWithError:error];
+//                                      }];
 }
 
 //加载更多数据
@@ -226,14 +261,18 @@
 - (void)addFriendWithIndex:(NSIndexPath *)indexPath
 {
     //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-    NSDictionary *info = _datasource[indexPath.row];
-    NSString *uid = info[@"uid"];
-    NSString *friendship = info[@"friendship"];
-    NSString *name = info[@"name"];
-    NSString *wlname = [info[@"wlname"] length] == 0 ? name : info[@"wlname"];
-    if(uid != nil && friendship.integerValue != 1){
+    IBaseUserM *baseUser = _datasource[indexPath.row];
+//    NSDictionary *info = _datasource[indexPath.row];
+//    NSString *uid = info[@"uid"];
+//    NSString *friendship = info[@"friendship"];
+//    NSString *name = info[@"name"];
+//    NSString *wlname = [info[@"wlname"] length] == 0 ? name : info[@"wlname"];
+    
+    if(baseUser.uid != nil && baseUser.friendship.integerValue != 1){
         //添加
         DLog(@"添加好友");
+        NSString *wlname = baseUser.wlname.length == 0 ? baseUser.name : baseUser.wlname;
+        
         //添加好友，发送添加成功，状态变成待验证
         LogInUser *loginUser = [LogInUser getCurrentLoginUser];
         UIAlertView *alert = [UIAlertView bk_alertViewWithTitle:@"好友验证" message:[NSString stringWithFormat:@"发送至好友：%@",wlname]];
@@ -242,20 +281,37 @@
         [alert bk_addButtonWithTitle:@"取消" handler:nil];
         [alert bk_addButtonWithTitle:@"发送" handler:^{
             //发送好友请求
-            [WLHttpTool requestFriendParameterDic:@{@"fid":uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
-                NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
-                //重置好友关系
-                [infoDic setValue:@"4" forKey:@"friendship"];
-//                //发送邀请成功，修改状态，刷新列表
-//                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
-                //改变数组，刷新列表
-                [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
-                //刷新列表
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient requestAddFriendWithID:baseUser.uid
+                                         Message:[alert textFieldAtIndex:0].text
+                                         Success:^(id resultInfo) {
+                                             [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+                                             NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
+                                             //重置好友关系
+                                             [infoDic setValue:@"4" forKey:@"friendship"];
+                                             //                //发送邀请成功，修改状态，刷新列表
+                                             //                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+                                             //改变数组，刷新列表
+                                             [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
+                                             //刷新列表
+                                             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                         } Failed:^(NSError *error) {
+                                             
+                                         }];
+            
+//            [WLHttpTool requestFriendParameterDic:@{@"fid":uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
+//                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
+//                NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
+//                //重置好友关系
+//                [infoDic setValue:@"4" forKey:@"friendship"];
+////                //发送邀请成功，修改状态，刷新列表
+////                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
+//                //改变数组，刷新列表
+//                [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
+//                //刷新列表
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }];
         [alert show];
     }

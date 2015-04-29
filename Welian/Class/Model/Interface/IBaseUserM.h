@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSNumber *uid;    //uid唯一标示
 @property (nonatomic, strong) NSString *name;   //用户姓名
+@property (nonatomic, strong) NSString *wlname; //如活动报名列表返回的 微链中的名字
 @property (nonatomic, strong) NSString *avatar; //用户头像
 @property (nonatomic, strong) NSString *company;//用户公司
 @property (nonatomic, strong) NSString *position;//用户职务
