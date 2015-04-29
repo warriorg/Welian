@@ -328,6 +328,7 @@ static NSString *itemscellid = @"itemscellid";
                     [arryM addObject:@{@"item":item.item}];
                 }
                 [arryM addObject:@{@"item":userInfo}];
+//                [WeLianClient investWithPhoto:<#(NSString *)#> Industrys:<#(NSArray *)#> Stages:<#(NSArray *)#> Items:<#(NSArray *)#> Success:<#^(id resultInfo)success#> Failed:<#^(NSError *error)failed#>]
                 [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
 
                     InvestItemM *invesIte = [[InvestItemM alloc] init];

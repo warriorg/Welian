@@ -88,19 +88,23 @@
     }
 }
 
+- (void)dealloc
+{
+    DLog(@"fdsafdadsaf");
+}
+
 - (void)logout
 {
 //    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
     [UserDefaults removeObjectForKey:kSessionId];
     [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
     [LogInUser setUserisNow:NO];
-    [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
     [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-//        [WLHUDView hiddenHud];
+        
     } fail:^(NSError *error) {
-//        [WLHUDView showErrorHUD:@"退出失败！"];
+        
     }];
-    
+    [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 
 #pragma mark 读取plist文件的内容
