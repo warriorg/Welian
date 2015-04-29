@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "BaseUser.h"
 
-@class ProjectDetailInfo;
+@class ProjectDetailInfo, IBaseUserM;
 
 @interface ProjectUser : BaseUser
 

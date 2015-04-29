@@ -72,8 +72,8 @@ static NSString *mobileCellid = @"MobileInfoCellid";
 {
     UserCardController *carVC = [[UserCardController alloc] init];
 
-    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getCurrentLoginUser]];
-    [carVC setUserinfoM:mode];
+//    UserInfoModel *mode = [UserInfoModel userinfoWithLoginUser:[LogInUser getCurrentLoginUser]];
+//    [carVC setUserinfoM:mode];
     [self.navigationController pushViewController:carVC animated:YES];
 }
 

@@ -8,7 +8,6 @@
 
 #import "ChatViewController.h"
 #import "ChatMessage.h"
-#import "UserInfoBasicVC.h"
 #import "TOWebViewController.h"
 #import "WLDisplayMediaViewController.h"
 #import "ActivityDetailInfoViewController.h"

@@ -7,7 +7,6 @@
 //
 
 #import "AddFriendsController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "WLTool.h"
@@ -250,7 +249,7 @@ static NSString *fridcellid = @"fridcellid";
     }else{
         FriendCell *searchcell = [tableView dequeueReusableCellWithIdentifier:fridcellid];
         
-        UserInfoModel *modeIM = self.filterArray[indexPath.row];
+        IBaseUserM *modeIM = self.filterArray[indexPath.row];
         
         [searchcell setUserMode:modeIM];
         return searchcell;
@@ -288,7 +287,7 @@ static NSString *fridcellid = @"fridcellid";
         
     }else{
         
-        UserInfoModel *mode = self.filterArray[indexPath.row];
+        IBaseUserM *mode = self.filterArray[indexPath.row];
 //        UserInfoBasicVC *userBasic = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:mode isAsk:NO];
 //        [self.navigationController pushViewController:userBasic animated:YES];
         UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:mode OperateType:nil HidRightBtn:NO];

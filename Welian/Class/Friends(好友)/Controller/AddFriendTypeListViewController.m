@@ -9,7 +9,6 @@
 #import "AddFriendTypeListViewController.h"
 #import "AddFriendViewController.h"
 #import "BSearchFriendsController.h"
-#import "UserInfoBasicVC.h"
 #import "NavViewController.h"
 #import "UserInfoViewController.h"
 #import "UIImage+ImageEffects.h"
@@ -118,7 +117,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _searchDisplayVC.searchResultsTableView) {
-        UserInfoModel *mode = _filterArray[indexPath.row];
+        IBaseUserM *mode = _filterArray[indexPath.row];
 
         UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)mode OperateType:nil HidRightBtn:NO];
         [self.navigationController pushViewController:userInfoVC animated:YES];
@@ -154,7 +153,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == _searchDisplayVC.searchResultsTableView) {
-        UserInfoModel *mode = _filterArray[indexPath.row];
+        IBaseUserM *mode = _filterArray[indexPath.row];
         return [NewFriendViewCell configureWithName:mode.name message:[NSString stringWithFormat:@"%@ %@",mode.company,mode.position]];
     }else{
         return 60.f;

@@ -24,8 +24,9 @@
     return @"个人名片";
 }
 
-- (void)setdatainfo:(UserInfoModel *)userinfoM
+- (void)setdatainfo
 {
+    LogInUser *userinfoM = [LogInUser getCurrentLoginUser];
     [_iconImageV sd_setImageWithURL:[NSURL URLWithString:userinfoM.avatar] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
     [_nameLabel setText:userinfoM.name];
@@ -91,7 +92,7 @@
 {
     activity = @[[[WeixinSessionActivity alloc] init], [[WeixinTimelineActivity alloc] init]];
 
-    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[[NSString stringWithFormat:@"%@的名片,%@,%@",self.userinfoM.name,self.userinfoM.position,self.userinfoM.company], self.iconImageV.image, [NSURL URLWithString:[NSString stringWithFormat:@"%@",self.userinfoM.shareurl]]] applicationActivities:activity];
+    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[[NSString stringWithFormat:@"%@的名片,%@,%@",[LogInUser getCurrentLoginUser].name,[LogInUser getCurrentLoginUser].position,[LogInUser getCurrentLoginUser].company], self.iconImageV.image, [NSURL URLWithString:[NSString stringWithFormat:@"%@",[LogInUser getCurrentLoginUser].shareurl]]] applicationActivities:activity];
     
     //    activityView.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePrint];
     [self presentViewController:activityView animated:YES completion:nil];
@@ -112,7 +113,7 @@
     
     [self.bageView.layer setCornerRadius:5.0];
     [self.bageView.layer setMasksToBounds:YES];
-    [self setdatainfo:_userinfoM];
+    [self setdatainfo];
     // Do any additional setup after loading the view from its nib.
 }
 

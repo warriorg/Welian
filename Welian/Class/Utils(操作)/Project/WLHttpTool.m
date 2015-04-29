@@ -822,7 +822,7 @@
         NSMutableArray *mutabArray = [NSMutableArray arrayWithCapacity:json.count];
         for (NSDictionary *modic in json) {
             
-            UserInfoModel *mode = [[UserInfoModel alloc] init];
+            IBaseUserM *mode = [[IBaseUserM alloc] init];
             [mode setKeyValues:modic];
             [mutabArray addObject:mode];
         }

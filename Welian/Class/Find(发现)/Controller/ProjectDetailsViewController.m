@@ -21,7 +21,6 @@
 #import "NoCommentCell.h"
 #import "ProjectFavorteViewCell.h"
 #import "ProjectDetailInfoView.h"
-#import "UserInfoBasicVC.h"
 #import "MessageKeyboardView.h"
 #import "MJRefresh.h"
 //分享

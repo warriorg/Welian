@@ -67,7 +67,7 @@
  *
  *  @param userInfoModel 用户信息模型
  */
-- (void)setUserInfoModel:(UserInfoModel *)userInfoModel
+- (void)setUserInfoModel:(IBaseUserM *)userInfoModel
 {
     [super willChangeValueForKey:@"userInfoModel"];
     _userInfoModel = userInfoModel;

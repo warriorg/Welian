@@ -70,13 +70,13 @@
                     Success:(SuccessBlock)success
                      Failed:(FailedBlock)failed;
 
+
+// 取用户详细
++ (void)getWithUid:(NSNumber *)uid Success:(SuccessBlock)success Failed:(FailedBlock)failed;
+
+
 //认证投资人
-+ (void)investWithPhoto:(NSString *)photo
-              Industrys:(NSArray *)industrys
-                 Stages:(NSArray *)stages
-                  Items:(NSArray *)items
-                Success:(SuccessBlock)success
-                 Failed:(FailedBlock)failed;
++ (void)investWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //取用户认证信息
 + (void)loadInvestorWithID:(NSString *)uid

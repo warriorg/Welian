@@ -537,7 +537,7 @@ static NSString *fridcellid = @"fridcellid";
             break;
         case 2:
         {
-            UserInfoModel *modeIM = _datasource3[indexPath.row];
+            IBaseUserM *modeIM = _datasource3[indexPath.row];
 //            UserInfoBasicVC *userinfVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:modeIM isAsk:NO];
             UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:modeIM OperateType:nil HidRightBtn:NO];
             [self.navigationController pushViewController:userInfoVC animated:YES];
@@ -1013,7 +1013,7 @@ static NSString *fridcellid = @"fridcellid";
     NSMutableArray *forwardsM = [NSMutableArray array];
     if (feedarray.count) {
         for (NSDictionary *feeddic in feedarray) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:feeddic];
+            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:feeddic];
             [forwardsM addObject:mode];
         }
     }
@@ -1022,7 +1022,7 @@ static NSString *fridcellid = @"fridcellid";
     NSMutableArray *zanArrayM = [NSMutableArray array];
     if (zanarray.count) {
         for (NSDictionary *zandic in zanarray) {
-            UserInfoModel *mode = [UserInfoModel objectWithKeyValues:zandic];
+            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:zandic];
             [zanArrayM addObject:mode];
         }
     }
@@ -1040,7 +1040,7 @@ static NSString *fridcellid = @"fridcellid";
     NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
     NSMutableArray *joinArrayM = [NSMutableArray array];
     if (joinedusers.count) {
-        UserInfoModel *meInfoM = [[UserInfoModel alloc] init];
+        IBaseUserM *meInfoM = [[IBaseUserM alloc] init];
         meInfoM.name = statusM.user.name;
         meInfoM.uid = statusM.user.uid;
         meInfoM.avatar = statusM.user.avatar;
@@ -1048,7 +1048,7 @@ static NSString *fridcellid = @"fridcellid";
     }
     if (joinedusers.count) {
         for (NSDictionary *joDic in joinedusers) {
-            UserInfoModel *joMode = [UserInfoModel objectWithKeyValues:joDic];
+            IBaseUserM *joMode = [IBaseUserM objectWithKeyValues:joDic];
             [joinArrayM addObject:joMode];
         }
     }

@@ -7,7 +7,6 @@
 //
 
 #import "AddFriendViewController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import "NewFriendViewCell.h"

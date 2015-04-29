@@ -8,7 +8,6 @@
 
 #import "BSearchFriendsController.h"
 #import "MainViewController.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 #import <AddressBook/AddressBook.h>

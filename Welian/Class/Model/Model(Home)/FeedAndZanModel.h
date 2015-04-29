@@ -18,6 +18,6 @@
 @property (nonatomic, strong) NSString *fcid;
 
 /**  用户信息   */
-@property (nonatomic, strong) UserInfoModel *user;
+@property (nonatomic, strong) IBaseUserM *user;
 
 @end

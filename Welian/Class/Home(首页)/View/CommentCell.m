@@ -10,7 +10,6 @@
 #import "MLEmojiLabel.h"
 #import "UIImageView+WebCache.h"
 #import "UIImage+ImageEffects.h"
-#import "UserInfoBasicVC.h"
 #import "UserInfoViewController.h"
 
 @interface CommentCell() <MLEmojiLabelDelegate>
@@ -107,7 +106,7 @@
 {
     WLBasicTrends *user = _commentCellFrame.commentM.user;
     
-    UserInfoModel *mode = [[UserInfoModel alloc] init];
+    IBaseUserM *mode = [[IBaseUserM alloc] init];
     
     [mode setUid:user.uid];
     [mode setAvatar:user.avatar];

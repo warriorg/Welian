@@ -317,7 +317,7 @@ static NSString *itemscellid = @"itemscellid";
             };
             [self.navigationController pushViewController:investVC animated:YES];
         }
-    }else if (indexPath.section==2){
+    }else if (indexPath.section==2){ // 投资案例
         if (indexPath.row == [LogInUser getCurrentLoginUser].rsInvestItems.count) {
             
             NameController *caseVC = [[NameController alloc] initWithBlock:^(NSString *userInfo) {
@@ -328,6 +328,11 @@ static NSString *itemscellid = @"itemscellid";
                     [arryM addObject:@{@"item":item.item}];
                 }
                 [arryM addObject:@{@"item":userInfo}];
+                [WeLianClient investWithParameterDic:@{@"items":arryM} Success:^(id resultInfo) {
+                    
+                } Failed:^(NSError *error) {
+                    
+                }];
                 [WLHttpTool investAuthParameterDic:@{@"items":arryM} success:^(id JSON) {
 
                     InvestItemM *invesIte = [[InvestItemM alloc] init];
