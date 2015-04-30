@@ -51,17 +51,19 @@
 {
     _commenFrame = commenFrame;
     NSArray *commentDataArray = commenFrame.statusM.comments;
-    
+    [oneLabel setHidden:YES];
+    [twoLabel setHidden:YES];
+    [threeLabel setHidden:YES];
+    [fourLabel setHidden:YES];
+    [fiveLabel setHidden:YES];
+    [moreLabel setHidden:YES];
+    if (!commentDataArray.count) return;
     for (NSInteger i = 0; i<commentDataArray.count; i++) {
         CommentMode *commMode = commentDataArray[i];
         
         if (i==0) {
+            [oneLabel setHidden:NO];
             [self setLableEmjoWith:oneLabel andCommMode:commMode labelFrame:commenFrame.oneLabelFrame];
-            [twoLabel setHidden:YES];
-            [threeLabel setHidden:YES];
-            [fourLabel setHidden:YES];
-            [fiveLabel setHidden:YES];
-            [moreLabel setHidden:YES];
         }else if (i==1){
             [twoLabel setHidden:NO];
             [self setLableEmjoWith:twoLabel andCommMode:commMode labelFrame:commenFrame.twoLabelFrame];
@@ -181,6 +183,7 @@
 - (MLEmojiLabel *)newHBVLabel
 {
     MLEmojiLabel *HBlabel = [[MLEmojiLabel alloc] init];
+    HBlabel.hidden = YES;
     [HBlabel setTextColor:[UIColor colorWithWhite:0.25 alpha:1.0]];
     HBlabel.font = WLFONT(14);
     [HBlabel setDelegate:self];
