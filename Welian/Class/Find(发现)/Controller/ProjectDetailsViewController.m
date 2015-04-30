@@ -272,29 +272,61 @@ static NSString *noCommentCell = @"NoCommentCell";
         user.uid = loginUser.uid;
         commentM.user = user;
         
-        [WLHttpTool commentProjectParameterDic:params
-                                       success:^(id JSON) {
-                                           commentM.fcid = JSON[@"pcid"];
-                                           
-                                           CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-                                           [commentFrame setCommentM:commentM];
-                                           [_datasource insertObject:commentFrame atIndex:0];
-                                           
-                                           _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
-                                           
-                                           //刷新
-                                           if (_iProjectDetailInfo.zancount.integerValue < 1) {
-                                               //如果之前没有刷新整个table
-                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-                                           }else{
-                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-                                           }
-                                           
-                                           //隐藏键盘
-                                           [self hideKeyBoard];
-                                       } fail:^(NSError *error) {
-                                           [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
-                                       }];
+        //评论
+        [WLHUDView showHUDWithStr:@"评论中..." dim:NO];
+        [WeLianClient commentProjectWithParameterDic:params
+                                             Success:^(id resultInfo) {
+                                                 [WLHUDView hiddenHud];
+                                                 
+                                                 commentM.fcid = resultInfo[@"cid"];
+                                                 
+                                                 CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+                                                 [commentFrame setCommentM:commentM];
+                                                 [_datasource insertObject:commentFrame atIndex:0];
+                                                 
+                                                 _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
+                                                 
+                                                 //刷新
+                                                 if (_iProjectDetailInfo.zancount.integerValue < 1) {
+                                                     //如果之前没有刷新整个table
+                                                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                                                 }else{
+                                                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                                 }
+                                                 
+                                                 //隐藏键盘
+                                                 [self hideKeyBoard];
+                                             } Failed:^(NSError *error) {
+                                                 if (error) {
+                                                     [WLHUDView showErrorHUD:error.description];
+                                                 }else{
+                                                     [WLHUDView showErrorHUD:@"评论发表失败，请重试！"];
+                                                 }
+                                             }];
+        
+//        [WLHttpTool commentProjectParameterDic:params
+//                                       success:^(id JSON) {
+//                                           commentM.fcid = JSON[@"pcid"];
+//                                           
+//                                           CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+//                                           [commentFrame setCommentM:commentM];
+//                                           [_datasource insertObject:commentFrame atIndex:0];
+//                                           
+//                                           _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
+//                                           
+//                                           //刷新
+//                                           if (_iProjectDetailInfo.zancount.integerValue < 1) {
+//                                               //如果之前没有刷新整个table
+//                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//                                           }else{
+//                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+//                                           }
+//                                           
+//                                           //隐藏键盘
+//                                           [self hideKeyBoard];
+//                                       } fail:^(NSError *error) {
+//                                           [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
+//                                       }];
         
     }];
     [self.view addSubview:self.messageView];
@@ -478,19 +510,41 @@ static NSString *noCommentCell = @"NoCommentCell";
     if (selecCommFrame.commentM.user.uid.integerValue == [LogInUser getCurrentLoginUser].uid.integerValue) {
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
-            [WLHttpTool deleteProjectCommentParameterDic:@{@"pcid":selecCommFrame.commentM.fcid}
-                                                 success:^(id JSON) {
-                                                     //删除当前对象
-                                                     [_datasource removeObject:selecCommFrame];
-                                                     
-                                                     //刷新列表
-                                                     _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue - 1);
-                                                     
-                                                     //刷新
-                                                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-                                                 } fail:^(NSError *error) {
-                                                     [UIAlertView showWithTitle:@"系统提示" message:@"删除失败，请重试！"];
-                                                 }];
+            //删除评论
+            [WLHUDView showHUDWithStr:@"评论删除中..." dim:NO];
+            [WeLianClient deleteProjectCommentWithCid:selecCommFrame.commentM.fcid
+                                              Success:^(id resultInfo) {
+                                                  [WLHUDView hiddenHud];
+                                                  
+                                                  //删除当前对象
+                                                  [_datasource removeObject:selecCommFrame];
+                                                  
+                                                  //刷新列表
+                                                  _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue - 1);
+                                                  
+                                                  //刷新
+                                                  [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+                                              } Failed:^(NSError *error) {
+                                                  if (error) {
+                                                      [WLHUDView showErrorHUD:error.description];
+                                                  }else{
+                                                      [WLHUDView showErrorHUD:@"删除评论失败，请重试！"];
+                                                  }
+                                              }];
+            
+//            [WLHttpTool deleteProjectCommentParameterDic:@{@"pcid":selecCommFrame.commentM.fcid}
+//                                                 success:^(id JSON) {
+//                                                     //删除当前对象
+//                                                     [_datasource removeObject:selecCommFrame];
+//                                                     
+//                                                     //刷新列表
+//                                                     _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue - 1);
+//                                                     
+//                                                     //刷新
+//                                                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+//                                                 } fail:^(NSError *error) {
+//                                                     [UIAlertView showWithTitle:@"系统提示" message:@"删除失败，请重试！"];
+//                                                 }];
         }];
         [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet showInView:self.view];
@@ -786,70 +840,145 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     NSMutableArray *zanUsers = [NSMutableArray arrayWithArray:_iProjectDetailInfo.zanusers];
+    [WLHUDView showHUDWithStr:@"" dim:NO];
     if (!_iProjectDetailInfo.iszan.boolValue) {
         //赞
-        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectPid}
-                                   success:^(id JSON) {
-                                       _iProjectDetailInfo.iszan = @(1);
-                                       _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue + 1);
-                                       [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
-                                       
-                                       IBaseUserM *zanUser = [[IBaseUserM alloc] init];
-                                       zanUser.avatar = loginUser.avatar;
-                                       zanUser.name = loginUser.name;
-                                       zanUser.uid = loginUser.uid;
-                                       zanUser.position = loginUser.position;
-                                       zanUser.company = loginUser.company;
-                                       zanUser.investorauth = loginUser.investorauth;
-                                       //插入
-                                       [zanUsers insertObject:zanUser atIndex:0];
-                                       _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
-                                       
-                                       //刷新
-                                       if (_iProjectDetailInfo.zancount.integerValue <= 1) {
-                                           //如果之前没有刷新整个table
-                                           [_tableView reloadData];
-                                       }else{
-                                           [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-                                       }
-                                       
-                                       [self checkZanStatus];
-                                       
-                                       [self updateUI];
-                                   } fail:^(NSError *error) {
-                                       [UIAlertView showWithTitle:@"系统提示" message:@"点赞失败，请重试！"];
-                                   }];
+        [WeLianClient zanProjectWithPid:_projectPid
+                                Success:^(id resultInfo) {
+                                    [WLHUDView hiddenHud];
+                                    
+                                    _iProjectDetailInfo.iszan = @(1);
+                                    _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue + 1);
+                                    [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
+                                    
+                                    IBaseUserM *zanUser = [[IBaseUserM alloc] init];
+                                    zanUser.avatar = loginUser.avatar;
+                                    zanUser.name = loginUser.name;
+                                    zanUser.uid = loginUser.uid;
+                                    zanUser.position = loginUser.position;
+                                    zanUser.company = loginUser.company;
+                                    zanUser.investorauth = loginUser.investorauth;
+                                    //插入
+                                    [zanUsers insertObject:zanUser atIndex:0];
+                                    _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                    
+                                    //刷新
+                                    if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+                                        //如果之前没有刷新整个table
+                                        [_tableView reloadData];
+                                    }else{
+                                        [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                    }
+                                    
+                                    [self checkZanStatus];
+                                    
+                                    [self updateUI];
+                                } Failed:^(NSError *error) {
+                                    if (error) {
+                                        [WLHUDView showErrorHUD:error.description];
+                                    }else{
+                                        [WLHUDView showErrorHUD:@"点赞失败，请重试！"];
+                                    }
+                                }];
+        
+//        [WLHttpTool zanProjectParameterDic:@{@"pid":_projectPid}
+//                                   success:^(id JSON) {
+//                                       _iProjectDetailInfo.iszan = @(1);
+//                                       _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue + 1);
+//                                       [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
+//                                       
+//                                       IBaseUserM *zanUser = [[IBaseUserM alloc] init];
+//                                       zanUser.avatar = loginUser.avatar;
+//                                       zanUser.name = loginUser.name;
+//                                       zanUser.uid = loginUser.uid;
+//                                       zanUser.position = loginUser.position;
+//                                       zanUser.company = loginUser.company;
+//                                       zanUser.investorauth = loginUser.investorauth;
+//                                       //插入
+//                                       [zanUsers insertObject:zanUser atIndex:0];
+//                                       _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+//                                       
+//                                       //刷新
+//                                       if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+//                                           //如果之前没有刷新整个table
+//                                           [_tableView reloadData];
+//                                       }else{
+//                                           [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+//                                       }
+//                                       
+//                                       [self checkZanStatus];
+//                                       
+//                                       [self updateUI];
+//                                   } fail:^(NSError *error) {
+//                                       [UIAlertView showWithTitle:@"系统提示" message:@"点赞失败，请重试！"];
+//                                   }];
     }else{
         //取消赞
-        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectPid}
-                                         success:^(id JSON) {
-                                             _iProjectDetailInfo.iszan = @(0);
-                                             _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue - 1);
-                                             [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
-                                             
-                                             IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
-                                                 return [obj uid].integerValue == loginUser.uid.integerValue;
-                                             }];
-                                             if (zanUser) {
-                                                 [zanUsers removeObject:zanUser];
-                                                 
-                                                 _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
-                                                 
-                                                 //刷新
-                                                 if (_iProjectDetailInfo.zancount.integerValue <= 1) {
-                                                     //如果之前没有刷新整个table
-                                                     [_tableView reloadData];
-                                                 }else{
-                                                     [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-                                                 }
-                                             }
-                                             
-                                             [self checkZanStatus];
-                                             
-                                             [self updateUI];
-                                         } fail:^(NSError *error) {
-                                             [UIAlertView showWithTitle:@"系统提示" message:@"取消赞失败，请重试！"];
-                                         }];
+        [WeLianClient deleteProjectZanWithPid:_projectPid
+                                      Success:^(id resultInfo) {
+                                          [WLHUDView hiddenHud];
+                                          
+                                          _iProjectDetailInfo.iszan = @(0);
+                                          _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue - 1);
+                                          [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
+                                          
+                                          IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
+                                              return [obj uid].integerValue == loginUser.uid.integerValue;
+                                          }];
+                                          if (zanUser) {
+                                              [zanUsers removeObject:zanUser];
+                                              
+                                              _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+                                              
+                                              //刷新
+                                              if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+                                                  //如果之前没有刷新整个table
+                                                  [_tableView reloadData];
+                                              }else{
+                                                  [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                                              }
+                                          }
+                                          
+                                          [self checkZanStatus];
+                                          
+                                          [self updateUI];
+                                      } Failed:^(NSError *error) {
+                                          if (error) {
+                                              [WLHUDView showErrorHUD:error.description];
+                                          }else{
+                                              [WLHUDView showErrorHUD:@"取消赞失败，请重试！"];
+                                          }
+                                      }];
+        
+//        [WLHttpTool deleteProjectZanParameterDic:@{@"pid":_projectPid}
+//                                         success:^(id JSON) {
+//                                             _iProjectDetailInfo.iszan = @(0);
+//                                             _iProjectDetailInfo.zancount = @(_iProjectDetailInfo.zancount.integerValue - 1);
+//                                             [_projectDetailInfo updateZancount:_iProjectDetailInfo.zancount];
+//                                             
+//                                             IBaseUserM *zanUser = [zanUsers bk_match:^BOOL(id obj) {
+//                                                 return [obj uid].integerValue == loginUser.uid.integerValue;
+//                                             }];
+//                                             if (zanUser) {
+//                                                 [zanUsers removeObject:zanUser];
+//                                                 
+//                                                 _iProjectDetailInfo.zanusers = [NSArray arrayWithArray:zanUsers];
+//                                                 
+//                                                 //刷新
+//                                                 if (_iProjectDetailInfo.zancount.integerValue <= 1) {
+//                                                     //如果之前没有刷新整个table
+//                                                     [_tableView reloadData];
+//                                                 }else{
+//                                                     [_tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+//                                                 }
+//                                             }
+//                                             
+//                                             [self checkZanStatus];
+//                                             
+//                                             [self updateUI];
+//                                         } fail:^(NSError *error) {
+//                                             [UIAlertView showWithTitle:@"系统提示" message:@"取消赞失败，请重试！"];
+//                                         }];
     }
     
 }
@@ -875,25 +1004,57 @@ static NSString *noCommentCell = @"NoCommentCell";
 {
     if (_iProjectDetailInfo.isfavorite.boolValue) {
         //取消收藏
-        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectPid}
-                                              success:^(id JSON) {
-                                                  _iProjectDetailInfo.isfavorite = @(0);
-                                                  [self checkFavorteStatus];
-                                                  if (self.favoriteBlock) {
-                                                      self.favoriteBlock();
-                                                  }
-                                              } fail:^(NSError *error) {
-                                                  [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
-                                              }]; 
+        [WLHUDView showHUDWithStr:@"取消收藏中..." dim:NO];
+        [WeLianClient deleteProjectFavoriteWithPid:_projectPid
+                                           Success:^(id resultInfo) {
+                                               [WLHUDView hiddenHud];
+                                               
+                                               _iProjectDetailInfo.isfavorite = @(0);
+                                               [self checkFavorteStatus];
+                                               if (self.favoriteBlock) {
+                                                   self.favoriteBlock();
+                                               }
+                                           } Failed:^(NSError *error) {
+                                               if (error) {
+                                                   [WLHUDView showErrorHUD:error.description];
+                                               }else{
+                                                   [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
+                                               }
+                                           }];
+//        [WLHttpTool deleteFavoriteProjectParameterDic:@{@"pid":_projectPid}
+//                                              success:^(id JSON) {
+//                                                  _iProjectDetailInfo.isfavorite = @(0);
+//                                                  [self checkFavorteStatus];
+//                                                  if (self.favoriteBlock) {
+//                                                      self.favoriteBlock();
+//                                                  }
+//                                              } fail:^(NSError *error) {
+//                                                  [UIAlertView showWithTitle:@"系统提示" message:@"取消收藏失败，请重试！"];
+//                                              }]; 
     }else{
         //收藏项目
-        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectPid}
-                                        success:^(id JSON) {
-                                            _iProjectDetailInfo.isfavorite = @(1);
-                                            [self checkFavorteStatus];
-                                        } fail:^(NSError *error) {
-                                            [UIAlertView showWithTitle:@"系统提示" message:@"收藏项目失败，请重试！"];
-                                        }];
+        [WLHUDView showHUDWithStr:@"收藏中..." dim:NO];
+        [WeLianClient favoriteProjectWithPid:_projectPid
+                                     Success:^(id resultInfo) {
+                                         [WLHUDView hiddenHud];
+                                         
+                                         _iProjectDetailInfo.isfavorite = @(1);
+                                         [self checkFavorteStatus];
+                                     } Failed:^(NSError *error) {
+                                         if (error) {
+                                             [WLHUDView showErrorHUD:error.description];
+                                         }else{
+                                             [WLHUDView showErrorHUD:@"收藏项目失败，请重试！"];
+                                         }
+                                     }];
+        
+//        [WLHttpTool favoriteProjectParameterDic:@{@"pid":_projectPid}
+//                                        success:^(id JSON) {
+//                                            _iProjectDetailInfo.isfavorite = @(1);
+//                                            [self checkFavorteStatus];
+//                                        } fail:^(NSError *error) {
+//                                            [UIAlertView showWithTitle:@"系统提示" message:@"收藏项目失败，请重试！"];
+//                                        }];
     }
     
 }
@@ -961,34 +1122,28 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 //获取详情信息
 - (void)initData{
-    WEAKSELF
+    
     if (!_projectPid.boolValue) {
         UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该项目已经被删除！"];
         [alert bk_addButtonWithTitle:@"确定" handler:^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
         [alert show];
         return;
     }
 
-    [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
-                                     success:^(id JSON) {
+    [WeLianClient getProjectDetailInfoWithID:_projectPid
+                                     Success:^(id resultInfo) {
                                          //隐藏
                                          [self.tableView.header endRefreshing];
-                                         if ([[JSON objectForKey:@"deleted"] boolValue]) {
-                                            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该项目已经被删除！"];
-                                             [alert bk_addButtonWithTitle:@"确定" handler:^{
-                                                  [weakSelf.navigationController popViewControllerAnimated:YES];
-                                             }];
-                                             [alert show];
-                                             return;
-                                         }
-                                         IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
-                                         weakSelf.iProjectDetailInfo = detailInfo;
-                                         weakSelf.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
+                                         
+                                         IProjectDetailInfo *detailInfo = resultInfo;
+                                         self.iProjectDetailInfo = resultInfo;
+                                         //存入本地数据库
+                                         self.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
                                          
                                          //添加分享按钮
-                                         weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+                                         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
                                          
                                          NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
                                          for (ICommentInfo *commentInfo in detailInfo.comments) {
@@ -998,23 +1153,9 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              commentM.comment = commentInfo.comment;
                                              commentM.created = commentInfo.created;
                                              if (commentInfo.user.uid) {
-//                                                 WLBasicTrends *user = [[WLBasicTrends alloc] init];
-//                                                 user.avatar = commentInfo.user.avatar;
-//                                                 user.company = commentInfo.user.company;
-//                                                 user.investorauth = commentInfo.user.investorauth.intValue;
-//                                                 user.name = commentInfo.user.name;
-//                                                 user.position = commentInfo.user.position;
-//                                                 user.uid = commentInfo.user.uid;
                                                  commentM.user = commentInfo.user;
                                              }
                                              if (commentInfo.touser.uid) {
-//                                                 WLBasicTrends *touser = [[WLBasicTrends alloc] init];
-//                                                 touser.avatar = commentInfo.touser.avatar;
-//                                                 touser.company = commentInfo.touser.company;
-//                                                 touser.investorauth = commentInfo.touser.investorauth.intValue;
-//                                                 touser.name = commentInfo.touser.name;
-//                                                 touser.position = commentInfo.touser.position;
-//                                                 touser.uid = commentInfo.touser.uid;
                                                  commentM.touser = commentInfo.touser;
                                              }
                                              
@@ -1025,18 +1166,90 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          }
                                          self.datasource = dataAM;
                                          if (dataAM.count >= detailInfo.commentcount.integerValue) {
-                                             [weakSelf.tableView.footer setHidden:YES];
+                                             [self.tableView.footer setHidden:YES];
                                          }else{
-                                             [weakSelf.tableView.footer setHidden:NO];
+                                             [self.tableView.footer setHidden:NO];
                                          }
                                          [_tableView reloadData];
                                          
-                                         [weakSelf updateUI];
-                                     } fail:^(NSError *error) {
+                                         [self updateUI];
+                                     } Failed:^(NSError *error) {
                                          //隐藏
-                                         [weakSelf.tableView.header endRefreshing];
-                                         [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
+                                         [self.tableView.header endRefreshing];
+                                         if (error) {
+                                             [WLHUDView showErrorHUD:error.description];
+                                         }else{
+                                             [WLHUDView showErrorHUD:@"获取详情失败，请刷新重试！"];
+                                         }
                                      }];
+    
+//    WEAKSELF
+//    [WLHttpTool getProjectDetailParameterDic:@{@"pid":_projectPid}
+//                                     success:^(id JSON) {
+//                                         //隐藏
+//                                         [self.tableView.header endRefreshing];
+//                                         if ([[JSON objectForKey:@"deleted"] boolValue]) {
+//                                            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该项目已经被删除！"];
+//                                             [alert bk_addButtonWithTitle:@"确定" handler:^{
+//                                                  [weakSelf.navigationController popViewControllerAnimated:YES];
+//                                             }];
+//                                             [alert show];
+//                                             return;
+//                                         }
+//                                         IProjectDetailInfo *detailInfo = [IProjectDetailInfo objectWithDict:JSON];
+//                                         weakSelf.iProjectDetailInfo = detailInfo;
+//                                         weakSelf.projectDetailInfo = [ProjectDetailInfo createWithIProjectDetailInfo:detailInfo];
+//                                         
+//                                         //添加分享按钮
+//                                         weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
+//                                         
+//                                         NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
+//                                         for (ICommentInfo *commentInfo in detailInfo.comments) {
+//                                             
+//                                             CommentMode *commentM = [[CommentMode alloc] init];
+//                                             commentM.fcid = commentInfo.pcid;
+//                                             commentM.comment = commentInfo.comment;
+//                                             commentM.created = commentInfo.created;
+//                                             if (commentInfo.user.uid) {
+////                                                 WLBasicTrends *user = [[WLBasicTrends alloc] init];
+////                                                 user.avatar = commentInfo.user.avatar;
+////                                                 user.company = commentInfo.user.company;
+////                                                 user.investorauth = commentInfo.user.investorauth.intValue;
+////                                                 user.name = commentInfo.user.name;
+////                                                 user.position = commentInfo.user.position;
+////                                                 user.uid = commentInfo.user.uid;
+//                                                 commentM.user = commentInfo.user;
+//                                             }
+//                                             if (commentInfo.touser.uid) {
+////                                                 WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+////                                                 touser.avatar = commentInfo.touser.avatar;
+////                                                 touser.company = commentInfo.touser.company;
+////                                                 touser.investorauth = commentInfo.touser.investorauth.intValue;
+////                                                 touser.name = commentInfo.touser.name;
+////                                                 touser.position = commentInfo.touser.position;
+////                                                 touser.uid = commentInfo.touser.uid;
+//                                                 commentM.touser = commentInfo.touser;
+//                                             }
+//                                             
+//                                             CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+//                                             [commentFrame setCommentM:commentM];
+//                                             
+//                                             [dataAM addObject:commentFrame];
+//                                         }
+//                                         self.datasource = dataAM;
+//                                         if (dataAM.count >= detailInfo.commentcount.integerValue) {
+//                                             [weakSelf.tableView.footer setHidden:YES];
+//                                         }else{
+//                                             [weakSelf.tableView.footer setHidden:NO];
+//                                         }
+//                                         [_tableView reloadData];
+//                                         
+//                                         [weakSelf updateUI];
+//                                     } fail:^(NSError *error) {
+//                                         //隐藏
+//                                         [weakSelf.tableView.header endRefreshing];
+//                                         [UIAlertView showWithTitle:@"系统提示" message:@"获取详情失败，请重试！"];
+//                                     }];
 }
 
 //初始化页面展示
@@ -1161,59 +1374,98 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)loadMoreCommentData
 {
 //    if (_datasource.count < _iProjectDetailInfo.commentcount.integerValue) {
-       _pageIndex++;
-        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
-                                           success:^(id JSON) {
-                                               //隐藏加载更多动画
-                                               [self.tableView.footer endRefreshing];
-                                               
-                                               if (JSON) {
-                                                   NSArray *comments = [ICommentInfo objectsWithInfo:JSON];
+    _pageIndex++;
+    [WeLianClient getProjectCommentListWithPid:_projectPid
+                                          Page:@(_pageIndex)
+                                          Size:@(_pageSize)
+                                       Success:^(id resultInfo) {
+                                           //隐藏加载更多动画
+                                           [self.tableView.footer endRefreshing];
+                                           
+                                           if ([resultInfo count] > 0) {
+                                               for (ICommentInfo *commentInfo in resultInfo) {
+                                                   CommentMode *commentM = [[CommentMode alloc] init];
+                                                   commentM.fcid = commentInfo.pcid;
+                                                   commentM.comment = commentInfo.comment;
+                                                   commentM.created = commentInfo.created;
+                                                   if (commentInfo.user.uid) {
+                                                       commentM.user = commentInfo.user;
+                                                   }
+                                                   if (commentInfo.touser.uid) {
+                                                       commentM.touser = commentInfo.touser;
+                                                   }
                                                    
-                                                   for (ICommentInfo *commentInfo in comments) {
-                                                       CommentMode *commentM = [[CommentMode alloc] init];
-                                                       commentM.fcid = commentInfo.pcid;
-                                                       commentM.comment = commentInfo.comment;
-                                                       commentM.created = commentInfo.created;
-                                                       if (commentInfo.user.uid) {
-//                                                           WLBasicTrends *user = [[WLBasicTrends alloc] init];
-//                                                           user.avatar = commentInfo.user.avatar;
-//                                                           user.company = commentInfo.user.company;
-//                                                           user.investorauth = commentInfo.user.investorauth.intValue;
-//                                                           user.name = commentInfo.user.name;
-//                                                           user.position = commentInfo.user.position;
-//                                                           user.uid = commentInfo.user.uid;
-                                                           commentM.user = commentInfo.user;
-                                                       }
-                                                       if (commentInfo.touser.uid) {
-//                                                           WLBasicTrends *touser = [[WLBasicTrends alloc] init];
-//                                                           touser.avatar = commentInfo.touser.avatar;
-//                                                           touser.company = commentInfo.touser.company;
-//                                                           touser.investorauth = commentInfo.touser.investorauth.intValue;
-//                                                           touser.name = commentInfo.touser.name;
-//                                                           touser.position = commentInfo.touser.position;
-//                                                           touser.uid = commentInfo.touser.uid;
-                                                           commentM.touser = commentInfo.touser;
-                                                       }
-                                                       
-                                                       CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-                                                       [commentFrame setCommentM:commentM];
-                                                       
-                                                       [_datasource addObject:commentFrame];
-                                                   }
-                                                 
-                                                   if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
-                                                       [self.tableView.footer setHidden:YES];
-                                                   }else{
-                                                       [self.tableView.footer setHidden:NO];
-                                                   }
-                                                   //刷新列表
-                                                   [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                                   CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+                                                   [commentFrame setCommentM:commentM];
+                                                   
+                                                   [_datasource addObject:commentFrame];
                                                }
-                                           } fail:^(NSError *error) {
-                                               //隐藏加载更多动画
-                                               [self.tableView.footer endRefreshing];
-                                           }];
+                                               
+                                               if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
+                                                   [self.tableView.footer setHidden:YES];
+                                               }else{
+                                                   [self.tableView.footer setHidden:NO];
+                                               }
+                                               //刷新列表
+                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                                           }
+                                       } Failed:^(NSError *error) {
+                                           //隐藏加载更多动画
+                                           [self.tableView.footer endRefreshing];
+                                       }];
+    
+//        [WLHttpTool getProjectCommentsParameterDic:@{@"pid":_projectPid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+//                                           success:^(id JSON) {
+//                                               //隐藏加载更多动画
+//                                               [self.tableView.footer endRefreshing];
+//                                               
+//                                               if (JSON) {
+//                                                   NSArray *comments = [ICommentInfo objectsWithInfo:JSON];
+//                                                   
+//                                                   for (ICommentInfo *commentInfo in comments) {
+//                                                       CommentMode *commentM = [[CommentMode alloc] init];
+//                                                       commentM.fcid = commentInfo.pcid;
+//                                                       commentM.comment = commentInfo.comment;
+//                                                       commentM.created = commentInfo.created;
+//                                                       if (commentInfo.user.uid) {
+////                                                           WLBasicTrends *user = [[WLBasicTrends alloc] init];
+////                                                           user.avatar = commentInfo.user.avatar;
+////                                                           user.company = commentInfo.user.company;
+////                                                           user.investorauth = commentInfo.user.investorauth.intValue;
+////                                                           user.name = commentInfo.user.name;
+////                                                           user.position = commentInfo.user.position;
+////                                                           user.uid = commentInfo.user.uid;
+//                                                           commentM.user = commentInfo.user;
+//                                                       }
+//                                                       if (commentInfo.touser.uid) {
+////                                                           WLBasicTrends *touser = [[WLBasicTrends alloc] init];
+////                                                           touser.avatar = commentInfo.touser.avatar;
+////                                                           touser.company = commentInfo.touser.company;
+////                                                           touser.investorauth = commentInfo.touser.investorauth.intValue;
+////                                                           touser.name = commentInfo.touser.name;
+////                                                           touser.position = commentInfo.touser.position;
+////                                                           touser.uid = commentInfo.touser.uid;
+//                                                           commentM.touser = commentInfo.touser;
+//                                                       }
+//                                                       
+//                                                       CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
+//                                                       [commentFrame setCommentM:commentM];
+//                                                       
+//                                                       [_datasource addObject:commentFrame];
+//                                                   }
+//                                                 
+//                                                   if (_datasource.count >= _iProjectDetailInfo.commentcount.integerValue) {
+//                                                       [self.tableView.footer setHidden:YES];
+//                                                   }else{
+//                                                       [self.tableView.footer setHidden:NO];
+//                                                   }
+//                                                   //刷新列表
+//                                                   [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+//                                               }
+//                                           } fail:^(NSError *error) {
+//                                               //隐藏加载更多动画
+//                                               [self.tableView.footer endRefreshing];
+//                                           }];
 //    }
 }
 

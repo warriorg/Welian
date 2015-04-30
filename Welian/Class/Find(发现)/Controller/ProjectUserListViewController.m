@@ -38,7 +38,7 @@
             return @"赞过的人";
             break;
         default:
-            return @"朋友列表";
+//            return @"朋友列表";
             break;
     }
 }
@@ -194,53 +194,103 @@
 //取赞的用户列表
 - (void)initZanUserData
 {
-    [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
-                                       success:^(id JSON) {
-                                           //隐藏加载更多动画
-                                           [self.tableView.footer endRefreshing];
-                                           
-                                           if([JSON count] > 0){
-                                               NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
-                                               [self.datasource addObjectsFromArray:users];
-                                           }
-                                           
-                                           //设置是否可以下拉刷新
-                                           if ([JSON count] != KCellConut) {
-                                               self.tableView.footer.hidden = YES;
-                                           }else{
-                                               self.tableView.footer.hidden = NO;
-                                           }
-                                           
-                                           [self.tableView reloadData];
-                                       } fail:^(NSError *error) {
-//                                           [UIAlertView showWithError:error];
-                                       }];
+    [WeLianClient getProjectZanListWithPid:_projectDetailInfo.pid
+                                      Page:@(_pageIndex)
+                                      Size:@(_pageSize)
+                                   Success:^(id resultInfo) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                       
+                                       if ([resultInfo count] > 0) {
+                                           [self.datasource addObjectsFromArray:resultInfo];
+                                       }
+                                       
+                                       //设置是否可以下拉刷新
+                                       if ([resultInfo count] != KCellConut) {
+                                           self.tableView.footer.hidden = YES;
+                                       }else{
+                                           self.tableView.footer.hidden = NO;
+                                       }
+                                       
+                                       [self.tableView reloadData];
+                                   } Failed:^(NSError *error) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                       DLog(@"getProjectZanList error:%@",error.description);
+                                   }];
+    
+//    [WLHttpTool getProjectZanUsersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+//                                       success:^(id JSON) {
+//                                           //隐藏加载更多动画
+//                                           [self.tableView.footer endRefreshing];
+//                                           
+//                                           if([JSON count] > 0){
+//                                               NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+//                                               [self.datasource addObjectsFromArray:users];
+//                                           }
+//                                           
+//                                           //设置是否可以下拉刷新
+//                                           if ([JSON count] != KCellConut) {
+//                                               self.tableView.footer.hidden = YES;
+//                                           }else{
+//                                               self.tableView.footer.hidden = NO;
+//                                           }
+//                                           
+//                                           [self.tableView reloadData];
+//                                       } fail:^(NSError *error) {
+////                                           [UIAlertView showWithError:error];
+//                                       }];
 }
 
 //取团队成员的用户列表
 - (void)initGroupUserData
 {
-    [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
-                                      success:^(id JSON) {
-                                          //隐藏加载更多动画
-                                          [self.tableView.footer endRefreshing];
-                                          
-                                          if([JSON count] > 0){
-                                              NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
-                                              [self.datasource addObjectsFromArray:users];
-                                          }
-                                          
-                                          //设置是否可以下拉刷新
-                                          if ([JSON count] != KCellConut) {
-                                              self.tableView.footer.hidden = YES;
-                                          }else{
-                                              self.tableView.footer.hidden = NO;
-                                          }
-                                          
-                                          [self.tableView reloadData];
-                                      } fail:^(NSError *error) {
-//                                          [UIAlertView showWithError:error];
-                                      }];
+    [WeLianClient getProjectMembersWithPid:_projectDetailInfo.pid
+                                      Page:@(_pageIndex)
+                                      Size:@(_pageSize)
+                                   Success:^(id resultInfo) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                       
+                                       if ([resultInfo count] > 0) {
+                                           [self.datasource addObjectsFromArray:resultInfo];
+                                       }
+                                       
+                                       //设置是否可以下拉刷新
+                                       if ([resultInfo count] != KCellConut) {
+                                           self.tableView.footer.hidden = YES;
+                                       }else{
+                                           self.tableView.footer.hidden = NO;
+                                       }
+                                       
+                                       [self.tableView reloadData];
+                                   } Failed:^(NSError *error) {
+                                       //隐藏加载更多动画
+                                       [self.tableView.footer endRefreshing];
+                                       DLog(@"getProjectMembers error:%@",error.description);
+                                   }];
+    
+//    [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectDetailInfo.pid,@"page":@(_pageIndex),@"size":@(_pageSize)}
+//                                      success:^(id JSON) {
+//                                          //隐藏加载更多动画
+//                                          [self.tableView.footer endRefreshing];
+//                                          
+//                                          if([JSON count] > 0){
+//                                              NSArray *users = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:JSON]];
+//                                              [self.datasource addObjectsFromArray:users];
+//                                          }
+//                                          
+//                                          //设置是否可以下拉刷新
+//                                          if ([JSON count] != KCellConut) {
+//                                              self.tableView.footer.hidden = YES;
+//                                          }else{
+//                                              self.tableView.footer.hidden = NO;
+//                                          }
+//                                          
+//                                          [self.tableView reloadData];
+//                                      } fail:^(NSError *error) {
+////                                          [UIAlertView showWithError:error];
+//                                      }];
 }
 
 - (void)addFriendWithIndex:(NSIndexPath *)indexPath
