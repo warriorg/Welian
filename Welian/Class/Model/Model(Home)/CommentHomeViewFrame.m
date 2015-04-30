@@ -73,8 +73,8 @@
             _cellHigh = CGRectGetMaxY(_fiveLabelFrame);
         }
     }
-    if (statusM.commentcount>5) {
-        _moreLabelStr = [NSString stringWithFormat:@"查看全部%d条评论",statusM.commentcount];
+    if (statusM.commentcount.integerValue>5) {
+        _moreLabelStr = [NSString stringWithFormat:@"查看全部%ld条评论",(long)statusM.commentcount.integerValue];
         _moreLabelFrame = CGRectMake(labelX, CGRectGetMaxY(_fiveLabelFrame)+4, labelW, 20);
         _cellHigh = CGRectGetMaxY(_moreLabelFrame);
     }
