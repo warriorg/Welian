@@ -76,7 +76,7 @@
     if (photoInfos > 0) {
         for (int i = 0; i< photoInfos.count; i++) {
             WLPhoto *wlphoto = [[WLPhoto alloc] init];
-            wlphoto.url = [photoInfos[i] photo];
+            wlphoto.photo = [photoInfos[i] photo];
             [photos addObject:wlphoto];
         }
     }
@@ -175,7 +175,7 @@
             mjPhoto.hasNoImageView = YES;
         }
         //去除，现实高清图地址
-        NSString *photoUrl = wlPhoto.url;
+        NSString *photoUrl = wlPhoto.photo;
         photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
         photoUrl = [photoUrl stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
         mjPhoto.url = [NSURL URLWithString:photoUrl]; // 图片路径

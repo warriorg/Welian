@@ -75,9 +75,9 @@
             [photoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
             
             if (picCount == 1) { // 1张
-                CGSize size = [self onePhotoSize:photoView.photo.url];
-                if (photoView.photo.imageData) {
-                    UIImage *image = [UIImage imageWithData:photoView.photo.imageData];
+                CGSize size = [self onePhotoSize:photoView.photo.photo];
+                if (photoView.photo.imageDataStr) {
+                    UIImage *image = photoView.image;
                     size = image.size;
                     CGFloat w = image.size.width;
                     CGFloat h = image.size.height;
@@ -135,7 +135,7 @@
     for (int i = 0; i<_photos.count; i++) {
         WLPhotoView *photoView = self.subviews[i];
         // 替换为中等尺寸图片
-        NSString *url = photoView.photo.url;
+        NSString *url = photoView.photo.photo;
         MJPhoto *photo = [[MJPhoto alloc] init];
         url = [url stringByReplacingOccurrencesOfString:@"_x.jpg" withString:@".jpg"];
         url = [url stringByReplacingOccurrencesOfString:@"_x.png" withString:@".png"];
@@ -187,7 +187,7 @@
     // 1.只有1张图片
     if (count.count == 1) {
         WLPhoto *photo = count[0];
-        NSArray *array = [photo.url componentsSeparatedByString:@"-"];
+        NSArray *array = [photo.photo componentsSeparatedByString:@"-"];
         CGFloat w = 180;
         CGFloat h = 150;
         if (array.count>1) {
@@ -217,14 +217,14 @@
     }
 
     // 1.每一行的最大列数
-    int maxColPerRow = count.count == 4 ? 2 : 3;
+    NSUInteger maxColPerRow = count.count == 4 ? 2 : 3;
     
     // 2.列数
-    int colCount = count.count >= maxColPerRow ? maxColPerRow : count.count;
+    NSUInteger colCount = count.count >= maxColPerRow ? maxColPerRow : count.count;
     
     // 3.行数
     // 行数 = (总个数 + 每行最多显示数 - 1) / 每行最多显示数
-    int rowCount = (count.count + maxColPerRow - 1) / maxColPerRow;
+    NSUInteger rowCount = (count.count + maxColPerRow - 1) / maxColPerRow;
     
     CGFloat photoWidth = needAutoSize ? ([UIScreen mainScreen].bounds.size.width - kMarginLeft * 2.f) / colCount : IWPhotoWH;
     CGFloat photoHeight = needAutoSize ? photoWidth : IWPhotoWH;

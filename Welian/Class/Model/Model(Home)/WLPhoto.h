@@ -11,9 +11,9 @@
 @interface WLPhoto : IFBase
 
 /**  图片url   */
-@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *photo;
 
 //*   直接用图片 *//
-@property (nonatomic, strong) NSData *imageData;
+@property (nonatomic, strong) NSString *imageDataStr;
 
 @end

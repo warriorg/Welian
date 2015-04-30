@@ -9,12 +9,10 @@
 #import "HomeController.h"
 #import "PublishStatusController.h"
 #import "NavViewController.h"
-#import "WLHUDView.h"
 #import "MJRefresh.h"
 #import "WLStatusCell.h"
 #import "WLUserStatusesResult.h"
 #import "WLStatusM.h"
-#import "WLStatusCell.h"
 #import "WLStatusFrame.h"
 #import "UIImageView+WebCache.h"
 #import "CommentInfoController.h"
@@ -24,10 +22,8 @@
 #import "UIBarButtonItem+Badge.h"
 #import "CommentMode.h"
 #import "MainViewController.h"
-#import <ShareSDK/ShareSDK.h>
 #import "AFNetworkReachabilityManager.h"
 #import "NotstringView.h"
-//#import "FeedAndZanModel.h"
 #import "WLPhoto.h"
 
 @interface HomeController () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -94,7 +90,6 @@
         [self.view addSubview:self.tableView];
         [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(beginPullDownRefreshing)];
         self.tableView.header.updatedTimeHidden = YES;
-//        self.tableView.header.stateHidden = YES;
         [self.tableView.header beginRefreshing];
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
         self.tableView.footer.hidden = YES;
@@ -141,7 +136,7 @@
     
     [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
         
-        NSArray *jsonarray = [WLStatusM objectsWithInfo:JSON];
+        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
         if (!_uid) {
             [LogInUser setUserNewstustcount:@(0)];
         }
@@ -151,15 +146,13 @@
         NSArray *againArray = [self getSendAgainStuatArray];
         [_dataArry addObjectsFromArray:againArray];
         
-        for (WLStatusM *statusM in jsonarray) {
-            WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
-            sf.status = statusM;
-//             WLStatusFrame *sf = [self dataFrameWith:dic];
+        for (NSDictionary *statusDic in jsonarray) {
+             WLStatusFrame *sf = [self dataFrameWith:statusDic];
             [_dataArry addObject:sf];
         }
         _page++;
         if (!_uid) {
-//            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
+            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
             if (!_dataArry.count) {
                 [self.homeView setHidden:NO];
             }else{
@@ -188,57 +181,7 @@
 
 - (WLStatusFrame*)dataFrameWith:(NSDictionary *)statusDic
 {
-    WLStatusM *statusM = [WLStatusM objectWithKeyValues:statusDic];
-    
-    NSArray *feedarray = [statusDic objectForKey:@"forwards"];
-    NSArray *zanarray = [statusDic objectForKey:@"zans"];
-    
-    NSMutableArray *forwardsM = [NSMutableArray array];
-    if (feedarray.count) {
-        for (NSDictionary *feeddic in feedarray) {
-            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:feeddic];
-            [forwardsM addObject:mode];
-        }
-    }
-    [statusM setForwards:forwardsM];
-    
-    NSMutableArray *zanArrayM = [NSMutableArray array];
-    if (zanarray.count) {
-        for (NSDictionary *zandic in zanarray) {
-            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:zandic];
-            [zanArrayM addObject:mode];
-        }
-    }
-    [statusM setZans:zanArrayM];
-    
-    NSArray *comments = [statusDic objectForKey:@"comments"];
-    NSMutableArray *commentArrayM = [NSMutableArray array];
-    if (comments.count) {
-        for (NSDictionary *commDic in comments) {
-            CommentMode *commMode = [CommentMode objectWithKeyValues:commDic];
-            [commentArrayM addObject:commMode];
-        }
-    }
-    
-    [statusM setComments:commentArrayM];
-    NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
-    NSMutableArray *joinArrayM = [NSMutableArray array];
-    if (statusM.type.integerValue==5||statusM.type.integerValue==12) {
-        IBaseUserM *meInfoM = [[IBaseUserM alloc] init];
-        meInfoM.name = statusM.user.name;
-        meInfoM.uid = statusM.user.uid;
-        meInfoM.avatar = statusM.user.avatar;
-        [joinArrayM addObject:meInfoM];
-        
-        if (joinedusers.count) {
-            for (NSDictionary *joDic in joinedusers) {
-                IBaseUserM *joMode = [IBaseUserM objectWithKeyValues:joDic];
-                [joinArrayM addObject:joMode];
-            }
-        }
-    }
-    [statusM setJoinedusers:joinArrayM];
-    
+    WLStatusM *statusM = [WLStatusM objectWithDict:statusDic];
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
     return sf;
@@ -365,7 +308,7 @@
     [self.navigationController.view insertSubview:btn belowSubview:self.navigationController.navigationBar];
     
     // 6.执行动画
-    // 6.1.利用1s往下走
+
     CGFloat duration = 0.7;
     [UIView animateWithDuration:duration animations:^{
         btn.transform = CGAffineTransformMakeTranslation(0, btnH);
@@ -633,95 +576,6 @@
 //                                      [self.refreshControl endRefreshing];
 //                                      [WLHUDView hiddenHud];
                                   }];
-        
-        
-        
-//        [WLHttpTool loadFriendWithSQL:NO ParameterDic:@{@"uid":@(0)} success:^(id JSON) {
-//            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                NSArray *myFriends = [nowLoginUser getAllMyFriendUsers];
-//                NSArray  *json = [NSArray arrayWithArray:JSON];
-//                //循环，删除本地数据库多余的缓存数据
-//                for (int i = 0; i < [myFriends count]; i++){
-//                    MyFriendUser *myFriendUser = myFriends[i];
-//                    //判断返回的数组是否包含
-//                    BOOL isHave = [json bk_any:^BOOL(id obj) {
-//                        //判断是否包含对应的
-//                        return [[obj objectForKey:@"uid"] integerValue] == [myFriendUser uid].integerValue;
-//                    }];
-//                    //删除新的好友本地数据库
-//                    NewFriendUser *newFuser = [nowLoginUser getNewFriendUserWithUid:myFriendUser.uid];
-//                    //本地不存在，不是好友关系
-//                    if(!isHave){
-//                        if (newFuser) {
-//                            //更新好友请求列表数据为 添加
-//                            [newFuser updateOperateType:0];
-//                        }
-//                        
-//                        //如果uid大于100的为普通好友，刷新的时候可以删除本地，系统好友，保留
-//                        if(myFriendUser.uid.integerValue > 100){
-//                            //不包含，删除当前数据
-//                            //                    [myFriendUser MR_deleteEntityInContext:nowLoginUser.managedObjectContext];
-//                            //更新设置为不是我的好友
-//                            [myFriendUser updateIsNotMyFriend];
-//                        }
-//                    }else{
-//                        //好友
-//                        if (newFuser) {
-//                            //更新好友请求列表数据为 添加
-//                            [newFuser updateOperateType:2];
-//                        }
-//                    }
-//                }
-//                
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    
-//                    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-//                        NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
-//                        LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
-//                        
-//                        //循环添加数据库数据
-//                        for (NSDictionary *modic in json) {
-//                            FriendsUserModel *friendM = [FriendsUserModel objectWithKeyValues:modic];
-//                            friendM.friendship = @(1);
-//                            
-//                            NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",loginUser,@"uid",friendM.uid];
-//                            MyFriendUser *myFriend = [MyFriendUser MR_findFirstWithPredicate:pre inContext:localContext];
-//                            if (!myFriend) {
-//                                myFriend = [MyFriendUser MR_createEntityInContext:localContext];
-//                            }
-//                            myFriend.uid = friendM.uid;
-//                            myFriend.mobile = friendM.mobile;
-//                            myFriend.position = friendM.position;
-//                            myFriend.provinceid = friendM.provinceid;
-//                            myFriend.provincename = friendM.provincename;
-//                            myFriend.cityid = friendM.cityid;
-//                            myFriend.cityname = friendM.cityname;
-//                            myFriend.friendship = friendM.friendship;
-//                            myFriend.shareurl = friendM.shareurl;
-//                            myFriend.avatar = friendM.avatar;
-//                            myFriend.name = friendM.name;
-//                            myFriend.address = friendM.address;
-//                            myFriend.email = friendM.email;
-//                            myFriend.investorauth = friendM.investorauth;
-////                            myFriend.startupauth = friendM.startupauth;
-//                            myFriend.company = friendM.company;
-//                            myFriend.status = friendM.status;
-//                            myFriend.isMyFriend = @(YES);
-//                            [loginUser addRsMyFriendsObject:myFriend];
-//                        }
-//                        
-//                    } completion:^(BOOL contextDidSave, NSError *error) {
-//
-//                    }];
-//                    
-//                });
-//            });
-//            
-//        } fail:^(NSError *error) {
-//            [self.refreshControl endRefreshing];
-//            [WLHUDView hiddenHud];
-//        }];
     }
 }
 
@@ -802,28 +656,12 @@
 
 - (WLStatusFrame *)relodStatusFrameWithDic:(NSDictionary *)reqDataDic withFidStr:(NSString *)fidStr
 {
-    LogInUser *meuser = [LogInUser getCurrentLoginUser];
-    NSArray *photsArray = [reqDataDic objectForKey:@"photos"];
-    NSMutableArray *photosA = [NSMutableArray array];
-    for (NSDictionary *imageDic in photsArray) {
-        NSData *photoData = [[NSData alloc] initWithBase64EncodedString:[imageDic objectForKey:@"photo"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        [photosA addObject:@{@"imageData":photoData}];
-    }
-    NSMutableDictionary *frameDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
-    [frameDic setObject:photosA forKey:@"photos"];
-    
-    WLStatusFrame *newsf = [self dataFrameWith:frameDic];
-    WLStatusM *statusM = newsf.status;
+    WLStatusM *statusM = [WLStatusM objectWithDict:reqDataDic];
+    WLStatusFrame *newsf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     statusM.sendId = fidStr;
     statusM.sendType = 1;
     statusM.type = @(13);
-    IBaseUserM *meBasic =  [[IBaseUserM alloc] init];
-    meBasic.name = meuser.name;
-    meBasic.avatar = meuser.avatar;
-    meBasic.uid = meuser.uid;
-    meBasic.position = meuser.position;
-    meBasic.company = meuser.company;
-    meBasic.friendship = meuser.firststustid;
+    IBaseUserM *meBasic =  [IBaseUserM getLoginUserBaseInfo];
     statusM.user = meBasic;
     newsf.status = statusM;
     return newsf;
@@ -838,13 +676,12 @@
     statusFrame.status = statusM;
     [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    
+
     WEAKSELF
-    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+    [WeLianClient saveFeedWithParameterDic:reqDataDic Success:^(id resultInfo) {
         [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
         [weakSelf beginPullDownRefreshing];
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
         WLStatusM *statusM = statusFrame.status;
         statusM.sendType = 1;
         statusFrame.status = statusM;
@@ -852,5 +689,17 @@
         [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [WLHUDView showErrorHUD:@"发布失败！"];
     }];
+//    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
+//        [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
+//        [weakSelf beginPullDownRefreshing];
+//    } fail:^(NSError *error) {
+//        
+//        WLStatusM *statusM = statusFrame.status;
+//        statusM.sendType = 1;
+//        statusFrame.status = statusM;
+//        [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+//        [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [WLHUDView showErrorHUD:@"发布失败！"];
+//    }];
 }
 @end
