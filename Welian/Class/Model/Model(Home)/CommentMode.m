@@ -13,24 +13,31 @@
 - (void)customOperation:(NSDictionary *)dict
 {
     self.user = [IBaseUserM objectWithDict:dict[@"user"]];
-    self.touser = [IBaseUserM objectWithDict:dict[@"touser"]];
+    if ([dict objectForKey:@"touser"]) {
+        
+        self.touser = [IBaseUserM objectWithDict:dict[@"touser"]];
+        _commentAndName = [NSString stringWithFormat:@"%@ 回复 %@ : %@",_user.name,_touser.name,_comment];
+    }else{
+        _commentAndName = [NSString stringWithFormat:@"%@ : %@",_user.name,_comment];
+    }
+    self.created = [self getCreated];
 }
 
-- (void)setTouser:(IBaseUserM *)touser
-{
-    _touser = touser;
-    _commentAndName = [NSString stringWithFormat:@"%@ 回复 %@ : %@",_user.name,touser.name,_comment];
-}
+//- (void)setTouser:(IBaseUserM *)touser
+//{
+//    _touser = touser;
+//    _commentAndName = [NSString stringWithFormat:@"%@ 回复 %@ : %@",_user.name,touser.name,_comment];
+//}
+//
+//- (void)setUser:(IBaseUserM *)user
+//{
+//    _user = user;
+//    _commentAndName = [NSString stringWithFormat:@"%@ : %@",_user.name,_comment];
+//}
 
-- (void)setUser:(IBaseUserM *)user
-{
-    _user = user;
-    _commentAndName = [NSString stringWithFormat:@"%@ : %@",_user.name,_comment];
-}
 
 
-
-- (NSString *)created
+- (NSString *)getCreated
 {
     // 1.获得微博的发送时间
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];

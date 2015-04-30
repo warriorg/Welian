@@ -18,7 +18,7 @@
     if (statusM.photos.count) {
         NSInteger i = 0;
         for (WLPhoto *photo in statusM.photos) {
-            NSString *urlStr = photo.url;
+            NSString *urlStr = photo.photo;
             if (i==0) {
                 [_oneImage setHidden:NO];
                 [_oneImage sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];

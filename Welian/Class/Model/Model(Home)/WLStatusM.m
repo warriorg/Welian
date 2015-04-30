@@ -14,16 +14,41 @@
 - (void)customOperation:(NSDictionary *)dict
 {
     self.user = [IBaseUserM objectWithDict:dict[@"user"]];
-    self.tuiuser = [IBaseUserM objectWithDict:dict[@"tuiuser"]];
-    self.card = [CardStatuModel objectWithDict:dict[@"card"]];
-    self.photos = [WLPhoto objectsWithInfo:dict[@"photos"]];
-    self.comments = [CommentMode objectsWithInfo:dict[@"comments"]];
-    self.zans = [IBaseUserM objectsWithInfo:dict[@"zans"]];
-    self.forwards = [IBaseUserM objectsWithInfo:dict[@"forwards"]];
-    self.joinedusers = [IBaseUserM objectsWithInfo:dict[@"joinedusers"]];
+    if ([dict objectForKey:@"tuiuser"]) {
+        self.tuiuser = [IBaseUserM objectWithDict:dict[@"tuiuser"]];
+    }
+    if ([dict objectForKey:@"card"]) {
+        
+        self.card = [CardStatuModel objectWithDict:dict[@"card"]];
+    }
+    if ([dict objectForKey:@"photos"]) {
+        
+        self.photos = [WLPhoto objectsWithInfo:dict[@"photos"]];
+    }
+    if ([dict objectForKey:@"comments"]) {
+        
+        self.comments = [CommentMode objectsWithInfo:dict[@"comments"]];
+    }
+    if ([dict objectForKey:@"zans"]) {
+        
+        self.zans = [IBaseUserM objectsWithInfo:dict[@"zans"]];
+    }
+    if ([dict objectForKey:@"forwards"]) {
+        
+        self.forwards = [IBaseUserM objectsWithInfo:dict[@"forwards"]];
+    }
+    if ([dict objectForKey:@"joinedusers"]) {
+        
+        self.joinedusers = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:dict[@"joinedusers"]]];
+    }
+    
+    if (self.type.integerValue==5||self.type.integerValue==12) {
+        [self.joinedusers addObject:self.user];
+    }
+    self.created = [self getCreated];
 }
 
-- (NSString *)created
+- (NSString *)getCreated
 {
     // 1.获得微博的发送时间
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];

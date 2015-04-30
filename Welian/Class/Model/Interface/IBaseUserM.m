@@ -15,4 +15,20 @@
 
 }
 
+
++ (IBaseUserM *)getLoginUserBaseInfo
+{
+    LogInUser *meuser = [LogInUser getCurrentLoginUser];
+    IBaseUserM *loginUser = [[IBaseUserM alloc] init];
+    loginUser.name = meuser.name;
+    loginUser.avatar = meuser.avatar;
+    loginUser.uid = meuser.uid;
+    loginUser.position = meuser.position;
+    loginUser.company = meuser.company;
+    loginUser.friendship = meuser.firststustid;
+    loginUser.investorauth = meuser.investorauth;
+    
+    return loginUser;
+}
+
 @end

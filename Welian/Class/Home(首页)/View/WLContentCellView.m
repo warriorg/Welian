@@ -289,7 +289,7 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *zans = [NSMutableArray arrayWithArray:statM.zans];
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
+    IBaseUserM *mode = [IBaseUserM getLoginUserBaseInfo];
     if (statM.iszan.boolValue) {
         
         for (IBaseUserM *zanM in statM.zans) {

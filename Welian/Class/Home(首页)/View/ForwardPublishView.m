@@ -61,7 +61,7 @@
     CGFloat labelW = self.frame.size.width-30;
     if (photoM) {
         [_imageView setFrame:CGRectMake(10, 0, self.frame.size.height, self.frame.size.height)];
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:photoM.url] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:photoM.photo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
         labelX += self.frame.size.height+10;
         labelW -= self.frame.size.height;
     }else{

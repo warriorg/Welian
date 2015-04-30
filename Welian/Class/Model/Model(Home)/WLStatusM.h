@@ -7,7 +7,6 @@
 //
 
 #import "IFBase.h"
-//#import "WLBasicTrends.h"
 #import "CardStatuModel.h"
 
 @interface WLStatusM : IFBase
@@ -84,7 +83,7 @@
 @property (nonatomic, strong) CardStatuModel *card;
 
 // * 对项目的点评，活动参与人 *//
-@property (nonatomic, strong) NSArray *joinedusers;
+@property (nonatomic, strong) NSMutableArray *joinedusers;
 
 /*
 

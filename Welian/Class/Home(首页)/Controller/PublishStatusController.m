@@ -412,8 +412,8 @@ static NSString *picCellid = @"PicCellID";
             [WLHUDView showErrorHUD:@"内容为空！"];
             return;
         }
-    }else if (_publishType == PublishTypeNomel)
-    {
+    }else if (_publishType == PublishTypeNomel){
+        
         if (!(_textCell.textView.text.length||self.assetsArray.count)) {
             [WLHUDView showErrorHUD:@"内容为空！"];
             return;
@@ -438,11 +438,16 @@ static NSString *picCellid = @"PicCellID";
                 UIImage *image = jkAsset.fullImage;
                 NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
                 NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                NSDictionary *imageDic = @{@"photo":imageStr,@"title":@"jpg"};
+                NSDictionary *imageDic = @{@"imageDataStr":imageStr};
                 [self.publishM.photos addObject:imageDic];
             }
              [reqDataDic setObject:weakSelf.publishM.photos forKey:@"photos"];
         }
+        
+//        IBaseUserM *meBase = [IBaseUserM getLoginUserBaseInfo];
+//        NSDictionary *user = [meBase keyValues];
+//        [reqDataDic setObject:user forKey:@"user"];
+        
         NSString *dateStr = [NSString stringWithFormat:@"%lld",[[[NSDate date] formattedDateWithFormat:@"yyyyMMddHHMMss"] longLongValue]];
         [[WLDataDBTool sharedService] putObject:reqDataDic  withId:dateStr intoTable:KSendAgainDataTableName];
         if (self.publishDicBlock) {

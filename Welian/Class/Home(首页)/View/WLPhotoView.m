@@ -45,17 +45,18 @@
 - (void)setPhoto:(WLPhoto *)photo
 {
     _photo = photo;
-    if (photo.url) {
+    if (photo.photo) {
         // 1.下载图片
-        [self sd_setImageWithURL:[NSURL URLWithString:photo.url] placeholderImage:nil options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [[SDImageCache sharedImageCache] storeImage:image forKey:photo.url];
+        [self sd_setImageWithURL:[NSURL URLWithString:photo.photo] placeholderImage:nil options:SDWebImageLowPriority|SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [[SDImageCache sharedImageCache] storeImage:image forKey:photo.photo];
         }];
-    }else if (photo.imageData){
-        [self setImage:[UIImage imageWithData:photo.imageData]];
+    }else if (photo.imageDataStr){
+        NSData *photoData = [[NSData alloc] initWithBase64EncodedString:photo.imageDataStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        [self setImage:[UIImage imageWithData:photoData]];
     }
     
     // 2.gif标识的处理
-    if ([photo.url.lowercaseString hasSuffix:@"gif"]) { // 是GIF
+    if ([photo.photo.lowercaseString hasSuffix:@"gif"]) { // 是GIF
         _gifView.hidden = NO;
     } else {
         _gifView.hidden = YES;

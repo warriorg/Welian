@@ -37,4 +37,6 @@
 @property (nonatomic, strong) NSNumber *friend2count;// 二度好友 数量
 @property (nonatomic, strong) NSNumber *samefriendscount; // 共同好友数量  取自己信息的时候没有
 
++ (IBaseUserM *)getLoginUserBaseInfo;
+
 @end
