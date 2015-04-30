@@ -17,16 +17,16 @@
 @property (nonatomic, strong) NSString *sendId;
 
 /** 0 正常动态，1 转推的动态，2推荐的动态，3创建的活动，4 修改个人公司，5 参加的活动，6 修改学校资料，10创建项目，11 网页, 12点评项目  13 自己正在发布的动态*/
-@property (nonatomic, assign) NSNumber *type;
+@property (nonatomic, strong) NSNumber *type;
 
 /***  列表中动态最大id，用户新动态提示   */
-@property (nonatomic, assign) NSNumber *topid;
+@property (nonatomic, strong) NSNumber *topid;
 
 /**  推荐理由（你的通讯录中有N个好友与TA是微链好友）   */
 @property (nonatomic, strong) NSString *commandmsg;
 
 /**  微博UID   */
-@property (nonatomic, assign) NSNumber *fid;
+@property (nonatomic, strong) NSNumber *fid;
 
 /**  微博信息内容   */
 @property (nonatomic, strong) NSString *content;
@@ -34,22 +34,22 @@
 @property (nonatomic, strong) NSString *created;
 
 /** int	转发数 */
-@property (nonatomic, assign) NSNumber *forwardcount;
+@property (nonatomic, strong) NSNumber *forwardcount;
 /** int	评论数 */
-@property (nonatomic, assign) NSNumber *commentcount;
+@property (nonatomic, strong) NSNumber *commentcount;
 /** int	表态数 */
-@property (nonatomic, assign) NSNumber *zan;
+@property (nonatomic, strong) NSNumber *zan;
 
 /**  1已赞 0未赞  */
-@property (nonatomic, assign) NSNumber *iszan;
+@property (nonatomic, strong) NSNumber *iszan;
 
 /**  是否推过 1已推 0未推  */
-@property (nonatomic, assign) NSNumber *isforward;
+@property (nonatomic, strong) NSNumber *isforward;
 
 /**  纬度   */
-@property (nonatomic, assign) NSNumber  *x;
+@property (nonatomic, strong) NSNumber  *x;
 /**  经度   */
-@property (nonatomic, assign) NSNumber  *y;
+@property (nonatomic, strong) NSNumber  *y;
 
 /** object	微博作者的用户信息字段 详细 */
 @property (nonatomic, strong) IBaseUserM *user;
