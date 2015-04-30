@@ -774,7 +774,8 @@
                           Path:kProjectDetailInfoPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProject ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -829,15 +830,18 @@
 
 //取项目成员
 + (void)getProjectMembersWithPid:(NSNumber *)pid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
                          Success:(SuccessBlock)success
                           Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"pid":pid};
+    NSDictionary *params = @{@"pid":pid,@"page":page,@"size":size};
     [self reqestPostWithParams:params
                           Path:kProjectMembersPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectMembers ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -860,15 +864,10 @@
 }
 
 //项目 评论
-+ (void)commentProjectWithPid:(NSNumber *)pid
-                        Touid:(NSNumber *)touid
-                      Comment:(NSString *)comment
-                      Success:(SuccessBlock)success
-                       Failed:(FailedBlock)failed
++ (void)commentProjectWithParameterDic:(NSDictionary *)params
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"pid":pid,
-                             @"touid":touid,
-                             @"comment":comment};
     [self reqestPostWithParams:params
                           Path:kProjectCommentPath
                        Success:^(id resultInfo) {
@@ -893,7 +892,8 @@
                           Path:kProjectZanListPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectZanList ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -913,7 +913,8 @@
                           Path:kProjectCommentListPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectCommentList ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [ICommentInfo objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

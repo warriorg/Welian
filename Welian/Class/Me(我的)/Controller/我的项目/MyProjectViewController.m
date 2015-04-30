@@ -413,17 +413,36 @@
 - (void)deleteProjectWith:(NSIndexPath *)indexPath
 {
     IProjectInfo *projectInfo = _createDataArray[indexPath.row];
-    [WLHttpTool deleteProjectParameterDic:@{@"pid":projectInfo.pid}
-                                  success:^(id JSON) {
-                                      //删除当前项目
-                                      [ProjectInfo deleteProjectInfoWithType:@(2) Pid:projectInfo.pid];
-                                      [self.createDataArray removeObjectAtIndex:indexPath.row];
-                                      [_tableView reloadData];
-                                      //检测是否提醒
-                                      [self checkHasData];
-                                  } fail:^(NSError *error) {
-                                      [WLHUDView showErrorHUD:error.description];
-                                  }];
+    [WLHUDView showHUDWithStr:@"删除中..." dim:NO];
+    [WeLianClient deleteProjectWithPid:projectInfo.pid
+                               Success:^(id resultInfo) {
+                                   [WLHUDView hiddenHud];
+                                   
+                                   //删除当前项目
+                                   [ProjectInfo deleteProjectInfoWithType:@(2) Pid:projectInfo.pid];
+                                   [self.createDataArray removeObjectAtIndex:indexPath.row];
+                                   [_tableView reloadData];
+                                   //检测是否提醒
+                                   [self checkHasData];
+                               } Failed:^(NSError *error) {
+                                   if (error) {
+                                       [WLHUDView showErrorHUD:error.description];
+                                   }else{
+                                       [WLHUDView showErrorHUD:@"删除项目失败，请重试!"];
+                                   }
+                               }];
+    
+//    [WLHttpTool deleteProjectParameterDic:@{@"pid":projectInfo.pid}
+//                                  success:^(id JSON) {
+//                                      //删除当前项目
+//                                      [ProjectInfo deleteProjectInfoWithType:@(2) Pid:projectInfo.pid];
+//                                      [self.createDataArray removeObjectAtIndex:indexPath.row];
+//                                      [_tableView reloadData];
+//                                      //检测是否提醒
+//                                      [self checkHasData];
+//                                  } fail:^(NSError *error) {
+//                                      [WLHUDView showErrorHUD:error.description];
+//                                  }];
 }
 
 //检测是否显示提醒

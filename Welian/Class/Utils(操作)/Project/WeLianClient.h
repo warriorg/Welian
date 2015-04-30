@@ -245,6 +245,8 @@
 
 //取项目成员
 + (void)getProjectMembersWithPid:(NSNumber *)pid
+                            Page:(NSNumber *)page
+                            Size:(NSNumber *)size
                          Success:(SuccessBlock)success
                           Failed:(FailedBlock)failed;
 
@@ -254,11 +256,9 @@
                    Failed:(FailedBlock)failed;
 
 //项目 评论
-+ (void)commentProjectWithPid:(NSNumber *)pid
-                        Touid:(NSNumber *)touid
-                      Comment:(NSString *)comment
-                      Success:(SuccessBlock)success
-                       Failed:(FailedBlock)failed;
++ (void)commentProjectWithParameterDic:(NSDictionary *)params
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed;
 
 //取赞的用户列表
 + (void)getProjectZanListWithPid:(NSNumber *)pid
