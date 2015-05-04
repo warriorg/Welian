@@ -575,7 +575,6 @@ static NSString *noCommentCell = @"NoCommentCell";
                 [weakSelf updataCommentBlock];
                 _selecCommFrame = nil;
                 [weakSelf.tableView reloadData];
-                
                 weakSelf.commentHeadView;
                 
             } fail:^(NSError *error) {

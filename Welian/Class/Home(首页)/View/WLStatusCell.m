@@ -203,7 +203,7 @@
         [_feznView setHidden:YES];
     }
     
-    if (status.commentcount) {
+    if (status.commentcount.integerValue) {
         [_commentView setHidden:NO];
         [_commentView setCommenFrame:statusFrame.commentListFrame];
         [_commentView setFrame:CGRectMake(61, commenY+1, mainSize.width-61-10, statusFrame.commentListFrame.cellHigh)];
