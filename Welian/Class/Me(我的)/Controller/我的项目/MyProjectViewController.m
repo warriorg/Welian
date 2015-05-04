@@ -144,79 +144,147 @@
 {
     [self.refreshControl beginRefreshing];
     _pageIndex = 1;
-    [_getProjectDic removeAllObjects];
-    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
-    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
+//    [_getProjectDic removeAllObjects];
+//    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
+//    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
 
     if (self.segmentedControl.selectedSegmentIndex==0) {
+        [WeLianClient getProjectFavoriteListWithPage:@(_pageIndex)
+                                                Size:@(KCellConut)
+                                             Success:^(id resultInfo) {
+                                                 [self.refreshControl endRefreshing];
+                                                 [self.tableView.footer endRefreshing];
+                                                 
+                                                 if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                                                     NSArray *projects = resultInfo;
+                                                     if (!_uid) {
+                                                         [ProjectInfo deleteAllProjectInfoWithType:@(1)];
+                                                         for (IProjectInfo *projectM in projects) {
+                                                             [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
+                                                         }
+                                                         [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(1)].count];
+                                                     }else{
+                                                         [self.notstrView setHidden:projects.count];
+                                                     }
+                                                     [self.collectDataArray removeAllObjects];
+                                                     self.collectDataArray = nil;
+                                                     self.collectDataArray = [NSMutableArray arrayWithArray:projects];
+                                                     [self.tableView reloadData];
+                                                     if (projects.count != KCellConut) {
+                                                         self.tableView.footer.hidden = YES;
+                                                     }else{
+                                                         self.tableView.footer.hidden = NO;
+                                                         _pageIndex++;
+                                                     }
+                                                 }
+                                             } Failed:^(NSError *error) {
+                                                 [self.refreshControl endRefreshing];
+                                                 [self.tableView.footer endRefreshing];
+                                             }];
+        
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                if (!_uid) {
-                    [ProjectInfo deleteAllProjectInfoWithType:@(1)];
-                    for (IProjectInfo *projectM in projects) {
-                        [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
-                    }
-                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(1)].count];
-                }else{
-                    [self.notstrView setHidden:projects.count];
-                }
-                [self.collectDataArray removeAllObjects];
-                self.collectDataArray = nil;
-                self.collectDataArray = [NSMutableArray arrayWithArray:projects];
-                [self.tableView reloadData];
-                if (projects.count != KCellConut) {
-                    self.tableView.footer.hidden = YES;
-                }else{
-                    self.tableView.footer.hidden = NO;
-                    _pageIndex++;
-                }
-            }
-            
-        } fail:^(NSError *error) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-        }];
+//        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+//                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+//                if (!_uid) {
+//                    [ProjectInfo deleteAllProjectInfoWithType:@(1)];
+//                    for (IProjectInfo *projectM in projects) {
+//                        [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
+//                    }
+//                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(1)].count];
+//                }else{
+//                    [self.notstrView setHidden:projects.count];
+//                }
+//                [self.collectDataArray removeAllObjects];
+//                self.collectDataArray = nil;
+//                self.collectDataArray = [NSMutableArray arrayWithArray:projects];
+//                [self.tableView reloadData];
+//                if (projects.count != KCellConut) {
+//                    self.tableView.footer.hidden = YES;
+//                }else{
+//                    self.tableView.footer.hidden = NO;
+//                    _pageIndex++;
+//                }
+//            }
+//
+//        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//        }];
     }else if (self.segmentedControl.selectedSegmentIndex ==1){
         if (_uid) {
             [_getProjectDic setObject:_uid forKey:@"uid"];
         }else{
            [_getProjectDic setObject:@(-1) forKey:@"uid"];
         }
+        
+        //大于零取某个用户的，-1取自己的，不传或者0取全部推荐的项目
+        [WeLianClient getProjectListWithUid:@(-1)
+                                       Page:@(_pageIndex)
+                                       Size:@(KCellConut)
+                                    Success:^(id resultInfo) {
+                                        [self.refreshControl endRefreshing];
+                                        [self.tableView.footer endRefreshing];
+                                        if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                                            NSArray *projects = resultInfo;
+                                            if (!_uid) {
+                                                [ProjectInfo deleteAllProjectInfoWithType:@(2)];
+                                                for (IProjectInfo *projectM in projects) {
+                                                    [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
+                                                }
+                                                [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(2)].count];
+                                            }else {
+                                                [self.notstrView setHidden:projects.count];
+                                            }
+                                            [self.createDataArray removeAllObjects];
+                                            self.createDataArray = nil;
+                                            self.createDataArray = [NSMutableArray arrayWithArray:projects];
+                                            [self.tableView reloadData];
+                                            if (projects.count != KCellConut) {
+                                                self.tableView.footer.hidden = YES;
+                                            }else{
+                                                self.tableView.footer.hidden = NO;
+                                                _pageIndex++;
+                                            }
+                                        }
+                                    } Failed:^(NSError *error) {
+                                        [self.tableView.header endRefreshing];
+                                        [self.tableView.footer endRefreshing];
+                                        
+                                    }];
        
         // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                if (!_uid) {
-                    [ProjectInfo deleteAllProjectInfoWithType:@(2)];
-                    for (IProjectInfo *projectM in projects) {
-                        [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
-                    }
-                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(2)].count];
-                }else {
-                    [self.notstrView setHidden:projects.count];
-                }
-                [self.createDataArray removeAllObjects];
-                self.createDataArray = nil;
-                self.createDataArray = [NSMutableArray arrayWithArray:projects];
-                [self.tableView reloadData];
-                if (projects.count != KCellConut) {
-                    self.tableView.footer.hidden = YES;
-                }else{
-                    self.tableView.footer.hidden = NO;
-                    _pageIndex++;
-                }
-            }
-        } fail:^(NSError *error) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-        }];
+//        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+//                NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+//                if (!_uid) {
+//                    [ProjectInfo deleteAllProjectInfoWithType:@(2)];
+//                    for (IProjectInfo *projectM in projects) {
+//                        [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
+//                    }
+//                    [self.notstrView setHidden:[ProjectInfo allMyProjectInfoWithType:@(2)].count];
+//                }else {
+//                    [self.notstrView setHidden:projects.count];
+//                }
+//                [self.createDataArray removeAllObjects];
+//                self.createDataArray = nil;
+//                self.createDataArray = [NSMutableArray arrayWithArray:projects];
+//                [self.tableView reloadData];
+//                if (projects.count != KCellConut) {
+//                    self.tableView.footer.hidden = YES;
+//                }else{
+//                    self.tableView.footer.hidden = NO;
+//                    _pageIndex++;
+//                }
+//            }
+//        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//        }];
     }
     
     
@@ -225,67 +293,128 @@
 #pragma mark - 上拉加载更多
 - (void)laodMoreData
 {
-    [_getProjectDic removeAllObjects];
-    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
-    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
+//    [_getProjectDic removeAllObjects];
+//    [_getProjectDic setObject:@(_pageIndex) forKey:@"page"];
+//    [_getProjectDic setObject:@(KCellConut) forKey:@"size"];
     
     if (self.segmentedControl.selectedSegmentIndex==0) {
-        if (_uid) {
-            [_getProjectDic setObject:_uid forKey:@"uid"];
-        }
-        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                if (JSON) {
-                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                    if (!_uid) {
-                        for (IProjectInfo *projectM in projects) {
-                            [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
-                        }
-                    }
-                    [self.collectDataArray addObjectsFromArray:projects];
-                    [self.tableView reloadData];
-                    if (projects.count != KCellConut) {
-                        self.tableView.footer.hidden = YES;
-                    }else{
-                        self.tableView.footer.hidden = NO;
-                        _pageIndex++;
-                    }
-                }
-            }
-        } fail:^(NSError *error) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-        }];
+//        if (_uid) {
+//            [_getProjectDic setObject:_uid forKey:@"uid"];
+//        }
+        
+        [WeLianClient getProjectFavoriteListWithPage:@(_pageIndex)
+                                                Size:@(KCellConut)
+                                             Success:^(id resultInfo) {
+                                                 [self.refreshControl endRefreshing];
+                                                 [self.tableView.footer endRefreshing];
+                                                 if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                                                     if ([resultInfo count] > 0) {
+                                                         NSArray *projects = resultInfo;
+                                                         if (!_uid) {
+                                                             for (IProjectInfo *projectM in projects) {
+                                                                 [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
+                                                             }
+                                                         }
+                                                         [self.collectDataArray addObjectsFromArray:projects];
+                                                         [self.tableView reloadData];
+                                                         if (projects.count != KCellConut) {
+                                                             self.tableView.footer.hidden = YES;
+                                                         }else{
+                                                             self.tableView.footer.hidden = NO;
+                                                             _pageIndex++;
+                                                         }
+                                                     }
+                                                 }
+                                             } Failed:^(NSError *error) {
+                                                 [self.refreshControl endRefreshing];
+                                                 [self.tableView.footer endRefreshing];
+                                             }];
+        
+//        [WLHttpTool getFavoriteProjectsParameterDic:_getProjectDic success:^(id JSON) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+//                if (JSON) {
+//                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+//                    if (!_uid) {
+//                        for (IProjectInfo *projectM in projects) {
+//                            [ProjectInfo createProjectInfoWith:projectM withType:@(1)];
+//                        }
+//                    }
+//                    [self.collectDataArray addObjectsFromArray:projects];
+//                    [self.tableView reloadData];
+//                    if (projects.count != KCellConut) {
+//                        self.tableView.footer.hidden = YES;
+//                    }else{
+//                        self.tableView.footer.hidden = NO;
+//                        _pageIndex++;
+//                    }
+//                }
+//            }
+//        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//        }];
     }else if (self.segmentedControl.selectedSegmentIndex ==1){
-        [_getProjectDic setObject:@(-1) forKey:@"uid"];
-        // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
-                if (JSON) {
-                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-                    if (!_uid) {
-                        for (IProjectInfo *projectM in projects) {
-                            [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
-                        }
-                    }
-                    [self.createDataArray addObjectsFromArray:projects];
-                    [self.tableView reloadData];
-                    if (projects.count != KCellConut) {
-                        self.tableView.footer.hidden = YES;
-                    }else{
-                        self.tableView.footer.hidden = NO;
-                        _pageIndex++;
-                    }
-                }
-            }
-        } fail:^(NSError *error) {
-            [self.refreshControl endRefreshing];
-            [self.tableView.footer endRefreshing];
-        }];
+        
+        //大于零取某个用户的，-1取自己的，不传或者0取全部推荐的项目
+        [WeLianClient getProjectListWithUid:@(-1)
+                                       Page:@(_pageIndex)
+                                       Size:@(KCellConut)
+                                    Success:^(id resultInfo) {
+                                        [self.refreshControl endRefreshing];
+                                        [self.tableView.footer endRefreshing];
+                                        if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+                                            if ([resultInfo count] > 0) {
+                                                NSArray *projects = resultInfo;
+                                                if (!_uid) {
+                                                    for (IProjectInfo *projectM in projects) {
+                                                        [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
+                                                    }
+                                                }
+                                                [self.createDataArray addObjectsFromArray:projects];
+                                                [self.tableView reloadData];
+                                                if (projects.count != KCellConut) {
+                                                    self.tableView.footer.hidden = YES;
+                                                }else{
+                                                    self.tableView.footer.hidden = NO;
+                                                    _pageIndex++;
+                                                }
+                                            }
+                                        }
+                                    } Failed:^(NSError *error) {
+                                        [self.tableView.header endRefreshing];
+                                        [self.tableView.footer endRefreshing];
+                                        
+                                    }];
+        
+//        [_getProjectDic setObject:@(-1) forKey:@"uid"];
+//        // -1 取自己，0 取推荐的项目，大于0取id为uid的用户
+//        [WLHttpTool getProjectsParameterDic:_getProjectDic success:^(id JSON) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//            if (self.segmentedControl.selectedSegmentIndex==self.selectIndex) {
+//                if (JSON) {
+//                    NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
+//                    if (!_uid) {
+//                        for (IProjectInfo *projectM in projects) {
+//                            [ProjectInfo createProjectInfoWith:projectM withType:@(2)];
+//                        }
+//                    }
+//                    [self.createDataArray addObjectsFromArray:projects];
+//                    [self.tableView reloadData];
+//                    if (projects.count != KCellConut) {
+//                        self.tableView.footer.hidden = YES;
+//                    }else{
+//                        self.tableView.footer.hidden = NO;
+//                        _pageIndex++;
+//                    }
+//                }
+//            }
+//        } fail:^(NSError *error) {
+//            [self.refreshControl endRefreshing];
+//            [self.tableView.footer endRefreshing];
+//        }];
     }
     
 }

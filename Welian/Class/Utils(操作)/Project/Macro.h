@@ -112,6 +112,10 @@
 #define kFriendUrl(path) [NSString stringWithFormat:@"friend/%@",path]
 //取好友列表
 #define kFriendListPath kFriendUrl(@"list")
+//上传通讯录，获取系统好友列表
+#define kFriendUploadphonebookPath kFriendUrl(@"uploadphonebook")
+//取微信好友列表
+#define kFriendWXListPath kFriendUrl(@"wxlist")
 //二度好友列表
 #define kFriendList2Path kFriendUrl(@"list2")
 //取共同好友
@@ -127,6 +131,10 @@
 #pragma mark - 项目 project 模块
 //基本路径
 #define kProjectUrl(path) [NSString stringWithFormat:@"project/%@",path]
+//检测项目是否同名存在
+#define kCheckProjectPath kProjectUrl(@"check")
+//取我收藏的项目列表
+#define kProjectFavoriteListPath kProjectUrl(@"favoritelist")
 //取项目列表
 #define kProjectListPath kProjectUrl(@"list")
 //取项目详情

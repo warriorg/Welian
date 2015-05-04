@@ -341,7 +341,7 @@ static NSString *projectcellid = @"projectcellid";
 {
     // 2.显示相册
     MJPhoto *photo = [[MJPhoto alloc] init];
-    WEAKSELF
+//    WEAKSELF
     if (indexPath.section==0) {
         if (_projectModel.photos.count) {
             seleSection = 0;
@@ -386,19 +386,34 @@ static NSString *projectcellid = @"projectcellid";
 
         }else{    // 删除网络
             IPhotoInfo *photoI = _projectModel.photos[_row];
-            [WLHttpTool deleteProjectPicParameterDic:@{@"picid":photoI.picid} success:^(id JSON) {
-                NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
-                [photosM removeObjectAtIndex:_row];
-                [_projectModel setPhotos:photosM];
-                [self.projectM setPhotos:photosM];
-                // 修改数据库数据
-                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                [_browser handleSingleTap];
-                [self.tableView setTableFooterView:self.footView];
-                [self.footView.collectionView reloadData];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient deleteProjectPhotoWithPhotoid:photoI.picid
+                                                Success:^(id resultInfo) {
+                                                    NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
+                                                    [photosM removeObjectAtIndex:_row];
+                                                    [_projectModel setPhotos:photosM];
+                                                    [self.projectM setPhotos:photosM];
+                                                    // 修改数据库数据
+                                                    [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                                                    [_browser handleSingleTap];
+                                                    [self.tableView setTableFooterView:self.footView];
+                                                    [self.footView.collectionView reloadData];
+                                                } Failed:^(NSError *error) {
+                                                    
+                                                }];
+            
+//            [WLHttpTool deleteProjectPicParameterDic:@{@"picid":photoI.picid} success:^(id JSON) {
+//                NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
+//                [photosM removeObjectAtIndex:_row];
+//                [_projectModel setPhotos:photosM];
+//                [self.projectM setPhotos:photosM];
+//                // 修改数据库数据
+//                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+//                [_browser handleSingleTap];
+//                [self.tableView setTableFooterView:self.footView];
+//                [self.footView.collectionView reloadData];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }
         
     }];
@@ -441,30 +456,56 @@ static NSString *projectcellid = @"projectcellid";
     if (_projectModel.pid || _isEdit) {  // 修改项目
         if (self.assetsArray.count) {
             NSMutableArray *photDicArray = [self seleAssetsArray];
-            [WLHttpTool saveProjectPicParameterDic:@{@"pid":_projectModel.pid,@"photos":photDicArray} success:^(id JSON) {
-                NSMutableArray *photoArray = [NSMutableArray arrayWithArray:_projectModel.photos];
-                for (NSDictionary *photoDic in JSON) {
-                    IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
-                    [photoArray addObject:photoI];
-                }
-                [_projectModel setPhotos:photoArray];
-                [self.projectM setPhotos:photoArray];
-                // 修改数据库数据
-                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                [self createProjectParameterDic];
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient saveProjectPhotoWithParameterDic:@{@"pid":_projectModel.pid,@"photos":photDicArray}
+                                                   Success:^(id resultInfo) {
+                                                       NSMutableArray *photoArray = [NSMutableArray arrayWithArray:_projectModel.photos];
+                                                       if ([resultInfo count] > 0) {
+                                                           [photoArray addObjectsFromArray:resultInfo];
+                                                           [_projectModel setPhotos:photoArray];
+                                                           [self.projectM setPhotos:photoArray];
+                                                           
+                                                           // 修改数据库数据
+                                                           [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                                                           [self createProjectParameterDic];
+                                                       }
+                                                   } Failed:^(NSError *error) {
+                                                       
+                                                   }];
+//            [WLHttpTool saveProjectPicParameterDic:@{@"pid":_projectModel.pid,@"photos":photDicArray} success:^(id JSON) {
+//                NSMutableArray *photoArray = [NSMutableArray arrayWithArray:_projectModel.photos];
+//                for (NSDictionary *photoDic in JSON) {
+//                    IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
+//                    [photoArray addObject:photoI];
+//                }
+//                [_projectModel setPhotos:photoArray];
+//                [self.projectM setPhotos:photoArray];
+//                // 修改数据库数据
+//                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+//                [self createProjectParameterDic];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else{
             [self createProjectParameterDic];
         }
     }else{   // 新建项目
         // 检测项目是否有同名
-        [WLHttpTool checkProjectParameterDic:@{@"name":_projectModel.name} success:^(id JSON) {
-            [self createProjectParameterDic];
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient checkProjectWithName:_projectModel.name
+                                   Success:^(id resultInfo) {
+                                       [self createProjectParameterDic];
+                                   } Failed:^(NSError *error) {
+                                       if (error) {
+                                           [WLHUDView showErrorHUD:error.description];
+                                       }else{
+                                           [WLHUDView showErrorHUD:@"网络连接失败，请重试！"];
+                                       }
+                                   }];
+        
+//        [WLHttpTool checkProjectParameterDic:@{@"name":_projectModel.name} success:^(id JSON) {
+//            [self createProjectParameterDic];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 
@@ -496,76 +537,146 @@ static NSString *projectcellid = @"projectcellid";
             [saveProjectDic setObject:photArray forKey:@"photos"];
         }
     }
-
-    [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
-        if (JSON) {
-            [_projectModel setPid:[JSON objectForKey:@"pid"]];
-            [_projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
-            
-            [self.projectM setPid:_projectModel.pid];
-            [self.projectM setName:_projectModel.name];
-            [self.projectM setIntro:_projectModel.intro];
-            [self.projectM setDes:_projectModel.des];
-            [self.projectM setWebsite:_projectModel.website];
-            [self.projectM setIndustrys:_projectModel.industrys];
-            [self.projectM setShareurl:_projectModel.shareurl];
-            
-            // 创建项目存数据库
-            IProjectInfo *iProjectinfo = [[IProjectInfo alloc] init];
-            [iProjectinfo setPid:_projectModel.pid];
-            [iProjectinfo setName:_projectModel.name];
-            [iProjectinfo setIntro:_projectModel.intro];
-            [iProjectinfo setDes:_projectModel.des];
-            [iProjectinfo setIndustrys:_projectModel.industrys];
-            [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
-            
-            if (_isEdit) {
-                // 修改数据库数据
-                ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                if (self.projectDataBlock) {
-                    self.projectDataBlock(projectMR);
-                }
-                [self.assetsArray removeAllObjects];
-                [self.navigationController popViewControllerAnimated:YES];
-                
-            }else{
-                
-                NSArray *creatPhots = [JSON objectForKey:@"photos"];
-                
-                if (creatPhots.count) {
-                    NSMutableArray *photoArray = [NSMutableArray array];
-                    for (NSDictionary *photoDic in creatPhots) {
-                        IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
-                        [photoArray addObject:photoI];
-                    }
-                    [_projectModel setPhotos:photoArray];
-                    [self.projectM setPhotos:photoArray];
-                }
-                
-                IBaseUserM *meUserM = [[IBaseUserM alloc] init];
-                LogInUser *logUser = [LogInUser getCurrentLoginUser];
-                [meUserM setName:logUser.name];
-                [meUserM setUid:logUser.uid];
-                meUserM.friendship = logUser.friendship;
-                meUserM.avatar = logUser.avatar;
-                meUserM.company = logUser.company;
-                meUserM.position = logUser.position;
-                [_projectModel setUser:meUserM];
-                [self.projectM setUser:meUserM];
-                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
-                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
-                [self.navigationController pushViewController:memberVC animated:YES];
-                [self.assetsArray removeAllObjects];
-                [self.tableView setTableFooterView:self.footView];
-                [self.footView.collectionView reloadData];
-            }
-            //通知刷新个人项目列表
-            [KNSNotification postNotificationName:KRefreshMyProjectNotif object:self];
-        }
-        
-    } fail:^(NSError *error) {
-        
-    }];
+    
+    [WeLianClient saveProjectWithParameterDic:saveProjectDic
+                                      Success:^(id resultInfo) {
+                                          if (resultInfo) {
+                                              _projectModel.pid = [resultInfo pid];
+                                              _projectModel.shareurl = [resultInfo shareurl];
+                                              
+                                              [self.projectM setPid:_projectModel.pid];
+                                              [self.projectM setName:_projectModel.name];
+                                              [self.projectM setIntro:_projectModel.intro];
+                                              [self.projectM setDes:_projectModel.des];
+                                              [self.projectM setWebsite:_projectModel.website];
+                                              [self.projectM setIndustrys:_projectModel.industrys];
+                                              [self.projectM setShareurl:_projectModel.shareurl];
+                                              
+                                              // 创建项目存数据库
+                                              IProjectInfo *iProjectinfo = [[IProjectInfo alloc] init];
+                                              [iProjectinfo setPid:_projectModel.pid];
+                                              [iProjectinfo setName:_projectModel.name];
+                                              [iProjectinfo setIntro:_projectModel.intro];
+                                              [iProjectinfo setDes:_projectModel.des];
+                                              [iProjectinfo setIndustrys:_projectModel.industrys];
+                                              [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
+                                              
+                                              if (_isEdit) {
+                                                  // 修改数据库数据
+                                                  ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                                                  if (self.projectDataBlock) {
+                                                      self.projectDataBlock(projectMR);
+                                                  }
+                                                  [self.assetsArray removeAllObjects];
+                                                  [self.navigationController popViewControllerAnimated:YES];
+                                                  
+                                              }else{
+                                                  
+                                                  NSArray *creatPhots = [resultInfo photos];//[JSON objectForKey:@"photos"];
+                                                  
+                                                  if (creatPhots.count) {
+                                                      NSMutableArray *photoArray = [NSMutableArray array];
+                                                      for (NSDictionary *photoDic in creatPhots) {
+                                                          IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
+                                                          [photoArray addObject:photoI];
+                                                      }
+                                                      [_projectModel setPhotos:photoArray];
+                                                      [self.projectM setPhotos:photoArray];
+                                                  }
+                                                  
+                                                  IBaseUserM *meUserM = [[IBaseUserM alloc] init];
+                                                  LogInUser *logUser = [LogInUser getCurrentLoginUser];
+                                                  [meUserM setName:logUser.name];
+                                                  [meUserM setUid:logUser.uid];
+                                                  meUserM.friendship = logUser.friendship;
+                                                  meUserM.avatar = logUser.avatar;
+                                                  meUserM.company = logUser.company;
+                                                  meUserM.position = logUser.position;
+                                                  [_projectModel setUser:meUserM];
+                                                  [self.projectM setUser:meUserM];
+                                                  [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+                                                  MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
+                                                  [self.navigationController pushViewController:memberVC animated:YES];
+                                                  [self.assetsArray removeAllObjects];
+                                                  [self.tableView setTableFooterView:self.footView];
+                                                  [self.footView.collectionView reloadData];
+                                              }
+                                              //通知刷新个人项目列表
+                                              [KNSNotification postNotificationName:KRefreshMyProjectNotif object:self];
+                                          }
+                                      } Failed:^(NSError *error) {
+                                          
+                                      }];
+    
+//    [WLHttpTool createProjectParameterDic:saveProjectDic success:^(id JSON) {
+//        if (JSON) {
+//            [_projectModel setPid:[JSON objectForKey:@"pid"]];
+//            [_projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+//            
+//            [self.projectM setPid:_projectModel.pid];
+//            [self.projectM setName:_projectModel.name];
+//            [self.projectM setIntro:_projectModel.intro];
+//            [self.projectM setDes:_projectModel.des];
+//            [self.projectM setWebsite:_projectModel.website];
+//            [self.projectM setIndustrys:_projectModel.industrys];
+//            [self.projectM setShareurl:_projectModel.shareurl];
+//            
+//            // 创建项目存数据库
+//            IProjectInfo *iProjectinfo = [[IProjectInfo alloc] init];
+//            [iProjectinfo setPid:_projectModel.pid];
+//            [iProjectinfo setName:_projectModel.name];
+//            [iProjectinfo setIntro:_projectModel.intro];
+//            [iProjectinfo setDes:_projectModel.des];
+//            [iProjectinfo setIndustrys:_projectModel.industrys];
+//            [ProjectInfo createProjectInfoWith:iProjectinfo withType:@(2)];
+//            
+//            if (_isEdit) {
+//                // 修改数据库数据
+//                ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+//                if (self.projectDataBlock) {
+//                    self.projectDataBlock(projectMR);
+//                }
+//                [self.assetsArray removeAllObjects];
+//                [self.navigationController popViewControllerAnimated:YES];
+//                
+//            }else{
+//                
+//                NSArray *creatPhots = [JSON objectForKey:@"photos"];
+//                
+//                if (creatPhots.count) {
+//                    NSMutableArray *photoArray = [NSMutableArray array];
+//                    for (NSDictionary *photoDic in creatPhots) {
+//                        IPhotoInfo *photoI = [IPhotoInfo objectWithKeyValues:photoDic];
+//                        [photoArray addObject:photoI];
+//                    }
+//                    [_projectModel setPhotos:photoArray];
+//                    [self.projectM setPhotos:photoArray];
+//                }
+//                
+//                IBaseUserM *meUserM = [[IBaseUserM alloc] init];
+//                LogInUser *logUser = [LogInUser getCurrentLoginUser];
+//                [meUserM setName:logUser.name];
+//                [meUserM setUid:logUser.uid];
+//                meUserM.friendship = logUser.friendship;
+//                meUserM.avatar = logUser.avatar;
+//                meUserM.company = logUser.company;
+//                meUserM.position = logUser.position;
+//                [_projectModel setUser:meUserM];
+//                [self.projectM setUser:meUserM];
+//                [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];
+//                MemberProjectController *memberVC = [[MemberProjectController alloc] initIsEdit:NO withData:self.projectM];
+//                [self.navigationController pushViewController:memberVC animated:YES];
+//                [self.assetsArray removeAllObjects];
+//                [self.tableView setTableFooterView:self.footView];
+//                [self.footView.collectionView reloadData];
+//            }
+//            //通知刷新个人项目列表
+//            [KNSNotification postNotificationName:KRefreshMyProjectNotif object:self];
+//        }
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
     
 }
 

@@ -657,6 +657,38 @@
                        }];
 }
 
+//上传通讯录，获取系统好友列表
++ (void)uploadFriendWithPhonebooks:(NSArray *)phoneBooks
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"data":phoneBooks};
+    [self reqestPostWithParams:params
+                          Path:kFriendUploadphonebookPath
+                       Success:^(id resultInfo) {
+                           DLog(@"uploadFriendWithPhonebooks ---- %@",resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取微信好友列表
++ (void)getFriendWXListWithSuccess:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kFriendWXListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getFriendWXList ---- %@",resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 //二度好友列表
 + (void)getFriend2ListWithID:(NSNumber *)uid
                         Page:(NSNumber *)page
@@ -746,17 +778,53 @@
 
 
 #pragma mark - 项目 project 模块
-//取项目列表
-+ (void)getProjectListWithPage:(NSNumber *)page
-                          Size:(NSNumber *)size
-                       Success:(SuccessBlock)success
-                        Failed:(FailedBlock)failed
+//检测项目是否同名存在
++ (void)checkProjectWithName:(NSString *)name
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"name":name};
+    [self reqestPostWithParams:params
+                          Path:kCheckProjectPath
+                       Success:^(id resultInfo) {
+                           DLog(@"checkProject ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取我收藏的项目列表
++ (void)getProjectFavoriteListWithPage:(NSNumber *)page
+                                  Size:(NSNumber *)size
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed
 {
     NSDictionary *params = @{@"page":page,@"size":size};
     [self reqestPostWithParams:params
+                          Path:kProjectFavoriteListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getProjectFavoriteList ---- %@",resultInfo);
+                           NSArray *result = [IProjectInfo objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取项目列表
++ (void)getProjectListWithUid:(NSNumber *)uid
+                         Page:(NSNumber *)page
+                         Size:(NSNumber *)size
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed
+{
+    //大于零取某个用户的，-1取自己的，不传或者0取全部
+    NSDictionary *params = @{@"uid":uid,@"page":page,@"size":size};
+    [self reqestPostWithParams:params
                           Path:kProjectListPath
                        Success:^(id resultInfo) {
-                           DLog(@"saveProject ---- %@",resultInfo);
+                           DLog(@"getProjectList ---- %@",resultInfo);
                            NSArray *result = [IProjectInfo objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
@@ -773,7 +841,7 @@
     [self reqestPostWithParams:params
                           Path:kProjectDetailInfoPath
                        Success:^(id resultInfo) {
-                           DLog(@"saveProject ---- %@",resultInfo);
+                           DLog(@"getProjectDetailInfo ---- %@",resultInfo);
                            IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
@@ -790,7 +858,8 @@
                           Path:kSaveProjectPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProject ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
@@ -977,7 +1046,8 @@
                           Path:kSaveProjectPhotoPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProjectPhoto ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
+                           NSArray *result = [IPhotoInfo objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];
