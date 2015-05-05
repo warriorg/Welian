@@ -392,5 +392,10 @@
                            failed:(FailedBlock)failed;
 
 
+#pragma mark - 上传图片
+
+//  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
+//  FeedID : 只有动态才有 每个动态的唯一标示
+- (void)uploadImageWithImageData:(NSData *)imageData Type:(NSString *)type FeedID:(NSString *)feedID Index:(NSInteger)index Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 @end

@@ -3945,6 +3945,11 @@
 		F57F31EB1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
 		F57F31EC1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
 		F57F31ED1AA947F900B8EF72 /* ShareType.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57F31E91AA947F900B8EF72 /* ShareType.plist */; };
+		F581E7881AF870B900902665 /* IPhotoUp.m in Sources */ = {isa = PBXBuildFile; fileRef = F581E7871AF870B900902665 /* IPhotoUp.m */; };
+		F581E7891AF870B900902665 /* IPhotoUp.m in Sources */ = {isa = PBXBuildFile; fileRef = F581E7871AF870B900902665 /* IPhotoUp.m */; };
+		F581E78A1AF870B900902665 /* IPhotoUp.m in Sources */ = {isa = PBXBuildFile; fileRef = F581E7871AF870B900902665 /* IPhotoUp.m */; };
+		F581E78B1AF870B900902665 /* IPhotoUp.m in Sources */ = {isa = PBXBuildFile; fileRef = F581E7871AF870B900902665 /* IPhotoUp.m */; };
+		F581E78C1AF870B900902665 /* IPhotoUp.m in Sources */ = {isa = PBXBuildFile; fileRef = F581E7871AF870B900902665 /* IPhotoUp.m */; };
 		F583996A1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
 		F583996B1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
 		F583996C1AD7CDC7008A1A48 /* UCZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F58399691AD7CDC7008A1A48 /* UCZProgressView.m */; };
@@ -6012,6 +6017,8 @@
 		F57F31E01AA7F38900B8EF72 /* ShareFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFriendsController.h; sourceTree = "<group>"; };
 		F57F31E11AA7F38900B8EF72 /* ShareFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFriendsController.m; sourceTree = "<group>"; };
 		F57F31E91AA947F900B8EF72 /* ShareType.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ShareType.plist; sourceTree = "<group>"; };
+		F581E7861AF870B900902665 /* IPhotoUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhotoUp.h; sourceTree = "<group>"; };
+		F581E7871AF870B900902665 /* IPhotoUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhotoUp.m; sourceTree = "<group>"; };
 		F58399681AD7CDC7008A1A48 /* UCZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCZProgressView.h; sourceTree = "<group>"; };
 		F58399691AD7CDC7008A1A48 /* UCZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCZProgressView.m; sourceTree = "<group>"; };
 		F584803F1AE10629002C2722 /* me_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_play@2x.png"; sourceTree = "<group>"; };
@@ -6733,6 +6740,8 @@
 				A48A365B1AF0AE6A0099615D /* IActivityOrderResultModel.m */,
 				A48A36611AF0AF130099615D /* IAlipayInfoModel.h */,
 				A48A36621AF0AF130099615D /* IAlipayInfoModel.m */,
+				F581E7861AF870B900902665 /* IPhotoUp.h */,
+				F581E7871AF870B900902665 /* IPhotoUp.m */,
 			);
 			path = Interface2.0;
 			sourceTree = "<group>";
@@ -12732,6 +12741,7 @@
 				A49C7BC61A70D42700F2AEC5 /* ActivityUserViewCell.m in Sources */,
 				A49C7BC71A70D42700F2AEC5 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A493C28E1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
+				F581E78C1AF870B900902665 /* IPhotoUp.m in Sources */,
 				A49235551ADE693A009E0B8C /* JKAssetsViewCell.m in Sources */,
 				F57F31BD1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
 				A44BDF8C1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
@@ -13237,6 +13247,7 @@
 				A41CE1AE1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F53DC29F1A49192600F5F712 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A493C28C1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
+				F581E78A1AF870B900902665 /* IPhotoUp.m in Sources */,
 				F57F31BC1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
 				A44BDF8B1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F53DC2A01A49192600F5F712 /* FriendsNewCell.m in Sources */,
@@ -13742,6 +13753,7 @@
 				A41CE1AC1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				A493C28A1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
 				F566497E1A2AFD56008A5830 /* FriendsNewCell.m in Sources */,
+				F581E7881AF870B900902665 /* IPhotoUp.m in Sources */,
 				A49235511ADE693A009E0B8C /* JKAssetsViewCell.m in Sources */,
 				A44BDF891AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F57F31BA1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
@@ -14247,6 +14259,7 @@
 				A41CE1AD1A6E4ED5004F17E7 /* ActivityUserViewCell.m in Sources */,
 				F5664C371A2AFDD5008A5830 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A493C28B1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
+				F581E7891AF870B900902665 /* IPhotoUp.m in Sources */,
 				F57F31BB1AA6A5F200B8EF72 /* WLActivityView.m in Sources */,
 				A44BDF8A1AC3F4B000E306E7 /* UserInfoViewCell.m in Sources */,
 				F5664C381A2AFDD5008A5830 /* FriendsNewCell.m in Sources */,
@@ -14829,6 +14842,7 @@
 				A493C2881ADD0BB00056BD52 /* DKPredicate.m in Sources */,
 				A493C28D1ADD0BB00056BD52 /* DKPredicateBuilder.m in Sources */,
 				A40515911AE61FE500A3CA3F /* IBaseModel.m in Sources */,
+				F581E78B1AF870B900902665 /* IPhotoUp.m in Sources */,
 				A493C2B01ADD0BB00056BD52 /* WLNoteInfoView.m in Sources */,
 				A493C3251ADD14A60056BD52 /* NewFriendModel.m in Sources */,
 				A493C32A1ADD14A60056BD52 /* CardStatuModel.m in Sources */,

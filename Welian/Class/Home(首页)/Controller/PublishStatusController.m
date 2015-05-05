@@ -437,6 +437,7 @@ static NSString *picCellid = @"PicCellID";
             for (JKAssets *jkAsset in self.assetsArray) {
                 UIImage *image = jkAsset.fullImage;
                 NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+                
                 NSString *imageStr = [imagedata base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                 NSDictionary *imageDic = @{@"imageDataStr":imageStr};
                 [self.publishM.photos addObject:imageDic];

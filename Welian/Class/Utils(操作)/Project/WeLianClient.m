@@ -8,7 +8,25 @@
 
 #import "WeLianClient.h"
 
+@interface WeLianClient ()
+{
+    NSOperationQueue *_operationQ;
+}
+
+@end
+
+
 @implementation WeLianClient
+
+- (NSOperationQueue *)getOperationQ
+{
+    if (_operationQ==nil) {
+        _operationQ = [[NSOperationQueue alloc] init];
+        _operationQ.maxConcurrentOperationCount = 1;
+    }
+    return _operationQ;
+}
+
 
 - (instancetype)initWithBaseURL:(NSURL *)url
 {
@@ -1329,6 +1347,69 @@
         [operation start];
     }
 }
+
+#pragma mark - 上传图片
+//  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
+//  FeedID : 只有动态才有 每个动态的唯一标示
+- (void)uploadImageWithImageData:(NSData *)imageData Type:(NSString *)type FeedID:(NSString *)feedID Index:(NSInteger)index Success:(SuccessBlock)success Failed:(FailedBlock)failed
+{
+    //设置sessionid
+    NSString *sessid = [UserDefaults objectForKey:kSessionId];
+
+    NSString *pathInfo = @"upload/index";
+    if (sessid.length) {
+        pathInfo = [NSString stringWithFormat:@"upload/index?sessionid=%@",sessid];
+    }
+    NSString *fileName = @"file.jpg";
+    if (feedID) {
+        fileName = [NSString stringWithFormat:@"%@.jpg",feedID];
+    }
+
+    [[self getOperationQ] addOperationWithBlock:^{
+        [[WeLianClient sharedClient] POST:pathInfo parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            //参数
+            [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpg"];
+            // 图片类型
+            //  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
+            [formData appendPartWithFormData:[type dataUsingEncoding:NSUTF8StringEncoding] name:@"type"];
+            [formData appendPartWithFormData:[[NSString stringWithFormat:@"%ld",(long)index] dataUsingEncoding:NSUTF8StringEncoding] name:@"order"];
+            
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            IBaseModel *result = [IBaseModel objectWithDict:responseObject];
+            //如果sessionid有的话放入data
+            if (result.isSuccess) {
+                if (result.sessionid.length > 0) {
+                    //保存session
+                    [UserDefaults setObject:result.sessionid forKey:kSessionId];
+                }
+                SAFE_BLOCK_CALL(success, result.data);
+            }else{
+                if (result.state.integerValue > 1000 && result.state.integerValue < 2000) {
+                    //可以提醒的错误
+                    SAFE_BLOCK_CALL(failed, result.error);
+                }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
+                    //系统级错误，直接打印错误信息
+                    DLog(@"Result System ErroInfo-- : %@",result.errormsg);
+                    SAFE_BLOCK_CALL(failed, nil);
+                }else if(result.state.integerValue>=3000){
+                    //打印错误信息 ，返回操作
+                    DLog(@"Result ErroInfo-- : %@",result.errormsg);
+                    SAFE_BLOCK_CALL(success, result.data);
+                }else{
+                    DLog(@"Result ErroInfo-- : %@",result.errormsg);
+                    SAFE_BLOCK_CALL(failed, nil);
+                }
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            DLog(@"Failure: %@", error);
+            SAFE_BLOCK_CALL(failed, nil);
+        }];
+    }];
+
+    
+
+}
+
 
 
 @end
