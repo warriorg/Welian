@@ -110,11 +110,10 @@
                  Success:(SuccessBlock)success
                   Failed:(FailedBlock)failed;
 //评论动态
-+ (void)commentFeedWithID:(NSNumber *)fid
-                  Comment:(NSString *)comment
-                    Touid:(NSNumber *)touid
-                  Success:(SuccessBlock)success
-                   Failed:(FailedBlock)failed;
+//评论动态
++ (void)commentFeedWithParams:(NSDictionary *)params
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed;
 
 //删除动态评论评论
 + (void)deleteFeedCommentWithID:(NSNumber *)cid
@@ -148,11 +147,7 @@
                       Failed:(FailedBlock)failed;
 
 //取动态评论列表
-+ (void)getFeedCommentListWithID:(NSNumber *)fid
-                            Page:(NSNumber *)page
-                            Size:(NSNumber *)size
-                         Success:(SuccessBlock)success
-                          Failed:(FailedBlock)failed;
++ (void)getFeedCommentListWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //取赞的用户列表
 + (void)getFeedZanListWithID:(NSNumber *)fid
@@ -417,6 +412,6 @@
 
 //  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
 //  FeedID : 只有动态才有 每个动态的唯一标示
-- (void)uploadImageWithImageData:(NSData *)imageData Type:(NSString *)type FeedID:(NSString *)feedID Index:(NSInteger)index Success:(SuccessBlock)success Failed:(FailedBlock)failed;
+- (void)uploadImageWithImageData:(NSArray *)imageDataArray Type:(NSString *)type FeedID:(NSString *)feedID Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 @end

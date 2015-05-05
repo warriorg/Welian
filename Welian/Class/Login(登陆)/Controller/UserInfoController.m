@@ -17,6 +17,7 @@
 #import "UITextField+LeftRightView.h"
 #import "UIImage+ImageEffects.h"
 #import "CompotAndPostController.h"
+#import "IPhotoUp.h"
 
 @interface UserInfoController () <UITextFieldDelegate>
 {
@@ -26,7 +27,7 @@
     UITextField *_postTF;
     UIButton *_loginBut;
     UIScrollView *_scrollView;
-    NSString *_imagebase64Str;
+    NSString *_imageURL;
 
     
 }
@@ -129,12 +130,12 @@
         return;
     }
     
-    if (!_imagebase64Str.length) {
+    if (!_imageURL.length) {
         [WLHUDView showErrorHUD:@"请选择头像"];
         return;
     }
     [WLHUDView showHUDWithStr:@"登录中..." dim:YES];
-    [WeLianClient registerWithName:_nameTF.text Mobile:self.phoneString Company:_companyTF.text Position:_postTF.text Password:[self.pwdString MD5String] Avatar:_imagebase64Str Success:^(id resultInfo) {
+    [WeLianClient registerWithName:_nameTF.text Mobile:self.phoneString Company:_companyTF.text Position:_postTF.text Password:[self.pwdString MD5String] Avatar:_imageURL Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);
         [WLHUDView hiddenHud];
         ILoginUserModel *loginUserM = resultInfo;
@@ -198,7 +199,15 @@
     [_iconBut setImage:image forState:UIControlStateNormal];
     [_iconBut.layer setCornerRadius:_iconBut.bounds.size.width*0.5];
     [_iconBut.layer setMasksToBounds:YES];
-    _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+    
+    [[WeLianClient sharedClient] uploadImageWithImageData:@[imagedata] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
+        IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+        _imageURL = photoUp.photo;
+    } Failed:^(NSError *error) {
+        
+    }];
+//    _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];

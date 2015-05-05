@@ -195,8 +195,6 @@ typedef void (^WLHttpFailureBlock)(NSError *error);
 #pragma mark - 退出登录
 + (void)logoutParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
-#pragma mark - 转推
-+ (void)addFeedTuiParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;
 
 #pragma mark - 取消转推
 + (void)deleteFeedForwardParameterDic:(NSDictionary *)parameterDic success:(WLHttpSuccessBlock)succeBlock fail:(WLHttpFailureBlock)failurBlock;

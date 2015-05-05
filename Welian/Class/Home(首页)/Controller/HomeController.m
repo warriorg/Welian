@@ -426,18 +426,24 @@
                 [self.homeView setHidden:_dataArry.count];
             }
         }else{
-            [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
-                
-                [_dataArry removeObject:statuF];
-                [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
-                if (_uid) {
-                    [self.notDataView setHidden:_dataArry.count];
-                }else{
-                    [self.homeView setHidden:_dataArry.count];
-                }
-            } fail:^(NSError *error) {
-                
-            }];
+            [WeLianClient deleteFeedWithID:statuF.status.fid
+                                   Success:^(id resultInfo) {
+                                       [_dataArry removeObject:statuF];
+                                       [self.tableView deleteRowsAtIndexPaths:@[_clickIndex] withRowAnimation:UITableViewRowAnimationFade];
+                                       if (_uid) {
+                                           [self.notDataView setHidden:_dataArry.count];
+                                       }else{
+                                           [self.homeView setHidden:_dataArry.count];
+                                       }
+                                   } Failed:^(NSError *error) {
+                                       
+                                   }];
+//            [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
+//                
+//                
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }
         
     }
@@ -669,7 +675,7 @@
 }
 
 
-- (void)sendStuat:(NSMutableDictionary *)reqDataDic withIndexPath:(NSIndexPath *)indexPath
+- (void)sendStuat:(NSDictionary *)reqDataDic withIndexPath:(NSIndexPath *)indexPath
 {
     WLStatusFrame *statusFrame = _dataArry[indexPath.row];
     WLStatusM *statusM = statusFrame.status;
@@ -680,62 +686,62 @@
     
     NSArray *photosArray = statusM.photos;
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
+    WEAKSELF
     if (photosArray&&photosArray.count) {
-            NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
-        for (NSInteger i = 0; i<photosArray.count; i++) {
-            WLPhoto *photo = photosArray[i];
+        NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
+        NSMutableArray *imageDataArray = [NSMutableArray arrayWithCapacity:photosArray.count];
+        for (WLPhoto *photo in photosArray) {
             NSData *data = [[NSData data] initWithBase64EncodedString:photo.imageDataStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            [imageDataArray addObject:data];
+        }
+        [[WeLianClient sharedClient] uploadImageWithImageData:imageDataArray Type:@"feed" FeedID:statusM.sendId  Success:^(id resultInfo) {
+            DLog(@"%@",resultInfo);
+            IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
             
-            [[WeLianClient sharedClient] uploadImageWithImageData:data Type:@"feed" FeedID:statusM.sendId Index:i  Success:^(id resultInfo) {
-                DLog(@"%@",resultInfo);
-                IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
-
-                if (photoUp.photo && photoUp.photo.length) {
-                    [photoReqst addObject:photoUp];
-                    
-                    if (photoReqst.count==photosArray.count) {
-                        NSSortDescriptor *bookNameDesc = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-                        NSArray *photoUpArray = [photoReqst sortedArrayUsingDescriptors:@[bookNameDesc]];
-                        NSMutableArray *photoUrl = [NSMutableArray array];
-                        for (IPhotoUp *iphotoUp in photoUpArray) {
-                             [photoUrl addObject:@{@"photo":iphotoUp.photo}];
-                        }
-                        [reqstDic setObject:photoUrl forKey:@"photos"];
-                        WEAKSELF
-                        [WeLianClient saveFeedWithParameterDic:reqstDic Success:^(id resultInfo) {
-                            [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
-                            [weakSelf beginPullDownRefreshing];
-                        } Failed:^(NSError *error) {
-                            WLStatusM *statusM = statusFrame.status;
-                            statusM.sendType = 1;
-                            statusFrame.status = statusM;
-                            [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
-                            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                            [WLHUDView showErrorHUD:@"发布失败！"];
-                        }];
+            if (photoUp.photo && photoUp.photo.length&&[photoUp.type isEqualToString:@"feed"]) {
+                [photoReqst addObject:photoUp];
+                
+                if (photoReqst.count==photosArray.count) {
+                    NSSortDescriptor *bookNameDesc = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+                    NSArray *photoUpArray = [photoReqst sortedArrayUsingDescriptors:@[bookNameDesc]];
+                    NSMutableArray *photoUrl = [NSMutableArray array];
+                    for (IPhotoUp *iphotoUp in photoUpArray) {
+                        [photoUrl addObject:@{@"photo":iphotoUp.photo}];
                     }
-
+                    [reqstDic setObject:photoUrl forKey:@"photos"];
                 }
                 
+            }
+            [WeLianClient saveFeedWithParameterDic:reqstDic Success:^(id resultInfo) {
+                [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
+                [weakSelf beginPullDownRefreshing];
             } Failed:^(NSError *error) {
-                
+                WLStatusM *statusM = statusFrame.status;
+                statusM.sendType = 1;
+                statusFrame.status = statusM;
+                [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [WLHUDView showErrorHUD:@"发布失败！"];
             }];
-           
             
-        }
-//        for (WLPhoto *photo in photosArray) {
-//            NSData *data = [[NSData data] initWithBase64EncodedString:photo.imageDataStr options:NSDataBase64Encoding64CharacterLineLength];
-//            [WeLianClient uploadImageWithImageData:data Success:^(id resultInfo) {
-//                DLog(@"%@",resultInfo);
-//                NSString *photo = [resultInfo objectForKey:@"photo"];
-//                if (photo&&photo.length) {
-//                    
-//                }
-//            } Failed:^(NSError *error) {
-//
-//            }];
-//        }
+        } Failed:^(NSError *error) {
+            
+        }];
+    }else{
+
+        [WeLianClient saveFeedWithParameterDic:reqstDic Success:^(id resultInfo) {
+            [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
+            [weakSelf beginPullDownRefreshing];
+        } Failed:^(NSError *error) {
+            WLStatusM *statusM = statusFrame.status;
+            statusM.sendType = 1;
+            statusFrame.status = statusM;
+            [_dataArry replaceObjectAtIndex:indexPath.row withObject:statusFrame];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [WLHUDView showErrorHUD:@"发布失败！"];
+        }];
     }
+    
     
    
 //    [WLHttpTool addFeedParameterDic:reqDataDic success:^(id JSON) {
@@ -751,4 +757,5 @@
 //        [WLHUDView showErrorHUD:@"发布失败！"];
 //    }];
 }
+
 @end

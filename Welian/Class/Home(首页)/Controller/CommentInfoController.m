@@ -80,79 +80,39 @@ static NSString *noCommentCell = @"NoCommentCell";
     _commentHeadView.feezanBlock = ^(WLStatusM *statusM){
         [weakSelf.statusM setZans:statusM.zans];
         [weakSelf backDataStatusFrame:NO];
-        
-//        [commin refreshDataChangde:statusM isYES:YES];
     };
     _commentHeadView.feedTuiBlock = ^(WLStatusM *statusM){
         [weakSelf.statusM setForwards:statusM.forwards];
         [weakSelf backDataStatusFrame:NO];
-//        if (weakSelf.feedTuiBlock) {
-//            weakSelf.feedTuiBlock (statusM);
-//        }
-//        [commin refreshDataChangde:statusM isYES:YES];
+
     };
     return _commentHeadView;
 }
 
-//- (void)loadloadOneFeed2
-//{
-//    NSNumber *fid = self.statusM.topid;
-//    if (fid==nil || fid.integerValue ==0) {
-//        fid = self.statusM.fid;
-//    }
-//    [WLHttpTool loadOneFeedParameterDic:@{@"fid":fid} success:^(id JSON) {
-//        NSDictionary *statusDic = JSON;
-//        [[WLDataDBTool sharedService] putObject:statusDic withId:[NSString stringWithFormat:@"%@",[statusDic objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
-//        self.statusM = [WLStatusM objectWithDict:statusDic];
-////        WLStatusM *loadstatusM = [WLStatusM objectWithKeyValues:statusDic];
-////        [self.statusM setContent:loadstatusM.content];
-////        [self.statusM setCommentcount:loadstatusM.commentcount];
-////        [self.statusM setCreated:statusDic[@"created"]];
-////        [self.statusM setFid:loadstatusM.fid];
-////        [self.statusM setForwardcount:loadstatusM.forwardcount];
-////        [self.statusM setIszan:[statusDic[@"iszan"] intValue]];
-////        [self.statusM setIsforward:[statusDic[@"isforward"] intValue]];
-////        [self.statusM setShareurl:loadstatusM.shareurl];
-////        [self.statusM setType:loadstatusM.type];
-////        [self.statusM setUser:loadstatusM.user];
-////        [self.statusM setZan:loadstatusM.zan];
-////        [self.statusM setPhotos:loadstatusM.photos];
-//        self.commentHeadView;
-//        [self.tableView reloadData];
-////        [self refreshDataChangde:self.statusM isYES:NO];
-//    } fail:^(NSError *error) {
-//        
-//    }];
-//}
-
-
-// 加载赞和转发数据
-- (void)loadnewFeedZanAndForward
+- (void)loadloadOneFeed2
 {
     NSNumber *fid = self.statusM.topid;
-    if (fid.integerValue==0||fid == nil) {
+    if (fid==nil || fid.integerValue ==0) {
         fid = self.statusM.fid;
     }
-    [WLHttpTool loadFeedZanAndForwardParameterDic:@{@"fid":fid} success:^(id JSON) {
-        NSArray *feedarray = [JSON objectForKey:@"forwards"];
-        NSArray *zanarray = [JSON objectForKey:@"zans"];
-        if (feedarray) {
-            [_feedArrayM removeAllObjects];
-            _feedArrayM = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:feedarray]];
-            self.statusM.forwards = _feedArrayM;
-        }
-        if (zanarray) {
-            [_zanArrayM removeAllObjects];
-            _zanArrayM = [NSMutableArray arrayWithArray:[IBaseUserM objectsWithInfo:zanarray]];
-            self.statusM.zans = _zanArrayM;
-        }
+    [WeLianClient getFeedDetailInfoWithID:fid Success:^(id resultInfo) {
+        DLog(@"%@",resultInfo);
+        NSNumber *commentCount = self.statusM.commentcount;
+        NSArray *commentArray = self.statusM.comments;
+        
+        self.statusM = [WLStatusM objectWithDict:resultInfo];
+        self.statusM.comments = commentArray;
+        self.statusM.commentcount = commentCount;
+        _zanArrayM = [NSMutableArray arrayWithArray:self.statusM.zans];
+        _feedArrayM = [NSMutableArray arrayWithArray:self.statusM.forwards];
         [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
         [self updataCommentBlock];
         [self.tableView reloadData];
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
 }
+
 
 - (void)becomComment
 {
@@ -183,7 +143,7 @@ static NSString *noCommentCell = @"NoCommentCell";
     _zanArrayM = [NSMutableArray arrayWithArray:self.statusM.zans];
     _feedAndZanFM = [[FeedAndZanFrameM alloc] init];
     [_feedAndZanFM setCellWidth:SuperSize.width];
-    [_feedAndZanFM setFeedAndzanDic:@{@"zans":self.statusM.zans,@"forwards":_feedArrayM}];
+    [_feedAndZanFM setFeedAndzanDic:@{@"zans":_zanArrayM,@"forwards":_feedArrayM}];
     
     _dataArrayM = [self commentFrameArrayModel:self.statusM.comments];
     self.reqestDic = [NSMutableDictionary dictionary];
@@ -208,12 +168,10 @@ static NSString *noCommentCell = @"NoCommentCell";
         if (_selecCommFrame) {
             [reqstDicM setObject:_selecCommFrame.commentM.user.uid forKey:@"touid"];
         }
-        
-        [WLHttpTool addFeedCommentParameterDic:reqstDicM success:^(id JSON) {
-            
+        [WeLianClient commentFeedWithParams:reqstDicM Success:^(id resultInfo) {
             weakSelf.statusM.commentcount = @(weakSelf.statusM.commentcount.integerValue +1);
             [weakSelf loadNewCommentListData];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             
         }];
     }];
@@ -292,22 +250,24 @@ static NSString *noCommentCell = @"NoCommentCell";
                 break;
             case ShareTypeReport:
             {
-                [WLHttpTool complainParameterDic:@{@"fid":self.statusM.fid} success:^(id JSON) {
-                    [WLHUDView showSuccessHUD:@"举报成功！稍后我们会核查信息"];
-                } fail:^(NSError *error) {
+                [WeLianClient reportFeedWithID:self.statusM.fid Success:^(id resultInfo) {
+                     [WLHUDView showSuccessHUD:@"举报成功！稍后我们会核查信息"];
+                } Failed:^(NSError *error) {
                     
                 }];
+
             }
                 break;
             case ShareTypeDelete:
             {
-                [WLHttpTool deleteFeedParameterDic:@{@"fid":self.statusM.fid} success:^(id JSON) {
+                [WeLianClient deleteFeedWithID:self.statusM.fid Success:^(id resultInfo) {
                     [WLHUDView showSuccessHUD:@"删除动态成功！"];
                     [weakSelf backDataStatusFrame:YES];
                     [weakSelf.navigationController popViewControllerAnimated:YES];
-                } fail:^(NSError *error) {
+                } Failed:^(NSError *error) {
                     
                 }];
+
             }
                 break;
                 
@@ -339,8 +299,8 @@ static NSString *noCommentCell = @"NoCommentCell";
 
 - (void)loadnewcommentAndFeedZanAndForward
 {
-//    [self loadloadOneFeed2];
-    [self loadnewFeedZanAndForward];
+    [self loadloadOneFeed2];
+//    [self loadnewFeedZanAndForward];
     [self loadNewCommentListData];
 }
 
@@ -351,17 +311,16 @@ static NSString *noCommentCell = @"NoCommentCell";
     [self.reqestDic setObject:self.statusM.fid forKey:@"fid"];
     [self.reqestDic setObject:@(KCellConut) forKey:@"size"];
     [self.reqestDic setObject:@(1) forKey:@"page"];
-    [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-        
+    [WeLianClient getFeedCommentListWithParameterDic:self.reqestDic Success:^(id resultInfo) {
         [_dataArrayM removeAllObjects];
-        NSArray *datarray = [CommentMode objectsWithInfo:JSON];
+        NSArray *datarray = [CommentMode objectsWithInfo:resultInfo];
         [self hiddenRefresh];
         if (!datarray.count) return;
         _dataArrayM = [self commentFrameArrayModel:datarray];
         [self.statusM setComments:datarray];
         [self updataCommentBlock];
         [self.tableView reloadData];
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         [self.refreshControl endRefreshing];
     }];
 }
@@ -380,20 +339,6 @@ static NSString *noCommentCell = @"NoCommentCell";
 }
 
 
-//- (NSMutableArray *)commentFrameArray:(NSArray *)commentArray
-//{
-//    NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:commentArray.count];
-//    for (NSDictionary *dic in commentArray) {
-//        
-//        CommentMode *commentM = [CommentMode objectWithKeyValues:dic];
-//        CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-//        [commentFrame setCommentM:commentM];
-//        
-//        [dataAM addObject:commentFrame];
-//    }
-//    return dataAM;
-//}
-
 - (void)updataCommentBlock
 {
     WEAKSELF
@@ -406,16 +351,13 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)loadMoreCommentData
 {
     if (_dataArrayM.count<=0)    return;
-    
-    [WLHttpTool loadFeedCommentParameterDic:self.reqestDic success:^(id JSON) {
-        NSArray *dataarr = [CommentMode objectsWithInfo:JSON];
-        
+    [WeLianClient getFeedCommentListWithParameterDic:self.reqestDic Success:^(id resultInfo) {
+        NSArray *dataarr = [CommentMode objectsWithInfo:resultInfo];
         [_dataArrayM addObjectsFromArray:[self commentFrameArrayModel:dataarr]];
-        
         [self hiddenRefresh];
         [self.tableView reloadData];
-    } fail:^(NSError *error) {
-        
+    } Failed:^(NSError *error) {
+        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -564,7 +506,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
-            [WLHttpTool deleteFeedCommentParameterDic:@{@"fcid":_selecCommFrame.commentM.fcid} success:^(id JSON) {
+            [WeLianClient deleteFeedCommentWithID:_selecCommFrame.commentM.fcid Success:^(id resultInfo) {
                 [_dataArrayM removeObject:_selecCommFrame];
                 NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_dataArrayM.count];
                 for (CommentCellFrame *comCellF in _dataArrayM) {
@@ -576,17 +518,13 @@ static NSString *noCommentCell = @"NoCommentCell";
                 _selecCommFrame = nil;
                 [weakSelf.tableView reloadData];
                 weakSelf.commentHeadView;
-                
-            } fail:^(NSError *error) {
+            } Failed:^(NSError *error) {
                 
             }];
             
         }];
         [sheet showInView:self.view];
     }else{
-//        [sheet bk_addButtonWithTitle:@"回复" handler:^{
-//        }];
-//        [sheet showInView:self.view];
         [self.messageView startCompile:_selecCommFrame.commentM.user];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -620,6 +558,7 @@ static NSString *noCommentCell = @"NoCommentCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+    _selecCommFrame = nil;
 }
 
 @end

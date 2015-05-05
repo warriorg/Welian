@@ -1125,14 +1125,19 @@ static NSString *fridcellid = @"fridcellid";
     UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [sheet bk_addButtonWithTitle:@"删除该条动态" handler:^{
         WLStatusFrame *statuF = _datasource2[indexPath.row];
-        
-        [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
-            
+        [WeLianClient deleteFeedWithID:statuF.status.fid Success:^(id resultInfo) {
+
             [_datasource2 removeObject:statuF];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             
         }];
+//        [WLHttpTool deleteFeedParameterDic:@{@"fid":statuF.status.fid} success:^(id JSON) {
+//            
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }];
     [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     [sheet showInView:self.view];

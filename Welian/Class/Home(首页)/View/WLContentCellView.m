@@ -300,22 +300,31 @@
         [statM setZans:zans];
         [statM setIszan:0];
         statM.zan = @(statM.zan.integerValue -1);
-        
-        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+        [WeLianClient deleteFeedZanWithID:statM.topid == 0 ? statM.fid : statM.topid Success:^(id resultInfo) {
             [but setEnabled:YES];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
+//        [WLHttpTool deleteFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+//            [but setEnabled:YES];
+//        } fail:^(NSError *error) {
+//            [but setEnabled:YES];
+//        }];
     }else{
         [zans insertObject:mode atIndex:0];
         [statM setZans:zans];
         [statM setIszan:@(1)];
         statM.zan = @(statM.zan.integerValue+1);
-        [WLHttpTool addFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+        [WeLianClient feedZanWithID:statM.topid == 0 ? statM.fid : statM.topid Success:^(id resultInfo) {
             [but setEnabled:YES];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
+//        [WLHttpTool addFeedZanParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+//            [but setEnabled:YES];
+//        } fail:^(NSError *error) {
+//            [but setEnabled:YES];
+//        }];
     }
     
     if (self.feedzanBlock) {
@@ -349,23 +358,33 @@
         [statM setForwards:forwards];
         [statM setIsforward:0];
         statM.forwardcount = @(statM.forwardcount.integerValue -1);
-        
-        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+        [WeLianClient deleteFeedForwardWithID:statM.topid == 0 ? statM.fid : statM.topid Success:^(id resultInfo) {
             [but setEnabled:YES];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
+//        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+//            [but setEnabled:YES];
+//        } fail:^(NSError *error) {
+//            [but setEnabled:YES];
+//        }];
     }else{
         [forwards insertObject:mode atIndex:0];
         [statM setForwards:forwards];
         [statM setIsforward:@(1)];
         statM.forwardcount = @(statM.forwardcount.integerValue +1);
-        [WLHttpTool forwardFeedParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+        [WeLianClient feedForwardWithID:statM.topid == 0 ? statM.fid : statM.topid Success:^(id resultInfo) {
             [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
             [but setEnabled:YES];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
+//        [WLHttpTool forwardFeedParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
+//            [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
+//            [but setEnabled:YES];
+//        } fail:^(NSError *error) {
+//            [but setEnabled:YES];
+//        }];
     }
     
     if (self.feedTuiBlock) {

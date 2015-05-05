@@ -456,13 +456,11 @@
 }
 
 //评论动态
-+ (void)commentFeedWithID:(NSNumber *)fid
-                  Comment:(NSString *)comment
-                    Touid:(NSNumber *)touid
++ (void)commentFeedWithParams:(NSDictionary *)params
                   Success:(SuccessBlock)success
                    Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"fid":fid,@"comment":comment,@"touid":touid};
+//    NSDictionary *params = @{@"fid":fid,@"comment":comment,@"touid":touid};
     [self reqestPostWithParams:params
                           Path:kFeedCommentPath
                        Success:^(id resultInfo) {
@@ -571,13 +569,9 @@
 }
 
 //取动态评论列表
-+ (void)getFeedCommentListWithID:(NSNumber *)fid
-                            Page:(NSNumber *)page
-                            Size:(NSNumber *)size
-                         Success:(SuccessBlock)success
-                          Failed:(FailedBlock)failed
++ (void)getFeedCommentListWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"fid":fid,@"page":page,@"size":size};
+//    NSDictionary *params = @{@"fid":fid,@"page":page,@"size":size};
     [self reqestPostWithParams:params
                           Path:kFeedListCommentPath
                        Success:^(id resultInfo) {
@@ -1421,7 +1415,7 @@
 #pragma mark - 上传图片
 //  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
 //  FeedID : 只有动态才有 每个动态的唯一标示
-- (void)uploadImageWithImageData:(NSData *)imageData Type:(NSString *)type FeedID:(NSString *)feedID Index:(NSInteger)index Success:(SuccessBlock)success Failed:(FailedBlock)failed
+- (void)uploadImageWithImageData:(NSArray *)imageDataArray Type:(NSString *)type FeedID:(NSString *)feedID Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
     //设置sessionid
     NSString *sessid = [UserDefaults objectForKey:kSessionId];
@@ -1437,14 +1431,15 @@
 
     [[self getOperationQ] addOperationWithBlock:^{
         [[WeLianClient sharedClient] POST:pathInfo parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            //参数
-            [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpg"];
-            // 图片类型
             //  type : avatar 头像, feed 动态,investor 投资人名片,project 项目
             [formData appendPartWithFormData:[type dataUsingEncoding:NSUTF8StringEncoding] name:@"type"];
-            [formData appendPartWithFormData:[[NSString stringWithFormat:@"%ld",(long)index] dataUsingEncoding:NSUTF8StringEncoding] name:@"order"];
+            for (NSData *imageData in imageDataArray) {
+                //参数
+                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpg"];
+            }
             
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            DLog(@"reqest Result ---- %@",[operation responseString]);
             IBaseModel *result = [IBaseModel objectWithDict:responseObject];
             //如果sessionid有的话放入data
             if (result.isSuccess) {
