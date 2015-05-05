@@ -114,21 +114,39 @@
 {
     
     if (_type ==1) {
-        [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-            self.searchArray = [NSMutableArray arrayWithArray:JSON];
-            [self.tableView reloadData];
-            DLog(@"%@",JSON);
-        } fail:^(NSError *error) {
-            
-        }];
+        //搜索公司
+        [WeLianClient searchCompanyWithKeyword:searchText
+                                       Success:^(id resultInfo) {
+                                           self.searchArray = [NSMutableArray arrayWithArray:resultInfo];
+                                           [self.tableView reloadData];
+                                       } Failed:^(NSError *error) {
+                                           
+                                       }];
+//        [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+//            self.searchArray = [NSMutableArray arrayWithArray:JSON];
+//            [self.tableView reloadData];
+//            DLog(@"%@",JSON);
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }else if (_type ==2){
-        [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-            self.searchArray = [NSMutableArray arrayWithArray:JSON];
-            [self.tableView reloadData];
-            [_backdropView insertSubview:self.postView belowSubview:self.tableView];
-        } fail:^(NSError *error) {
-            
-        }];
+        //搜索职位
+        [WeLianClient searchPositionWithKeyword:searchText
+                                        Success:^(id resultInfo) {
+                                            self.searchArray = [NSMutableArray arrayWithArray:resultInfo];
+                                            [self.tableView reloadData];
+                                            [_backdropView insertSubview:self.postView belowSubview:self.tableView];
+                                        } Failed:^(NSError *error) {
+                                            
+                                        }];
+        
+//        [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+//            self.searchArray = [NSMutableArray arrayWithArray:JSON];
+//            [self.tableView reloadData];
+//            [_backdropView insertSubview:self.postView belowSubview:self.tableView];
+//        } fail:^(NSError *error) {
+//            
+//        }];
 
     }
     

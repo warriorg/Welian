@@ -56,4 +56,10 @@
 #import "CommentMode.h"
 #import "WLStatusFrame.h"
 
+#pragma mark - Model（Find）
+#import "InvestorUserM.h"
+
+#pragma mark - Model（Main）
+#import "FriendsAddressBook.h"
+
 #endif

@@ -82,7 +82,7 @@ static NSString *fridcellid = @"fridcellid";
     [super viewDidLoad];
     [self setTitle:@"团队成员"];
     self.selectArray = [NSMutableArray array];
-    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
+//    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
         IBaseUserM *meUserM = [[IBaseUserM alloc] init];
         LogInUser *logUser = [LogInUser getCurrentLoginUser];
         [meUserM setName:logUser.name];
@@ -91,35 +91,65 @@ static NSString *fridcellid = @"fridcellid";
         meUserM.avatar = logUser.avatar;
         meUserM.company = logUser.company;
         meUserM.position = logUser.position;
-        self.allArray = [JSON objectForKey:@"array"];
+    
+        NSArray *myFriends = [logUser getAllMyFriendUsers];
+        self.allArray = [NSMutableArray arrayWithArray:myFriends];// [JSON objectForKey:@"array"];
         [self.allArray insertObject:@{@"key":@"我",@"userF":@[meUserM]} atIndex:0];
         [self.tableView reloadData];
         if (_isEdit) {
-            [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectModel.pid} success:^(id JSON) {
-                NSArray *selectA = [IBaseUserM objectsWithInfo:JSON];
-                NSMutableArray *seleIndexPath = [NSMutableArray arrayWithCapacity:self.selectArray.count];
-                for (IBaseUserM *selectUserM in selectA) {
-                    for (NSInteger i = 0; i<self.allArray.count; i++) {
-                        NSDictionary *userDic = self.allArray[i];
-                        NSArray *userArray = [userDic objectForKey:@"userF"];
-                        for (NSInteger j = 0; j<userArray.count; j++) {
-                            IBaseUserM *IBuserM = userArray[j];
-                            if ([selectUserM.uid.stringValue isEqualToString:IBuserM.uid.stringValue]) {
-                                [self.selectArray addObject:IBuserM];
-                                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:j inSection:i];
-                                [seleIndexPath addObject:indexPath];
-                            }
-                        }
-                    }
-                }
-                
-                for (NSIndexPath *indexpath in seleIndexPath) {
-                    [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionBottom];
-                }
-                [self reloadItemBadg];
-            } fail:^(NSError *error) {
-                
-            }];
+            //获取项目成员
+            [WeLianClient getProjectMembersWithPid:_projectModel.pid
+                                           Success:^(id resultInfo) {
+                                               NSArray *selectA = resultInfo;
+                                               NSMutableArray *seleIndexPath = [NSMutableArray arrayWithCapacity:self.selectArray.count];
+                                               for (IBaseUserM *selectUserM in selectA) {
+                                                   for (NSInteger i = 0; i<self.allArray.count; i++) {
+                                                       NSDictionary *userDic = self.allArray[i];
+                                                       NSArray *userArray = [userDic objectForKey:@"userF"];
+                                                       for (NSInteger j = 0; j<userArray.count; j++) {
+                                                           IBaseUserM *IBuserM = userArray[j];
+                                                           if ([selectUserM.uid.stringValue isEqualToString:IBuserM.uid.stringValue]) {
+                                                               [self.selectArray addObject:IBuserM];
+                                                               NSIndexPath *indexPath=[NSIndexPath indexPathForRow:j inSection:i];
+                                                               [seleIndexPath addObject:indexPath];
+                                                           }
+                                                       }
+                                                   }
+                                               }
+                                               
+                                               for (NSIndexPath *indexpath in seleIndexPath) {
+                                                   [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionBottom];
+                                               }
+                                               [self reloadItemBadg];
+                                           } Failed:^(NSError *error) {
+                                               
+                                           }];
+            
+//            [WLHttpTool getProjectMembersParameterDic:@{@"pid":_projectModel.pid} success:^(id JSON) {
+//                NSArray *selectA = [IBaseUserM objectsWithInfo:JSON];
+//                NSMutableArray *seleIndexPath = [NSMutableArray arrayWithCapacity:self.selectArray.count];
+//                for (IBaseUserM *selectUserM in selectA) {
+//                    for (NSInteger i = 0; i<self.allArray.count; i++) {
+//                        NSDictionary *userDic = self.allArray[i];
+//                        NSArray *userArray = [userDic objectForKey:@"userF"];
+//                        for (NSInteger j = 0; j<userArray.count; j++) {
+//                            IBaseUserM *IBuserM = userArray[j];
+//                            if ([selectUserM.uid.stringValue isEqualToString:IBuserM.uid.stringValue]) {
+//                                [self.selectArray addObject:IBuserM];
+//                                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:j inSection:i];
+//                                [seleIndexPath addObject:indexPath];
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                for (NSIndexPath *indexpath in seleIndexPath) {
+//                    [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionBottom];
+//                }
+//                [self reloadItemBadg];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else{
             // 默认选中自己
             NSIndexPath *ip=[NSIndexPath indexPathForRow:0 inSection:0];
@@ -127,9 +157,9 @@ static NSString *fridcellid = @"fridcellid";
             [self.selectArray addObject:meUserM];
             [self reloadItemBadg];
         }
-    } fail:^(NSError *error) {
-        
-    }];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 #pragma mark - tableView代理
@@ -230,24 +260,42 @@ static NSString *fridcellid = @"fridcellid";
     [ProjectMemberDic setObject:_projectModel.pid forKey:@"pid"];
     NSMutableArray *members = [NSMutableArray array];
     for (IBaseUserM *friendM in self.selectArray) {
-        [members addObject:@{@"uid":friendM.uid}];
+        [members addObject:@{@"uid":friendM.uid,@"note":friendM.position.length > 0 ? friendM.position : @""}];
     }
     [ProjectMemberDic setObject:members forKey:@"members"];
-    [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
-        [_projectModel setMembercount:@(self.selectArray.count)];
-       ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
-        if (_isEdit) {
-            if (self.projectDataBlock) {
-                self.projectDataBlock(projectMR);
-            }
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO withData:_projectModel];
-            [self.navigationController pushViewController:financingVC animated:YES];
-        }
-    } fail:^(NSError *error) {
-        
-    }];
+    //添加项目成员
+    [WeLianClient saveProjectMembersWithParameterDic:ProjectMemberDic
+                                             Success:^(id resultInfo) {
+                                                 [_projectModel setMembercount:@(self.selectArray.count)];
+                                                 ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
+                                                 if (_isEdit) {
+                                                     if (self.projectDataBlock) {
+                                                         self.projectDataBlock(projectMR);
+                                                     }
+                                                     [self.navigationController popViewControllerAnimated:YES];
+                                                 }else{
+                                                     FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO withData:_projectModel];
+                                                     [self.navigationController pushViewController:financingVC animated:YES];
+                                                 }
+                                             } Failed:^(NSError *error) {
+                                                 
+                                             }];
+    
+//    [WLHttpTool addProjectMembersParameterDic:ProjectMemberDic success:^(id JSON) {
+//        [_projectModel setMembercount:@(self.selectArray.count)];
+//       ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:_projectModel];
+//        if (_isEdit) {
+//            if (self.projectDataBlock) {
+//                self.projectDataBlock(projectMR);
+//            }
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }else{
+//            FinancingProjectController *financingVC = [[FinancingProjectController alloc] initIsEdit:NO withData:_projectModel];
+//            [self.navigationController pushViewController:financingVC animated:YES];
+//        }
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

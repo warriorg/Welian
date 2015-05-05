@@ -111,10 +111,12 @@
 + (void)deleteAllActivityInfoWithType:(NSNumber *)type
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"activeType",type];
-    NSArray *all = [ActivityInfo MR_findAllWithPredicate:pre];
-    for (ActivityInfo *activityInfo in all) {
-        [activityInfo MR_deleteEntity];
-    }
+//    NSArray *all = [ActivityInfo MR_findAllWithPredicate:pre];
+//    for (ActivityInfo *activityInfo in all) {
+//        [activityInfo MR_deleteEntity];
+//    }
+    //删除所有查询的信息
+    [ActivityInfo MR_deleteAllMatchingPredicate:pre];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 

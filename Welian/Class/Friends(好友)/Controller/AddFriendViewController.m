@@ -568,18 +568,35 @@
 - (void)inviteWxFriendWithNeedAddUser:(NeedAddUser *)needAddUser indexPath:(NSIndexPath *)indexPath
 {
     [WLHUDView showHUDWithStr:@"发送中..." dim:NO];
-    [WLHttpTool inviteWxFriendParameterDic:@{@"wxid":needAddUser.wxid}
-                                   success:^(id JSON) {
-                                       //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
-                                       NeedAddUser *addUser = [needAddUser updateFriendShip:5];
-                                       //改变数组，刷新列表
-                                       [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
-                                       //刷新列表
-                                       [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                                       [WLHUDView showSuccessHUD:@"好友请求已发送"];
-                                   } fail:^(NSError *error) {
-                                       [WLHUDView showErrorHUD:@"发送失败，请重试"];
-                                   }];
+    [WeLianClient inviteFriendWithWXId:needAddUser.wxid
+                               Success:^(id resultInfo) {
+                                   //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
+                                   NeedAddUser *addUser = [needAddUser updateFriendShip:5];
+                                   //改变数组，刷新列表
+                                   [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+                                   //刷新列表
+                                   [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                   [WLHUDView showSuccessHUD:@"好友请求已发送"];
+                               } Failed:^(NSError *error) {
+                                   if (error) {
+                                       [WLHUDView showErrorHUD:error.description];
+                                   }else{
+                                       [WLHUDView showErrorHUD:@"好友邀请发送失败，请重试"];
+                                   }
+                               }];
+    
+//    [WLHttpTool inviteWxFriendParameterDic:@{@"wxid":needAddUser.wxid}
+//                                   success:^(id JSON) {
+//                                       //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系  4:等待验证   5.已发送  */
+//                                       NeedAddUser *addUser = [needAddUser updateFriendShip:5];
+//                                       //改变数组，刷新列表
+//                                       [self.datasource replaceObjectAtIndex:indexPath.row withObject:addUser];
+//                                       //刷新列表
+//                                       [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                                       [WLHUDView showSuccessHUD:@"好友请求已发送"];
+//                                   } fail:^(NSError *error) {
+//                                       [WLHUDView showErrorHUD:@"发送失败，请重试"];
+//                                   }];
 }
 
 /**
