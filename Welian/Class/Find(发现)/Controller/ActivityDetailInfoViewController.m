@@ -670,9 +670,9 @@
                 if (_activityInfo.type.integerValue == 0) {
                     //取消报名
                     [UIAlertView bk_showAlertViewWithTitle:@""
-                                                   message:@"取消参加当前活动？"
-                                         cancelButtonTitle:@"取消"
-                                         otherButtonTitles:@[@"确定"]
+                                                   message:@"是否取消当前活动的报名？"
+                                         cancelButtonTitle:@"否"
+                                         otherButtonTitles:@[@"是"]
                                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                                                        if (buttonIndex == 0) {
                                                            return;
@@ -1034,7 +1034,7 @@
     WEAKSELF
     if (!_activityId.boolValue) {
         UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
-        [alert bk_addButtonWithTitle:@"确定" handler:^{
+        [alert bk_addButtonWithTitle:@"知道了" handler:^{
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
         [alert show];

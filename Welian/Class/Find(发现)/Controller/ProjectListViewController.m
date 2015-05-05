@@ -208,8 +208,9 @@
 
 //获取数据
 - (void)initData{
-    //"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-    [WeLianClient getProjectListWithPage:@(_pageIndex)
+    //大于零取某个用户的，-1取自己的，不传或者0取全部
+    [WeLianClient getProjectListWithUid:@(0)
+                                   Page:@(_pageIndex)
                                     Size:@(_pageSize)
                                  Success:^(id resultInfo) {
                                      [self.tableView.header endRefreshing];
@@ -253,6 +254,7 @@
                                      
                                  }];
     
+    //"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
 //    NSDictionary *params = @{@"uid":@(0),// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
 //                            @"page":@(_pageIndex),
 //                            @"size":@(_pageSize)};

@@ -184,6 +184,15 @@
                     Success:(SuccessBlock)success
                      Failed:(FailedBlock)failed;
 
+//上传通讯录，获取系统好友列表
++ (void)uploadFriendWithPhonebooks:(NSArray *)phoneBooks
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed;
+
+//取微信好友列表
++ (void)getFriendWXListWithSuccess:(SuccessBlock)success
+                            Failed:(FailedBlock)failed;
+
 //二度好友列表
 + (void)getFriend2ListWithID:(NSNumber *)uid
                         Page:(NSNumber *)page
@@ -216,8 +225,20 @@
 
 
 #pragma mark - 项目 project 模块
+//检测项目是否同名存在
++ (void)checkProjectWithName:(NSString *)name
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed;
+
+//取我收藏的项目列表
++ (void)getProjectFavoriteListWithPage:(NSNumber *)page
+                                  Size:(NSNumber *)size
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed;
+
 //取项目列表
-+ (void)getProjectListWithPage:(NSNumber *)page
++ (void)getProjectListWithUid:(NSNumber *)uid
+                         Page:(NSNumber *)page
                           Size:(NSNumber *)size
                        Success:(SuccessBlock)success
                         Failed:(FailedBlock)failed;

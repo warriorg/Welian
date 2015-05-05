@@ -195,10 +195,10 @@
             //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
 //            if (needAddUser.userType.integerValue == 1) {
             //手机联系人
-            BOOL isask = NO;
-            if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
-                isask = NO;
-            }
+//            BOOL isask = NO;
+//            if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
+//                isask = NO;
+//            }
 //                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
             
             UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)needAddUser OperateType:nil HidRightBtn:NO];
@@ -409,14 +409,25 @@
 
 - (void)getPhoneData
 {
-    [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
-        [self.tableView.header endRefreshing];
-        //保存数据到数据库
-        [self createNeedAddUserWithInfo:JSON withType:1];
-    } fail:^(NSError *error) {
-        [self.tableView.header endRefreshing];
-//        [self.refreshControl endRefreshing];
-    }];
+    [WeLianClient uploadFriendWithPhonebooks:_localPhoneArray
+                                     Success:^(id resultInfo) {
+                                         [WLHUDView hiddenHud];
+                                         [self.tableView.header endRefreshing];
+                                         //保存数据到数据库
+                                         [self createNeedAddUserWithInfo:resultInfo withType:1];
+                                     } Failed:^(NSError *error) {
+                                         [WLHUDView hiddenHud];
+                                         [self.tableView.header endRefreshing];
+                                     }];
+    
+//    [WLHttpTool uploadPhonebookParameterDic:_localPhoneArray success:^(id JSON) {
+//        [self.tableView.header endRefreshing];
+//        //保存数据到数据库
+//        [self createNeedAddUserWithInfo:JSON withType:1];
+//    } fail:^(NSError *error) {
+//        [self.tableView.header endRefreshing];
+////        [self.refreshControl endRefreshing];
+//    }];
 }
 
 //创建需要添加的好友对象
@@ -427,52 +438,52 @@
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"isNow",@(YES)];
         LogInUser *loginUser = [LogInUser MR_findFirstWithPredicate:pre inContext:localContext];
         
-        for (NSDictionary *info in users) {
-            NSNumber *uid = info[@"uid"] == nil ? nil : @([info[@"uid"] integerValue]);
-            NSString *name = info[@"name"];
-            NSString *wlName = info[@"wlname"];
-            NSString *mobile = info[@"mobile"];
-            NSString *avatar = info[@"avatar"];
-            NSString *company = info[@"company"];
-            NSString *position = info[@"position"];
-            //是否投资认证人
-            NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
-            NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
-            NSNumber *wxid = info[@"wxid"];
+        for (IBaseUserM *userInfo in users) {
+//            NSNumber *uid = info[@"uid"] == nil ? nil : @([info[@"uid"] integerValue]);
+//            NSString *name = info[@"name"];
+//            NSString *wlName = info[@"wlname"];
+//            NSString *mobile = info[@"mobile"];
+//            NSString *avatar = info[@"avatar"];
+//            NSString *company = info[@"company"];
+//            NSString *position = info[@"position"];
+//            //是否投资认证人
+//            NSNumber *investorauth = info[@"investorauth"] == nil ? nil : @([info[@"investorauth"] integerValue]);
+//            NSNumber *friendship = info[@"friendship"] == nil ? nil : @([info[@"friendship"] integerValue]);
+//            NSNumber *wxid = info[@"wxid"];
             //如果未返回uid的微信好友，不展示
 //            if (!uid && type == 2) {
 //                //设置为好友
 //                friendship = @(1);
 //                return;
 //            }
-            if (friendship.integerValue == -1) {
+            if (userInfo.friendship.integerValue == -1) {
                 //自己
                 return;
             }
             
             NSPredicate *pre = nil;
-            if (uid != nil) {
-                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" ,uid,@"userType" ,@(type)];
+            if (userInfo.uid != nil) {
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"uid" ,userInfo.uid,@"userType" ,@(type)];
             }else{
-                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , mobile,@"userType" ,@(type)];
+                pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@ && %K == %@", @"rsLoginUser",loginUser,@"mobile" , userInfo.mobile,@"userType" ,@(type)];
             }
             
             NeedAddUser *needAddUser = [NeedAddUser MR_findFirstWithPredicate:pre inContext:localContext];
             if (!needAddUser) {
                 needAddUser = [NeedAddUser MR_createEntityInContext:localContext];
             }
-            needAddUser.uid = uid;
-            needAddUser.wxid = wxid;
-            needAddUser.avatar = avatar;
-            needAddUser.friendship = friendship;
-            needAddUser.mobile = mobile;
-            needAddUser.name = name.length > 0 ? name : (wlName.length > 0 ? wlName : @"未知");
-            needAddUser.wlname = wlName.length > 0 ? wlName : (name.length > 0 ? name : @"未知");
+            needAddUser.uid = userInfo.uid;
+            needAddUser.wxid = userInfo.wxid;
+            needAddUser.avatar = userInfo.avatar;
+            needAddUser.friendship = userInfo.friendship;
+            needAddUser.mobile = userInfo.mobile;
+            needAddUser.name = userInfo.name.length > 0 ? userInfo.name : (userInfo.wlname.length > 0 ? userInfo.wlname : @"未知");
+            needAddUser.wlname = userInfo.wlname.length > 0 ? userInfo.wlname : (userInfo.name.length > 0 ? userInfo.name : @"未知");
             needAddUser.pinyin = [needAddUser.name getHanziFirstString];
             needAddUser.userType = @(type);
-            needAddUser.company = company;
-            needAddUser.position = position;
-            needAddUser.investorauth = investorauth;
+            needAddUser.company = userInfo.company;
+            needAddUser.position = userInfo.position;
+            needAddUser.investorauth = userInfo.investorauth;
             [loginUser addRsNeedAddUsersObject:needAddUser];
         }
     } completion:^(BOOL contextDidSave, NSError *error) {
@@ -495,38 +506,62 @@
     if (_datasource.count <= 0) {
         [WLHUDView showHUDWithStr:@"加载中.." dim:NO];
     }
-    [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
-                                 success:^(id JSON) {
-                                     [self.tableView.header endRefreshing];
-                                     
-                                     //删除本地数据库微信数据
-                                     NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
-                                     
-                                     //循环，删除本地数据库多余的缓存数据
-                                     if (wxAddUser.count > 0) {
-                                         for (int i = 0; i < [wxAddUser count]; i++){
-                                             NeedAddUser *addUser = wxAddUser[i];
-                                             //判断返回的数组是否包含
-                                             //                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
-                                             //                                             //判断是否包含对应的
-                                             //                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
-                                             //                                         }];
-                                             //                                         if(!isHave){
-                                             //                                             //删除
-                                             //                                             [addUser MR_deleteEntity];
-                                             //                                         }
-                                             //删除
-                                             [addUser MR_deleteEntity];
-                                         }
-                                         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                                     }
-                                     
-                                     //保存到数据库
-                                     [self createNeedAddUserWithInfo:JSON withType:2];
-                                 } fail:^(NSError *error) {
-                                     [self.tableView.header endRefreshing];
-//                                     [self.refreshControl endRefreshing];
-                                 }];
+    [WeLianClient getFriendWXListWithSuccess:^(id resultInfo) {
+        [WLHUDView hiddenHud];
+        [self.tableView.header endRefreshing];
+        
+        //删除本地数据库微信数据
+        NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
+        
+        //循环，删除本地数据库多余的缓存数据
+        if (wxAddUser.count > 0) {
+            for (int i = 0; i < [wxAddUser count]; i++){
+                NeedAddUser *addUser = wxAddUser[i];
+                //删除
+                [addUser MR_deleteEntity];
+            }
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+        
+        //保存到数据库
+        [self createNeedAddUserWithInfo:resultInfo withType:2];
+    } Failed:^(NSError *error) {
+        [WLHUDView hiddenHud];
+        [self.tableView.header endRefreshing];
+    }];
+    
+//    [WLHttpTool loadWxFriendParameterDic:[NSMutableArray array]
+//                                 success:^(id JSON) {
+//                                     [self.tableView.header endRefreshing];
+//                                     
+//                                     //删除本地数据库微信数据
+//                                     NSMutableArray *wxAddUser = [NeedAddUser allNeedAddUsersWithType:2];
+//                                     
+//                                     //循环，删除本地数据库多余的缓存数据
+//                                     if (wxAddUser.count > 0) {
+//                                         for (int i = 0; i < [wxAddUser count]; i++){
+//                                             NeedAddUser *addUser = wxAddUser[i];
+//                                             //判断返回的数组是否包含
+//                                             //                                         BOOL isHave = [JSON bk_any:^BOOL(id obj) {
+//                                             //                                             //判断是否包含对应的
+//                                             //                                             return [[obj objectForKey:@"uid"] integerValue] == [addUser uid].integerValue || [[obj objectForKey:@"mobile"] isEqualToString:addUser.mobile];
+//                                             //                                         }];
+//                                             //                                         if(!isHave){
+//                                             //                                             //删除
+//                                             //                                             [addUser MR_deleteEntity];
+//                                             //                                         }
+//                                             //删除
+//                                             [addUser MR_deleteEntity];
+//                                         }
+//                                         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//                                     }
+//                                     
+//                                     //保存到数据库
+//                                     [self createNeedAddUserWithInfo:JSON withType:2];
+//                                 } fail:^(NSError *error) {
+//                                     [self.tableView.header endRefreshing];
+////                                     [self.refreshControl endRefreshing];
+//                                 }];
 }
 
 //邀请微信好友
