@@ -496,8 +496,6 @@ static NSString *projectcellid = @"projectcellid";
                                    } Failed:^(NSError *error) {
                                        if (error) {
                                            [WLHUDView showErrorHUD:error.description];
-                                       }else{
-                                           [WLHUDView showErrorHUD:@"网络连接失败，请重试！"];
                                        }
                                    }];
         
@@ -541,8 +539,8 @@ static NSString *projectcellid = @"projectcellid";
     [WeLianClient saveProjectWithParameterDic:saveProjectDic
                                       Success:^(id resultInfo) {
                                           if (resultInfo) {
-                                              _projectModel.pid = [resultInfo pid];
-                                              _projectModel.shareurl = [resultInfo shareurl];
+                                            [_projectModel setPid:[resultInfo objectForKey:@"pid"]];
+                                            [_projectModel setShareurl:[resultInfo objectForKey:@"shareurl"]];
                                               
                                               [self.projectM setPid:_projectModel.pid];
                                               [self.projectM setName:_projectModel.name];
@@ -572,7 +570,7 @@ static NSString *projectcellid = @"projectcellid";
                                                   
                                               }else{
                                                   
-                                                  NSArray *creatPhots = [resultInfo photos];//[JSON objectForKey:@"photos"];
+                                                  NSArray *creatPhots = [resultInfo objectForKey:@"photos"];//[JSON ];
                                                   
                                                   if (creatPhots.count) {
                                                       NSMutableArray *photoArray = [NSMutableArray array];
@@ -584,14 +582,7 @@ static NSString *projectcellid = @"projectcellid";
                                                       [self.projectM setPhotos:photoArray];
                                                   }
                                                   
-                                                  IBaseUserM *meUserM = [[IBaseUserM alloc] init];
-                                                  LogInUser *logUser = [LogInUser getCurrentLoginUser];
-                                                  [meUserM setName:logUser.name];
-                                                  [meUserM setUid:logUser.uid];
-                                                  meUserM.friendship = logUser.friendship;
-                                                  meUserM.avatar = logUser.avatar;
-                                                  meUserM.company = logUser.company;
-                                                  meUserM.position = logUser.position;
+                                                  IBaseUserM *meUserM = [IBaseUserM getLoginUserBaseInfo];
                                                   [_projectModel setUser:meUserM];
                                                   [self.projectM setUser:meUserM];
                                                   [ProjectDetailInfo createWithIProjectDetailInfo:self.projectM];

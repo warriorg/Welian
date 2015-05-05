@@ -221,7 +221,7 @@
         }
         
         //大于零取某个用户的，-1取自己的，不传或者0取全部推荐的项目
-        [WeLianClient getProjectListWithUid:@(-1)
+        [WeLianClient getProjectListWithUid:_uid?_uid:@(-1)
                                        Page:@(_pageIndex)
                                        Size:@(KCellConut)
                                     Success:^(id resultInfo) {

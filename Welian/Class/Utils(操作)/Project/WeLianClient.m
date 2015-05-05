@@ -1007,7 +1007,7 @@
                        Success:^(id resultInfo) {
                            DLog(@"saveProject ---- %@",resultInfo);
                            IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
-                           SAFE_BLOCK_CALL(success,result);
+                           SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
                        }];

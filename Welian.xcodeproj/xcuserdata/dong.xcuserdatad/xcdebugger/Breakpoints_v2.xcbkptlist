@@ -4,83 +4,13 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Utils(&#x64cd;&#x4f5c;)/Project/WLHttpTool.m"
-            timestampString = "451979994.730817"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1005"
-            endingLineNumber = "1005"
-            landmarkName = "+logoutParameterDic:success:fail:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__46+[WLHttpTool logoutParameterDic:success:fail:]_block_invoke"
-                  moduleName = "weLianAppDev"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Utils(%E6%93%8D%E4%BD%9C)/Project/WLHttpTool.m"
-                  timestampString = "452510494.291178"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1005"
-                  endingLineNumber = "1005"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__46+[WLHttpTool logoutParameterDic:success:fail:]_block_invoke709"
-                  moduleName = "weLianAppDev"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dong/Desktop/Welian/Welian/Class/Utils(%E6%93%8D%E4%BD%9C)/Project/WLHttpTool.m"
-                  timestampString = "452510494.291486"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1005"
-                  endingLineNumber = "1005"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Login(&#x767b;&#x9646;)/Controller/UserInfoController.m"
-            timestampString = "452498685.474298"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Welian/Class/Utils(&#x64cd;&#x4f5c;)/Project/WeLianClient.m"
-            timestampString = "452510494.11819"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1445"
-            endingLineNumber = "1445"
-            landmarkName = "-uploadImageWithImageData:Type:FeedID:Success:Failed:"
-            landmarkType = "5">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

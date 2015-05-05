@@ -31,7 +31,7 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 //    BOOL isAll = NO;
     for (NSDictionary *indDic in allArray) {
         IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
-        [indust setIndustryid:[indDic objectForKey:@"id"]];
+        [indust setIndustryid:[indDic objectForKey:@"industryid"]];
         [indust setIndustryname:[indDic objectForKey:@"name"]];
         if (_projectModel.industrys.count) {
 //            NSString *buxianname = [_projectModel getindustrysName][0];
@@ -224,24 +224,11 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
 - (void)saveData
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"isSelect == 1"];
-    NSMutableArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
+    NSArray *arrayPre = [[NSArray arrayWithArray:_alldataArray] filteredArrayUsingPredicate: pre];
     if (!arrayPre.count) {
         [WLHUDView showErrorHUD:@"请选择"];
         return;
     }
-//    if (_type==1) {
-//        for (IInvestIndustryModel *industM in arrayPre) {
-//            if ([industM.industryname isEqualToString:@"不限"]) {
-//                if (self.investBlock) {
-//                    self.investBlock(@[industM]);
-//                }
-//                [self.navigationController popViewControllerAnimated:YES];
-//                return;
-//            }
-//        }
-//    }else if (_type==2){
-//        
-//    }
     if (self.investBlock) {
         self.investBlock(arrayPre);
     }

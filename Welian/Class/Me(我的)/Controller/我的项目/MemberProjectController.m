@@ -83,16 +83,16 @@ static NSString *fridcellid = @"fridcellid";
     [self setTitle:@"团队成员"];
     self.selectArray = [NSMutableArray array];
 //    [WLHttpTool loadFriendWithSQL:YES ParameterDic:nil success:^(id JSON) {
-        IBaseUserM *meUserM = [[IBaseUserM alloc] init];
+        IBaseUserM *meUserM = [IBaseUserM getLoginUserBaseInfo];
         LogInUser *logUser = [LogInUser getCurrentLoginUser];
-        [meUserM setName:logUser.name];
-        [meUserM setUid:logUser.uid];
-        meUserM.friendship = logUser.friendship;
-        meUserM.avatar = logUser.avatar;
-        meUserM.company = logUser.company;
-        meUserM.position = logUser.position;
+//        [meUserM setName:logUser.name];
+//        [meUserM setUid:logUser.uid];
+//        meUserM.friendship = logUser.friendship;
+//        meUserM.avatar = logUser.avatar;
+//        meUserM.company = logUser.company;
+//        meUserM.position = logUser.position;
     
-        NSArray *myFriends = [logUser getAllMyFriendUsers];
+        NSArray *myFriends =[WLHttpTool getChineseStringArr:[logUser getAllMyFriendUsers]];
         self.allArray = [NSMutableArray arrayWithArray:myFriends];// [JSON objectForKey:@"array"];
         [self.allArray insertObject:@{@"key":@"我",@"userF":@[meUserM]} atIndex:0];
         [self.tableView reloadData];

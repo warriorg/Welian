@@ -408,49 +408,80 @@ static NSString *financingCellid = @"financingCellid";
         }
     }
     //修改项目
-//    [WeLianClient saveProjectWithParameterDic:finishDic
-//                                      Success:^(id resultInfo) {
-//                                          
-//                                      } Failed:^(NSError *error) {
-//                                          
-//                                      }];
+    [WeLianClient saveProjectWithParameterDic:finishDic
+                                      Success:^(id resultInfo) {
+                                          if (resultInfo) {
+                                              [weakSelf.projectModel setPid:[resultInfo objectForKey:@"pid"]];
+                                              [weakSelf.projectModel setShareurl:[resultInfo objectForKey:@"shareurl"]];
+                                              [weakSelf.projectModel setFinancingtime:[resultInfo objectForKey:@"financingtime"]];
+                                              
+                                              [weakSelf.selfProjectM setPid:weakSelf.projectModel.pid];
+                                              [weakSelf.selfProjectM setShareurl:weakSelf.projectModel.shareurl];
+                                              [weakSelf.selfProjectM setStatus:weakSelf.projectModel.status];
+                                              if (weakSelf.projectModel.status.integerValue==1) {
+                                                  [weakSelf.selfProjectM setAmount:weakSelf.projectModel.amount];
+                                                  [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
+                                                  [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
+                                                  [weakSelf.selfProjectM setFinancing:weakSelf.projectModel.financing];
+                                                  [weakSelf.selfProjectM setFinancingtime:weakSelf.projectModel.financingtime];
+                                              }else{
+                                                  [weakSelf.selfProjectM setAmount:nil];
+                                                  [weakSelf.selfProjectM setShare:nil];
+                                                  [weakSelf.selfProjectM setStage:nil];
+                                                  [weakSelf.selfProjectM setFinancingtime:nil];
+                                              }
+                                              ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:weakSelf.selfProjectM];
+                                              if (weakSelf.isEdit) {
+                                                  if (weakSelf.projectDataBlock) {
+                                                      weakSelf.projectDataBlock(projectMR);
+                                                  }
+                                                  [weakSelf.navigationController popViewControllerAnimated:YES];
+                                              }else{
+                                                  ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM isFromCreate:YES];
+                                                  [weakSelf.navigationController pushViewController:projectVC animated:YES];
+                                              }
+                                          }
+                                          DLog(@"%@",resultInfo);
+                                      } Failed:^(NSError *error) {
+                                          
+                                      }];
     
-    [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
-        if (JSON) {
-            [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];
-            [weakSelf.projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
-            [weakSelf.projectModel setFinancingtime:[JSON objectForKey:@"financingtime"]];
-            
-            [weakSelf.selfProjectM setPid:weakSelf.projectModel.pid];
-            [weakSelf.selfProjectM setShareurl:weakSelf.projectModel.shareurl];
-            [weakSelf.selfProjectM setStatus:weakSelf.projectModel.status];
-            if (weakSelf.projectModel.status.integerValue==1) {
-                [weakSelf.selfProjectM setAmount:weakSelf.projectModel.amount];
-                [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
-                [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
-                [weakSelf.selfProjectM setFinancing:weakSelf.projectModel.financing];
-                [weakSelf.selfProjectM setFinancingtime:weakSelf.projectModel.financingtime];
-            }else{
-                [weakSelf.selfProjectM setAmount:nil];
-                [weakSelf.selfProjectM setShare:nil];
-                [weakSelf.selfProjectM setStage:nil];
-                [weakSelf.selfProjectM setFinancingtime:nil];
-            }
-            ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:weakSelf.selfProjectM];
-            if (weakSelf.isEdit) {
-                if (weakSelf.projectDataBlock) {
-                    weakSelf.projectDataBlock(projectMR);
-                }
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            }else{
-                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM isFromCreate:YES];
-                [weakSelf.navigationController pushViewController:projectVC animated:YES];
-            }
-        }
-
-    } fail:^(NSError *error) {
-        
-    }];
+//    [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
+//        if (JSON) {
+//            [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];
+//            [weakSelf.projectModel setShareurl:[JSON objectForKey:@"shareurl"]];
+//            [weakSelf.projectModel setFinancingtime:[JSON objectForKey:@"financingtime"]];
+//            
+//            [weakSelf.selfProjectM setPid:weakSelf.projectModel.pid];
+//            [weakSelf.selfProjectM setShareurl:weakSelf.projectModel.shareurl];
+//            [weakSelf.selfProjectM setStatus:weakSelf.projectModel.status];
+//            if (weakSelf.projectModel.status.integerValue==1) {
+//                [weakSelf.selfProjectM setAmount:weakSelf.projectModel.amount];
+//                [weakSelf.selfProjectM setShare:weakSelf.projectModel.share];
+//                [weakSelf.selfProjectM setStage:weakSelf.projectModel.stage];
+//                [weakSelf.selfProjectM setFinancing:weakSelf.projectModel.financing];
+//                [weakSelf.selfProjectM setFinancingtime:weakSelf.projectModel.financingtime];
+//            }else{
+//                [weakSelf.selfProjectM setAmount:nil];
+//                [weakSelf.selfProjectM setShare:nil];
+//                [weakSelf.selfProjectM setStage:nil];
+//                [weakSelf.selfProjectM setFinancingtime:nil];
+//            }
+//            ProjectDetailInfo *projectMR = [ProjectDetailInfo createWithIProjectDetailInfo:weakSelf.selfProjectM];
+//            if (weakSelf.isEdit) {
+//                if (weakSelf.projectDataBlock) {
+//                    weakSelf.projectDataBlock(projectMR);
+//                }
+//                [weakSelf.navigationController popViewControllerAnimated:YES];
+//            }else{
+//                ProjectDetailsViewController *projectVC = [[ProjectDetailsViewController alloc] initWithProjectDetailInfo:weakSelf.selfProjectM isFromCreate:YES];
+//                [weakSelf.navigationController pushViewController:projectVC animated:YES];
+//            }
+//        }
+//
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
