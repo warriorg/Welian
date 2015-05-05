@@ -218,7 +218,9 @@
 }
 
 //登陆
-+ (void)loginWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
++ (void)loginWithParameterDic:(NSDictionary *)params
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed
 {
 //    NSDictionary *params = @{@"mobile":mobile
 //                             ,@"unionid":unionid
@@ -251,6 +253,20 @@
         } Failed:^(NSError *error) {
         }];
     }
+}
+
+//退出登录
++ (void)logoutWithSuccess:(SuccessBlock)success
+                   Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kLogoutPath
+                       Success:^(id resultInfo) {
+                           DLog(@"logout ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success, resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
 }
 
 #pragma mark - 用户模块
@@ -381,6 +397,77 @@
                        Success:^(id resultInfo) {
                            DLog(@"changeUserPassWd ---- %@",resultInfo);
                            IBaseModel *result = [IBaseModel objectWithDict:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取投资人列表
++ (void)getInvestListWithParameterDic:(NSDictionary *)params
+                              Success:(SuccessBlock)success
+                               Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kInvestorsListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getInvestList ---- %@",resultInfo);
+                           NSArray *result = [InvestorUserM objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//修改用户头像
++ (void)changeUserAvatarWithAvatar:(NSString *)avatar
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"avatar":avatar};
+    [self reqestPostWithParams:params
+                          Path:kChangeAvatarPath
+                       Success:^(id resultInfo) {
+                           DLog(@"changeUserAvatar ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//修改用户地理位置
++ (void)changeUserLocationWithLatitude:(NSString *)latitude
+                            Longtitude:(NSString *)longtitude
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"latitude":latitude,
+                             @"longtitude":longtitude};
+    [self reqestPostWithParams:params
+                          Path:kChangeLocationPath
+                       Success:^(id resultInfo) {
+                           DLog(@"changeUserLocation ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//查找用户信息
++ (void)searchUserWithKeyword:(NSString *)keyword
+                         Page:(NSNumber *)page
+                         Size:(NSNumber *)size
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"keyword":keyword,
+                             @"page":page,
+                             @"size":size};
+    [self reqestPostWithParams:params
+                          Path:kSearchUserPath
+                       Success:^(id resultInfo) {
+                           DLog(@"searchUser ---- %@",resultInfo);
+                           NSArray *result = [IBaseUserM objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -656,6 +743,22 @@
                        }];
 }
 
+//取最新动态数量
++ (void)getNewFeedCountsWithID:(NSNumber *)fid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed;
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedNewCountPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getNewFeedCounts ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 
 #pragma mark - 好友模块 friends
 //取好友列表
@@ -794,6 +897,39 @@
                        }];
 }
 
+//邀请微信好友
++ (void)inviteFriendWithWXId:(NSNumber *)wxid
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"wxid":wxid};
+    [self reqestPostWithParams:params
+                          Path:kInviteWXFriendPath
+                       Success:^(id resultInfo) {
+                           DLog(@"inviteFriend ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//上传通讯录，获取好友关系，包括微信好友
++ (void)uploadFriendWithPhonebookRelation:(NSArray *)phoneBooks
+                                  Success:(SuccessBlock)success
+                                   Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"data":phoneBooks};
+    [self reqestPostWithParams:params
+                          Path:kFriendPhonebookRelationPath
+                       Success:^(id resultInfo) {
+                           DLog(@"uploadFriendPhonebookRelation ---- %@",resultInfo);
+                           NSArray *result = [FriendsAddressBook objectsWithInfo:resultInfo];
+                           SAFE_BLOCK_CALL(success,result);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 
 #pragma mark - 项目 project 模块
 //检测项目是否同名存在
@@ -917,12 +1053,10 @@
 
 //取项目成员
 + (void)getProjectMembersWithPid:(NSNumber *)pid
-                            Page:(NSNumber *)page
-                            Size:(NSNumber *)size
                          Success:(SuccessBlock)success
                           Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"pid":pid,@"page":page,@"size":size};
+    NSDictionary *params = @{@"pid":pid};
     [self reqestPostWithParams:params
                           Path:kProjectMembersPath
                        Success:^(id resultInfo) {
@@ -1335,6 +1469,104 @@
                           Path:kActiveCitiesPath
                        Success:^(id resultInfo) {
                            DLog(@"getActiveCities ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+
+#pragma mark - 系统模块
+//版本更新检测
++ (void)checkUpdateWithPlatform:(NSString *)platform
+                        Version:(NSString *)version
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"platform":platform,  //ios,ios-app,android
+                             @"version":version};   //,必须三位
+    [self reqestPostWithParams:params
+                          Path:kCheckUpdatePath
+                       Success:^(id resultInfo) {
+                           DLog(@"checkUpdate ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//获取城市列表
++ (void)getAllCityListWithSuccess:(SuccessBlock)success
+                           Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kAllCityListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getAllCityList ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//取行业列表
++ (void)getAllIndustryListWithSuccess:(SuccessBlock)success
+                               Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kAllIndustryListPath
+                       Success:^(id resultInfo) {
+                           DLog(@"getAllIndustryList ---- %@",resultInfo);
+                           //保存到本地数据库
+                           [[WLDataDBTool sharedService] putObject:resultInfo withId:KInvestIndustryTableName intoTable:KInvestIndustryTableName];
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//搜索学校
++ (void)searchSchoolWithKeyword:(NSString *)keyword
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"keyword":keyword};
+    [self reqestPostWithParams:params
+                          Path:kSearchSchoolPath
+                       Success:^(id resultInfo) {
+                           DLog(@"searchSchool ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//搜索公司
++ (void)searchCompanyWithKeyword:(NSString *)keyword
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"keyword":keyword};
+    [self reqestPostWithParams:params
+                          Path:kSearchCompanyPath
+                       Success:^(id resultInfo) {
+                           DLog(@"searchCompany ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+//搜索职位
++ (void)searchPositionWithKeyword:(NSString *)keyword
+                          Success:(SuccessBlock)success
+                           Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"keyword":keyword};
+    [self reqestPostWithParams:params
+                          Path:kSearchPositionPath
+                       Success:^(id resultInfo) {
+                           DLog(@"searchPosition ---- %@",resultInfo);
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);

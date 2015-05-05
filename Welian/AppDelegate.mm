@@ -1,4 +1,4 @@
-//
+ //
 //  AppDelegate.m
 //  Welian
 //
@@ -159,27 +159,51 @@ BMKMapManager* _mapManager;
 #pragma mark - 检测版本更新
 - (void)detectionUpdataVersionDic
 {
-    [WLTool updateVersions:^(NSDictionary *versionDic) {
-        if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
-            NSString *msg = [versionDic objectForKey:@"msg"];
-            _upURL = [versionDic objectForKey:@"url"];
-            _update = [[versionDic objectForKey:@"update"] integerValue];
-            _msg = msg;
-            if (_update==0) { //自己检测
-                
-                
-            }else if(_update == 1){  // 弹出提示
-                
-                _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil];
-                [_updataalert show];
-            }else if (_update == 2){  // 强制更新
-               _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
-                [_updataalert show];
-            }
-            
-        }else{
-        }
-    }];
+    [WeLianClient checkUpdateWithPlatform:KPlatformType
+                                  Version:XcodeAppVersion
+                                  Success:^(id resultInfo) {
+                                      if ([[resultInfo objectForKey:@"flag"] integerValue]==1) {
+                                          NSString *msg = [resultInfo objectForKey:@"msg"];
+                                          _upURL = [resultInfo objectForKey:@"url"];
+                                          _update = [[resultInfo objectForKey:@"update"] integerValue];
+                                          _msg = msg;
+                                          
+                                          //// 0 检测更新，1强制弹出更新，2强制更新，不更新不可以使用
+                                          if (_update==0) { //自己检测
+                                              
+                                          }else if(_update == 1){  // 弹出提示
+                                              _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil];
+                                              [_updataalert show];
+                                          }else if (_update == 2){  // 强制更新
+                                              _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
+                                              [_updataalert show];
+                                          }
+                                      }
+                                  } Failed:^(NSError *error) {
+                                      
+                                  }];
+    
+//    [WLTool updateVersions:^(NSDictionary *versionDic) {
+//        if ([[versionDic objectForKey:@"flag"] integerValue]==1) {
+//            NSString *msg = [versionDic objectForKey:@"msg"];
+//            _upURL = [versionDic objectForKey:@"url"];
+//            _update = [[versionDic objectForKey:@"update"] integerValue];
+//            _msg = msg;
+//            if (_update==0) { //自己检测
+//                
+//                
+//            }else if(_update == 1){  // 弹出提示
+//                
+//                _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"立即更新", nil];
+//                [_updataalert show];
+//            }else if (_update == 2){  // 强制更新
+//               _updataalert = [[UIAlertView alloc] initWithTitle:@"更新提示" message:msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
+//                [_updataalert show];
+//            }
+//            
+//        }else{
+//        }
+//    }];
 }
 
 #pragma mark - 版本更新跳转- 退出登录
@@ -500,11 +524,16 @@ BMKMapManager* _mapManager;
     
     [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
-        [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+        [WeLianClient logoutWithSuccess:^(id resultInfo) {
             
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             
         }];
+//        [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
     [LogInUser setUserisNow:NO];
 }

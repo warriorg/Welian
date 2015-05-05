@@ -328,16 +328,27 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
-    [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
-
-        [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];
-        [_iconCell.iconImage setImage:image];
-
-        [UserDefaults setObject:avatarStr forKey:@"icon"];
-        [self.tableView reloadData];
-    } fail:^(NSError *error) {
-        
-    }];
+    //修改头像
+    [WeLianClient changeUserAvatarWithAvatar:avatarStr
+                                     Success:^(id resultInfo) {
+                                         [LogInUser setUserAvatar:[resultInfo objectForKey:@"url"]];
+                                         [_iconCell.iconImage setImage:image];
+                                         
+                                         [UserDefaults setObject:avatarStr forKey:@"icon"];
+                                         [self.tableView reloadData];
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+//    [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
+//
+//        [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];
+//        [_iconCell.iconImage setImage:image];
+//
+//        [UserDefaults setObject:avatarStr forKey:@"icon"];
+//        [self.tableView reloadData];
+//    } fail:^(NSError *error) {
+//        
+//    }];
     
     [picker dismissViewControllerAnimated:YES completion:^{
         

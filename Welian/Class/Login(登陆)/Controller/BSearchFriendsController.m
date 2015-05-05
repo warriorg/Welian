@@ -177,34 +177,61 @@ static NSString *fridcellid = @"fridcellid";
             [UserDefaults setObject:@"1" forKey:KAddressBook];
             
             [WLTool getAddressBookArray:^(NSMutableArray *friendsAddress) {
-                [WLHttpTool uploadPhonebook2ParameterDic:friendsAddress success:^(id JSON) {
-                    NSArray *array = JSON;
-                    for (NSDictionary *dic  in array) {
-                        FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
-                        [friendBook setKeyValues:dic];
-                        if (friendBook.type.integerValue == 0) {
-                            [self.friendsBook addObject:friendBook];
-                        }else if (friendBook.type.integerValue==1){
-                            [self.friendsWeixing addObject:friendBook];
-                        }
-                    }
-                    
-                    
-                    [UIView animateWithDuration:2 animations:^{
-                        [_searchView setAlpha:0.0];
-                    } completion:^(BOOL finished) {
-                        if (self.friendsBook.count||self.friendsWeixing.count) {
-                            [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
-                            [self.view addSubview:self.tableView];
-                        }else{
-                            [self.view addSubview:self.notFriendsView];
-                        }
-                        [_leidaImage stopAnimating];
-                        [_searchView removeFromSuperview];
-                    }];
-                } fail:^(NSError *error) {
-                    
-                }];
+                //上传通讯录，获取好友信息
+                [WeLianClient uploadFriendWithPhonebookRelation:friendsAddress
+                                                        Success:^(id resultInfo) {
+                                                            for (FriendsAddressBook *friendBook in resultInfo) {
+                                                                if (friendBook.type.integerValue == 0) {
+                                                                    [self.friendsBook addObject:friendBook];
+                                                                }else if (friendBook.type.integerValue==1){
+                                                                    [self.friendsWeixing addObject:friendBook];
+                                                                }
+                                                            }
+                                                            
+                                                            [UIView animateWithDuration:2 animations:^{
+                                                                [_searchView setAlpha:0.0];
+                                                            } completion:^(BOOL finished) {
+                                                                if (self.friendsBook.count||self.friendsWeixing.count) {
+                                                                    [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
+                                                                    [self.view addSubview:self.tableView];
+                                                                }else{
+                                                                    [self.view addSubview:self.notFriendsView];
+                                                                }
+                                                                [_leidaImage stopAnimating];
+                                                                [_searchView removeFromSuperview];
+                                                            }];
+                                                        } Failed:^(NSError *error) {
+                                                            
+                                                        }];
+                
+//                [WLHttpTool uploadPhonebook2ParameterDic:friendsAddress success:^(id JSON) {
+//                    NSArray *array = JSON;
+//                    for (NSDictionary *dic  in array) {
+//                        FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+//                        [friendBook setKeyValues:dic];
+//                        if (friendBook.type.integerValue == 0) {
+//                            [self.friendsBook addObject:friendBook];
+//                        }else if (friendBook.type.integerValue==1){
+//                            [self.friendsWeixing addObject:friendBook];
+//                        }
+//                    }
+//                    
+//                    
+//                    [UIView animateWithDuration:2 animations:^{
+//                        [_searchView setAlpha:0.0];
+//                    } completion:^(BOOL finished) {
+//                        if (self.friendsBook.count||self.friendsWeixing.count) {
+//                            [self.tableView setFrame:CGRectMake(0, 80, SuperSize.width, SuperSize.height-80)];
+//                            [self.view addSubview:self.tableView];
+//                        }else{
+//                            [self.view addSubview:self.notFriendsView];
+//                        }
+//                        [_leidaImage stopAnimating];
+//                        [_searchView removeFromSuperview];
+//                    }];
+//                } fail:^(NSError *error) {
+//                    
+//                }];
             }];
 
             
@@ -212,32 +239,56 @@ static NSString *fridcellid = @"fridcellid";
             
             [UserDefaults setObject:@"0" forKey:KAddressBook];
 //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-            [WLHttpTool uploadPhonebook2ParameterDic:[NSMutableArray array] success:^(id JSON) {
-                NSArray *array = JSON;
-                for (NSDictionary *dic  in array) {
-                    FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
-                    [friendBook setKeyValues:dic];
-                    [self.friendsWeixing addObject:friendBook];
-                }
-                
-                [UIView animateWithDuration:2 animations:^{
-                    [_searchView setAlpha:0.0];
-                } completion:^(BOOL finished) {
-                    if (self.friendsWeixing.count) {
-                        [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
-                        [self.view insertSubview:self.tableView belowSubview:_searchView];
-                        
-                    }else{
-                        [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
-                    }
-                    [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
-                    [_leidaImage stopAnimating];
-                    [_searchView removeFromSuperview];
-                }];
-
-            } fail:^(NSError *error) {
-                
-            }];
+            //上传通讯录，获取好友信息
+            [WeLianClient uploadFriendWithPhonebookRelation:[NSArray array]
+                                                    Success:^(id resultInfo) {
+                                                        //添加数据
+                                                        [self.friendsWeixing addObjectsFromArray:resultInfo];
+                                                        
+                                                        [UIView animateWithDuration:2 animations:^{
+                                                            [_searchView setAlpha:0.0];
+                                                        } completion:^(BOOL finished) {
+                                                            if (self.friendsWeixing.count) {
+                                                                [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
+                                                                [self.view insertSubview:self.tableView belowSubview:_searchView];
+                                                                
+                                                            }else{
+                                                                [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
+                                                            }
+                                                            [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
+                                                            [_leidaImage stopAnimating];
+                                                            [_searchView removeFromSuperview];
+                                                        }];
+                                                    } Failed:^(NSError *error) {
+                                                        
+                                                    }];
+            
+//            [WLHttpTool uploadPhonebook2ParameterDic:[NSMutableArray array] success:^(id JSON) {
+//                NSArray *array = JSON;
+//                for (NSDictionary *dic  in array) {
+//                    FriendsAddressBook *friendBook = [[FriendsAddressBook alloc] init];
+//                    [friendBook setKeyValues:dic];
+//                    [self.friendsWeixing addObject:friendBook];
+//                }
+//                
+//                [UIView animateWithDuration:2 animations:^{
+//                    [_searchView setAlpha:0.0];
+//                } completion:^(BOOL finished) {
+//                    if (self.friendsWeixing.count) {
+//                        [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(self.addressBookRefView.frame)+20, SuperSize.width, SuperSize.height- CGRectGetMaxY(self.addressBookRefView.frame)+20)];
+//                        [self.view insertSubview:self.tableView belowSubview:_searchView];
+//                        
+//                    }else{
+//                        [self.view insertSubview:self.notFriendsView belowSubview:_searchView];
+//                    }
+//                    [self.view insertSubview:self.addressBookRefView belowSubview:_searchView];
+//                    [_leidaImage stopAnimating];
+//                    [_searchView removeFromSuperview];
+//                }];
+//
+//            } fail:^(NSError *error) {
+//                
+//            }];
 
         }
         

@@ -37,47 +37,84 @@ static NSString *identifier = @"investorcellid";
 - (void)loadNewDataArray
 {
     page = 1;
-    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
-        [self hideRefreshView];        
-
-        NSArray *arr = JSON;
-        [InvestorUser MR_deleteAllMatchingPredicate:nil];
-        for (InvestorUserM *invest in JSON) {
-            [InvestorUser createInvestor:invest];
-        }
-        [self.allArray removeAllObjects];
-        self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
-        [self.tableView reloadData];
-        if (arr.count<20) {
-            self.tableView.footer.hidden = YES;
-        }else{
-            self.tableView.footer.hidden = NO;
-        }
-        page++;
-    } fail:^(NSError *error) {
-        [self hideRefreshView];
-    }];
+    [WeLianClient getInvestListWithParameterDic:@{@"page":@(page),@"size":@(KCellConut)}
+                                        Success:^(id resultInfo) {
+                                            [self hideRefreshView];
+                                            
+                                            [InvestorUser MR_deleteAllMatchingPredicate:nil];
+                                            for (InvestorUserM *invest in resultInfo) {
+                                                [InvestorUser createInvestor:invest];
+                                            }
+                                            [self.allArray removeAllObjects];
+                                            self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
+                                            [self.tableView reloadData];
+                                            if ([resultInfo count] < KCellConut) {
+                                                self.tableView.footer.hidden = YES;
+                                            }else{
+                                                self.tableView.footer.hidden = NO;
+                                            }
+                                            page++;
+                                        } Failed:^(NSError *error) {
+                                            [self hideRefreshView];
+                                        }];
+    
+//    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
+//        [self hideRefreshView];        
+//
+//        NSArray *arr = JSON;
+//        [InvestorUser MR_deleteAllMatchingPredicate:nil];
+//        for (InvestorUserM *invest in JSON) {
+//            [InvestorUser createInvestor:invest];
+//        }
+//        [self.allArray removeAllObjects];
+//        self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
+//        [self.tableView reloadData];
+//        if (arr.count<20) {
+//            self.tableView.footer.hidden = YES;
+//        }else{
+//            self.tableView.footer.hidden = NO;
+//        }
+//        page++;
+//    } fail:^(NSError *error) {
+//        [self hideRefreshView];
+//    }];
 }
 
 // 加载更多
 - (void)loadMoreDataArray
 {
-    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
-        
-        [self hideRefreshView];
-        [self.allArray addObjectsFromArray:JSON];
-        
-        [self.tableView reloadData];
-        NSArray *arr = JSON;
-        if (arr.count<20) {
-            self.tableView.footer.hidden = YES;
-        }else{
-            self.tableView.footer.hidden = NO;
-        }
-        page++;
-    } fail:^(NSError *error) {
-        [self hideRefreshView];
-    }];
+    [WeLianClient getInvestListWithParameterDic:@{@"page":@(page),@"size":@(KCellConut)}
+                                        Success:^(id resultInfo) {
+                                            [self hideRefreshView];
+                                            [self.allArray addObjectsFromArray:resultInfo];
+                                            
+                                            [self.tableView reloadData];
+                                            if ([resultInfo count] < KCellConut) {
+                                                self.tableView.footer.hidden = YES;
+                                            }else{
+                                                self.tableView.footer.hidden = NO;
+                                            }
+                                            page++;
+                                        } Failed:^(NSError *error) {
+                                            [self hideRefreshView];
+                                        }];
+    
+//    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(page),@"size":@(20)} success:^(id JSON) {
+//        
+//        [self hideRefreshView];
+//        [self.allArray addObjectsFromArray:JSON];
+//        
+//        [self.tableView reloadData];
+//        NSArray *arr = JSON;
+//        if (arr.count<20) {
+//            self.tableView.footer.hidden = YES;
+//        }else{
+//            self.tableView.footer.hidden = NO;
+//        }
+//        page++;
+//    } fail:^(NSError *error) {
+//        [self hideRefreshView];
+//    }];
 }
 
 - (void)hideRefreshView
@@ -249,19 +286,33 @@ static NSString *identifier = @"investorcellid";
 
 - (void)loadSearchDataArray:(NSString *)searchString
 {
+    [WeLianClient getInvestListWithParameterDic:@{@"page":@(1),@"size":@(2000),@"keyword":searchString}
+                                        Success:^(id resultInfo) {
+                                            [self.filterArray removeAllObjects];
+                                            self.filterArray = [NSMutableArray arrayWithArray:resultInfo];
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.searchDisplayVC.searchResultsTableView reloadData];
+                                            });
+                                        } Failed:^(NSError *error) {
+                                            if (error) {
+                                                [WLHUDView showErrorHUD:error.description];
+                                            }else{
+                                                [WLHUDView showErrorHUD:@"搜索失败，请重试！"];
+                                            }
+                                        }];
     
-    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(1),@"size":@(2000),@"keyword":searchString} success:^(id JSON) {
-        
-        [self.filterArray removeAllObjects];
-        self.filterArray = [NSMutableArray arrayWithArray:JSON];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.searchDisplayVC.searchResultsTableView reloadData];
-        });
-        
-
-    } fail:^(NSError *error) {
-        
-    }];
+//    [WLHttpTool loadInvestorUserParameterDic:@{@"page":@(1),@"size":@(2000),@"keyword":searchString} success:^(id JSON) {
+//        
+//        [self.filterArray removeAllObjects];
+//        self.filterArray = [NSMutableArray arrayWithArray:JSON];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.searchDisplayVC.searchResultsTableView reloadData];
+//        });
+//        
+//
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 @end

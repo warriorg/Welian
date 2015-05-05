@@ -99,11 +99,16 @@
     [UserDefaults removeObjectForKey:kSessionId];
     [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
     [LogInUser setUserisNow:NO];
-    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+    [WeLianClient logoutWithSuccess:^(id resultInfo) {
         
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         
     }];
+//    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
+//        
+//    } fail:^(NSError *error) {
+//        
+//    }];
     [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
 }
 

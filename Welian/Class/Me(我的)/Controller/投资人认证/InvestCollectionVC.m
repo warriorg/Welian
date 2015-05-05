@@ -102,12 +102,20 @@ static NSString * const reuseIdentifier = @"Cell";
             YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:KInvestIndustryTableName fromTable:KInvestIndustryTableName];
             NSArray *itemArray = item.itemObject;
             [self jiexidata:itemArray];
-            [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
-                [self jiexidata:JSON];
+            
+            //取所有行业领域
+            [WeLianClient getAllIndustryListWithSuccess:^(id resultInfo) {
+                [self jiexidata:resultInfo];
                 [self.collectionView reloadData];
-            } fail:^(NSError *error) {
-
+            } Failed:^(NSError *error) {
+                
             }];
+//            [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
+//                [self jiexidata:JSON];
+//                [self.collectionView reloadData];
+//            } fail:^(NSError *error) {
+//
+//            }];
             
         }else if (type ==2){ // 投资阶段
             [self setTitle:@"投资阶段"];
@@ -160,35 +168,66 @@ static NSString * const reuseIdentifier = @"Cell";
         }
         [ruqstDic setObject:_reuqstDataArray forKey:@"stages"];
     }
-    [WLHttpTool investAuthParameterDic:ruqstDic success:^(id JSON) {
-        if (_type ==1) {
-            [LogInUser getCurrentLoginUser].rsInvestIndustrys = nil;
-             InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            
-            if (cell.checkImageView.selected) {
-                IInvestIndustryModel *industrM = [[IInvestIndustryModel alloc]init];
-                [industrM setIndustryid:@(-1)];
-                [industrM setIndustryname:@"不限"];
-                [InvestIndustry createInvestIndustry:industrM];
-            }else{
-                for (IInvestIndustryModel *industryM in _selectCells) {
-                    [InvestIndustry createInvestIndustry:industryM];
-                }
-            }
-            
-        }else if (_type ==2){
-            [LogInUser getCurrentLoginUser].rsInvestStages = nil;
-            for (IInvestStageModel *stageM in _selectCells) {
-                [InvestStages createInvestStages:stageM];
-            }
-        }
-        if (self.investBlock) {
-            self.investBlock();
-        }
-        [self.navigationController popViewControllerAnimated:YES];
-    } fail:^(NSError *error) {
-        
-    }];
+    //认证投资人
+    [WeLianClient investWithParameterDic:ruqstDic
+                                 Success:^(id resultInfo) {
+                                     if (_type ==1) {
+                                         [LogInUser getCurrentLoginUser].rsInvestIndustrys = nil;
+                                         InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                                         
+                                         if (cell.checkImageView.selected) {
+                                             IInvestIndustryModel *industrM = [[IInvestIndustryModel alloc]init];
+                                             [industrM setIndustryid:@(-1)];
+                                             [industrM setIndustryname:@"不限"];
+                                             [InvestIndustry createInvestIndustry:industrM];
+                                         }else{
+                                             for (IInvestIndustryModel *industryM in _selectCells) {
+                                                 [InvestIndustry createInvestIndustry:industryM];
+                                             }
+                                         }
+                                         
+                                     }else if (_type ==2){
+                                         [LogInUser getCurrentLoginUser].rsInvestStages = nil;
+                                         for (IInvestStageModel *stageM in _selectCells) {
+                                             [InvestStages createInvestStages:stageM];
+                                         }
+                                     }
+                                     if (self.investBlock) {
+                                         self.investBlock();
+                                     }
+                                     [self.navigationController popViewControllerAnimated:YES];
+                                 } Failed:^(NSError *error) {
+                                     
+                                 }];
+//    [WLHttpTool investAuthParameterDic:ruqstDic success:^(id JSON) {
+//        if (_type ==1) {
+//            [LogInUser getCurrentLoginUser].rsInvestIndustrys = nil;
+//             InvestCollectionCell *cell = (InvestCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//            
+//            if (cell.checkImageView.selected) {
+//                IInvestIndustryModel *industrM = [[IInvestIndustryModel alloc]init];
+//                [industrM setIndustryid:@(-1)];
+//                [industrM setIndustryname:@"不限"];
+//                [InvestIndustry createInvestIndustry:industrM];
+//            }else{
+//                for (IInvestIndustryModel *industryM in _selectCells) {
+//                    [InvestIndustry createInvestIndustry:industryM];
+//                }
+//            }
+//            
+//        }else if (_type ==2){
+//            [LogInUser getCurrentLoginUser].rsInvestStages = nil;
+//            for (IInvestStageModel *stageM in _selectCells) {
+//                [InvestStages createInvestStages:stageM];
+//            }
+//        }
+//        if (self.investBlock) {
+//            self.investBlock();
+//        }
+//        [self.navigationController popViewControllerAnimated:YES];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 
 }
 

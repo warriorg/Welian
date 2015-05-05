@@ -45,6 +45,8 @@
 #define kLoginPath kRegisterUrl(@"login")
 // 上传平台，clientid
 #define kUpdateclient kRegisterUrl(@"updateclient")
+//退出登录
+#define kLogoutPath kRegisterUrl(@"logout")
 
 
 #pragma mark - 用户模块
@@ -66,6 +68,14 @@
 #define kLoadInvestorPath kUserUrl(@"loadinvestor")
 //修改密码
 #define kChangePassWDPath kUserUrl(@"chanagepassword")
+//取投资人列表
+#define kInvestorsListPath kUserUrl(@"investors")
+//修改用户头像
+#define kChangeAvatarPath kUserUrl(@"avatar")
+//修改用户地理位置
+#define kChangeLocationPath kUserUrl(@"location")
+//查找用户信息
+#define kSearchUserPath kUserUrl(@"search")
 
 #pragma mark - 认证手机号码
 //取验证码接口
@@ -105,6 +115,8 @@
 #define kFeedDetailInfoPath kFeedUrl(@"get")
 //举报
 #define kFeedReportPath kFeedUrl(@"report")
+//取最新动态数量
+#define kFeedNewCountPath kFeedUrl(@"new")
 
 
 #pragma mark - 好友模块 friends
@@ -126,6 +138,10 @@
 #define kFriendConfirmPath kFriendUrl(@"confirm")
 //删除好友
 #define kDeleteFriendPath kFriendUrl(@"delete")
+//邀请微信好友
+#define kInviteWXFriendPath kFriendUrl(@"invite")
+//上传通讯录，获取好友关系，包括微信好友
+#define kFriendPhonebookRelationPath kFriendUrl(@"phonebookrelation")
 
 
 #pragma mark - 项目 project 模块
@@ -200,6 +216,21 @@
 #define kActiveCitiesPath kActiveUrl(@"cities")
 
 
+#pragma mark - 系统模块
+//基本路径
+#define kCommonUrl(path) [NSString stringWithFormat:@"common/%@",path]
+//版本更新检测
+#define kCheckUpdatePath kCommonUrl(@"update")
+//获取城市列表
+#define kAllCityListPath kCommonUrl(@"city")
+//取行业列表
+#define kAllIndustryListPath kCommonUrl(@"industry")
+//搜索学校
+#define kSearchSchoolPath kCommonUrl(@"school")
+//搜索公司
+#define kSearchCompanyPath kCommonUrl(@"company")
+//搜索职位
+#define kSearchPositionPath kCommonUrl(@"position")
 
 
 

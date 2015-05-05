@@ -113,19 +113,35 @@ single_implementation(MainViewController)
     LogInUser *mode = [LogInUser getCurrentLoginUser];
     if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
         
-        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":mode.firststustid} success:^(id JSON) {
-            NSNumber *count = [JSON objectForKey:@"count"];
-            NSNumber *activecount = [JSON objectForKey:@"activecount"];
-            NSNumber *investorcount = [JSON objectForKey:@"investorcount"];
-            NSNumber *projectcount = [JSON objectForKey:@"projectcount"];
-            [LogInUser setUserNewstustcount:count];
-            [LogInUser setUserActivecount:activecount];
-            [LogInUser setUserInvestorcount:investorcount];
-            [LogInUser setUserProjectcount:projectcount];
-            [self updataItembadge];
-        } fail:^(NSError *error) {
-            
-        }];
+        //获取最新动态数量
+        [WeLianClient getNewFeedCountsWithID:mode.firststustid
+                                     Success:^(id resultInfo) {
+                                         NSNumber *count = [resultInfo objectForKey:@"count"];
+                                         NSNumber *activecount = [resultInfo objectForKey:@"activecount"];
+                                         NSNumber *investorcount = [resultInfo objectForKey:@"investorcount"];
+                                         NSNumber *projectcount = [resultInfo objectForKey:@"projectcount"];
+                                         [LogInUser setUserNewstustcount:count];
+                                         [LogInUser setUserActivecount:activecount];
+                                         [LogInUser setUserInvestorcount:investorcount];
+                                         [LogInUser setUserProjectcount:projectcount];
+                                         [self updataItembadge];
+                                     } Failed:^(NSError *error) {
+                                         
+                                     }];
+        
+//        [WLHttpTool loadNewFeedCountParameterDic:@{@"fid":mode.firststustid} success:^(id JSON) {
+//            NSNumber *count = [JSON objectForKey:@"count"];
+//            NSNumber *activecount = [JSON objectForKey:@"activecount"];
+//            NSNumber *investorcount = [JSON objectForKey:@"investorcount"];
+//            NSNumber *projectcount = [JSON objectForKey:@"projectcount"];
+//            [LogInUser setUserNewstustcount:count];
+//            [LogInUser setUserActivecount:activecount];
+//            [LogInUser setUserInvestorcount:investorcount];
+//            [LogInUser setUserProjectcount:projectcount];
+//            [self updataItembadge];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 
@@ -291,14 +307,21 @@ single_implementation(MainViewController)
         //城市定位
         [weakSelf getLoactionCityInfoWith:userLocation];
         CLLocationCoordinate2D coord2D = userLocation.location.coordinate;
-        NSString *x = [NSString stringWithFormat:@"%f",coord2D.latitude];
-        NSString *y = [NSString stringWithFormat:@"%f",coord2D.longitude];
+        NSString *latitude = [NSString stringWithFormat:@"%f",coord2D.latitude];
+        NSString *longitude = [NSString stringWithFormat:@"%f",coord2D.longitude];
         
-        [WLHttpTool saveProfileParameterDic:@{@"x":x,@"y":y} success:^(id JSON) {
-            
-        } fail:^(NSError *error) {
-            
-        }];
+        [WeLianClient changeUserLocationWithLatitude:latitude
+                                          Longtitude:longitude
+                                             Success:^(id resultInfo) {
+                                                 
+                                             } Failed:^(NSError *error) {
+                                                 
+                                             }];
+//        [WLHttpTool saveProfileParameterDic:@{@"x":x,@"y":y} success:^(id JSON) {
+//            
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }];
     
     //获取城市定位

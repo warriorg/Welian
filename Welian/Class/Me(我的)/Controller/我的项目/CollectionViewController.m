@@ -66,11 +66,17 @@ static NSString * const reuseIdentifier = @"ProjectIndustryCell";
             YTKKeyValueItem *item = [[WLDataDBTool sharedService] getYTKKeyValueItemById:KInvestIndustryTableName fromTable:KInvestIndustryTableName];
             NSArray *itemArray = item.itemObject;
             [self jiexidata:itemArray];
-            [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
-                [self jiexidata:JSON];
-            } fail:^(NSError *error) {
+            //取所有行业领域
+            [WeLianClient getAllIndustryListWithSuccess:^(id resultInfo) {
+                [self jiexidata:resultInfo];
+            } Failed:^(NSError *error) {
                 
             }];
+//            [WLHttpTool getIndustryParameterDic:@{} success:^(id JSON) {
+//                [self jiexidata:JSON];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else if (type==2){
             [self setTitle:@"融资阶段"];
             // 1.获得路径

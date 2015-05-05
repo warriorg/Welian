@@ -184,15 +184,27 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [_filterArray removeAllObjects];
-    [WLHttpTool searchUserParameterDic:@{@"keyword":searchBar.text,@"page":@(1),@"size":@(100)} success:^(id JSON) {
-        self.filterArray = JSON;
-        if (!_filterArray.count) {
-            [WLHUDView showCustomHUD:@"暂无该好友" imageview:nil];
-        }
-        [_searchDisplayVC.searchResultsTableView reloadData];
-    } fail:^(NSError *error) {
-        
-    }];
+    [WeLianClient searchUserWithKeyword:searchBar.text
+                                   Page:@(1)
+                                   Size:@(1000)
+                                Success:^(id resultInfo) {
+                                    self.filterArray = resultInfo;
+                                    if (!_filterArray.count) {
+                                        [WLHUDView showCustomHUD:@"暂无该好友" imageview:nil];
+                                    }
+                                    [_searchDisplayVC.searchResultsTableView reloadData];
+                                } Failed:^(NSError *error) {
+                                    
+                                }];
+//    [WLHttpTool searchUserParameterDic:@{@"keyword":searchBar.text,@"page":@(1),@"size":@(100)} success:^(id JSON) {
+//        self.filterArray = JSON;
+//        if (!_filterArray.count) {
+//            [WLHUDView showCustomHUD:@"暂无该好友" imageview:nil];
+//        }
+//        [_searchDisplayVC.searchResultsTableView reloadData];
+//    } fail:^(NSError *error) {
+//        
+//    }];
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller

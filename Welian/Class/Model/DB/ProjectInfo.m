@@ -63,10 +63,11 @@
 + (void)deleteAllProjectInfoWithType:(NSNumber *)type
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@", @"type",type];
-    NSArray *all = [ProjectInfo MR_findAllWithPredicate:pre];
-    for (ProjectInfo *projectInfo in all) {
-        [projectInfo MR_deleteEntity];
-    }
+//    NSArray *all = [ProjectInfo MR_findAllWithPredicate:pre];
+//    for (ProjectInfo *projectInfo in all) {
+//        [projectInfo MR_deleteEntity];
+//    }
+    [ProjectInfo MR_deleteAllMatchingPredicate:pre];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 

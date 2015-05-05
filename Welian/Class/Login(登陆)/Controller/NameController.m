@@ -131,29 +131,53 @@
     if (searchText.length) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:1];
         if (_verType==IWVerifiedTypeCompany) {
+            //搜索公司
+            [WeLianClient searchCompanyWithKeyword:searchText
+                                           Success:^(id resultInfo) {
+                                               self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
+                                               [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                           } Failed:^(NSError *error) {
+                                               
+                                           }];
             
-            [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = [NSMutableArray arrayWithArray:JSON];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+//            [WLHttpTool getCompanyParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+//                self.dataArray = [NSMutableArray arrayWithArray:JSON];
+//                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else if (_verType == IWVerifiedTypeJob){
-            [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = [NSMutableArray arrayWithArray:JSON];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+            //搜索职位
+            [WeLianClient searchPositionWithKeyword:searchText
+                                            Success:^(id resultInfo) {
+                                                self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
+                                                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                            } Failed:^(NSError *error) {
+                                                
+                                            }];
             
+//            [WLHttpTool getJobParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+//                self.dataArray = [NSMutableArray arrayWithArray:JSON];
+//                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }else if (_verType == IWVerifiedTypeSchool){
+            //搜索学校
+            [WeLianClient searchSchoolWithKeyword:searchText
+                                          Success:^(id resultInfo) {
+                                              self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
+                                              [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                          } Failed:^(NSError *error) {
+                                              
+                                          }];
             
-            [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
-                self.dataArray = [NSMutableArray arrayWithArray:JSON];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-            } fail:^(NSError *error) {
-                
-            }];
+//            [WLHttpTool getSchoolParameterDic:@{@"start":@(1),@"size":@(50),@"keyword":searchText} success:^(id JSON) {
+//                self.dataArray = [NSMutableArray arrayWithArray:JSON];
+//                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+//            } fail:^(NSError *error) {
+//                
+//            }];
         }
         
     }

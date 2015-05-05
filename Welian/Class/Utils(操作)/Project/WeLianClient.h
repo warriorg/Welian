@@ -45,10 +45,16 @@
                           Failed:(FailedBlock)failed;
 
 //登陆
-+ (void)loginWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
++ (void)loginWithParameterDic:(NSDictionary *)params
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed;
 
 // 上传平台，clientid
 + (void)updateclientID;
+
+//退出登录
++ (void)logoutWithSuccess:(SuccessBlock)success
+                   Failed:(FailedBlock)failed;
 
 #pragma mark - 用户模块
 //修改用户信息
@@ -86,6 +92,29 @@
                             Newpassword:(NSString *)newpassword
                                 Success:(SuccessBlock)success
                                  Failed:(FailedBlock)failed;
+
+//取投资人列表
++ (void)getInvestListWithParameterDic:(NSDictionary *)params
+                              Success:(SuccessBlock)success
+                               Failed:(FailedBlock)failed;
+
+//修改用户头像
++ (void)changeUserAvatarWithAvatar:(NSString *)avatar
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed;
+
+//修改用户地理位置
++ (void)changeUserLocationWithLatitude:(NSString *)latitude
+                            Longtitude:(NSString *)longtitude
+                               Success:(SuccessBlock)success
+                                Failed:(FailedBlock)failed;
+
+//查找用户信息
++ (void)searchUserWithKeyword:(NSString *)keyword
+                         Page:(NSNumber *)page
+                         Size:(NSNumber *)size
+                      Success:(SuccessBlock)success
+                       Failed:(FailedBlock)failed;
 
 #pragma mark - 认证手机号码
 //取验证码接口
@@ -177,6 +206,11 @@
                  Success:(SuccessBlock)success
                   Failed:(FailedBlock)failed;
 
+//取最新动态数量
++ (void)getNewFeedCountsWithID:(NSNumber *)fid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed;
+
 
 #pragma mark - 好友模块 friends
 //取好友列表
@@ -223,6 +257,16 @@
                    Success:(SuccessBlock)success
                     Failed:(FailedBlock)failed;
 
+//邀请微信好友
++ (void)inviteFriendWithWXId:(NSNumber *)wxid
+                     Success:(SuccessBlock)success
+                      Failed:(FailedBlock)failed;
+
+//上传通讯录，获取好友关系，包括微信好友
++ (void)uploadFriendWithPhonebookRelation:(NSArray *)phoneBooks
+                                  Success:(SuccessBlock)success
+                                   Failed:(FailedBlock)failed;
+
 
 #pragma mark - 项目 project 模块
 //检测项目是否同名存在
@@ -266,8 +310,6 @@
 
 //取项目成员
 + (void)getProjectMembersWithPid:(NSNumber *)pid
-                            Page:(NSNumber *)page
-                            Size:(NSNumber *)size
                          Success:(SuccessBlock)success
                           Failed:(FailedBlock)failed;
 
@@ -398,6 +440,36 @@
 //取活动城市列表
 + (void)getActiveCitiesSuccess:(SuccessBlock)success
                         Failed:(FailedBlock)failed;
+
+
+#pragma mark - 系统模块
+//版本更新检测
++ (void)checkUpdateWithPlatform:(NSString *)platform
+                        Version:(NSString *)version
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed;
+
+//获取城市列表
++ (void)getAllCityListWithSuccess:(SuccessBlock)success
+                           Failed:(FailedBlock)failed;
+
+//取行业列表
++ (void)getAllIndustryListWithSuccess:(SuccessBlock)success
+                               Failed:(FailedBlock)failed;
+
+//搜索学校
++ (void)searchSchoolWithKeyword:(NSString *)keyword
+                        Success:(SuccessBlock)success
+                         Failed:(FailedBlock)failed;
+
+//搜索公司
++ (void)searchCompanyWithKeyword:(NSString *)keyword
+                         Success:(SuccessBlock)success
+                          Failed:(FailedBlock)failed;
+//搜索职位
++ (void)searchPositionWithKeyword:(NSString *)keyword
+                          Success:(SuccessBlock)success
+                           Failed:(FailedBlock)failed;
 
 
 

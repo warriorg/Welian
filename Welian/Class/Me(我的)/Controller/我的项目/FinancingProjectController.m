@@ -407,6 +407,14 @@ static NSString *financingCellid = @"financingCellid";
             [finishDic setObject:self.projectModel.financing forKey:@"financing"];
         }
     }
+    //修改项目
+//    [WeLianClient saveProjectWithParameterDic:finishDic
+//                                      Success:^(id resultInfo) {
+//                                          
+//                                      } Failed:^(NSError *error) {
+//                                          
+//                                      }];
+    
     [WLHttpTool createProjectParameterDic:finishDic success:^(id JSON) {
         if (JSON) {
             [weakSelf.projectModel setPid:[JSON objectForKey:@"pid"]];

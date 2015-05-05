@@ -188,7 +188,7 @@ fprintf(stderr, "-----------------------------------\n");                       
 
 
 // 每次加载cell的个数
-#define KCellConut 15
+#define KCellConut 30
 
 /**
  8.常用的一些距离

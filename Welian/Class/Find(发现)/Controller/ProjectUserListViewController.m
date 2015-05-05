@@ -246,8 +246,6 @@
 - (void)initGroupUserData
 {
     [WeLianClient getProjectMembersWithPid:_projectDetailInfo.pid
-                                      Page:@(_pageIndex)
-                                      Size:@(_pageSize)
                                    Success:^(id resultInfo) {
                                        //隐藏加载更多动画
                                        [self.tableView.footer endRefreshing];
@@ -257,11 +255,11 @@
                                        }
                                        
                                        //设置是否可以下拉刷新
-                                       if ([resultInfo count] != KCellConut) {
+//                                       if ([resultInfo count] != KCellConut) {
                                            self.tableView.footer.hidden = YES;
-                                       }else{
-                                           self.tableView.footer.hidden = NO;
-                                       }
+//                                       }else{
+//                                           self.tableView.footer.hidden = NO;
+//                                       }
                                        
                                        [self.tableView reloadData];
                                    } Failed:^(NSError *error) {
