@@ -1161,7 +1161,7 @@
                           Path:kProjectCommentListPath
                        Success:^(id resultInfo) {
                            DLog(@"getProjectCommentList ---- %@",resultInfo);
-                           NSArray *result = [ICommentInfo objectsWithInfo:resultInfo];
+                           NSArray *result = [CommentMode objectsWithInfo:resultInfo];
                            SAFE_BLOCK_CALL(success,result);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);

@@ -124,7 +124,6 @@ static char MJRefreshHeaderKey;
                                  header,
                                  OBJC_ASSOCIATION_ASSIGN);
         [self didChangeValueForKey:@"header"];
-        
         [self addSubview:header];
     }
 }

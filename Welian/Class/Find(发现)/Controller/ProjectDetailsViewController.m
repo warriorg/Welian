@@ -506,7 +506,6 @@ static NSString *noCommentCell = @"NoCommentCell";
     
     CommentCellFrame *selecCommFrame = _datasource[indexPath.row];
     
-    
     if (selecCommFrame.commentM.user.uid.integerValue == [LogInUser getCurrentLoginUser].uid.integerValue) {
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
@@ -1146,21 +1145,21 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbar_more"] style:UIBarButtonItemStyleBordered target:self action:@selector(shareBtnClicked)];
                                          
                                          NSMutableArray *dataAM = [NSMutableArray arrayWithCapacity:detailInfo.comments.count];
-                                         for (ICommentInfo *commentInfo in detailInfo.comments) {
+                                         for (CommentMode *commentInfo in detailInfo.comments) {
                                              
-                                             CommentMode *commentM = [[CommentMode alloc] init];
-                                             commentM.cid = commentInfo.cid;
-                                             commentM.comment = commentInfo.comment;
-                                             commentM.created = commentInfo.created;
-                                             if (commentInfo.user.uid) {
-                                                 commentM.user = commentInfo.user;
-                                             }
-                                             if (commentInfo.touser.uid) {
-                                                 commentM.touser = commentInfo.touser;
-                                             }
+//                                             CommentMode *commentM = [[CommentMode alloc] init];
+//                                             commentM.cid = commentInfo.cid;
+//                                             commentM.comment = commentInfo.comment;
+//                                             commentM.created = commentInfo.created;
+//                                             if (commentInfo.user.uid) {
+//                                                 commentM.user = commentInfo.user;
+//                                             }
+//                                             if (commentInfo.touser.uid) {
+//                                                 commentM.touser = commentInfo.touser;
+//                                             }
                                              
                                              CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-                                             [commentFrame setCommentM:commentM];
+                                             [commentFrame setCommentM:commentInfo];
                                              
                                              [dataAM addObject:commentFrame];
                                          }
@@ -1383,20 +1382,20 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            [self.tableView.footer endRefreshing];
                                            
                                            if ([resultInfo count] > 0) {
-                                               for (ICommentInfo *commentInfo in resultInfo) {
-                                                   CommentMode *commentM = [[CommentMode alloc] init];
-                                                   commentM.cid = commentInfo.cid;
-                                                   commentM.comment = commentInfo.comment;
-                                                   commentM.created = commentInfo.created;
-                                                   if (commentInfo.user.uid) {
-                                                       commentM.user = commentInfo.user;
-                                                   }
-                                                   if (commentInfo.touser.uid) {
-                                                       commentM.touser = commentInfo.touser;
-                                                   }
+                                               for (CommentMode *commentInfo in resultInfo) {
+//                                                   CommentMode *commentM = [[CommentMode alloc] init];
+//                                                   commentM.cid = commentInfo.cid;
+//                                                   commentM.comment = commentInfo.comment;
+//                                                   commentM.created = commentInfo.created;
+//                                                   if (commentInfo.user.uid) {
+//                                                       commentM.user = commentInfo.user;
+//                                                   }
+//                                                   if (commentInfo.touser.uid) {
+//                                                       commentM.touser = commentInfo.touser;
+//                                                   }
                                                    
                                                    CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-                                                   [commentFrame setCommentM:commentM];
+                                                   [commentFrame setCommentM:commentInfo];
                                                    
                                                    [_datasource addObject:commentFrame];
                                                }

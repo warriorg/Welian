@@ -7,7 +7,8 @@
 //
 
 #import "IProjectDetailInfo.h"
-#import "ICommentInfo.h"
+#import "CommentMode.h"
+//#import "ICommentInfo.h"
 #import "IInvestIndustryModel.h"
 #import "IPhotoInfo.h"
 
@@ -19,7 +20,7 @@
     self.user = [IBaseUserM objectWithDict:dict[@"user"]];
     self.photos = [IPhotoInfo objectsWithInfo:self.photos];
     self.industrys = [IInvestIndustryModel objectsWithInfo:self.industrys];
-    self.comments = [ICommentInfo objectsWithInfo:self.comments];
+    self.comments = [CommentMode objectsWithInfo:self.comments];
     self.zanusers = [IBaseUserM objectsWithInfo:self.zanusers];
 }
 

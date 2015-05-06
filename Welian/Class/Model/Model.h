@@ -32,7 +32,6 @@
 #import "IProjectDetailInfo.h"
 #import "IInvestIndustryModel.h"
 #import "IUserInfo.h"
-#import "ICommentInfo.h"
 #import "IPhotoInfo.h"
 #import "FriendsUserModel.h"
 #import "IActivityInfo.h"

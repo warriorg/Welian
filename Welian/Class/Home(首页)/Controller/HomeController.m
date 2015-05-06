@@ -135,40 +135,40 @@
     }else {
         [darDic setObject:@(0) forKey:@"start"];
     }
+    WEAKSELF
     [WeLianClient getFeedListWithParameterDic:darDic Success:^(id resultInfo) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             // 耗时的操作
             NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
+            NSMutableArray *newDataArray = [NSMutableArray array];
             if (!_uid) {
                 [LogInUser setUserNewstustcount:@(0)];
-                [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
+                [weakSelf loadFirstFID:[weakSelf dataFrameWith:[jsonarray firstObject]]];
             }
-            // 1.在拿到最新微博数据的同时计算它的frame
-            [_dataArry removeAllObjects];
-            
-            NSArray *againArray = [self getSendAgainStuatArray];
-            [_dataArry addObjectsFromArray:againArray];
+            NSArray *againArray = [weakSelf getSendAgainStuatArray];
+            [newDataArray addObjectsFromArray:againArray];
             
             for (NSDictionary *statusDic in jsonarray) {
-                WLStatusFrame *sf = [self dataFrameWith:statusDic];
-                [_dataArry addObject:sf];
+                WLStatusFrame *sf = [weakSelf dataFrameWith:statusDic];
+                [newDataArray addObject:sf];
             }
             _page++;
             dispatch_async(dispatch_get_main_queue(), ^{
                 DLog(@"-----更新界面");
+                _dataArry = newDataArray;
                 // 更新界面
                 if (!_uid) {
-                    [self.homeView setHidden:_dataArry.count];
+                    [weakSelf.homeView setHidden:_dataArry.count];
                 }else if(_uid.integerValue == 0){
-                    [self.notDataView setHidden:_dataArry.count];
+                    [weakSelf.notDataView setHidden:_dataArry.count];
                 }
                 [[MainViewController sharedMainViewController] updataItembadge];
-                [self.tableView reloadData];
-                [self endRefreshing];
+                [weakSelf.tableView reloadData];
+                [weakSelf endRefreshing];
                 if (jsonarray.count<KCellConut) {
-                    [self.tableView.footer setHidden:YES];
+                    [weakSelf.tableView.footer setHidden:YES];
                 }else{
-                    [self.tableView.footer setHidden:NO];
+                    [weakSelf.tableView.footer setHidden:NO];
                 }
             });  
         });
