@@ -59,8 +59,8 @@
                                options:SDWebImageRetryFailed|SDWebImageLowPriority];
     _nameLabel.text = baseUser.wlname.length == 0 ? baseUser.name : baseUser.wlname;
     
-    NSString *company = _baseUser.company.length < 1 ? @"" : _baseUser.company;
-    NSString *position = _baseUser.position.length < 1 ? @"" : _baseUser.position;
+    NSString *company = _baseUser.company.length > 0 ? [_baseUser.company deleteTopAndBottomKonggeAndHuiche] : @"";
+    NSString *position = _baseUser.position.length > 0 ? [_baseUser.position deleteTopAndBottomKonggeAndHuiche] : @"";
     _messageLabel.text = [NSString stringWithFormat:@"%@%@",position,(position.length > 0 ? [NSString stringWithFormat:@" %@",company] : company)];
     _messageLabel.numberOfLines = 1;
     
@@ -205,6 +205,10 @@
     
     [_nameLabel sizeToFit];
     _nameLabel.left = _logoImageView.right + kMarginLeft;
+    CGFloat nameMaxWidth = self.width - _logoImageView.right - kMarginLeft * 2.f - (_wxBtn.hidden == YES ? 0 : _wxBtn.width) - (_operateBtn.hidden == YES ? 0 : _operateBtn.width);
+    if (_nameLabel.width > nameMaxWidth) {
+        _nameLabel.width = nameMaxWidth;
+    }
     if (_messageLabel.text.length == 0) {
         _nameLabel.centerY = self.height / 2.f;
     }else{

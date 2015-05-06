@@ -25,11 +25,13 @@
 #import "UserInfoView.h"
 #import "WLCustomSegmentedControl.h"
 
-#define kTableViewHeaderViewHeight 330.f
+#define kTableViewHeaderViewHeight 145.f
+#define kHeaderBgImageHeight 83.f
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_data;
+    CExpandHeader *_header;//用于设置头部背景
 }
 
 @property (assign,nonatomic) UITableView *tableView;
@@ -137,10 +139,11 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
+    CGFloat offsetY = scrollView.contentOffset.y + kHeaderBgImageHeight;
     UIColor *color = kNavBgColor;
-    if (offsetY > kHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+    DLog(@"scroll off Y---%f",offsetY);
+    if (offsetY > kHeaderBgImageHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderBgImageHeight/2 + 64 - offsetY) / 64);
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
     } else {
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
@@ -168,32 +171,49 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UITableView *tableView = [[UITableView alloc] initWithFrame:Rect(0.f,0.f,self.view.width,self.view.height - TabBarHeight) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
-    tableView.contentInset = UIEdgeInsetsMake(-100,0, 0,0);
+//    tableView.contentInset = UIEdgeInsetsMake(-100,0, 0,0);
     //隐藏表格分割线
 //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
+//    [tableView setDebug:YES];
     
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"BadgeBaseCell" bundle:nil] forCellReuseIdentifier:BadgeBaseCellid];
     
+    //设置自定义图片头部背景 me_background
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
+    [imageView setImage:[UIImage imageNamed:@"header_gackground_top"]];
+    
+    //关键步骤 设置可变化背景view属性
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight| UIViewAutoresizingFlexibleWidth;
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    [customView addSubview:imageView];
+    _header = [CExpandHeader expandWithScrollView:_tableView expandView:customView];
     
     //设置头部
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
-    headerView.backgroundColor = [UIColor clearColor];
     
     LogInUser *loginUser = [LogInUser getCurrentLoginUser];
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 60.f)];
+//    userInfoView.backgroundColor = [UIColor clearColor];
     userInfoView.loginUser = loginUser;
     self.userInfoView = userInfoView;
     [headerView addSubview:userInfoView];
+//    [userInfoView setDebug:YES];
     
     //切换按钮
     [headerView addSubview:self.wlSegmentedControl];
     _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
     
     [_tableView setTableHeaderView:headerView];
+//    _tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
+//    [headerView setDebug:YES];
+    
 //    [self.tableView setParallaxHeaderView:headerView
 //                                     mode:VGParallaxHeaderModeFill
 //                                   height:kTableViewHeaderViewHeight];

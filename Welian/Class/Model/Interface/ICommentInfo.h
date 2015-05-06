@@ -11,7 +11,7 @@
 
 @interface ICommentInfo : IFBase
 
-@property (nonatomic,strong) NSNumber *pcid;
+@property (nonatomic,strong) NSNumber *cid;
 @property (nonatomic,strong) NSString *comment;
 @property (nonatomic,strong) NSString *created;
 @property (nonatomic,strong) IBaseUserM *user;

@@ -186,8 +186,8 @@
 {
     // 1.只有1张图片
     if (count.count == 1) {
-        WLPhoto *photo = count[0];
-        NSArray *array = [photo.photo componentsSeparatedByString:@"-"];
+        WLPhoto *wlPhoto = count[0];
+        NSArray *array = [wlPhoto.photo componentsSeparatedByString:@"-"];
         CGFloat w = 180;
         CGFloat h = 150;
         if (array.count>1) {

@@ -506,7 +506,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         UIActionSheet *sheet = [UIActionSheet bk_actionSheetWithTitle:nil];
         [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
-            [WeLianClient deleteFeedCommentWithID:_selecCommFrame.commentM.fcid Success:^(id resultInfo) {
+            [WeLianClient deleteFeedCommentWithID:_selecCommFrame.commentM.cid Success:^(id resultInfo) {
                 [_dataArrayM removeObject:_selecCommFrame];
                 NSMutableArray *commentAM = [NSMutableArray arrayWithCapacity:_dataArrayM.count];
                 for (CommentCellFrame *comCellF in _dataArrayM) {
