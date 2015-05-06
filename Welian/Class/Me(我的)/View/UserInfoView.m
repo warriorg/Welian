@@ -11,7 +11,7 @@
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
 
-#define kBlueBgViewHeight 230.f
+#define kBlueBgViewHeight 47.f
 #define kLogoHeight 70.f
 #define kButtonWidth 65.f
 #define kButtonHeight 25.f
@@ -163,12 +163,12 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _bgImageView.size = CGSizeMake(self.width, kBlueBgViewHeight);
-    _bgImageView.top = 0.f;
+    _bgImageView.size = CGSizeMake(self.width, kBlueBgViewHeight + 2.f);
+    _bgImageView.top = -2.f;
     _bgImageView.centerX = self.width / 2.f;
     
     _logoImageView.size = CGSizeMake(kLogoHeight, kLogoHeight);
-    _logoImageView.bottom = _bgImageView.height + 23.f;
+    _logoImageView.top = 0.f;
     _logoImageView.left = kMarginLeft;
     
     [_phoneRZImageView sizeToFit];
@@ -187,7 +187,7 @@
     
     [_companyLabel sizeToFit];
     _companyLabel.width = self.width - _logoImageView.right - kMarginEdge - kMarginLeft;
-    _companyLabel.bottom = _bgImageView.height - 6.f;
+    _companyLabel.top = _nameLabel.bottom + 6.f;
     _companyLabel.left = _nameLabel.left;
     
     [_touZiRenBtn sizeToFit];
@@ -199,7 +199,7 @@
     _cityBtn.width = _cityBtn.width + 10.f;
     if (_touZiRenBtn.hidden) {
         _cityBtn.left = _nameLabel.left;
-        _cityBtn.top = _bgImageView.bottom + kMarginEdge;
+        _cityBtn.bottom = _logoImageView.bottom ;
     }else{
         _cityBtn.left = _touZiRenBtn.right + 10.f;
         _cityBtn.centerY =  _touZiRenBtn.centerY;
@@ -215,8 +215,8 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     
-    //蓝色背景
-    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_background"]];
+    //蓝色背景me_background
+    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_background_bottom"]];
     bgImageView.backgroundColor = [UIColor clearColor];
     [self addSubview:bgImageView];
     self.bgImageView = bgImageView;

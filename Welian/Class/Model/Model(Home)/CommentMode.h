@@ -11,7 +11,7 @@
 @interface CommentMode : IFBase
 
 /**  fcid   */
-@property (nonatomic, strong) NSNumber *fcid;
+@property (nonatomic, strong) NSNumber *cid;
 
 /**  comment评论   */
 @property (nonatomic, strong) NSString *comment;

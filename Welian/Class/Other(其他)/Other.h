@@ -23,6 +23,7 @@
 #import "DateTools.h"
 #import "LocationTool.h"
 #import "MJRefresh.h"
+#import "CExpandHeader.h"
 
 #import <BlocksKit/BlocksKit.h>
 #import <BlocksKit/BlocksKit+UIKit.h>

@@ -236,7 +236,7 @@
     [KNSNotification addObserver:self selector:@selector(messageHomenotif) name:KMessageHomeNotif object:nil];
     
     //刷新所有好友通知
-    [KNSNotification addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
+//    [KNSNotification addObserver:self selector:@selector(loadMyAllFriends) name:KupdataMyAllFriends object:nil];
     
     // 1.设置界面属性
     [self buildUI];
@@ -510,7 +510,7 @@
 -(void)loadMyAllFriends
 {
     LogInUser *nowLoginUser = [LogInUser getCurrentLoginUser];
-    if(nowLoginUser){
+    if(nowLoginUser.rsMyFriends.count == 0){
         //获取好友列表
         [WeLianClient getFriendListWithID:nowLoginUser.uid
                                   Success:^(id resultInfo) {

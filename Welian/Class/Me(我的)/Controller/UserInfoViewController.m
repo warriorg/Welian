@@ -19,12 +19,16 @@
 #import "UserInfoViewCell.h"
 #import "WLNoteInfoView.h"
 
-#define kTableViewHeaderViewHeight 298.f
+#define kTableViewHeaderViewHeight 115.f
+#define kHeaderBgImageHeight 83.f
 
 #define kTableViewCellHeight 60.f
 #define kTableViewHeaderHeight 60.f
 
 @interface UserInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+{
+    CExpandHeader *_header;//用于设置头部背景
+}
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) WLCustomSegmentedControl *wlSegmentedControl;
@@ -195,15 +199,14 @@ static NSString *fridcellid = @"fridcellid";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
+    CGFloat offsetY = scrollView.contentOffset.y + kHeaderBgImageHeight;
     UIColor *color = kNavBgColor;
-    if (offsetY > kHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+    DLog(@"scroll off Y---%f",offsetY);
+    if (offsetY > kHeaderBgImageHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderBgImageHeight/2 + 64 - offsetY) / 64);
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
     }
 }
 
@@ -229,8 +232,21 @@ static NSString *fridcellid = @"fridcellid";
     self.tableView = tableView;
     
     
+    //设置自定义图片头部背景
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
+    [imageView setImage:[UIImage imageNamed:@"header_gackground_top"]];
+    
+    //关键步骤 设置可变化背景view属性
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight| UIViewAutoresizingFlexibleWidth;
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    [customView addSubview:imageView];
+    _header = [CExpandHeader expandWithScrollView:_tableView expandView:customView];
+    
     //设置头部
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0.f, _tableView.width, kTableViewHeaderViewHeight)];
     UserInfoView *userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, kTableViewHeaderViewHeight - 38.f)];
     userInfoView.baseUserModel = _baseUserModel;
     if (_operateType) {

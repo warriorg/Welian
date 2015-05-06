@@ -278,7 +278,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                              Success:^(id resultInfo) {
                                                  [WLHUDView hiddenHud];
                                                  
-                                                 commentM.fcid = resultInfo[@"cid"];
+                                                 commentM.cid = resultInfo[@"cid"];
                                                  
                                                  CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
                                                  [commentFrame setCommentM:commentM];
@@ -512,7 +512,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         [sheet bk_setDestructiveButtonWithTitle:@"删除" handler:^{
             //删除评论
             [WLHUDView showHUDWithStr:@"评论删除中..." dim:NO];
-            [WeLianClient deleteProjectCommentWithCid:selecCommFrame.commentM.fcid
+            [WeLianClient deleteProjectCommentWithCid:selecCommFrame.commentM.cid
                                               Success:^(id resultInfo) {
                                                   [WLHUDView hiddenHud];
                                                   
@@ -1149,7 +1149,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          for (ICommentInfo *commentInfo in detailInfo.comments) {
                                              
                                              CommentMode *commentM = [[CommentMode alloc] init];
-                                             commentM.fcid = commentInfo.pcid;
+                                             commentM.cid = commentInfo.cid;
                                              commentM.comment = commentInfo.comment;
                                              commentM.created = commentInfo.created;
                                              if (commentInfo.user.uid) {
@@ -1385,7 +1385,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                            if ([resultInfo count] > 0) {
                                                for (ICommentInfo *commentInfo in resultInfo) {
                                                    CommentMode *commentM = [[CommentMode alloc] init];
-                                                   commentM.fcid = commentInfo.pcid;
+                                                   commentM.cid = commentInfo.cid;
                                                    commentM.comment = commentInfo.comment;
                                                    commentM.created = commentInfo.created;
                                                    if (commentInfo.user.uid) {
