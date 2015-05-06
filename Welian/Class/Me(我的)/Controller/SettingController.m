@@ -98,6 +98,7 @@
 //    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
     [UserDefaults removeObjectForKey:kSessionId];
     [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
+    [UserDefaults synchronize];
     [LogInUser setUserisNow:NO];
     [WeLianClient logoutWithSuccess:^(id resultInfo) {
         

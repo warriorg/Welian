@@ -91,7 +91,7 @@
         [self.view addSubview:self.tableView];
         [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(beginPullDownRefreshing)];
         self.tableView.header.updatedTimeHidden = YES;
-        [self.tableView.header beginRefreshing];
+//        [self.tableView.header beginRefreshing];
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
         self.tableView.footer.hidden = YES;
 
@@ -123,6 +123,7 @@
     [self.tableView.footer endRefreshing];
 }
 
+#pragma mark - 刷新动态列表数据
 - (void)beginPullDownRefreshing
 {
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
@@ -134,50 +135,91 @@
     }else {
         [darDic setObject:@(0) forKey:@"start"];
     }
-    
-    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
-        
-        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
-        if (!_uid) {
-            [LogInUser setUserNewstustcount:@(0)];
-        }
-        // 1.在拿到最新微博数据的同时计算它的frame
-        [_dataArry removeAllObjects];
-        
-        NSArray *againArray = [self getSendAgainStuatArray];
-        [_dataArry addObjectsFromArray:againArray];
-        
-        for (NSDictionary *statusDic in jsonarray) {
-             WLStatusFrame *sf = [self dataFrameWith:statusDic];
-            [_dataArry addObject:sf];
-        }
-        _page++;
-        if (!_uid) {
-            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
-            if (!_dataArry.count) {
-                [self.homeView setHidden:NO];
-            }else{
-                [self.homeView setHidden:YES];
+    [WeLianClient getFeedListWithParameterDic:darDic Success:^(id resultInfo) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 耗时的操作
+            NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
+            if (!_uid) {
+                [LogInUser setUserNewstustcount:@(0)];
+                [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
             }
-        }else if(_uid.integerValue == 0){
-            if (!_dataArry.count) {
-                [self.notDataView setHidden:NO];
-            }else{
-                [self.notDataView setHidden:YES];
+            // 1.在拿到最新微博数据的同时计算它的frame
+            [_dataArry removeAllObjects];
+            
+            NSArray *againArray = [self getSendAgainStuatArray];
+            [_dataArry addObjectsFromArray:againArray];
+            
+            for (NSDictionary *statusDic in jsonarray) {
+                WLStatusFrame *sf = [self dataFrameWith:statusDic];
+                [_dataArry addObject:sf];
             }
-        }
-        [[MainViewController sharedMainViewController] updataItembadge];
-        [self.tableView reloadData];
-
-        [self endRefreshing];
-        if (jsonarray.count<KCellConut) {
-            [self.tableView.footer setHidden:YES];
-        }else{
-            [self.tableView.footer setHidden:NO];
-        }
-    } fail:^(NSError *error) {
+            _page++;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DLog(@"-----更新界面");
+                // 更新界面
+                if (!_uid) {
+                    [self.homeView setHidden:_dataArry.count];
+                }else if(_uid.integerValue == 0){
+                    [self.notDataView setHidden:_dataArry.count];
+                }
+                [[MainViewController sharedMainViewController] updataItembadge];
+                [self.tableView reloadData];
+                [self endRefreshing];
+                if (jsonarray.count<KCellConut) {
+                    [self.tableView.footer setHidden:YES];
+                }else{
+                    [self.tableView.footer setHidden:NO];
+                }
+            });  
+        });
+        
+        
+    } Failed:^(NSError *error) {
         [self endRefreshing];
     }];
+//    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
+//        
+//        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+//        if (!_uid) {
+//            [LogInUser setUserNewstustcount:@(0)];
+//        }
+//        // 1.在拿到最新微博数据的同时计算它的frame
+//        [_dataArry removeAllObjects];
+//        
+//        NSArray *againArray = [self getSendAgainStuatArray];
+//        [_dataArry addObjectsFromArray:againArray];
+//        
+//        for (NSDictionary *statusDic in jsonarray) {
+//             WLStatusFrame *sf = [self dataFrameWith:statusDic];
+//            [_dataArry addObject:sf];
+//        }
+//        _page++;
+//        if (!_uid) {
+//            [self loadFirstFID:[self dataFrameWith:[jsonarray firstObject]]];
+//            if (!_dataArry.count) {
+//                [self.homeView setHidden:NO];
+//            }else{
+//                [self.homeView setHidden:YES];
+//            }
+//        }else if(_uid.integerValue == 0){
+//            if (!_dataArry.count) {
+//                [self.notDataView setHidden:NO];
+//            }else{
+//                [self.notDataView setHidden:YES];
+//            }
+//        }
+//        [[MainViewController sharedMainViewController] updataItembadge];
+//        [self.tableView reloadData];
+//
+//        [self endRefreshing];
+//        if (jsonarray.count<KCellConut) {
+//            [self.tableView.footer setHidden:YES];
+//        }else{
+//            [self.tableView.footer setHidden:NO];
+//        }
+//    } fail:^(NSError *error) {
+//        [self endRefreshing];
+//    }];
 }
 
 - (WLStatusFrame*)dataFrameWith:(NSDictionary *)statusDic
@@ -201,9 +243,8 @@
         WLStatusFrame *f = [_dataArry lastObject];
         [darDic setObject:f.status.fid forKey:@"start"];
     }
-    
-    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
-        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+    [WeLianClient getFeedListWithParameterDic:darDic Success:^(id resultInfo) {
+        NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
         
         // 1.在拿到最新微博数据的同时计算它的frame
         NSMutableArray *newFrames = [NSMutableArray array];
@@ -221,9 +262,31 @@
         if (jsonarray.count<KCellConut) {
             [self.tableView.footer setHidden:YES];
         }
-    } fail:^(NSError *error) {
+    } Failed:^(NSError *error) {
         [self endRefreshing];
     }];
+//    [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_uid success:^(id JSON) {
+//        NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+//        
+//        // 1.在拿到最新微博数据的同时计算它的frame
+//        NSMutableArray *newFrames = [NSMutableArray array];
+//        
+//        for (NSDictionary *dic in jsonarray) {
+//            WLStatusFrame *sf = [self dataFrameWith:dic];
+//            [newFrames addObject:sf];
+//        }
+//        // 2.将newFrames整体插入到旧数据的后面
+//        [_dataArry addObjectsFromArray:newFrames];
+//        _page++;
+//        [self.tableView reloadData];
+//        
+//        [self endRefreshing];
+//        if (jsonarray.count<KCellConut) {
+//            [self.tableView.footer setHidden:YES];
+//        }
+//    } fail:^(NSError *error) {
+//        [self endRefreshing];
+//    }];
 
 }
 
@@ -277,7 +340,8 @@
         if (status == AFNetworkReachabilityStatusNotReachable) {
             [self showStatusNotReachable];
         }else{
-            [self beginPullDownRefreshing];
+//            [self beginPullDownRefreshing];
+            [self.tableView.header beginRefreshing];
             self.tableView.tableHeaderView = nil;
         }
     }];

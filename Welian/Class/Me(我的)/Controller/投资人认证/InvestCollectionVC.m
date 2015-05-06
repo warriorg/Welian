@@ -55,7 +55,7 @@ static NSString * const reuseIdentifier = @"Cell";
     if (firstIndustry) {
         for (NSDictionary *indDic in dataarray) {
             IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
-            [indust setIndustryid:[indDic objectForKey:@"id"]];
+            [indust setIndustryid:[indDic objectForKey:@"industryid"]];
             [indust setIndustryname:[indDic objectForKey:@"name"]];
             [indust setIsSelect:YES];
             [_selectCells addObject:indust];
@@ -70,7 +70,7 @@ static NSString * const reuseIdentifier = @"Cell";
     }else{
         for (NSDictionary *indDic in dataarray) {
             IInvestIndustryModel *indust = [[IInvestIndustryModel alloc] init];
-            [indust setIndustryid:[indDic objectForKey:@"id"]];
+            [indust setIndustryid:[indDic objectForKey:@"industryid"]];
             [indust setIndustryname:[indDic objectForKey:@"name"]];
             if ([loginUser getInvestIndustryWithName:indust.industryname]) {
                 

@@ -877,67 +877,79 @@ static NSString *fridcellid = @"fridcellid";
 //    }
 //    return sameFrindM;
 //}
-
-//获取用户最新动态
+#pragma mark - 获取用户最新动态
 - (void)getUserFeedsData
 {
     NSMutableDictionary *darDic = [NSMutableDictionary dictionary];
     [darDic setObject:@(KCellConut) forKey:@"size"];
-    
     self.pageIndex = 1;
-    
-    if (_baseUserModel.uid) {
-        //查看他人的动态
-        [darDic setObject:@(_pageIndex) forKey:@"page"];
-        [darDic setObject:_baseUserModel.uid forKey:@"uid"];
-    }else {
-        //调用自己的动态
-//        [darDic setObject:@(0) forKey:@"start"];
-    }
-    
-    [WLHttpTool loadFeedsParameterDic:darDic
-                          andLoadType:_baseUserModel.uid
-                              success:^(id JSON) {
-                                  
-                                  NSArray *jsonarray = [NSArray arrayWithArray:JSON];
-                                  
-                                  // 1.在拿到最新微博数据的同时计算它的frame
-                                  [_datasource2 removeAllObjects];
-                                  NSMutableArray *datas = [NSMutableArray array];
-                                  
-                                  for (NSDictionary *dic in jsonarray) {
-                                      WLStatusFrame *sf = [self dataFrameWith:dic];
-                                      [datas addObject:sf];
-                                  }
-                                  self.datasource2 = datas;
-//                                  if (!_baseUserModel.uid) {
-//                                      [self loadFirstFID];
-                                      //            if (!_datasource.count) {
-                                      //                [self.homeView setHidden:NO];
-                                      //            }else{
-                                      //                [self.homeView setHidden:YES];
-                                      //            }
+    //查看他人的动态
+    [darDic setObject:@(_pageIndex) forKey:@"page"];
+    [darDic setObject:_baseUserModel.uid forKey:@"uid"];
+    [WeLianClient getFeedListWithParameterDic:darDic Success:^(id resultInfo) {
+        NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
+        
+        // 1.在拿到最新微博数据的同时计算它的frame
+        [_datasource2 removeAllObjects];
+        NSMutableArray *datas = [NSMutableArray array];
+        
+        for (NSDictionary *dic in jsonarray) {
+            WLStatusFrame *sf = [self dataFrameWith:dic];
+            [datas addObject:sf];
+        }
+        self.datasource2 = datas;
+        //
+        //检查
+        [self checkNoteInfoLoad:YES];
+        
+        [_tableView.footer endRefreshing];
+        if (jsonarray.count<KCellConut) {
+            // 隐藏当前的上拉刷新控件
+            _tableView.footer.hidden = YES;
+            _canLoadMore = NO;
+        }else{
+            _pageIndex++;
+            _canLoadMore = YES;
+            // 隐藏当前的上拉刷新控件
+            _tableView.footer.hidden = NO;
+        }
+    } Failed:^(NSError *error) {
+        
+    }];
+//    [WLHttpTool loadFeedsParameterDic:darDic
+//                          andLoadType:_baseUserModel.uid
+//                              success:^(id JSON) {
+//                                  
+//                                  NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+//                                  
+//                                  // 1.在拿到最新微博数据的同时计算它的frame
+//                                  [_datasource2 removeAllObjects];
+//                                  NSMutableArray *datas = [NSMutableArray array];
+//                                  
+//                                  for (NSDictionary *dic in jsonarray) {
+//                                      WLStatusFrame *sf = [self dataFrameWith:dic];
+//                                      [datas addObject:sf];
 //                                  }
-                                  //        [LogInUser setUserNewstustcount:@(0)];
-                                  //        [[MainViewController sharedMainViewController] updataItembadge];
-                                  //检查
-                                  [self checkNoteInfoLoad:YES];
-                                  
-                                  [_tableView.footer endRefreshing];
-                                  if (jsonarray.count<KCellConut) {
-                                      // 隐藏当前的上拉刷新控件
-                                      _tableView.footer.hidden = YES;
-                                      _canLoadMore = NO;
-                                  }else{
-                                      _pageIndex++;
-                                      _canLoadMore = YES;
-                                      // 隐藏当前的上拉刷新控件
-                                      _tableView.footer.hidden = NO;
-                                  }
-                              } fail:^(NSError *error) {
-                                  [_tableView.footer endRefreshing];
-                                  _wlNoteInfoView.loadFailed = YES;
-                              }];
+//                                  self.datasource2 = datas;
+////
+//                                  //检查
+//                                  [self checkNoteInfoLoad:YES];
+//                                  
+//                                  [_tableView.footer endRefreshing];
+//                                  if (jsonarray.count<KCellConut) {
+//                                      // 隐藏当前的上拉刷新控件
+//                                      _tableView.footer.hidden = YES;
+//                                      _canLoadMore = NO;
+//                                  }else{
+//                                      _pageIndex++;
+//                                      _canLoadMore = YES;
+//                                      // 隐藏当前的上拉刷新控件
+//                                      _tableView.footer.hidden = NO;
+//                                  }
+//                              } fail:^(NSError *error) {
+//                                  [_tableView.footer endRefreshing];
+//                                  _wlNoteInfoView.loadFailed = YES;
+//                              }];
 }
 
 #pragma mark 加载更多数据
@@ -953,26 +965,18 @@ static NSString *fridcellid = @"fridcellid";
         if (_baseUserModel.uid) {
             [darDic setObject:_baseUserModel.uid forKey:@"uid"];
             [darDic setObject:@(_pageIndex) forKey:@"page"];
-        }else{
-//            [darDic setObject:@(start) forKey:@"start"];
         }
         
-        [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
-            
-            NSArray *jsonarray = [NSArray arrayWithArray:JSON];
-            
-            // 1.在拿到最新微博数据的同时计算它的frame
+        [WeLianClient getFeedListWithParameterDic:darDic Success:^(id resultInfo) {
+            NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
             NSMutableArray *newFrames = [NSMutableArray array];
-            
+            // 1.在拿到最新微博数据的同时计算它的frame
             for (NSDictionary *dic in jsonarray) {
                 WLStatusFrame *sf = [self dataFrameWith:dic];
                 [newFrames addObject:sf];
             }
             // 2.将newFrames整体插入到旧数据的后面
             [_datasource2 addObjectsFromArray:newFrames];
-            
-//            [_datasource2 addObjectsFromArray:_datasource2];
-            //            [_datasource2 addObjectsFromArray:_datasource2];
             
             //检查
             [self checkNoteInfoLoad:YES];
@@ -988,71 +992,49 @@ static NSString *fridcellid = @"fridcellid";
                 // 隐藏当前的上拉刷新控件
                 _tableView.footer.hidden = NO;
             }
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             [_tableView.footer endRefreshing];
         }];
+//        [WLHttpTool loadFeedsParameterDic:darDic andLoadType:_baseUserModel.uid success:^(id JSON) {
+//            
+//            NSArray *jsonarray = [NSArray arrayWithArray:JSON];
+//            
+//            // 1.在拿到最新微博数据的同时计算它的frame
+//            NSMutableArray *newFrames = [NSMutableArray array];
+//            
+//            for (NSDictionary *dic in jsonarray) {
+//                WLStatusFrame *sf = [self dataFrameWith:dic];
+//                [newFrames addObject:sf];
+//            }
+//            // 2.将newFrames整体插入到旧数据的后面
+//            [_datasource2 addObjectsFromArray:newFrames];
+//            
+////            [_datasource2 addObjectsFromArray:_datasource2];
+//            //            [_datasource2 addObjectsFromArray:_datasource2];
+//            
+//            //检查
+//            [self checkNoteInfoLoad:YES];
+//            
+//            [_tableView.footer endRefreshing];
+//            if (jsonarray.count<KCellConut) {
+//                // 隐藏当前的上拉刷新控件
+//                _tableView.footer.hidden = YES;
+//                _canLoadMore = NO;
+//            }else{
+//                _pageIndex++;
+//                _canLoadMore = YES;
+//                // 隐藏当前的上拉刷新控件
+//                _tableView.footer.hidden = NO;
+//            }
+//        } fail:^(NSError *error) {
+//            [_tableView.footer endRefreshing];
+//        }];
     }
-}
-
-#pragma mark - 取第一条ID保存
-- (void)loadFirstFID
-{
-    // 1.第一条微博的ID
-    WLStatusFrame *startf = [_datasource2 firstObject];
-    [LogInUser setUserFirststustid:startf.status.fid];
 }
 
 - (WLStatusFrame*)dataFrameWith:(NSDictionary *)statusDic
 {
-    WLStatusM *statusM = [WLStatusM objectWithKeyValues:statusDic];
-    
-    NSArray *feedarray = [statusDic objectForKey:@"forwards"];
-    NSArray *zanarray = [statusDic objectForKey:@"zans"];
-    
-    NSMutableArray *forwardsM = [NSMutableArray array];
-    if (feedarray.count) {
-        for (NSDictionary *feeddic in feedarray) {
-            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:feeddic];
-            [forwardsM addObject:mode];
-        }
-    }
-    [statusM setForwards:forwardsM];
-    
-    NSMutableArray *zanArrayM = [NSMutableArray array];
-    if (zanarray.count) {
-        for (NSDictionary *zandic in zanarray) {
-            IBaseUserM *mode = [IBaseUserM objectWithKeyValues:zandic];
-            [zanArrayM addObject:mode];
-        }
-    }
-    [statusM setZans:zanArrayM];
-    
-    NSArray *comments = [statusDic objectForKey:@"comments"];
-    NSMutableArray *commentArrayM = [NSMutableArray array];
-    if (comments.count) {
-        for (NSDictionary *commDic in comments) {
-            CommentMode *commMode = [CommentMode objectWithKeyValues:commDic];
-            [commentArrayM addObject:commMode];
-        }
-    }
-    [statusM setComments:commentArrayM];
-    NSArray *joinedusers = [statusDic objectForKey:@"joinedusers"];
-    NSMutableArray *joinArrayM = [NSMutableArray array];
-    if (joinedusers.count) {
-        IBaseUserM *meInfoM = [[IBaseUserM alloc] init];
-        meInfoM.name = statusM.user.name;
-        meInfoM.uid = statusM.user.uid;
-        meInfoM.avatar = statusM.user.avatar;
-        [joinArrayM addObject:meInfoM];
-    }
-    if (joinedusers.count) {
-        for (NSDictionary *joDic in joinedusers) {
-            IBaseUserM *joMode = [IBaseUserM objectWithKeyValues:joDic];
-            [joinArrayM addObject:joMode];
-        }
-    }
-    [statusM setJoinedusers:joinArrayM];
-    
+    WLStatusM *statusM = [WLStatusM objectWithDict:statusDic];
     WLStatusFrame *sf = [[WLStatusFrame alloc] initWithWidth:[UIScreen mainScreen].bounds.size.width-60];
     sf.status = statusM;
     return sf;

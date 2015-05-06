@@ -169,11 +169,11 @@
                         Success:(SuccessBlock)success
                          Failed:(FailedBlock)failed;
 
-//取动态列表
-+ (void)getFeedListWithStart:(NSNumber *)start
-                        Size:(NSNumber *)size
-                     Success:(SuccessBlock)success
-                      Failed:(FailedBlock)failed;
+//取创业圈动态列表
++ (void)getFeedListWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
+
+// 取某一个用户的动态列表
++ (void)getFeedUserListParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
 //取动态评论列表
 + (void)getFeedCommentListWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;

@@ -16,6 +16,7 @@
 #import "IconTableViewCell.h"
 #import "MobileInfoCell.h"
 #import "PhoneChangeVC.h"
+#import "IPhotoUp.h"
 
 @interface MeInfoController () <LocationProDelegate>
 {
@@ -325,20 +326,28 @@ static NSString *mobileCellid = @"MobileInfoCellid";
      [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];   
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
-    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-
-    //修改头像
-    [WeLianClient changeUserAvatarWithAvatar:avatarStr
-                                     Success:^(id resultInfo) {
-                                         [LogInUser setUserAvatar:[resultInfo objectForKey:@"url"]];
-                                         [_iconCell.iconImage setImage:image];
-                                         
-                                         [UserDefaults setObject:avatarStr forKey:@"icon"];
-                                         [self.tableView reloadData];
-                                     } Failed:^(NSError *error) {
-                                         
-                                     }];
+    
+    [[WeLianClient sharedClient] uploadImageWithImageData:@[imageData] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
+        IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+        if (photoUp.photo.length&&[photoUp.type isEqualToString:@"avatar"]) {
+            //修改头像
+            [WeLianClient changeUserAvatarWithAvatar:photoUp.photo
+                                             Success:^(id resultInfo) {
+                                                 [LogInUser setUserAvatar:[resultInfo objectForKey:@"avatar"]];
+                                                 [_iconCell.iconImage setImage:image];
+                                                 
+                                                 [UserDefaults setObject:avatarStr forKey:@"icon"];
+                                                 [self.tableView reloadData];
+                                             } Failed:^(NSError *error) {
+                                                 
+                                             }];
+        }
+    } Failed:^(NSError *error) {
+        
+    }];
+    
 //    [WLHttpTool uploadAvatarParameterDic:@{@"avatar":avatarStr,@"title":@"png"} success:^(id JSON) {
 //
 //        [LogInUser setUserAvatar:[JSON objectForKey:@"url"]];

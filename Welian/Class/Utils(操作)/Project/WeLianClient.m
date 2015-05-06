@@ -217,7 +217,7 @@
                        }];
 }
 
-//登陆
+// 登陆
 + (void)loginWithParameterDic:(NSDictionary *)params
                       Success:(SuccessBlock)success
                        Failed:(FailedBlock)failed
@@ -229,10 +229,10 @@
                           Path:kLoginPath
                        Success:^(id resultInfo) {
                            DLog(@"login ---- %@",resultInfo);
-                           if ([resultInfo objectForKey:@"flag"]) {
-                               SAFE_BLOCK_CALL(success, resultInfo);
+                           if ([[resultInfo objectForKey:@"flag"] integerValue]==0&&[resultInfo objectForKey:@"flag"]) {
+                              SAFE_BLOCK_CALL(success, resultInfo);
                            }else{
-                               ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
+                               ILoginUserModel *result = [ILoginUserModel objectWithDict:[resultInfo objectForKey:@"profile"]];
                                //记录最后一次登陆的手机号
                                SaveLoginMobile(result.mobile);
                                SAFE_BLOCK_CALL(success, result);
@@ -638,15 +638,48 @@
                        }];
 }
 
-//取动态列表
-+ (void)getFeedListWithStart:(NSNumber *)start
-                        Size:(NSNumber *)size
-                     Success:(SuccessBlock)success
-                      Failed:(FailedBlock)failed
+//取创业圈动态列表
++ (void)getFeedListWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
 {
-    NSDictionary *params = @{@"start":start,@"size":size};
+    
+    // 有uid表示是某用户的动态 否则是创业圈
+    NSString *path = kFeedListPath;
+    if ([params objectForKey:@"uid"]) {
+        path = kFeedUrl(@"userlist");
+    }
     [self reqestPostWithParams:params
-                          Path:kFeedListPath
+                          Path:path
+                       Success:^(id resultInfo) {
+                           DLog(@"getFeedList ---- %@",resultInfo);
+                           NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
+                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                               if (jsonarray.count) {
+                                   BOOL isok = NO;
+                                   if ([params objectForKey:@"start"]&&[[params objectForKey:@"start"] integerValue]==0) {
+                                       isok = YES;
+                                       [[WLDataDBTool sharedService] clearTable:KHomeDataTableName];
+                                   }
+                                   for (NSDictionary *dicJson in jsonarray) {
+                                       if (isok) {
+                                           [[WLDataDBTool sharedService] putObject:dicJson  withId:[dicJson objectForKey:@"fid"] intoTable:KHomeDataTableName];
+                                       }
+                                       [[WLDataDBTool sharedService] putObject:dicJson withId:[NSString stringWithFormat:@"%@",[dicJson objectForKey:@"fid"]] intoTable:KWLStutarDataTableName];
+                                   }
+                               }
+
+                           
+                           });
+                        SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
+// 取某一个用户的动态列表
++ (void)getFeedUserListParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:params
+                          Path:kFeedUrl(@"userlist")
                        Success:^(id resultInfo) {
                            DLog(@"getFeedList ---- %@",resultInfo);
                            SAFE_BLOCK_CALL(success,resultInfo);
@@ -1651,10 +1684,13 @@
 {
     //设置sessionid
     NSString *sessid = [UserDefaults objectForKey:kSessionId];
-
+    
     NSString *pathInfo = @"upload/index";
+    if (imageDataArray.count > 1) {
+        pathInfo = @"upload/indexs";
+    }
     if (sessid.length) {
-        pathInfo = [NSString stringWithFormat:@"upload/index?sessionid=%@",sessid];
+        pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",pathInfo,sessid];
     }
     NSString *fileName = @"file.jpg";
     if (feedID) {

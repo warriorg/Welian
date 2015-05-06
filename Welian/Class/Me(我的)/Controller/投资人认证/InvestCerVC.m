@@ -270,6 +270,7 @@ static NSString *itemscellid = @"itemscellid";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
+        
         [WLHttpTool deleteInvestorParameterDic:@{} success:^(id JSON) {
             [LogInUser setUserinvestorauth:@(0)];
             [LogInUser setUserUrl:nil];
