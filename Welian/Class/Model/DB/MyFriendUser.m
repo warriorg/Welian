@@ -129,17 +129,26 @@
 {
     NSDictionary *fromuser = dict[@"fromuser"];
     LogInUser *loginUser = [LogInUser getLogInUserWithUid:dict[@"uid"]];
-    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:fromuser[@"uid"]];
+    NSNumber *fromUid = [fromuser objectForKey:@"uid"];
+    MyFriendUser *myFriend = [loginUser getMyfriendUserWithUid:fromUid];
     if (!myFriend) {
         myFriend = [MyFriendUser MR_createEntityInContext:loginUser.managedObjectContext];
-        myFriend.uid = fromuser[@"uid"];
-        myFriend.avatar = fromuser[@"avatar"];
-        myFriend.name = fromuser[@"name"];
-        myFriend.isMyFriend = @(YES);
-        
-        [loginUser addRsMyFriendsObject:myFriend];
     }
+    myFriend.uid = fromuser[@"uid"];
+    myFriend.avatar = fromuser[@"avatar"];
+    myFriend.name = fromuser[@"name"];
+    
+    if (fromUid.integerValue <= 100) {
+        //系统定义的好友，推来消息，自动设置好友关系
+         myFriend.isMyFriend = @(YES);
+    }else{
+        //其他的不设置聊天信息
+         myFriend.isMyFriend = @(NO);
+    }
+    
     myFriend.isChatNow = @(YES);
+    
+    [loginUser addRsMyFriendsObject:myFriend];
     
     [loginUser.managedObjectContext MR_saveToPersistentStoreAndWait];
     

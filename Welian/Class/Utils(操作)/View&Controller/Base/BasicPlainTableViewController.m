@@ -51,7 +51,8 @@
     DLog(@"%@ ------  dealloc",[self class]);
     if (!self.needlessCancel) {
         [WLHUDView hiddenHud];
-        [WLHttpTool cancelAllRequestHttpTool];
+//        [WLHttpTool cancelAllRequestHttpTool];
+        [WeLianClient cancelAllRequestHttpTool];
         DLog(@"--------------------------------------取消请求-------取消请求");
     }
 }
