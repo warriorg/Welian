@@ -569,6 +569,7 @@
     
     if (type == FriendOperateTypeAccept) {
         //接受好友请求
+        [WLHUDView showHUDWithStr:@"添加中..." dim:NO];
         [WeLianClient confirmAddFriendWithID:newFriendUser.uid
                                      Success:^(id resultInfo) {
                                          [newFriendUser setIsAgree:@(1)];
@@ -597,9 +598,13 @@
                                          //本地创建好像
                                          [ChatMessage createChatMessageForAddFriend:myFriendUser];
                                          
-                                         [WLHUDView showSuccessHUD:@"添加成功！"];
+                                         [WLHUDView showSuccessHUD:[NSString stringWithFormat:@"你已添加%@为好友",newFriendUser.name]];
                                      } Failed:^(NSError *error) {
-                                         
+                                         if (error) {
+                                             [WLHUDView showErrorHUD:error.description];
+                                         }else{
+                                             [WLHUDView showErrorHUD:@"添加失败，请重试"];
+                                         }
                                      }];
         
 //        [WLHttpTool addFriendParameterDic:@{@"fid":newFriendUser.uid} success:^(id JSON) {

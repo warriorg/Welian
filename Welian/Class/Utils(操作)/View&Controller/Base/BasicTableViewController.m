@@ -130,7 +130,8 @@
 {
     if (!self.needlessCancel) {
         [WLHUDView hiddenHud];
-        [WLHttpTool cancelAllRequestHttpTool];
+//        [WLHttpTool cancelAllRequestHttpTool];
+        [WeLianClient cancelAllRequestHttpTool];
     }
 }
 

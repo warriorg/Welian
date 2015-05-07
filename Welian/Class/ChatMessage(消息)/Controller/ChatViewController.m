@@ -153,8 +153,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //取消接口调用
-//    [WLHttpTool cancelAllRequestHttpTool];
     
     //设置上次输入的为发送的文本内容
     NSString *unSendText = [UserDefaults objectForKey:[NSString stringWithFormat:kChatNowKey,self.friendUser.uid.stringValue]];
@@ -171,6 +169,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //取消接口调用
+    [WeLianClient cancelAllRequestHttpTool];
     
     self.title = self.friendUser.name;
     

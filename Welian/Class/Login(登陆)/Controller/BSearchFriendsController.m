@@ -46,7 +46,8 @@ static NSString *fridcellid = @"fridcellid";
     _notFriendsView = nil;
     DLog(@"%@ ------  dealloc",[self class]);
     [WLHUDView hiddenHud];
-    [WLHttpTool cancelAllRequestHttpTool];
+//    [WLHttpTool cancelAllRequestHttpTool];
+    [WeLianClient cancelAllRequestHttpTool];
     DLog(@"--------------------------------------取消请求-------取消请求");
 }
 

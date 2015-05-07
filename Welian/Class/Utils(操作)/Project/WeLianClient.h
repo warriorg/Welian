@@ -12,6 +12,8 @@
 
 + (instancetype)sharedClient;
 
+#pragma mark - 取消所有请求
++ (void)cancelAllRequestHttpTool;
 
 #pragma mark - 注册，登录
 //微信注册

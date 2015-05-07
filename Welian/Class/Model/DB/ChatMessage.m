@@ -233,18 +233,11 @@
     
     NSNumber *fromUid = [[dict objectForKey:@"fromuser"] objectForKey:@"uid"];
     MyFriendUser *friendUser = [loginUser getMyfriendUserWithUid:fromUid];
-    if(friendUser){
-    }else{
-        if (fromUid.integerValue <= 100) {
-            //系统定义的好友，推来消息，自动设置好友关系
-            friendUser = [MyFriendUser createMyFriendFromReceive:dict];
-        }else{
-            //其他的不设置聊天信息
-            return;
-        }
+    if(!friendUser){
+        //如果不存在，创建好友关系
+        friendUser = [MyFriendUser createMyFriendFromReceive:dict];
     }
     
-//    MyFriendUser *friendUser = [MyFriendUser createMyFriendFromReceive:dict];
     NSInteger type = [dict[@"type"] integerValue];
     NSString *msg = dict[@"msg"];
     
@@ -407,7 +400,8 @@
     //    chatMsg.rsMyFriendUser = friendUser;
     [friendUser addRsChatMessagesObject:chatMsg];
     //更新未读消息数量
-    friendUser.unReadChatMsg = friendUser.isMyFriend.boolValue ? @(friendUser.unReadChatMsg.integerValue + 1) : @(0);
+//    friendUser.unReadChatMsg = friendUser.isMyFriend.boolValue ? @(friendUser.unReadChatMsg.integerValue + 1) : @(0);
+    friendUser.unReadChatMsg = @(friendUser.unReadChatMsg.integerValue + 1);
     friendUser.lastChatTime = chatMsg.timestamp;//更新好友的聊天时间
     friendUser.isChatNow = @(YES);
     
