@@ -18,6 +18,7 @@
 #import "NSString+val.h"
 #import "NavViewController.h"
 #import "UITextField+LeftRightView.h"
+#import "IPhotoUp.h"
 
 @interface PerfectInfoController () <UITextFieldDelegate>
 {
@@ -28,7 +29,8 @@
     UITextField *_phoneTF;
     UIButton *_loginBut;
     UIButton *_bindingBut;
-    NSString *_imagebase64Str;
+//    NSString *_imagebase64Str;
+    NSString *_imageURL;
     UIScrollView *_scrollView;
 }
 
@@ -138,7 +140,14 @@
         [_iconBut.layer setCornerRadius:iconimage.size.width*0.5];
         [_iconBut.layer setMasksToBounds:YES];
         [_iconBut.imageView sd_setImageWithURL:[NSURL URLWithString:[userInfoDic objectForKey:@"headimgurl"]] placeholderImage:iconimage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            
+            NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+            [[WeLianClient sharedClient] uploadImageWithImageData:@[imagedata] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
+                IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+                _imageURL = photoUp.photo;
+            } Failed:^(NSError *error) {
+            }];
+//            _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             [_iconBut setImage:image forState:UIControlStateNormal];
         }];
     }
@@ -193,27 +202,20 @@
         return;
     }
     
-    if (!_imagebase64Str.length) {
-        [WLHUDView showErrorHUD:@"请选择头像"];
+    if (!_imageURL.length) {
+        [WLHUDView showErrorHUD:@"头像上传失败，请重新上传"];
         return;
     }
     
     NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
-//    [requstDic setObject:KPlatformType forKey:@"platform"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
     [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
     [requstDic setObject:_nameTF.text  forKey:@"name"];
     [requstDic setObject:_phoneTF.text forKey:@"mobile"];
     [requstDic setObject:_companyTF.text forKey:@"company"];
     [requstDic setObject:_postTF.text forKey:@"position"];
-    [requstDic setObject:@"1417496795301_x.png" forKey:@"avatar"];
+    [requstDic setObject:_imageURL forKey:@"avatar"];
 
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
-//    if ([self.userInfoDic objectForKey:@"nickname"]) {
-//        [requstDic setObject:[self.userInfoDic objectForKey:@"nickname"]forKey:@"nickname"];
-//    }
     [WLHUDView showHUDWithStr:@"正在加载..." dim:YES];
     [WeLianClient wxRegisterWithParameterDic:requstDic Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);
@@ -275,7 +277,13 @@
     [_iconBut setImage:image forState:UIControlStateNormal];
     [_iconBut.layer setCornerRadius:_iconBut.bounds.size.width*0.5];
     [_iconBut.layer setMasksToBounds:YES];
-    _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+    [[WeLianClient sharedClient] uploadImageWithImageData:@[imagedata] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
+        IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+        _imageURL = photoUp.photo;
+    } Failed:^(NSError *error) {
+    }];
+//    _imagebase64Str = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];

@@ -521,7 +521,7 @@ BMKMapManager* _mapManager;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
     [UserDefaults removeObjectForKey:kSessionId];
     [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
-    
+    [UserDefaults synchronize];
     [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
         [WeLianClient logoutWithSuccess:^(id resultInfo) {
@@ -652,6 +652,7 @@ BMKMapManager* _mapManager;
     _sdkStatus = SdkStatusStarted;
     _clientId = clientId;
     [UserDefaults setObject:clientId forKey:kBPushRequestChannelIdKey];
+    [UserDefaults synchronize];
     [WeLianClient updateclientID];
 //    [WLHttpTool updateClientSuccess:^(id JSON) {
 //        

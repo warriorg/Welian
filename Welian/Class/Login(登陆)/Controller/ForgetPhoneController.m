@@ -81,14 +81,6 @@
         return;
     }
     
-//    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-//    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
-//    [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
-//    [reqstDic setObject:KPlatformType forKey:@"platform"];
-//    
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
     [WLHUDView showHUDWithStr:@"加载中..." dim:YES];
     [WeLianClient getCodeWithMobile:self.phoneTextField.text Type:@"forgetpassword" Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);

@@ -124,7 +124,7 @@
 //    loginuser.checkcode = userInfoM.checkcode;
 //    loginuser.sessionid = userInfoM.sessionid;
     loginuser.inviteurl = userInfoM.inviteurl;
-    loginuser.isNow = @(1);
+//    loginuser.isNow = @(1);
     loginuser.friendcount = userInfoM.friendcount;
     loginuser.feedcount = userInfoM.feedcount;
     loginuser.friend2count = userInfoM.friend2count;

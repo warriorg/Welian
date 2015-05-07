@@ -488,7 +488,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     ILoginUserModel *profileM = [ILoginUserModel objectWithKeyValues:profile];
     
     //保存到数据库
-    LogInUser *loginUser = [LogInUser updateLoginUserWithModel:profileM];
+    LogInUser *loginUser = [LogInUser createLogInUserModel:profileM];
     //设置用户信息
     _userInfoView.loginUser = loginUser;
     //设置好友数量
@@ -540,12 +540,15 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     [WeLianClient getUserDetailInfoWithUid:@(0) Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);
         WEAKSELF
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            weakSelf.infoDict = [self getUserInfoWith:resultInfo];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView reloadData];
-            });
-        });
+        weakSelf.infoDict = [weakSelf getUserInfoWith:resultInfo];
+        [weakSelf.tableView reloadData];
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+////            weakSelf.infoDict = [self getUserInfoWith:resultInfo];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                weakSelf.infoDict = [self getUserInfoWith:resultInfo];
+//                [weakSelf.tableView reloadData];
+//            });
+//        });
 
     } Failed:^(NSError *error) {
         

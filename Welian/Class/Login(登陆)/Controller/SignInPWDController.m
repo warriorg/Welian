@@ -149,14 +149,7 @@
 // 注册重新发送验证码
 - (void)chongxingfasong
 {
-//    NSMutableDictionary *reqstDicM = [NSMutableDictionary dictionary];
-//    [reqstDicM setObject:@"register" forKey:@"type"];
-//    [reqstDicM setObject:self.phoneString forKey:@"mobile"];
-//    [reqstDicM setObject:KPlatformType forKey:@"platform"];
-//    
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        [reqstDicM setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
+
     [WLHUDView showHUDWithStr:@"加载中..." dim:YES];
     [WeLianClient getCodeWithMobile:self.phoneString Type:@"register" Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);

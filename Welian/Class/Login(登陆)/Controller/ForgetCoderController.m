@@ -104,14 +104,7 @@
 // 注册重新发送验证码
 - (void)chongxingfasongforgetcode
 {
-//    NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
-//    [reqstDic setObject:@"forgetPassword" forKey:@"type"];
-//    [reqstDic setObject:self.phoneString forKey:@"mobile"];
-//    [reqstDic setObject:KPlatformType forKey:@"platform"];
-//    
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
+
     [WLHUDView showHUDWithStr:@"加载中..." dim:NO];
     [WeLianClient getCodeWithMobile:self.phoneString Type:@"forgetpassword" Success:^(id resultInfo) {
         DLog(@"%@",resultInfo);

@@ -74,13 +74,10 @@
     }
     NSMutableDictionary *requstDic = [NSMutableDictionary dictionary];
     [requstDic setObject:[self.userInfoDic objectForKey:@"unionid"] forKey:@"unionid"];
-//    [requstDic setObject:[self.userInfoDic objectForKey:@"openid"] forKey:@"openid"];
+
     [requstDic setObject:_phoneTF.text forKey:@"mobile"];
     [requstDic setObject:_pwdTF.text forKey:@"password"];
-//    [requstDic setObject:KPlatformType forKey:@"platform"];
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        [requstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
+
     [WLHUDView showHUDWithStr:@"绑定中..." dim:YES];
     [WeLianClient loginWithParameterDic:requstDic Success:^(id resultInfo) {
         [WLHUDView hiddenHud];

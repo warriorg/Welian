@@ -124,7 +124,7 @@
                            DLog(@"wxRegister ---- %@",resultInfo);
                            if ([resultInfo objectForKey:@"flag"]) {
                                SAFE_BLOCK_CALL(success, resultInfo);
-                           }else{
+                           }else if(resultInfo){
                                ILoginUserModel *result = [ILoginUserModel objectWithDict:resultInfo];
                                //记录最后一次登陆的手机号
                                SaveLoginMobile(result.mobile);
@@ -247,7 +247,7 @@
 + (void)updateclientID
 {
     if ([[UserDefaults objectForKey:kBPushRequestChannelIdKey] length]&& ![UserDefaults boolForKey:kneedChannelId]) {
-        [self reqestPostWithParams:@{@"platform":KPlatformType,@"clientid":kBPushRequestChannelIdKey,@"version":XcodeAppVersion} Path:kUpdateclient Success:^(id resultInfo) {
+        [self reqestPostWithParams:@{@"platform":KPlatformType,@"clientid":[UserDefaults objectForKey:kBPushRequestChannelIdKey],@"version":XcodeAppVersion} Path:kUpdateclient Success:^(id resultInfo) {
             DLog(@"%@",resultInfo);
             [UserDefaults setBool:YES forKey:kneedChannelId];
         } Failed:^(NSError *error) {

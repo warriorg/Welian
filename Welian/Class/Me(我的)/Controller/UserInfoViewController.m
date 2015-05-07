@@ -201,7 +201,7 @@ static NSString *fridcellid = @"fridcellid";
 {
     CGFloat offsetY = scrollView.contentOffset.y + kHeaderBgImageHeight;
     UIColor *color = kNavBgColor;
-    DLog(@"scroll off Y---%f",offsetY);
+//    DLog(@"scroll off Y---%f",offsetY);
     if (offsetY > kHeaderBgImageHeight/2) {
         CGFloat alpha = 1 - ((kHeaderBgImageHeight/2 + 64 - offsetY) / 64);
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];

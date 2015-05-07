@@ -143,11 +143,7 @@
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionary];
     [reqstDic setObject:self.phoneTextField.text forKey:@"mobile"];
     [reqstDic setObject:[self.pwdTextField.text MD5String] forKey:@"password"];
-//    [reqstDic setObject:KPlatformType forKey:@"platform"];
-//    if ([UserDefaults objectForKey:kBPushRequestChannelIdKey]) {
-//        
-//        [reqstDic setObject:[UserDefaults objectForKey:kBPushRequestChannelIdKey] forKey:@"clientid"];
-//    }
+
     [WLHUDView showHUDWithStr:@"登录中..." dim:YES];
     [WeLianClient loginWithParameterDic:reqstDic Success:^(id resultInfo) {
         [WLHUDView hiddenHud];
