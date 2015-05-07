@@ -1629,7 +1629,6 @@
 		A49C7D851A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C779631A52F1D30098BC29 /* libBlocksKit.a */; };
 		A49C7D861A70D42700F2AEC5 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BCDEAA1A038B2000183F64 /* libbaidumapapi.a */; };
 		A49C7D871A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F6A5E71A514A47008DBC8C /* libBlocksKit.a */; };
-		A49C7D881A70D42700F2AEC5 /* libGexinSdk-1.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */; };
 		A49C7D891A70D42700F2AEC5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2D13C19FA8B94000610A1 /* libz.dylib */; };
 		A49C7D8A1A70D42700F2AEC5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70919E8FF62003773F1 /* libsqlite3.dylib */; };
 		A49C7D8B1A70D42700F2AEC5 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F520EDF419D02CCA00E753E4 /* libc++abi.dylib */; };
@@ -3071,7 +3070,6 @@
 		F53DC3B41A49192600F5F712 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F646AE1A43C287002E66FC /* AssetsLibrary.framework */; };
 		F53DC3B51A49192600F5F712 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57423C319FA92C9003D20C8 /* CoreTelephony.framework */; };
 		F53DC3B61A49192600F5F712 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BCDEAA1A038B2000183F64 /* libbaidumapapi.a */; };
-		F53DC3B71A49192600F5F712 /* libGexinSdk-1.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */; };
 		F53DC3B81A49192600F5F712 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2D13C19FA8B94000610A1 /* libz.dylib */; };
 		F53DC3B91A49192600F5F712 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70919E8FF62003773F1 /* libsqlite3.dylib */; };
 		F53DC3BA1A49192600F5F712 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F520EDF419D02CCA00E753E4 /* libc++abi.dylib */; };
@@ -3509,7 +3507,6 @@
 		F5664A6E1A2AFD56008A5830 /* UIColor+HBVHarmonies.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BCDEB41A03BF7200183F64 /* UIColor+HBVHarmonies.m */; };
 		F5664A701A2AFD56008A5830 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57423C319FA92C9003D20C8 /* CoreTelephony.framework */; };
 		F5664A711A2AFD56008A5830 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BCDEAA1A038B2000183F64 /* libbaidumapapi.a */; };
-		F5664A721A2AFD56008A5830 /* libGexinSdk-1.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */; };
 		F5664A731A2AFD56008A5830 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2D13C19FA8B94000610A1 /* libz.dylib */; };
 		F5664A741A2AFD56008A5830 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70919E8FF62003773F1 /* libsqlite3.dylib */; };
 		F5664A751A2AFD56008A5830 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F520EDF419D02CCA00E753E4 /* libc++abi.dylib */; };
@@ -3783,7 +3780,6 @@
 		F5664D281A2AFDD5008A5830 /* UIColor+HBVHarmonies.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BCDEB41A03BF7200183F64 /* UIColor+HBVHarmonies.m */; };
 		F5664D2A1A2AFDD5008A5830 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57423C319FA92C9003D20C8 /* CoreTelephony.framework */; };
 		F5664D2B1A2AFDD5008A5830 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BCDEAA1A038B2000183F64 /* libbaidumapapi.a */; };
-		F5664D2C1A2AFDD5008A5830 /* libGexinSdk-1.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */; };
 		F5664D2D1A2AFDD5008A5830 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2D13C19FA8B94000610A1 /* libz.dylib */; };
 		F5664D2E1A2AFDD5008A5830 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5A1A70919E8FF62003773F1 /* libsqlite3.dylib */; };
 		F5664D2F1A2AFDD5008A5830 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F520EDF419D02CCA00E753E4 /* libc++abi.dylib */; };
@@ -4097,6 +4093,11 @@
 		F5933FB51AD4F4030088C70D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5933F851AD4F4030088C70D /* UIView+MJExtension.m */; };
 		F5933FB61AD65D6D0088C70D /* me_lvli_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A14F1AC2E1AE0033A31D /* me_lvli_add@2x.png */; };
 		F5933FB71AD65DC90088C70D /* me_lvli_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A409A14F1AC2E1AE0033A31D /* me_lvli_add@2x.png */; };
+		F596A56D1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */; };
+		F596A56E1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */; };
+		F596A56F1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */; };
+		F596A5701AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */; };
+		F596A5711AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */; };
 		F59D20081AE4AC31008F3943 /* Shape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59D20071AE4AC31008F3943 /* Shape@2x.png */; };
 		F59D20091AE4AC31008F3943 /* Shape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59D20071AE4AC31008F3943 /* Shape@2x.png */; };
 		F59D200A1AE4AC31008F3943 /* Shape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59D20071AE4AC31008F3943 /* Shape@2x.png */; };
@@ -6045,9 +6046,6 @@
 		F5874C161A1C842E009F7D83 /* WLCellHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCellHead.m; sourceTree = "<group>"; };
 		F5874C181A1C8DA9009F7D83 /* me_mycard_chuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_mycard_chuang@2x.png"; sourceTree = "<group>"; };
 		F5874C1F1A1D901F009F7D83 /* WLStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLStatusCell.m; sourceTree = "<group>"; };
-		F5874C231A1DA5F7009F7D83 /* GexinSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GexinSdk.h; sourceTree = "<group>"; };
-		F5874C241A1DA5F7009F7D83 /* GXSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXSdkError.h; sourceTree = "<group>"; };
-		F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGexinSdk-1.0.7.a"; sourceTree = "<group>"; };
 		F58796461AE889EE002C414F /* UITextField+LeftRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+LeftRightView.h"; sourceTree = "<group>"; };
 		F58796471AE889EE002C414F /* UITextField+LeftRightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+LeftRightView.m"; sourceTree = "<group>"; };
 		F58796591AE8C008002C414F /* button_blue_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_blue_pre@2x.png"; sourceTree = "<group>"; };
@@ -6104,6 +6102,9 @@
 		F5933F831AD4F4030088C70D /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		F5933F841AD4F4030088C70D /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		F5933F851AD4F4030088C70D /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		F596A56A1AFB337A000C03C6 /* GexinSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GexinSdk.h; sourceTree = "<group>"; };
+		F596A56B1AFB337A000C03C6 /* GXSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXSdkError.h; sourceTree = "<group>"; };
+		F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGexinSdk-1.1.1.a"; sourceTree = "<group>"; };
 		F59D20071AE4AC31008F3943 /* Shape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shape@2x.png"; sourceTree = "<group>"; };
 		F59E760A1A405D170028FBAF /* weLian.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = weLian.xcdatamodel; sourceTree = "<group>"; };
 		F59E760D1A4071320028FBAF /* SchoolCompanyDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolCompanyDate.h; sourceTree = "<group>"; };
@@ -6577,9 +6578,9 @@
 				A49C7D831A70D42700F2AEC5 /* CoreMedia.framework in Frameworks */,
 				A49C7D841A70D42700F2AEC5 /* AssetsLibrary.framework in Frameworks */,
 				A49C7D851A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */,
+				F596A5711AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */,
 				A49C7D861A70D42700F2AEC5 /* libbaidumapapi.a in Frameworks */,
 				A49C7D871A70D42700F2AEC5 /* libBlocksKit.a in Frameworks */,
-				A49C7D881A70D42700F2AEC5 /* libGexinSdk-1.0.7.a in Frameworks */,
 				A49C7D891A70D42700F2AEC5 /* libz.dylib in Frameworks */,
 				A49C7D8A1A70D42700F2AEC5 /* libsqlite3.dylib in Frameworks */,
 				A49C7D8B1A70D42700F2AEC5 /* libc++abi.dylib in Frameworks */,
@@ -6625,9 +6626,9 @@
 				F53DC3B31A49192600F5F712 /* CoreMedia.framework in Frameworks */,
 				F53DC3B41A49192600F5F712 /* AssetsLibrary.framework in Frameworks */,
 				F5C779661A52F1D30098BC29 /* libBlocksKit.a in Frameworks */,
+				F596A56F1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */,
 				F53DC3B61A49192600F5F712 /* libbaidumapapi.a in Frameworks */,
 				A4F6A5EA1A514A47008DBC8C /* libBlocksKit.a in Frameworks */,
-				F53DC3B71A49192600F5F712 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F53DC3B81A49192600F5F712 /* libz.dylib in Frameworks */,
 				F53DC3B91A49192600F5F712 /* libsqlite3.dylib in Frameworks */,
 				F53DC3BA1A49192600F5F712 /* libc++abi.dylib in Frameworks */,
@@ -6669,12 +6670,12 @@
 				A49C80381A71040F00F2AEC5 /* AlipaySDK.framework in Frameworks */,
 				F5664A711A2AFD56008A5830 /* libbaidumapapi.a in Frameworks */,
 				A49C803C1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
-				F5664A721A2AFD56008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F5664A731A2AFD56008A5830 /* libz.dylib in Frameworks */,
 				F5664A741A2AFD56008A5830 /* libsqlite3.dylib in Frameworks */,
 				F5664A751A2AFD56008A5830 /* libc++abi.dylib in Frameworks */,
 				F5664A761A2AFD56008A5830 /* Foundation.framework in Frameworks */,
 				F5664A771A2AFD56008A5830 /* CoreGraphics.framework in Frameworks */,
+				F596A56D1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */,
 				F5664A781A2AFD56008A5830 /* AddressBookUI.framework in Frameworks */,
 				F5664A791A2AFD56008A5830 /* libMobClickLibrary.a in Frameworks */,
 				F5664A7A1A2AFD56008A5830 /* libWeChatSDK.a in Frameworks */,
@@ -6717,10 +6718,10 @@
 				A49C803D1A71041000F2AEC5 /* libcrypto.a in Frameworks */,
 				A4776AC61A4428300022E211 /* AssetsLibrary.framework in Frameworks */,
 				F5664D2B1A2AFDD5008A5830 /* libbaidumapapi.a in Frameworks */,
-				F5664D2C1A2AFDD5008A5830 /* libGexinSdk-1.0.7.a in Frameworks */,
 				F5664D2D1A2AFDD5008A5830 /* libz.dylib in Frameworks */,
 				F5664D2E1A2AFDD5008A5830 /* libsqlite3.dylib in Frameworks */,
 				F5664D2F1A2AFDD5008A5830 /* libc++abi.dylib in Frameworks */,
+				F596A56E1AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */,
 				F5664D301A2AFDD5008A5830 /* Foundation.framework in Frameworks */,
 				F5664D311A2AFDD5008A5830 /* CoreGraphics.framework in Frameworks */,
 				F5664D331A2AFDD5008A5830 /* libMobClickLibrary.a in Frameworks */,
@@ -6739,6 +6740,7 @@
 			files = (
 				F5CE861719BFF2AB00A9D14C /* XCTest.framework in Frameworks */,
 				F5CE861919BFF2AB00A9D14C /* UIKit.framework in Frameworks */,
+				F596A5701AFB337A000C03C6 /* libGexinSdk-1.1.1.a in Frameworks */,
 				F5CE861819BFF2AB00A9D14C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9023,19 +9025,10 @@
 		F5874C211A1DA5F7009F7D83 /* GETUI_IOS_SDK */ = {
 			isa = PBXGroup;
 			children = (
-				F5874C221A1DA5F7009F7D83 /* include */,
-				F5874C251A1DA5F7009F7D83 /* libGexinSdk-1.0.7.a */,
+				F596A5691AFB337A000C03C6 /* include */,
+				F596A56C1AFB337A000C03C6 /* libGexinSdk-1.1.1.a */,
 			);
 			path = GETUI_IOS_SDK;
-			sourceTree = "<group>";
-		};
-		F5874C221A1DA5F7009F7D83 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F5874C231A1DA5F7009F7D83 /* GexinSdk.h */,
-				F5874C241A1DA5F7009F7D83 /* GXSdkError.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 		F58CA98C1A5D4F9100988A61 /* DaiDodgeKeyboard */ = {
@@ -9084,6 +9077,15 @@
 				F5933F851AD4F4030088C70D /* UIView+MJExtension.m */,
 			);
 			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		F596A5691AFB337A000C03C6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F596A56A1AFB337A000C03C6 /* GexinSdk.h */,
+				F596A56B1AFB337A000C03C6 /* GXSdkError.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		F59E76061A405CE70028FBAF /* Model */ = {
@@ -10281,6 +10283,11 @@
 				TargetAttributes = {
 					A49C7BBE1A70D42700F2AEC5 = {
 						DevelopmentTeam = V6JKEEZATW;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					F53DC2991A49192600F5F712 = {
 						DevelopmentTeam = V6JKEEZATW;
@@ -15438,6 +15445,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "WelianTests/weLian.temp_caseinsensitive_renameTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+				);
 				PRODUCT_NAME = weLian.temp_caseinsensitive_renameTests;
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -15458,6 +15469,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Welian/Welian-Prefix.pch";
 				INFOPLIST_FILE = "WelianTests/weLian.temp_caseinsensitive_renameTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Welian/Class/Other(其他)/GETUI_IOS_SDK",
+				);
 				PRODUCT_NAME = weLian.temp_caseinsensitive_renameTests;
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";

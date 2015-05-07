@@ -368,6 +368,19 @@
                        }];
 }
 
+// 取消投资人认证
++ (void)deleteinvestorWithSuccess:(SuccessBlock)success Failed:(FailedBlock)failed
+{
+    [self reqestPostWithParams:nil
+                          Path:kUserUrl(@"deleteinvestor")
+                       Success:^(id resultInfo) {
+                           DLog(@"invest ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 //取用户认证信息
 + (void)loadInvestorWithID:(NSNumber *)uid
                    Success:(SuccessBlock)success
@@ -1039,7 +1052,7 @@
                           Path:kSaveProjectPath
                        Success:^(id resultInfo) {
                            DLog(@"saveProject ---- %@",resultInfo);
-                           IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
+//                           IProjectDetailInfo *result = [IProjectDetailInfo objectWithDict:resultInfo];
                            SAFE_BLOCK_CALL(success,resultInfo);
                        } Failed:^(NSError *error) {
                            SAFE_BLOCK_CALL(failed, error);
@@ -1685,12 +1698,12 @@
     //设置sessionid
     NSString *sessid = [UserDefaults objectForKey:kSessionId];
     
-    NSString *pathInfo = @"upload/index";
-    NSString *name = @"file";
-    if (imageDataArray.count > 1) {
-        pathInfo = @"upload/indexs";
-        name = @"files";
-    }
+    NSString *pathInfo = @"upload/indexs";
+    NSString *name = @"files";
+//    if (imageDataArray.count > 1) {
+//        pathInfo = @"upload/indexs";
+//        name = @"files";
+//    }
     if (sessid.length) {
         pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",pathInfo,sessid];
     }

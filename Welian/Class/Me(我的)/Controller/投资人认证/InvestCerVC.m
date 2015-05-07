@@ -20,10 +20,12 @@
 #import "IInvestStageModel.h"
 #import "UIImageView+WebCache.h"
 #import "MJExtension.h"
+#import "IPhotoUp.h"
 
 @interface InvestCerVC ()<UIActionSheetDelegate, UIAlertViewDelegate>
 {
     LogInUser *_loginuser;
+    UIImage *_image;
 }
 @property (nonatomic, strong) UILabel *headLabel;
 @end
@@ -186,14 +188,18 @@ static NSString *itemscellid = @"itemscellid";
     if (indexPath.section==0) {
 
         InvestCardCell *cell = [tableView dequeueReusableCellWithIdentifier:invcellid];
-        
-        NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
-        NSString *urlStr = [LogInUser getCurrentLoginUser].url;
-        if (auth == 0) {  // 默认状态
-            urlStr = nil;
-
+    
+        if (_image) {
+            [cell.investCardBut setImage:_image];
+        }else{
+            NSString *urlStr = [LogInUser getCurrentLoginUser].url;
+            NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+            if (auth == 0) {  // 默认状态
+                urlStr = nil;
+                
+            }
+            [cell.investCardBut sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"investor_attestation_add"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         }
-        [cell.investCardBut sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"investor_attestation_add"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
         
         return cell;
     }else if(indexPath.section==1){
@@ -231,7 +237,6 @@ static NSString *itemscellid = @"itemscellid";
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:itemscellid];
             }
             NSArray *itemS = [[LogInUser getCurrentLoginUser] getAllInvestItems];
-            
             InvestItems *item = itemS[indexPath.row];
             [cell.textLabel setText:item.item];
             return cell;
@@ -270,14 +275,21 @@ static NSString *itemscellid = @"itemscellid";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-        
-        [WLHttpTool deleteInvestorParameterDic:@{} success:^(id JSON) {
+        [WeLianClient deleteinvestorWithSuccess:^(id resultInfo) {
             [LogInUser setUserinvestorauth:@(0)];
             [LogInUser setUserUrl:nil];
+            _image = nil;
             [self refreshTabelViewHead];
-        } fail:^(NSError *error) {
+        } Failed:^(NSError *error) {
             
         }];
+//        [WLHttpTool deleteInvestorParameterDic:@{} success:^(id JSON) {
+//            [LogInUser setUserinvestorauth:@(0)];
+//            [LogInUser setUserUrl:nil];
+//            [self refreshTabelViewHead];
+//        } fail:^(NSError *error) {
+//            
+//        }];
     }
 }
 
@@ -287,15 +299,24 @@ static NSString *itemscellid = @"itemscellid";
     //image就是你选取的照片
     UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     
-    NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    [WeLianClient investWithParameterDic:@{@"photo":@"1417496795301_x.png"} Success:^(id resultInfo) {
-        NSString *url = @"1417496795301_x.png";
-        [LogInUser setUserinvestorauth:@(-2)];
-        [LogInUser setUserUrl:url];
-        [self refreshTabelViewHead];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    [[WeLianClient sharedClient] uploadImageWithImageData:@[imageData] Type:@"investor" FeedID:nil Success:^(id resultInfo) {
+        IPhotoUp *photoUp = [[IPhotoUp objectsWithInfo:resultInfo] firstObject];
+        if (photoUp.photo&&[photoUp.type isEqualToString:@"investor"]) {
+            [WeLianClient investWithParameterDic:@{@"photo":photoUp.photo} Success:^(id resultInfo) {
+                [LogInUser setUserinvestorauth:@(-2)];
+                _image = image;
+//                [LogInUser setUserUrl:photoUp.photo];
+                [self refreshTabelViewHead];
+            } Failed:^(NSError *error) {
+                
+            }];
+        }
     } Failed:^(NSError *error) {
         
     }];
+    
+    
 //    [WLHttpTool investAuthParameterDic:@{@"photo":avatarStr} success:^(id JSON) {
 //        NSString *url = [JSON objectForKey:@"url"];
 //        [LogInUser setUserinvestorauth:@(-2)];

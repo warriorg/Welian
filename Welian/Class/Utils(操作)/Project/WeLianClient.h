@@ -82,6 +82,9 @@
 //认证投资人
 + (void)investWithParameterDic:(NSDictionary *)params Success:(SuccessBlock)success Failed:(FailedBlock)failed;
 
+// 取消投资人认证
++ (void)deleteinvestorWithSuccess:(SuccessBlock)success Failed:(FailedBlock)failed;
+
 //取用户认证信息
 + (void)loadInvestorWithID:(NSNumber *)uid
                    Success:(SuccessBlock)success
