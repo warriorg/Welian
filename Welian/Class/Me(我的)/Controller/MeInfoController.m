@@ -330,7 +330,7 @@ static NSString *mobileCellid = @"MobileInfoCellid";
     NSString *avatarStr = [UIImageJPEGRepresentation(image, 0.5) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     
     [[WeLianClient sharedClient] uploadImageWithImageData:@[imageData] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
-        IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+        IPhotoUp *photoUp = [[IPhotoUp objectsWithInfo:resultInfo] firstObject];
         if (photoUp.photo.length&&[photoUp.type isEqualToString:@"avatar"]) {
             //修改头像
             [WeLianClient changeUserAvatarWithAvatar:photoUp.photo

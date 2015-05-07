@@ -680,19 +680,6 @@
     } Failed:^(NSError *error) {
         DLog(@"getActiveCities error:%@",error.description);
     }];
-//    [WLHttpTool getActiveCitiesParameterDic:[NSDictionary dictionary]
-//                                    success:^(id JSON) {
-//                                        NSArray *citys = [NSArray arrayWithArray:JSON];
-//                                        //写入到本地
-//                                        BOOL state = [citys writeToFile:[[ResManager documentPath] stringByAppendingString:@"/ActivityCitys.plist"] atomically:YES];
-//                                        if (state == YES) {
-//                                            DLog(@"write successfully");
-//                                        }else{
-//                                            DLog(@"fail to write");
-//                                        }
-//                                    } fail:^(NSError *error) {
-//                                        DLog(@"getActiveCitiesParameterDic error:%@",error.description);
-//                                    }];
 }
 
 #pragma mark - 加载缓存重新发送的动态
@@ -751,7 +738,7 @@
     NSArray *photosArray = statusM.photos;
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
     WEAKSELF
-    if (photosArray&&photosArray.count) {
+    if (photosArray.count) {
         NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
         NSMutableArray *imageDataArray = [NSMutableArray arrayWithCapacity:photosArray.count];
         for (WLPhoto *photo in photosArray) {
@@ -760,22 +747,13 @@
         }
         [[WeLianClient sharedClient] uploadImageWithImageData:imageDataArray Type:@"feed" FeedID:statusM.sendId  Success:^(id resultInfo) {
             DLog(@"%@",resultInfo);
-            IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
             
-            if (photoUp.photo && photoUp.photo.length&&[photoUp.type isEqualToString:@"feed"]) {
-                [photoReqst addObject:photoUp];
-                
-                if (photoReqst.count==photosArray.count) {
-                    NSSortDescriptor *bookNameDesc = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-                    NSArray *photoUpArray = [photoReqst sortedArrayUsingDescriptors:@[bookNameDesc]];
-                    NSMutableArray *photoUrl = [NSMutableArray array];
-                    for (IPhotoUp *iphotoUp in photoUpArray) {
-                        [photoUrl addObject:@{@"photo":iphotoUp.photo}];
-                    }
-                    [reqstDic setObject:photoUrl forKey:@"photos"];
-                }
-                
+            NSArray *photoUrlArray = [IPhotoUp objectsWithInfo:resultInfo];
+            for (IPhotoUp *photoUp in photoUrlArray) {
+                [photoReqst addObject:@{@"photo":photoUp.photo}];
             }
+            [reqstDic setObject:photoReqst forKey:@"photos"];
+
             [WeLianClient saveFeedWithParameterDic:reqstDic Success:^(id resultInfo) {
                 [[WLDataDBTool sharedService] deleteObjectById:statusFrame.status.sendId fromTable:KSendAgainDataTableName];
                 [weakSelf beginPullDownRefreshing];

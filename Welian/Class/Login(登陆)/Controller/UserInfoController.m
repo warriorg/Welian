@@ -202,7 +202,7 @@
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
     
     [[WeLianClient sharedClient] uploadImageWithImageData:@[imagedata] Type:@"avatar" FeedID:nil Success:^(id resultInfo) {
-        IPhotoUp *photoUp = [IPhotoUp objectWithDict:resultInfo];
+        IPhotoUp *photoUp = [[IPhotoUp objectsWithInfo:resultInfo] firstObject];
         _imageURL = photoUp.photo;
     } Failed:^(NSError *error) {
         
