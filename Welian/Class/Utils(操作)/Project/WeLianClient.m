@@ -1686,8 +1686,10 @@
     NSString *sessid = [UserDefaults objectForKey:kSessionId];
     
     NSString *pathInfo = @"upload/index";
+    NSString *name = @"file";
     if (imageDataArray.count > 1) {
         pathInfo = @"upload/indexs";
+        name = @"files";
     }
     if (sessid.length) {
         pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",pathInfo,sessid];
@@ -1703,7 +1705,7 @@
             [formData appendPartWithFormData:[type dataUsingEncoding:NSUTF8StringEncoding] name:@"type"];
             for (NSData *imageData in imageDataArray) {
                 //参数
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpg"];
+                [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:@"image/jpg"];
             }
             
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {

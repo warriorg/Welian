@@ -751,7 +751,7 @@
     NSArray *photosArray = statusM.photos;
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
     WEAKSELF
-    if (photosArray&&photosArray.count) {
+    if (photosArray.count) {
         NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
         NSMutableArray *imageDataArray = [NSMutableArray arrayWithCapacity:photosArray.count];
         for (WLPhoto *photo in photosArray) {
