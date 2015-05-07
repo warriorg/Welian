@@ -699,6 +699,9 @@ static NSString *fridcellid = @"fridcellid";
     switch (_selectType) {
         case 0:
         {
+            //设置用户信息
+            _userInfoView.baseUserModel = _baseUserModel;
+            
             //加载完成，但数据为空
             if (isLoad && _datasource1.count <= 0) {
                 noteInfo = @"这家伙还没设置过自己的资料";
@@ -1294,7 +1297,7 @@ static NSString *fridcellid = @"fridcellid";
             DLog(@"userDetailInfo----%@",resultInfo);
             WEAKSELF
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [weakSelf getUserInfoWith:resultInfo];
+                weakSelf.datasource1 = [weakSelf getUserInfoWith:resultInfo];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //检查
                     [weakSelf checkNoteInfoLoad:YES];
@@ -1325,7 +1328,7 @@ static NSString *fridcellid = @"fridcellid";
     [self checkNoteInfoLoad:YES];
 }
 
-- (void)getUserInfoWith:(NSDictionary *)dataDic
+- (NSMutableArray *)getUserInfoWith:(NSDictionary *)dataDic
 {
     //保存到sqlite数据库
     [[WLDataDBTool sharedService] putObject:dataDic withId:_baseUserModel.uid.stringValue intoTable:KWLUserInfoTableName];
@@ -1336,7 +1339,6 @@ static NSString *fridcellid = @"fridcellid";
     
     //设置用户信息
     self.baseUserModel = profileM;
-    _userInfoView.baseUserModel = _baseUserModel;
     
     //设置操作按钮
     if (_operateType) {
@@ -1414,7 +1416,7 @@ static NSString *fridcellid = @"fridcellid";
     if (lvliArray.count > 0) {
         [infos addObject:@{@"icon":@"me_lvli",@"title":@"履历",@"type":@(2),@"info":lvliArray}];
     }
-    self.datasource1 = infos;
+    return infos;
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
 #import "PublishStatusController.h"
+#import "ActivitySubInfoViewController.h"
 
 #import "MessageKeyboardView.h"
 #import "ActivityCustomViewCell.h"
@@ -128,7 +129,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
 //    [super scrollViewDidScroll:scrollView];
-    [self.tableView shouldPositionParallaxHeader];
+//    [self.tableView shouldPositionParallaxHeader];
     
     CGFloat offsetY = scrollView.contentOffset.y;
     UIColor *color = kNavBgColor;
@@ -213,6 +214,19 @@
     
     //获取详情信息
     [self initData];
+    
+    
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 400)];
+//    view.backgroundColor = [UIColor blueColor];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((300-80)/2.f, (400-30)/2.f, 80, 30)];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.textColor = [UIColor whiteColor];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.text = @"第一页";
+//    
+//    [view addSubview:label];
+//    [self.scrollView addSubview:self.view];
     //下拉刷新
 //    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initData)];
 //    [self.tableView.header beginRefreshing];
@@ -355,10 +369,10 @@
             
             cell.textLabel.text = @"";
             cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
-            WEAKSELF
-            [cell setBlock:^(void){
-                [weakSelf showActivityDetailInfo];
-            }];
+//            WEAKSELF
+//            [cell setBlock:^(void){
+//                [weakSelf showActivityDetailInfo];
+//            }];
              return cell;
         }else{
             return nil;
@@ -999,11 +1013,17 @@
     titleLabel.left = 15.f;
     [headerView addSubview:titleLabel];
     
-//    [_tableView setTableHeaderView:headerView];
+    [_tableView setTableHeaderView:headerView];
+//    [self.view addSubview:tableView];
+//    [self.view sendSubviewToBack:_tableView];
     
-    [_tableView setParallaxHeaderView:headerView
-                                 mode:VGParallaxHeaderModeFill
-                               height:kHeaderImageHeight + titleSize.height + 20.f];
+    self.scrollView.contentSize = CGSizeMake(_tableView.width, _tableView.height - ViewCtrlTopBarHeight);
+    [self.scrollView addSubview:_tableView];
+    [self.scrollView addSubview:self.navHeaderView];
+    [self.scrollView bringSubviewToFront:self.navHeaderView];
+//    [_tableView setParallaxHeaderView:headerView
+//                                 mode:VGParallaxHeaderModeFill
+//                               height:kHeaderImageHeight + titleSize.height + 20.f];
 }
 
 //更新报名人数信息
@@ -1026,6 +1046,16 @@
 - (void)updatePayJoined
 {
     [self updateJoinedInfo:YES];
+}
+
+//更新详情展示页面
+- (void)updateWebDetailInfo
+{
+    if (_activityInfo.url.length > 0) {
+        ActivitySubInfoViewController *webVC = [[ActivitySubInfoViewController alloc] initWithUrl:_activityInfo.url];
+        self.subViewController = webVC;
+        self.subViewController.mainViewController = self;
+    }
 }
 
 //获取详情信息
@@ -1057,6 +1087,8 @@
                                             }
                                             self.datasource = iActivity.guests;
                                             
+                                            //更新详情展示页面
+                                            [self updateWebDetailInfo];
                                             //检测分享按钮
                                             [self checkShareBtn];
                                             //更页面

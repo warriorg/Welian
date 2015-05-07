@@ -487,13 +487,6 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     NSDictionary *profile = [dataDic objectForKey:@"profile"];
     ILoginUserModel *profileM = [ILoginUserModel objectWithKeyValues:profile];
     
-    //保存到数据库
-    LogInUser *loginUser = [LogInUser createLogInUserModel:profileM];
-    //设置用户信息
-    _userInfoView.loginUser = loginUser;
-    //设置好友数量
-    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
-    
     // 动态
     NSDictionary *feed = [dataDic objectForKey:@"feed"];
     WLStatusM *feedM = [WLStatusM objectWithKeyValues:feed];
@@ -534,36 +527,33 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     return (@{@"feed":feedM,@"investor":investorM,@"projects":projectsArrayM,@"project":projectName,@"profile":profileM,@"usercompany":companyArrayM,@"userschool":schoolArrayM,@"active":active});
 }
 
+- (void)reSetUserInfo:(ILoginUserModel *)loginUserModel
+{
+    //保存到数据库
+    LogInUser *loginUser = [LogInUser createLogInUserModel:loginUserModel];
+    //设置用户信息
+    _userInfoView.loginUser = loginUser;
+    //设置好友数量
+    _wlSegmentedControl.sectionDetailTitles = @[loginUser.friendcount ? loginUser.friendcount.stringValue : @"0",loginUser.friend2count ? loginUser.friend2count.stringValue : @"0"];
+}
+
 - (void)initUserInfo
 {
     //获取用户详细信息
     [WeLianClient getUserDetailInfoWithUid:@(0) Success:^(id resultInfo) {
-        DLog(@"%@",resultInfo);
+        DLog(@"getUserDetailInfo -- %@",resultInfo);
         WEAKSELF
-        weakSelf.infoDict = [weakSelf getUserInfoWith:resultInfo];
-        [weakSelf.tableView reloadData];
-//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-////            weakSelf.infoDict = [self getUserInfoWith:resultInfo];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                weakSelf.infoDict = [self getUserInfoWith:resultInfo];
-//                [weakSelf.tableView reloadData];
-//            });
-//        });
-
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            weakSelf.infoDict = [self getUserInfoWith:resultInfo];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //重置用户信息
+                [weakSelf reSetUserInfo:[weakSelf.infoDict objectForKey:@"profile"]];
+                [weakSelf.tableView reloadData];
+            });
+        });
     } Failed:^(NSError *error) {
         
     }];
-//    [WLHttpTool loadUserInfoParameterDic:@{@"uid":loginUser.uid} success:^(id JSON) {
-//        WEAKSELF
-//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            weakSelf.infoDict = [self getUserInfoWith:JSON];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [weakSelf.tableView reloadData];
-//            });
-//        });
-//    } fail:^(NSError *error) {
-//        
-//    }];
 }
 
 @end
