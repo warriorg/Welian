@@ -739,7 +739,6 @@
     NSMutableDictionary *reqstDic = [NSMutableDictionary dictionaryWithDictionary:reqDataDic];
     WEAKSELF
     if (photosArray.count) {
-        NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
         NSMutableArray *imageDataArray = [NSMutableArray arrayWithCapacity:photosArray.count];
         for (WLPhoto *photo in photosArray) {
             NSData *data = [[NSData data] initWithBase64EncodedString:photo.imageDataStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -747,7 +746,7 @@
         }
         [[WeLianClient sharedClient] uploadImageWithImageData:imageDataArray Type:@"feed" FeedID:statusM.sendId  Success:^(id resultInfo) {
             DLog(@"%@",resultInfo);
-            
+            NSMutableArray *photoReqst = [NSMutableArray arrayWithCapacity:photosArray.count];
             NSArray *photoUrlArray = [IPhotoUp objectsWithInfo:resultInfo];
             for (IPhotoUp *photoUp in photoUrlArray) {
                 [photoReqst addObject:@{@"photo":photoUp.photo}];

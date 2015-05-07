@@ -46,7 +46,7 @@ static NSString *identifier = @"investorcellid";
                                                 [InvestorUser createInvestor:invest];
                                             }
                                             [self.allArray removeAllObjects];
-                                            self.allArray = [NSMutableArray arrayWithArray:[InvestorUser allInvestorUsers]];
+                                            self.allArray = [NSMutableArray arrayWithArray:resultInfo];
                                             [self.tableView reloadData];
                                             if ([resultInfo count] < KCellConut) {
                                                 self.tableView.footer.hidden = YES;
