@@ -9,13 +9,11 @@
 #import "LoginPhoneVC.h"
 #import "NSString+val.h"
 #import "MainViewController.h"
-#import "MJExtension.h"
 #import "UITextField+LeftRightView.h"
 #import "ForgetPhoneController.h"
 #import "LogInUser.h"
 #import "UIImage+ImageEffects.h"
-
-#import "UserInfoController.h"
+#import "AppDelegate.h"
 
 @interface LoginPhoneVC ()<UITextFieldDelegate>
 
@@ -149,8 +147,12 @@
         [WLHUDView hiddenHud];
         ILoginUserModel *loginUserM = resultInfo;
         [LogInUser createLogInUserModel:loginUserM];
+        
         //进入主页面
+//        AppDelegate *deldte = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         MainViewController *mainVC = [[MainViewController alloc] init];
+        //        [mainVC setSelectedIndex:0];
+//        self.view.window.rootViewController = mainVC;
         [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
         
     } Failed:^(NSError *error) {

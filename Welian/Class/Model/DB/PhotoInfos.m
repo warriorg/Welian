@@ -22,7 +22,7 @@
 {
     PhotoInfos *photoInfo = [PhotoInfos MR_createEntity];
     photoInfo.photo = iPhotoInfo.photo;
-    photoInfo.picid = iPhotoInfo.picid;
+    photoInfo.picid = iPhotoInfo.photoid;
     // 获得文件的扩展类型
     photoInfo.title = [iPhotoInfo.photo pathExtension];
     

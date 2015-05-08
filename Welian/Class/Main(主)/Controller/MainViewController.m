@@ -24,66 +24,11 @@
 #import "NewFriendUser.h"
 #import "MJExtension.h"
 
-@interface NavTitleView : UIView
-{
-    UIView *prompt;
-    UILabel *titLabel;
-}
-- (void)hidePrompt;
-- (void)showPrompt;
-- (void)settitStr:(NSString *)titStr;
-
-@end
-
-@implementation NavTitleView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        titLabel = [[UILabel alloc] initWithFrame:frame];
-//        [titLabel setCenter:self.center];
-        [titLabel setFont:WLFONTBLOD(17)];
-        [titLabel setTextColor:[UIColor whiteColor]];
-        [titLabel setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:titLabel];
-        prompt = [[UIView alloc] init];
-        [prompt setBackgroundColor:[UIColor redColor]];
-        [prompt.layer setCornerRadius:5];
-        [prompt.layer setMasksToBounds:YES];
-        [prompt setHidden:YES];
-        [self addSubview:prompt];
-    }
-    return self;
-}
-
-- (void)settitStr:(NSString *)titStr
-{
-    [titLabel setText:titStr];
-    [titLabel sizeToFit];
-    [titLabel setCenter:self.center];
-    
-    [prompt setFrame:CGRectMake(CGRectGetMaxX(titLabel.frame)-2, 0, 10, 10)];
-    
-}
-
-- (void)showPrompt
-{
-    [prompt setHidden:NO];
-}
-- (void)hidePrompt
-{
-    [prompt setHidden:YES];
-}
-
-
-@end
 
 @interface MainViewController () <UINavigationControllerDelegate>
 {
     UITabBarItem *homeItem;
     UITabBarItem *selectItem;
-//    UITabBarItem *circleItem;
     UITabBarItem *chatMessageItem;
     UITabBarItem *findItem;
     UITabBarItem *meItem;
@@ -97,6 +42,15 @@
 @implementation MainViewController
 
 single_implementation(MainViewController)
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (void)loadNewStustupdata
 {

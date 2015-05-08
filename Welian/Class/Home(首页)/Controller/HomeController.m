@@ -141,10 +141,7 @@
             // 耗时的操作
             NSArray *jsonarray = [NSArray arrayWithArray:resultInfo];
             NSMutableArray *newDataArray = [NSMutableArray array];
-            if (!_uid) {
-                [LogInUser setUserNewstustcount:@(0)];
-                [weakSelf loadFirstFID:[weakSelf dataFrameWith:[jsonarray firstObject]]];
-            }
+            
             NSArray *againArray = [weakSelf getSendAgainStuatArray];
             [newDataArray addObjectsFromArray:againArray];
             
@@ -154,6 +151,10 @@
             }
             _page++;
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!_uid) {
+                    [LogInUser setUserNewstustcount:@(0)];
+                    [weakSelf loadFirstFID:[weakSelf dataFrameWith:[jsonarray firstObject]]];
+                }
                 DLog(@"-----更新界面");
                 _dataArry = newDataArray;
                 // 更新界面

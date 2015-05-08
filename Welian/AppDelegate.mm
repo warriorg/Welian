@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "BMapKit.h"
-#import "MainViewController.h"
 #import "NavViewController.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
@@ -27,22 +26,19 @@
 #import "NeedAddUser.h"
 #import <ShareSDK/ShareSDK.h>
 #import <AlipaySDK/AlipaySDK.h>
-#import "LoginGuideController.h"
 #import "MsgPlaySound.h"
 
 @interface AppDelegate() <BMKGeneralDelegate,UITabBarControllerDelegate>
 {
-    MainViewController *mainVC;
     NSInteger _update; //0不提示更新 1不强制更新，2强制更新
      NSString *_upURL; // 更新地址
     NSString *_msg;  // 更新提示语
     UIAlertView *_updataalert;
-//    UIAlertView *_logoutAlert;
 }
 @end
 
 @implementation AppDelegate
-single_implementation(AppDelegate)
+//single_implementation(AppDelegate)
 BMKMapManager* _mapManager;
 
 
@@ -130,15 +126,13 @@ BMKMapManager* _mapManager;
 //    DLog(@"%@",mode.description);
     if ([UserDefaults objectForKey:kSessionId]) {
         /** 已登陆 */
-        mainVC = [[MainViewController alloc] init];
-        [mainVC setDelegate:self];
-//        [LogInUser setUserNewstustcount:@(0)];
-//        [mainVC loadNewStustupdata];
-        [self.window setRootViewController:mainVC];
+        self.mainVC = [[MainViewController alloc] init];
+        [self.mainVC setDelegate:self];
+        [self.window setRootViewController:self.mainVC];
     }else{
         /** 未登陆 */
-        LoginGuideController *loginGuideVC = [[LoginGuideController alloc] init];
-        [self.window setRootViewController:loginGuideVC];
+        self.loginGuideVC = [[LoginGuideController alloc] init];
+        [self.window setRootViewController:self.loginGuideVC];
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"====沙盒路径=======%@",paths);
@@ -519,9 +513,6 @@ BMKMapManager* _mapManager;
     if ([self.window.rootViewController isKindOfClass:[LoginGuideController class]])
         return;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
-    [UserDefaults removeObjectForKey:kSessionId];
-    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
-    [UserDefaults synchronize];
     [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
         [WeLianClient logoutWithSuccess:^(id resultInfo) {
@@ -530,6 +521,9 @@ BMKMapManager* _mapManager;
         }];
     }
     [LogInUser setUserisNow:NO];
+    [UserDefaults removeObjectForKey:kSessionId];
+    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
+    [UserDefaults synchronize];
 }
 
 

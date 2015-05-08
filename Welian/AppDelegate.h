@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "GexinSdk.h"
-#import "Singleton.h"
+//#import "Singleton.h"
+#import "MainViewController.h"
+#import "LoginGuideController.h"
 
 typedef enum {
     SdkStatusStoped,
@@ -21,7 +23,7 @@ typedef enum {
     NSString *_deviceToken;
 }
 
-single_interface(AppDelegate)
+//single_interface(AppDelegate)
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) GexinSdk *gexinPusher;
@@ -34,6 +36,10 @@ single_interface(AppDelegate)
 
 @property (assign, nonatomic) int lastPayloadIndex;
 @property (retain, nonatomic) NSString *payloadId;
+
+
+@property (nonatomic, strong) MainViewController *mainVC;
+@property (nonatomic, strong) LoginGuideController *loginGuideVC;
 
 - (void)startSdkWith:(NSString *)appID appKey:(NSString *)appKey appSecret:(NSString *)appSecret;
 - (void)stopSdk;

@@ -386,7 +386,7 @@ static NSString *projectcellid = @"projectcellid";
 
         }else{    // 删除网络
             IPhotoInfo *photoI = _projectModel.photos[_row];
-            [WeLianClient deleteProjectPhotoWithPhotoid:photoI.picid Success:^(id resultInfo) {
+            [WeLianClient deleteProjectPhotoWithPhotoid:photoI.photoid Success:^(id resultInfo) {
                 NSMutableArray *photosM = [[NSMutableArray alloc] initWithArray:_projectModel.photos];
                 [photosM removeObjectAtIndex:_row];
                 [_projectModel setPhotos:photosM];

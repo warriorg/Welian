@@ -187,7 +187,8 @@
                                            [LogInUser createLogInUserModel:loginUserM];
                                            // 进入主页面
                                            MainViewController *mainVC = [[MainViewController alloc] init];
-                                           [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
+                                           [self.view.window setRootViewController:mainVC];
+//                                           [[UIApplication sharedApplication].keyWindow setRootViewController:mainVC];
                                        }
                                    } Failed:^(NSError *error) {
                                        [WLHUDView showErrorHUD:error.localizedDescription];

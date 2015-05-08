@@ -41,7 +41,7 @@
 
 @end
 
-//static NSString *meinfocellid = @"MeinfoCell";
+
 static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
 @implementation MeViewController
 
@@ -500,7 +500,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     NSArray *projects = [dataDic objectForKey:@"projects"];
     NSArray *projectsArrayM = [IProjectInfo objectsWithInfo:projects];
     IProjectInfo *projectM = [projectsArrayM firstObject];
-    NSString *projectName = projectM.name;
+    NSString *projectName = projectM.name?projectM.name:@"";
     
     // 工作经历列表
     NSArray *usercompany = [dataDic objectForKey:@"usercompany"];

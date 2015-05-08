@@ -57,7 +57,7 @@
     int index = 0;
     for (NSString *key in keyArray) {
         NSString *value = [parameters objectForKey:key];
-        paraString = [NSString stringWithFormat:@"%@%@=%@%@",paraString,key,value, ++index == keyArray.count ? @"" : @"&"];
+        paraString = [NSString stringWithFormat:@"%@%@=%@%@\n",paraString,key,value, ++index == keyArray.count ? @"" : @"&"];
     }
     NSString *api = [NSString stringWithFormat:@"====\n%@/%@?%@\n=======", WLHttpServer,pathInfo, paraString];
     DLog(@"api:%@", api);
@@ -76,7 +76,7 @@
         pathInfo = [NSString stringWithFormat:@"%@?sessionid=%@",path,sessid];
     }
     //打印
-//    [self formatUrlAndParameters:params WithpathInfo:pathInfo];
+    [self formatUrlAndParameters:params WithpathInfo:pathInfo];
     [[WeLianClient sharedClient] POST:pathInfo
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -810,15 +810,18 @@
                        Success:(SuccessBlock)success
                         Failed:(FailedBlock)failed;
 {
-    NSDictionary *params = @{@"fid":fid};
-    [self reqestPostWithParams:params
-                          Path:kFeedNewCountPath
-                       Success:^(id resultInfo) {
-                           DLog(@"getNewFeedCounts ---- %@",resultInfo);
-                           SAFE_BLOCK_CALL(success,resultInfo);
-                       } Failed:^(NSError *error) {
-                           SAFE_BLOCK_CALL(failed, error);
-                       }];
+    if (fid) {
+        NSDictionary *params = @{@"fid":fid};
+        [self reqestPostWithParams:params
+                              Path:kFeedNewCountPath
+                           Success:^(id resultInfo) {
+                               DLog(@"getNewFeedCounts ---- %@",resultInfo);
+                               SAFE_BLOCK_CALL(success,resultInfo);
+                           } Failed:^(NSError *error) {
+                               SAFE_BLOCK_CALL(failed, error);
+                           }];
+    }
+    
 }
 
 
@@ -1775,9 +1778,6 @@
             SAFE_BLOCK_CALL(failed, nil);
         }];
     }];
-
-    
-
 }
 
 

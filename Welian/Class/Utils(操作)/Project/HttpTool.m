@@ -118,7 +118,7 @@ static HttpTool *engine;
             failureBlock ([[NSError alloc] init]);
         }else if ([[dic objectForKey:@"state"] integerValue]==2){ // ID超时
             [[self operationQueue] cancelAllOperations];
-            [[AppDelegate sharedAppDelegate] logout];
+//            [[AppDelegate sharedAppDelegate] logout];
             failureBlock ([NSError errorWithDomain:[dic objectForKey:@"errorcode"] code:2 userInfo:nil]);
         }else if ([[dic objectForKey:@"state"] integerValue]== -1){ // 已经不在是好友关系
             [WLHUDView showErrorHUD:[dic objectForKey:@"errorcode"]];

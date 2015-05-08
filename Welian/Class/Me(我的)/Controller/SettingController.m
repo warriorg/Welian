@@ -96,21 +96,17 @@
 - (void)logout
 {
 //    [WLHUDView showHUDWithStr:@"正在退出..." dim:YES];
-    [UserDefaults removeObjectForKey:kSessionId];
-    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
-    [UserDefaults synchronize];
-    [LogInUser setUserisNow:NO];
     [WeLianClient logoutWithSuccess:^(id resultInfo) {
         
     } Failed:^(NSError *error) {
         
     }];
-//    [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-//        
-//    } fail:^(NSError *error) {
-//        
-//    }];
+    [UserDefaults removeObjectForKey:kSessionId];
+    [UserDefaults removeObjectForKey:kBPushRequestChannelIdKey];
+    [UserDefaults synchronize];
+    [LogInUser setUserisNow:NO];
     [self.view.window setRootViewController:[[LoginGuideController alloc] init]];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 #pragma mark 读取plist文件的内容
