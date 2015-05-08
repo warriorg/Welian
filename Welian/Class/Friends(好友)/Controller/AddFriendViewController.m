@@ -191,16 +191,8 @@
         [sheet showInView:self.view];
     }else{
         NeedAddUser *needAddUser = _datasource[indexPath.row];
-        if(needAddUser.friendship.integerValue != 0 || needAddUser.uid != nil){
+        if(needAddUser.uid != nil){
             //friendship /**  好友关系，1好友，2好友的好友,-1自己，0没关系   */
-//            if (needAddUser.userType.integerValue == 1) {
-            //手机联系人
-//            BOOL isask = NO;
-//            if(needAddUser.friendship.integerValue == 1 || needAddUser.friendship.integerValue == 2){
-//                isask = NO;
-//            }
-//                UserInfoBasicVC *userInfoVC = [[UserInfoBasicVC alloc] initWithStyle:UITableViewStyleGrouped andUsermode:(IBaseUserM *)needAddUser isAsk:isask];
-            
             UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] initWithBaseUserM:(IBaseUserM *)needAddUser OperateType:nil HidRightBtn:NO];
             [self.navigationController pushViewController:userInfoVC animated:YES];
                 //    __weak NewFriendController *newFVC = self;
@@ -219,7 +211,7 @@
                     [self showMessageView:needAddUser.mobile title:@"邀请好友" body:@"我正在玩微链，认识了不少投资和创业的朋友，嘿，你也来吧！http://welian.com"];
                 }
             }else{
-                if (needAddUser.wxid.integerValue > 0 && _selectIndex == 1) {
+                if (needAddUser.wxid.integerValue > 0 && _selectIndex == 1 && needAddUser.friendship.integerValue != 5) {
                     //邀请微信好友
                     [self inviteWxFriendWithNeedAddUser:needAddUser indexPath:indexPath];
                 }
