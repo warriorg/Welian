@@ -225,7 +225,8 @@ static NSString *CellIdentifier = @"BadgeBaseCellid";
             if (indexPath.row==0) {
                 // 一起玩
                 TOWebViewController *webVC = [[TOWebViewController alloc] initWithURLString:@"http://my.welian.com/play"];
-                webVC.navigationButtonsHidden = YES;//隐藏底部操作栏目
+
+                webVC.navigationButtonsHidden = NO;//隐藏底部操作栏目
                 webVC.showRightShareBtn = YES;//现实右上角分享按钮
                 [self.navigationController pushViewController:webVC animated:YES];
             }
