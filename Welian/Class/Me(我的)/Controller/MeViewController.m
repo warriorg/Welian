@@ -26,7 +26,7 @@
 #import "WLCustomSegmentedControl.h"
 
 #define kTableViewHeaderViewHeight 145.f
-#define kHeaderBgImageHeight 83.f
+#define kHeaderBgImageHeight 105.f
 
 @interface MeViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -186,6 +186,7 @@ static NSString *BadgeBaseCellid = @"BadgeBaseCellid";
     UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderBgImageHeight)];
     [imageView setImage:[UIImage imageNamed:@"header_gackground_top"]];
+//    [imageView setImage:[UIImage imageNamed:@"me_background"]];
     
     //关键步骤 设置可变化背景view属性
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight| UIViewAutoresizingFlexibleWidth;

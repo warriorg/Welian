@@ -214,6 +214,7 @@
 {
     DLog(@"%@ ------  leftBtnClicked",[self class]);
     if (self.navigationController.viewControllers.count > 1) {
+        [WLHUDView hiddenHud];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
