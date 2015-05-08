@@ -134,6 +134,11 @@
 
 
 #pragma mark - 动态Feed模块
+// 取最新动态数量 (新项目，投资人，活动)
++ (void)getNewFeedConutWithFid:(NSNumber *)fid
+                                Success:(SuccessBlock)success
+                                 Failed:(FailedBlock)failed;
+
 //添加动态
 + (void)saveFeedWithParameterDic:(NSDictionary *)params
                          Success:(SuccessBlock)success

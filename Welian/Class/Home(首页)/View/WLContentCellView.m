@@ -311,7 +311,7 @@
 //            [but setEnabled:YES];
 //        }];
     }else{
-        [zans insertObject:mode atIndex:0];
+        [zans addObject:mode];
         [statM setZans:zans];
         [statM setIszan:@(1)];
         statM.zan = @(statM.zan.integerValue+1);
@@ -346,10 +346,9 @@
         statM = _commentFrame.status;
     }
     NSMutableArray *forwards = [NSMutableArray arrayWithArray:statM.forwards];
-    //    UserInfoModel *mode = [[UserInfoTool sharedUserInfoTool] getUserInfoModel];
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
+
+    IBaseUserM *mode = [IBaseUserM getLoginUserBaseInfo];
     if (statM.isforward.integerValue==1) {
-        
         for (IBaseUserM *forwardM in statM.forwards) {
             if ([forwardM.uid integerValue] == [mode.uid integerValue]) {
                 [forwards removeObject:forwardM];
@@ -363,13 +362,8 @@
         } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
-//        [WLHttpTool deleteFeedForwardParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
-//            [but setEnabled:YES];
-//        } fail:^(NSError *error) {
-//            [but setEnabled:YES];
-//        }];
     }else{
-        [forwards insertObject:mode atIndex:0];
+        [forwards addObject:mode];
         [statM setForwards:forwards];
         [statM setIsforward:@(1)];
         statM.forwardcount = @(statM.forwardcount.integerValue +1);
@@ -379,12 +373,6 @@
         } Failed:^(NSError *error) {
             [but setEnabled:YES];
         }];
-//        [WLHttpTool forwardFeedParameterDic:@{@"fid":statM.topid == 0 ? statM.fid : statM.topid} success:^(id JSON) {
-//            [WLHUDView showCustomHUD:@"已转推给你的好友！" imageview:nil];
-//            [but setEnabled:YES];
-//        } fail:^(NSError *error) {
-//            [but setEnabled:YES];
-//        }];
     }
     
     if (self.feedTuiBlock) {

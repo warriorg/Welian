@@ -261,15 +261,7 @@ static NSString *noCommentCell = @"NoCommentCell";
         }else{
             params = @{@"pid":_projectPid,@"comment":comment};
         }
-        
-        LogInUser *loginUser = [LogInUser getCurrentLoginUser];
-        IBaseUserM *user = [[IBaseUserM alloc] init];
-        user.avatar = loginUser.avatar;
-        user.company = loginUser.company;
-        user.investorauth = loginUser.investorauth;
-        user.name = loginUser.name;
-        user.position = loginUser.position;
-        user.uid = loginUser.uid;
+        IBaseUserM *user = [IBaseUserM getLoginUserBaseInfo];
         commentM.user = user;
         
         //评论
@@ -298,35 +290,11 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                  [self hideKeyBoard];
                                              } Failed:^(NSError *error) {
                                                  if (error) {
-                                                     [WLHUDView showErrorHUD:error.description];
+                                                     [WLHUDView showErrorHUD:error.localizedDescription];
                                                  }else{
                                                      [WLHUDView showErrorHUD:@"评论发表失败，请重试！"];
                                                  }
                                              }];
-        
-//        [WLHttpTool commentProjectParameterDic:params
-//                                       success:^(id JSON) {
-//                                           commentM.fcid = JSON[@"pcid"];
-//                                           
-//                                           CommentCellFrame *commentFrame = [[CommentCellFrame alloc] init];
-//                                           [commentFrame setCommentM:commentM];
-//                                           [_datasource insertObject:commentFrame atIndex:0];
-//                                           
-//                                           _iProjectDetailInfo.commentcount = @(_iProjectDetailInfo.commentcount.integerValue + 1);
-//                                           
-//                                           //刷新
-//                                           if (_iProjectDetailInfo.zancount.integerValue < 1) {
-//                                               //如果之前没有刷新整个table
-//                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-//                                           }else{
-//                                               [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-//                                           }
-//                                           
-//                                           //隐藏键盘
-//                                           [self hideKeyBoard];
-//                                       } fail:^(NSError *error) {
-//                                           [UIAlertView showWithTitle:@"系统提示" message:@"评论失败，请重试！"];
-//                                       }];
         
     }];
     [self.view addSubview:self.messageView];
@@ -525,7 +493,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                   [_tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
                                               } Failed:^(NSError *error) {
                                                   if (error) {
-                                                      [WLHUDView showErrorHUD:error.description];
+                                                      [WLHUDView showErrorHUD:error.localizedDescription];
                                                   }else{
                                                       [WLHUDView showErrorHUD:@"删除评论失败，请重试！"];
                                                   }
@@ -874,7 +842,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                     [self updateUI];
                                 } Failed:^(NSError *error) {
                                     if (error) {
-                                        [WLHUDView showErrorHUD:error.description];
+                                        [WLHUDView showErrorHUD:error.localizedDescription];
                                     }else{
                                         [WLHUDView showErrorHUD:@"点赞失败，请重试！"];
                                     }
@@ -943,7 +911,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                           [self updateUI];
                                       } Failed:^(NSError *error) {
                                           if (error) {
-                                              [WLHUDView showErrorHUD:error.description];
+                                              [WLHUDView showErrorHUD:error.localizedDescription];
                                           }else{
                                               [WLHUDView showErrorHUD:@"取消赞失败，请重试！"];
                                           }
@@ -1015,7 +983,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                                }
                                            } Failed:^(NSError *error) {
                                                if (error) {
-                                                   [WLHUDView showErrorHUD:error.description];
+                                                   [WLHUDView showErrorHUD:error.localizedDescription];
                                                }else{
                                                    [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
                                                }
@@ -1041,7 +1009,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          [self checkFavorteStatus];
                                      } Failed:^(NSError *error) {
                                          if (error) {
-                                             [WLHUDView showErrorHUD:error.description];
+                                             [WLHUDView showErrorHUD:error.localizedDescription];
                                          }else{
                                              [WLHUDView showErrorHUD:@"收藏项目失败，请重试！"];
                                          }
@@ -1176,7 +1144,7 @@ static NSString *noCommentCell = @"NoCommentCell";
                                          //隐藏
                                          [self.tableView.header endRefreshing];
                                          if (error) {
-                                             [WLHUDView showErrorHUD:error.description];
+                                             [WLHUDView showErrorHUD:error.localizedDescription];
                                          }else{
                                              [WLHUDView showErrorHUD:@"获取详情失败，请刷新重试！"];
                                          }

@@ -91,7 +91,6 @@
 }
 
 @property (strong,nonatomic) CLGeocoder* geocoder;
-@property (nonatomic, strong) NavTitleView *navTitleView;
 
 @end
 
@@ -99,20 +98,10 @@
 
 single_implementation(MainViewController)
 
-- (NavTitleView *)navTitleView
-{
-    if (_navTitleView == nil) {
-        _navTitleView = [[NavTitleView alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        [_navTitleView settitStr:@"创业圈"];
-    }
-    return _navTitleView;
-}
-
 - (void)loadNewStustupdata
 {
-    LogInUser *mode = [LogInUser getCurrentLoginUser];
-    if (mode.firststustid.integerValue && mode.sessionid&&mode.mobile) {
-        
+    if ([UserDefaults objectForKey:kSessionId]) {
+        LogInUser *mode = [LogInUser getCurrentLoginUser];
         //获取最新动态数量
         [WeLianClient getNewFeedCountsWithID:mode.firststustid
                                      Success:^(id resultInfo) {
@@ -155,7 +144,7 @@ single_implementation(MainViewController)
     // 首页 创业圈角标
 //    if (meinfo.newstustcount.integerValue &&!meinfo.homemessagebadge.integerValue) {
     if ([LogInUser getCurrentLoginUser].newstustcount.integerValue) {
-        [self.navTitleView showPrompt];
+//        [self.navTitleView showPrompt];
         [homeItem setImage:[[UIImage imageNamed:@"tabbar_home_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [homeItem setSelectedImage:[[UIImage imageNamed:@"tabbar_home_selected_prompt"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }else{

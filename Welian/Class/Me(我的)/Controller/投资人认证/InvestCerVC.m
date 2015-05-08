@@ -49,17 +49,18 @@ static NSString *itemscellid = @"itemscellid";
         _headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 48)];
         [_headLabel setTextAlignment:NSTextAlignmentCenter];
         _headLabel.font = WLFONT(16);
-        NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
-        if (auth ==1){ // 认证成功
-            _headLabel.text = @"  投资人认证成功！";
-            _headLabel.textColor = WLRGB(52, 116, 186);
-        }else if (auth ==-2){  // 正在审核
-            _headLabel.text = @"  名片已上传，正在等待验证...";
-            _headLabel.textColor = WLRGB(52, 116, 186);
-        }else if (auth ==-1){ // 认证失败
-            _headLabel.text = @"  很遗憾，未能通过投资人认证";
-            _headLabel.textColor = WLRGB(255, 117, 117);
-        }
+        
+    }
+    NSInteger auth = [LogInUser getCurrentLoginUser].investorauth.integerValue;
+    if (auth ==1){ // 认证成功
+        _headLabel.text = @"  投资人认证成功！";
+        _headLabel.textColor = WLRGB(52, 116, 186);
+    }else if (auth ==-2){  // 正在审核
+        _headLabel.text = @"  名片已上传，正在等待验证...";
+        _headLabel.textColor = WLRGB(52, 116, 186);
+    }else if (auth ==-1){ // 认证失败
+        _headLabel.text = @"  很遗憾，未能通过投资人认证";
+        _headLabel.textColor = WLRGB(255, 117, 117);
     }
     return _headLabel;
 }

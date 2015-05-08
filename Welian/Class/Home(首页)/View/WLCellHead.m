@@ -128,7 +128,7 @@
     // 头像
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"user_small"] options:SDWebImageRetryFailed|SDWebImageLowPriority];
     // 是否创业
-    [_touziImageView setHidden:!user.investorauth.integerValue];
+    [_touziImageView setHidden:user.investorauth.integerValue != 1];
 
     if (userStat.type.integerValue==5||userStat.type.integerValue==12) {
         NSMutableString *nameStr = [NSMutableString string];
@@ -232,7 +232,7 @@
                                          [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                      } Failed:^(NSError *error) {
                                          if (error) {
-                                             [WLHUDView showErrorHUD:error.description];
+                                             [WLHUDView showErrorHUD:error.localizedDescription];
                                          }else{
                                              [WLHUDView showErrorHUD:@"发送失败，请重试"];
                                          }

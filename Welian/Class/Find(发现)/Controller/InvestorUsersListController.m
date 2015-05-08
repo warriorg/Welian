@@ -295,7 +295,7 @@ static NSString *identifier = @"investorcellid";
                                             });
                                         } Failed:^(NSError *error) {
                                             if (error) {
-                                                [WLHUDView showErrorHUD:error.description];
+                                                [WLHUDView showErrorHUD:error.localizedDescription];
                                             }else{
                                                 [WLHUDView showErrorHUD:@"搜索失败，请重试！"];
                                             }

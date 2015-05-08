@@ -555,7 +555,7 @@
                                    [self checkHasData];
                                } Failed:^(NSError *error) {
                                    if (error) {
-                                       [WLHUDView showErrorHUD:error.description];
+                                       [WLHUDView showErrorHUD:error.localizedDescription];
                                    }else{
                                        [WLHUDView showErrorHUD:@"删除项目失败，请重试!"];
                                    }

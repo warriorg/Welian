@@ -530,6 +530,22 @@
 
 
 #pragma mark - 动态Feed模块
+// 取最新动态数量 (新项目，投资人，活动)
++ (void)getNewFeedConutWithFid:(NSNumber *)fid
+                       Success:(SuccessBlock)success
+                        Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"fid":fid};
+    [self reqestPostWithParams:params
+                          Path:kFeedUrl(@"new")
+                       Success:^(id resultInfo) {
+                           DLog(@"saveFeed ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 //添加动态
 + (void)saveFeedWithParameterDic:(NSDictionary *)params
                          Success:(SuccessBlock)success

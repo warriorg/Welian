@@ -33,7 +33,7 @@
     // 7.时间
     CGFloat timeX = CGRectGetMaxX(_nameLabelF)+IWCellBorderWidth;
     CGFloat timeY = iconY;
-    CGSize timeSize = CGSizeMake(80, 15);
+    CGSize timeSize = CGSizeMake(60, 15);
     _timeLabelF = (CGRect){{timeX, timeY}, timeSize};
     
     

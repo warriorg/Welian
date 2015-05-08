@@ -579,7 +579,7 @@
                                    [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                } Failed:^(NSError *error) {
                                    if (error) {
-                                       [WLHUDView showErrorHUD:error.description];
+                                       [WLHUDView showErrorHUD:error.localizedDescription];
                                    }else{
                                        [WLHUDView showErrorHUD:@"好友邀请发送失败，请重试"];
                                    }
@@ -634,7 +634,7 @@
                                                  [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                              } Failed:^(NSError *error) {
                                                  if (error) {
-                                                     [WLHUDView showErrorHUD:error.description];
+                                                     [WLHUDView showErrorHUD:error.localizedDescription];
                                                  }else{
                                                      [WLHUDView showErrorHUD:@"发送失败，请重试"];
                                                  }

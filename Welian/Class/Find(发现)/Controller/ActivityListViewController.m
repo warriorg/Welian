@@ -365,7 +365,7 @@
                                     //隐藏加载更多动画
                                     [self.tableView.header endRefreshing];
                                     [self.tableView.footer endRefreshing];
-                                    DLog(@"getActiveList error:%@",error.description);
+                                    DLog(@"getActiveList error:%@",error.localizedDescription);
                                 }];
     
 //    NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),

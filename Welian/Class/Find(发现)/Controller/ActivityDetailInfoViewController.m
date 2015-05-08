@@ -605,7 +605,7 @@
                                              [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
                                          } Failed:^(NSError *error) {
                                              if (error) {
-                                                 [WLHUDView showErrorHUD:error.description];
+                                                 [WLHUDView showErrorHUD:error.localizedDescription];
                                              }else{
                                                  [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
                                              }
@@ -634,7 +634,7 @@
                                        [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
                                    } Failed:^(NSError *error) {
                                        if (error) {
-                                           [WLHUDView showErrorHUD:error.description];
+                                           [WLHUDView showErrorHUD:error.localizedDescription];
                                        }else{
                                            [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
                                        }
@@ -907,7 +907,7 @@
                                      }
                                  } Failed:^(NSError *error) {
                                      if (error) {
-                                         [WLHUDView showErrorHUD:error.description];
+                                         [WLHUDView showErrorHUD:error.localizedDescription];
                                      }else{
                                          [WLHUDView showErrorHUD:@"获取票务信息失败，请重试！"];
                                      }
@@ -955,7 +955,7 @@
                                           }
                                       } Failed:^(NSError *error) {
                                           if (error) {
-                                              [WLHUDView showErrorHUD:error.description];
+                                              [WLHUDView showErrorHUD:error.localizedDescription];
                                           }else{
                                               [WLHUDView showErrorHUD:@"获取票务信息失败，请重试！"];
                                           }
@@ -1098,11 +1098,11 @@
                                         }
                                     } Failed:^(NSError *error) {
                                         if (error) {
-                                            [WLHUDView showErrorHUD:error.description];
+                                            [WLHUDView showErrorHUD:error.localizedDescription];
                                         }else{
                                             [WLHUDView showErrorHUD:@"网络无法连接，请重试！"];
                                         }
-                                        DLog(@"getActivityDetailParameterDic error:%@",error.description);
+                                        DLog(@"getActivityDetailParameterDic error:%@",error.localizedDescription);
                                     }];
     
 //    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
@@ -1154,11 +1154,11 @@
                                        [self updateJoinedInfo:NO];
                                    } Failed:^(NSError *error) {
                                        if (error) {
-                                           [WLHUDView showErrorHUD:error.description];
+                                           [WLHUDView showErrorHUD:error.localizedDescription];
                                        }else{
                                            [WLHUDView showErrorHUD:@"取消报名失败，请重试！"];
                                        }
-                                       DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
+                                       DLog(@"deleteActiveRecorderParameterDic error:%@",error.localizedDescription);
                                    }];
 //    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityId}
 //                                         success:^(id JSON) {
@@ -1199,7 +1199,7 @@
                                 }
                             } Failed:^(NSError *error) {
                                 if (error) {
-                                    [WLHUDView showErrorHUD:error.description];
+                                    [WLHUDView showErrorHUD:error.localizedDescription];
                                 }else{
                                     [WLHUDView showErrorHUD:@"报名失败，请重新尝试！"];
                                 }

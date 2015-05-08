@@ -231,7 +231,7 @@
                                            [self.refreshControl endRefreshing];
                                            [_tableView.footer endRefreshing];
                                            if (error) {
-                                               [WLHUDView showErrorHUD:error.description];
+                                               [WLHUDView showErrorHUD:error.localizedDescription];
                                            }
                                        }];
     

@@ -545,7 +545,7 @@
                                              [WLHUDView showSuccessHUD:@"好友请求已发送"];
                                          } Failed:^(NSError *error) {
                                              if (error) {
-                                                 [WLHUDView showErrorHUD:error.description];
+                                                 [WLHUDView showErrorHUD:error.localizedDescription];
                                              }else{
                                                  [WLHUDView showErrorHUD:@"发送失败，请重试"];
                                              }
@@ -601,7 +601,7 @@
                                          [WLHUDView showSuccessHUD:[NSString stringWithFormat:@"你已添加%@为好友",newFriendUser.name]];
                                      } Failed:^(NSError *error) {
                                          if (error) {
-                                             [WLHUDView showErrorHUD:error.description];
+                                             [WLHUDView showErrorHUD:error.localizedDescription];
                                          }else{
                                              [WLHUDView showErrorHUD:@"添加失败，请重试"];
                                          }

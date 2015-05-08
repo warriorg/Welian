@@ -133,7 +133,7 @@ BMKMapManager* _mapManager;
         mainVC = [[MainViewController alloc] init];
         [mainVC setDelegate:self];
 //        [LogInUser setUserNewstustcount:@(0)];
-        [mainVC loadNewStustupdata];
+//        [mainVC loadNewStustupdata];
         [self.window setRootViewController:mainVC];
     }else{
         /** 未登陆 */
@@ -527,13 +527,7 @@ BMKMapManager* _mapManager;
         [WeLianClient logoutWithSuccess:^(id resultInfo) {
             
         } Failed:^(NSError *error) {
-            
         }];
-//        [WLHttpTool logoutParameterDic:@{} success:^(id JSON) {
-//            
-//        } fail:^(NSError *error) {
-//            
-//        }];
     }
     [LogInUser setUserisNow:NO];
 }
@@ -562,7 +556,6 @@ BMKMapManager* _mapManager;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [KNSNotification postNotificationName:KNEWStustUpdate object:self];
     DLog(@"应用程序将要进入活动状态，即将进入前台运行");
 
 }
@@ -578,9 +571,10 @@ BMKMapManager* _mapManager;
         _updataalert =  [[UIAlertView alloc] initWithTitle:@"更新提示" message:_msg  delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即更新", nil];
         [_updataalert show];
     }
-    
     //获取聊天消息记录 和好友请求消息
     [self getServiceChatMsgInfo];
+    
+    [KNSNotification postNotificationName:KNEWStustUpdate object:self];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -653,13 +647,8 @@ BMKMapManager* _mapManager;
     _clientId = clientId;
     [UserDefaults setObject:clientId forKey:kBPushRequestChannelIdKey];
     [UserDefaults synchronize];
+    
     [WeLianClient updateclientID];
-//    [WLHttpTool updateClientSuccess:^(id JSON) {
-//        
-//    } fail:^(NSError *error) {
-//        
-//    }];
-    //    [self stopSdk];
 }
 
 - (void)GexinSdkDidReceivePayload:(NSString *)payloadId fromApplication:(NSString *)appId
