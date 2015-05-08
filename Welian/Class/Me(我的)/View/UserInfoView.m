@@ -163,8 +163,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _bgImageView.size = CGSizeMake(self.width, kBlueBgViewHeight + 2.f);
-    _bgImageView.top = -2.f;
+    _bgImageView.size = CGSizeMake(self.width, kBlueBgViewHeight + 150.f);
+    _bgImageView.top = -150.f;
     _bgImageView.centerX = self.width / 2.f;
     
     _logoImageView.size = CGSizeMake(kLogoHeight, kLogoHeight);
@@ -215,8 +215,8 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     
-    //蓝色背景me_background
-    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_background_bottom"]];
+    //蓝色背景me_background header_background_bottom
+    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_background"]];
     bgImageView.backgroundColor = [UIColor clearColor];
     [self addSubview:bgImageView];
     self.bgImageView = bgImageView;

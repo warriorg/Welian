@@ -20,7 +20,7 @@
 #import "WLNoteInfoView.h"
 
 #define kTableViewHeaderViewHeight 115.f
-#define kHeaderBgImageHeight 83.f
+#define kHeaderBgImageHeight 93.f
 
 #define kTableViewCellHeight 60.f
 #define kTableViewHeaderHeight 60.f

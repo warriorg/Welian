@@ -13,7 +13,7 @@
 
 @property (strong,nonatomic) NSString *city;
 @property (strong,nonatomic) NSString *address;
-@property (assign,nonatomic) BMKMapView *mapView;
+@property (strong,nonatomic) BMKMapView *mapView;
 @property (strong,nonatomic) BMKGeoCodeSearch *searcher;
 //@property (strong,nonatomic) BMKLocationService *locService;//定位功能
 
@@ -26,6 +26,7 @@
     _address = nil;
     _city = nil;
     _searcher = nil;
+    _mapView = nil;
 //    _locService = nil;
 }
 

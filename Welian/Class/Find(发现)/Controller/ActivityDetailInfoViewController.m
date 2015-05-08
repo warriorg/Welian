@@ -14,7 +14,6 @@
 #import "ShareFriendsController.h"
 #import "NavViewController.h"
 #import "PublishStatusController.h"
-#import "ActivitySubInfoViewController.h"
 
 #import "MessageKeyboardView.h"
 #import "ActivityCustomViewCell.h"
@@ -23,6 +22,7 @@
 #import "ActivityTicketView.h"
 #import "WLActivityView.h"
 #import "CardAlertView.h"
+#import "ActivityWebDetailInfoView.h"
 
 #import "ShareEngine.h"
 #import "SEImageCache.h"
@@ -33,7 +33,10 @@
 #define kOperateButtonHeight 35.f
 #define kmarginLeft 10.f
 
-@interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+@interface ActivityDetailInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>{
+    BOOL isDragging;
+    CExpandHeader *_header;//用于设置头部背景
+}
 
 @property (assign,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) NSArray *datasource;
@@ -43,6 +46,7 @@
 @property (assign,nonatomic) ActivityTicketView *activityTicketView;
 @property (strong,nonatomic) ActivityInfo *activityInfo;
 @property (strong,nonatomic) NSNumber *activityId;
+@property (strong,nonatomic) ActivityWebDetailInfoView *activityWebInfoView;
 
 @end
 
@@ -84,28 +88,10 @@
     return self;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    //代理置空，否则会闪退 设置手势滑动返回
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-//    }
-}
-
-//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//    //开启滑动手势
-//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        navigationController.interactivePopGestureRecognizer.enabled = YES;
-//    }else{
-//        navigationController.interactivePopGestureRecognizer.enabled = NO;
-//    }
-//}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self scrollViewDidScroll:_tableView];
+    [self scrollViewDidScroll:self.tableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -115,32 +101,72 @@
     //设置push到当前VC
     self.isJoindThisVC = YES;
     
-    [self scrollViewDidScroll:_tableView];
-    
-    //开启iOS7的滑动返回效果
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        //只有在二级页面生效
-//        if ([self.navigationController.viewControllers count] > 1) {
-//            self.navigationController.interactivePopGestureRecognizer.delegate = self;
-//        }
-//    }
+    [self scrollViewDidScroll:self.tableView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    [super scrollViewDidScroll:scrollView];
 //    [self.tableView shouldPositionParallaxHeader];
+    CGFloat offsetY = scrollView.contentOffset.y + kHeaderImageHeight;;
+    DLog(@"scroll off Y---%f",offsetY);
     
+    if (!_activityWebInfoView.isShow) {
+        [self changeHeaderColorWithOffsetY:offsetY];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    isDragging = YES;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    isDragging = NO;
+    
+    // 上拉加载详情
     CGFloat offsetY = scrollView.contentOffset.y;
+    if(offsetY > (_tableView.contentSize.height - _tableView.height + 60)){
+        if (_activityInfo.url.length > 0) {
+            [self showActivityWebDetailInfo];
+        }
+    }
+}
+
+- (void)changeHeaderColorWithOffsetY:(CGFloat)offsetY
+{
     UIColor *color = kNavBgColor;
-    if (offsetY > kHeaderViewHeight/2) {
-        CGFloat alpha = 1 - ((kHeaderViewHeight/2 + 64 - offsetY) / 64);
+    if (offsetY > kHeaderImageHeight/2) {
+        CGFloat alpha = 1 - ((kHeaderImageHeight/2 + 64 - offsetY) / 64);
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:alpha];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
         self.navHeaderView.backgroundColor = [color colorWithAlphaComponent:0];
-        //        [self.navigationController.navigationBar useBackgroundColor:[color colorWithAlphaComponent:0]];
     }
+}
+
+- (void)showActivityWebDetailInfo
+{
+    // Show the header
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _activityWebInfoView.frame = CGRectMake(0, ViewCtrlTopBarHeight, self.view.width, _activityWebInfoView.height);
+        _tableView.bottom = ViewCtrlTopBarHeight;
+        //设置颜色为系统颜色
+        [self changeHeaderColorWithOffsetY:300.f];
+        _activityWebInfoView.isShow = YES;
+    }];
+}
+
+- (void)hideActivityWebDetailInfo
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        _activityWebInfoView.frame = CGRectMake(0, self.view.height - toolBarHeight, self.view.width, _activityWebInfoView.height);
+        _tableView.top = 0.f;
+        _activityWebInfoView.isShow = NO;
+        [self scrollViewDidScroll:self.tableView];
+    }];
 }
 
 - (void)viewDidLoad {
@@ -165,7 +191,16 @@
     [self.view addSubview:tableView];
     [self.view sendSubviewToBack:tableView];
     self.tableView = tableView;
-//    [tableView registerNib:[UINib nibWithNibName:@"NoCommentCell" bundle:nil] forCellReuseIdentifier:noCommentCell];
+//    [tableView setDebug:YES];
+    
+    //初始化项目详情页面
+    ActivityWebDetailInfoView *activityWebInfoView = [[ActivityWebDetailInfoView alloc] initWithFrame:Rect(0.f, _tableView.bottom , self.view.width, _tableView.height - ViewCtrlTopBarHeight)];
+    [self.view addSubview:activityWebInfoView];
+    self.activityWebInfoView = activityWebInfoView;
+    WEAKSELF
+    [activityWebInfoView setBackBlock:^(void){
+        [weakSelf hideActivityWebDetailInfo];
+    }];
     
     //设置底部操作栏
     UIView *operateToolView = [[UIView alloc] initWithFrame:CGRectMake(0.f, tableView.bottom, self.view.width, toolBarHeight)];
@@ -173,6 +208,7 @@
     operateToolView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
     operateToolView.layer.borderWidths = @"{0.6,0,0,0}";
     [self.view addSubview:operateToolView];
+    [self.view bringSubviewToFront:operateToolView];
     
     //收藏
     UIButton *favorteBtn = [UIView getBtnWithTitle:@"收藏" image:[UIImage imageNamed:@"me_mywriten_shoucang"]];
@@ -203,7 +239,9 @@
     self.activityTicketView = activityTicketView;
     
     if (_activityInfo) {
+        //设置头部和底部内容
         [self initActivityUIInfo];
+        [self updateWebDetailInfo];
         
         //检测分享按钮是否显示
         [self checkShareBtn];
@@ -215,18 +253,6 @@
     //获取详情信息
     [self initData];
     
-    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 400)];
-//    view.backgroundColor = [UIColor blueColor];
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((300-80)/2.f, (400-30)/2.f, 80, 30)];
-//    label.font = [UIFont systemFontOfSize:14];
-//    label.textColor = [UIColor whiteColor];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.text = @"第一页";
-//    
-//    [view addSubview:label];
-//    [self.scrollView addSubview:self.view];
     //下拉刷新
 //    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initData)];
 //    [self.tableView.header beginRefreshing];
@@ -235,51 +261,49 @@
 #pragma mark - UITableView Datasource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return _datasource.count > 0 ? 3 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        if (_activityInfo) {
-            return _activityInfo.sponsor.length > 0 ? 5.f : 4.f;
-        }else{
-            return 0;
+    switch (section) {
+        case 0:
+        {
+            if (_activityInfo) {
+                return _activityInfo.sponsor.length > 0 ? 4.f : 3.f;
+            }else{
+                return 0;
+            }
         }
-    }else{
-        return _datasource.count;
+            break;
+        case 1:
+        {
+            //活动嘉宾
+            if (_datasource.count > 0) {
+                return _datasource.count + 1;
+            }else{
+                //活动简介
+                return 1;
+            }
+        }
+            break;
+        case 2:
+        {
+            //活动简介
+            return 1;
+        }
+            break;
+        default:
+            return 0;
+            break;
     }
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width, kTableViewHeaderHeight)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-    headerView.layer.borderWidths = @"{0,0,0.6,0}";
-    
-    UIView *topBgView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, headerView.width, 15.f)];
-    topBgView.backgroundColor = RGB(236.f, 238.f, 241.f);
-    [headerView addSubview:topBgView];
-    
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = kNormal14Font;
-    titleLabel.textColor = RGB(125.f, 125.f, 125.f);
-    titleLabel.text = @"嘉宾";
-    [titleLabel sizeToFit];
-    titleLabel.left = 15.f;
-    titleLabel.centerY = (headerView.height - topBgView.height) / 2.f + topBgView.height;
-    [headerView addSubview:titleLabel];
-    
-    return headerView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if(indexPath.section == 0){
-        //微信联系人
-        if (indexPath.row < 4) {
+    switch (indexPath.section) {
+        case 0:
+        {
             static NSString *cellIdentifier = @"Activity_Custom_View_Cell";
             ActivityCustomViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -327,38 +351,86 @@
                 case 3:
                 {
                     //如果活动主办方存在
-                    if(_activityInfo.sponsor.length > 0){
-                        //活动主办方
-                        cell.showCustomInfo = NO;
-                        cell.accessoryType = UITableViewCellSelectionStyleNone;
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_zhubanfang"];
-                        cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
-                    }else{
-                        //活动详情
-                        static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
-                        ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                        if (!cell) {
-                            cell = [[ActivityInfoViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-                        }
-                        cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-                        cell.layer.borderWidths = @"{0.6,0,0,0}";
-                        
-                        cell.textLabel.text = @"";
-                        cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
-                        WEAKSELF
-                        [cell setBlock:^(void){
-                            [weakSelf showActivityDetailInfo];
-                        }];
-                        return cell;
-                    }
+                    //活动主办方
+                    cell.showCustomInfo = NO;
+                    cell.accessoryType = UITableViewCellSelectionStyleNone;
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_zhubanfang"];
+                    cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
                 }
                     break;
                 default:
                     break;
             }
             return cell;
-        }else if (indexPath.row == 4){
+        }
+            break;
+        case 1:
+        {
+            //活动嘉宾
+            if (_datasource.count > 0) {
+                if (indexPath.row == 0) {
+                    //头部标题
+                    static NSString *cellIdentifier = @"Activity_Header_View_Cell";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    if (!cell) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                    }
+                    
+                    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width, kTableViewHeaderHeight)];
+                    headerView.backgroundColor = [UIColor whiteColor];
+                    headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+                    headerView.layer.borderWidths = @"{0,0,0.6,0}";
+                    
+                    UIView *topBgView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, headerView.width, 15.f)];
+                    topBgView.backgroundColor = RGB(236.f, 238.f, 241.f);
+                    [headerView addSubview:topBgView];
+                    
+                    UILabel *titleLabel = [[UILabel alloc] init];
+                    titleLabel.font = kNormal14Font;
+                    titleLabel.textColor = RGB(125.f, 125.f, 125.f);
+                    titleLabel.text = @"嘉宾";
+                    [titleLabel sizeToFit];
+                    titleLabel.left = 15.f;
+                    titleLabel.centerY = (headerView.height - topBgView.height) / 2.f + topBgView.height;
+                    [headerView addSubview:titleLabel];
+                    [cell.contentView addSubview:headerView];
+                    return cell;
+                }else{
+                    static NSString *cellIdentifier = @"Activity_User_View_Cell";
+                    ActivityUserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    if (!cell) {
+                        cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                    }
+                    cell.indexPath = indexPath;
+                    cell.baseUser = _datasource[indexPath.row - 1];
+                    cell.hidOperateBtn = YES;
+                    cell.hidBottomLine = YES;//隐藏分割线
+                    return cell;
+                }
+            }else{
+                //活动简介
+                static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
+                ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (!cell) {
+                    cell = [[ActivityInfoViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+                }
+                cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+                cell.layer.borderWidths = @"{0.6,0,0,0}";
+                
+                cell.textLabel.text = @"";
+                cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
+                WEAKSELF
+                [cell setBlock:^(void){
+                    [weakSelf showActivityWebDetailInfo];
+                }];
+                return cell;
+            }
+        }
+            break;
+        case 2:
+        {
+            //活动简介
             static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
             ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -369,32 +441,23 @@
             
             cell.textLabel.text = @"";
             cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
-//            WEAKSELF
-//            [cell setBlock:^(void){
-//                [weakSelf showActivityDetailInfo];
-//            }];
-             return cell;
-        }else{
+            WEAKSELF
+            [cell setBlock:^(void){
+                [weakSelf showActivityWebDetailInfo];
+            }];
+            return cell;
+        }
+            break;
+        default:
             return nil;
-        }
-    }else{
-        static NSString *cellIdentifier = @"Activity_User_View_Cell";
-        ActivityUserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-        cell.indexPath = indexPath;
-        cell.baseUser = _datasource[indexPath.row];
-        cell.hidOperateBtn = YES;
-        cell.hidBottomLine = YES;//隐藏分割线
-        return cell;
+            break;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if(indexPath.section == 0){
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
         switch (indexPath.row) {
             case 1:
             {
@@ -420,15 +483,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 0.f;
-    }else{
-        if (_datasource.count > 0) {
-            return kTableViewHeaderHeight;
-        }else{
-            return 0.f;
-        }
-    }
+    return 0.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -443,37 +498,58 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:
-                return [ActivityCustomViewCell configureWithMsg:[_activityInfo displayStartTimeInfo] hasArrowImage:NO];
-                break;
-            case 1:
-                return [ActivityCustomViewCell configureWithMsg:_activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address hasArrowImage:YES];
-                break;
-            case 2:
-                return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited] hasArrowImage:YES];
-                break;
-            case 3:
-                //如果活动主办方存在
-                if(_activityInfo.sponsor.length > 0){
-                    return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] hasArrowImage:NO];
-                }else{
-                    //活动详情
-                    return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
-                }
-                break;
-            case 4:
-                return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];//_activityInfo.intro];
-                break;
-            default:
-                return 60.f;
-                break;
+    switch (indexPath.section) {
+        case 0:
+        {
+            switch (indexPath.row) {
+                case 0:
+                    return [ActivityCustomViewCell configureWithMsg:[_activityInfo displayStartTimeInfo] hasArrowImage:NO];
+                    break;
+                case 1:
+                    return [ActivityCustomViewCell configureWithMsg:_activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address hasArrowImage:YES];
+                    break;
+                case 2:
+                    return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"已报名%@人/限额%@人",_activityInfo.joined,_activityInfo.limited] hasArrowImage:YES];
+                    break;
+                case 3:
+                    //如果活动主办方存在
+                    if(_activityInfo.sponsor.length > 0){
+                        return [ActivityCustomViewCell configureWithMsg:[NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor] hasArrowImage:NO];
+                    }else{
+                        //活动详情
+                        return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
+                    }
+                    break;
+                default:
+                    return 60.f;
+                    break;
+            }
         }
-    }else if (indexPath.section == 1) {
-        return 60.f;
-    }else{
-        return 100.f;
+            break;
+        case 1:
+        {
+            //活动嘉宾
+            if (_datasource.count > 0) {
+                if (indexPath.row == 0) {
+                    return kTableViewHeaderHeight;
+                }else{
+                    return 60.f;
+                }
+            }else{
+                //活动简介
+                return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
+            }
+        }
+            break;
+        case 2:
+        {
+            //活动简介
+            return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
+        }
+            break;
+        default:
+            return 100.f;
+            break;
     }
 }
 
@@ -574,19 +650,11 @@
 - (void)shareToWX:(WeiboType)type
 {
     NSString *desc = [_activityInfo displayShareToWx];
-//    NSURL *imgUrl = [NSURL URLWithString:_activityInfo.logo];
     NSString *link = _activityInfo.shareurl;
     NSString *title = _activityInfo.name;
     
     UIImage *shareImage = [UIImage imageNamed:@"home_repost_huodong"];
     [[ShareEngine sharedShareEngine] sendWeChatMessage:title andDescription:desc WithUrl:link andImage:shareImage WithScene:type];
-//    [[SDWebImageManager sharedManager] downloadImageWithURL:imgUrl options:SDWebImageRetryFailed|SDWebImageLowPriority
-//                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//                                                       DLog(@"shareFriendImage---->>>%.2f",(float)receivedSize);
-//                                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-//                                                       DLog(@"shareFriendImage---->>>%@",image);
-//                                                       
-//                                                   }];
 }
 
 //收藏
@@ -610,17 +678,6 @@
                                                  [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
                                              }
                                          }];
-//        [WLHttpTool deleteFavoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
-//                                             success:^(id JSON) {
-////                                                 _iProjectDetailInfo.isfavorite = @(0);
-//                                                 self.activityInfo = [_activityInfo updateFavorite:@(0)];
-//                                                 [self checkFavorteStatus];
-//                                                 //通知刷新我的活动中的数据
-//                                                 [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
-//                                             } fail:^(NSError *error) {
-//                                                 [UIAlertView showWithTitle:nil message:@"取消收藏失败，请重试！"];
-//                                             }];
-        
     }else{
         //收藏项目
         [WLHUDView showHUDWithStr:@"收藏中..." dim:NO];
@@ -639,17 +696,6 @@
                                            [WLHUDView showErrorHUD:@"取消收藏失败，请重试！"];
                                        }
                                    }];
-        
-//        [WLHttpTool favoriteActiveParameterDic:@{@"activeid":_activityInfo.activeid}
-//                                       success:^(id JSON) {
-////                                           _iProjectDetailInfo.isfavorite = @(1);
-//                                           self.activityInfo = [_activityInfo updateFavorite:@(1)];
-//                                           [self checkFavorteStatus];
-//                                           //通知刷新我的活动中的数据
-//                                           [KNSNotification postNotificationName:kMyActivityInfoChanged object:nil];
-//                                        } fail:^(NSError *error) {
-//                                            [UIAlertView showWithTitle:nil message:@"收藏活动失败，请重试！"];
-//                                        }];
     }
 }
 
@@ -858,25 +904,6 @@
                         [_joinBtn setTitle:@"已售罄" forState:UIControlStateNormal];
                     }
                 }
-                
-//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-//                    //不限人数，可以报名
-//                    _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-//                    [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
-//                }else{
-//                    //收费活动
-//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-//                        //1收费，0免费
-//                        if (_activityInfo.type.integerValue == 0) {
-//                            _joinBtn.backgroundColor = RGB(52.f, 115.f, 185.f);
-//                            [_joinBtn setTitle:@"我要报名" forState:UIControlStateNormal];
-//                        }else{
-//                            
-//                        }
-//                    }else{
-//                        [_joinBtn setTitle:@"名额已满" forState:UIControlStateNormal];
-//                    }
-//                }
             }
         }
             break;
@@ -913,27 +940,6 @@
                                      }
                                      DLog(@"getActiveTickets error:%@",error.description);
                                  }];
-    
-//    [WLHttpTool getActivityTicketParameterDic:@{@"activeid":_activityInfo.activeid}
-//                                      success:^(id JSON) {
-//                                          
-//                                          if (JSON) {
-//                                              NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
-//                                              if (_activityTicketView.hidden) {
-//                                                  WEAKSELF
-//                                                  [_activityTicketView setBuyTicketBlock:^(NSArray *ticekets){
-//                                                      [weakSelf buyTicketToOrderInfo:ticekets];
-//                                                  }];
-//                                                  _activityTicketView.isBuyTicket = YES;
-//                                                  _activityTicketView.tickets = tickets;
-//                                                  [_activityTicketView showInView];
-//                                              }else{
-//                                                  [_activityTicketView dismiss];
-//                                              }
-//                                          }
-//                                      } fail:^(NSError *error) {
-//                                          DLog(@"getActivityTicketParameterDic error:%@",error.description);
-//                                      }];
 }
 
 //查看我购买的票务信息
@@ -961,27 +967,13 @@
                                           }
                                           DLog(@"getActiveBuyedTickets error:%@",error.description);
                                       }];
-//    [WLHttpTool getBuyedActiveTicketsParameterDic:@{@"activeid":_activityInfo.activeid}
-//                                          success:^(id JSON) {
-//                                              if (JSON) {
-//                                                  NSArray *tickets = [IActivityTicket objectsWithInfo:JSON];
-//                                                  if (_activityTicketView.hidden) {
-//                                                      _activityTicketView.isBuyTicket = NO;
-//                                                      _activityTicketView.tickets = tickets;
-//                                                      [_activityTicketView showInView];
-//                                                  }else{
-//                                                      [_activityTicketView dismiss];
-//                                                  }
-//                                              }
-//                                          } fail:^(NSError *error) {
-//                                              DLog(@"getActivityTicketParameterDic error:%@",error.description);
-//                                          }];
 }
 
 //更新页面信息
 - (void)updateUI
 {
     [_tableView reloadData];
+    
     [self checkFavorteStatus];
     [self checkOperateBtnStatus];
 }
@@ -990,15 +982,9 @@
 - (void)initActivityUIInfo
 {
     CGSize titleSize = [_activityInfo.name calculateSize:CGSizeMake(self.view.width - 30.f, FLT_MAX) font:kNormalBlod16Font];
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight + titleSize.height + 20.f)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, titleSize.height + 20.f)];
     headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
     headerView.layer.borderWidths = @"{0,0,0.6,0}";
-    
-    //图片
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight)];
-    imageView.backgroundColor = [UIColor lightGrayColor];
-    [headerView addSubview:imageView];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
     
     //标题
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -1009,21 +995,27 @@
     titleLabel.width = headerView.width - 30.f;
     titleLabel.numberOfLines = 0;
     [titleLabel sizeToFit];
-    titleLabel.top = imageView.bottom + 10.f;
+    titleLabel.centerY = headerView.height / 2.f;
     titleLabel.left = 15.f;
     [headerView addSubview:titleLabel];
     
     [_tableView setTableHeaderView:headerView];
-//    [self.view addSubview:tableView];
-//    [self.view sendSubviewToBack:_tableView];
     
-    self.scrollView.contentSize = CGSizeMake(_tableView.width, _tableView.height - ViewCtrlTopBarHeight);
-    [self.scrollView addSubview:_tableView];
-    [self.scrollView addSubview:self.navHeaderView];
-    [self.scrollView bringSubviewToFront:self.navHeaderView];
-//    [_tableView setParallaxHeaderView:headerView
-//                                 mode:VGParallaxHeaderModeFill
-//                               height:kHeaderImageHeight + titleSize.height + 20.f];
+    //设置自定义图片头部背景
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight)];
+    //图片
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderImageHeight)];
+    imageView.backgroundColor = [UIColor lightGrayColor];
+    [headerView addSubview:imageView];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:_activityInfo.logo] placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority];
+    
+    //关键步骤 设置可变化背景view属性
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight| UIViewAutoresizingFlexibleWidth;
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    
+    [customView addSubview:imageView];
+    _header = [CExpandHeader expandWithScrollView:_tableView expandView:customView];
 }
 
 //更新报名人数信息
@@ -1051,10 +1043,9 @@
 //更新详情展示页面
 - (void)updateWebDetailInfo
 {
+    //加载图文详情
     if (_activityInfo.url.length > 0) {
-        ActivitySubInfoViewController *webVC = [[ActivitySubInfoViewController alloc] initWithUrl:_activityInfo.url];
-        self.subViewController = webVC;
-        self.subViewController.mainViewController = self;
+        _activityWebInfoView.urlStr = _activityInfo.url;
     }
 }
 
@@ -1074,28 +1065,36 @@
     [WLHUDView showHUDWithStr:@"获取详情中..." dim:NO];
     [WeLianClient getActiveDetailInfoWithID:_activityId
                                     Success:^(id resultInfo) {
-                                        [WLHUDView hiddenHud];
                                         if (resultInfo) {
-                                            IActivityInfo *iActivity = resultInfo;
-                                            BOOL isFromList = _activityInfo != nil ? YES : NO;
-                                            if (isFromList) {
-                                                self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
-                                            }else{
-                                                self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
-                                                //更新数据
-                                                [self initActivityUIInfo];
-                                            }
-                                            self.datasource = iActivity.guests;
+                                            [WLHUDView hiddenHud];
                                             
-                                            //更新详情展示页面
-                                            [self updateWebDetailInfo];
-                                            //检测分享按钮
-                                            [self checkShareBtn];
-                                            //更页面
-                                            [self updateUI];
+                                            WEAKSELF
+                                            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                IActivityInfo *iActivity = resultInfo;
+                                                BOOL isFromList = _activityInfo != nil ? YES : NO;
+                                                if (isFromList) {
+                                                    weakSelf.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+                                                }else{
+                                                    weakSelf.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
+                                                }
+                                                weakSelf.datasource = iActivity.guests;
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    //更新数据
+                                                    if (!isFromList) {
+                                                        [weakSelf initActivityUIInfo];
+                                                    }
+                                                    //更新详情展示页面
+                                                    [weakSelf updateWebDetailInfo];
+                                                    //检测分享按钮
+                                                    [weakSelf checkShareBtn];
+                                                    //更页面
+                                                    [weakSelf updateUI];
+                                                });
+                                            });
                                         }else{
                                             [WLHUDView showErrorHUD:@"获取失败，该活动不存在！"];
                                         }
+                                        
                                     } Failed:^(NSError *error) {
                                         if (error) {
                                             [WLHUDView showErrorHUD:error.description];
@@ -1104,43 +1103,6 @@
                                         }
                                         DLog(@"getActivityDetailParameterDic error:%@",error.description);
                                     }];
-    
-//    [WLHttpTool getActivityDetailParameterDic:@{@"activeid":_activityId}
-//                                      success:^(id JSON) {
-//                                          //隐藏下拉刷新控件
-////                                          [self.tableView.header endRefreshing];
-//                                          if (JSON) {
-//                                              if ([[JSON objectForKey:@"deleted"] boolValue]) {
-//                                                  UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
-//                                                  [alert bk_addButtonWithTitle:@"确定" handler:^{
-//                                                      [weakSelf.navigationController popViewControllerAnimated:YES];
-//                                                  }];
-//                                                  [alert show];
-//                                                  return;
-//                                              }
-//                                              IActivityInfo *iActivity = [IActivityInfo objectWithDict:JSON];
-//                                              BOOL isFromList = _activityInfo != nil ? YES : NO;
-//                                              if (isFromList) {
-//                                                  self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
-//                                              }else{
-//                                                  self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
-//                                                  //更新数据
-//                                                  [self initActivityUIInfo];
-//                                              }
-//                                              self.datasource = iActivity.guests;
-//                                              
-//                                              //检测分享按钮
-//                                              [self checkShareBtn];
-//                                              //更页面
-//                                              [self updateUI];
-//                                          }else{
-//                                              [WLHUDView showSuccessHUD:@"获取失败，该活动不存在！"];
-//                                          }
-//                                      } fail:^(NSError *error) {
-//                                          //隐藏下拉刷新控件
-////                                          [self.tableView.header endRefreshing];
-//                                          DLog(@"getActivityDetailParameterDic error:%@",error.description);
-//                                      }];
 }
 
 //取消报名
@@ -1160,13 +1122,6 @@
                                        }
                                        DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
                                    }];
-//    [WLHttpTool deleteActiveRecorderParameterDic:@{@"activeid":_activityId}
-//                                         success:^(id JSON) {
-//                                             //更页面
-//                                             [self updateJoinedInfo:NO];
-//                                         } fail:^(NSError *error) {
-//                                             DLog(@"deleteActiveRecorderParameterDic error:%@",error.description);
-//                                         }];
 }
 
 //创建活动报名   type: 0:免费 1：收费
@@ -1204,42 +1159,6 @@
                                     [WLHUDView showErrorHUD:@"报名失败，请重新尝试！"];
                                 }
                             }];
-    
-//    NSDictionary *param = [NSDictionary dictionary];
-//    if (type == 0) {
-//        //免费活动
-//        param = @{@"activeid":_activityId};
-//    }else{
-//        NSMutableArray *ticketsinfo = [NSMutableArray array];
-//        for (int i = 0; i < tickets.count; i++) {
-//            IActivityTicket *ticket = tickets[i];
-//            [ticketsinfo addObject:@{@"ticketid":ticket.ticketid,@"count":ticket.buyCount}];
-//        }
-//        //需要支付的活动
-//        param = @{@"activeid":_activityId,
-//                  @"tickets":ticketsinfo};
-//    }
-    
-//    [WLHttpTool createTicketOrderParameterDic:param
-//                                      success:^(id JSON) {
-//                                          if ([JSON isKindOfClass:[NSDictionary class]]) {
-//                                              if ([JSON[@"state"] integerValue] == -1) {
-//                                                  [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
-//                                                  return;
-//                                              }
-//                                          }
-//                                          if (type != 0) {
-//                                              //进入订单页面
-//                                              ActivityOrderInfoViewController *activityOrderInfoVC = [[ActivityOrderInfoViewController alloc] initWithActivityInfo:_activityInfo Tickets:tickets payInfo:JSON];
-//                                              [self.navigationController pushViewController:activityOrderInfoVC animated:YES];
-//                                          }else{
-//                                              [WLHUDView showSuccessHUD:@"恭喜您，报名成功！"];
-//                                              //更页面
-//                                              [self updateJoinedInfo:YES];
-//                                          }
-//                                      } fail:^(NSError *error) {
-//                                          [WLHUDView showSuccessHUD:@"报名失败，请重新尝试！"];
-//                                      }];
 }
 
 @end

@@ -6,10 +6,9 @@
 //  Copyright (c) 2015年 chuansongmen. All rights reserved.
 //
 
-//#import "BasicViewController.h"
-#import "NLMainViewController.h"
+#import "BasicViewController.h"
 
-@interface ActivityDetailInfoViewController : NLMainViewController//BasicViewController
+@interface ActivityDetailInfoViewController : BasicViewController
 
 - (instancetype)initWithActivityInfo:(ActivityInfo *)activityInfo;
 - (instancetype)initWIthActivityId:(NSNumber *)activityId;

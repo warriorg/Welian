@@ -88,11 +88,11 @@
     UIButton *detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     detailBtn.backgroundColor = [UIColor clearColor];
     detailBtn.titleLabel.font = kNormal14Font;
-    [detailBtn setTitle:@"查看活动详情" forState:UIControlStateNormal];
+    [detailBtn setTitle:@"上拉查看图文详情" forState:UIControlStateNormal];
     [detailBtn setTitleColor:kNormalTextColor forState:UIControlStateNormal];
-    [detailBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_more"] forState:UIControlStateNormal];
-    detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,180,0,0);
-    detailBtn.titleEdgeInsets = UIEdgeInsetsMake(0,-50, 0, 0);
+//    [detailBtn setImage:[UIImage imageNamed:@"discovery_activity_detail_more"] forState:UIControlStateNormal];
+//    detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0,180,0,0);
+//    detailBtn.titleEdgeInsets = UIEdgeInsetsMake(0,-50, 0, 0);
     [detailBtn addTarget:self action:@selector(detailBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:detailBtn];
     self.detailBtn = detailBtn;
