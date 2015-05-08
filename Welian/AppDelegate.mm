@@ -122,8 +122,6 @@ BMKMapManager* _mapManager;
      */
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-//    LogInUser *mode = [LogInUser getCurrentLoginUser];
-//    DLog(@"%@",mode.description);
     if ([UserDefaults objectForKey:kSessionId]) {
         /** 已登陆 */
         self.mainVC = [[MainViewController alloc] init];
@@ -513,7 +511,7 @@ BMKMapManager* _mapManager;
     if ([self.window.rootViewController isKindOfClass:[LoginGuideController class]])
         return;
     [self.window setRootViewController:[[LoginGuideController alloc] init]];
-    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的微链账号已经在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号长时间未登录或在其他设备上登录"  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     if ([LogInUser getCurrentLoginUser]) {
         [WeLianClient logoutWithSuccess:^(id resultInfo) {
             

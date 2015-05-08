@@ -7,6 +7,7 @@
 //
 
 #import "WeLianClient.h"
+#import "AppDelegate.h"
 
 @interface WeLianClient ()
 {
@@ -92,6 +93,11 @@
                                       SAFE_BLOCK_CALL(success, result.data);
                                   }else{
                                       if (result.state.integerValue > 1000 && result.state.integerValue < 2000) {
+                                          if (result.state.integerValue==1010) {
+                                              // 未登录
+                                              AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                              [appDelegate logout];
+                                          }
                                           //可以提醒的错误
                                           SAFE_BLOCK_CALL(failed, result.error);
                                       }else if(result.state.integerValue >= 2000 && result.state.integerValue < 3000){
@@ -252,7 +258,7 @@
 // 上传平台，clientid
 + (void)updateclientID
 {
-    if ([[UserDefaults objectForKey:kBPushRequestChannelIdKey] length]&& ![UserDefaults boolForKey:kneedChannelId]) {
+    if ([[UserDefaults objectForKey:kBPushRequestChannelIdKey] length]&& ![UserDefaults boolForKey:kneedChannelId]&&[UserDefaults objectForKey:kSessionId]) {
         [self reqestPostWithParams:@{@"platform":KPlatformType,@"clientid":[UserDefaults objectForKey:kBPushRequestChannelIdKey],@"version":XcodeAppVersion} Path:kUpdateclient Success:^(id resultInfo) {
             DLog(@"%@",resultInfo);
             [UserDefaults setBool:YES forKey:kneedChannelId];
