@@ -227,6 +227,8 @@
 #define kAllIndustryListPath kCommonUrl(@"industry")
 //搜索学校
 #define kSearchSchoolPath kCommonUrl(@"school")
+//搜索专业
+#define kSearchSpecialtyPath kCommonUrl(@"specialty")
 //搜索公司
 #define kSearchCompanyPath kCommonUrl(@"company")
 //搜索职位

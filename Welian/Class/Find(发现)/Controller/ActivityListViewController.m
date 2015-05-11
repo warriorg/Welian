@@ -367,59 +367,6 @@
                                     [self.tableView.footer endRefreshing];
                                     DLog(@"getActiveList error:%@",error.localizedDescription);
                                 }];
-    
-//    NSDictionary *params = @{@"date":@([_selectTimeType[@"cityid"] integerValue]),
-//                             @"cityid":@([_selectAddressType[@"cityid"] integerValue]),
-//                             @"page":@(_pageIndex),
-//                             @"size":@(_pageSize)};
-//    [WLHttpTool getActivitysParameterDic:params
-//                                 success:^(id JSON) {
-//                                     //隐藏加载更多动画
-////                                     [self.refreshControl endRefreshing];
-//                                     [_tableView.header endRefreshing];
-//                                     [_tableView.footer endRefreshing];
-//                                     
-//                                     DLog(@"---json:%@",JSON);
-//                                     if (JSON) {
-//                                         if (_pageIndex == 1) {
-//                                             //第一页
-//                                             [ActivityInfo deleteAllActivityInfoWithType:@(0)];
-//                                         }
-//                                         NSArray *activitys = [IActivityInfo objectsWithInfo:JSON];
-//                                         for (IActivityInfo *iActivityInfo in activitys) {
-//                                             [ActivityInfo createActivityInfoWith:iActivityInfo withType:@(0)];
-//                                         }
-//                                     }
-//                                     //获取数据
-//                                     self.datasource = [ActivityInfo allNormalActivityInfos];
-//                                     [_tableView reloadData];
-//                                     
-//                                     //设置是否可以下拉刷新
-//                                     if ([JSON count] != KCellConut) {
-//                                         _tableView.footer.hidden = YES;
-//                                     }else{
-//                                         _tableView.footer.hidden = NO;
-//                                         _pageIndex++;
-//                                     }
-//                                     
-//                                     if(([_datasource[0] count] + [_datasource[1] count]) == 0){
-//                                         [_tableView addSubview:self.notView];
-//                                         [_tableView sendSubviewToBack:self.notView];
-//                                     }else{
-////                                         if ([_datasource[0] count] > 0) {
-////                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-////                                         }else if ([_datasource[1] count] > 0){
-////                                             [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-////                                         }
-//                                         [_notView removeFromSuperview];
-//                                     }
-//                                 } fail:^(NSError *error) {
-////                                     [self.refreshControl endRefreshing];
-//                                     //隐藏加载更多动画
-//                                     [self.tableView.header endRefreshing];
-//                                     [self.tableView.footer endRefreshing];
-//                                     DLog(@"getActivitysParameterDic error:%@",error.description);
-//                                 }];
 }
 
 //下拉刷新数据

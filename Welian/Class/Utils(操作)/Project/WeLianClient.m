@@ -1612,6 +1612,22 @@
                        }];
 }
 
+//搜索专业
++ (void)searchSpecialtyWithKeyword:(NSString *)keyword
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed
+{
+    NSDictionary *params = @{@"keyword":keyword};
+    [self reqestPostWithParams:params
+                          Path:kSearchSpecialtyPath
+                       Success:^(id resultInfo) {
+                           DLog(@"searchSpecialty ---- %@",resultInfo);
+                           SAFE_BLOCK_CALL(success,resultInfo);
+                       } Failed:^(NSError *error) {
+                           SAFE_BLOCK_CALL(failed, error);
+                       }];
+}
+
 //搜索公司
 + (void)searchCompanyWithKeyword:(NSString *)keyword
                          Success:(SuccessBlock)success

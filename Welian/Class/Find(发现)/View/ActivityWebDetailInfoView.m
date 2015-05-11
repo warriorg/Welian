@@ -15,6 +15,7 @@
 
 @property (strong,nonatomic) UIWebView *webView;
 @property (assign,nonatomic) UILabel *infoLabel;
+@property (assign,nonatomic) UILabel *noteLabel;
 @property (strong,nonatomic) UIActivityIndicatorView *activityView;
 
 @end
@@ -104,10 +105,19 @@
     [self addSubview:webView];
     self.webView = webView;
     
+    UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, ScreenWidth,30.f)];
+    noteLabel.font = kNormal14Font;
+    noteLabel.textColor = kNormalTextColor;
+    noteLabel.text = @"暂无活动详情";
+    noteLabel.textAlignment = NSTextAlignmentCenter;
+    noteLabel.hidden = YES;
+    [self addSubview:noteLabel];
+    self.noteLabel = noteLabel;
+    
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.width, 30.f)];
     infoLabel.font = kNormal14Font;
     infoLabel.textColor = kNormalTextColor;
-    infoLabel.text = @"下拉返回活动详情";
+    infoLabel.text = @"↓ 下拉返回活动详情";
     infoLabel.textAlignment = NSTextAlignmentCenter;
     infoLabel.hidden = YES;
     [self addSubview:infoLabel];
@@ -124,15 +134,10 @@
 - (void)reloadWebInfo
 {
     if (_urlStr.length > 0) {
+        _noteLabel.hidden = YES;
         [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlStr]]];
     }else{
-        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, ScreenWidth,30.f)];
-        infoLabel.font = kNormal14Font;
-        infoLabel.textColor = kNormalTextColor;
-        infoLabel.text = @"暂无活动详情";
-        infoLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:infoLabel];
-        self.infoLabel = infoLabel;
+        _noteLabel.hidden = NO;
     }
 }
 
@@ -147,6 +152,11 @@
 {
     DLog(@"webViewDidFinishLoad --");
     [_activityView stopAnimating];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    DLog(@"didFailLoadWithError --");
 }
 
 @end

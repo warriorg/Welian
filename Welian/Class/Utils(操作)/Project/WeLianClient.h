@@ -467,6 +467,11 @@
                         Success:(SuccessBlock)success
                          Failed:(FailedBlock)failed;
 
+//搜索专业
++ (void)searchSpecialtyWithKeyword:(NSString *)keyword
+                           Success:(SuccessBlock)success
+                            Failed:(FailedBlock)failed;
+
 //搜索公司
 + (void)searchCompanyWithKeyword:(NSString *)keyword
                          Success:(SuccessBlock)success

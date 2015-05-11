@@ -209,7 +209,7 @@
 //获取数据
 - (void)initData{
     //大于零取某个用户的，-1取自己的，不传或者0取全部
-    [WeLianClient getProjectListWithUid:@(0)
+    [WeLianClient getProjectListWithUid:@(0)//"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
                                    Page:@(_pageIndex)
                                     Size:@(_pageSize)
                                  Success:^(id resultInfo) {
@@ -253,83 +253,6 @@
                                      [self.tableView.footer endRefreshing];
                                      
                                  }];
-    
-    //"uid":10086,// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-//    NSDictionary *params = @{@"uid":@(0),// -1 取自己，0 取推荐的项目，大于0取id为uid的用户
-//                            @"page":@(_pageIndex),
-//                            @"size":@(_pageSize)};
-//    [WLHttpTool getProjectsParameterDic:params
-//                                success:^(id JSON) {
-//                                    //隐藏加载更多动画
-////                                    [self.refreshControl endRefreshing];
-//                                    [self.tableView.header endRefreshing];
-//                                    [self.tableView.footer endRefreshing];
-//                                    
-//                                    if (JSON) {
-//                                        if (_pageIndex == 1) {
-//                                            //第一页
-//                                            [ProjectInfo deleteAllProjectInfoWithType:@(0)];
-//                                        }
-//                                        NSArray *projects = [IProjectInfo objectsWithInfo:JSON];
-//                                        for (IProjectInfo *iProjectInfo in projects) {
-//                                            [ProjectInfo createProjectInfoWith:iProjectInfo withType:@(0)];
-//                                        }
-//                                        
-//                                        NSArray *sortedInfo = [ProjectInfo allNormalProjectInfos];
-//                                        self.headDatasource = sortedInfo[0];
-//                                        self.datasource = sortedInfo[1];
-//                                        
-//                                        //添加数据
-//                                        [_allDataSource addObjectsFromArray:projects];
-//                                        [self.tableView reloadData];
-////
-////                                        NSMutableArray *headerKeys = [NSMutableArray array];
-////                                        NSMutableArray *arrayForArrays = [NSMutableArray array];
-////                                        NSMutableArray *tempFroGroup = nil;
-////                                        BOOL checkValueAtIndex = NO;
-////                                        for (int i = 0; i < _allDataSource.count; i++) {
-////                                            IProjectInfo *iProject = projects[i];
-////                                            //监测数组中是否包含当前日期，没有创建
-////                                            if (![headerKeys containsObject:iProject.date]) {
-////                                                [headerKeys addObject:iProject.date];
-////                                                tempFroGroup = [NSMutableArray array];
-////                                                checkValueAtIndex = NO;
-////                                            }
-////                                            
-////                                            //有就把数据添加进去
-////                                            if ([headerKeys containsObject:iProject.date]) {
-////                                                [tempFroGroup addObject:iProject];
-////                                                if (checkValueAtIndex == NO) {
-////                                                    [arrayForArrays addObject:tempFroGroup];
-////                                                    checkValueAtIndex = YES;
-////                                                }
-////                                            }
-////                                        }
-////                                        self.headDatasource = headerKeys;
-////                                        self.datasource = arrayForArrays;
-////                                        [self.tableView reloadData];
-//                                    }
-//                                    
-//                                    //设置是否可以下拉刷新
-//                                    if ([JSON count] != KCellConut) {
-//                                        self.tableView.footer.hidden = YES;
-//                                    }else{
-//                                        self.tableView.footer.hidden = NO;
-//                                    }
-//                                    
-//                                    if(_allDataSource.count == 0){
-//                                        [self.tableView addSubview:self.notView];
-//                                        [self.tableView sendSubviewToBack:self.notView];
-//                                    }else{
-//                                        [_notView removeFromSuperview];
-//                                    }
-//                                } fail:^(NSError *error) {
-////                                    [self.refreshControl endRefreshing];
-//                                    //隐藏加载更多动画
-//                                    [self.tableView.header endRefreshing];
-//                                    [self.tableView.footer endRefreshing];
-////                                    [UIAlertView showWithError:error];
-//                                }];
 }
 
 @end

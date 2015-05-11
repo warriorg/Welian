@@ -125,9 +125,7 @@
     // 上拉加载详情
     CGFloat offsetY = scrollView.contentOffset.y;
     if(offsetY > (_tableView.contentSize.height - _tableView.height + 60)){
-        if (_activityInfo.url.length > 0) {
-            [self showActivityWebDetailInfo];
-        }
+        [self showActivityWebDetailInfo];
     }
 }
 
@@ -239,15 +237,15 @@
     self.activityTicketView = activityTicketView;
     
     if (_activityInfo) {
+        //更新页面展示
+        [self updateUI];
+        
         //设置头部和底部内容
         [self initActivityUIInfo];
         [self updateWebDetailInfo];
         
         //检测分享按钮是否显示
         [self checkShareBtn];
-        
-        [self checkFavorteStatus];
-        [self checkOperateBtnStatus];
     }
     
     //获取详情信息
@@ -768,28 +766,6 @@
                         
                     }
                 }
-                
-                
-//                //名额未满
-//                if (_activityInfo.limited.integerValue == 0 && _activityInfo.type.integerValue == 0) {
-//                    //不限人数，可以报名
-//                    [self noPayToJoin];
-//                }else{
-//                    //名额未满
-//                    if(_activityInfo.limited.integerValue > _activityInfo.joined.integerValue){
-//                        //1收费，0免费
-//                        if (_activityInfo.type.integerValue == 0) {
-//                            //我要报名
-//                            [self noPayToJoin];
-//                        }else{
-//                            //我要购票
-//                            [self loadActivityTickets];
-//                        }
-//                    }else{
-//                        //名额已满
-//                        
-//                    }
-//                }
             }
         }
             break;
@@ -1044,19 +1020,16 @@
 - (void)updateWebDetailInfo
 {
     //加载图文详情
-    if (_activityInfo.url.length > 0) {
-        _activityWebInfoView.urlStr = _activityInfo.url;
-    }
+    _activityWebInfoView.urlStr = _activityInfo.url;
 }
 
 //获取详情信息
 - (void)initData
 {
-    WEAKSELF
     if (!_activityId.boolValue) {
         UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:@"" message:@"该活动已经被删除！"];
         [alert bk_addButtonWithTitle:@"知道了" handler:^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
         [alert show];
         return;
@@ -1068,29 +1041,23 @@
                                         if (resultInfo) {
                                             [WLHUDView hiddenHud];
                                             
-                                            WEAKSELF
-                                            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                                IActivityInfo *iActivity = resultInfo;
-                                                BOOL isFromList = _activityInfo != nil ? YES : NO;
-                                                if (isFromList) {
-                                                    weakSelf.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
-                                                }else{
-                                                    weakSelf.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
-                                                }
-                                                weakSelf.datasource = iActivity.guests;
-                                                dispatch_async(dispatch_get_main_queue(), ^{
-                                                    //更新数据
-                                                    if (!isFromList) {
-                                                        [weakSelf initActivityUIInfo];
-                                                    }
-                                                    //更新详情展示页面
-                                                    [weakSelf updateWebDetailInfo];
-                                                    //检测分享按钮
-                                                    [weakSelf checkShareBtn];
-                                                    //更页面
-                                                    [weakSelf updateUI];
-                                                });
-                                            });
+                                            IActivityInfo *iActivity = resultInfo;
+                                            BOOL isFromList = _activityInfo != nil ? YES : NO;
+                                            if (isFromList) {
+                                                self.activityInfo = [ActivityInfo updateActivityInfoWith:iActivity withType:_activityInfo.activeType];
+                                            }else{
+                                                self.activityInfo = [ActivityInfo createActivityInfoWith:iActivity withType:0];
+                                                [self initActivityUIInfo];
+                                            }
+                                            self.datasource = iActivity.guests;
+                                            
+                                            //更页面
+                                            [self updateUI];
+                                            
+                                            //更新详情展示页面
+                                            [self updateWebDetailInfo];
+                                            //检测分享按钮
+                                            [self checkShareBtn];
                                         }else{
                                             [WLHUDView showErrorHUD:@"获取失败，该活动不存在！"];
                                         }
