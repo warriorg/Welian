@@ -675,7 +675,7 @@
     NSArray *homearray = [HomeMessage MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
 //    NSArray *homearray = [[[[HomeMessage queryInManagedObjectContext:MOC] where:@"rsLogInUser" equals:[LogInUser getCurrentLoginUser]] where:@"isLook" isTrue:NO] results];
     for (HomeMessage *meee  in homearray) {
-        meee.isLook = @(1);
+        meee.isLook = @(YES);
     }
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 //    [MOC save];
@@ -688,8 +688,8 @@
 {
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"%K == %@ && %K == %@", @"rsLogInUser",self,@"isLook",@(NO)];
     NSArray *homearray = [HomeMessage MR_findAllWithPredicate:pre inContext:[self managedObjectContext]];
-    for (HomeMessage *meee  in homearray) {
-        meee.isLook = @(1);
+    for (HomeMessage *meee in homearray) {
+        meee.isLook = @(YES);
     }
     [self.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
