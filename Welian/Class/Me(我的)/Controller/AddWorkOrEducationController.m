@@ -105,7 +105,7 @@
 - (UITextField*)beginTextF
 {
     if (_beginTextF ==nil) {
-        _beginTextF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width-100, 44)];
+        _beginTextF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width-130, 44)];
         [_beginTextF setPlaceholder:@"请选择"];
         [_beginTextF setTextAlignment:NSTextAlignmentRight];
         [_beginTextF setTintColor:KBasesColor];
@@ -129,7 +129,7 @@
 - (UITextField *)endTextF
 {
     if (_endTextF == nil) {
-        _endTextF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width-100, 44)];
+        _endTextF = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, SuperSize.width-130, 44)];
         [_endTextF setTextAlignment:NSTextAlignmentRight];
         [_endTextF setPlaceholder:@"请选择"];
         [_endTextF setDelegate:self];
@@ -404,7 +404,7 @@
             if (indexPath.row==0) {
                 vertype = IWVerifiedTypeSchool;
             }else if (indexPath.row ==1){
-                
+                vertype = IWVerifiedTypeSpecialty;
             }
         }else if (_wlUserLoadType ==2) {
             if (indexPath.row ==0) {

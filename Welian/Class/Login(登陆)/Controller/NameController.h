@@ -16,7 +16,8 @@ typedef enum {
     IWVerifiedTypeSchool = 3, // 学校
     IWVerifiedTypeJob = 4, // 职位
     IWVerifiedTypeMailbox = 5, // 邮箱
-    IWVerifiedTypeAddress = 6 //  地址
+    IWVerifiedTypeAddress = 6, //  地址
+    IWVerifiedTypeSpecialty = 7 // 专业
 } IWVerifiedType;
 
 @interface NameController : UIViewController

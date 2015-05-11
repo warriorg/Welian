@@ -72,6 +72,7 @@
         
         _cellHeadView = [[WLCellHead alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
         _cellHeadView.backgroundColor = [UIColor clearColor];
+        _cellHeadView.controllVC = self.homeVC;
         [self.contentView addSubview:_cellHeadView];
 
         _contentAndDockView = [[WLContentCellView alloc] init];
@@ -152,7 +153,7 @@
     }
 
     [_cellHeadView setUserStat:status];
-    [_cellHeadView setControllVC:self.homeVC];
+//    [_cellHeadView setControllVC:self.homeVC];
     CGFloat y = 0;
     CGRect headFrame = _cellHeadView.frame;
     if (status.type.integerValue==1||status.type.integerValue==2||status.type.integerValue==6 ||status.type.integerValue==4) {

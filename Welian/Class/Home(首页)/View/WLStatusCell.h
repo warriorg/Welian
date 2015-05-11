@@ -25,7 +25,6 @@ typedef void (^WLFeedTuiBlock)(WLStatusM *starusM);
 @property (nonatomic, copy) WLFeedAndZanBlock feedzanBlock;
 
 @property (nonatomic, copy) WLFeedTuiBlock feedTuiBlock;
-
 //    ** 内容 */
 @property (nonatomic, strong) WLContentCellView *contentAndDockView;
 

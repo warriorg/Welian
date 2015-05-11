@@ -135,7 +135,7 @@
             [WeLianClient searchCompanyWithKeyword:searchText
                                            Success:^(id resultInfo) {
                                                self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
-                                               [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                               [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
                                            } Failed:^(NSError *error) {
                                                
                                            }];
@@ -151,7 +151,7 @@
             [WeLianClient searchPositionWithKeyword:searchText
                                             Success:^(id resultInfo) {
                                                 self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
-                                                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
                                             } Failed:^(NSError *error) {
                                                 
                                             }];
@@ -167,7 +167,7 @@
             [WeLianClient searchSchoolWithKeyword:searchText
                                           Success:^(id resultInfo) {
                                               self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
-                                              [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                                              [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
                                           } Failed:^(NSError *error) {
                                               
                                           }];
@@ -178,6 +178,15 @@
 //            } fail:^(NSError *error) {
 //                
 //            }];
+        }else if (_verType == IWVerifiedTypeSpecialty){
+            // 搜索专业
+            [WeLianClient searchSpecialtyWithKeyword:searchText Success:^(id resultInfo) {
+                self.dataArray = [NSMutableArray arrayWithArray:resultInfo];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+            } Failed:^(NSError *error) {
+                
+            }];
+            
         }
         
     }

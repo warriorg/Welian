@@ -35,7 +35,7 @@
     }
     
     homeMessage.commentid = messageM.commentid;
-    homeMessage.isLook = messageM.isLook != nil?messageM.isLook:NO;
+    homeMessage.isLook = messageM.isLook != nil?messageM.isLook:@(NO);
     homeMessage.avatar = messageM.avatar;
     homeMessage.name = messageM.name;
     homeMessage.uid = messageM.uid;
