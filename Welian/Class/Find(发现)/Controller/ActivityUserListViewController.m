@@ -209,38 +209,6 @@
                                        //隐藏加载更多动画
                                        [self.tableView.footer endRefreshing];
                                    }];
-    
-//    [WLHttpTool loadActiveRecordsParameterDic:@{@"activeid":_activeId,@"page":@(_pageIndex),@"size":@(_pageSize)}
-//                                      success:^(id JSON) {
-//                                          //隐藏加载更多动画
-//                                          [self.tableView.footer endRefreshing];
-////                                          NSInteger count = [JSON[@"count"] integerValue];
-//                                          NSArray *records = JSON[@"records"];
-//                                          
-//                                          if (records.count > 0) {
-//                                              [self.datasource addObjectsFromArray:records];
-//                                          }
-//                                          
-//                                          //设置是否可以下拉刷新
-//                                          if ([records count] != KCellConut) {
-//                                              self.tableView.footer.hidden = YES;
-//                                          }else{
-//                                              self.tableView.footer.hidden = NO;
-//                                          }
-//                                          
-//                                          if (_datasource.count > 0) {
-//                                              [_noDataNotView removeFromSuperview];
-//                                          }else{
-//                                              [self.tableView addSubview:self.noDataNotView];
-//                                              [self.tableView sendSubviewToBack:self.noDataNotView];
-//                                          }
-//                                          
-//                                          [self.tableView reloadData];
-//                                      } fail:^(NSError *error) {
-//                                          //隐藏加载更多动画
-//                                          [self.tableView.footer endRefreshing];
-////                                          [UIAlertView showWithError:error];
-//                                      }];
 }
 
 //加载更多数据
@@ -301,21 +269,6 @@
                                                  [WLHUDView showErrorHUD:@"发送失败，请重试"];
                                              }
                                          }];
-            
-//            [WLHttpTool requestFriendParameterDic:@{@"fid":uid,@"message":[alert textFieldAtIndex:0].text} success:^(id JSON) {
-//                [WLHUDView showSuccessHUD:@"好友验证发送成功！"];
-//                NSMutableDictionary *infoDic =  [NSMutableDictionary dictionaryWithDictionary:_datasource[indexPath.row]];
-//                //重置好友关系
-//                [infoDic setValue:@"4" forKey:@"friendship"];
-////                //发送邀请成功，修改状态，刷新列表
-////                NeedAddUser *addUser = [needAddUser updateFriendShip:4];
-//                //改变数组，刷新列表
-//                [self.datasource replaceObjectAtIndex:indexPath.row withObject:infoDic];
-//                //刷新列表
-//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            } fail:^(NSError *error) {
-//                
-//            }];
         }];
         [alert show];
     }
