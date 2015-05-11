@@ -281,14 +281,14 @@
                 return _datasource.count + 1;
             }else{
                 //活动简介
-                return 1;
+                return 2;
             }
         }
             break;
         case 2:
         {
             //活动简介
-            return 1;
+            return 2;
         }
             break;
         default:
@@ -299,113 +299,107 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section) {
-        case 0:
-        {
-            static NSString *cellIdentifier = @"Activity_Custom_View_Cell";
-            ActivityCustomViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[ActivityCustomViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            }
-            switch (indexPath.row) {
-                case 0:
-                {
-                    cell.showCustomInfo = NO;
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_time"];
-                    cell.textLabel.text = [_activityInfo displayStartTimeInfo];
-                }
-                    break;
-                case 1:
-                {
-                    cell.showCustomInfo = NO;
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                    cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_place"];
-                    cell.textLabel.text = _activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address;
-                }
-                    break;
-                case 2:
-                {
-                    cell.showCustomInfo = YES;
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                    cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_people"];
-                    
-                    NSString *info = [NSString stringWithFormat:@"已报名%@人",_activityInfo.joined];
-                    cell.textLabel.text = info;
-                    [cell.textLabel setAttributedText:[NSObject getAttributedInfoString:info searchStr:_activityInfo.joined.stringValue color:KBlueTextColor font:kNormal14Font]];
-                    
-                    NSString *detailInfo = [NSString stringWithFormat:@"/限额%@人",_activityInfo.limited];
-                    cell.detailTextLabel.text = detailInfo;
-                    //设置特殊颜色
-                    [cell.detailTextLabel setAttributedText:[NSObject getAttributedInfoString:detailInfo searchStr:_activityInfo.limited.stringValue color:KBlueTextColor font:kNormal14Font]];
-                    //收费和免费中未现在人数
-                    if (_activityInfo.type.integerValue == 1 || (_activityInfo.type.integerValue == 0 && _activityInfo.limited.integerValue == 0)) {
-                        cell.detailTextLabel.hidden = YES;
-                    }else{
-                        cell.detailTextLabel.hidden = NO;
-                    }
-                }
-                    break;
-                case 3:
-                {
-                    //如果活动主办方存在
-                    //活动主办方
-                    cell.showCustomInfo = NO;
-                    cell.accessoryType = UITableViewCellSelectionStyleNone;
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_zhubanfang"];
-                    cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
-                }
-                    break;
-                default:
-                    break;
-            }
-            return cell;
+    if (indexPath.section == 0) {
+        static NSString *cellIdentifier = @"Activity_Custom_View_Cell";
+        ActivityCustomViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[ActivityCustomViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         }
-            break;
-        case 1:
-        {
-            //活动嘉宾
-            if (_datasource.count > 0) {
-                if (indexPath.row == 0) {
-                    //头部标题
-                    static NSString *cellIdentifier = @"Activity_Header_View_Cell";
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                    if (!cell) {
-                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                    }
-                    
-                    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width, kTableViewHeaderHeight)];
-                    headerView.backgroundColor = [UIColor whiteColor];
-                    headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-                    headerView.layer.borderWidths = @"{0,0,0.6,0}";
-                    
-                    UIView *topBgView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, headerView.width, 15.f)];
-                    topBgView.backgroundColor = RGB(236.f, 238.f, 241.f);
-                    [headerView addSubview:topBgView];
-                    
-                    UILabel *titleLabel = [[UILabel alloc] init];
-                    titleLabel.font = kNormal14Font;
-                    titleLabel.textColor = RGB(125.f, 125.f, 125.f);
-                    titleLabel.text = @"嘉宾";
-                    [titleLabel sizeToFit];
-                    titleLabel.left = 15.f;
-                    titleLabel.centerY = (headerView.height - topBgView.height) / 2.f + topBgView.height;
-                    [headerView addSubview:titleLabel];
-                    [cell.contentView addSubview:headerView];
-                    return cell;
+        switch (indexPath.row) {
+            case 0:
+            {
+                cell.showCustomInfo = NO;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_time"];
+                cell.textLabel.text = [_activityInfo displayStartTimeInfo];
+            }
+                break;
+            case 1:
+            {
+                cell.showCustomInfo = NO;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_place"];
+                cell.textLabel.text = _activityInfo.address.length == 0 ? _activityInfo.city : _activityInfo.address;
+            }
+                break;
+            case 2:
+            {
+                cell.showCustomInfo = YES;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_people"];
+                
+                NSString *info = [NSString stringWithFormat:@"已报名%@人",_activityInfo.joined];
+                cell.textLabel.text = info;
+                [cell.textLabel setAttributedText:[NSObject getAttributedInfoString:info searchStr:_activityInfo.joined.stringValue color:KBlueTextColor font:kNormal14Font]];
+                
+                NSString *detailInfo = [NSString stringWithFormat:@"/限额%@人",_activityInfo.limited];
+                cell.detailTextLabel.text = detailInfo;
+                //设置特殊颜色
+                [cell.detailTextLabel setAttributedText:[NSObject getAttributedInfoString:detailInfo searchStr:_activityInfo.limited.stringValue color:KBlueTextColor font:kNormal14Font]];
+                //收费和免费中未现在人数
+                if (_activityInfo.type.integerValue == 1 || (_activityInfo.type.integerValue == 0 && _activityInfo.limited.integerValue == 0)) {
+                    cell.detailTextLabel.hidden = YES;
                 }else{
-                    static NSString *cellIdentifier = @"Activity_User_View_Cell";
-                    ActivityUserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                    if (!cell) {
-                        cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                    }
-                    cell.indexPath = indexPath;
-                    cell.baseUser = _datasource[indexPath.row - 1];
-                    cell.hidOperateBtn = YES;
-                    cell.hidBottomLine = YES;//隐藏分割线
-                    return cell;
+                    cell.detailTextLabel.hidden = NO;
                 }
+            }
+                break;
+            case 3:
+            {
+                //如果活动主办方存在
+                //活动主办方
+                cell.showCustomInfo = NO;
+                cell.accessoryType = UITableViewCellSelectionStyleNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.imageView.image = [UIImage imageNamed:@"discovery_activity_detail_zhubanfang"];
+                cell.textLabel.text = [NSString stringWithFormat:@"主办方：%@",_activityInfo.sponsor];
+            }
+                break;
+            default:
+                break;
+        }
+        return cell;
+    }else{
+        if (indexPath.row == 0) {
+            //头部标题
+            static NSString *cellIdentifier = @"Activity_Header_View_Cell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            }
+            
+            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, self.view.width, kTableViewHeaderHeight)];
+            headerView.backgroundColor = [UIColor whiteColor];
+            headerView.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
+            headerView.layer.borderWidths = @"{0,0,0.6,0}";
+            
+            UIView *topBgView = [[UIView alloc] initWithFrame:CGRectMake(.0f, .0f, headerView.width, 15.f)];
+            topBgView.backgroundColor = RGB(236.f, 238.f, 241.f);
+            [headerView addSubview:topBgView];
+            
+            UILabel *titleLabel = [[UILabel alloc] init];
+            titleLabel.font = kNormal14Font;
+            titleLabel.textColor = RGB(125.f, 125.f, 125.f);
+            titleLabel.text = (_datasource.count > 0 && indexPath.section == 1) ? @"嘉宾" : @"简介";
+            [titleLabel sizeToFit];
+            titleLabel.left = 15.f;
+            titleLabel.centerY = (headerView.height - topBgView.height) / 2.f + topBgView.height;
+            [headerView addSubview:titleLabel];
+            [cell.contentView addSubview:headerView];
+            return cell;
+        }else{
+            //活动嘉宾
+            if (_datasource.count > 0 && indexPath.section == 1) {
+                static NSString *cellIdentifier = @"Activity_User_View_Cell";
+                ActivityUserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (!cell) {
+                    cell = [[ActivityUserViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                }
+                cell.indexPath = indexPath;
+                cell.baseUser = _datasource[indexPath.row - 1];
+                cell.hidOperateBtn = YES;
+                cell.hidBottomLine = YES;//隐藏分割线
+                return cell;
             }else{
                 //活动简介
                 static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
@@ -425,30 +419,6 @@
                 return cell;
             }
         }
-            break;
-        case 2:
-        {
-            //活动简介
-            static NSString *cellIdentifier = @"Activity_Detail_Info_View_Cell";
-            ActivityInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[ActivityInfoViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            }
-            cell.layer.borderColorFromUIColor = RGB(231.f, 231.f, 231.f);
-            cell.layer.borderWidths = @"{0.6,0,0,0}";
-            
-            cell.textLabel.text = @"";
-            cell.detailTextLabel.text = [_activityInfo displayActivityInfo];
-            WEAKSELF
-            [cell setBlock:^(void){
-                [weakSelf showActivityWebDetailInfo];
-            }];
-            return cell;
-        }
-            break;
-        default:
-            return nil;
-            break;
     }
 }
 
@@ -525,24 +495,20 @@
         }
             break;
         case 1:
-        {
-            //活动嘉宾
-            if (_datasource.count > 0) {
-                if (indexPath.row == 0) {
-                    return kTableViewHeaderHeight;
-                }else{
-                    return 60.f;
-                }
-            }else{
-                //活动简介
-                return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
-            }
-        }
-            break;
         case 2:
         {
-            //活动简介
-            return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
+            if (indexPath.row == 0) {
+                return kTableViewHeaderHeight;
+            }else{
+                //活动嘉宾
+                if (_datasource.count > 0 && indexPath.section == 1) {
+                    return 60.f;
+                }else{
+                    //活动简介
+                    return [ActivityInfoViewCell configureWithTitle:@"" Msg:[_activityInfo displayActivityInfo]];
+                }
+            }
+            
         }
             break;
         default:
